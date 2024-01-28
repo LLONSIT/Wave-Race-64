@@ -1,0 +1,412 @@
+
+name: Wave Race 64 (North America)
+sha1: 508dfc2d4caa42b6f6de5263d0aed5e44ac7966a
+options:
+  basename: waverace64
+  target_path: baserom.us.z64
+  base_path: .
+  compiler: IDO
+  find_file_boundaries: True
+  header_encoding: ASCII
+  platform: n64
+ # undefined_funcs_auto: True
+  undefined_funcs_auto_path: undefined_funcs_auto.txt
+#  undefined_syms_auto: True
+  undefined_syms_auto_path: undefined_syms_auto.txt
+  symbol_addrs_path: symbol_addrs.txt
+  asm_path: asm
+  src_path: src
+  build_path: build
+  extensions_path: tools/splat_ext
+  #mips_abi_float_regs: o32
+  #section_order: [".text", ".data", ".rodata", ".bss"]
+  #auto_all_sections: [".data", ".rodata", ".bss"]
+  #libultra_symbols: True
+  #hardware_regs: True
+segments:
+  - name: header
+    type: header
+    start: 0x0
+  - name: boot
+    type: bin
+    start: 0x40
+  - name: main_segment
+    type: code
+    start: 0x1000
+    vram: 0x80046800
+    subsegments:
+
+
+     #Game layout
+     #                                Is the overlay compressed?
+     #Main Segment -> ucode -> Data/Rodata -> MIO_SEGMENT | Overlay
+
+      - [0x1000, hasm, entrypoint]
+      - [0x1050, c, game_1050] #Some GFX macros
+      - [0x1C70, c, main]
+      - [0x23E0, c, game_23E0]
+      - [0x5480, c, game_5480]
+      - [0x69D0, c, game_69D0]
+      - [0xBD30, c, game_BD30]
+      - [0xBF40, c, game_BF40]
+      - [0xC6C0, c, game_C6C0]
+      - [0x24270, c, game_24270]
+      - [0x24B00, c, game_24B00]
+      - [0x2C670, c, game_2C670]
+      - [0x34D50, c, game_34D50]
+      - [0x355D0, c, core/game_355D0]
+      - [0x39F00, c, game_39F00]
+      - [0x3A580, c, game_3A580]
+      - [0x3AC00, c, game_3AC00]
+      - [0x42670, c, game_42670]
+      - [0x436A0, c, game_43A60]
+      - [0x43DA0, c, game_43DA0]
+      - [0x4C750, c, game_4C750]
+      - [0x4F850, c, game_4F850]
+      - [0x52990, c, game_52990]
+      - [0x52CD0, c, game_52CD0]
+      - [0x68A10, c, game_68A10]
+      - [0x6EF50, c, game_6EF50]
+      - [0x6F530, c, game_6F530]
+      - [0x6F5D0, c, game_6F5D0]
+      - [0x71AF0, c, game_71AF0]
+      - [0x74D80, c, game_74D80]
+      - [0x77080, c, game_77080]
+      - [0x79B70, c, audio_mgr]
+
+     #Libultra Starts!
+      - [0x7FF20, c, os/osVirtualtoPhysical]
+      - [0x7FFA0, c, os/osSendMesg]
+      - [0x800F0, c, os/osGetTime]
+      - [0x80180, c, os/osSetTime]
+      - [0x801B0, c, os/osViSwapBuffer]
+      - [0x80200, c, os/osContReadData]
+      - [0x80460, c, os/osRecvMesg]
+      - [0x805A0, c, os/osDpgetStat]
+      - [0x805F0, c, os/osViSetMode]
+      - [0x80660, c, os/osViSetSpecialFeatures]
+      - [0x80820, c, os/osSpTaskYield]
+      - [0x80840, c, os/sptask]
+      - [0x80B00, c, os/osDpSetStatus]
+      - [0x80B10, c, os/osCreateMesgQueue]
+      - [0x80B40, c, os/osSetEventMesg]
+      - [0x80BB0, c, os/osViSetEvent]
+      - [0x80C20, c, os/osCreateThread] #Important
+      - [0x80D70, c, os/osStartThread]
+      - [0x80EC0, c, os/osSpTaskYielded]
+      - [0x80F40, hasm, libultra/writebackdcacheall]
+      - [0x80F70, c, libultra_nm/UnkLibultraSeg_80F70]
+      - [0x812D0, c, os/osViBlack]
+      - [0x81340, c, os/osViGetCurrentFramebuffer]
+      - [0x81380, c, os/osCreatePiManager]
+      - [0x81500, c, os/osSetThreadPri]
+      - [0x815E0, c, libultra_nm/UnkLibultraSeg_815E0]
+      - [0x81810, hasm, libultra/sqrtf]
+      - [0x81820, c, game_81820] #Game segment
+      - [0x81B80, asm, guOrtho]
+      - [0x81D40, c, os/gu/guTranslate] #TODO
+      - [0x81DE0, c, libultra_nm/UnkLibultraSeg_81DE0] #gu funcs
+      - [0x822A0, c, libultra_nm/UnkLibultraSeg_822A0]
+      - [0x82AD0, c, os/osEepromLongWrite]
+      - [0x82C10, c, libultra_nm/UnkLibultraSeg_82C10]
+      - [0x82D50, c, libultra_nm/UnkLibultraSeg_82D50]
+      - [0x82DC0, c, libultra_nm/UnkLibultraSeg_82DC0]
+      - [0x830F0, c, libultra_nm/UnkLibultraSeg_830F0]
+      - [0x83270, c, libultra_nm/UnkLibultraSeg_83270]
+      - [0x83410, c, libultra_nm/UnkLibultraSeg_83410]
+      - [0x835C0, c, libultra_nm/UnkLibultraSeg_835C0]
+      - [0x840B0, c, libultra_nm/UnkLibultraSeg_840B0]
+      - [0x84620, c, os/osPhysicalToVirtual]
+      - [0x84630, c, libultra_nm/UnkLibultraSeg_84630]
+      - [0x84760, c, libultra_nm/UnkLibultraSeg_84760]
+      - [0x84A10, c, os/sprintf]
+      - [0x84AC0, hasm, libultra/invaldcache]
+      - [0x84B70, c, libultra_nm/UnkLibultraSeg_84B70]
+      - [0x84C80, hasm, libultra/invalicache]
+      - [0x84D00, hasm, libultra/bzero]
+      - [0x84DA0, c, os/osAiSetFrequency]
+      - [0x84F00, c, os/audio/bnkf]
+      - [0x85150, c, os/osAiGetLength]
+      - [0x85160, c, os/osAiSetNextBuffer]
+      - [0x85210, hasm, libultra/probetlb]
+      - [0x852D0, hasm, libultra/interrupt]
+      - [0x85310, asm]
+      - [0x85BC0, asm, libultra/osGetCount]
+      - [0x85BD0, c, libultra_nm/unkLibultraSeg_85BD0]
+      - [0x86100, c, os/siacs]
+      - [0x861C0, c, os/__osSiRawStartDma]
+      - [0x86270, asm]
+      - [0x86280, asm]
+      - [0x86610, asm]
+      - [0x86650, asm]
+      - [0x866E0, c, os/__osSpDeviceBusy]
+      - [0x86710, asm]
+      - [0x86720, asm]
+      - [0x86740, c, os/osPiGetDeviceType]
+      - [0x86750, asm]
+      - [0x86AB0, asm]
+      - [0x86B70, c, os/osPiRawStartDma]
+      - [0x86C50, c, os/osDevMgrMain]
+      - [0x86DD0, asm, libultra/unkLibultraSeg_86DD0]
+      - [0x86DE0, asm, libultra/unkLibultraSeg_86DE0]
+      - [0x86DF0, asm]
+      - [0x86EA0, asm, libultra/unkLibultraSeg_86EA0]
+      - [0x86F00, asm]
+      - [0x86F60, c, os/ll]
+      - [0x87300, asm]
+      - [0x87570, c, libultra_nm/unkLibultraSeg_87570]
+      - [0x87870, c, libultra_nm/unkLibultraSeg_87870]
+      - [0x897A0, asm]
+      - [0x89B30, asm]
+      - [0x8ACC0, asm]
+      - [0x8AD60, c, os/osJamMesg]
+      - [0x8AEB0, c, os/osPiGetCmdQueue]
+      - [0x8AEE0, asm]
+      - [0x8B390, asm]
+      - [0x8B4C0, c, libultra_nm/unkLibultraSeg_8B4C0]
+      - [0x8B520, c, os/osDestroyThread]
+      - [0x8B620, hasm, libultra/setcompare]
+      - [0x8B630, asm]
+      - [0x8B660, asm]
+      - [0x8B7E0, c, os/libultra_Segment] #mix Litob and Ltob
+      - [0x8C8B0, hasm, libultra/getcause]
+      - [0x8C8C0, c, os/__osAtomicDec]
+      - [0x8C920, c, os/libc/ldiv]
+      - [0x8CAB0, asm, fast3d_part1] #TODO: Put these on a separated segment
+      - [0x8CB80, bin, fast3d_part2]
+      - [0x8DFB0, bin, fast3d_audio]
+
+  - name: next_bin #Data and Rodata for the main overlay??
+    type: bin
+    vram: 0x800D45F0
+    start: 0x8EDF0 #Needs to be 0x16 Aligned
+    #subsegments:
+    #- [0x8EDF0, data]
+    #- [0xA2102, bin]
+
+    #!< Not dinamically loaded!
+  - name: overlay_A95D0
+    type: code
+    start: 0xA95D0
+    vram: 0x801DAFA0
+    symbol_name_format: A95D0_$VRAM
+    subsegments:
+    - [0xA95D0, c, overlay_A95D0]
+    - [0xAF8C0, c, overlay_AF8C0]
+    - [0xB2510, c, overlay_B2510]
+    - [0xB2A70, c, overlay_B2A70]
+    - [0xB3AA0, c, overlay_B3AA0]
+    - [0xB55E0, c, overlay_B55E0]
+    - [0xB66E0, c, overlay_B66E0]
+    - [0xCAE70, bin] #Rodata???
+
+  - name: MIO0_chunk
+    type: bin
+    start: 0x1AE660
+
+    #Just need the exact vram of these
+  - name: overlay_1B1FB0
+    type: code
+    start: 0x1B1FB0
+    #vram: 0x801F77B0
+    #symbol_name_format: 1B1FB0_$VRAM
+    subsegments:
+    - [0x1B1FB0, bin] #Need the exact vram of this !!!!!!!
+    - [0x1B3E10, bin]
+
+  - name: overlay_1B3EC0
+    type: code
+    start: 0x1B3EC0
+    vram: 0x802C5800
+    symbol_name_format: 1B3EC0_$VRAM
+    subsegments:
+    - [0x1B3EC0, c, overlay_1B3EC0] #Migrated !
+    - [0x1B5290, bin] #BSS maybe?
+
+    #This one seems to be loaded when the game enters in a race
+  - name: overlay_1B55A0
+    type: bin
+    start: 0x1B55A0
+    vram: 0x802C5800
+
+  # - name: overlay_1B55A0
+  #   type: code
+  #   start: 0x1B55A0
+  #   vram: 0x802C5800
+  #   symbol_name_format: 1B55A0_$VRAM
+  #   subsegments:
+  #   - [0x1B55A0, c, overlay_1B55A0]
+  #   - [0x1B91E0, bin]
+  #   - [0x1B9440, c, overlay_1B9440]
+  #   - [0x1BC800, bin]
+  #   - [0x1BC890, c, overlay_1BC890]
+  #   - [0x1BDFE0, bin]
+  #   - [0x1BE0B0, c, overlay_1BE0B0]
+  #   - [0x1BFDE0, bin]
+  #   - [0x1BFF50, c, overlay_1BFF50]
+  #   - [0x1C17E0, c, overlay_1C17E0]
+  #   - [0x1C2150, bin]
+  #   - [0x1C2250, c, overlay_1C2250]
+  #   - [0x1C36C0, bin]
+  #   - [0x1C3780, c, overlay_1C3780]
+  #   - [0x1C43B0, bin]
+  #   - [0x1C43F0, c, overlay_1C43F0]
+  #   - [0x1C4910, bin]
+  #   - [0x1C49A0, c, overlay_1C49A0]
+  #   - [0x1C61E0, bin]
+  #   - [0x1C66D0, c, overlay_1C66D0]
+  #   - [0x1C8F90, bin]
+  #   - [0x1C9150, c, overlay_1C9150]
+  #   - [0x1CA3F0, bin]
+  #   - [0x1CA480, c, overlay_1CA480]
+  #   - [0x1CADD0, bin]
+  #   - [0x1CAE40, c, overlay_1CAE40]
+  #   - [0x1CBAA0, bin]
+  #   - [0x1CBAF0, c, overlay_1CBAF0]
+  #   - [0x1CF040, bin]
+  #   - [0x1CF180, c, overlay_1CF180]
+  #   - [0x1CFA70, bin]
+  #   - [0x1CFB60, c, overlay_1CFB60]
+  #   - [0x1D10B0, bin] #End
+
+  - name: LAST_MIO0_SEGMENT_OVERLAY
+    type: code
+    start: 0x1D11D0
+    subsegments:
+    - [0x1D11D0, bin]
+    - [0x1E5860, bin]
+    - [0x1EFCF0, bin]
+    - [0x1FB270, bin]
+    - [0x208980, bin]
+    - [0x20F940, bin]
+    - [0x217630, bin]
+    - [0x221A60, bin]
+    - [0x2293E0, bin]
+    - [0x234420, bin]
+    - [0x241070, bin]
+    - [0x243540, bin]
+    - [0x245430, bin]
+    - [0x247C20, bin]
+    - [0x24B440, bin]
+    - [0x24E570, bin]
+    - [0x250CB0, bin]
+    - [0x254F70, bin]
+    - [0x257D40, bin]
+    - [0x2631D0, bin]
+    - [0x268040, bin]
+    - [0x271E00, bin]
+    - [0x2789E0, bin]
+    - [0x2829A0, bin]
+    - [0x289570, bin]
+    - [0x295DB0, bin]
+    - [0x29CB00, bin]
+    - [0x29F7E0, bin]
+    - [0x2A2150, bin]
+    - [0x2E5FB0, bin]
+    - [0x2F9BE0, bin]
+    - [0x30BC50, bin]
+    - [0x30EC20, bin]
+    - [0x313A90, bin]
+    - [0x317270, bin, Race_position_numbers] #Player Race position number like 1th, 2th, 3th
+    - [0x31CF40, bin]
+    - [0x320D10, bin]
+    - [0x327E90, bin]
+    - [0x32B8C0, bin]
+    - [0x32B8E0, bin]
+    - [0x330990, bin]
+    - [0x3320E0, bin]
+    - [0x333340, bin]
+    - [0x333960, bin]
+    - [0x333E60, bin]
+    - [0x336790, bin]
+    - [0x337780, bin]
+    - [0x338470, bin]
+    - [0x3396A0, bin]
+    - [0x33AD40, bin]
+    - [0x33B7F0, bin]
+    - [0x33BEB0, bin]
+    - [0x340F20, bin]
+    - [0x3423E0, bin]
+    - [0x345D70, bin]
+    - [0x351260, bin]
+    - [0x352CA0, bin]
+    - [0x354290, bin]
+    - [0x3567F0, bin]
+    - [0x358CE0, bin]
+    - [0x35AA80, bin]
+    - [0x35C4C0, bin]
+    - [0x35E370, bin]
+    - [0x35FCB0, bin]
+    - [0x361A90, bin]
+    - [0x361BA0, bin]
+    - [0x361C30, bin]
+    - [0x361D20, bin]
+    - [0x361DB0, bin]
+    - [0x361EC0, bin]
+    - [0x361FB0, bin]
+    - [0x3620B0, bin]
+    - [0x362DE0, bin]
+    - [0x363D60, bin]
+    - [0x364950, bin]
+    - [0x3654F0, bin]
+    - [0x365EC0, bin]
+    - [0x366B40, bin]
+    - [0x3679D0, bin]
+    - [0x3684B0, bin]
+    - [0x368910, bin]
+    - [0x368FB0, bin]
+    - [0x3694C0, bin]
+    - [0x369950, bin]
+    - [0x369EE0, bin]
+    - [0x36A4B0, bin]
+    - [0x36A9D0, bin]
+    - [0x36AE80, bin]
+    - [0x36B5F0, bin]
+    - [0x36BBD0, bin]
+    - [0x36C210, bin]
+    - [0x36CDC0, bin]
+    - [0x36D820, bin]
+    - [0x36E020, bin]
+    - [0x36E9B0, bin]
+    - [0x36F2B0, bin]
+    - [0x36FD40, bin]
+    - [0x370F20, bin]
+    - [0x3718B0, bin]
+    - [0x3721B0, bin]
+    - [0x372AB0, bin]
+    - [0x3733B0, bin]
+    - [0x3738D0, bin]
+    - [0x374100, bin]
+    - [0x37D000, bin]
+    - [0x381A40, bin]
+    - [0x38A900, bin]
+    - [0x38F8B0, bin]
+    - [0x398830, bin]
+    - [0x39D300, bin]
+    - [0x3A6540, bin]
+    - [0x3AB060, bin]
+    - [0x3B3EB0, bin]
+    - [0x3B8900, bin]
+    - [0x3C15F0, bin]
+    - [0x3C6590, bin]
+    - [0x3CF0A0, bin]
+    - [0x3D3A90, bin]
+    - [0x3DCCF0, bin]
+    - [0x3E17A0, bin]
+    - [0x3E8EE0, bin]
+    - [0x3EACF0, bin]
+    - [0x3EE830, bin]
+    - [0x3EF030, bin]
+    - [0x3EF8C0, bin]
+    - [0x3F13D0, bin]
+    - [0x3F46F0, bin]
+    - [0x3F5A30, bin]
+    - [0x405810, bin]
+
+    #TODO: Check this
+  - name: sound
+    type: bin
+    start: 0x7AE670
+
+
+  - [0x800000]
