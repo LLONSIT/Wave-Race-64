@@ -1,19 +1,24 @@
-#include "common.h"
+#include "ultra64.h"
+#include "functions.h"
+#include "structs.h"
+#include "variables.h"
+#include "course.h"
 
-extern u32 D_800D8170;
-extern f32 D_800E9D94;
-extern f32 D_800E9CCC;
-extern struct_801C1F84 *D_801C1F84;
-extern struct_801C1F84 *D_801C1F88;
-extern f32 D_801C39B4;
-extern s32 D_801CE620;
-extern struct_801AEE20 *D_801AEE20;
-extern struct_801AEE20 *D_801B2F20;
-extern struct_801AEE20 *D_801B7020;
-extern s32 D_801BB120;
-extern s32 D_801BB124;
-extern s32 D_801BB128;
-extern struct_801C1F84 *D_801C1F80;
+f32 D_800E9D94;
+f32 D_800E9CCC;
+
+//This should be data..
+struct_801C1F84 *D_801C1F84;
+struct_801C1F84 *D_801C1F88;
+f32 D_801C39B4;
+s32 D_801CE620;
+struct_801AEE20 *D_801AEE20;
+struct_801AEE20 *D_801B2F20;
+struct_801AEE20 *D_801B7020;
+s32 D_801BB120;
+s32 D_801BB124;
+s32 D_801BB128;
+struct_801C1F84 *D_801C1F80;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_2C670/func_80071E70.s")
 
@@ -28,7 +33,7 @@ s32 func_80074264(f32 arg0, f32 arg1) {
     s32 ret;
 
     ret = TRUE;
-    if (D_800D8170 == 0) {
+    if (gCourseID == DOLPHIN_PARK) {
         if(sqrtf((arg0 * arg0) + (arg1 * arg1)) <= D_800E9CCC) {
             ret = FALSE;
         }

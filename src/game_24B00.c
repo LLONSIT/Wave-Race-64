@@ -4,6 +4,7 @@
 #include "functions.h"
 #include "structs.h"
 #include "variables.h"
+#include "course.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_24B00/func_8006A300.s")
 
@@ -63,7 +64,7 @@ void configSignalRectangle(Gfx** gDisplayList) {
     //Color
     gDPSetTextureLUT(gDisplayListHead++, G_TT_NONE);
 
-    if ((D_800DAB28 == 1) && (D_800D8170 == 4)) {
+    if ((D_800DAB28 == 1) && (gCourseID == DRAKE_LAKE)) {
         func_8006C5D8(&gDisplayListHead);
     }
     if ((D_801CE638 == 1) && ((D_801CE620 == 4) || (D_801CE620 == 1))) {

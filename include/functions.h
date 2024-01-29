@@ -47,5 +47,7 @@ void func_800BCB34(struct struct_800BCB34* arg0);
 void func_800BCAE4(struct struct_800BCB34* arg0, s32 arg2);
 void func_800BCAA8(struct struct_800BCB34* arg0);
 void func_800BB108(void);
+void play_sound(int sound, signed char arg1);
+void func_800C538C(s32 arg0, f32 arg1);
 #endif /*FUNCTIONS_H*/
 

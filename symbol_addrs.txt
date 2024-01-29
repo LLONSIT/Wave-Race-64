@@ -144,3 +144,5 @@ func_A95D0_801E4C60 = 0x801E4C60;
 configSignalRectangle = 0x8006E024;
 fast3d_800D22B0 = 0x800D22B0;
 play_sound = 0x800C53D4;
+gCourseID = 0x800D8170;
+menu_buffer_1 = 0x80228930;

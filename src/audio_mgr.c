@@ -1,7 +1,10 @@
 #include "ultra64.h"
+#include "functions.h"
 #include "audio_internal.h"
 #include "macros.h"
 
+s32 D_8004562C;
+s8 D_800E7C94;
 u8 D_800E85F0;
 u8 D_800E85F4;
 OSMesgQueue* D_800E85F8;
@@ -18,11 +21,42 @@ void* D_801D86AC;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio_mgr/func_800BF6AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio_mgr/func_800BF784.s")
+void func_800BF784(f32 arg0, s8 arg1) {
+    if ((D_800E7C94 == 7) && !(arg0 >= 128.0f)) {
+        func_800C538C(0x01000700, arg0 <= 12.0f ? 1.0f : (128.0f - arg0) / 116.0f);
+        play_sound(0x06000701, 0x7F);
+        play_sound(0x06000702, arg1);
+        play_sound(0x06000700, 0x15);
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio_mgr/func_800BF844.s")
+void func_800BF844(s8 arg0, s8 arg1) {
+    u32 sp1C;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio_mgr/func_800BF8C8.s")
+    sp1C = (u32) (D_8004562C & 0x7000) >> 0xC;
+    play_sound(0x06000700, -1);
+    play_sound(0x06000701, arg0);
+    play_sound(0x06000702, arg1);
+    play_sound(0x06000703, sp1C);
+    play_sound(0x06000700, 0);
+}
+
+void func_800BF8C8(void) {
+    s32 sp24;
+    u32 sp20;
+    u32 sp1C;
+
+    if ((D_8004562C & 0xF) == 0) {
+        sp24 = ((D_8004562C & 0xF)* 4) + 0x3C;
+        sp20 = (u32) (D_8004562C & 0x7F0) >> 4;
+        sp1C = (u32) (D_8004562C & 0x7000) >> 0xC;
+        play_sound(0x06000700, -1);
+        play_sound(0x06000701, sp24);
+        play_sound(0x06000702, sp20);
+        play_sound(0x06000703, sp1C);
+        play_sound(0x06000700, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio_mgr/func_800BF964.s")
 
@@ -238,9 +272,13 @@ void func_800C5354(s32 arg0, s32 *arg1) {
   D_800E85F0++;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio_mgr/func_800C538C.s")
+void func_800C538C(s32 arg0, f32 arg1) {
+    func_800C5354(arg0, (s32*)&arg1);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio_mgr/func_800C53B0.s")
+void func_800C53B0(s32 arg0, s32 arg1) {
+    func_800C5354(arg0, &arg1);
+}
 
 void play_sound(int sound, signed char arg1) {
     int bits = arg1 << 24;
@@ -269,4 +307,6 @@ void func_800C5404(void)
 #endif
 #pragma GLOBAL_ASM("asm/nonmatchings/audio_mgr/func_800C547C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio_mgr/func_800C56F4.s")
+void func_800C56F4(void) {
+    func_800C52CC();
+}
