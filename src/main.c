@@ -41,8 +41,7 @@ void func_800474E4(void) {
 
 //Only in this scope 
 extern void *func_8004791C;
-
-void func_80047AA4(void) {
+void main(void) {
     func_800C6DE0();
     osCreateThread(&D_801539E0, 1, &func_8004791C, 0, &D_80151DE0, 0x64);
     osStartThread(&D_801539E0);

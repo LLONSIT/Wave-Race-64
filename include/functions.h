@@ -49,5 +49,11 @@ void func_800BCAA8(struct struct_800BCB34* arg0);
 void func_800BB108(void);
 void play_sound(int sound, signed char arg1);
 void func_800C538C(s32 arg0, f32 arg1);
+Gfx* func_8008FB74(Gfx* arg0);
+Gfx* func_80090F58(Gfx*);
+Gfx* func_800949B8(Gfx*, int arg1);
+void func_A95D0_801E355C(void);
+Gfx* func_A95D0_801E3698(Gfx*);
+Gfx* func_A95D0_801E34F8(Gfx* arg0);
 #endif /*FUNCTIONS_H*/
 

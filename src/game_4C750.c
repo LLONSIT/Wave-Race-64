@@ -4,11 +4,13 @@
 #include "variables.h"
 #include "functions.h"
 #include "structs.h"
+#include "color.h"
 #include <PR/gbi.h> //for macros
 
 //File declaration
+Gfx* D_106F8A0;
 int D_801CE6B0[4];
-
+struct half_rgb short_RGB[4];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_4C750/func_80091F50.s")
 
@@ -77,11 +79,27 @@ int func_80094088(u32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_4C750/func_800948DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_4C750/func_800949B8.s")
+Gfx* func_800949B8(Gfx* gDisplayList, int color_index) {
+    struct half_rgb *color;
+    color = &short_RGB[color_index];
+
+    gSPDisplayList(gDisplayList++, &D_106F8A0);
+    gDPSetPrimColor(gDisplayList++, 
+        0, 
+        0, 
+        color->red, 
+        color->green, 
+        color->blue, 
+        0xFF);
+    gDPFillRectangle(gDisplayList++, 8, 20, 311, 219);
+    return gDisplayList;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_4C750/func_80094A44.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_4C750/func_80094ABC.s")
+void func_80094ABC(void) {
+    D_800DAB0C = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_4C750/func_80094ACC.s")
 

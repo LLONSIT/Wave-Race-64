@@ -273,6 +273,7 @@ segments:
   - name: LAST_MIO0_SEGMENT_OVERLAY
     type: code
     start: 0x1D11D0
+    vram: 0x802A0000
     subsegments:
     - [0x1D11D0, bin]
     - [0x1E5860, bin]

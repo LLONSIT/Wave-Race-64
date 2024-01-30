@@ -44,8 +44,8 @@ extern s32 D_80151984;
 extern s32 D_801542C0[]; //tex save?
 extern void* D_801CE5F8;
 extern s32 D_801CE650;
-
 //overlay
 extern struct ovl_A95D0_B66E0_1 D_A95D0_80228A78;
-
+extern s32 D_800DAB2C;
+extern s16 D_800DAB0C;
 #endif /* VARIABLES_H */
