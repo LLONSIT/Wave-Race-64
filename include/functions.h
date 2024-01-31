@@ -55,5 +55,6 @@ Gfx* func_800949B8(Gfx*, int arg1);
 void func_A95D0_801E355C(void);
 Gfx* func_A95D0_801E3698(Gfx*);
 Gfx* func_A95D0_801E34F8(Gfx* arg0);
+void func_8007B31C(void);
 #endif /*FUNCTIONS_H*/
 

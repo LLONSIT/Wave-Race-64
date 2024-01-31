@@ -35,7 +35,7 @@ void func_800468E0(void) {
     gSPSegment(gDisplayListHead++, 0x0D, D_800D45E4);
     gSPSegment(gDisplayListHead++, 0x0E, D_800D45E8);
 
-    if (D_800DAB28 == 2) {
+    if (gPlayers == 2) {
         gSPDisplayList(gDisplayListHead++, &D_1000098);
     } else {
          gSPDisplayList(gDisplayListHead++, &D_1000000);

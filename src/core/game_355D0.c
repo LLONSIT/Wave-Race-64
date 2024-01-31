@@ -1,4 +1,18 @@
-#include "common.h"
+#include "ultra64.h"
+#include "structs.h"
+#include "variables.h"
+
+s8 D_801AEA20;
+s8 D_801AEA21;
+s8 D_801AEA22;
+s8 D_801AEA23;
+s8 D_801AEA24;
+s8 D_801CB280;
+s32 D_801CB288;
+s32 D_801CB28C;
+s32 D_801CB290;
+s32 D_801CB294;
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/game_355D0/func_8007ADD0.s")
 
@@ -24,7 +38,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/game_355D0/func_8007B2E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/core/game_355D0/func_8007B31C.s")
+void func_8007B31C(void) {
+    D_801AEA24 = D_801CB280;
+    D_801AEA20 =  D_801CB288;
+    D_801AEA21 =  D_801CB28C;
+    D_801AEA22 =  D_801CB290;
+    D_801AEA23 =  D_801CB294;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/core/game_355D0/func_8007B370.s")
 

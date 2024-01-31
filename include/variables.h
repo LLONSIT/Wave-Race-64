@@ -36,7 +36,7 @@ extern s32 D_800D45E4;
 extern s32 D_800D45E8;
 extern s32 D_800D45F0;
 extern s32 D_800DAB1C;
-extern s32 D_800DAB28;
+extern s32 gPlayers;
 extern void* D_8011EDE0;
 extern void* D_801518B8;
 extern s32 D_80151948;
