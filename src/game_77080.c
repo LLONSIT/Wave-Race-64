@@ -3,8 +3,13 @@
 #include "functions.h"
 #include "variables.h"
 
-extern u32 D_8003FCC8[];
-
+/*
+struct temp {
+u32 unk0;
+char pad[0x13C];
+};
+extern struct temp D_8003FCC8[];
+*/
 #pragma GLOBAL_ASM("asm/nonmatchings/game_77080/func_800BC880.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_77080/func_800BC9A0.s")
@@ -66,11 +71,12 @@ void func_800BCB34(struct struct_800BCB34* arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game_77080/func_800BDD14.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_77080/func_800BE858.s")
+
 /*
 void func_800BF0C4(s32 arg0) {
     u32 var_s0;
-    for(var_s0 = 0; var_s0 < -2; var_s0+=0x50) {
-        if ((D_8003FCC8[var_s0] >> 0x1F) == 1) {
+    for(var_s0 = 0; var_s0 < 1; var_s0++) {
+        if ((D_8003FCC8[var_s0].unk0 >> 0x1F) == 1) {
             func_800BE858(&D_8003FCC8[var_s0]);
             func_800BBFD4(&D_8003FCC8[var_s0]);
         }
