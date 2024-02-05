@@ -3,6 +3,7 @@
 #include "variables.h"
 #include "functions.h"
 #include "macros.h"
+#include "course.h"
 
 //File declaration
 f32 D_800E5130;
@@ -378,8 +379,16 @@ void func_8009C240(f_struct* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_800AC184.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_800AD3C4.s")
-
+UNUSED void func_800AD3C4(void) {
+    switch (gCourseID) {
+    case DRAKE_LAKE:
+        func_800C1DEC(); //Special announcer voice when finish a lap?
+        break;
+    case PORT_BLUE:
+        func_800C1B98();
+        break;
+    }
+}
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_800AD418.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_800ADC8C.s")

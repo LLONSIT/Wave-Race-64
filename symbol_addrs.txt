@@ -152,3 +152,4 @@ gControllers = 0x801542F0;
 gControllerOne = 0x80154308;
 gCameraPerspective = 0x80227C80;
 gPlayers = 0x800DAB28;
+gRiders = 0x801982F0;

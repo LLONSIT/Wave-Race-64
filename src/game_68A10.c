@@ -1,4 +1,5 @@
-#include "common.h"
+#include <ultra64.h>
+#include "camera.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_68A10/func_800AE210.s")
 

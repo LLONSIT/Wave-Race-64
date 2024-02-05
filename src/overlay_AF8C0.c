@@ -4,11 +4,57 @@
 #include "macros.h"
 #include "course.h"
 
+extern s32 D_800DAB24;
+extern s32 D_800DAB2C;
+extern s16 D_800DAB68;
+extern s16 D_800EAC14[4][8];
+extern Mtx D_8011F820;
+extern s32 D_801C2660[];
+extern s32 D_801C2690[];
+extern s32 D_801CB334;
+extern s32 D_801CB338;
+extern s32 D_801CE608;
+extern s32 D_801CE63C;
+extern s16 D_A95D0_80228A16;
+
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_AF8C0/func_A95D0_801E1290.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_AF8C0/func_A95D0_801E1BA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_AF8C0/func_A95D0_801E1E8C.s")
+s32 func_A95D0_801E1E8C(s32 arg0) {
+    s16 temp_a0;
+    s32 var_s0;
+    Gfx* gDisplayList;
+
+    if (D_801CE63C != 0) {
+        D_801CE63C = 0;
+    }
+    
+    D_800DAB2C = 0;
+    gDisplayList = func_A95D0_801E2058(func_8008FB74(func_80093F78(arg0)));
+    gSPMatrix(gDisplayList++, &D_8011F820, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    arg0 = func_A95D0_801E229C(func_80090F58(func_80094A44(gDisplayList, gCourseID)));
+    
+    if (D_800DAB24 == 0x64) {
+        func_A95D0_801E2530();
+    } else if (D_A95D0_80228A16 == 1) {
+        if (D_801CE608 == 4) {
+            for (var_s0 = 0; var_s0 < D_801CB334 + 1; var_s0++) {
+                temp_a0 = D_800EAC14[D_801CB338][var_s0];
+                if ((D_801C2660[temp_a0] != 0) || (D_801C2690[temp_a0] != 0)) {
+                    if (D_800DAB68 != 0) {
+                        func_8007C204(temp_a0);
+                    } else {
+                        func_8007BEA4(temp_a0);
+                    }
+                }
+            }
+        }
+        func_A95D0_801EC500();
+    }
+    
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_AF8C0/func_A95D0_801E2058.s")
 

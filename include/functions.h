@@ -62,5 +62,7 @@ void func_A95D0_801E62A8(void*);
 void func_A95D0_801E66F4(void*);
 void func_A95D0_801E68EC(void*);
 void func_A95D0_801DDAB8(void*, void*, void*);
+void func_800C1DEC(void);
+void func_800C1B98(void);
 #endif /*FUNCTIONS_H*/
 

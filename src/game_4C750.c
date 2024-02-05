@@ -8,9 +8,12 @@
 #include <PR/gbi.h> //for macros
 
 //File declaration
+Gfx D_106F8E8[];
 Gfx* D_106F8A0;
 int D_801CE6B0[4];
 struct half_rgb short_RGB[4];
+Vtx* D_800DAA90[];
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_4C750/func_80091F50.s")
 
@@ -95,6 +98,18 @@ Gfx* func_800949B8(Gfx* gDisplayList, int color_index) {
     return gDisplayList;
 }
 
+/*
+Gfx* func_80094A44(Gfx* gDisplayList, s32 arg1) {
+    if ((arg1 < 0) || (arg1 >= 9)) {
+        arg1 = 0;
+    }
+    gSPDisplayList(gDisplayList++, D_106F8E8);
+    gSPVertex(gDisplayList++, D_800DAA90[arg1], 4, 0);
+    gSP1Triangle(gDisplayList++, 0, 3, 1, 0);
+    gSP1Triangle(gDisplayList++, 0, 2, 3, 0);
+    return gDisplayList;
+}
+*/
 #pragma GLOBAL_ASM("asm/nonmatchings/game_4C750/func_80094A44.s")
 
 void func_80094ABC(void) {
