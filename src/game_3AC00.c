@@ -147,6 +147,31 @@ s32 func_800873D4(s32 arg0, s32 arg1) {
     return (s32) sqrtf(SQ(temp_f0) + SQ(temp_f2));
 }
 
+#if 0
+void func_80087444(void) {
+    struct camera_unk_1_part_offset__801C3C50* temp_v1;
+    f32 sp28;
+    f32 sp24;
+
+    if (gDifficulty != EXPERT) {
+        temp_v1 = &D_80192690[D_800D48DC];
+        sp28 = temp_v1->unk44 - D_801C3C50->unk44;
+        sp24 = temp_v1->unk4C - D_801C3C50->unk4C;
+        func_80088B84(&sp28, &sp24);
+        if (D_800EAA90 < (f64) ((D_801C4000.unk10 * sp28) + (D_801C4000.unk14 * sp24))) {
+            if (((D_801C3C50->unk84 * sp28) + (D_801C3C50->unk8C * sp24)) > 0.0f) {
+                D_801C4000.unk8 = temp_v1->unk44 - (60.0f * D_801C3C50->unk84);
+                D_801C4000.unkC = temp_v1->unk4C - (60.0f * D_801C3C50->unk8C);
+            } else {
+                D_801C4000.unk8 = temp_v1->unk44 + (60.0f * D_801C3C50->unk84);
+                D_801C4000.unkC = temp_v1->unk4C + (60.0f * D_801C3C50->unk8C);
+            }
+            func_80088B00(&D_801C4000);
+        }
+    }
+}
+#endif
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game_3AC00/func_80087444.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_3AC00/func_800875B8.s")
