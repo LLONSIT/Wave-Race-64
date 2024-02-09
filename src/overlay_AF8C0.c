@@ -3,6 +3,7 @@
 #include "variables.h"
 #include "macros.h"
 #include "course.h"
+#include "rider.h"
 
 extern s32 D_800DAB24;
 extern s32 D_800DAB2C;
@@ -12,7 +13,6 @@ extern Mtx D_8011F820;
 extern s32 D_801C2660[];
 extern s32 D_801C2690[];
 extern s32 D_801CB334;
-extern s32 D_801CB338;
 extern s32 D_801CE608;
 extern s32 D_801CE63C;
 extern s16 D_A95D0_80228A16;
@@ -40,7 +40,7 @@ s32 func_A95D0_801E1E8C(s32 arg0) {
     } else if (D_A95D0_80228A16 == 1) {
         if (D_801CE608 == 4) {
             for (var_s0 = 0; var_s0 < D_801CB334 + 1; var_s0++) {
-                temp_a0 = D_800EAC14[D_801CB338][var_s0];
+                temp_a0 = D_800EAC14[gDifficulty][var_s0];
                 if ((D_801C2660[temp_a0] != 0) || (D_801C2690[temp_a0] != 0)) {
                     if (D_800DAB68 != 0) {
                         func_8007C204(temp_a0);

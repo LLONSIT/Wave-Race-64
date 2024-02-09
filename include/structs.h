@@ -83,4 +83,9 @@ struct  {
 
 };
 
+struct unk_80097E68{
+    s16 unk0;
+    struct unk_80097E68* unk4;
+};
+
 #endif /* STRUCTS_H */

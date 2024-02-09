@@ -48,4 +48,6 @@ extern s32 D_801CE650;
 extern struct ovl_A95D0_B66E0_1 D_A95D0_80228A78;
 extern s32 D_800DAB2C;
 extern s16 D_800DAB0C;
+extern s32 D_800DAB38[];
+extern s32 D_800C1FC;
 #endif /* VARIABLES_H */

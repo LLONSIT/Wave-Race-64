@@ -40,6 +40,7 @@ osPhysicalToVirtual     = 0x800C9E20; //defined:true
 sprintf                 = 0x800CA210; //defined:true
 proutSprintf            = 0x800CA27C; //defined:true
 osInvalDCache		= 0x800CA2C0; //defined:true
+osPiStartDma            = 0x800CA370; //defined:true
 bzero                   = 0x800CA500; //defined:true
 osAiSetFrequency        = 0x800CA5A0; //defined:true
 osAiSetNextBuffer       = 0x800CA960; //defined:true
@@ -118,7 +119,6 @@ guRotateRPYF		= 0x801EDF9C;
 guAlignF		= 0x801EE040;
 
 
-
 //TODO: Need to reference undefined function to the overlay address
 
 //Game Symbols
@@ -153,3 +153,5 @@ gControllerOne = 0x80154308;
 gCameraPerspective = 0x80227C80;
 gPlayers = 0x800DAB28;
 gRiders = 0x801982F0;
+gRiderGameModes = 0x801CE648;
+gDifficulty = 0x801CB338;

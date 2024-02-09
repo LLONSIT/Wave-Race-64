@@ -68,5 +68,8 @@ void func_800804C4(void);
 void func_80086148(void);
 void func_80088B84(f32* sp24, f32* sp20);
 void func_80085408(void);
+void func_80095A28(void*);
+void func_80097EC8(u32, void*, u32);
+void func_80097F74(s32 arg0, s32 arg1, u32 arg2);
+void func_80097E68(void);
 #endif /*FUNCTIONS_H*/
-

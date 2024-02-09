@@ -5,6 +5,7 @@
 #include "functions.h"
 #include "structs.h"
 #include "color.h"
+#include "rider.h"
 #include <PR/gbi.h> //for macros
 
 //File declaration

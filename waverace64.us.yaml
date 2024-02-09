@@ -223,6 +223,7 @@ segments:
     subsegments:
     - [0x1B3EC0, c, overlay_1B3EC0] #Migrated !
     - [0x1B5290, bin] #BSS maybe?
+    #- [0x1B5990, rodata]
 
     #This one seems to be loaded when the game enters in a race
   - name: overlay_1B55A0
