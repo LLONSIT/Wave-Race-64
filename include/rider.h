@@ -8,13 +8,6 @@ AI_MODE,  //Used in the game intro
 RACE_MODE, //Normal Race mode
 }RIDER_GAME_MODES;
 
-typedef enum {
-NORMAL,
-HARD,
-EXPERT
-}DIFFICULTY;
-
-extern DIFFICULTY gDifficulty;
 
 extern RIDER_GAME_MODES gRiderGameModes;
 

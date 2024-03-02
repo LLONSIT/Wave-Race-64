@@ -3,6 +3,7 @@
 #include "structs.h"
 #include "variables.h"
 #include "course.h"
+#include "game.h"
 
 f32 D_800E9D94;
 f32 D_800E9CCC;
@@ -11,7 +12,6 @@ f32 D_800E9CCC;
 struct_801C1F84 *D_801C1F84;
 struct_801C1F84 *D_801C1F88;
 f32 D_801C39B4;
-s32 D_801CE620;
 struct_801AEE20 *D_801AEE20;
 struct_801AEE20 *D_801B2F20;
 struct_801AEE20 *D_801B7020;
@@ -128,7 +128,7 @@ s32 func_80076240(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
 
 void func_800762D0(struct_800762D0 *arg0) {
     if (D_801CE638 == 1) {
-        if ((D_801CE620 == 0xB) && (arg0->unk2C4 <= 0)) {
+        if ((gGameModes == STUNT_MODE) && (arg0->unk2C4 <= 0)) {
             arg0->unk2EC = 2;
         } else if (arg0->unk19C >= 599999) {
             arg0->unk2EC = 2;
@@ -136,7 +136,7 @@ void func_800762D0(struct_800762D0 *arg0) {
             arg0->unk2EC = 1;
         }
 
-        if ((D_801CE620 != 1) || (arg0->unk2EC != 2)) {
+        if ((gGameModes != TWO_PLAYER_VS) || (arg0->unk2EC != 2)) {
             arg0->unk32C = D_801C39B4;
             D_801C39B4 += D_800E9D94;
         }

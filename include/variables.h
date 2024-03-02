@@ -36,7 +36,6 @@ extern s32 D_800D45E4;
 extern s32 D_800D45E8;
 extern s32 D_800D45F0;
 extern s32 D_800DAB1C;
-extern s32 gPlayers;
 extern void* D_8011EDE0;
 extern void* D_801518B8;
 extern s32 D_80151948;
@@ -50,4 +49,10 @@ extern s32 D_800DAB2C;
 extern s16 D_800DAB0C;
 extern s32 D_800DAB38[];
 extern s32 D_800C1FC;
+extern s16 D_800DA9AC;
+extern s32 D_801CE64C;
+extern s32 D_800DA9D0;
+extern s32 D_801CB328; //Selected course id??
+extern s32 D_801CE608;
+extern s8 D_800E5134;
 #endif /* VARIABLES_H */

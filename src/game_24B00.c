@@ -5,6 +5,8 @@
 #include "structs.h"
 #include "variables.h"
 #include "course.h"
+#include "player.h"
+#include "game.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_24B00/func_8006A300.s")
 
@@ -36,8 +38,6 @@
 
 
 extern s32 D_800D8170;
-extern s32 D_801CE620;
-
 
 
 /******************************************************************************
@@ -64,10 +64,10 @@ void configSignalRectangle(Gfx** gDisplayList) {
     //Color
     gDPSetTextureLUT(gDisplayListHead++, G_TT_NONE);
 
-    if ((gPlayers == 1) && (gCourseID == DRAKE_LAKE)) {
+    if ((gPlayers == ONE_PLAYER) && (gCourseID == DRAKE_LAKE)) {
         func_8006C5D8(&gDisplayListHead);
     }
-    if ((D_801CE638 == 1) && ((D_801CE620 == 4) || (D_801CE620 == 1))) {
+    if ((D_801CE638 == 1) && ((gGameModes == CHAMPIONSHIP) || (gGameModes == TWO_PLAYER_VS))) {
         func_8006BE74(&gDisplayListHead);
     }
     func_8006B334(&gDisplayListHead);

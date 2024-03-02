@@ -155,3 +155,4 @@ gPlayers = 0x800DAB28;
 gRiders = 0x801982F0;
 gRiderGameModes = 0x801CE648;
 gDifficulty = 0x801CB338;
+gGameModes = 0x801CE620;

@@ -12,8 +12,10 @@ struct comp {
  s32 unk10;
  s32 unk14;
  s32 unk18;
+ s32 unk1C;
 };
 
+s32 D_8001C58;
 void* D_80151954;
 OSMesgQueue D_801540B8;
 OSIoMesg D_801542A0;
@@ -33,10 +35,32 @@ OSIoMesg D_801542A0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_4F850/func_800963CC.s")
 
-void func_800964C4(void) {
+UNUSED void func_800964C4(void) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_4F850/func_800964CC.s")
+s32** func_800964CC(s32 arg0) {
+    s32 pad[2];
+    s32** sp34;
+    struct comp* temp_s0;
+    s32** var_s2;
+    s32 var_s3;
+
+    var_s2 = func_80094088(&D_8001C58) + arg0;
+    sp34 = var_s2;
+    var_s3 = 0;
+    for(var_s3 = 0; var_s3 != 8; var_s3+=4, var_s2++) {
+        temp_s0 = func_80094088(*var_s2) + arg0;
+        *var_s2 = temp_s0;
+        temp_s0->unk4 =   (func_80094088(temp_s0->unk4) + arg0);
+        temp_s0->unk8 =   (func_80094088(temp_s0->unk8) + arg0);
+        temp_s0->unkC =   (func_80094088(temp_s0->unkC) + arg0);
+        temp_s0->unk10 =  (func_80094088(temp_s0->unk10) + arg0);
+        temp_s0->unk14 =  (func_80094088(temp_s0->unk14) + arg0);
+        temp_s0->unk18 =  (func_80094088(temp_s0->unk18) + arg0);
+        temp_s0->unk1C = (func_80094088(temp_s0->unk1C) + arg0);
+    }
+    return sp34;
+}
 
 s32** func_800965B8(s32 arg0) {
     s32 pad[2];

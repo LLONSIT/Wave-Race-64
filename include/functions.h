@@ -72,4 +72,10 @@ void func_80095A28(void*);
 void func_80097EC8(u32, void*, u32);
 void func_80097F74(s32 arg0, s32 arg1, u32 arg2);
 void func_80097E68(void);
+s32 func_80094088(u32);
+void func_A95D0_801E6A4C(s32 arg0, s32 arg1);
+void func_800C21F4(s32 arg0, s32 arg1);
+void func_80096960(s32, s32, s32, s32, s32);
+void func_A95D0_801E6FB0(s32 arg0, u16 arg1, u16 arg2);
 #endif /*FUNCTIONS_H*/
+

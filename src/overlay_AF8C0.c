@@ -4,6 +4,7 @@
 #include "macros.h"
 #include "course.h"
 #include "rider.h"
+#include "game.h"
 
 extern s32 D_800DAB24;
 extern s32 D_800DAB2C;

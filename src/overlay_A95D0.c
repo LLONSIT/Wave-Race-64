@@ -5,6 +5,7 @@
 #include "macros.h"
 #include "course.h"
 #include "ovl.h"
+#include "player.h"
 
 struct var_80227E98 {
     char pad[0xe0];

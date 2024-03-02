@@ -4,6 +4,7 @@
 #include "variables.h"
 #include "course.h"
 #include "rider.h"
+#include "game.h"
 
 #define SQ(x) (x*x)
 

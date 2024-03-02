@@ -199,7 +199,7 @@ segments:
     - [0xB55E0, c, overlay_B55E0]
     - [0xB66E0, c, overlay_B66E0]
     - [0xCAE70, bin] #Rodata???
-    #- [0x1AE220, bin]
+    - [0x1AE220, bin]
 
   - name: MIO0_chunk
     type: bin

@@ -5,6 +5,7 @@
 #include "functions.h"
 #include "structs.h"
 #include "macros.h"
+#include "player.h"
 
 //File declaration
 Gfx *D_1000098;
@@ -35,7 +36,7 @@ void func_800468E0(void) {
     gSPSegment(gDisplayListHead++, 0x0D, D_800D45E4);
     gSPSegment(gDisplayListHead++, 0x0E, D_800D45E8);
 
-    if (gPlayers == 2) {
+    if (gPlayers == TWO_PLAYERS) {
         gSPDisplayList(gDisplayListHead++, &D_1000098);
     } else {
          gSPDisplayList(gDisplayListHead++, &D_1000000);
