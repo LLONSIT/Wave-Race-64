@@ -621,10 +621,13 @@ void func_A95D0_801ED004(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_B66E0/func_A95D0_801FAD68.s")
 
-void func_A95D0_801FAEA8(void) {
+UNUSED void func_A95D0_801FAEA8(void) {
+
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_B66E0/func_A95D0_801FAEB0.s")
+UNUSED void func_A95D0_801FAEB0(Gfx **arg0) { 
+
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_B66E0/func_A95D0_801FAEB8.s")
 
