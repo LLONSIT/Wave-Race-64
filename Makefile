@@ -20,9 +20,10 @@ ASM_DIRS  = asm/data asm asm/libultra #For libultra handwritten files
 BIN_DIRS  = assets assets/mio0_seg
 
 SRC_DIR   = src
+OVL_DIR   = $(SRC_DIR)/overlays
 LIBULTRA_SRC_DIRS = $(SRC_DIR)/os $(SRC_DIR)/os/libc $(SRC_DIR)/os/audio $(SRC_DIR)/libultra_nm $(SRC_DIR)/os/gu 
 
-DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/core $(LIBULTRA_SRC_DIRS)
+DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/core $(SRC_DIR)/audio $(OVL_DIR)/A95D0 $(OVL_DIR)/1B3EC0 $(LIBULTRA_SRC_DIRS)
 SRC_DIRS = $(DEFINE_SRC_DIRS)
 
 TOOLS_DIR = tools

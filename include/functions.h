@@ -77,5 +77,8 @@ void func_A95D0_801E6A4C(s32 arg0, s32 arg1);
 void func_800C21F4(s32 arg0, s32 arg1);
 void func_80096960(s32, s32, s32, s32, s32);
 void func_A95D0_801E6FB0(s32 arg0, u16 arg1, u16 arg2);
+void func_800B9F90(s32 arg0, s32 arg1, s32 arg2);
+void func_800B9F3C(s32 arg0, s32 arg1, s32 arg2);
+void func_800C3500(s32);
 #endif /*FUNCTIONS_H*/
 
