@@ -41,6 +41,7 @@ sprintf                 = 0x800CA210; //defined:true
 proutSprintf            = 0x800CA27C; //defined:true
 osInvalDCache		= 0x800CA2C0; //defined:true
 osPiStartDma            = 0x800CA370; //defined:true
+osInvalICache		= 0x800CA480; //defined:true
 bzero                   = 0x800CA500; //defined:true
 osAiSetFrequency        = 0x800CA5A0; //defined:true
 osAiSetNextBuffer       = 0x800CA960; //defined:true
@@ -157,6 +158,17 @@ gRiderGameModes = 0x801CE648;
 gDifficulty = 0x801CB338;
 gGameModes = 0x801CE620;
 mio0decode = 0x800B4D30;
+osTvType = 0x80000300;
+audio_thread = 0x80047B20;
+idle_thread = 0x8004791C;
+
+//Fix build
 D_A95D0_80228A78 = 0x80228A78;
 D_A95D0_80227E98 = 0x80227E98;
 D_A95D0_80228058 = 0x80228058;
+
+osInitialize = 0x800C6DE0;
+
+//Names from n64decomp/mk64
+sequence_channel_process_sound = 0x800BBE30;
+audio_init = 0x800BA100;

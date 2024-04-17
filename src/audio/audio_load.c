@@ -34,4 +34,4 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_load/func_800B9F90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_load/func_800BA100.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_load/audio_init.s")

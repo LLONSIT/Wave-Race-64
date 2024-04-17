@@ -1,6 +1,6 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_effects/func_800BBE30.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_effects/sequence_channel_process_sound.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_effects/func_800BBFD4.s")
 

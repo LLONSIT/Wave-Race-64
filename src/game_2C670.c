@@ -5,10 +5,17 @@
 #include "course.h"
 #include "game.h"
 
+
+#ifdef DATA
+D_800E9D94 = 1.0f;
+D_800E9CCC = 7.7f;
+#endif
+
+//.data
 f32 D_800E9D94;
 f32 D_800E9CCC;
 
-//This should be data..
+//.bss
 struct_801C1F84 *D_801C1F84;
 struct_801C1F84 *D_801C1F88;
 f32 D_801C39B4;

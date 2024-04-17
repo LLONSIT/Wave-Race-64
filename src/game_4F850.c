@@ -17,7 +17,7 @@ struct comp {
 
 s32 D_8001C58;
 void* D_80151954;
-OSMesgQueue D_801540B8;
+extern OSMesgQueue D_801540B8;
 OSIoMesg D_801542A0;
 
 
@@ -106,7 +106,7 @@ void func_80097E68(void) {
     }
 }
 
-void func_80097EC8(u32 arg0, void* arg1, u32 arg2) {
+void func_80097EC8(void* arg0, void* arg1, u32 arg2) {
     if (D_801540B8.validCount >= D_801540B8.msgCount) {
         osRecvMesg(&D_801540B8, &D_80151954, 1);
     }
@@ -126,7 +126,6 @@ void func_80097F74(s32 arg0, s32 arg1, u32 arg2) {
     s32 temp_lo;
 
 
-    //LOL
     temp_lo = arg2 / 10240U;
     temp_hi = arg2 % 10240U;
     
