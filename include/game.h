@@ -11,7 +11,7 @@ typedef enum {
 /* 0x0 */ TIME_TRIAL,
 /* 0x1 */ TWO_PLAYER_VS,
 /* 0x4 */ CHAMPIONSHIP = 4,
-/* 0x11 */ STUNT_MODE = 11,
+/* 0x11 */ STUNT_MODE = 11
 }GAME_MODES;
 
 typedef struct {

@@ -11,7 +11,8 @@
 
 default:
 	@$(CC) n64crc.c -o n64crc
-	@make  -C  ido5.3_recomp
+	@make setup -C  ido-static-recomp
+	@make VERSION=5.3 -C  ido-static-recomp
 	@printf "done\n"
 
 clean:

@@ -82,5 +82,6 @@ void func_800B9F3C(s32 arg0, s32 arg1, s32 arg2);
 void func_800C3500(s32);
 void func_80098190(void);
 void* func_80046DA0(void* entry);
+void func_80047FFC(s32 arg0, s32 arg1, s32 arg2, s32* arg3, s32* arg4, s32* arg5);
 #endif /*FUNCTIONS_H*/
 

@@ -6,9 +6,9 @@
 #include "course.h"
 
 //File declaration
-f32 D_800E5130;
-s32 D_800E5138;
-f32 D_800EB4F0;
+extern f32 D_800E5130;
+extern s32 D_800E5138;
+extern f32 D_800EB4F0;
 extern void *func_8009AE6C;
 
 float func_800984D0(float arg0) {

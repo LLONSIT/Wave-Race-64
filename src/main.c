@@ -9,18 +9,18 @@ OSTask *second_task;
 OSTask *first_task;
 
 //.data, .rodata
-s32 D_800D4600;
-s32 D_800D4604;
-s32 D_800D4608;
-s32 D_800D460C; 
-s32 D_800D4610;
-s32 D_800D4614;
-s32 D_800D4618;
-s8 D_800D4624;
-s8 D_800D4628;
-s8 D_800D4620;
-OSViMode D_800E8770;
-OSViMode D_800E8BD0;
+extern s32 D_800D4600;
+extern s32 D_800D4604;
+extern s32 D_800D4608;
+extern s32 D_800D460C; 
+extern s32 D_800D4610;
+extern s32 D_800D4614;
+extern s32 D_800D4618;
+extern s8 D_800D4624;
+extern s8 D_800D4628;
+extern s8 D_800D4620;
+extern OSViMode D_800E8770;
+extern OSViMode D_800E8BD0;
 
 
 //.bss
@@ -28,7 +28,7 @@ void* D_80154148;
 s32 D_801521E0;
 OSThread D_80153B90;
 OSMesgQueue D_801540A0;
-OSThread *D_801539E0;
+OSThread *gIdleThread;
 void* D_80151DE0;
 s32 D_801531E0;
 OSThread D_80153D40;
@@ -94,7 +94,7 @@ void* func_80047530(void* entry) {
     osSetEventMesg(9U, &D_80154130, (void* )0x18);
     osViSetEvent(&D_80154130, (void* )0x19, 1U);
     func_800980C8();
-    osCreateThread(&D_80153D40, 4, audio_thread, NULL, &D_801539E0, 0x14);
+    osCreateThread(&D_80153D40, 4, audio_thread, NULL, &gIdleThread, 0x14);
     if (D_800D4628 != 0) {
         osStartThread(&D_80153D40);
     }
@@ -204,8 +204,8 @@ void* idle_thread(void* entry) {
 
 void main(void) {
     osInitialize();
-    osCreateThread(&D_801539E0, 1, &idle_thread, 0, &D_80151DE0, 0x64);
-    osStartThread(&D_801539E0);
+    osCreateThread(&gIdleThread, 1, &idle_thread, 0, &D_80151DE0, 0x64);
+    osStartThread(&gIdleThread);
 }
 
 void func_80047B00(void) {

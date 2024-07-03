@@ -2,7 +2,7 @@
 #include "osAi.h"
 #include "hardware.h"
 
-u8 D_800E8FF0;
+extern u8 D_800E8FF0;
 
 /**
  * It is worth noting that a previous hardware bug has been fixed by a software

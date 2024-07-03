@@ -19,20 +19,26 @@ typedef struct {
     s16 unk4;
 } struct_80098548;
 
-
 typedef struct {
     s8 unk0;
     s8 unk1;
     s8 unk2;
-    s8 pad[0x1];
+    s8 unk3;
     s8 unk4;
     s8 unk5;
     s8 unk6;
-    s8 pad1[0x1];
+    s8 unk7;
     s8 unk8;
     s8 unk9;
     s8 unkA;
-} chr_struct; //char struct
+    s8 unkB;
+    s8 unkC;
+    s8 unkD;
+    s8 unkE;
+    s8 unkF;
+    char pad[0x3];
+    s8 unk13;
+} chr_struct;
 
 typedef struct {
 	s8 pad[0x30];

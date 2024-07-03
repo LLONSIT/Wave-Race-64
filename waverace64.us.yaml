@@ -179,13 +179,13 @@ segments:
       - [0x8CB80, bin, fast3d_part2]
       - [0x8DFB0, bin, fast3d_audio]
 
-  - name: next_bin #Data and Rodata for the main overlay??
-    type: bin
+  - name: Main_seg_rodata #Data and Rodata for the main overlay??
+    type: code
     vram: 0x800D45F0
     start: 0x8EDF0 #Needs to be 0x16 Aligned
-#    subsegments:
-#      - [0x8EDF0, data]
-#      - [0xA9102, bin]
+    subsegments:
+      - [0x8EDF0, data]
+      - [0xA3A20, bin]
 
     #!< Not dinamically loaded!
   - name: overlay_A95D0
@@ -231,9 +231,7 @@ segments:
     symbol_name_format: 1B3EC0_$VRAM
     subsegments:
     - [0x1B3EC0, c, 1B3EC0/overlay_1B3EC0] #Migrated !
-    
-    
-    
+
   - name: pad1
     type: bin
     start: 0x1B5290 #BSS maybe?

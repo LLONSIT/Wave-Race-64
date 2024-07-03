@@ -129,6 +129,11 @@ create_obj =  0x800B490C;
 gDisplayListHead = 0x80151944; //Default name for display lists for both local and global declarations
 unk_game_load = 0x80095050;
 
+
+//game_23E0
+srand = 0x80047E44;
+rand = 0x80047E50;
+
 //R_G_B_A
 gColorRed   = 0x800D47E8;
 gColorGreen = 0x800D47EC;
@@ -161,6 +166,7 @@ mio0decode = 0x800B4D30;
 osTvType = 0x80000300;
 audio_thread = 0x80047B20;
 idle_thread = 0x8004791C;
+gIdleThread = 0x801539E0;
 
 //Fix build
 D_A95D0_80228A78 = 0x80228A78;

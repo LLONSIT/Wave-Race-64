@@ -12,8 +12,8 @@
 Gfx D_106F8E8[];
 Gfx* D_106F8A0;
 int D_801CE6B0[4];
-struct half_rgb short_RGB[4];
-Vtx* D_800DAA90[];
+extern struct half_rgb short_RGB[4];
+extern Vtx* D_800DAA90[];
 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_4C750/func_80091F50.s")
