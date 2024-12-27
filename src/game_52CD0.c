@@ -5,59 +5,75 @@
 #include "macros.h"
 #include "course.h"
 
-//File declaration
+// File declaration
 extern f32 D_800E5130;
 extern s32 D_800E5138;
 extern f32 D_800EB4F0;
 extern void *func_8009AE6C;
 
-float func_800984D0(float arg0) {
-    if (arg0 < 0.0f) {
+float func_800984D0(float arg0)
+{
+    if (arg0 < 0.0f)
+    {
         arg0 = -arg0;
     }
     return arg0;
 }
 
-void func_800984F4(f_struct* arg0, f32 arg1, f32 arg2, f32 arg3) {
+void func_800984F4(f_struct *arg0, f32 arg1, f32 arg2, f32 arg3)
+{
     arg0->unk_x = arg1;
     arg0->unk_y = arg2;
     arg0->unk_z = arg3;
 }
 
-
-void func_80098514(f_struct* arg0) {
+void func_80098514(f_struct *arg0)
+{
     arg0->unk_x = 0.0f;
     arg0->unk_y = 0.0f;
     arg0->unk_z = 0.0f;
 }
 
-
-void func_8009852C(f_struct *arg0, f_struct *arg1) {
-    arg0->unk_x =  arg1->unk_x;
-    arg0->unk_y =  arg1->unk_y;
-    arg0->unk_z =  arg1->unk_z;
+void func_8009852C(f_struct *arg0, f_struct *arg1)
+{
+    arg0->unk_x = arg1->unk_x;
+    arg0->unk_y = arg1->unk_y;
+    arg0->unk_z = arg1->unk_z;
 }
 
-//TODO: Maybe f_struct too?
+// TODO: Maybe f_struct too?
 
-void func_80098548(struct_80098548 *arg0, struct_80098548 *arg1) {
-    arg0->unk0 =  arg1->unk0;
-    arg0->unk2 =  arg1->unk2;
-    arg0->unk4 =  arg1->unk4;
+void func_80098548(struct_80098548 *arg0, struct_80098548 *arg1)
+{
+    arg0->unk0 = arg1->unk0;
+    arg0->unk2 = arg1->unk2;
+    arg0->unk4 = arg1->unk4;
 }
 
-
-UNUSED void func_80098564(void) {
+UNUSED void func_80098564(void)
+{
 }
 
-UNUSED void func_8009856C(void) {
+UNUSED void func_8009856C(void)
+{
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_80098574.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_80098644.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_80098714.s")
+s32 func_80098714(f32* arg0, f32 arg1, f32 arg2) {
+
+    if (arg2 > 1.0f) {
+        arg2 = 1.0f;
+    }
+    *arg0 = * arg0 + ((arg1 -  *arg0) * arg2);
+    if (arg1 == *arg0) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_80098774.s")
 
@@ -71,14 +87,16 @@ UNUSED void func_8009856C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_800989E0.s")
 
-UNUSED void func_80098A5C(void) {
+UNUSED void func_80098A5C(void)
+{
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_80098A64.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_80098AC4.s")
 
-void func_80098BFC(void) {
+void func_80098BFC(void)
+{
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_80098C04.s")
@@ -153,11 +171,10 @@ void func_80098BFC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_8009AC50.s")
 
-
-void func_8009AD14(s32 arg0) {
+void func_8009AD14(s32 arg0)
+{
     func_800988D8(D_800E5138);
 }
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_8009AD3C.s")
 
@@ -177,13 +194,14 @@ void func_8009AD14(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_8009B030.s")
 
-void func_8009B0C8(s32 arg0) {
+void func_8009B0C8(s32 arg0)
+{
     func_8009ADA8();
     func_8009A460(&func_8009AE6C, arg0, 0x3C, 0x3C);
 }
 
-
-UNUSED void func_8009B100(void) {
+UNUSED void func_8009B100(void)
+{
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_8009B108.s")
@@ -228,7 +246,8 @@ UNUSED void func_8009B100(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_8009BE40.s")
 
-UNUSED void func_8009BEB4(void) {
+UNUSED void func_8009BEB4(void)
+{
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_8009BEBC.s")
@@ -247,7 +266,8 @@ UNUSED void func_8009BEB4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_8009C00C.s")
 
-UNUSED void func_8009C03C(void) {
+UNUSED void func_8009C03C(void)
+{
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_8009C044.s")
@@ -268,13 +288,14 @@ UNUSED void func_8009C03C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_8009C1C4.s")
 
-
-void func_8009C240(f_struct* arg0) {
+void func_8009C240(f_struct *arg0)
+{
     f32 temp_f0;
     f32 temp_f14;
     f32 temp_f2;
 
-    if (D_801CE638 == 0x15) {
+    if (D_801CE638 == 0x15)
+    {
         temp_f0 = D_800EB4F0 - arg0->unkC;
         temp_f2 = 60.0f - arg0->unk10;
         temp_f14 = 1000.0f - arg0->unk14;
@@ -283,7 +304,6 @@ void func_8009C240(f_struct* arg0) {
     }
     D_800E5130 = -1.0f;
 }
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_8009C2CC.s")
 
@@ -379,14 +399,17 @@ void func_8009C240(f_struct* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_800AC184.s")
 
-UNUSED void func_800AD3C4(void) {
-    switch (gCourseID) {
+UNUSED void func_800AD3C4(void)
+{
+    switch (gCourseID)
+    {
     case DRAKE_LAKE:
-        func_800C1DEC(); //Special announcer voice when finish a lap?
+        func_800C1DEC(); // Special announcer voice when finish a lap?
         break;
     case PORT_BLUE:
         func_800C1B98();
         break;
+    default: break;
     }
 }
 #pragma GLOBAL_ASM("asm/nonmatchings/game_52CD0/func_800AD418.s")
