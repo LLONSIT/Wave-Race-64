@@ -40,13 +40,6 @@ typedef struct {
     s8 unk13;
 } chr_struct;
 
-typedef struct {
-	s8 pad[0x30];
-	s32 unk30;
-	s8 fill[0x35];
-	s32 unk6C;
-} struct_801C3C58;
-
 //Size: 0x10 bytes
 typedef struct {
 	f32 unk0;

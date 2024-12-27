@@ -241,7 +241,7 @@ $(TARGET).bin: $(TARGET).elf
 
 $(TARGET).z64: $(TARGET).bin
 	@printf "[$(CYAN) .bin -> .z64 $(NO_COL)] $<\n"
-	cp build/$(BASENAME).$(VERSION).bin build/$(BASENAME).$(VERSION).z64
+	@cp build/$(BASENAME).$(VERSION).bin build/$(BASENAME).$(VERSION).z64
 	@printf "[$(GREEN) Calculating CRC $(NO_COL)]  $<\n"
 	@$(CRC)
 

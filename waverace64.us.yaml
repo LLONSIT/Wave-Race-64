@@ -214,11 +214,11 @@ segments:
     start: 0x1AE660
 
     #Just need the exact vram of these
-  - name: overlay_1B1FB0
+  - name: segment_1B1FB0
     type: code
     start: 0x1B1FB0
-    #vram: 0x801F77B0
-    #symbol_name_format: 1B1FB0_$VRAM
+    vram: 0x801F77B0
+    symbol_name_format: 1B1FB0_$VRAM
     subsegments:
     - [0x1B1FB0, bin] #Need the exact vram of this !!!!!!!
     - [0x1B3E10, bin]

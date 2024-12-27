@@ -20,7 +20,7 @@ typedef struct {
 /* 0x6 */  short Rider;
 /* 0x8 */  int WaveLevel;
 /* 0xC */  int Power_Misses;
-/* 0x10 */ int Laps; //Lap number of a rece
+/* 0x10 */ int Laps; //Lap number of a race
 /* 0x14 */ int unk_14;
 } game_801CE608;
 
