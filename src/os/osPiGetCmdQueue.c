@@ -1,10 +1,3 @@
-#include "libultra_internal.h"
+#include "common.h"
 
-extern OSMgrArgs __osPiDevMgr;
-
-OSMesgQueue *osPiGetCmdQueue(void) {
-    if (!__osPiDevMgr.initialized) {
-        return NULL;
-    }
-    return __osPiDevMgr.cmdQueue;
-}
+#pragma GLOBAL_ASM("asm/nonmatchings/os/osPiGetCmdQueue/osPiGetCmdQueue.s")

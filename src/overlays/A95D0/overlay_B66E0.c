@@ -128,13 +128,13 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/A95D0/overlay_B66E0/func_A95D0_801EDD04.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/A95D0/overlay_B66E0/guMtxF2L.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlays/A95D0/overlay_B66E0/func_A95D0_801EDD90.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/A95D0/overlay_B66E0/guRotateRPYF.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlays/A95D0/overlay_B66E0/func_A95D0_801EDF9C.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/A95D0/overlay_B66E0/func_A95D0_801EDFFC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/A95D0/overlay_B66E0/guAlignF.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlays/A95D0/overlay_B66E0/func_A95D0_801EE040.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/A95D0/overlay_B66E0/func_A95D0_801EE228.s")
 

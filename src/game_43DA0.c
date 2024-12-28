@@ -1,8 +1,4 @@
-#include <ultra64.h>
-#include <PR/gbi.h>
-#include "functions.h"
-#include "variables.h"
-#include "macros.h"
+#include "common.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_43DA0/func_800895A0.s")
 

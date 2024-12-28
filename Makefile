@@ -150,8 +150,8 @@ ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
 ### Optimisation Overrides
 $(BUILD_DIR)/src/os/%.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/src/os/audio/%.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/os/libc/%.c.o: OPT_FLAGS := -O3
-$(BUILD_DIR)/src/os/gu/%.c.o: OPT_FLAGS := -O3
+$(BUILD_DIR)/src/os/libc/%.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/os/gu/%.c.o: OPT_FLAGS := -O2
 
 ### Targets
 

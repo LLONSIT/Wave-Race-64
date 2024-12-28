@@ -1,6 +1,6 @@
 #include "common.h"
 
-UNUSED void func_80088EA0(void) {
+void func_80088EA0(void) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_43A60/func_80088EA8.s")

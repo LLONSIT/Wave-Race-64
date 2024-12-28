@@ -13,7 +13,9 @@ options:
   undefined_funcs_auto_path: undefined_funcs_auto.txt
 #  undefined_syms_auto: True
   undefined_syms_auto_path: undefined_syms_auto.txt
-  symbol_addrs_path: symbol_addrs.txt
+  symbol_addrs_path: 
+  - symbol_addrs.txt
+  - ovl_symbols.txt
   asm_path: asm
   src_path: src
   build_path: build
@@ -189,6 +191,8 @@ segments:
 
     #!< Not dinamically loaded!
   - name: overlay_A95D0
+    exclusive_ram_id: overlay
+    follows_varm: segment_1B1FB0
     type: code
     start: 0xA95D0
     vram: 0x801DAFA0
@@ -213,17 +217,19 @@ segments:
     type: bin
     start: 0x1AE660
 
-    #Just need the exact vram of these
-  - name: segment_1B1FB0
+    # What?, this seems to be unused.
+  - name: segment_1B1FB0  
+    exclusive_ram_id: overlay
     type: code
     start: 0x1B1FB0
     vram: 0x801F77B0
     symbol_name_format: 1B1FB0_$VRAM
     subsegments:
-    - [0x1B1FB0, bin] #Need the exact vram of this !!!!!!!
+    - [0x1B1FB0, c, unused_game_1B1FB0]
     - [0x1B3E10, bin]
 
   - name: overlay_1B3EC0
+    exclusive_ram_id: overlay
     type: code
     start: 0x1B3EC0
     vram: 0x802C5800
@@ -232,16 +238,33 @@ segments:
     subsegments:
     - [0x1B3EC0, c, 1B3EC0/overlay_1B3EC0] #Migrated !
 
-  - name: pad1
+  - name: unk_data
     type: bin
-    start: 0x1B5290 #BSS maybe?
+    start: 0x1B5280 
     #- [0x1B5990, rodata]
 
     #This one seems to be loaded when the game enters in a race
   - name: overlay_1B55A0
-    type: bin
+    type: code
+    exclusive_ram_id: overlay
+    symbol_name_format: 1B55A0_$VRAM
     start: 0x1B55A0
     vram: 0x802C5800
+    subsegments:
+    - [0x1B55A0, c, overlay_1B55A0]
+    - [0x1B91E0, bin]
+
+
+    # Rider selection?
+  - name: overlay_1B9440
+    type: code
+    exclusive_ram_id: overlay
+    symbol_name_format: 1B9940_$VRAM
+    start: 0x1B9940
+    vram: 0x802C5800
+    subsegments:
+    - [0x1B9440, asm]
+    - [0x1BC800, bin]
 
   # - name: overlay_1B55A0
   #   type: code
@@ -284,6 +307,7 @@ segments:
   #   - [0x1D10B0, bin] #End
 
   - name: LAST_MIO0_SEGMENT_OVERLAY
+    exclusive_ram_id: segment
     type: code
     start: 0x1D11D0
     vram: 0x802A0000

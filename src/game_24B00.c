@@ -1,12 +1,4 @@
-#include <ultra64.h>
-#include <PR/gbi.h> //for macros
-#include "macros.h" //another macros
-#include "functions.h"
-#include "structs.h"
-#include "variables.h"
-#include "course.h"
-#include "player.h"
-#include "game.h"
+#include "common.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_24B00/func_8006A300.s")
 
@@ -36,44 +28,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_24B00/func_8006E01C.s")
 
-
-extern s32 D_800D8170;
-
-
-/******************************************************************************
-*
-* !< This function apparently configure the
-*	  "texture lookup table"
-*
-*   !< The clearest use that can be seen is that it is related to the appearance,
-*   of color in signs or arrows.
-*
-*	@param1: (gDisplayList) this functions takes the gfx pointer to
-*       "Set the texel type of the texture lookup table (TLUT)"
-*
-********************************************************************************/
-
-//F3D: OK
-void configSignalRectangle(Gfx** gDisplayList) {
-
-    UNUSED s32 filler[15];
-    Gfx *gDisplayListHead = *gDisplayList;
-    UNUSED s32 second_filler[3];
-
-    gDPPipeSync(gDisplayListHead++);
-    //Color
-    gDPSetTextureLUT(gDisplayListHead++, G_TT_NONE);
-
-    if ((gPlayers == ONE_PLAYER) && (gCourseID == DRAKE_LAKE)) {
-        func_8006C5D8(&gDisplayListHead);
-    }
-    if ((D_801CE638 == 1) && ((gGameModes == CHAMPIONSHIP) || (gGameModes == TWO_PLAYER_VS))) {
-        func_8006BE74(&gDisplayListHead);
-    }
-    func_8006B334(&gDisplayListHead);
-    *gDisplayList = gDisplayListHead;
-}
-
+#pragma GLOBAL_ASM("asm/nonmatchings/game_24B00/configSignalRectangle.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game_24B00/func_8006E0F4.s")
 
