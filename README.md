@@ -19,7 +19,7 @@ A early decompilation of a game with many waves!
 </p>
 
 ```diff
-+ Some info +
+- Important info -
 
 * This project is very early so for now you can't make any kind of modification, well maybe I'll focus on it soon ;).
 
