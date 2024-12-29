@@ -118,12 +118,13 @@ Assuming that you cloned the repository with --recursive
 	├── asm: Assembler files (TODO: Remaining segments to classify)
 	│   ├── libultra: Liubltra Hand written assembly files
 	│   └── asm_nonmatchings: Functions that have not yet been matched either from libultra or from the game
-	├── assets: Binary blobs from the game (very soon the textures will be)
-	├── build: output directory
+	├── assets: Binary blobs from the game (Extracted by your own copy from the game)
+	├── build: build output directory
 	├── include: header files, things like the structs or variables are here
 	├── src: C source code for game
 	│   ├── os: Libultra files
 	│   └── core: DMA code
+	|   └── overlays: Game overlays
 	└── tools: build tools
 
 
