@@ -1,10 +1,3 @@
-#include "libultra_internal.h"
-#include "hardware.h"
+#include "common.h"
 
-s32 __osSpDeviceBusy() {
-    register u32 status = HW_REG(SP_STATUS_REG, u32);
-    if (status & (SPSTATUS_IO_FULL | SPSTATUS_DMA_FULL | SPSTATUS_DMA_BUSY)) {
-        return 1;
-    }
-    return 0;
-}
+#pragma GLOBAL_ASM("asm/nonmatchings/os/__osSpDeviceBusy/__osSpDeviceBusy.s")

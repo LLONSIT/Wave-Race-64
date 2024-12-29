@@ -7,7 +7,7 @@ A early decompilation of a game with many waves!
 - Game Code
 <p align="left">
     <a href="" alt="WR64_Total_Functions">
-        <img src="https://img.shields.io/badge/Functions_97%2F1667-5.83%25-blue" /></a>
+        <img src="https://img.shields.io/badge/Functions%2097%2F1148-8.46%25-blue" /></a>
   
 </p>
 
@@ -19,7 +19,7 @@ A early decompilation of a game with many waves!
 </p>
 
 ```diff
-+ Some info +
+- Important info -
 
 * This project is very early so for now you can't make any kind of modification, well maybe I'll focus on it soon ;).
 
@@ -118,12 +118,13 @@ Assuming that you cloned the repository with --recursive
 	├── asm: Assembler files (TODO: Remaining segments to classify)
 	│   ├── libultra: Liubltra Hand written assembly files
 	│   └── asm_nonmatchings: Functions that have not yet been matched either from libultra or from the game
-	├── assets: Binary blobs from the game (very soon the textures will be)
-	├── build: output directory
+	├── assets: Binary blobs from the game (Extracted by your own copy from the game)
+	├── build: build output directory
 	├── include: header files, things like the structs or variables are here
 	├── src: C source code for game
 	│   ├── os: Libultra files
 	│   └── core: DMA code
+	|   └── overlays: Game overlays
 	└── tools: build tools
 
 

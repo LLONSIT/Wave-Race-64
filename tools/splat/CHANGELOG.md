@@ -1,5 +1,694 @@
 # splat Release Notes
 
+### 0.32.2
+
+* Fix jumptable labels not being properly formatted with the given `symbol_name_format`.
+* `spimdisasm` 1.32.0 or above is now required.
+
+### 0.32.1
+
+* Include subsegment information when aggregating split statistics.
+
+### 0.32.0
+
+* Tag `PSYQ` as a compiler that uses `j` instructions as branches.
+  * Fixes incorrect detection of non existing functions under the mentioned compiler.
+* Try to tell the users what segments are causing the overlapping issue.
+* The overlap warning has been promoted to an error.
+
+### 0.31.0
+
+* Fix subsegments of auto `data` segments not being split.
+
+### 0.30.1
+
+* Fix `create_config` not handling unsafe path characters.
+
+### 0.30.0
+
+* New `asmtu` segment type.
+  * Allows writing the disassembly of every section for a given object into the same assembly file.
+  * Useful for dealing with symbols with local visibility.
+* Cleanup some redundant code regarding duplicated `asm` segments.
+* The global option `add_set_gp_64` now defaults to `False` on psx and ps2 platforms.
+* Add compiler options supported by spimdisasm.
+  * New compilers: `KMC` (n64), `EGCS` (iQue), `PSYQ` (PS1) and `MWCCPS2` (PS2)
+  * It is highly recommended to use the specific compiler that the game uses (i.e. `KMC`) than just a general option like `GCC` because splat won't be able to adjust as best as it can.
+* `spimdisasm` 1.31.0 or above is now required.
+* Python 3.9 or above is now required.
+
+### 0.29.0
+
+* Fix bss/sbss asm files not being generated.
+* Remove `...` as a valid rom start address for segments.
+
+### 0.28.2
+
+* New global option and per-segment option: `suggestion_rodata_section_start`
+  * Allows to toggle the rodata section start suggestion that is emitted by inspecting the data section
+* Avoid running spimdisasm on auto segments.
+  * Should improve runtime performance and avoid giving redundant filesplit suggestions.
+* A zero-sized bin segment is now considered a hard error.
+
+### 0.28.1
+
+* Fix a crash when listing zero-sized segments on the yaml.
+  * It is discouraged to have zero sized segments on the yaml, but they may be needed on games that have a "segment address" table of any kind and shows the segments having a zero size.
+  * This allows to have segment symbols for those kind of segments without having to go through linker script hacks.
+
+### 0.28.0
+
+* Minor version release for previous release's breaking change that should have had its own minor release (oopsh, yanked 0.27.4)
+* BREKAING: Change the default value for `ld_generate_symbol_per_data_segment`. It defaults to `False` now.
+* Improve `create_config` to avoid choking on SN64 games.
+  * The results may not be completely accurate but should give a decent enough starting yaml.
+
+### 0.27.3
+
+* Fix a possible infinite recursion due to a segment being its own sibling.
+
+### 0.27.2
+
+* Added new global option `emit_subalign`. If disabled, subalign directives will not be emitted in the generated linker script. Enabled by default (no change in default behavior).
+
+### 0.27.1
+
+* Add new symbol attributes:
+  * `function_owner`: Allows to force a rodata symbol to be migrated to the given function, skipping over the rodata migration heuristic.
+  * `can_reference`: Allows toggling if the symbol is allowed to reference other symbols.
+  * `can_be_referenced`: Allows toggling if the symbol is allowed to be referenced by other symbols.
+* `spimdisasm` 1.29.0 or above is now required.
+
+### 0.27.0
+
+* BREAKING: Renamed `auto_all_sections` to `auto_link_sections` and documented its behavior.
+* BREAKING: Removed redundant `N64Segment`, `PSXSegment`, `PSPSegment` stub classes. Any references to these should be instead to the base `Segment`
+* Promoted `linker_offset` segment type to common, so it's now usable by all platforms.
+* Added documentation for the remaining undocumented segment types and did some general doc tidying.
+* Splat will now error when the last segment is `pad`, as this will not work as expected.
+* Attempting to retrieve the `subalign` property of a non-top-level segment will now return an error.
+
+### 0.26.2
+
+* Fixed not being able to disable the `subalign` directive for a given segment.
+* Removed bugged alignment check on image segments.
+* splat will now error out if any of the following attributes is specified in a non top-level segment.
+  * `subalign`
+  * `ld_fill_value`.
+* `spimdisasm` 1.28.1 or above is now required.
+
+### 0.26.1
+
+* Fix pairing text to other sections on cases where text is not be the first section.
+* Fix some code that assumes that `.rodata` will always be present on the `sections_order` list.
+* Fix `.text`/`.rdata` section pairing (hopefully).
+* Emit an error if we try to migrate the rodata symbols to functions if the rodata section is not prefixed with a dot (ie `- [0x1234, rodata, some_file]` instead of `- [0x1234, .rodata, some_file]`)
+  * Not prefixing the type with a dot would produce splat to both disassemble the rodata section to its own assembly file and to migrate the symbols to the corresponding functions, generating link-time errors and many headaches.
+* Rewrite the `ld_legacy_generation` docs for clarity.
+
+### 0.26.0
+
+* Fixed the `subalign` segment property logic to be more straightforward
+* Updated required versions of rabbitizier, n64img, and crunch64
+* BREAKING: Removed `include_macro_inc` option, as it was never required and often detrimental
+
+### 0.25.3
+
+* Fix incorrect calculation for `$gp` value in create_config.py for PSX when immediate value is negative.
+
+### 0.25.2
+
+* Two new yaml options: `use_gp_rel_macro_nonmatching` and `use_gp_rel_macro`
+  * Allows to toggle the use of `%gp_rel`s.
+  * Not using `%gp_rel`s may be desirable for projects that use old assemblers that do not support said relocation parameter.
+  * The assembler is free to choose the kind of relocation to use if no explicit relocation parameter is used for a given instruction, it may even expand the instruction into multiple instructions. To avoid this, it is the user's responsability to provide the symbol's information (like the symbol's size) to the assembler so it can pick the correct relocation.
+
+### 0.25.1
+
+* Added two new segment types: `gcc_except_table` and `eh_frame`.
+  * Used by GCC to handle C++ exceptions.
+* New yaml option: `asm_ehtable_label_macro`
+  * Allows to specify the macro used by ehlabels, the ones generated by `gcc_except_table` references.
+
+### 0.25.0
+
+* BREAKING: Changed the default value of `use_legacy_include_asm` to false
+
+### 0.24.7
+
+* splat no longer creates unnecessary directories for asm
+
+### 0.24.6
+
+* Handle PS-X EXE header that includes .text/.data vram address
+
+### 0.24.5
+
+* New `use_src_path` option for incbins segments.
+  * Allows to make the generated assembly files relative to the `src_path` directory instead of the default `data_path`.
+* New yaml option: `global_vram_start` and `global_vram_end`.
+  * Allow specifying that the global memory range may be larger than what was automatically detected.
+  * Useful for projects where splat is used in multiple individual files, meaning the expected global segment may not be properly detected because each instance of splat can't see the info from other files (like in PSX and PSP projects).
+
+### 0.24.4
+
+* New yaml option: `matchings_path`
+  * Determines the path to the asm matchings directory
+  * This is used alongside `disassemble_all` to organize matching functions from nonmatching functions
+
+### 0.24.3
+
+* New yaml option: `ld_align_segment_start`
+  * Allows specifying an alignment for the start of all the segments.
+  * The alignment can be overriden or disabled per segment too.
+* Add `visibility` attribute to symbols.
+  * Allows to specify if a symbol should be declared as `local`, `weak`, etc in the disassembly.
+* `spimdisasm` 1.26.0 or above is now required
+
+### 0.24.2
+
+* Fixed create_config to replace "/" in detected binary names with "_"
+
+### 0.24.1
+
+* Tweak the disassembler's configuration for PSP platform to improve assembly analysis.
+  * Should improve function start/end detection.
+
+### 0.24.0
+
+* Added PSP as a new platform.
+* `spimdisasm` 1.25.0 or above is now required
+* `rabbitizer` 1.10.0 or above is now required
+
+### 0.23.2
+
+* Fixed a bug where auto segments insertion may not respect the proper ordering if there are linker_offset segments present.
+
+### 0.23.1
+
+* New `EEGCC` compiler option.
+  * Provide specific adjustments for the GCC compiler used for the PS2 platform.
+* `spimdisasm` 1.24.2 or above is now required.
+
+### 0.23.0
+
+* splat now checks if symbol names can be valid filepaths and produce an error if not.
+  * This is checked because functions are written to their own files and the symbol name is used as the filepath.
+  * There are two checks in place:
+    * The resulting filename should not exceed 255 bytes, since most OSes impose that restriction.
+    * It should not contain any of the following characters: `"<", ">", ":", '"', "/", "\\", "|", "?", "*"`
+  * It is possible to specify a different filename and retain the symbol name by using the `filename` attribute for each symbol on the `symbol_addrs` file.
+    * Make sure that the new specified `filename` does fit the listed requirements.
+* Change `sbss` to properly work as a noload section.
+  * To make it not behave as noload then turn off `ld_bss_is_noload`.
+* `ld_bss_is_noload` is now `False` by default for `psx` projects.
+* Allow to properly override `get_linker_section` and `get_section_flags` in `asm` and `hasm` files.
+* Fix disassembling segments that only have bss.
+* `ld_section_labels` was removed since it was a redundant list to `section_order`.
+* Give a proper error message for missing sections on `section_order` during linker script generation.
+* Allow configuring the `spimdisasm` section on extension segments (that inherit from `asm`, `data`, `rodata` or `bss` segments) before running the analisys on it.
+  * This is done by overriding the `configure_disassembler_section` method.
+* New ps2-specific segments:
+  * `lit4` and `lit8`: "Literal" sections that only contain `float`s and `double`s respectively.
+  * `ctor`: Data pointing to C++ global data initialization functions.
+  * `vtables`: C++ vtables
+* `spimdisasm` 1.23.0 or above is now required.
+
+### 0.22.3
+
+* Fix linker script generation not respecting other noload segments (like `.sbss`) when using `bss_contains_common`.
+
+### 0.22.2
+
+* Allow for `image_type_in_extension` to be overridden by subclasses of N64SegImg
+
+### 0.22.1
+
+* Fixed a bug where palettes with `global_id`s were reporing errors too eagerly
+
+### 0.22.0: Palette Revamp
+
+* The N64 ci/palette system has been rewritten to be more versatile and support a larger variety of configurations.
+  * ci segments now have a "palettes:" argument, which can be a list of palettes or a single palette to be linked to the ci for extraction. The implicit value of `palettes:` is a one-element list containing the name of the ci, meaning palettes whose names match a ci will automatically be linked to the ci. Each palette linked to a ci will result in a separate png.
+  * the `raster_name` field on palettes and the `palette` field on rasters no longer exist. Instead, rasters point to palettes via the `palettes:` property of the ci segment (or the final argument after width and height, if using list format).
+  * palette segments can provide a `global_id` field, which serves as a globally searchable palette id. This can be used for cross-segment ci/palette linking.
+  * added option `image_type_in_extension`, which puts the type of an image in the file extension. For example, with the setting enabled, an image named `texture` would export with filename `texture.ci4.png`.
+* `spimdisasm` 1.21.0 or above is now required.
+
+### 0.21.12
+
+* Fixed issue that prevented symbols from being added to undefined_funcs_auto
+* Add rodata file split suggestions for PSX.
+  * This works by inspecting the expected alignment of jumptables. If a jumptable is not 8-aligned file-wise means there's a file split.
+
+### 0.21.11
+
+* Show an error on `create_config` if the format is not supported.
+* Allow lib segment to be a dictionary with `object` and `section` options
+* Allow lib segment to use `vram` option
+
+### 0.21.10
+
+* Allow the global `subalign` option to take `null` values
+
+### 0.21.9
+
+* Removed gc code in favor of decomp-toolkit, which is now linked-to from this project.
+
+### 0.21.8
+
+* `gfx` and `vtx` segments now support an optional `length` parameter, allowing splat to know their size
+
+### 0.21.7
+
+* New attribute for symbols: `allow_duplicated`
+  * Allows to lift the duplicated symbol restriction for the specified symbols, allowing to have specific symbols that are not checked for shared vrams or names but keeping the check for everything else.
+
+### 0.21.6
+
+* Fix `bss_contains_common` option not being passed to "auto all" inserted sections.
+* New yaml option: `ld_bss_contains_common`
+  * Sets the default option for the `bss_contains_common` attribute of all segments.
+
+### 0.21.5
+
+* Fixed issue with Python 3.8 compatibility (oops)
+
+### 0.21.4
+
+* New yaml option: `hasm_in_src_path`
+  * Tells splat to consider `hasm` files to be relative to `src_path` instead of `asm_path`.
+* Remove some dead code.
+* `auto_all_sections` is even more "auto" now, creating automatic entries for all .text segments.
+  * Before, this feature did not function for a given type if you had one or more of that type manually specified elsewhere. Now, the automatic entries are still populated, even if you have manual ones as well.
+
+### 0.21.3
+
+* Updated version graphically
+
+### 0.21.2
+
+* Fix bugs involving segments not having proper end rom positions if followed by segments with "auto" rom addresses; splat will now skip over these properly
+
+### 0.21.1
+
+* Fix duplicated symbol resolution in symbol_addrs.txt file.
+  * To allow symbols with the same name or vram address, splat was expecting both `rom` and `segment` to be specified. This check was changes so either one of them is required to disambiguate the symbol.
+* Python dependencies per target architecture have been regrouped.
+  * splat now requires an architecture to be specified during installation through pip.
+  * This allows to avoid installing dependencies for an architecture that won't be used.
+  * The new syntax to be used with pip is `python3 -m pip install -U splat64[arch1, arch2, etc]`, for example, `splat64[mips]`
+  * Currently the only architecture supported is `mips`.
+* The `main` function has been modularized and cleaned up.
+  * When using splat as a library, allows the user to call each individual step of split without having to pass by its full monolithic `main` function.
+
+### 0.21.0
+
+* BREAKING: Extension segments will need adjustments to continue to work.
+  * Due to splat working as a library now, absolute imports on extension segments no longer work.
+  * Here's an example on how to fix this. Before version 0.21.0 you would have something like this
+
+    ```py
+    from util import log, options
+
+    from segtypes.common.segment import Segment
+    from segtypes.common.data import CommonSegData
+    ```
+
+    There are two ways to fix this, depending on how the user uses splat:
+    * Installing splat as a Python package:
+
+      If the user decides to use splat as a package instead of as a subrepo/submodule then fixing this issue becomes very easy, just prefix the imports with `splat.`:
+
+      ```py
+      from splat.util import log, options
+
+      from splat.segtypes.common.segment import Segment
+      from splat.segtypes.common.data import CommonSegData
+      ```
+
+    * Using splat as a submodule/subrepo:
+
+      This option is a bit more complex since it requires relative imports, as if the extension segment were part of splat.
+
+      splat will load extension segment as if it were in `segtypes/{PLATFORM}/{EXTENSION}.py`, so imports should be relative to that folder.
+
+      Assuming the extension is for an `n64` project, the fixed version would look like this:
+
+      ```py
+      from ...util import log, options
+
+      from ..common.segment import Segment
+      from ..common.data import CommonSegData
+      ```
+
+* splat has been librarified!
+  * splat can now be installed as a Python package and used as a library.
+  * The normal way of invoking `./split.py` still works as usual.
+* Installing the splat package allows to use it as a cli tool besides using it as a library.
+  * Check `python3 -m splat --help` (or simply `splat --help`) to the options.
+  * `splat split` has the same functionality as the plain `./split.py` script.
+  * `splat create_config` has the same functionality as the plain `./create_config.py` script.
+  * `splat capy`.
+* DO NOT use splat as both an installed Python package and a submodule/subrepo.
+  * This may be very problematic if the version of both splats go out of sync.
+  * This warning is mainly for users that want use their own extension segments or use splat as a library.
+
+### 0.20.1
+
+* splat now uses [crunch64](https://github.com/decompals/crunch64) as a dependency for handling decompression of various formats, starting with Yay0 and MIO0
+* Changed compression_type (and thus file extension) for the Mio0 segment to "MIO0" from "Mio0", accurately reflecting its true name
+* Removed utility cli Yay0decompress.py and Mio0decompress.py scripts; see crunch64-cli for a much more performant (de)compression CLI tool
+
+### 0.20.0
+
+* Add a pad segment that advances the linker script instead of dumping a binary / generating an assembly file.
+* Move the logic of writing the entry to the linker script from `LinkerWriter` to `LinkerEntry`
+  * This allows to have custom behavior for an entry without needing to hardcode extra checks on `LinkerWriter`.
+  * Extension segments can make a subclass of `LinkerEntry` and override its methods to have custom linker script behavior.
+* New yaml option: `ld_generate_symbol_per_data_segment`
+  * If enabled, the generated linker script will have a linker symbol for each data file.
+  * Defaults to `True`.
+
+### 0.19.7
+
+* Ensure the directory exists when extracting a palette segment.
+* Ensure the directory exists when writing the undefined funcs/syms files.
+* Make `.splat` hidden folder to be relative to `base_path`
+
+### 0.19.6
+
+* The `*_END` linker symbol of every section for each segment is now aligned to the configured alignment by default.
+* New yaml option: `ld_align_section_vram_end`
+  * Allows to toggle aligning the `*_END` linker symbol of each section.
+  * Defaults to `True`.
+
+### 0.19.5
+
+* The `*_VRAM_END` linker symbol for each segment is now aligned to the configured alignment by default.
+* New yaml option: `ld_align_segment_vram_end`
+  * Allows to toggle aligning the `*_VRAM_END` linker symbol.
+  * Defaults to `True`.
+
+### 0.19.4
+
+* Fix `ld_fill_value` not accepting `null` as a valid value on the yaml
+
+### 0.19.3
+
+* New yaml option: `ld_bss_is_noload`
+  * Allows to control if `bss` sections (and derivatived sections) will be put on a `NOLOAD` segment on the generated linker script or not.
+  * Applies to all `bss` (`sbss`, `common`, `scommon`, etc) sections.
+  * Defaults to `True`, meaning `bss` sections will be put on `NOLOAD` segments.
+
+### 0.19.2
+
+* `named_regs_for_c_funcs` (default True): Can be disabled to make c functions' disassembled functions contain numeric registers.
+
+### 0.19.1
+
+* Fixed disassembly of certain ps2 instructions to properly re-assemble in a compatible and matching way.
+
+### 0.19.0: vram_classes
+
+* New top-level yaml feature: `vram_classes`. This allows you to make common definitions for vram locations that can be applied to multiple segments. Please see the [documentation](docs/VramClasses.md) for more details!
+  * Renamed `ld_use_follows` to `ld_use_symbolic_vram_addresses` to more accurately describe what it's doing
+  * Renamed `vram_of_symbol` segment option to `vram_symbol` to provide consistency between the segment-level option and the vram class field.
+  * Removed `appears_after_overlays_addr` symbol_addrs option in favor of specifying this behavior with `vram_classes`
+* Removed `dead` symbol_addrs option
+* A warning is now emitted when the `sha1` top-level yaml option is not provided. Adding this is highly recommended, as it prevents errors using splat in which the wrong binary is provided.
+
+### 0.18.3
+
+* splat now will emit a `FILL(0)` statement on each segment of a linker script by default, to customize this behavior use the `ld_fill_value` yaml option or the per-segment `ld_fill_value` option.
+* New yaml option: `ld_fill_value`
+  * Allows to specify the value of the `FILL` statement generated on every segment of the linker script.
+  * It must be either an integer, which will be used as the parameter for the `FILL` statement, or `null`, which tells splat to not emit `FILL` statements.
+  * This behavior can be customized per segment too.
+* New per segment option: `ld_fill_value`
+  * Allows to specify the value of the `FILL` statement generated for this specific top-level segment of the linker script, ignoring the global configuration.
+  * If not set, then the global configuration is used.
+
+### 0.18.2
+
+* Fix rodata migration for `.rdata` sections (and other rodata sections that don't use the name `.rodata`)
+* `spimdisasm` 1.18.0 or above is now required.
+
+### 0.18.1
+
+* New yaml options: `check_consecutive_segment_types`
+  * Allows to turn off checking for segment types not being in a consecutive order
+* New option for segments: `linker_section_order` and `linker_section`
+  * `linker_section_order`: Allows overriding the section order used for linker script generation. Useful when a section of a file is not between the other sections of the same type in the ROM, for example a file having its data section between other files's rodata.
+  * `linker_section`: Allows to override the `.section` directive that will be used when generating the disassembly of the corresponding section, without needing to write an extension segment. This also affects the section name that will be used during link time. Useful for sections with special names, like an executable section named `.start`
+
+### 0.18.0
+
+* `symbol_addrs` parsing checks:
+  * Enforce lines contain a single `;`
+  * Enforce no duplicates (same vram, same rom)
+
+### 0.17.3
+
+* Move wiki to the `docs` folder
+* Added the ability to specify `find_file_boundaries` on a per segment basis
+* Fix `cpp` segment not symbolizing rodata symbols properly
+
+### 0.17.2
+
+* Added more support for PS2 elf files
+
+### 0.17.1
+
+* New yaml options: `ld_sections_allowlist` and `ld_sections_denylist`
+  * `ld_sections_allowlist`: A list of sections to preserve during link time. It can be useful to preserve debugging sections.
+  * `ld_sections_denylist`: A list of sections to discard during link time. It can be useful to avoid using the wildcard discard. Note that this option does not turn off `ld_discard_section`.
+
+### 0.17.0
+
+* BREAKING: Linker script generation now imposes the specified `section_order`, which may not completely reflect the yaml order.
+  * In case this new linker script generation can't be properly adapted to a repo, the old generation can be reenabled by using the `ld_legacy_generation` flag as a temporary solution. Keep in mind this option may be removed in the future.
+* New yaml options related to linker script generation: `ld_partial_linking`, `ld_partial_scripts_path`, `ld_partial_build_segments_path`, `elf_path`, `ld_dependencies`
+  * `ld_partial_linking`: Changes how the linker script is generated, allowing partially linking each segment. This allows for faster linking times when making changes to files at the cost of a slower build time from a clean build and loosing filepaths in the mapfile. This is also known as "incremental linking". This option requires both `ld_partial_scripts_path` and `ld_partial_build_segments_path`.
+  * `ld_partial_scripts_path`: Folder were each intermediary linker script will be written to.
+  * `ld_partial_build_segments_path`: Folder where the built partially linked segments will be placed by the build system.
+  * `elf_path`: Path to the final elf target.
+  * `ld_dependencies`: Generate a dependency file for every linker script generated, including the main linker script and the ones for partial linking. Dependency files will have the same path and name as the corresponding linker script, but changing the extension to `.d`. Requires `elf_path` to be set.
+* New misc yaml options: `asm_function_alt_macro` and `ique_symbols`
+  * `asm_function_alt_macro`: Allows to use a different label on symbols that are in the middle of functions (that are not branch targets of any kind) than the one used for the label for functions, allowing for alternative function entrypoints.
+  * `ique_symbols` Automatically fills libultra symbols that are exclusive for iQue. This option is ignored if platform is not N64.
+* New "incbin" segments: `textbin`, `databin` and `rodatabin`
+  * Allows to specify binary blobs to be linked in a specific section instead of the data default.
+  * If a `textbin` section has a corresponding `databin` and/or `rodatabin` section with the same name then those will be included in the same generated assembly file.
+  * If a known symbol matches the vram of a incbin section then it will be emitted properly, allowing for better integration with the rest of splat's symbol system.
+* `spimdisasm` 1.17.0 or above is now required.
+
+### 0.16.10
+
+* Produce an error if subsegments do not have an ascending vram order.
+  * This can happen because bss subsegments need their vram to be specified explicitly.
+
+### 0.16.9
+
+* Add command line argument `--disassemble-all`, which has the same effect as the `disassemble_all` yaml option so will disamble already matched functions as well as migrated data.
+  * Note: the command line argument takes precedence over the yaml, so will take effect even if the yaml option is set to false.
+
+### 0.16.8
+
+* Avoid ignoring the `align` defined in a segment for `code` segments
+
+### 0.16.7
+
+* Use `pylibyaml` to speed-up yaml parsing
+
+### 0.16.6
+
+* Add option `ld_rom_start`.
+  * Allows offsetting rom address linker symbols by some arbitrary value.
+    * Useful for SN64 games which often have rom addresses offset by 0xB0000000.
+  * Defaults to 0.
+
+### 0.16.5
+
+* Add option `segment_symbols_style`.
+  * Allows changing the style of the generated segment symbols in the linker script.
+  * Possible values:
+    * `splat`: The current style for segment symbols.
+    * `makerom`: Style that aims to be compatible with makerom generated symbols.
+  * Defaults to `splat`.
+
+### 0.16.4
+
+* Add `get_section_flags` method to the `Segment` class.
+  * Useful for providing linker section flags when creating a custom section when making splat extensions.
+  * This may be necessary for some custom section types, because sections unrecognized by the linker will not link its data properly.
+  * More info about section flags: <https://sourceware.org/binutils/docs/as/Section.html#ELF-Version>
+
+### 0.16.3
+
+* Add `--stdout-only` flag. Redirects the progress bar output to `stdout` instead of `stderr`.
+* Add a check to prevent relocs with duplicated rom addresses.
+* Check empty functions only have 2 instructions before autodecompiling them.
+
+### 0.16.2
+
+* Add option `disassemble_all`. If enabled then already matched functions and migrated data will be disassembled to files anyways.
+
+### 0.16.1
+
+* Various changes so that series of image and palette subsegments can have `auto` rom addresses (as long as the first can find its rom address from the parent segment or its own definition)
+
+### 0.16.0
+
+* Add option `detect_redundant_function_end`. It tries to detect redundant and unreferenced functions ends and merge them together.
+  * This option is ignored if the compiler is not set to IDO.
+  * This type of codegen is only affected by flags `-g`, `-g1` and `-g2`.
+  * This option can also be overriden per file.
+* Disable `include_macro_inc` by default for IDO projects.
+* Disable `asm_emit_size_directive` by default for SN64 projects.
+* `spimdisasm` 1.16.0 or above is now required.
+
+### 0.15.4
+
+* Try to assign a segment to an user-declared symbol if the user declared the rom address.
+  * Helps to disambiguate symbols for same-address overlays.
+
+### 0.15.3
+
+* Disabled `asm_emit_size_directive` by default for IDO projects.
+
+### 0.15.2
+
+* Various cleanup and fixes to support more liberal use of `auto` for rom addresses
+
+### 0.15.1
+
+* Made some modifications such that linker object paths should be simpler in some circumstances
+
+### 0.15.0
+
+* New options:
+  * `data_string_encoding` can be set at the global level (or `str_encoding` at the segment level) to specify the encoding using when guessing and disassembling strings the the data section. In spimdisasm this value defaults to ASCII.
+  * `rodata_string_guesser_level` changes the behaviour of the rodata string guesser. A higher value means more agressive guessing, while 0 and negative means no guessing at all. Even if the guesser feature is disabled, symbols manually marked as strings in the symbol_addrs.txt file will still be disassembled as strings. In spimdisasm this value defaults to 1.
+    * level 0: Completely disable the guessing feature.
+    * level 1: The most conservative guessing level. Imposes the following restrictions:
+      * Do not try to guess if the user provided a type for the symbol.
+      * Do no try to guess if type information for the symbol can be inferred by other means.
+      * A string symbol must be referenced only once.
+      * Strings must not be empty.
+    * level 2: A string no longer needs to be referenced only once to be considered a possible string. This can happen because of a deduplication optimization.
+    * level 3: Empty strings are allowed.
+    * level 4: Symbols with autodetected type information but no user type information can still be guessed as strings.
+  * `data_string_guesser_level` is similar to `rodata_string_guesser_level`, but for the data section instead. In spimdisasm this value defaults to 2.
+  * `asm_emit_size_directive` toggles the size directived emitted by the disassembler. In spimdisasm this defaults to True.
+
+### 0.14.1
+
+* Fix bug, cod cleanup
+
+### 0.14.0
+
+* Add support for PSX's GTE instruction set
+
+### 0.13.10
+
+* New option `disasm_unknown` (False by default)
+  * If enabled it tells the disassembler to try disassembling functions with unknown instructions instead of falling back to disassembling as raw data
+
+### 0.13.9
+
+* New segment option `linker_entry` (true by default).
+  * If disabled, this segment will not produce entries in the linker script.
+
+### 0.13.8
+
+* New option `segment_end_before_align`.
+  * If enabled, the end symbol for each segment will be placed before the alignment directive for the segment
+
+### 0.13.7
+
+* Severely sped-up linker entry writing by using a dict instead of a list. Symbol headers will no longer be in any specific order (which shouldn't matter, because they're headers).
+
+### 0.13.6
+
+* Changed CI image processing so that their data is fetched during the scan phase, supporting palettes that come before CI images.
+
+### 0.13.5
+
+* An error will be produced if a symbol is declared with an unknown type in the symbol_addrs file.
+  * The current list of known symbols is `'func', 'label', 'jtbl', 'jtbl_label', 's8', 'u8', 's16', 'u16', 's32', 'u32', 's64', 'u64', 'f32', 'f64', 'Vec3f', 'asciz', 'char*', 'char'`.
+  * Custom types are allowed if they start with a capital letter.
+
+### 0.13.4
+
+* Renamed `follows_vram_symbol` segment option to `vram_of_symbol` to more accurately reflect what it's used for - to set the segment's vram based on a symbol.
+* Refactored the `appears_after_overlays_addr` feature so that expressions are written at the latest possible moment in the linker script. This fixes errors and warnings regarding forward references to later symbols.
+
+### 0.13.3
+
+* Added a new symbol_addrs attribute `appears_after_overlays_addr:0x1234` which will modify the linker script such that the symbol's address is equal to the value of the end of the longest overlay starting with address 0x1234. It achieves this by writing a series of sym = MAX(sym, seg_vram_END) statements into the linker script. For some games, it's feasible to manually create such statements, but for games with hundreds of overlays at the same address, this is very tedious and prone to error. The new attribute allows you to have peace of mind that the symbol will end up after all of these overlays.
+
+### 0.13.2
+
+* Actually implemented `ld_use_follows`. Oopz
+
+### 0.13.1
+
+* Added `ld_wildcard_sections` option (disabled by default), which adds a wildcard to the linker script for section linking. This can be helpful for modern GCC, which creates additional rodata sections such as ".rodata.xyz".
+* Added `ld_use_follows` option (enabled by default), which, if disabled, makes splat ignore follows_vram and follows_symbols. This helps for fixing matching builds while being able to add infrastructure to the yaml for non-matching builds by just re-enabling the option.
+
+### 0.13.0
+
+* Automatically generate `INCLUDE_RODATA`/`#pragma GLOBAL_ASM` directives for non migrated rodata symbols when creating new C files.
+* Non migrated rodata symbols will now only be produced if the C file has a corresponding rodata file with the same name and the C file has a `INCLUDE_RODATA`/`#pragma GLOBAL_ASM` directive referencing the symbol, similar to how functions are disassembled.
+  * Because of this, the `partial_migration` attribute has lost its purpose and has been removed.
+* Rodata symbol files are now included in the autogenerated dependency files too.
+
+### 0.12.14
+
+* New option: `pair_rodata_to_text`.
+  * If enabled, splat will try to find to which text segment an unpaired rodata segment belongs, and it will hint it to the user.
+
+### 0.12.13
+
+* bss segments can now omit the rom offset.
+
+### 0.12.12
+
+* Try to detect and warn to the user if a gap between two migrated rodata symbols is detected and suggest possible solutions to the user.
+
+### 0.12.11
+
+* New disassembly option in the yaml: `allow_data_addends`.
+  * Allows enabling/disabling using addends on all `.data` symbols.
+* Three new options for symbols: `name_end`, `allow_addend` and `dont_allow_addend`.
+  * `name_end`: allows to provide a closing name for any symbol. Useful for handwritten asm which usually have an "end" name.
+  * `allow_addend` and `dont_allow_addend`: Allow overriding the global `allow_data_addends` option for allowing addends on data symbols.
+
+### 0.12.10
+
+* Allows passing user-created relocs to the disassembler via the `reloc_addrs.txt` file, allowing to improve the automatic disassembly.
+* Multiple reloc_addrs files can be specified in the yaml with the `reloc_addrs_path` option.
+
+### 0.12.9
+
+* Added `format_sym_name()` to the vtx segment so it, too, can be extended
+
+### 0.12.8
+
+* The gfx and vtx segments now have a `data_only` option, which, if enabled, will emit only the plain data for the type and omit the enclosing symbol definition. This mode is useful when you want to manually declare the symbol and then #include the extracted data within the declaration.
+* The gfx segment has a method, `format_sym_name()`, which will allow custom overriding of the output of symbol names by extending the `gfx` segment. For example, this can be used to transform context-specific symbol names like mac_01_vtx into N(vtx), where N() is a macro that applies the current "namespace" to the symbol. Paper Mario plans to use this, so we can extract an asset once and then #include it in multiple places, while giving each inclusion unique symbol names for each component.
+
+### 0.12.7
+
+* Allow setting a different macro for jumptable labels with `asm_jtbl_label_macro`
+  * The currently recommended one is `jlabel` instead of `glabel`
+* Two new options for symbols: `force_migration` and `force_not_migration`
+  * Useful for weird cases where the disassembler decided a rodata symbol must (or must not) be migrated when it really shouldn't (or should)
+* Fix `str_encoding` defaulting to `False` instead of `None`
+* Output empty rules in generated dependency files to avoid issues when the function file does not exist anymore (i.e. when it gets matched)
+* Allow changing the `include_macro_inc` option in the yaml
+
 ### 0.12.6
 
 * Adds two new N64-specific segments:
@@ -12,7 +701,7 @@
 
 * Update minimal spimdisasm version to 1.7.1.
 * Fix spimdisasm>=1.7.0 non being able to see symbols which only are referenced by other data symbols.
-* An check was added to prevent segments marked with `exclusive_ram_id` have a vram address range which overlaps with segments not marked with said tag. If this happens it will be warned to the user.
+* A check was added to prevent segments marked with `exclusive_ram_id` have a vram address range which overlaps with segments not marked with said tag. If this happens it will be warned to the user.
 
 ### 0.12.4
 
@@ -219,7 +908,7 @@ The `auto_all_sections` option, when set to true, will automatically add `all_` 
     * Code and ASM modes have been combined into the `code` mode
 * BREAKING: The `name` attribute of a segment now should no longer be a subdirectory but rather a meaningful name for the segment which will be used as the name of the linker section. If your `name` was previously a directory, please change it into a `dir`.
 * BREAKING: `subsections` has been renamed to `subsegments`
-* New `dir` segment attribute specifies a subdirectory into which files will be saved. You can combine `dir` ("foo") with a subsection file name containing a subdirectory ("bar/out"), and the paths will be joined (foo/bar/out.c)
+* New `dir` segment attribute specifies a subdirectory into which files will be saved. You can combine `dir` ("foo") with a subsegment name containing a subdirectory ("bar/out"), and the paths will be joined (foo/bar/out.c)
   * If the `dir` attribute is specified but the `name` isn't, the `name` becomes `dir` with directory separation slashes replaced with underscores (foo/bar/baz -> foo_bar_baz)
 * BREAKING: Many configuration options have been renamed. `_dir` options have been changed to the suffix `_path`.
 * BREAKING: Assets (non-code, like `bin` and images) are now placed in the directory `asset_path` (defaults to `assets`).
@@ -275,10 +964,10 @@ Internally, there's a new Symbol class which stores information about a symbol a
 
 ## 0.5 The Rename Update
 * n64splat name changed to splat
-  * Some refactoring was done to support other platforms besides n64 in the future 
+  * Some refactoring was done to support other platforms besides n64 in the future
     * New `platform` option, which defaults to `n64`
   * This will cause breaking changes in custom segments, so please refer to one of the changes in one of the n64 base segments for details
-* Support for custom artifact paths 
+* Support for custom artifact paths
   * New `undefined_syms_auto_path` option
   * New `undefined_funcs_auto_path` option
   * New `cache_path` option

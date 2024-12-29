@@ -13,7 +13,9 @@ options:
   undefined_funcs_auto_path: undefined_funcs_auto.txt
 #  undefined_syms_auto: True
   undefined_syms_auto_path: undefined_syms_auto.txt
-  symbol_addrs_path: symbol_addrs.txt
+  symbol_addrs_path: 
+  - symbol_addrs.txt
+  - ovl_symbols.txt
   asm_path: asm
   src_path: src
   build_path: build
@@ -38,44 +40,43 @@ segments:
 
 
      #Game layout
-     #                                Is the overlay compressed?
-     #Main Segment -> ucode -> Data/Rodata -> MIO_SEGMENT | Overlay
+     #Main Segment -> ucode -> Data/Rodata -> MIO_SEGMENT | Overlays
 
       - [0x1000, hasm, entrypoint]
-      - [0x1050, c, game_1050] #Some GFX macros
-      - [0x1C70, c, main]
-      - [0x23E0, c, game_23E0]
-      - [0x5480, c, game_5480]
-      - [0x69D0, c, water_69D0]
-      - [0xBD30, c, game_BD30]
-      - [0xBF40, c, game_BF40]
-      - [0xC6C0, c, game_C6C0]
-      - [0x24270, c, game_24270]
-      - [0x24B00, c, game_24B00]
-      - [0x2C670, c, game_2C670]
-      - [0x34D50, c, game_34D50]
-      - [0x355D0, c, core/game_355D0]
-      - [0x39F00, c, game_39F00]
-      - [0x3A580, c, game_3A580]
-      - [0x3AC00, c, game_3AC00]
-      - [0x42670, c, game_42670]
-      - [0x436A0, c, game_43A60]
-      - [0x43DA0, c, game_43DA0]
-      - [0x4C750, c, game_4C750]
-      - [0x4F850, c, game_4F850]
-      - [0x52990, c, game_52990]
-      - [0x52CD0, c, game_52CD0]
-      - [0x68A10, c, game_68A10]
-      - [0x6EF50, c, game_6EF50]
+      - [0x1050, c, game/code_1050] #Some GFX macros
+      - [0x1C70, c, game/main]
+      - [0x23E0, c, game/code_23E0]
+      - [0x5480, c, game/code_5480]
+      - [0x69D0, c, game/water_69D0]
+      - [0xBD30, c, game/code_BD30]
+      - [0xBF40, c, game/code_BF40]
+      - [0xC6C0, c, game/code_C6C0]
+      - [0x24270, c, game/code_24270]
+      - [0x24B00, c, game/code_24B00]
+      - [0x2C670, c, game/code_2C670]
+      - [0x34D50, c, game/code_34D50]
+      - [0x355D0, c, game/core/code_355D0]
+      - [0x39F00, c, game/code_39F00]
+      - [0x3A580, c, game/code_3A580]
+      - [0x3AC00, c, game/code_3AC00]
+      - [0x42670, c, game/code_42670]
+      - [0x436A0, c, game/code_43A60]
+      - [0x43DA0, c, game/code_43DA0]
+      - [0x4C750, c, game/code_4C750]
+      - [0x4F850, c, game/code_4F850]
+      - [0x52990, c, game/code_52990]
+      - [0x52CD0, c, game/code_52CD0]
+      - [0x68A10, c, game/code_68A10]
+      - [0x6EF50, c, game/code_6EF50]
       - [0x6F530, hasm, mio0decode]
-      - [0x6F5D0, c, audio/audio_synthesis]
-      - [0x71AF0, c, audio/audio_heap]
-      - [0x734B0, c, audio/audio_load]
-      - [0x74D80, c, audio/audio_playback]
-      - [0x76630, c, audio/audio_effects]
-      - [0x77080, c, audio/auido_seqplayer]
-      - [0x79B70, c, audio/audio_external]
-      - [0x7F440, c, audio/audio_port] 
+      - [0x6F5D0, c, game/synthesis]
+      - [0x71AF0, c, game/audio/heap]
+      - [0x734B0, c, game/audio/load]
+      - [0x74D80, c, game/audio/playback]
+      - [0x76630, c, game/audio/effects]
+      - [0x77080, c, game/audio/seqplayer]
+      - [0x79B70, c, game/audio/external]
+      - [0x7F440, c, game/audio/port] 
 
      #Libultra Starts!
       - [0x7FF20, c, os/osVirtualtoPhysical]
@@ -105,7 +106,7 @@ segments:
       - [0x81500, c, os/osSetThreadPri]
       - [0x815E0, c, libultra_nm/UnkLibultraSeg_815E0]
       - [0x81810, hasm, libultra/sqrtf]
-      - [0x81820, c, game_81820] #Game segment
+      - [0x81820, c, libultra_nm/UnkLibultraSeg_81820] #Game segment
       - [0x81B80, asm, guOrtho]
       - [0x81D40, c, os/gu/guTranslate] #TODO
       - [0x81DE0, c, libultra_nm/UnkLibultraSeg_81DE0] #gu funcs
@@ -189,19 +190,21 @@ segments:
 
     #!< Not dinamically loaded!
   - name: overlay_A95D0
+    exclusive_ram_id: overlay
+    follows_varm: segment_1B1FB0
     type: code
     start: 0xA95D0
     vram: 0x801DAFA0
     dir: overlays
     symbol_name_format: A95D0_$VRAM
     subsegments:
-    - [0xA95D0, c, A95D0/overlay_A95D0]
-    - [0xAF8C0, c, A95D0/overlay_AF8C0]
-    - [0xB2510, c, A95D0/overlay_B2510]
-    - [0xB2A70, c, A95D0/overlay_B2A70]
-    - [0xB3AA0, c, A95D0/overlay_B3AA0]
-    - [0xB55E0, c, A95D0/overlay_B55E0]
-    - [0xB66E0, c, A95D0/overlay_B66E0]
+    - [0xA95D0, c, A95D0/ovl_A95D0]
+    - [0xAF8C0, c, A95D0/ovl_AF8C0]
+    - [0xB2510, c, A95D0/ovl_B2510]
+    - [0xB2A70, c, A95D0/ovl_B2A70]
+    - [0xB3AA0, c, A95D0/ovl_B3AA0]
+    - [0xB55E0, c, A95D0/ovl_B55E0]
+    - [0xB66E0, c, A95D0/ovl_B66E0]
     #- [0xCAE70, bin] #Rodata???
     #- [0x1AE220, bin]
 
@@ -213,78 +216,228 @@ segments:
     type: bin
     start: 0x1AE660
 
-    #Just need the exact vram of these
-  - name: segment_1B1FB0
+    # What?, this seems to be unused.
+  - name: segment_1B1FB0  
+    exclusive_ram_id: overlay
     type: code
     start: 0x1B1FB0
     vram: 0x801F77B0
     symbol_name_format: 1B1FB0_$VRAM
     subsegments:
-    - [0x1B1FB0, bin] #Need the exact vram of this !!!!!!!
+    - [0x1B1FB0, c, unused_code_1B1FB0]
     - [0x1B3E10, bin]
 
-  - name: overlay_1B3EC0
+  - name: ovl_i0
+    exclusive_ram_id: overlay
     type: code
     start: 0x1B3EC0
     vram: 0x802C5800
-    dir: overlays
-    symbol_name_format: 1B3EC0_$VRAM
+    dir: overlays/ovl_i0
+    symbol_name_format: i0_$VRAM
     subsegments:
-    - [0x1B3EC0, c, 1B3EC0/overlay_1B3EC0] #Migrated !
+    - [0x1B3EC0, c, ovl_1B3EC0] #Migrated !
 
-  - name: pad1
+  - name: unk_data
     type: bin
-    start: 0x1B5290 #BSS maybe?
-    #- [0x1B5990, rodata]
+    start: 0x1B5280 
 
-    #This one seems to be loaded when the game enters in a race
-  - name: overlay_1B55A0
-    type: bin
+    #Loaded when the game enters in a race
+  - name: ovl_i1
+    type: code
+    dir: overlays/ovl_i1
+    exclusive_ram_id: overlay
+    symbol_name_format: i1_$VRAM
     start: 0x1B55A0
     vram: 0x802C5800
+    subsegments:
+    - [0x1B55A0, c, ovl_1B55A0]
+    - [0x1B91E0, bin]
 
-  # - name: overlay_1B55A0
-  #   type: code
-  #   start: 0x1B55A0
-  #   vram: 0x802C5800
-  #   symbol_name_format: 1B55A0_$VRAM
-  #   subsegments:
-  #   - [0x1B55A0, c, overlay_1B55A0]
-  #   - [0x1B91E0, bin]
-  #   - [0x1B9440, c, overlay_1B9440]
-  #   - [0x1BC800, bin]
-  #   - [0x1BC890, c, overlay_1BC890]
-  #   - [0x1BDFE0, bin]
-  #   - [0x1BE0B0, c, overlay_1BE0B0]
-  #   - [0x1BFDE0, bin]
-  #   - [0x1BFF50, c, overlay_1BFF50]
-  #   - [0x1C17E0, c, overlay_1C17E0]
-  #   - [0x1C2150, bin]
-  #   - [0x1C2250, c, overlay_1C2250]
-  #   - [0x1C36C0, bin]
-  #   - [0x1C3780, c, overlay_1C3780]
-  #   - [0x1C43B0, bin]
-  #   - [0x1C43F0, c, overlay_1C43F0]
-  #   - [0x1C4910, bin]
-  #   - [0x1C49A0, c, overlay_1C49A0]
-  #   - [0x1C61E0, bin]
-  #   - [0x1C66D0, c, overlay_1C66D0]
-  #   - [0x1C8F90, bin]
-  #   - [0x1C9150, c, overlay_1C9150]
-  #   - [0x1CA3F0, bin]
-  #   - [0x1CA480, c, overlay_1CA480]
-  #   - [0x1CADD0, bin]
-  #   - [0x1CAE40, c, overlay_1CAE40]
-  #   - [0x1CBAA0, bin]
-  #   - [0x1CBAF0, c, overlay_1CBAF0]
-  #   - [0x1CF040, bin]
-  #   - [0x1CF180, c, overlay_1CF180]
-  #   - [0x1CFA70, bin]
-  #   - [0x1CFB60, c, overlay_1CFB60]
-  #   - [0x1D10B0, bin] #End
 
-  - name: LAST_MIO0_SEGMENT_OVERLAY
+    # Rider selection?
+  - name: ovl_i2
     type: code
+    dir: overlays/ovl_i2
+    exclusive_ram_id: overlay
+    symbol_name_format: i2_$VRAM
+    start: 0x1B9440
+    vram: 0x802C5800
+    subsegments:
+    - [0x1B9440, c, ovl_1B9440]
+    - [0x1BC7F0, bin]
+
+  #Before race (map overview?)
+  - name: ovl_i3
+    type: code
+    dir: overlays/ovl_i3
+    exclusive_ram_id: overlay
+    symbol_name_format: i3_$VRAM
+    start: 0x1BC890
+    vram: 0x802C5800
+    subsegments:
+    - [0x1BC890, c, ovl_1BC890] 
+    - [0x1BDFE0, bin]
+
+  - name: ovl_i4
+    type: code
+    dir: overlays/ovl_i4
+    exclusive_ram_id: overlay
+    symbol_name_format: i4_$VRAM
+    start: 0x1BE0B0
+    vram: 0x802C5800
+    subsegments:
+    - [0x1BE0B0, c, ovl_1BE0B0]
+    - [0x1BFDE0, bin]
+
+  - name: ovl_i5
+    type: code
+    dir: overlays/ovl_i5
+    exclusive_ram_id: overlay
+    symbol_name_format: i5_$VRAM
+    start: 0x1BFF50
+    vram: 0x802C5800
+    subsegments:
+    - [0x1BFF50, c, ovl_1BFF50] # Pre - race (map overview?)
+    - [0x1C17E0, c, ovl_1C17E0]
+    - [0x1C2150, bin]
+
+  - name: ovl_i6
+    type: code
+    dir: overlays/ovl_i6
+    exclusive_ram_id: overlay
+    symbol_name_format: i6_$VRAM
+    start: 0x1C2250
+    vram: 0x802C5800
+    subsegments:
+    - [0x1C2250, c, ovl_1C2250]
+    - [0x1C36C0, bin]
+
+    # Unused?
+  - name: seg_1C3780
+    type: code
+    exclusive_ram_id: overlay
+    symbol_name_format: 1C370_$VRAM
+    start: 0x1C3780
+    vram: 0x80208F80
+    subsegments:
+    - [0x1C3780, c, seg_1C3780]
+    - [0x1C3CB0, hasm, seg_pad] # TODO: This is just fake
+    - [0x1C3D00, c, seg_1C3D00]
+    - [0x1C43B0, bin]
+
+
+  # OPTIONS overlay
+
+  - name: ovl_i7
+    type: code
+    dir: overlays/ovl_i7
+    exclusive_ram_id: overlay
+    symbol_name_format: i7_$VRAM
+    start: 0x1C43F0
+    vram: 0x802C5800
+    subsegments:
+    - [0x1C43F0, c, ovl_1C43F0] 
+    - [0x1C4910, bin]
+
+  # Options - Change name
+  - name: ovl_i8
+    type: code
+    dir: overlays/ovl_i8
+    exclusive_ram_id: overlay
+    symbol_name_format: i8_$VRAM
+    start: 0x1C49A0
+    vram: 0x802C5800
+    subsegments:
+    - [0x1C49A0, c, ovl_1C49A0] 
+    - [0x1C61E0, bin]     
+
+    # Options - View records.
+  - name: ovl_i9
+    type: code
+    dir: overlays/ovl_i9
+    exclusive_ram_id: overlay
+    symbol_name_format: i9_$VRAM
+    start: 0x1C66D0
+    vram: 0x802C5800
+    subsegments:
+    - [0x1C66D0, c, ovl_1C66D0] 
+    - [0x1C8F90, bin]  
+
+    # Options - Change names
+  - name: ovl_i10
+    type: code
+    dir: overlays/ovl_i10
+    exclusive_ram_id: overlay
+    symbol_name_format: i10_$VRAM
+    start: 0x1C9150
+    vram: 0x802C5800
+    subsegments:
+    - [0x1C9150, c, ovl_1C9150] 
+    - [0x1CA3F0, bin]
+
+    # Options - Audio
+  - name: ovl_i11
+    type: code
+    dir: overlays/ovl_i11
+    exclusive_ram_id: overlay
+    symbol_name_format: i11_$VRAM
+    start: 0x1CA480
+    vram: 0x802C5800
+    subsegments:
+    - [0x1CA480, c, ovl_1CA480] 
+    - [0x1CADD0, bin]  
+
+    # Options - Erase course records
+  - name: ovl_i12
+    type: code
+    dir: overlays/ovl_i12
+    exclusive_ram_id: overlay
+    symbol_name_format: i12_$VRAM
+    start: 0x1CAE40
+    vram: 0x802C5800
+    subsegments:
+    - [0x1CAE40, c, ovl_1CAE40] 
+    - [0x1CBAA0, bin]
+
+    # Options - Save and load
+  - name: ovl_i13
+    type: code
+    dir: overlays/ovl_i13
+    exclusive_ram_id: overlay
+    symbol_name_format: i13_$VRAM
+    start: 0x1CBAF0
+    vram: 0x802C5800
+    subsegments:
+    - [0x1CBAF0, c, ovl_1CBAF0] 
+    - [0x1CF040, bin]
+
+    # Menu for the stunt and time trials mode or GAME OVER
+  - name: ovl_i14
+    type: code
+    dir: overlays/ovl_i14
+    exclusive_ram_id: overlay
+    symbol_name_format: i14_$VRAM
+    start: 0x1CF180
+    vram: 0x802C5800
+    subsegments:
+    - [0x1CF180, c, ovl_1CF180] 
+    - [0x1CFA70, bin]    
+
+    # Prize scene
+  - name: ovl_i15
+    type: code
+    dir: overlays/ovl_i15
+    exclusive_ram_id: overlay
+    symbol_name_format: i15_$VRAM
+    start: 0x1CFB60
+    vram: 0x802C5800
+    subsegments:
+    - [0x1CFB60, c, ovl_1CFB60] 
+    - [0x1D10B0, bin]    
+
+  - name: LAST_MIO0_SEG
+    type: code
+    exclusive_ram_id: segment
     start: 0x1D11D0
     vram: 0x802A0000
     subsegments:

@@ -4,7 +4,7 @@
 typedef enum {
 NO_PLAYERS,
 ONE_PLAYER,
-TWO_PLAYERS,
+TWO_PLAYERS
 }PLAYERS;
 
 extern PLAYERS gPlayers;
