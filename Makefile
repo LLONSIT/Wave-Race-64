@@ -77,7 +77,7 @@ GREP     = grep -rl
 
 #For segments without GLOBAL_ASM
 
-USE_QEMU_IRIX ?= 1
+USE_QEMU_IRIX ?= 0
 $(eval $(call validate-option,USE_QEMU_IRIX,0 1))
 
 
@@ -94,7 +94,7 @@ endif
 ifeq ($(USE_QEMU_IRIX),1)
         CC       := $(QEMU_IRIX) -silent -L $(TOOLS_DIR)/ido5.3_cc $(TOOLS_DIR)/ido5.3_cc/usr/bin/cc
 else
-        CC       := $(TOOLS_DIR)/ido_recomp/build/5.3/out/cc
+        CC       := $(TOOLS_DIR)/ido-static-recomp/build/5.3/out/cc
 endif
 
 SPLAT    = $(TOOLS_DIR)/splat/split.py
