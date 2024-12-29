@@ -17,13 +17,26 @@ CYAN    := \033[0;36m
 
 BUILD_DIR = build
 ASM_DIRS  = asm/data asm asm/libultra #For libultra handwritten files
-BIN_DIRS  = assets assets/mio0_seg
 
 SRC_DIR   = src
-OVL_DIR   = $(SRC_DIR)/overlays
+ASSETS_DIR = assets
+OVL_SRC_DIR   = $(SRC_DIR)/overlays
+OVL_ASSET_DIR = $(ASSETS_DIR)/overlays
+
 LIBULTRA_SRC_DIRS = $(SRC_DIR)/os $(SRC_DIR)/os/libc $(SRC_DIR)/os/audio $(SRC_DIR)/libultra_nm $(SRC_DIR)/os/gu 
 
-DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/core $(SRC_DIR)/audio $(OVL_DIR)/A95D0 $(OVL_DIR)/1B3EC0 $(LIBULTRA_SRC_DIRS)
+OVERLAY_SRC_DIRS = $(OVL_SRC_DIR)/ovl_i0 $(OVL_SRC_DIR)/ovl_i1 $(OVL_SRC_DIR)/ovl_i2 $(OVL_SRC_DIR)/ovl_i3 $(OVL_SRC_DIR)/ovl_i4 $(OVL_SRC_DIR)/ovl_i5 $(OVL_SRC_DIR)/ovl_i6 \
+		$(OVL_SRC_DIR)/ovl_i7 $(OVL_SRC_DIR)/ovl_i8 $(OVL_SRC_DIR)/ovl_i9 $(OVL_SRC_DIR)/ovl_i10 $(OVL_SRC_DIR)/ovl_i11 $(OVL_SRC_DIR)/ovl_i12 $(OVL_SRC_DIR)/ovl_i13 \
+		$(OVL_SRC_DIR)/ovl_i14 $(OVL_SRC_DIR)/ovl_i15 $(OVL_SRC_DIR)/ovl_i16
+
+OVERLAY_ASSETS_DIRS = $(OVL_ASSET_DIR)/ovl_i0 $(OVL_ASSET_DIR)/ovl_i1 $(OVL_ASSET_DIR)/ovl_i2 $(OVL_ASSET_DIR)/ovl_i3 $(OVL_ASSET_DIR)/ovl_i4 $(OVL_ASSET_DIR)/ovl_i5 $(OVL_ASSET_DIR)/ovl_i6 \
+		$(OVL_ASSET_DIR)/ovl_i7 $(OVL_ASSET_DIR)/ovl_i8 $(OVL_ASSET_DIR)/ovl_i9 $(OVL_ASSET_DIR)/ovl_i10 $(OVL_ASSET_DIR)/ovl_i11 $(OVL_ASSET_DIR)/ovl_i12 $(OVL_ASSET_DIR)/ovl_i13 \
+		$(OVL_ASSET_DIR)/ovl_i14 $(OVL_ASSET_DIR)/ovl_i15 $(OVL_ASSET_DIR)/ovl_i16
+
+
+BIN_DIRS  = assets assets/mio0_seg $(OVERLAY_ASSETS_DIRS)
+
+DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/game $(SRC_DIR)/game/core $(SRC_DIR)/game/audio $(OVL_SRC_DIR)/A95D0 $(OVERLAY_SRC_DIRS) $(LIBULTRA_SRC_DIRS)
 SRC_DIRS = $(DEFINE_SRC_DIRS)
 
 TOOLS_DIR = tools
@@ -64,7 +77,7 @@ GREP     = grep -rl
 
 #For segments without GLOBAL_ASM
 
-USE_QEMU_IRIX ?= 0
+USE_QEMU_IRIX ?= 1
 $(eval $(call validate-option,USE_QEMU_IRIX,0 1))
 
 
@@ -79,7 +92,7 @@ endif
 #Options
 
 ifeq ($(USE_QEMU_IRIX),1)
-        CC       := $(QEMU_IRIX) -silent -L $(TOOLS_DIR)/ido5.3_cc $(TOOLS_DIR)/ido5.3_compiler/usr/bin/cc
+        CC       := $(QEMU_IRIX) -silent -L $(TOOLS_DIR)/ido5.3_cc $(TOOLS_DIR)/ido5.3_cc/usr/bin/cc
 else
         CC       := $(TOOLS_DIR)/ido_recomp/build/5.3/out/cc
 endif
