@@ -7,3 +7,6 @@
 [submodule "tools/ido-static-recomp"]
 	path = tools/ido-static-recomp
 	url = https://github.com/decompals/ido-static-recomp.git
+[submodule "tools/decomp-permuter"]
+	path = tools/decomp-permuter
+	url = https://github.com/simonlindholm/decomp-permuter

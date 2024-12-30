@@ -5,4 +5,9 @@
 #include "variables.h"
 #include "functions.h"
 #include "macros.h"
+#include "math.h"
+
+
+typedef float Matrix[4][4];
+
 #endif /* COMMON_H */

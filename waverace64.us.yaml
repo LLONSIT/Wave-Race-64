@@ -186,8 +186,7 @@ segments:
     start: 0x8EDF0 #Needs to be 0x16 Aligned
     subsegments:
       - [0x8EDF0, data]
-      - [0xA3A20, bin]
-
+      - [0xA3A30, bin]
     #!< Not dinamically loaded!
   - name: overlay_A95D0
     exclusive_ram_id: overlay
