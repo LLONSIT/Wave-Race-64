@@ -12,7 +12,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/func_800B76F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/func_800B7760.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/soundAlloc.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/func_800B77D4.s")
 
@@ -32,7 +32,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/func_800B7A58.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/func_800B7B14.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/alloc_bank_or_seq.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/func_800B811C.s")
 

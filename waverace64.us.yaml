@@ -16,6 +16,7 @@ options:
   symbol_addrs_path: 
   - symbol_addrs.txt
   - ovl_symbols.txt
+  - audio_symbols.txt
   asm_path: asm
   src_path: src
   build_path: build
@@ -69,7 +70,7 @@ segments:
       - [0x68A10, c, game/code_68A10]
       - [0x6EF50, c, game/code_6EF50]
       - [0x6F530, hasm, mio0decode]
-      - [0x6F5D0, c, game/synthesis]
+      - [0x6F5D0, c, game/audio/synthesis]
       - [0x71AF0, c, game/audio/heap]
       - [0x734B0, c, game/audio/load]
       - [0x74D80, c, game/audio/playback]
