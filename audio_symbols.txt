@@ -1,0 +1,46 @@
+
+// Vars
+sSampleDmas = 0x80044DF0;
+gSampleDmaNumListItems = 0x800452F0;
+sSampleDmaListSize1 = 0x800452F4;
+sSampleDmaReuseQueueHead1 = 0x80045502;
+sSampleDmaReuseQueue1 = 0x80045300;
+sSampleDmaReuseQueue2 = 0x80045400;
+sSampleDmaReuseQueueHead2 = 0x80045503;
+sSampleDmaReuseQueueTail1 = 0x80045500;
+sSampleDmaReuseQueueTail2 = 0x80045501;
+gCurrAudioFrameDmaCount = 0x80045554;
+gCurrAudioFrameDmaQueue = 0x800447A0;
+gCurrAudioFrameDmaIoMesgBufs = 0x800448B8;
+gMaxSimultaneousNotes = 0x80045548;
+gAudioBufferParameters = 0x80045520;
+sDmaBufSize = 0x80045540;
+gNotesAndBuffersPool = 0x8003E570;
+
+gAudioDmaIoMesg = 0x80044DD8;
+gAudioDmaMesgQueue = 0x80044DB8;
+gAlCtlHeader = 0x80045508;
+gBankLoadedPool = 0x8003E7A0;
+gAlTbl = 0x8004550C;
+gCtlEntries = 0x80045518;
+gBankLoadStatus = 0x8003EB78;
+
+// Functions
+
+//load.c
+audio_dma_copy_immediate = 0x800B8CB0; //defined:true
+audio_dma_copy_async = 0x800B8D28; // defined:true
+audio_dma_partial_copy_async = 0x800B8D88; //defined:true
+decrease_sample_dma_ttls = 0x800B8E34; //defined:true
+dma_sample_data = 0x800B8F3C; //defined:true
+init_sample_dma_buffers = 0x800B9244;
+patch_sound = 0x800B9518; //defined:true
+patch_audio_bank = 0x800B9618; //defined:true
+bank_load_immediate = 0x800B9774; //defined:true
+bank_load_async = 0x800B98C0; //defined:true
+
+
+//heap.c
+
+soundAlloc = 0x800B7760;
+alloc_bank_or_seq = 0x800B7B14;

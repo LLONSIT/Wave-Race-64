@@ -55,4 +55,5 @@ extern s32 D_800DA9D0;
 extern s32 D_801CB328; //Selected course id??
 extern s32 D_801CE608;
 extern s8 D_800E5134;
+extern OSContPad gControllers[];
 #endif /* VARIABLES_H */
