@@ -100,7 +100,7 @@ segments:
       - [0x80D70, c, os/osStartThread]
       - [0x80EC0, c, os/osSpTaskYielded]
       - [0x80F40, hasm, libultra/writebackdcacheall]
-      - [0x80F70, c, libultra_nm/UnkLibultraSeg_80F70]
+      - [0x80F70, c, os/osCreateViManager]
       - [0x812D0, c, os/osViBlack]
       - [0x81340, c, os/osViGetCurrentFramebuffer]
       - [0x81380, c, os/osCreatePiManager]
@@ -187,7 +187,7 @@ segments:
     start: 0x8EDF0 #Needs to be 0x16 Aligned
     subsegments:
       - [0x8EDF0, data]
-      - [0xA3A30, bin]
+      - [0xA52B0, bin] # .rodata
     #!< Not dinamically loaded!
   - name: overlay_A95D0
     exclusive_ram_id: overlay
@@ -205,12 +205,8 @@ segments:
     - [0xB3AA0, c, A95D0/ovl_B3AA0]
     - [0xB55E0, c, A95D0/ovl_B55E0]
     - [0xB66E0, c, A95D0/ovl_B66E0]
-    #- [0xCAE70, bin] #Rodata???
-    #- [0x1AE220, bin]
+    - [0xCAE70, data] #Rodata???
 
-  - name: pad
-    type: bin
-    start: 0xCAE70
 
   - name: MIO0_chunk
     type: bin
