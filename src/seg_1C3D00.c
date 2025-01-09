@@ -10,11 +10,10 @@ void func_802C5D44(void);         /* extern */
 void func_802C5E10(void);
 void func_800C30F8(void);
 void func_8009345C();              /* extern */
-void func_801EB180();              /* extern */
-void func_801EBD28();              /* extern */
-void func_801EBFE4();              /* extern */
+void func_A95D0_801EB180();              /* extern */
+void func_A95D0_801EBD28();              /* extern */
+void func_A95D0_801EBFE4();              /* extern */
 void func_800C1F60(int);           /* extern */
-void func_801E6FB0(int, int, int); /* extern */
 void func_800C37F4(s32, s32);      /* extern */
 void func_802C5C4C(s32);           /* extern */
 
@@ -76,7 +75,7 @@ void func_1C370_8020994C(s32 arg0)
     D_801CE644 = 0;
     D_800DAB1C = 0;
     D_800D461C = 2;
-    func_801E6FB0(5, 1, 0);
+    func_A95D0_801E6FB0(5, 1, 0);
     if (D_801CE630 == 2)
     {
         func_800C1F60(0);
@@ -137,16 +136,16 @@ void func_1C370_80209B10(void)
         switch (D_801CE630)
         { /* irregular */
         case 2:
-            func_801EB180();
+            func_A95D0_801EB180();
             return;
         case 40:
             func_8009345C();
             return;
         case 10:
-            func_801EBD28();
+            func_A95D0_801EBD28();
             return;
         case 20:
-            func_801EBFE4();
+            func_A95D0_801EBFE4();
             break;
         }
     }

@@ -12,7 +12,7 @@ extern u32 D_800D47FC;
 void func_80051530(void) {
 }
 
-#ifdef BSS
+#ifdef DATA
 void* func_80051538(Gfx* gDisplayListHead) {
     static u32 D_800D47FC;
 

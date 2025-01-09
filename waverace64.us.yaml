@@ -187,6 +187,8 @@ segments:
     start: 0x8EDF0 #Needs to be 0x16 Aligned
     subsegments:
       - [0x8EDF0, data]
+      - [0x8EFE0, data]
+      - [0x8F000, data]
       - [0xA52B0, bin] # .rodata
     #!< Not dinamically loaded!
   - name: overlay_A95D0

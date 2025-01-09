@@ -115,9 +115,6 @@ __osPiAccessQueue	= 0x801DAC98;
 __osEepPifRam		= 0x801DACB0;
 kdebugserver_bss_0000	= 0x801DACF0;
 __osPiMesgQueue		= 0x801DAB30;
-guMtxF2L		= 0x801EDD90;
-guRotateRPYF		= 0x801EDF9C;
-guAlignF		= 0x801EE040;
 
 
 //TODO: Need to reference undefined function to the overlay address

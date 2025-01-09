@@ -87,4 +87,25 @@ struct unk_80097E68{
     struct unk_80097E68* unk4;
 };
 
+struct UnkStruct_801D7B70 {
+    s32 unk0;
+    s32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    s32 unk20;
+};
+
+struct Vec3f {
+    f32 x,y,z;
+};
+
+struct UnkStruct_800E6DD0 {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+};
 #endif /* STRUCTS_H */

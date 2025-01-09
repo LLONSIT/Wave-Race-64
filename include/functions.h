@@ -84,5 +84,7 @@ void func_80098190(void);
 void* func_80046DA0(void* entry);
 void func_80047FFC(s32 arg0, s32 arg1, s32 arg2, s32* arg3, s32* arg4, s32* arg5);
 s32 func_80086C40(f32 a0, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5);
+void func_800AF43C(f32, f32, f32);                       /* extern */
+void func_800B4788(s32, f32, f32, f32, f32, f32, f32);   /* extern */
 #endif /*FUNCTIONS_H*/
 

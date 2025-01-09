@@ -19,17 +19,17 @@ CPP_FLAGS = [
     "-DVERSION_US",
     "-DTARGET_N64",
     "-D_LANGUAGE_C",
-    "-DF3D_OLD", #PORT
+    "-DF3DEX_GBI",
     "-D_MIPS_SZLONG=32",
+  #  "-DSCRIPT(...)={}"
  #   "-D__attribute__(...)=",
- #   "-D__asm__(...)=",
-#    "-DGLOBAL_ASM(...)=",
+#    "-D__asm__(...)=",
     "-ffreestanding",
     "-nostdinc",
     "-Iinclude/libc",
     "-Iinclude",
     "-Ibuild",
-    "-Iinclude/2.0",
+    "-Iinclude/2.0I",
     "-Isrc",
     "-I.",
 ]
@@ -40,15 +40,13 @@ import shutil
 
 def import_c_file(in_file) -> str:
 
-    Message = '/**** \nContext file for Wave Race64!\nGenerated on '
+    Message = '/**** \nSpeedy Context file for Project_AG!\nGenerated on '
 
     with open("/etc/os-release") as f:
         for line in f:
             if "PRETTY_NAME" in line:
                 Message += line.split("=")[1].strip('"\n') + "\n"
                 Message += 'Linux Kernel ' + subprocess.check_output(['uname', '-r']).strip().decode('utf-8') + ')\n****/\n'
-
-
                 break
 
     Message += '/* by tools/m2ctx\n****/\n'
