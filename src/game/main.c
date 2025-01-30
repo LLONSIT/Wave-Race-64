@@ -30,7 +30,7 @@ OSMesgQueue D_801540A0;
 OSThread *gIdleThread;
 void *D_80151DE0;
 s32 D_801531E0;
-OSThread D_80153D40;
+OSThread gAudioThread;
 OSThread D_80153EF0;
 OSMesgQueue D_801540B8;
 OSMesgQueue D_801540E8;
@@ -95,11 +95,11 @@ void *func_80047530(void *entry)
     osSetEventMesg(4U, &D_80154130, (void *)0x17);
     osSetEventMesg(9U, &D_80154130, (void *)0x18);
     osViSetEvent(&D_80154130, (void *)0x19, 1U);
-    func_800980C8();
-    osCreateThread(&D_80153D40, 4, audio_thread, NULL, &gIdleThread, 0x14);
+    func_800980C8(); // stub
+    osCreateThread(&gAudioThread, 4, audio_thread, NULL, &gIdleThread, 0x14);
     if (D_800D4628 != 0)
     {
-        osStartThread(&D_80153D40);
+        osStartThread(&gAudioThread);
     }
     osCreateThread(&D_80153EF0, 5, func_80046DA0, NULL, &D_801531E0, 0xA);
     if (D_800D4624 != 0)

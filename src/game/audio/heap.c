@@ -34,7 +34,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/alloc_bank_or_seq.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/func_800B811C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/get_bank_or_seq.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/heap/func_800B81C4.s")
 

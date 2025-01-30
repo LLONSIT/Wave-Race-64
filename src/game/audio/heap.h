@@ -44,6 +44,15 @@ struct TemporaryPool {
     /*0x28, 0x2A   entries[1].id  */
 }; // size = 0x2C
 
+struct SoundMultiPool {
+    /*0x000*/ struct PersistentPool persistent;
+    /*0x194*/ struct TemporaryPool temporary;
+    /*     */ u32 pad2[4];
+}; // size = 0x1D0
+
 void *alloc_bank_or_seq(struct SoundMultiPool *arg0, s32 arg1, s32 size, s32 arg3, s32 id);
 void *soundAlloc(struct SoundAllocPool *pool, u32 size);
+
+extern struct SoundMultiPool gSeqLoadedPool;
+extern u8 gSeqLoadStatus[256];
 #endif /* HEAP_H */

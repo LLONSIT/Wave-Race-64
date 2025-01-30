@@ -24,7 +24,10 @@ gBankLoadedPool = 0x8003E7A0;
 gAlTbl = 0x8004550C;
 gCtlEntries = 0x80045518;
 gBankLoadStatus = 0x8003EB78;
-
+gSeqFileHeader = 0x80045504;
+gSeqLoadedPool = 0x8003E5D0;
+gSeqLoadStatus = 0x8003EBB8;
+gAlBankSets = 0x80045510;
 // Functions
 
 //load.c
@@ -38,9 +41,11 @@ patch_sound = 0x800B9518; //defined:true
 patch_audio_bank = 0x800B9618; //defined:true
 bank_load_immediate = 0x800B9774; //defined:true
 bank_load_async = 0x800B98C0; //defined:true
-
+sequence_dma_immediate = 0x800B9A24; //defined:true
+sequence_dma_async = 0x800B9AC4; //defined:true
+get_missing_bank = 0x800B9BEC; //defined:true
 
 //heap.c
-
 soundAlloc = 0x800B7760;
 alloc_bank_or_seq = 0x800B7B14;
+get_bank_or_seq = 0x800B811C; //defined:true
