@@ -31,7 +31,7 @@ void func_800964C4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80097E68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80097EC8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/game_dma_copy.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80097F74.s")
 

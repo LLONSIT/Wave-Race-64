@@ -48,4 +48,4 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/init_sequence_player.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BF1F4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/init_sequence_players.s")

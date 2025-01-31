@@ -22,4 +22,4 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/port/func_800C547C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/port/func_800C56F4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/port/port_init.s")

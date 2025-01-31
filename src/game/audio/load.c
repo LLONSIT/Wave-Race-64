@@ -1,8 +1,11 @@
 #include "common.h"
+#include <PR/os.h>
+
 #include "load.h"
 #include "heap.h"
 #include "internal.h"
 #include "data.h"
+#include "port.h"
 
 struct SharedDma
 {
@@ -80,7 +83,19 @@ OSIoMesg gAudioDmaIoMesg;
 u8 *gAlBankSets;
 u16 gSequenceCount;
 struct SequencePlayer gSequencePlayers[4];
+s32 gRefreshRate;
+f32 gAudio_Unk80045610;
+extern s32 gAudioHeapSize;
+/*
+externs
+*/
 
+extern u64 gAudioGlobalsStartMarker;
+extern u64 gAudioGlobalsEndMarker;
+extern u8 gSoundDataADSR[];
+extern u8 gSoundDataRaw[];
+extern u8 gMusicData[];
+extern u8 gBankSetsData[];
 
 #define PRINTF()
 
@@ -624,20 +639,26 @@ u8 get_missing_bank(u32 seqId, s32 *nonNullCount, s32 *nullCount)
     return ret;
 }
 
-struct AudioBank *load_banks_immediate(s32 seqId, u8 *outDefaultBank) {
+struct AudioBank *load_banks_immediate(s32 seqId, u8 *outDefaultBank)
+{
     void *bank;
     u32 bankId;
     u16 offset;
     u8 i;
-    offset = ((u16 *) gAlBankSets)[seqId];
-    for (i = gAlBankSets[offset++]; i != 0; i--) {
+    offset = ((u16 *)gAlBankSets)[seqId];
+    for (i = gAlBankSets[offset++]; i != 0; i--)
+    {
         bankId = gAlBankSets[offset++];
-        if ((gBankLoadStatus[bankId] >= 2) == 1) {
+        if ((gBankLoadStatus[bankId] >= 2) == 1)
+        {
             bank = get_bank_or_seq(&gBankLoadedPool, 2, bankId);
-        } else {
+        }
+        else
+        {
             bank = NULL;
         }
-        if (bank == NULL) {
+        if (bank == NULL)
+        {
             bank = bank_load_immediate(bankId, 2);
         }
     }
@@ -645,28 +666,36 @@ struct AudioBank *load_banks_immediate(s32 seqId, u8 *outDefaultBank) {
     return bank;
 }
 
-void preload_sequence(u32 seqId, u8 preloadMask) {
+void preload_sequence(u32 seqId, u8 preloadMask)
+{
     void *sequenceData;
     u8 temp;
 
-    if (seqId >= gSequenceCount) {
+    if (seqId >= gSequenceCount)
+    {
         return;
     }
 
     gAudioLoadLock = AUDIO_LOCK_LOADING;
-    if (preloadMask & PRELOAD_BANKS) {
+    if (preloadMask & PRELOAD_BANKS)
+    {
         load_banks_immediate(seqId, &temp);
     }
 
-    if (preloadMask & PRELOAD_SEQUENCE) {
+    if (preloadMask & PRELOAD_SEQUENCE)
+    {
         // @bug should be IS_SEQ_LOAD_COMPLETE
-        if ((gBankLoadStatus[seqId] >= 2) == TRUE) {
-            //eu_stubbed_printf_1("SEQ  %d ALREADY CACHED\n", seqId);
+        if ((gBankLoadStatus[seqId] >= 2) == TRUE)
+        {
+            // eu_stubbed_printf_1("SEQ  %d ALREADY CACHED\n", seqId);
             sequenceData = get_bank_or_seq(&gSeqLoadedPool, 2, seqId);
-        } else {
+        }
+        else
+        {
             sequenceData = NULL;
         }
-        if (sequenceData == NULL && !sequence_dma_immediate(seqId, 2)) {
+        if (sequenceData == NULL && !sequence_dma_immediate(seqId, 2))
+        {
             gAudioLoadLock = AUDIO_LOCK_NOT_LOADING;
             return;
         }
@@ -677,63 +706,80 @@ void preload_sequence(u32 seqId, u8 preloadMask) {
 
 void load_sequence_internal(u32 player, u32 seqId, s32 loadAsync);
 
-void load_sequence(u32 player, u32 seqId, s32 loadAsync) {
-    if (!loadAsync) {
+void load_sequence(u32 player, u32 seqId, s32 loadAsync)
+{
+    if (!loadAsync)
+    {
         gAudioLoadLock = AUDIO_LOCK_LOADING;
     }
     load_sequence_internal(player, seqId, loadAsync);
-    if (!loadAsync) {
+    if (!loadAsync)
+    {
         gAudioLoadLock = AUDIO_LOCK_NOT_LOADING;
     }
 }
 
-void load_sequence_internal(u32 player, u32 seqId, s32 loadAsync) {
+void load_sequence_internal(u32 player, u32 seqId, s32 loadAsync)
+{
     void *sequenceData;
     struct SequencePlayer *seqPlayer = &gSequencePlayers[player];
-           u32 padding[2];
-    if (seqId >= gSequenceCount) {
+    u32 padding[2];
+    if (seqId >= gSequenceCount)
+    {
         return;
     }
     sequence_player_disable(seqPlayer);
-    if (loadAsync) {
+    if (loadAsync)
+    {
         s32 numMissingBanks = 0;
         s32 dummy = 0;
         s32 bankId = get_missing_bank(seqId, &dummy, &numMissingBanks);
-        if (numMissingBanks == 1) {
-                                                                 ;
-            if (!bank_load_async(bankId, 2, seqPlayer)) {
+        if (numMissingBanks == 1)
+        {
+            ;
+            if (!bank_load_async(bankId, 2, seqPlayer))
+            {
                 return;
             }
             seqPlayer->defaultBank[0] = bankId;
-        } else {
-                                                                                                     ;
-            if (!load_banks_immediate(seqId, &seqPlayer->defaultBank[0])) {
+        }
+        else
+        {
+            ;
+            if (!load_banks_immediate(seqId, &seqPlayer->defaultBank[0]))
+            {
                 return;
             }
         }
-    } else if (!load_banks_immediate(seqId, &seqPlayer->defaultBank[0])) {
-        return;
     }
-                                                                                           ;
-                                              ;
+    else if (!load_banks_immediate(seqId, &seqPlayer->defaultBank[0]))
+    {
+        return;
+    };
+    ;
     seqPlayer->seqId = seqId;
     sequenceData = get_bank_or_seq(&gSeqLoadedPool, 2, seqId);
-    if (sequenceData == (void *)0) {
-        if (seqPlayer->seqDmaInProgress) {
-                                                                          ;
-                                                            ;
+    if (sequenceData == (void *)0)
+    {
+        if (seqPlayer->seqDmaInProgress)
+        {
+            ;
+            ;
             return;
         }
-        if (loadAsync) {
+        if (loadAsync)
+        {
             sequenceData = sequence_dma_async(seqId, 2, seqPlayer);
-        } else {
+        }
+        else
+        {
             sequenceData = sequence_dma_immediate(seqId, 2);
         }
-        if (sequenceData == (void *)0) {
+        if (sequenceData == (void *)0)
+        {
             return;
         }
-    }
-                                                          ;
+    };
     init_sequence_player(player);
     seqPlayer->scriptState.depth = 0;
     seqPlayer->delay = 0;
@@ -742,4 +788,123 @@ void load_sequence_internal(u32 player, u32 seqId, s32 loadAsync) {
     seqPlayer->scriptState.pc = sequenceData;
 }
 
+void port_init(void);
+s32 init_sequence_players(void);
+void sound_init_main_pools(s32 sizeForAudioInitPool);
+
+#ifdef NEEDS_RODATA
+void audio_init()
+{
+    s8 pad[16];
+    s32 i, j, k;
+    s32 lim1;
+    u8 buf[0x10];
+    s32 lim3;
+    u32 size;
+    u64 *ptr64;
+    void *data;
+    s32 pad2;
+
+    gAudioLoadLock = 0;
+    for (i = 0; i < gAudioHeapSize / 8; i++)
+    {
+        ((u64 *)gAudioHeap)[i] = 0;
+    }
+    ptr64 = &gAudioGlobalsStartMarker;
+    for (k = ((uintptr_t)&gAudioGlobalsEndMarker - (uintptr_t)&gAudioGlobalsStartMarker) / 8; k >= 0; k--)
+    {
+        *ptr64++ = 0;
+    }
+
+    switch (osTvType)
+    {
+    case OS_TV_PAL:
+        gAudio_Unk80045610 = 20.03042f;
+        gRefreshRate = 0x32;
+        break;
+    case OS_TV_MPAL:
+        gAudio_Unk80045610 = 16.546f;
+        gRefreshRate = 0x3C;
+        break;
+    case OS_TV_NTSC:
+    default:
+        gAudio_Unk80045610 = 16.713f;
+        gRefreshRate = 0x3C;
+        break;
+        break;
+    }
+    port_init();
+    if (k)
+    {
+    }
+    // PRINTF("Clear Workarea %x -%x size %x \n", (uintptr_t) &gAudioGlobalsStartMarker, (uintptr_t) &gAudioGlobalsEndMarker, (uintptr_t) &gAudioGlobalsEndMarker - (uintptr_t) &gAudioGlobalsStartMarker);
+    // PRINTF("AudioHeap is %x\n", gAudioHeapSize);
+    for (i = 0; i < 3; i++)
+    {
+        gAiBufferLengths[i] = 0xa0;
+    }
+    gAudioFrameCount = 0;
+    gAudioTaskIndex = 0;
+    gCurrAiBufferIndex = 0;
+    gSoundMode = 0;
+    gAudioTask = (void *)0;
+    gAudioTasks[0].task.t.data_size = 0;
+    gAudioTasks[1].task.t.data_size = 0;
+    osCreateMesgQueue(&gAudioDmaMesgQueue, &gAudioDmaMesg, 1);
+    osCreateMesgQueue(&gCurrAudioFrameDmaQueue, gCurrAudioFrameDmaMesgBufs,
+                      (s32)(sizeof(gCurrAudioFrameDmaMesgBufs) / sizeof(gCurrAudioFrameDmaMesgBufs[0])));
+    gCurrAudioFrameDmaCount = 0;
+    gSampleDmaNumListItems = 0;
+    sound_init_main_pools(gAudioInitPoolSize);
+    for (i = 0; i < 3; i++)
+    {
+        gAiBuffers[i] = soundAlloc(&gAudioInitPool, (0xa0 * 16));
+        for (j = 0; j < (s32)((0xa0 * 16) / sizeof(s16)); j++)
+        {
+            gAiBuffers[i][j] = 0;
+        }
+    }
+    gAudioResetPresetIdToLoad = 0;
+    gAudioResetStatus = 1;
+    audio_shut_down_and_reset_step();
+    // PRINTF("Heap reset.Synth Change %x \n", 0);
+    // PRINTF("Heap %x %x %x\n", 0, 0, 0);
+    // PRINTF("Main Heap Initialize.\n");
+    gSeqFileHeader = (ALSeqFile *)buf;
+    data = gMusicData;
+    audio_dma_copy_immediate((uintptr_t)data, gSeqFileHeader, 0x10);
+    gSequenceCount = gSeqFileHeader->seqCount;
+    size = gSequenceCount * sizeof(ALSeqData) + 4;
+    size = (((size) + 0xF) & ~0xF);
+    gSeqFileHeader = soundAlloc(&gAudioInitPool, size);
+    audio_dma_copy_immediate((uintptr_t)data, gSeqFileHeader, size);
+    alSeqFileNew(gSeqFileHeader, data);
+    gAlCtlHeader = (ALSeqFile *)buf;
+    data = gSoundDataADSR;
+    audio_dma_copy_immediate((uintptr_t)data, gAlCtlHeader, 0x10);
+    size = gAlCtlHeader->seqCount * sizeof(ALSeqData) + 4;
+    size = (((size) + 0xF) & ~0xF);
+    gCtlEntries = soundAlloc(&gAudioInitPool, gAlCtlHeader->seqCount * sizeof(struct CtlEntry));
+    gAlCtlHeader = soundAlloc(&gAudioInitPool, size);
+    audio_dma_copy_immediate((uintptr_t)data, gAlCtlHeader, size);
+    alSeqFileNew(gAlCtlHeader, data);
+    gAlTbl = (ALSeqFile *)buf;
+    audio_dma_copy_immediate((uintptr_t)data, gAlTbl, 0x10);
+    size = gAlTbl->seqCount * sizeof(ALSeqData) + 4;
+    size = (((size) + 0xF) & ~0xF);
+    gAlTbl = soundAlloc(&gAudioInitPool, size);
+    audio_dma_copy_immediate((uintptr_t)gSoundDataRaw, gAlTbl, size);
+    alSeqFileNew(gAlTbl, gSoundDataRaw);
+    gAlBankSets = soundAlloc(&gAudioInitPool, 0x100);
+    audio_dma_copy_immediate((uintptr_t)gBankSetsData, gAlBankSets, 0x100);
+    init_sequence_players();
+    gAudioLoadLock = 0x76557364;
+    // PRINTF("---------- Init Completed. ------------\n");
+    // PRINTF(" Syndrv    :[%6d]\n", 0);
+    // PRINTF(" Seqdrv    :[%6d]\n", 0);
+    // PRINTF(" audiodata :[%6d]\n", 0);
+    //   PRINTF("---------------------------------------\n");
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/load/audio_init.s")
+#endif

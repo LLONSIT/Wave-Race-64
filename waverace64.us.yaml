@@ -181,15 +181,18 @@ segments:
       - [0x8CB80, bin, fast3d_part2]
       - [0x8DFB0, bin, fast3d_audio]
 
-  - name: Main_seg_rodata #Data and Rodata for the main overlay??
+  - name: Main_seg_data_rodata
     type: code
     vram: 0x800D45F0
-    start: 0x8EDF0 #Needs to be 0x16 Aligned
+    start: 0x8DFC0 #Needs to be 0x16 Aligned
     subsegments:
+      - [0x8DFC0, data]
       - [0x8EDF0, data]
       - [0x8EFE0, data]
       - [0x8F000, data]
-      - [0xA52B0, bin] # .rodata
+      - [0xA52B0, data] # .rodata
+      - [0xA5620, data]
+      - [0xA5630, data]
     #!< Not dinamically loaded!
   - name: overlay_A95D0
     exclusive_ram_id: overlay
@@ -570,9 +573,9 @@ segments:
     - [0x405810, bin]
 
     #TODO: Check this
-  - name: sound
+  - name: sound_sequences
     type: bin
-    start: 0x7AE670
+    start: 0x7AE8B0
 
 
   - [0x800000]

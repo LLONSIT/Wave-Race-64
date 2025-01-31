@@ -158,6 +158,7 @@ osTvType = 0x80000300;
 audio_thread = 0x80047B20;
 idle_thread = 0x8004791C;
 gIdleThread = 0x801539E0;
+game_dma_copy = 0x80097EC8; //defined:true
 
 //Fix build
 D_A95D0_80228A78 = 0x80228A78;

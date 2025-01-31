@@ -31,6 +31,31 @@ gAlBankSets = 0x80045510;
 gSequenceCount = 0x80045514;
 gAudioLoadLock = 0x800EE300;
 gSequencePlayers = 0x8003FCC8;
+gAudioHeapSize = 0x800EE2F8;
+gAudioGlobalsEndMarker = 0x80045638;
+gAudioGlobalsStartMarker = 0x80038100;
+gAudioHeap = 0x80001000;
+gRefreshRate = 0x80045614;
+gAiBufferLengths = 0x80045624;
+gAudioFrameCount = 0x80045550;
+gAudioTaskIndex = 0x80045558;
+gCurrAiBufferIndex = 0x8004555C;
+gSoundMode = 0x8004554E;
+gAudioTasks = 0x80045570;
+gAudioTask = 0x8004556C;
+gAudioDmaMesg = 0x80044DD0;
+gAudioInitPoolSize = 0x800EE2FC;
+gAudioInitPool = 0x8003E560;
+gAiBuffers = 0x80045618;
+
+gAudioResetPresetIdToLoad = 0x8003ECB9;
+gAudioResetStatus = 0x8003ECB8;
+gMusicData = 0x7AE8B0; // TODO Not sure if this is real..
+gSoundDataADSR = 0x40B530;
+gBankSetsData = 0x7C4B70;
+gSoundDataRaw = 0x428C30;
+gCurrAudioFrameDmaMesgBufs = 0x800447B8;
+gAudio_Unk80045610 = 0x80045610;
 
 // Functions
 
@@ -54,10 +79,16 @@ load_sequence = 0x800B9F3C; //defined:true
 load_sequence_internal = 0x800B9F90; //defined:true
  
 //heap.c
-soundAlloc = 0x800B7760;
-alloc_bank_or_seq = 0x800B7B14;
+soundAlloc = 0x800B7760; //defined:true
+alloc_bank_or_seq = 0x800B7B14; //defined:true
 get_bank_or_seq = 0x800B811C; //defined:true
+audio_shut_down_and_reset_step = 0x800B8480; //defined:true
+port_init = 0x800C56F4; //defined:true
+sound_init_main_pools = 0x800B7848; //defined:true
 
 //seqplayer.c
 init_sequence_player = 0x800BF13C; //defined:true
 sequence_player_disable = 0x800BCEE0; //defined:true
+init_sequence_players = 0x800BF1F4; //defined:true
+
+alSeqFileNew = 0x800CA908; //defined:true

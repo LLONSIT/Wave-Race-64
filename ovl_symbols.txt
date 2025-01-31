@@ -220,3 +220,7 @@ func_A95D0_801FB514 = 0x801fb514; //defined:true
 func_A95D0_801FBFB4 = 0x801fbfb4; //defined:true
 func_A95D0_801FC39C = 0x801fc39c; //defined:true
 func_A95D0_801FC4D4 = 0x801fc4d4; //defined:true
+
+ 
+_A95D0_START = 0xA95D0;
+_A95D0_END = 0xF6090;

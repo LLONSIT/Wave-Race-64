@@ -57,4 +57,10 @@ void *soundAlloc(struct SoundAllocPool *pool, u32 size);
 void *get_bank_or_seq(s32 poolIdx, s32 arg1, s32 id);
 extern struct SoundMultiPool gSeqLoadedPool;
 extern u8 gSeqLoadStatus[256];
+extern struct SoundAllocPool gAudioInitPool;
+extern struct SoundAllocPool gNotesAndBuffersPool;
+extern struct SoundAllocPool gPersistentCommonPool;
+extern struct SoundAllocPool gTemporaryCommonPool;
+extern struct SoundMultiPool gSeqLoadedPool;
+extern struct SoundMultiPool gBankLoadedPool;
 #endif /* HEAP_H */
