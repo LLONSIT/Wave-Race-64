@@ -18,7 +18,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BCE18.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BCEE0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/sequence_player_disable.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BCFAC.s")
 
@@ -46,6 +46,6 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BF0C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BF13C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/init_sequence_player.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BF1F4.s")

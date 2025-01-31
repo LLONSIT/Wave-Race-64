@@ -28,6 +28,10 @@ gSeqFileHeader = 0x80045504;
 gSeqLoadedPool = 0x8003E5D0;
 gSeqLoadStatus = 0x8003EBB8;
 gAlBankSets = 0x80045510;
+gSequenceCount = 0x80045514;
+gAudioLoadLock = 0x800EE300;
+gSequencePlayers = 0x8003FCC8;
+
 // Functions
 
 //load.c
@@ -44,8 +48,16 @@ bank_load_async = 0x800B98C0; //defined:true
 sequence_dma_immediate = 0x800B9A24; //defined:true
 sequence_dma_async = 0x800B9AC4; //defined:true
 get_missing_bank = 0x800B9BEC; //defined:true
-
+load_banks_immediate = 0x800B9D24; //defined:true
+preload_sequence = 0x800B9E40; //defined:true
+load_sequence = 0x800B9F3C; //defined:true
+load_sequence_internal = 0x800B9F90; //defined:true
+ 
 //heap.c
 soundAlloc = 0x800B7760;
 alloc_bank_or_seq = 0x800B7B14;
 get_bank_or_seq = 0x800B811C; //defined:true
+
+//seqplayer.c
+init_sequence_player = 0x800BF13C; //defined:true
+sequence_player_disable = 0x800BCEE0; //defined:true

@@ -8,6 +8,8 @@
 #define SOUND_LOAD_STATUS_4              4
 #define SOUND_LOAD_STATUS_5              5
 
+#define IS_BANK_LOAD_COMPLETE(bankId) (gBankLoadStatus[bankId] >= SOUND_LOAD_STATUS_COMPLETE)
+
 struct SoundAllocPool {
     u8 *start;
     u8 *cur;
@@ -52,7 +54,7 @@ struct SoundMultiPool {
 
 void *alloc_bank_or_seq(struct SoundMultiPool *arg0, s32 arg1, s32 size, s32 arg3, s32 id);
 void *soundAlloc(struct SoundAllocPool *pool, u32 size);
-
+void *get_bank_or_seq(s32 poolIdx, s32 arg1, s32 id);
 extern struct SoundMultiPool gSeqLoadedPool;
 extern u8 gSeqLoadStatus[256];
 #endif /* HEAP_H */

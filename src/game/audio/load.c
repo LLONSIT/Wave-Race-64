@@ -2,6 +2,7 @@
 #include "load.h"
 #include "heap.h"
 #include "internal.h"
+#include "data.h"
 
 struct SharedDma
 {
@@ -77,6 +78,9 @@ OSMesgQueue gAudioDmaMesgQueue;
 OSMesg gAudioDmaMesg;
 OSIoMesg gAudioDmaIoMesg;
 u8 *gAlBankSets;
+u16 gSequenceCount;
+struct SequencePlayer gSequencePlayers[4];
+
 
 #define PRINTF()
 
@@ -620,12 +624,122 @@ u8 get_missing_bank(u32 seqId, s32 *nonNullCount, s32 *nullCount)
     return ret;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/load/func_800B9D24.s")
+struct AudioBank *load_banks_immediate(s32 seqId, u8 *outDefaultBank) {
+    void *bank;
+    u32 bankId;
+    u16 offset;
+    u8 i;
+    offset = ((u16 *) gAlBankSets)[seqId];
+    for (i = gAlBankSets[offset++]; i != 0; i--) {
+        bankId = gAlBankSets[offset++];
+        if ((gBankLoadStatus[bankId] >= 2) == 1) {
+            bank = get_bank_or_seq(&gBankLoadedPool, 2, bankId);
+        } else {
+            bank = NULL;
+        }
+        if (bank == NULL) {
+            bank = bank_load_immediate(bankId, 2);
+        }
+    }
+    *outDefaultBank = bankId;
+    return bank;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/load/func_800B9E40.s")
+void preload_sequence(u32 seqId, u8 preloadMask) {
+    void *sequenceData;
+    u8 temp;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/load/func_800B9F3C.s")
+    if (seqId >= gSequenceCount) {
+        return;
+    }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/load/func_800B9F90.s")
+    gAudioLoadLock = AUDIO_LOCK_LOADING;
+    if (preloadMask & PRELOAD_BANKS) {
+        load_banks_immediate(seqId, &temp);
+    }
+
+    if (preloadMask & PRELOAD_SEQUENCE) {
+        // @bug should be IS_SEQ_LOAD_COMPLETE
+        if ((gBankLoadStatus[seqId] >= 2) == TRUE) {
+            //eu_stubbed_printf_1("SEQ  %d ALREADY CACHED\n", seqId);
+            sequenceData = get_bank_or_seq(&gSeqLoadedPool, 2, seqId);
+        } else {
+            sequenceData = NULL;
+        }
+        if (sequenceData == NULL && !sequence_dma_immediate(seqId, 2)) {
+            gAudioLoadLock = AUDIO_LOCK_NOT_LOADING;
+            return;
+        }
+    }
+
+    gAudioLoadLock = AUDIO_LOCK_NOT_LOADING;
+}
+
+void load_sequence_internal(u32 player, u32 seqId, s32 loadAsync);
+
+void load_sequence(u32 player, u32 seqId, s32 loadAsync) {
+    if (!loadAsync) {
+        gAudioLoadLock = AUDIO_LOCK_LOADING;
+    }
+    load_sequence_internal(player, seqId, loadAsync);
+    if (!loadAsync) {
+        gAudioLoadLock = AUDIO_LOCK_NOT_LOADING;
+    }
+}
+
+void load_sequence_internal(u32 player, u32 seqId, s32 loadAsync) {
+    void *sequenceData;
+    struct SequencePlayer *seqPlayer = &gSequencePlayers[player];
+           u32 padding[2];
+    if (seqId >= gSequenceCount) {
+        return;
+    }
+    sequence_player_disable(seqPlayer);
+    if (loadAsync) {
+        s32 numMissingBanks = 0;
+        s32 dummy = 0;
+        s32 bankId = get_missing_bank(seqId, &dummy, &numMissingBanks);
+        if (numMissingBanks == 1) {
+                                                                 ;
+            if (!bank_load_async(bankId, 2, seqPlayer)) {
+                return;
+            }
+            seqPlayer->defaultBank[0] = bankId;
+        } else {
+                                                                                                     ;
+            if (!load_banks_immediate(seqId, &seqPlayer->defaultBank[0])) {
+                return;
+            }
+        }
+    } else if (!load_banks_immediate(seqId, &seqPlayer->defaultBank[0])) {
+        return;
+    }
+                                                                                           ;
+                                              ;
+    seqPlayer->seqId = seqId;
+    sequenceData = get_bank_or_seq(&gSeqLoadedPool, 2, seqId);
+    if (sequenceData == (void *)0) {
+        if (seqPlayer->seqDmaInProgress) {
+                                                                          ;
+                                                            ;
+            return;
+        }
+        if (loadAsync) {
+            sequenceData = sequence_dma_async(seqId, 2, seqPlayer);
+        } else {
+            sequenceData = sequence_dma_immediate(seqId, 2);
+        }
+        if (sequenceData == (void *)0) {
+            return;
+        }
+    }
+                                                          ;
+    init_sequence_player(player);
+    seqPlayer->scriptState.depth = 0;
+    seqPlayer->delay = 0;
+    seqPlayer->enabled = 1;
+    seqPlayer->seqData = sequenceData;
+    seqPlayer->scriptState.pc = sequenceData;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/load/audio_init.s")
