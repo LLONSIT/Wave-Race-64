@@ -21,6 +21,7 @@ options:
   src_path: src
   build_path: build
   extensions_path: tools/splat_ext
+  ld_legacy_generation: True
   #mips_abi_float_regs: o32
   #section_order: [".text", ".data", ".rodata", ".bss"]
   #auto_all_sections: [".data", ".rodata", ".bss"]
@@ -193,8 +194,8 @@ segments:
       - [0xA52B0, data] # .rodata
       - [0xA5620, data]
       - [0xA5630, data]
-    #!< Not dinamically loaded!
-  - name: overlay_A95D0
+
+  - name: overlay_A95D0 #Maybe this is just a segment
     exclusive_ram_id: overlay
     follows_varm: segment_1B1FB0
     type: code
@@ -210,7 +211,12 @@ segments:
     - [0xB3AA0, c, A95D0/ovl_B3AA0]
     - [0xB55E0, c, A95D0/ovl_B55E0]
     - [0xB66E0, c, A95D0/ovl_B66E0]
-    - [0xCAE70, data] #Rodata???
+    - [0xCAE70, data] 
+
+  - name: unk_F6090
+    type: bin
+    start: 0xF6090
+    
 
 
   - name: MIO0_chunk
@@ -572,10 +578,23 @@ segments:
     - [0x3F5A30, bin]
     - [0x405810, bin]
 
+
+  - name: sound_data_ctl
+    type: bin
+    start: 0x40B530
+
+  - name: sound_data
+    type: bin
+    start: 0x428C30
+
     #TODO: Check this
   - name: sound_sequences
     type: bin
     start: 0x7AE8B0
+
+  - name: bank_sets
+    type: bin
+    start: 0x7C4B70
 
 
   - [0x800000]

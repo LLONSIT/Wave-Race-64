@@ -50,10 +50,16 @@ gAiBuffers = 0x80045618;
 
 gAudioResetPresetIdToLoad = 0x8003ECB9;
 gAudioResetStatus = 0x8003ECB8;
-gMusicData = 0x7AE8B0; // TODO Not sure if this is real..
-gSoundDataADSR = 0x40B530;
-gBankSetsData = 0x7C4B70;
-gSoundDataRaw = 0x428C30;
+
+// Some linker symbols
+sound_data_ctl_ROM_START = 0x40B530; //defined:true
+sound_data_ROM_START = 0x428C30; //defined:true
+sound_sequences_ROM_START = 0x7AE8B0; //defined:true
+bank_sets_ROM_START = 0x7C4B70; //defined:true
+
+//bank_sets_ROM_END = ????
+
+
 gCurrAudioFrameDmaMesgBufs = 0x800447B8;
 gAudio_Unk80045610 = 0x80045610;
 
