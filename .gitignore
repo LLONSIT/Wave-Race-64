@@ -1,7 +1,6 @@
 # Ignore some tools
 tools/n64crc
 tools/ido5.3_recomp/
-tools/splat
 
 # Ignore OS and IDE folders
 .vscode/
