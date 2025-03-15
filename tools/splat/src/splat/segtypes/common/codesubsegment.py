@@ -41,7 +41,6 @@ class CommonSegCodeSubsegment(Segment):
         )
 
         self.is_hasm = False
-        self.use_gp_rel_macro = options.opts.use_gp_rel_macro
 
     @property
     def needs_symbols(self) -> bool:
@@ -60,13 +59,9 @@ class CommonSegCodeSubsegment(Segment):
         section.isHandwritten = self.is_hasm
         section.instrCat = self.instr_category
         section.detectRedundantFunctionEnd = self.detect_redundant_function_end
-        section.gpRelHack = not self.use_gp_rel_macro
 
     def scan_code(self, rom_bytes, is_hasm=False):
         self.is_hasm = is_hasm
-
-        if self.is_auto_segment:
-            return
 
         if not isinstance(self.rom_start, int):
             log.error(
@@ -122,7 +117,7 @@ class CommonSegCodeSubsegment(Segment):
         )
 
         # Gather symbols found by spimdisasm and create those symbols in splat's side
-        for referenced_vram in func_spim.referencedVrams:
+        for referenced_vram in func_spim.instrAnalyzer.referencedVrams:
             context_sym = self.spim_section.get_section().getSymbol(
                 referenced_vram, tryPlusOffset=False
             )
@@ -149,7 +144,9 @@ class CommonSegCodeSubsegment(Segment):
             if instr_offset in func_spim.instrAnalyzer.symbolInstrOffset:
                 sym_address = func_spim.instrAnalyzer.symbolInstrOffset[instr_offset]
 
-                context_sym = self.spim_section.get_section().getSymbol(sym_address)
+                context_sym = self.spim_section.get_section().getSymbol(
+                    sym_address, tryPlusOffset=False
+                )
                 if context_sym is not None:
                     symbols.create_symbol_from_spim_symbol(
                         self.get_most_parent(), context_sym
@@ -162,6 +159,9 @@ class CommonSegCodeSubsegment(Segment):
         assert isinstance(self.rom_start, int)
 
         for in_file_offset in self.spim_section.get_section().fileBoundaries:
+            if (in_file_offset % 16) != 0:
+                continue
+
             if not self.parent.reported_file_split:
                 self.parent.reported_file_split = True
 

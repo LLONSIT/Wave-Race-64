@@ -1,3 +1,4 @@
+from ..common.code import CommonSegCode
 from ..common.hasm import CommonSegHasm
 
 

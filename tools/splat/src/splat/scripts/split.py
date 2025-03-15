@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import importlib
+import pickle
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 from pathlib import Path
 
@@ -40,7 +41,7 @@ def initialize_segments(config_segments: Union[dict, list]) -> List[Segment]:
     segment_rams = IntervalTree()
 
     segments_by_name: Dict[str, Segment] = {}
-    ret: List[Segment] = []
+    ret = []
 
     last_rom_end = 0
 
@@ -53,13 +54,11 @@ def initialize_segments(config_segments: Union[dict, list]) -> List[Segment]:
 
         segment_class = Segment.get_class_for_type(seg_type)
 
-        this_start, is_auto_segment = Segment.parse_segment_start(seg_yaml)
+        this_start = Segment.parse_segment_start(seg_yaml)
 
         j = i + 1
         while j < len(config_segments):
-            next_start, next_is_auto_segment = Segment.parse_segment_start(
-                config_segments[j]
-            )
+            next_start = Segment.parse_segment_start(config_segments[j])
             if next_start is not None:
                 break
             j += 1
@@ -75,7 +74,7 @@ def initialize_segments(config_segments: Union[dict, list]) -> List[Segment]:
             next_start = last_rom_end
 
         segment: Segment = Segment.from_yaml(
-            segment_class, seg_yaml, this_start, next_start, None
+            segment_class, seg_yaml, this_start, next_start
         )
 
         if segment.require_unique_name:
@@ -110,11 +109,6 @@ def initialize_segments(config_segments: Union[dict, list]) -> List[Segment]:
             segment.given_vram_symbol = get_segment_vram_end_symbol_name(
                 segments_by_name[segment.given_follows_vram]
             )
-
-    if ret[-1].type == "pad":
-        log.error(
-            "Last segment in config cannot be a pad segment; see https://github.com/ethteck/splat/wiki/Segments#pad"
-        )
 
     return ret
 
@@ -271,9 +265,11 @@ def do_scan(
     for segment in scan_bar:
         assert isinstance(segment, Segment)
         scan_bar.set_description(f"Scanning {brief_seg_name(segment, 20)}")
+        typ = segment.type
+        if segment.type == "bin" and segment.is_name_default():
+            typ = "unk"
 
-        for ty, sub_stats in segment.statistics.items():
-            stats.add_size(ty, sub_stats.size)
+        stats.add_size(typ, segment.size)
 
         if segment.should_scan():
             # Check cache but don't write anything
@@ -285,8 +281,7 @@ def do_scan(
 
             processed_segments.append(segment)
 
-            for ty, sub_stats in segment.statistics.items():
-                stats.count_split(ty, sub_stats.count)
+            stats.count_split(typ)
 
     symbols.mark_c_funcs_as_defined()
     return processed_segments
@@ -304,8 +299,7 @@ def do_split(
         split_bar.set_description(f"Splitting {brief_seg_name(segment, 20)}")
 
         if cache.check_cache_hit(segment, True):
-            for ty, sub_stats in segment.statistics.items():
-                stats.count_cached(ty, sub_stats.count)
+            stats.count_cached(segment.type)
             continue
 
         if segment.should_split():
