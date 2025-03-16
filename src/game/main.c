@@ -160,7 +160,7 @@ void *func_80047530(void *entry)
         }
         if (sp4C == (void *)0x16)
         {
-            func_800C6740();
+            osWritebackDCacheAll();
             if (D_800D4604 != 0)
             {
                 if (D_800D4600 != 1)
@@ -176,7 +176,7 @@ void *func_80047530(void *entry)
         }
         if (sp4C == (void *)0x15)
         {
-            func_800C6740();
+            osWritebackDCacheAll();
             if (D_800D4604 != 0)
             {
                 D_800D460C = 1;
@@ -234,7 +234,7 @@ void *idle_thread(void *entry)
         ;
 }
 
-void main(void)
+void bootproc(void)
 {
     osInitialize();
     osCreateThread(&gIdleThread, 1, &idle_thread, 0, &D_80151DE0, 0x64);

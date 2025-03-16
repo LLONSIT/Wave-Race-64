@@ -98,3 +98,6 @@ sequence_player_disable = 0x800BCEE0; //defined:true
 init_sequence_players = 0x800BF1F4; //defined:true
 
 alSeqFileNew = 0x800CA908; //defined:true
+
+aspMainTextStart = 0x800D37B0;
+aspMainDataStart = 0x800EEB10;

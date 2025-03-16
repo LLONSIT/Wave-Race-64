@@ -23,6 +23,9 @@ options:
   extensions_path: tools/splat_ext
   ld_legacy_generation: True
   asm_emit_size_directive: True # REC
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
   #mips_abi_float_regs: o32
   #section_order: [".text", ".data", ".rodata", ".bss"]
   #auto_all_sections: [".data", ".rodata", ".bss"]
@@ -179,7 +182,7 @@ segments:
       - [0x8C8B0, hasm, libultra/getcause]
       - [0x8C8C0, c, os/__osAtomicDec]
       - [0x8C920, c, os/libc/ldiv]
-      - [0x8CAB0, asm, fast3d_part1] #TODO: Put these on a separated segment
+      - [0x8CAB0, bin, fast3d_part1] #TODO: Put these on a separated segment
       - [0x8CB80, bin, fast3d_part2]
       - [0x8DFB0, bin, fast3d_audio]
 
@@ -229,7 +232,7 @@ segments:
     exclusive_ram_id: overlay
     type: code
     start: 0x1B1FB0
-    vram: 0x801F77B0
+    vram: 0x802C5800
     symbol_name_format: 1B1FB0_$VRAM
     subsegments:
     - [0x1B1FB0, c, unused_code_1B1FB0]
@@ -326,10 +329,10 @@ segments:
     exclusive_ram_id: overlay
     symbol_name_format: 1C370_$VRAM
     start: 0x1C3780
-    vram: 0x80208F80
+    vram: 0x802C5800
     subsegments:
     - [0x1C3780, c, seg_1C3780]
-    - [0x1C3CB0, hasm, seg_pad] # TODO: This is just fake
+    - [0x1C3CB0, bin, seg_pad] # TODO: This is just fake
     - [0x1C3D00, c, seg_1C3D00]
     - [0x1C43B0, bin]
 

@@ -115,7 +115,15 @@ __osPiAccessQueue	= 0x801DAC98;
 __osEepPifRam		= 0x801DACB0;
 kdebugserver_bss_0000	= 0x801DACF0;
 __osPiMesgQueue		= 0x801DAB30;
-
+osInitialize = 0x800C6DE0;
+osWritebackDCacheAll = 0x800C6740;
+__osSetSR = 0x800CC5D0;
+__osGetSR = 0x800CC5E0;
+__osSetFpcCsr = 0x800CC5F0;
+__osSiRawReadIo = 0x800CC600;
+__osSiRawWriteIo = 0x800CC650;
+osMapTLBRdb = 0x800CC6A0;
+osContInit = 0x800C7020;
 
 //TODO: Need to reference undefined function to the overlay address
 
@@ -144,7 +152,7 @@ play_sound = 0x800C53D4;
 gCourseID = 0x800D8170;
 menu_buffer_1 = 0x80228930;
 short_RGB = 0x800DAA58;
-main = 0x80047AA4;
+bootproc = 0x80047AA4;
 gControllers = 0x801542F0;
 gControllerOne = 0x80154308;
 gCameraPerspective = 0x80227C80;
@@ -165,7 +173,6 @@ D_A95D0_80228A78 = 0x80228A78;
 D_A95D0_80227E98 = 0x80227E98;
 D_A95D0_80228058 = 0x80228058;
 
-osInitialize = 0x800C6DE0;
 
 //Names from n64decomp/mk64
 sequence_channel_process_sound = 0x800BBE30;
