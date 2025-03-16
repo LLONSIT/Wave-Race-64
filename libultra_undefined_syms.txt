@@ -1,6 +1,4 @@
 __osContPifRam          = 0x801D56FC;
 __osCurrentTime         = 0x801D58A4;
 __osContPifRam		= 0x801DAB60;
-osSpTaskStartGo         = 0x800C62BC;
-osSpTaskLoad            = 0x800C615C; 
 osClockRate             = 0x800E1FA4;
