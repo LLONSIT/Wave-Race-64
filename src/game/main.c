@@ -128,7 +128,7 @@ void *func_80047530(void *entry)
             switch (D_800D4600)
             { /* irregular */
             case 1:
-                if (func_800C66C0(first_task) != 0)
+                if (osSpTaskYielded(first_task) != 0)
                 {
                     D_800D4608 = 1;
                 }
@@ -200,7 +200,7 @@ void *idle_thread(void *entry)
     D_801542C0[0] = (s32)&D_8038F800;
     D_801542C0[1] = &D_803B5000;
     D_801542C0[2] = &D_803DA800;
-    func_800C6770(0xFE);
+    osCreateViManager(0xFE);
     if (osTvType == 1)
     { // NTSC
         osViSetMode(&D_800E8770);
