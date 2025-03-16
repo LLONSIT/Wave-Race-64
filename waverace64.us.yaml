@@ -223,8 +223,6 @@ segments:
   - name: unk_F6090
     type: bin
     start: 0xF6090
-    
-
 
   - name: MIO0_chunk
     type: bin
