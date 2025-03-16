@@ -22,6 +22,10 @@ options:
   build_path: build
   extensions_path: tools/splat_ext
   ld_legacy_generation: True
+  asm_emit_size_directive: True # REC
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
   #mips_abi_float_regs: o32
   #section_order: [".text", ".data", ".rodata", ".bss"]
   #auto_all_sections: [".data", ".rodata", ".bss"]
@@ -106,14 +110,14 @@ segments:
       - [0x81340, c, os/osViGetCurrentFramebuffer]
       - [0x81380, c, os/osCreatePiManager]
       - [0x81500, c, os/osSetThreadPri]
-      - [0x815E0, c, libultra_nm/UnkLibultraSeg_815E0]
+      - [0x815E0, c, libultra_nm/osInitialize]
       - [0x81810, hasm, libultra/sqrtf]
-      - [0x81820, c, libultra_nm/UnkLibultraSeg_81820] #Game segment
+      - [0x81820, c, libultra_nm/controller] #Game segment
       - [0x81B80, asm, guOrtho]
       - [0x81D40, c, os/gu/guTranslate] #TODO
       - [0x81DE0, c, libultra_nm/UnkLibultraSeg_81DE0] #gu funcs
       - [0x822A0, c, libultra_nm/UnkLibultraSeg_822A0]
-      - [0x82AD0, c, os/osEepromLongWrite]
+      - [0x82AD0, c, os/osEepromLongRead]
       - [0x82C10, c, libultra_nm/UnkLibultraSeg_82C10]
       - [0x82D50, c, libultra_nm/UnkLibultraSeg_82D50]
       - [0x82DC0, c, libultra_nm/UnkLibultraSeg_82DC0]
@@ -138,7 +142,8 @@ segments:
       - [0x852D0, hasm, libultra/interrupt]
       - [0x85310, asm]
       - [0x85BC0, asm, libultra/osGetCount]
-      - [0x85BD0, c, libultra_nm/unkLibultraSeg_85BD0]
+      - [0x85BD0, c, libultra_nm/osTimer]
+      - [0x85FD0, c, __osViInit]
       - [0x86100, c, os/siacs]
       - [0x861C0, c, os/__osSiRawStartDma]
       - [0x86270, asm]
@@ -153,21 +158,23 @@ segments:
       - [0x86AB0, asm]
       - [0x86B70, c, os/osPiRawStartDma]
       - [0x86C50, c, os/osDevMgrMain]
-      - [0x86DD0, asm, libultra/unkLibultraSeg_86DD0]
-      - [0x86DE0, asm, libultra/unkLibultraSeg_86DE0]
+      - [0x86DD0, asm, libultra/__osSetSR]
+      - [0x86DE0, asm, libultra/__osGetSR]
       - [0x86DF0, asm]
-      - [0x86EA0, asm, libultra/unkLibultraSeg_86EA0]
+      - [0x86EA0, asm, libultra/osMapTLBRdb]
       - [0x86F00, asm]
       - [0x86F60, c, os/ll]
       - [0x87300, asm]
       - [0x87570, c, libultra_nm/unkLibultraSeg_87570]
       - [0x87870, c, libultra_nm/unkLibultraSeg_87870]
-      - [0x897A0, asm]
+      #- [0x889A0, asm]
+      - [0x897A0, asm, contramwrite]
       - [0x89B30, asm]
-      - [0x8ACC0, asm]
+      - [0x8ACC0, asm, strchr]
       - [0x8AD60, c, os/osJamMesg]
       - [0x8AEB0, c, os/osPiGetCmdQueue]
-      - [0x8AEE0, asm]
+      - [0x8AEE0, asm, osAiSetNextBuffer]
+      - [0x8AF10, asm]
       - [0x8B390, asm]
       - [0x8B4C0, c, libultra_nm/unkLibultraSeg_8B4C0]
       - [0x8B520, c, os/osDestroyThread]
@@ -178,7 +185,7 @@ segments:
       - [0x8C8B0, hasm, libultra/getcause]
       - [0x8C8C0, c, os/__osAtomicDec]
       - [0x8C920, c, os/libc/ldiv]
-      - [0x8CAB0, asm, fast3d_part1] #TODO: Put these on a separated segment
+      - [0x8CAB0, bin, fast3d_part1] #TODO: Put these on a separated segment
       - [0x8CB80, bin, fast3d_part2]
       - [0x8DFB0, bin, fast3d_audio]
 
@@ -216,8 +223,6 @@ segments:
   - name: unk_F6090
     type: bin
     start: 0xF6090
-    
-
 
   - name: MIO0_chunk
     type: bin
@@ -228,7 +233,7 @@ segments:
     exclusive_ram_id: overlay
     type: code
     start: 0x1B1FB0
-    vram: 0x801F77B0
+    vram: 0x802C5800
     symbol_name_format: 1B1FB0_$VRAM
     subsegments:
     - [0x1B1FB0, c, unused_code_1B1FB0]
@@ -325,10 +330,10 @@ segments:
     exclusive_ram_id: overlay
     symbol_name_format: 1C370_$VRAM
     start: 0x1C3780
-    vram: 0x80208F80
+    vram: 0x802C5800
     subsegments:
     - [0x1C3780, c, seg_1C3780]
-    - [0x1C3CB0, hasm, seg_pad] # TODO: This is just fake
+    - [0x1C3CB0, bin, seg_pad] # TODO: This is just fake
     - [0x1C3D00, c, seg_1C3D00]
     - [0x1C43B0, bin]
 

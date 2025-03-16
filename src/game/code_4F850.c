@@ -1,9 +1,8 @@
 #include "common.h"
 
-extern void *D_80151954;
+extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
 extern OSIoMesg D_801542A0;
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/unk_game_load.s")
 
@@ -36,7 +35,7 @@ void func_800964C4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80097E68.s")
 
-void game_dma_copy(u32 devAddr, void *vAddr, u32 nbytes) {
+void game_dma_copy(u32 devAddr, void* vAddr, u32 nbytes) {
     if (D_801540B8.validCount >= D_801540B8.msgCount) {
         osRecvMesg(&D_801540B8, &D_80151954, 1);
     }
@@ -44,7 +43,6 @@ void game_dma_copy(u32 devAddr, void *vAddr, u32 nbytes) {
     osPiStartDma(&D_801542A0, 0, 0, devAddr, osPhysicalToVirtual(vAddr), nbytes, &D_801540B8);
     osRecvMesg(&D_801540B8, &D_80151954, 1);
 }
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80097F74.s")
 

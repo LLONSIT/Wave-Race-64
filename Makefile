@@ -189,6 +189,8 @@ no_verify: $(TARGET).z64
 splat: $(SPLAT)
 
 extract: splat tools
+	rm -rf asm
+	rm -rf build
 	$(PYTHON) $(SPLAT) $(BASENAME).$(VERSION).yaml
 
 dependencies: tools
@@ -197,6 +199,7 @@ dependencies: tools
 
 
 clean:
+	rm -rf asm
 	rm -rf build
 
 distclean: clean
@@ -204,6 +207,8 @@ distclean: clean
 	rm -rf assets
 	rm -f *auto.txt
 
+format:
+	python3 tools/format.py -j
 
 ### Recipes
 .baserom.$(VERSION).ok: baserom.$(VERSION).z64

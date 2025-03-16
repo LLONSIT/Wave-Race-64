@@ -16,7 +16,7 @@ osRecvMesg              = 0x800C5C60; //defined:true
 osDpGetStatus		= 0x800C5DA0; //defined:true
 osViSetMode		= 0x800C5DF0; //defined:true
 osSpTaskYield           = 0x800C6020; //defined:true
-sptask_text_0000	= 0x800C6040; //defined:true
+_VirtualToPhysicalTask	= 0x800C6040; //defined:true
 osSpTaskStartGo         = 0x800C62BC; 
 osDpSetStatus		= 0x800C6300; //defined:true
 osCreateMesgQueue	= 0x800C6310; //defined:true
@@ -34,7 +34,7 @@ guFrustumF              = 0x800C7380; //defined:true
 guFrustum               = 0x800C74D4; //defined:true
 guTranslateF            = 0x800C7540; //defined:true
 guTranslate            = 0x800C7588; //defined:true
-osEepromLongWrite       = 0x800C82D0; //defined:true
+osEepromLongRead       = 0x800C82D0; //defined:true
 osEepromProbe           = 0x800C8550; //defined:true
 osPhysicalToVirtual     = 0x800C9E20; //defined:true
 sprintf                 = 0x800CA210; //defined:true
@@ -72,7 +72,7 @@ __ll_div                = 0x800CC86C; //defined:true
 __ll_mul                = 0x800CC8C8; //defined:true
 osSetTimer		= 0x800CCA20; //defined:true
 guMtxIdentF             = 0x800CCC00; //defined:true
-osEepromWrite		= 0x800CCD70; //defined:true
+osEepromRead		= 0x800CCD70; //defined:true
 memcpy                  = 0x800D04C0; //defined:true
 strlen			= 0x800D04EC; //defined:true
 __osAiDeviceBusy        = 0x800D06E0; //defined:true
@@ -115,8 +115,53 @@ __osPiAccessQueue	= 0x801DAC98;
 __osEepPifRam		= 0x801DACB0;
 kdebugserver_bss_0000	= 0x801DACF0;
 __osPiMesgQueue		= 0x801DAB30;
-
-
+osInitialize = 0x800C6DE0;
+osWritebackDCacheAll = 0x800C6740;
+__osSetSR = 0x800CC5D0;
+__osGetSR = 0x800CC5E0;
+__osSetFpcCsr = 0x800CC5F0;
+__osSiRawReadIo = 0x800CC600;
+__osSiRawWriteIo = 0x800CC650;
+osMapTLBRdb = 0x800CC6A0;
+osContInit = 0x800C7020;
+__osPiGetAccess = 0x800CC300;
+__osPiRelAccess = 0x800CC344;
+guMtxF2L = 0x800CCB00;
+__osPackRamReadData = 0x800CEE3C;
+__osContDataCrc = 0x800D0F10;
+__osPfsGetStatus = 0x800C8988;
+osPfsInit = 0x800C88F0;
+__osEepStatus = 0x800CD32C;
+__osContRamRead = 0x800CEC10;
+__osContAddressCrc	=    0x800D0E60;
+__osPackRamWriteData = 0x800CF1C4;
+__osContRamWrite = 0x800CEFA0;
+__osViSwapContext = 0x800CBF50;
+strchr = 0x800D0514;
+__osViInit = 0x800CB7D0;
+viMgrMain = 0x800C68F4;
+osCreateViManager = 0x800C6770;
+__osPackRequestData = 0x800C72A8;
+__osContGetInitData = 0x800C71F4;
+__osInsertTimer = 0x800CB648;
+__osTimerServicesInit = 0x800CB3D0;
+__osTimerInterrupt = 0x800CB45C;
+__osSetTimerIntr = 0x800CB5D4;
+__osCheckId = 0x800CDD7C;
+__osPfsSelectBank = 0x800CE130;
+__osPfsRWInode = 0x800CDE94;
+__osRepairPackId = 0x800CD6C8;
+__osCheckPackId = 0x800CDA14;
+__osSumcalc = 0x800CD550;
+__osIdCheckSum = 0x800CD5CC;
+osEepromWrite = 0x800CD070;
+__osPackEepWriteData = 0x800CD220;
+__osPackEepReadData = 0x800CCF60;
+__osSpSetPc = 0x800CBE10;
+__osSpRawStartDma = 0x800CBE50;
+__osSpGetStatus = 0x800CBF10;
+osSpTaskYielded = 0x800C66C0;
+osEepromLongWrite = 0x800C8410;
 //TODO: Need to reference undefined function to the overlay address
 
 //Game Symbols
@@ -125,7 +170,7 @@ second_task = 0x801542B8;
 create_obj =  0x800B490C;
 gDisplayListHead = 0x80151944; //Default name for display lists for both local and global declarations
 unk_game_load = 0x80095050;
-
+main_thread = 0x80047530;
 
 //game_23E0
 srand = 0x80047E44;
@@ -144,7 +189,7 @@ play_sound = 0x800C53D4;
 gCourseID = 0x800D8170;
 menu_buffer_1 = 0x80228930;
 short_RGB = 0x800DAA58;
-main = 0x80047AA4;
+bootproc = 0x80047AA4;
 gControllers = 0x801542F0;
 gControllerOne = 0x80154308;
 gCameraPerspective = 0x80227C80;
@@ -165,7 +210,6 @@ D_A95D0_80228A78 = 0x80228A78;
 D_A95D0_80227E98 = 0x80227E98;
 D_A95D0_80228058 = 0x80228058;
 
-osInitialize = 0x800C6DE0;
 
 //Names from n64decomp/mk64
 sequence_channel_process_sound = 0x800BBE30;

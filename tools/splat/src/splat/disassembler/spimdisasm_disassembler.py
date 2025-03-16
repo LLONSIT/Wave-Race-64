@@ -7,7 +7,7 @@ from typing import Set
 
 class SpimdisasmDisassembler(disassembler.Disassembler):
     # This value should be kept in sync with the version listed on requirements.txt and pyproject.toml
-    SPIMDISASM_MIN = (1, 32, 0)
+    SPIMDISASM_MIN = (1, 25, 0)
 
     def configure(self):
         # Configure spimdisasm
@@ -57,26 +57,22 @@ class SpimdisasmDisassembler(disassembler.Disassembler):
         rabbitizer.config.pseudos_pseudoMove = False
 
         selected_compiler = options.opts.compiler
-        spimdisasm_compiler = spimdisasm.common.Compiler.fromStr(selected_compiler.name)
-        if spimdisasm_compiler is None:
-            log.write(
-                f"Unsupported selected compiler for spimdisasm: {selected_compiler.name}",
-                status="error",
-            )
-            log.error(
-                f"The following options are supported: {list(spimdisasm.common.compilerOptions.keys())}"
-            )
-        spimdisasm.common.GlobalConfig.COMPILER = spimdisasm_compiler
         if selected_compiler == compiler.SN64:
             rabbitizer.config.regNames_namedRegisters = False
             rabbitizer.config.toolchainTweaks_sn64DivFix = True
+            rabbitizer.config.toolchainTweaks_treatJAsUnconditionalBranch = True
             spimdisasm.common.GlobalConfig.ASM_COMMENT = False
             spimdisasm.common.GlobalConfig.SYMBOL_FINDER_FILTERED_ADDRESSES_AS_HILO = (
                 False
             )
-        rabbitizer.config.toolchainTweaks_treatJAsUnconditionalBranch = (
-            selected_compiler.j_as_branch
-        )
+            spimdisasm.common.GlobalConfig.COMPILER = spimdisasm.common.Compiler.SN64
+        elif selected_compiler == compiler.GCC:
+            rabbitizer.config.toolchainTweaks_treatJAsUnconditionalBranch = True
+            spimdisasm.common.GlobalConfig.COMPILER = spimdisasm.common.Compiler.GCC
+        elif selected_compiler == compiler.IDO:
+            spimdisasm.common.GlobalConfig.COMPILER = spimdisasm.common.Compiler.IDO
+        elif selected_compiler == compiler.EEGCC:
+            spimdisasm.common.GlobalConfig.COMPILER = spimdisasm.common.Compiler.EEGCC
 
         spimdisasm.common.GlobalConfig.DETECT_REDUNDANT_FUNCTION_END = (
             options.opts.detect_redundant_function_end
@@ -93,9 +89,6 @@ class SpimdisasmDisassembler(disassembler.Disassembler):
         )
         spimdisasm.common.GlobalConfig.ASM_DATA_LABEL = options.opts.asm_data_macro
         spimdisasm.common.GlobalConfig.ASM_TEXT_END_LABEL = options.opts.asm_end_label
-        spimdisasm.common.GlobalConfig.ASM_EHTBL_LABEL = (
-            options.opts.asm_ehtable_label_macro
-        )
 
         if options.opts.asm_emit_size_directive is not None:
             spimdisasm.common.GlobalConfig.ASM_EMIT_SIZE_DIRECTIVE = (

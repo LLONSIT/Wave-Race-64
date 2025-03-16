@@ -78,9 +78,6 @@ class CommonSegData(CommonSegCodeSubsegment, CommonSegGroup):
     def get_linker_section(self) -> str:
         return ".data"
 
-    def get_section_flags(self) -> Optional[str]:
-        return "wa"
-
     def get_linker_entries(self):
         return CommonSegCodeSubsegment.get_linker_entries(self)
 
@@ -101,9 +98,6 @@ class CommonSegData(CommonSegCodeSubsegment, CommonSegGroup):
             section.stringEncoding = self.str_encoding
 
     def disassemble_data(self, rom_bytes):
-        if self.is_auto_segment:
-            return
-
         if not isinstance(self.rom_start, int):
             log.error(
                 f"Segment '{self.name}' (type '{self.type}') requires a rom_start. Got '{self.rom_start}'"
@@ -145,22 +139,8 @@ class CommonSegData(CommonSegCodeSubsegment, CommonSegGroup):
                 self.get_most_parent(), symbol.contextSym
             )
 
-            # Gather symbols found by spimdisasm and create those symbols in splat's side
-            for referenced_vram in symbol.referencedVrams:
-                context_sym = self.spim_section.get_section().getSymbol(
-                    referenced_vram, tryPlusOffset=False
-                )
-                if context_sym is not None:
-                    symbols.create_symbol_from_spim_symbol(
-                        self.get_most_parent(), context_sym
-                    )
-
             # Hint to the user that we are now in the .rodata section and no longer in the .data section (assuming rodata follows data)
-            if (
-                self.suggestion_rodata_section_start
-                and not rodata_encountered
-                and self.get_most_parent().rodata_follows_data
-            ):
+            if not rodata_encountered and self.get_most_parent().rodata_follows_data:
                 if symbol.contextSym.isJumpTable():
                     rodata_encountered = True
                     print(

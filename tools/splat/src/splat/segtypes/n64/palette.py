@@ -5,13 +5,13 @@ from typing import Dict, List, Optional, Tuple, Union
 from ...util import log, options
 from ...util.color import unpack_color
 
-from ..segment import Segment
+from .segment import N64Segment
 
 
 VALID_SIZES = [0x20, 0x40, 0x80, 0x100, 0x200]
 
 
-class N64SegPalette(Segment):
+class N64SegPalette(N64Segment):
     require_unique_name = False
 
     def __init__(self, *args, **kwargs):

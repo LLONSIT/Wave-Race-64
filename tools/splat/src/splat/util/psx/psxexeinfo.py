@@ -136,9 +136,9 @@ def try_get_gp(rom_bytes, start_offset, max_instructions=50) -> int:
             break
         insn = rabbitizer.Instruction(word)
         if insn.getOpcodeName() == "lui" and insn.rt.name == "gp":
-            gp = insn.getProcessedImmediate() << 16
+            gp = insn.getImmediate() << 16
         elif insn.getOpcodeName() == "addiu" and insn.rt.name == "gp":
-            gp += insn.getProcessedImmediate()
+            gp += insn.getImmediate()
             break
     return gp
 

@@ -7,7 +7,9 @@ tools/ido5.3_recomp/
 __pycache__/
 
 # Ignore the baserom so it doesn't get accidentally added
-baserom.us.z64
+*.z64
+*.n64
+*.rom
 
 # Automatically generated folders should be ignored
 build/

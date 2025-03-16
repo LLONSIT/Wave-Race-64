@@ -36,8 +36,6 @@ class CommonSegC(CommonSegCodeSubsegment):
 
         self.file_extension = "c"
 
-        self.use_gp_rel_macro = options.opts.use_gp_rel_macro_nonmatching
-
     @staticmethod
     def strip_c_comments(text):
         def replacer(match):
@@ -151,12 +149,9 @@ class CommonSegC(CommonSegCodeSubsegment):
             self.scan_code(rom_bytes)
 
     def split(self, rom_bytes: bytes):
-        if self.is_auto_segment:
-            return
-
         if self.rom_start != self.rom_end:
             asm_out_dir = options.opts.nonmatchings_path / self.dir
-            matching_asm_out_dir = options.opts.matchings_path / self.dir
+            asm_out_dir.mkdir(parents=True, exist_ok=True)
 
             self.print_file_boundaries()
 
@@ -174,39 +169,21 @@ class CommonSegC(CommonSegCodeSubsegment):
                     if rodata_sibling is None:
                         continue
 
-                    if rodata_sibling.is_generated:
-                        continue
-
                     assert isinstance(
                         rodata_sibling, CommonSegRodata
-                    ), f"{rodata_sibling}, {rodata_sibling.type}"
-
-                    if not rodata_sibling.type.startswith("."):
-                        # Emit an error if we try to migrate the rodata symbols to functions if the rodata section is not prefixed with a dot
-                        # (ie `- [0x1234, rodata, some_file]` instead of `- [0x1234, .rodata, some_file]`).
-                        # Not prefixing the type with a dot would produce splat to both disassemble the rodata section to its own assembly file
-                        # and to migrate the symbols to the corresponding functions, generating link-time errors and many headaches.
-                        log.write(
-                            f"\nProblem detected with the `{rodata_sibling.type}` section of the `{rodata_sibling.name}` file during rodata migration.",
-                            status="warn",
-                        )
-                        log.write(
-                            f"\t The `{rodata_sibling.type}` section was not prefixed with a dot, which is required for the rodata migration feature to work properly and avoid build errors due to duplicated symbols at link-time."
-                        )
-                        log.error(
-                            f"\t To fix this, please prefix the section type with a dot (like `.{rodata_sibling.type}`)."
-                        )
+                    ), rodata_sibling.type
 
                     rodata_section_type = (
                         rodata_sibling.get_linker_section_linksection()
                     )
 
-                    assert rodata_sibling.spim_section is not None, f"{rodata_sibling}"
-                    assert isinstance(
-                        rodata_sibling.spim_section.get_section(),
-                        spimdisasm.mips.sections.SectionRodata,
-                    )
-                    rodata_spim_segment = rodata_sibling.spim_section.get_section()
+                    # rodata_sibling.spim_section may be None if said sibling is an auto inserted one
+                    if rodata_sibling.spim_section is not None:
+                        assert isinstance(
+                            rodata_sibling.spim_section.get_section(),
+                            spimdisasm.mips.sections.SectionRodata,
+                        )
+                        rodata_spim_segment = rodata_sibling.spim_section.get_section()
 
                     # Stop searching
                     break
@@ -249,17 +226,7 @@ class CommonSegC(CommonSegCodeSubsegment):
                         )
                         assert func_sym is not None
 
-                        if (
-                            not entry.function.getName() in self.global_asm_funcs
-                            and options.opts.disassemble_all
-                            and not is_new_c_file
-                        ):
-                            self.create_c_asm_file(
-                                entry, matching_asm_out_dir, func_sym
-                            )
-                        else:
-                            self.create_c_asm_file(entry, asm_out_dir, func_sym)
-
+                        self.create_c_asm_file(entry, asm_out_dir, func_sym)
                 else:
                     for spim_rodata_sym in entry.rodataSyms:
                         if (
@@ -361,6 +328,8 @@ class CommonSegC(CommonSegCodeSubsegment):
         outpath.parent.mkdir(parents=True, exist_ok=True)
 
         with outpath.open("w", newline="\n") as f:
+            if options.opts.include_macro_inc:
+                f.write('.include "macro.inc"\n\n')
             preamble = options.opts.generated_s_preamble
             if preamble:
                 f.write(preamble + "\n")
@@ -485,8 +454,6 @@ class CommonSegC(CommonSegCodeSubsegment):
 
                     if func_name in self.global_asm_funcs or is_new_c_file:
                         outpath = asm_out_dir / self.name / (func_name + ".s")
-                        outpath.parent.mkdir(parents=True, exist_ok=True)
-
                         depend_list.append(outpath)
                         f.write(f" \\\n    {outpath}")
                 else:
@@ -495,8 +462,6 @@ class CommonSegC(CommonSegCodeSubsegment):
 
                         if rodata_name in self.global_asm_rodata_syms or is_new_c_file:
                             outpath = asm_out_dir / self.name / (rodata_name + ".s")
-                            outpath.parent.mkdir(parents=True, exist_ok=True)
-
                             depend_list.append(outpath)
                             f.write(f" \\\n    {outpath}")
 
