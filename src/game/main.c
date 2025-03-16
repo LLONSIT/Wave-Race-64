@@ -92,10 +92,12 @@ void* main_thread(void* entry) {
     osSetEventMesg(9U, &D_80154130, (void*) 0x18);
     osViSetEvent(&D_80154130, (void*) 0x19, 1U);
     func_800980C8(); // stub
+
     osCreateThread(&gAudioThread, 4, audio_thread, NULL, &gIdleThread, 0x14);
     if (D_800D4628 != 0) {
         osStartThread(&gAudioThread);
     }
+
     osCreateThread(&D_80153EF0, 5, func_80046DA0, NULL, &D_801531E0, 0xA);
     if (D_800D4624 != 0) {
         osStartThread(&D_80153EF0);
@@ -122,6 +124,7 @@ void* main_thread(void* entry) {
                     }
                     func_800474A0();
                     break;
+
                 case 2:
                     if (D_800D4608 != 0) {
                         D_800D4608 = 0;
@@ -134,6 +137,7 @@ void* main_thread(void* entry) {
                         D_800D4604 = 0;
                     }
                     break;
+                    
                 case 3:
                     D_800D4600 = 0;
                     D_800D4604 = 0;

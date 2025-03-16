@@ -34,7 +34,7 @@ guFrustumF              = 0x800C7380; //defined:true
 guFrustum               = 0x800C74D4; //defined:true
 guTranslateF            = 0x800C7540; //defined:true
 guTranslate            = 0x800C7588; //defined:true
-osEepromLongWrite       = 0x800C82D0; //defined:true
+osEepromLongRead       = 0x800C82D0; //defined:true
 osEepromProbe           = 0x800C8550; //defined:true
 osPhysicalToVirtual     = 0x800C9E20; //defined:true
 sprintf                 = 0x800CA210; //defined:true
@@ -161,7 +161,7 @@ __osSpSetPc = 0x800CBE10;
 __osSpRawStartDma = 0x800CBE50;
 __osSpGetStatus = 0x800CBF10;
 osSpTaskYielded = 0x800C66C0;
-
+osEepromLongWrite = 0x800C8410;
 //TODO: Need to reference undefined function to the overlay address
 
 //Game Symbols
