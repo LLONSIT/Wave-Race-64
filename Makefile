@@ -207,6 +207,8 @@ distclean: clean
 	rm -rf assets
 	rm -f *auto.txt
 
+format:
+	python3 tools/format.py -j
 
 ### Recipes
 .baserom.$(VERSION).ok: baserom.$(VERSION).z64

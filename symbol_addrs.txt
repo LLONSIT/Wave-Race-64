@@ -170,7 +170,7 @@ second_task = 0x801542B8;
 create_obj =  0x800B490C;
 gDisplayListHead = 0x80151944; //Default name for display lists for both local and global declarations
 unk_game_load = 0x80095050;
-
+main_thread = 0x80047530;
 
 //game_23E0
 srand = 0x80047E44;

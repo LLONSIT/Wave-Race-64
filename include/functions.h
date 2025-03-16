@@ -66,7 +66,7 @@ void func_800C1DEC(void);
 void func_800C1B98(void);
 void func_800804C4(void);
 void func_80086148(void);
-void func_80088B84(f32* sp24, f32* sp20);
+void func_80088B84(f32* arg0, f32* arg1);
 void func_80085408(void);
 void func_80095A28(void*);
 void func_80097EC8(void*, void*, u32);
