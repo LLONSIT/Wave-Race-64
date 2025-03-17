@@ -197,6 +197,10 @@ dependencies: tools
 	@make -C tools
 	@$(PYTHON) -m pip install -r tools/splat/requirements.txt #Installing the splat dependencies
 
+expected:
+	mkdir -p expected/build
+	rm -rf expected/build/
+	cp -r build/ expected/build/
 
 clean:
 	rm -rf asm
