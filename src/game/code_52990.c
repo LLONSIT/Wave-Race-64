@@ -2,10 +2,6 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/func_80098190.s")
 
-#if 1
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/func_80098208.s")
-#else // matching but needs rodata imported
-
 extern s32 D_800DAB24;
 
 typedef struct UnkStruct_D_800E4ED0 {
@@ -149,4 +145,3 @@ void func_80098208(void) {
         osRecvMesg(&D_801540B8, &D_80151954, OS_MESG_BLOCK);
     }
 }
-#endif
