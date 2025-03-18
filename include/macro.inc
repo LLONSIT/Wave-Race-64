@@ -17,6 +17,12 @@
     \label:
 .endm
 
+.macro jlabel label
+    .global \label
+    .type \label, @function
+    \label:
+.endm
+
 .macro .word32 x
     .word \x
 .endm
@@ -30,9 +36,4 @@
     addu \a, \b, $zero
 .endm
 
-.macro jlabel label
-    .global \label
-    .type \label, @function
-    \label:
-.endm
 
