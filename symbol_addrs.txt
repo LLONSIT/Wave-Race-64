@@ -218,5 +218,5 @@ gSinTable = 0x80154350;
 gAudioThread = 0x80153D40;
 jtbl_800E9B70 = 0x800E9B70; //size:128 type:jtbl
 
-overlay_A95D0_ROM_START = 0xA95D0; //defined:true
-overlay_A95D0_ROM_END = 0xF6090; //defined:true
+codeseg_ROM_START = 0xA95D0; //defined:true
+codeseg_ROM_END = 0xF6090; //defined:true
