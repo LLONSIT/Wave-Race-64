@@ -137,7 +137,7 @@ void* main_thread(void* entry) {
                         D_800D4604 = 0;
                     }
                     break;
-                    
+
                 case 3:
                     D_800D4600 = 0;
                     D_800D4604 = 0;
@@ -187,14 +187,14 @@ void* idle_thread(void* entry) {
 
     while (osViGetCurrentFramebuffer() != D_801542C0[1]) {
         ;
-}
+    }
 
     func_800980D0(D_801542C0[0]);
     osViSwapBuffer((void*) D_801542C0[0]);
 
     while (osViGetCurrentFramebuffer() != D_801542C0[0]) {
         ;
-}
+    }
 
     osViBlack(FALSE);
     osViSetSpecialFeatures(0x66U);
@@ -206,7 +206,7 @@ void* idle_thread(void* entry) {
     osSetThreadPri(NULL, 0);
     while (TRUE) {
         ;
-}
+    }
 }
 
 void bootproc(void) {
