@@ -9,9 +9,7 @@ options:
   find_file_boundaries: True
   header_encoding: ASCII
   platform: n64
- # undefined_funcs_auto: True
   undefined_funcs_auto_path: undefined_funcs_auto.txt
-#  undefined_syms_auto: True
   undefined_syms_auto_path: undefined_syms_auto.txt
   symbol_addrs_path: 
   - symbol_addrs.txt
@@ -29,11 +27,7 @@ options:
   data_string_guesser_level: 2
   rodata_string_guesser_level: 2
   migrate_rodata_to_functions: True
-  #mips_abi_float_regs: o32
-  #section_order: [".text", ".data", ".rodata", ".bss"]
-  #auto_all_sections: [".data", ".rodata", ".bss"]
-  #libultra_symbols: True
-  #hardware_regs: True
+
 segments:
   - name: header
     type: header
@@ -255,7 +249,7 @@ segments:
       # DATA - Audio Microcode
       - [0xA9310, data, aspMain]
 
-  - name: codeseg #Maybe this is just a segment
+  - name: codeseg
     type: code
     start: 0xA95D0
     vram: 0x801DAFA0
@@ -268,21 +262,21 @@ segments:
     - [0xB55E0, c, codeseg/B55E0]
     - [0xB66E0, c, codeseg/B66E0]
     - [0xCAE70, data]
-  #  - [0xF4540, .rodata, codeseg/A95D0]
+    - [0xF4540, .rodata, codeseg/A95D0]
     - [0xF4670, data]
     - [0xF4840, data]
     - [0xF4970, data]
-   # - [0xF49B0, .rodata, codeseg/AF8C0]
+    - [0xF49B0, .rodata, codeseg/AF8C0]
     - [0xF49F0, data]
-   # - [0xF51B0, .rodata, codeseg/B2510]
+    - [0xF51B0, .rodata, codeseg/B2510]
     - [0xF51D0, data]
-    #- [0xF5240, .rodata, codeseg/B2A70]
+    - [0xF5240, data]
     - [0xF5260, data]
     - [0xF5270, data]
     - [0xF5280, data]
-    - [0xF52B0, data]
+    - [0xF52B0, .rodata, codeseg/B3AA0]
     - [0xF52F0, data]
-    - [0xF5340, data]
+    - [0xF5340, .rodata, codeseg/B55E0]
     - [0xF53A0, data]
     - [0xF5480, data]
     - [0xF5520, data]
@@ -335,7 +329,6 @@ segments:
     subsegments:
     - [0x1B55A0, c, ovl_1B55A0]
     - [0x1B91E0, bin]
-
 
     # Rider selection?
   - name: ovl_i2

@@ -79,8 +79,8 @@ extern f32 D_801C4058;
 extern struct UnkStruct_801C3C50* D_801C3C50;
 extern struct UnkStruct_801C3C54* D_801C3C54;
 
-f32 func_A95D0_801ED090(f32); /* extern */
-f32 func_800C7010(f32);       /* extern */
+f32 func_801ED090(f32);
+f32 func_800C7010(f32);
 f32 func_80088D94(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5);
 void func_80088B00(struct UnkStruct_80088B00* arg0);
 
@@ -235,7 +235,7 @@ void func_80088C00(void) {
     if (SQ(var_f0) > 1.0f) {
         var_f12 = 0.0f;
     }
-    D_801C3C58->unk28 = (s32) func_A95D0_801ED090(sqrtf(var_f12));
+    D_801C3C58->unk28 = (s32) func_801ED090(sqrtf(var_f12));
 }
 
 f32 func_80088D94(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {

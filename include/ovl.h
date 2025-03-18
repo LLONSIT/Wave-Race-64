@@ -22,5 +22,5 @@ struct ovl_A95D0_801DFDA8 {
     s32 unk34;
 };
 
-void func_A95D0_801DAFA0(struct ovl_A95D0_801DAFA0** arg0, int arg1);
+void func_801DAFA0(struct ovl_A95D0_801DAFA0** arg0, int arg1);
 #endif /* OVL_H */
