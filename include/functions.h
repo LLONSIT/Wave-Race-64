@@ -68,9 +68,8 @@ void func_800804C4(void);
 void func_80086148(void);
 void func_80088B84(f32* arg0, f32* arg1);
 void func_80085408(void);
-void func_80095A28(void*);
+void func_80095A28(DmaEntry* entry);
 void func_80097EC8(void*, void*, u32);
-void func_80097F74(s32 arg0, s32 arg1, u32 arg2);
 void func_80097E68(void);
 s32 func_80094088(u32);
 void func_801E6A4C(s32 arg0, s32 arg1);
@@ -84,7 +83,13 @@ void func_80098190(void);
 void* func_80046DA0(void* entry);
 void func_80047FFC(s32 arg0, s32 arg1, s32 arg2, s32* arg3, s32* arg4, s32* arg5);
 s32 func_80086C40(f32 a0, f32 a1, f32 a2, f32 a3, f32 a4, f32 a5);
-void func_800AF43C(f32, f32, f32);                       /* extern */
-void func_800B4788(s32, f32, f32, f32, f32, f32, f32);   /* extern */
-#endif /*FUNCTIONS_H*/
+void func_800AF43C(f32, f32, f32);                       
+void func_800B4788(s32, f32, f32, f32, f32, f32, f32);   
+void func_80095CE8(void*, s32);
+void func_80096048(void*, s32);
+void func_80096694(void*, s32, s32);
+void func_80097F74(u32, u32, u32);
+void func_800C6740(); 
+void Mio0_Decompress(u8*, u8*);
 
+#endif /*FUNCTIONS_H*/

@@ -73,7 +73,7 @@ segments:
       - [0x52CD0, c, game/code_52CD0]
       - [0x68A10, c, game/code_68A10]
       - [0x6EF50, c, game/code_6EF50]
-      - [0x6F530, hasm, mio0decode]
+      - [0x6F530, hasm, Mio0_Decompress]
       - [0x6F5D0, c, game/audio/synthesis]
       - [0x71AF0, c, game/audio/heap]
       - [0x734B0, c, game/audio/load]
