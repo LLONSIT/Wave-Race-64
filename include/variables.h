@@ -5,6 +5,8 @@
  * */
 #ifndef VARIABLES_H
 #define VARIABLES_H
+
+#include "structs.h"
 // Used in game_1050, game_4C750
 extern int D_80151948;
 extern s32 D_80151948;
@@ -33,7 +35,7 @@ extern OSTask *first_task;
 extern s32 D_801542B8;
 extern Gfx *D_1000000;
 extern s32 D_800D45E4;
-extern s32 D_800D45E8;
+extern s32 D_800D45E8; // might be a pointer
 extern u8* D_800D45F0;
 extern s32 D_800DAB1C;
 extern void* D_8011EDE0;
@@ -47,7 +49,7 @@ extern s32 D_801CE650;
 extern struct ovl_A95D0_B66E0_1 D_A95D0_80228A78;
 extern s32 D_800DAB2C;
 extern s16 D_800DAB0C;
-extern s32 D_800DAB38[];
+extern DmaTransfer D_800DAB38[];
 extern s32 D_800C1FC;
 extern s16 D_800DA9AC;
 extern s32 D_801CE64C;

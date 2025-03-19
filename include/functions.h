@@ -88,7 +88,7 @@ void func_800B4788(s32, f32, f32, f32, f32, f32, f32);
 void func_80095CE8(void*, s32);
 void func_80096048(void*, s32);
 void func_80096694(void*, s32, s32);
-void func_80097F74(u32, u32, u32);
+void func_80097F74(u32, s32, u32); // arg1 is confirmed to be s32
 void func_800C6740(); 
 void Mio0_Decompress(u8*, u8*);
 
