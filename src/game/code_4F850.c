@@ -125,14 +125,14 @@ void func_80097E68(void) {
 
 void game_dma_copy(uintptr_t devAddr, void* vAddr, u32 nbytes) {
     if (D_801540B8.validCount >= D_801540B8.msgCount) {
-        osRecvMesg(&D_801540B8, &D_80151954, 1);
+        osRecvMesg(&D_801540B8, &D_80151954, OS_MESG_BLOCK);
     }
     osInvalDCache(vAddr, nbytes);
     osPiStartDma(&D_801542A0, 0, 0, devAddr, osPhysicalToVirtual((uintptr_t) vAddr), nbytes, &D_801540B8);
-    osRecvMesg(&D_801540B8, &D_80151954, 1);
+    osRecvMesg(&D_801540B8, &D_80151954, OS_MESG_BLOCK);
 }
 
-void func_80097F74(u32 arg0, s32 arg1, u32 arg2) {
+void func_80097F74(uintptr_t devAddr, s32 vAddr, u32 arg2) {
     s32 pad[0x2];
     u32 sp2C;
     s32 temp_v0;
@@ -152,9 +152,9 @@ void func_80097F74(u32 arg0, s32 arg1, u32 arg2) {
 
     var_s2 = 0;
     if (temp_lo > 0) {
-        var_s0 = arg0;
+        var_s0 = devAddr;
         if (temp_lo > 0) {
-            var_s1 = arg1;
+            var_s1 = vAddr;
             do {
                 game_dma_copy(var_s0, var_s1, 0x2800U);
                 var_s2++;
@@ -166,7 +166,7 @@ void func_80097F74(u32 arg0, s32 arg1, u32 arg2) {
 
     temp_v0 = var_s2 * 0x2800;
     if (sp2C != 0) {
-        game_dma_copy((u32) arg0 + temp_v0, arg1 + temp_v0, sp2C);
+        game_dma_copy((u32) devAddr + temp_v0, vAddr + temp_v0, sp2C);
     }
 }
 

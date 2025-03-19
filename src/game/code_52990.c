@@ -40,7 +40,7 @@ extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
 extern OSIoMesg D_801542A0;
 
-void func_80098208(void) {
+void Overlay_Load(void) {
     s32 flag = 0;
     s32 pad;
     s32 size;

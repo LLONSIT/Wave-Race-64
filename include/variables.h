@@ -35,7 +35,7 @@ extern OSTask *first_task;
 extern s32 D_801542B8;
 extern Gfx *D_1000000;
 extern s32 D_800D45E4;
-extern s32 D_800D45E8; // might be a pointer
+extern u8* D_800D45E8;
 extern u8* D_800D45F0;
 extern s32 D_800DAB1C;
 extern void* D_8011EDE0;
