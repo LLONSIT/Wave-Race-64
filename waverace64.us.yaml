@@ -27,15 +27,18 @@ options:
   data_string_guesser_level: 2
   rodata_string_guesser_level: 2
   migrate_rodata_to_functions: True
+  disasm_unknown: True
 
 segments:
   - name: header
     type: header
     start: 0x0
+
   - name: boot
     type: bin
     start: 0x40
-  - name: main_segment
+
+  - name: main_segment # This segment is static, always present in memory
     type: code
     start: 0x1000
     vram: 0x80046800
@@ -249,7 +252,7 @@ segments:
       # DATA - Audio Microcode
       - [0xA9310, data, aspMain]
 
-  - name: codeseg
+  - name: codeseg # This segment is loaded into memory on func_80098190
     type: code
     start: 0xA95D0
     vram: 0x801DAFA0
@@ -285,9 +288,12 @@ segments:
     - [0xF5F30, data]
     - [0xF6000, data]
 
-  - name: unk_F6090
+  - name: segment_F6090 # looks like a bunch of uncompressed assets (Dlists and Textures)
     type: bin
     start: 0xF6090
+    # vram: 0x802A0000
+    # subsegments:
+    # - [0xF6090, data]
 
   - name: MIO0_chunk
     type: bin
