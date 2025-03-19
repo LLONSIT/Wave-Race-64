@@ -9,9 +9,7 @@ options:
   find_file_boundaries: True
   header_encoding: ASCII
   platform: n64
- # undefined_funcs_auto: True
   undefined_funcs_auto_path: undefined_funcs_auto.txt
-#  undefined_syms_auto: True
   undefined_syms_auto_path: undefined_syms_auto.txt
   symbol_addrs_path: 
   - symbol_addrs.txt
@@ -26,30 +24,31 @@ options:
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
-  #mips_abi_float_regs: o32
-  #section_order: [".text", ".data", ".rodata", ".bss"]
-  #auto_all_sections: [".data", ".rodata", ".bss"]
-  #libultra_symbols: True
-  #hardware_regs: True
+  data_string_guesser_level: 2
+  rodata_string_guesser_level: 2
+  migrate_rodata_to_functions: True
+  disasm_unknown: True
+
 segments:
   - name: header
     type: header
     start: 0x0
+
   - name: boot
     type: bin
     start: 0x40
-  - name: main_segment
+
+  - name: main_segment # This segment is static, always present in memory
     type: code
     start: 0x1000
     vram: 0x80046800
     subsegments:
-
-
      #Game layout
      #Main Segment -> ucode -> Data/Rodata -> MIO_SEGMENT | Overlays
 
+      # GAME CODE
       - [0x1000, hasm, entrypoint]
-      - [0x1050, c, game/code_1050] #Some GFX macros
+      - [0x1050, c, game/code_1050] # Some GFX macros
       - [0x1C70, c, game/main]
       - [0x23E0, c, game/code_23E0]
       - [0x5480, c, game/code_5480]
@@ -74,7 +73,7 @@ segments:
       - [0x52CD0, c, game/code_52CD0]
       - [0x68A10, c, game/code_68A10]
       - [0x6EF50, c, game/code_6EF50]
-      - [0x6F530, hasm, mio0decode]
+      - [0x6F530, hasm, Mio0_Decompress]
       - [0x6F5D0, c, game/audio/synthesis]
       - [0x71AF0, c, game/audio/heap]
       - [0x734B0, c, game/audio/load]
@@ -84,7 +83,7 @@ segments:
       - [0x79B70, c, game/audio/external]
       - [0x7F440, c, game/audio/port] 
 
-     #Libultra Starts!
+      # LIBULTRA CODE
       - [0x7FF20, c, os/osVirtualtoPhysical]
       - [0x7FFA0, c, os/osSendMesg]
       - [0x800F0, c, os/osGetTime]
@@ -101,7 +100,7 @@ segments:
       - [0x80B10, c, os/osCreateMesgQueue]
       - [0x80B40, c, os/osSetEventMesg]
       - [0x80BB0, c, os/osViSetEvent]
-      - [0x80C20, c, os/osCreateThread] #Important
+      - [0x80C20, c, os/osCreateThread] # Important
       - [0x80D70, c, os/osStartThread]
       - [0x80EC0, c, os/osSpTaskYielded]
       - [0x80F40, hasm, libultra/writebackdcacheall]
@@ -112,10 +111,10 @@ segments:
       - [0x81500, c, os/osSetThreadPri]
       - [0x815E0, c, libultra_nm/osInitialize]
       - [0x81810, hasm, libultra/sqrtf]
-      - [0x81820, c, libultra_nm/controller] #Game segment
+      - [0x81820, c, libultra_nm/controller]
       - [0x81B80, asm, guOrtho]
       - [0x81D40, c, os/gu/guTranslate] #TODO
-      - [0x81DE0, c, libultra_nm/UnkLibultraSeg_81DE0] #gu funcs
+      - [0x81DE0, c, libultra_nm/UnkLibultraSeg_81DE0] # gu funcs
       - [0x822A0, c, libultra_nm/UnkLibultraSeg_822A0]
       - [0x82AD0, c, os/osEepromLongRead]
       - [0x82C10, c, libultra_nm/UnkLibultraSeg_82C10]
@@ -148,6 +147,7 @@ segments:
       - [0x861C0, c, os/__osSiRawStartDma]
       - [0x86270, asm]
       - [0x86280, asm]
+      - [0x86590, asm]
       - [0x86610, asm]
       - [0x86650, asm]
       - [0x866E0, c, os/__osSpDeviceBusy]
@@ -167,7 +167,6 @@ segments:
       - [0x87300, asm]
       - [0x87570, c, libultra_nm/unkLibultraSeg_87570]
       - [0x87870, c, libultra_nm/unkLibultraSeg_87870]
-      #- [0x889A0, asm]
       - [0x897A0, asm, contramwrite]
       - [0x89B30, asm]
       - [0x8ACC0, asm, strchr]
@@ -181,48 +180,120 @@ segments:
       - [0x8B620, hasm, libultra/setcompare]
       - [0x8B630, asm]
       - [0x8B660, asm]
-      - [0x8B7E0, c, os/libultra_Segment] #mix Litob and Ltob
+      - [0x8B7E0, c, os/libultra_Segment] # mix Litob and Ltob
       - [0x8C8B0, hasm, libultra/getcause]
       - [0x8C8C0, c, os/__osAtomicDec]
       - [0x8C920, c, os/libc/ldiv]
-      - [0x8CAB0, bin, fast3d_part1] #TODO: Put these on a separated segment
+      
+      # GFX MICROCODE
+      - [0x8CAB0, bin, fast3d_part1] # TODO: Put these on a separated segment
       - [0x8CB80, bin, fast3d_part2]
-      - [0x8DFB0, bin, fast3d_audio]
 
-  - name: Main_seg_data_rodata
-    type: code
-    vram: 0x800D45F0
-    start: 0x8DFC0 #Needs to be 0x16 Aligned
-    subsegments:
+      # Audio Microcode
+      - [0x8DFB0, bin, aspMain]
+
       - [0x8DFC0, data]
       - [0x8EDF0, data]
       - [0x8EFE0, data]
       - [0x8F000, data]
-      - [0xA52B0, data] # .rodata
-      - [0xA5620, data]
-      - [0xA5630, data]
 
-  - name: overlay_A95D0 #Maybe this is just a segment
-    exclusive_ram_id: overlay
-    follows_varm: segment_1B1FB0
+      # GAME RODATA
+      - [0xA39F0, rodata]
+      - [0xA3A20, .rodata, game/code_23E0]
+      - [0xA3A70, .rodata, game/code_5480]
+      - [0xA3A80, .rodata, game/water_69D0]
+      - [0xA3B30, .rodata, game/code_C6C0]
+      - [0xA4070, rodata]
+      - [0xA40B0, rodata]
+      - [0xA40F0, rodata]
+      - [0xA4130, rodata]
+      - [0xA4170, rodata]
+      - [0xA41B0, rodata]
+      - [0xA41F0, rodata]
+      - [0xA4230, rodata]
+      - [0xA4270, rodata]
+      - [0xA42B0, data]
+      - [0xA4330, data] # code_24B00 ?
+      - [0xA4370, .rodata, game/code_2C670]
+      - [0xA4520, data] # looks like .rodata from code_2C670 but doesn't match together with it
+      - [0xA4610, data] # looks like .rodata from EEPROM code at code_355D0, but doesn't match
+      - [0xA4BF0, .rodata, game/code_39F00]
+      - [0xA4C00, .rodata, game/code_3A580]
+      - [0xA4C10, .rodata, game/code_3AC00]
+      - [0xA52B0, .rodata, game/code_42670]
+      - [0xA52D0, .rodata, game/code_43A60]
+      - [0xA52F0, .rodata, game/code_43DA0]
+      - [0xA53B0, data] # could be rodata from code_4C750 but it's weird, i can't make it compile
+      - [0xA5620, rodata]
+      - [0xA5630, data] # rodata from code_4C750 too?
+      - [0xA5950, .rodata, game/code_4F850]
+      - [0xA5B20, .rodata, game/code_52990]
+      - [0xA5CC0, data] # rodata from code_52CD0, introduces a gap if .rodata'd
+      - [0xA6350, .rodata, game/code_68A10]
+
+      # AUDIO RODATA
+      - [0xA6420, .rodata, game/audio/heap]
+      - [0xA6450, .rodata, game/audio/load]
+      - [0xA6460, .rodata, game/audio/playback]
+      - [0xA6490, .rodata, game/audio/effects]
+      - [0xA64C0, .rodata, game/audio/seqplayer]
+      - [0xA6B60, .rodata, game/audio/external]
+      - [0xA6DB0, .rodata, game/audio/port]
+
+      # LIBULTRA RODATA
+      - [0xA6DD0, rodata] # UnkLibultraSeg_81DE0
+      - [0xA6DE0, rodata] # UnkLibultraSeg_822A0
+      - [0xA6E00, rodata]
+      - [0xA6E50, rodata]
+      - [0xA6F50, rodata]
+
+      - [0xA7030, data] # looks like audio data
+
+      # DATA - Audio Microcode
+      - [0xA9310, data, aspMain]
+
+  - name: codeseg # This segment is loaded into memory on func_80098190
     type: code
     start: 0xA95D0
     vram: 0x801DAFA0
-    dir: overlays
-    symbol_name_format: A95D0_$VRAM
     subsegments:
-    - [0xA95D0, c, A95D0/ovl_A95D0]
-    - [0xAF8C0, c, A95D0/ovl_AF8C0]
-    - [0xB2510, c, A95D0/ovl_B2510]
-    - [0xB2A70, c, A95D0/ovl_B2A70]
-    - [0xB3AA0, c, A95D0/ovl_B3AA0]
-    - [0xB55E0, c, A95D0/ovl_B55E0]
-    - [0xB66E0, c, A95D0/ovl_B66E0]
-    - [0xCAE70, data] 
+    - [0xA95D0, c, codeseg/A95D0]
+    - [0xAF8C0, c, codeseg/AF8C0]
+    - [0xB2510, c, codeseg/B2510]
+    - [0xB2A70, c, codeseg/B2A70]
+    - [0xB3AA0, c, codeseg/B3AA0]
+    - [0xB55E0, c, codeseg/B55E0]
+    - [0xB66E0, c, codeseg/B66E0]
+    - [0xCAE70, data]
+    - [0xF4540, .rodata, codeseg/A95D0]
+    - [0xF4670, data]
+    - [0xF4840, data]
+    - [0xF4970, data]
+    - [0xF49B0, .rodata, codeseg/AF8C0]
+    - [0xF49F0, data]
+    - [0xF51B0, .rodata, codeseg/B2510]
+    - [0xF51D0, data]
+    - [0xF5240, data]
+    - [0xF5260, data]
+    - [0xF5270, data]
+    - [0xF5280, data]
+    - [0xF52B0, .rodata, codeseg/B3AA0]
+    - [0xF52F0, data]
+    - [0xF5340, .rodata, codeseg/B55E0]
+    - [0xF53A0, data]
+    - [0xF5480, data]
+    - [0xF5520, data]
+    - [0xF5D40, data]
+    - [0xF5D70, data]
+    - [0xF5F30, data]
+    - [0xF6000, data]
 
-  - name: unk_F6090
+  - name: segment_F6090 # looks like a bunch of uncompressed assets (Dlists and Textures)
     type: bin
     start: 0xF6090
+    # vram: 0x802A0000
+    # subsegments:
+    # - [0xF6090, data]
 
   - name: MIO0_chunk
     type: bin
@@ -253,7 +324,7 @@ segments:
     type: bin
     start: 0x1B5280 
 
-    #Loaded when the game enters in a race
+    # Loaded when the game enters in a race
   - name: ovl_i1
     type: code
     dir: overlays/ovl_i1
@@ -264,7 +335,6 @@ segments:
     subsegments:
     - [0x1B55A0, c, ovl_1B55A0]
     - [0x1B91E0, bin]
-
 
     # Rider selection?
   - name: ovl_i2
@@ -278,7 +348,7 @@ segments:
     - [0x1B9440, c, ovl_1B9440]
     - [0x1BC7F0, bin]
 
-  #Before race (map overview?)
+  # Before race (map overview?)
   - name: ovl_i3
     type: code
     dir: overlays/ovl_i3
@@ -487,7 +557,7 @@ segments:
     - [0x30BC50, bin]
     - [0x30EC20, bin]
     - [0x313A90, bin]
-    - [0x317270, bin, Race_position_numbers] #Player Race position number like 1th, 2th, 3th
+    - [0x317270, bin, Race_position_numbers] # Player Race position number like 1th, 2th, 3th
     - [0x31CF40, bin]
     - [0x320D10, bin]
     - [0x327E90, bin]

@@ -6,8 +6,8 @@ extern s32 D_800E6E30[];
 extern struct UnkStruct_801D7B70 D_801D7B70[];
 extern s32 D_801D7DB0;
 
-void func_A95D0_801ED338(f32, f32);
-s32 func_A95D0_801ED304(int);
+void func_801ED338(f32, f32);
+s32 func_801ED304(int);
 
 void func_800B4750(void) {
     int i;
@@ -44,7 +44,7 @@ void func_800B4788(s32 source_id, f32 x_position, f32 y_position, f32 z_position
     temp_v1->unkC = y_position + temp_y;
     temp_v1->unk10 = z_position + temp_z;
 
-    func_A95D0_801ED338(8.0f, x_position);
+    func_801ED338(8.0f, x_position);
 
     var_f2 = sqrtf(SQ(temp_x) + SQ(temp_z));
     if (var_f2 > 0.0f) {
@@ -53,7 +53,7 @@ void func_800B4788(s32 source_id, f32 x_position, f32 y_position, f32 z_position
 
     temp_x *= var_f2;
     temp_z *= var_f2;
-    temp_f8 = func_A95D0_801ED304(0xC) + 8.0f;
+    temp_f8 = func_801ED304(0xC) + 8.0f;
     temp_v1->unk14 = temp_x + x_velocity;
     temp_v1->unk18 = temp_f8 + y_velocity;
     temp_v1->unk1C = temp_z + z_velocity;

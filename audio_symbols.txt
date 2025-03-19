@@ -99,5 +99,5 @@ init_sequence_players = 0x800BF1F4; //defined:true
 
 alSeqFileNew = 0x800CA908; //defined:true
 
-aspMainTextStart = 0x800D37B0;
-aspMainDataStart = 0x800EEB10;
+aspMainTextStart = 0x800D37B0; //name_end:aspMainTextEnd
+aspMainDataStart = 0x800EEB10; //name_end:aspMainDataEnd
