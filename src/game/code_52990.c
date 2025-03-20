@@ -4,17 +4,6 @@
 
 extern s32 D_800DAB24;
 
-typedef struct Overlay {
-    /* 0x00 */ u32 romStart;
-    /* 0x04 */ u32 romEnd;
-    /* 0x08 */ u32 textStart;
-    /* 0x0C */ u32 textEnd;
-    /* 0x10 */ u32 dataStart;
-    /* 0x14 */ u32 dataEnd;
-    /* 0x18 */ u32 bssStart;
-    /* 0x1C */ u32 bssEnd;
-} Overlay; // size = 0x20
-
 // This is probably an array
 extern Overlay D_800E4ED0;
 extern Overlay D_800E4EF0;

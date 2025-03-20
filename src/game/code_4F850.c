@@ -110,10 +110,9 @@ void func_800964C4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80096960.s")
 
 void func_80097E68(void) {
-    DmaTransfer* transfer;
-    int i;
-
-    transfer = &D_800DAB38[0];
+    DmaTransfer* transfer = &D_800DAB38[0];
+    s32 i;
+    
     for (i = 0; i < 5; i++) {
         if (transfer->flag != 0) {
             transfer->flag = 0;

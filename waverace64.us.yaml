@@ -398,12 +398,20 @@ segments:
   - name: seg_1C3780
     type: code
     exclusive_ram_id: overlay
-    symbol_name_format: 1C370_$VRAM
+    symbol_name_format: 1C3780_$VRAM
     start: 0x1C3780
     vram: 0x802C5800
     subsegments:
     - [0x1C3780, c, seg_1C3780]
     - [0x1C3CB0, bin, seg_pad] # TODO: This is just fake
+
+  - name: seg_1C3D00
+    type: code
+    exclusive_ram_id: overlay
+    symbol_name_format: 1C3D00_$VRAM
+    start: 0x1C3D00
+    vram: 0x802C5800
+    subsegments:
     - [0x1C3D00, c, seg_1C3D00]
     - [0x1C43B0, bin]
 
