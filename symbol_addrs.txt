@@ -162,6 +162,8 @@ __osSpRawStartDma = 0x800CBE50;
 __osSpGetStatus = 0x800CBF10;
 osSpTaskYielded = 0x800C66C0;
 osEepromLongWrite = 0x800C8410;
+__osGetCause = 0x800D20B0;
+
 //TODO: Need to reference undefined function to the overlay address
 
 //Game Symbols
