@@ -112,7 +112,7 @@ void func_800964C4(void) {
 void func_80097E68(void) {
     DmaTransfer* transfer = &D_800DAB38[0];
     s32 i;
-    
+
     for (i = 0; i < 5; i++) {
         if (transfer->flag != 0) {
             transfer->flag = 0;

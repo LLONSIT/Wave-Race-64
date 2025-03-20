@@ -196,6 +196,8 @@ segments:
       - [0x8EDF0, data]
       - [0x8EFE0, data]
       - [0x8F000, data]
+      - [0x9F6D0, .data, ovl_table]
+      - [0x9F930, data]
 
       # GAME RODATA
       - [0xA39F0, rodata]
@@ -300,7 +302,7 @@ segments:
     start: 0x1AE660
 
     # What?, this seems to be unused.
-  - name: segment_1B1FB0  
+  - name: segment_1B1FB0
     exclusive_ram_id: overlay
     type: code
     start: 0x1B1FB0
@@ -309,6 +311,7 @@ segments:
     subsegments:
     - [0x1B1FB0, c, unused_code_1B1FB0]
     - [0x1B3E10, bin]
+    - { type: .bss, vram: 0xD_802C7710, name: unused_code_1B1FB0 }
 
   - name: ovl_i0
     exclusive_ram_id: overlay

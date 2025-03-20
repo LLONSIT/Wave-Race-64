@@ -206,9 +206,9 @@ gIdleThread = 0x801539E0;
 game_dma_copy = 0x80097EC8; //defined:true
 
 //Fix build
-D_A95D0_80228A78 = 0x80228A78;
-D_A95D0_80227E98 = 0x80227E98;
-D_A95D0_80228058 = 0x80228058;
+D_80228A78 = 0x80228A78;
+D_80227E98 = 0x80227E98;
+D_80228058 = 0x80228058;
 
 
 //Names from n64decomp/mk64
@@ -221,3 +221,4 @@ jtbl_800E9B70 = 0x800E9B70; //size:128 type:jtbl
 codeseg_ROM_START = 0xA95D0; //defined:true
 codeseg_ROM_END = 0xF6090; //defined:true
 Overlay_Load = 0x80098208;
+gOverlayTable = 0x800E4ED0;

@@ -2,29 +2,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/func_80098190.s")
 
+#if 0
+#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/Overlay_Load.s")
+#else
 extern s32 D_800DAB24;
-
-// This is probably an array
-extern Overlay D_800E4ED0;
-extern Overlay D_800E4EF0;
-extern Overlay D_800E4F10;
-extern Overlay D_800E4F30;
-extern Overlay D_800E4F50;
-extern Overlay D_800E4F70;
-extern Overlay D_800E4F90;
-extern Overlay D_800E4FB0;
-extern Overlay D_800E4FD0;
-extern Overlay D_800E4FF0;
-extern Overlay D_800E5010;
-extern Overlay D_800E5030;
-extern Overlay D_800E5050;
-extern Overlay D_800E5070;
-extern Overlay D_800E5090;
-extern Overlay D_800E50B0;
-extern Overlay D_800E50D0;
-extern Overlay D_800E50F0;
-extern Overlay D_800E5110;
-
 extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
 extern OSIoMesg D_801542A0;
@@ -37,80 +18,80 @@ void Overlay_Load(void) {
 
     switch (D_800DAB24) {
         case 0x5:
-            ovl = &D_800E4ED0;
+            ovl = &gOverlayTable[0];
             flag = 1;
             break;
         case 0x2:
-            ovl = &D_800E4EF0;
+            ovl = &gOverlayTable[1];
             flag = 1;
             break;
         case 0xA:
-            ovl = &D_800E4F10;
+            ovl = &gOverlayTable[2];
             flag = 1;
             break;
         case 0x1E:
-            ovl = &D_800E4F30;
+            ovl = &gOverlayTable[3];
             flag = 1;
             break;
         case 0x14:
-            ovl = &D_800E4F50;
+            ovl = &gOverlayTable[4];
             flag = 1;
             break;
         case 0x34:
-            ovl = &D_800E4F70;
+            ovl = &gOverlayTable[5];
             flag = 1;
             break;
         case 0x36:
-            ovl = &D_800E4F90;
+            ovl = &gOverlayTable[6];
             flag = 1;
             break;
         case 0x32:
-            ovl = &D_800E4FB0;
+            ovl = &gOverlayTable[7];
             flag = 1;
             break;
         case 0x38:
-            ovl = &D_800E4FD0;
+            ovl = &gOverlayTable[8];
             flag = 1;
             break;
         case 0x3C:
-            ovl = &D_800E4FF0;
+            ovl = &gOverlayTable[9];
             flag = 1;
             break;
         case 0x3E:
-            ovl = &D_800E5010;
+            ovl = &gOverlayTable[10];
             flag = 1;
             break;
         case 0x42:
-            ovl = &D_800E5030;
+            ovl = &gOverlayTable[11];
             flag = 1;
             break;
         case 0x44:
-            ovl = &D_800E5050;
+            ovl = &gOverlayTable[12];
             flag = 1;
             break;
         case 0x48:
-            ovl = &D_800E5070;
+            ovl = &gOverlayTable[13];
             flag = 1;
             break;
         case 0x46:
-            ovl = &D_800E5090;
+            ovl = &gOverlayTable[14];
             flag = 1;
             break;
         case 0x40:
-            ovl = &D_800E50B0;
+            ovl = &gOverlayTable[15];
             flag = 1;
             break;
         case 0x50:
-            ovl = &D_800E50D0;
+            ovl = &gOverlayTable[16];
             flag = 1;
             break;
         case 0x66:
-            ovl = &D_800E50F0;
+            ovl = &gOverlayTable[17];
             flag = 1;
             break;
         case 0x7:
         case 0x28:
-            ovl = &D_800E5110;
+            ovl = &gOverlayTable[18];
             flag = 1;
             break;
         case 1:
@@ -133,3 +114,4 @@ void Overlay_Load(void) {
         osRecvMesg(&D_801540B8, &D_80151954, OS_MESG_BLOCK);
     }
 }
+#endif

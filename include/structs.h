@@ -109,27 +109,4 @@ struct UnkStruct_800E6DD0 {
     f32 unk8;
 };
 
-typedef struct DmaEntry {
-    /* 0x0 */ u32 segRomStart;
-    /* 0x4 */ u32 segRomEnd;
-    /* 0x8 */ u32 flag;
-    /* 0xC */ u32 offset;
-} DmaEntry; // size = 0x10
-
-typedef struct {
-    /* 0x0 */ s16 flag;
-    /* 0x4 */ DmaEntry* entry;
-} DmaTransfer; // size = 0x8
-
-typedef struct Overlay {
-    /* 0x00 */ u32 romStart;
-    /* 0x04 */ u32 romEnd;
-    /* 0x08 */ u32 textStart;
-    /* 0x0C */ u32 textEnd;
-    /* 0x10 */ u32 dataStart;
-    /* 0x14 */ u32 dataEnd;
-    /* 0x18 */ u32 bssStart;
-    /* 0x1C */ u32 bssEnd;
-} Overlay; // size = 0x20
-
 #endif /* STRUCTS_H */

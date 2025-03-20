@@ -8,6 +8,7 @@
 #include "macros.h"
 #include "math.h"
 #include "structs.h"
+#include "wr64dma.h"
 
 typedef float Matrix[4][4];
 
