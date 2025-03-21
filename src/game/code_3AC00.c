@@ -1,8 +1,29 @@
+#include "game.h"
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80080400.s")
+void func_80080400(s32 arg0) {
+    func_80085EEC(arg0);
+    if (D_801CE650 == 3) {
+        func_8008044C();
+        return;
+    }
+    func_80080630();
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_8008044C.s")
+void func_8008044C(void) {
+    func_80086DA8();
+    func_80087E70();
+    func_800861AC();
+    func_80087E70();
+    func_800861AC();
+    func_80087E70();
+    func_80088418();
+    func_80085510();
+    func_80080864();
+    func_80080E34();
+    func_80081048();
+    func_80087AE8();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_800804C4.s")
 

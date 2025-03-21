@@ -139,47 +139,47 @@ segments:
       - [0x85160, c, os/osAiSetNextBuffer]
       - [0x85210, hasm, libultra/probetlb]
       - [0x852D0, hasm, libultra/interrupt]
-      - [0x85310, asm]
+      - [0x85310, hasm, libultra/exceptasm]
       - [0x85BC0, asm, libultra/osGetCount]
       - [0x85BD0, c, libultra_nm/osTimer]
       - [0x85FD0, c, __osViInit]
       - [0x86100, c, os/siacs]
       - [0x861C0, c, os/__osSiRawStartDma]
-      - [0x86270, asm]
-      - [0x86280, asm]
-      - [0x86590, asm]
-      - [0x86610, asm]
-      - [0x86650, asm]
+      - [0x86270, c, libultra_nm/unkSeg_86270]
+      - [0x86280, c, libultra_nm/unkSeg_86280]
+      - [0x86590, c, libultra_nm/unkSeg_86590]
+      - [0x86610, c, libultra_nm/unkSeg_86610]
+      - [0x86650, c, libultra_nm/unkSeg_86650]
       - [0x866E0, c, os/__osSpDeviceBusy]
-      - [0x86710, asm]
-      - [0x86720, asm]
+      - [0x86710, c, libultra_nm/unkSeg_86710]
+      - [0x86720, c, libultra_nm/unkSeg_86720]
       - [0x86740, c, os/osPiGetDeviceType]
-      - [0x86750, asm]
-      - [0x86AB0, asm]
+      - [0x86750, c, libultra_nm/unkSeg_86750]
+      - [0x86AB0, c, libultra_nm/unkSeg_86AB0]
       - [0x86B70, c, os/osPiRawStartDma]
       - [0x86C50, c, os/osDevMgrMain]
       - [0x86DD0, asm, libultra/__osSetSR]
       - [0x86DE0, asm, libultra/__osGetSR]
-      - [0x86DF0, asm]
+      - [0x86DF0, c, libultra_nm/unkSeg_86DF0]
       - [0x86EA0, asm, libultra/osMapTLBRdb]
-      - [0x86F00, asm]
+      - [0x86F00, c, libultra_nm/unkSeg_86F00]
       - [0x86F60, c, os/ll]
-      - [0x87300, asm]
+      - [0x87300, c, libultra_nm/unkSeg_87300]
       - [0x87570, c, libultra_nm/unkLibultraSeg_87570]
       - [0x87870, c, libultra_nm/unkLibultraSeg_87870]
       - [0x897A0, asm, contramwrite]
-      - [0x89B30, asm]
+      - [0x89B30, asm, xprintf]
       - [0x8ACC0, asm, strchr]
       - [0x8AD60, c, os/osJamMesg]
       - [0x8AEB0, c, os/osPiGetCmdQueue]
       - [0x8AEE0, asm, osAiSetNextBuffer]
-      - [0x8AF10, asm]
-      - [0x8B390, asm]
+      - [0x8AF10, c, libultra_nm/unkSeg_8AF10]
+      - [0x8B390, c, libultra_nm/unkSeg_8B390]
       - [0x8B4C0, c, libultra_nm/unkLibultraSeg_8B4C0]
       - [0x8B520, c, os/osDestroyThread]
       - [0x8B620, hasm, libultra/setcompare]
-      - [0x8B630, asm]
-      - [0x8B660, asm]
+      - [0x8B630, c, libultra_nm/unkSeg_8B630]
+      - [0x8B660, c, libultra_nm/unkSeg_8B660]
       - [0x8B7E0, c, os/libultra_Segment] # mix Litob and Ltob
       - [0x8C8B0, hasm, libultra/getcause]
       - [0x8C8C0, c, os/__osAtomicDec]
@@ -301,7 +301,7 @@ segments:
     type: bin
     start: 0x1AE660
 
-    # What?, this seems to be unused.
+    # Unused?
   - name: segment_1B1FB0
     exclusive_ram_id: overlay
     type: code
@@ -321,11 +321,8 @@ segments:
     dir: overlays/ovl_i0
     symbol_name_format: i0_$VRAM
     subsegments:
-    - [0x1B3EC0, c, ovl_1B3EC0] #Migrated !
-
-  - name: unk_data
-    type: bin
-    start: 0x1B5280 
+    - [0x1B3EC0, c, ovl_1B3EC0]
+    - [0x1B5280, bin]
 
     # Loaded when the game enters in a race
   - name: ovl_i1
@@ -397,7 +394,7 @@ segments:
     - [0x1C2250, c, ovl_1C2250]
     - [0x1C36C0, bin]
 
-    # Unused?
+    # Total points screen
   - name: seg_1C3780
     type: code
     exclusive_ram_id: overlay

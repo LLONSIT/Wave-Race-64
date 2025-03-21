@@ -28,9 +28,10 @@ s32 func_80047BE0(f32 arg0) {
     return (s32) (arg0 + 0.5f);
 }
 
-#ifdef NEEDS_RODATA
 // Same as func_8006A6E4 of fzero x
 // Props to inspectrdc for matching this...
+
+// Initialize the sin table
 void func_80047C38(void) {
     f64 denominator;
     f64 minusSquareX;
@@ -40,12 +41,11 @@ void func_80047C38(void) {
     s32 j;
 
     for (i = 0; i < ARRAY_COUNT(gSinTable); i++) {
-        x = (i * (2 * 6.2)) / ARRAY_COUNT(gSinTable);
+        x = (i * (6.28318530700000011)) / ARRAY_COUNT(gSinTable);
         numerator = -x * x * x;
         minusSquareX = -x * x;
-        denominator = 1 * 2 * 3; // 3!
+        denominator = 1 * 2 * 3;
 
-        // sinx = x - (x^3/3!) + (x^5/5!) - (x^7/7!) + ...
         for (j = 2; j < 14; j++) {
             x += (numerator / denominator);
             numerator *= minusSquareX;
@@ -55,9 +55,6 @@ void func_80047C38(void) {
         gSinTable[i] = x;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80047C38.s")
-#endif
 
 void srand(int seed) {
     Seed = seed;
