@@ -34,7 +34,13 @@ s32 func_8007AE30(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/code_355D0/func_8007AE8C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/code_355D0/func_8007AEFC.s")
+void func_8007AEFC(chr_struct* arg0, chr_struct* arg1) {
+    s32 sp1C = (arg1->unk1 & 0xFF) + ((arg1->unk0 & 0x7F) << 8);
+    
+    arg0->unk0 = func_8007AE30((sp1C >> 10) & 0x1F);
+    arg0->unk1 = func_8007AE30((sp1C >> 5) & 0x1F);
+    arg0->unk2 = func_8007AE30(sp1C & 0x1F);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/code_355D0/func_8007AF78.s")
 

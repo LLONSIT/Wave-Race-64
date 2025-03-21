@@ -19,8 +19,8 @@ typedef struct {
 } struct_80098548;
 
 typedef struct {
-    s8 unk0;
-    s8 unk1;
+    u8 unk0;
+    u8 unk1;
     s8 unk2;
     s8 unk3;
     s8 unk4;
