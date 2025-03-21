@@ -1,10 +1,31 @@
 #include "common.h"
+#include "camera.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006A300.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006A748.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006AA58.s")
+extern s32 D_801C058C;
+extern s32 D_801C059C;
+extern s32 D_801C05AC;
+extern s32 D_801C05BC;
+extern f32 D_801C0C84;
+extern f32 D_801C0C88;
+extern f32 D_801C0C8C;
+extern s32 D_80223930;
+
+void func_8006AA58(void) {
+    camera_unk_1* camera;
+
+    D_801C058C = 0;
+    D_801C059C = 0;
+    D_801C05AC = 0;
+    D_801C05BC = 0;
+    camera = &gCameraPerspective[D_80223930];
+    D_801C0C84 = camera->unk4C;
+    D_801C0C88 = camera->unk54;
+    D_801C0C8C = 700.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006AACC.s")
 
