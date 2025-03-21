@@ -2,6 +2,7 @@
 #define FUNCTIONS_H
 #include <ultra64.h>
 #include "structs.h"
+#include "wr64dma.h"
 
 //0x800B
 void func_8004A2B4(void);

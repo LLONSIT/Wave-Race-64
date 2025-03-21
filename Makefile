@@ -36,7 +36,7 @@ OVERLAY_ASSETS_DIRS = $(OVL_ASSET_DIR)/ovl_i0 $(OVL_ASSET_DIR)/ovl_i1 $(OVL_ASSE
 
 BIN_DIRS  = assets assets/mio0_seg $(OVERLAY_ASSETS_DIRS)
 
-DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/game $(SRC_DIR)/codeseg $(SRC_DIR)/game/core $(SRC_DIR)/game/audio $(OVL_SRC_DIR)/A95D0 $(OVERLAY_SRC_DIRS) $(LIBULTRA_SRC_DIRS)
+DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/game $(SRC_DIR)/codeseg $(SRC_DIR)/game/core $(SRC_DIR)/game/audio $(OVERLAY_SRC_DIRS) $(LIBULTRA_SRC_DIRS)
 SRC_DIRS = $(DEFINE_SRC_DIRS)
 
 TOOLS_DIR = tools

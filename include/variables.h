@@ -6,6 +6,7 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
 
+#include "wr64dma.h"
 #include "structs.h"
 // Used in game_1050, game_4C750
 extern int D_80151948;

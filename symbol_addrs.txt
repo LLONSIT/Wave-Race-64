@@ -162,6 +162,8 @@ __osSpRawStartDma = 0x800CBE50;
 __osSpGetStatus = 0x800CBF10;
 osSpTaskYielded = 0x800C66C0;
 osEepromLongWrite = 0x800C8410;
+__osGetCause = 0x800D20B0;
+
 //TODO: Need to reference undefined function to the overlay address
 
 //Game Symbols
@@ -206,9 +208,9 @@ gIdleThread = 0x801539E0;
 game_dma_copy = 0x80097EC8; //defined:true
 
 //Fix build
-D_A95D0_80228A78 = 0x80228A78;
-D_A95D0_80227E98 = 0x80227E98;
-D_A95D0_80228058 = 0x80228058;
+D_80228A78 = 0x80228A78;
+D_80227E98 = 0x80227E98;
+D_80228058 = 0x80228058;
 
 
 //Names from n64decomp/mk64
@@ -221,3 +223,4 @@ jtbl_800E9B70 = 0x800E9B70; //size:128 type:jtbl
 codeseg_ROM_START = 0xA95D0; //defined:true
 codeseg_ROM_END = 0xF6090; //defined:true
 Overlay_Load = 0x80098208;
+gOverlayTable = 0x800E4ED0;
