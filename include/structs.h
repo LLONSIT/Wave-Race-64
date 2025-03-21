@@ -109,4 +109,20 @@ struct UnkStruct_800E6DD0 {
     f32 unk8;
 };
 
+typedef struct Unkstruct_8007B1AC_arg0 {
+    s32 unk0;
+    char pad[0x3];
+    u8 unk7;
+    char pad8[0x3];
+    u8 unkB;
+    u8 unkC;
+} Unkstruct_8007B1AC_arg0;
+
+typedef struct Unkstruct_8007B1AC_arg1 {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+} Unkstruct_8007B1AC_arg1;
+
 #endif /* STRUCTS_H */

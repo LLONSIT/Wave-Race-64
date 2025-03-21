@@ -36,7 +36,7 @@ s32 func_8007AE30(s32 arg0) {
 
 void func_8007AEFC(chr_struct* arg0, chr_struct* arg1) {
     s32 sp1C = (arg1->unk1 & 0xFF) + ((arg1->unk0 & 0x7F) << 8);
-    
+
     arg0->unk0 = func_8007AE30((sp1C >> 10) & 0x1F);
     arg0->unk1 = func_8007AE30((sp1C >> 5) & 0x1F);
     arg0->unk2 = func_8007AE30(sp1C & 0x1F);
@@ -50,7 +50,23 @@ void func_8007AEFC(chr_struct* arg0, chr_struct* arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/code_355D0/func_8007B110.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/code_355D0/func_8007B1AC.s")
+void func_8007B1AC(Unkstruct_8007B1AC_arg0* arg0, Unkstruct_8007B1AC_arg1* arg1) {
+    s32 new_var2;
+    unsigned short new_var;
+    s32 temp_t3;
+    s8 new_var3;
+
+    // looks fake
+    new_var2 = arg0->unk0;
+    temp_t3 = new_var2;
+    new_var = temp_t3 >> 0x10;
+    arg1->unk0 = new_var + (arg0->unk7 << 5);
+    new_var3 = (s8) temp_t3;
+    arg1->unk1 = (new_var2 = temp_t3 >> 8);
+    arg1->unk2 = new_var3 & 0xFFFF;
+    func_8007AE8C(&arg1->unk3, &arg0->unkC, arg1, arg0);
+    arg1->unk3 = (u8) (arg1->unk3 ^ (arg0->unkB << 7));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/code_355D0/func_8007B220.s")
 

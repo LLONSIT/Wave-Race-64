@@ -93,5 +93,6 @@ void func_80097F74(u32, s32, u32); // arg1 is confirmed to be s32
 void func_800C6740(); 
 void Mio0_Decompress(u8*, u8*);
 s32 func_8007AE30(s32);
+void func_8007AE8C(void*, void*, void*, void*);
 
 #endif /*FUNCTIONS_H*/
