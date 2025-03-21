@@ -16,7 +16,21 @@ s32 func_8007ADD0(s32 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/code_355D0/func_8007AE30.s")
+s32 func_8007AE30(s32 arg0) {
+    if ((arg0 > 0) && (arg0 < 0x1B)) {
+        return arg0 + 0x40;
+    }
+    if (arg0 == 0x1B) {
+        return 0x20;
+    }
+    if (arg0 == 0x1C) {
+        return 0x2D;
+    }
+    if (arg0 == 0x1D) {
+        return 0x2E;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/code_355D0/func_8007AE8C.s")
 
