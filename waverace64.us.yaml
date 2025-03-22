@@ -310,8 +310,9 @@ segments:
     symbol_name_format: 1B1FB0_$VRAM
     subsegments:
     - [0x1B1FB0, c, unused_code_1B1FB0]
-    - [0x1B3E10, bin]
-    - { type: .bss, vram: 0xD_802C7710, name: unused_code_1B1FB0 }
+    - [0x1B3E10, data, unused_code_1B1FB0]
+    - [0x1B3EB0, .rodata, unused_code_1B1FB0]
+    # - { type: .bss, vram: 0xD_802C7710, name: unused_code_1B1FB0 }
 
   - name: ovl_i0
     exclusive_ram_id: overlay
@@ -323,6 +324,8 @@ segments:
     subsegments:
     - [0x1B3EC0, c, ovl_1B3EC0]
     - [0x1B5280, bin]
+    # - [0x1B5280, data, ovl_1B3EC0]
+    # - [0x1B5280, .rodata, ovl_1B3EC0]
 
     # Loaded when the game enters in a race
   - name: ovl_i1
@@ -417,7 +420,6 @@ segments:
 
 
   # OPTIONS overlay
-
   - name: ovl_i7
     type: code
     dir: overlays/ovl_i7
