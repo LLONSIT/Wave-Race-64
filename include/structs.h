@@ -3,6 +3,18 @@
 
 // TODO: Some lazy names here
 
+struct Mtx {
+    s16 intarr[4][4];
+    u16 fracarr[4][4];
+};
+
+typedef union {
+    struct Mtx m;
+    struct {
+        s32 xx, yx, zx, wx, xy, yy, zy, wy, xz, yz, zz, wz, xw, yw, zw, ww;
+    };
+} MF;
+
 typedef struct {
     f32 unk_x;
     f32 unk_y;

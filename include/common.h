@@ -9,6 +9,7 @@
 #include "math.h"
 #include "structs.h"
 #include "wr64dma.h"
+#include "wr64fade.h"
 
 typedef float Matrix[4][4];
 

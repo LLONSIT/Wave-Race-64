@@ -55,6 +55,8 @@ void* main_thread(void* entry);
 void* idle_thread(void* entry);
 void main(void);
 void func_80047B00(void);
+void func_800980C8(void);
+void func_800980D0(void*);
 void* audio_thread(void* entry);
 
 void func_80047470(void) {
@@ -185,14 +187,14 @@ void* idle_thread(void* entry) {
     osViBlack(TRUE);
     osViSwapBuffer(D_801542C0[1]);
 
-    while (osViGetCurrentFramebuffer() != D_801542C0[1]) {
+    while (osViGetCurrentFramebuffer() != (void*) D_801542C0[1]) {
         ;
     }
 
     func_800980D0(D_801542C0[0]);
     osViSwapBuffer((void*) D_801542C0[0]);
 
-    while (osViGetCurrentFramebuffer() != D_801542C0[0]) {
+    while (osViGetCurrentFramebuffer() != (void*) D_801542C0[0]) {
         ;
     }
 
