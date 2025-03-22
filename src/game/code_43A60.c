@@ -15,9 +15,9 @@ struct unk_D_801C3C60 {
 
 extern s32 D_800D48DC;
 extern s32 D_801C26C0[];
-struct unk_D_801C3C58* D_801C3C58;
-struct unk_D_801C3C60 D_801C3C60[];
-s32 D_801C4100[];
+extern struct unk_D_801C3C58* D_801C3C58;
+extern struct unk_D_801C3C60 D_801C3C60[];
+extern s32 D_801C4100[];
 
 void func_80088EA0(void) {
 }

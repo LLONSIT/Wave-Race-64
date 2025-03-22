@@ -22,7 +22,7 @@ struct UnkStruct_801C3C54 {
     /* 0x080 */ f32 unk80;        /* inferred */
     /* 0x084 */ f32 unk84;        /* inferred */
     /* 0x088 */ char pad88[0x7C]; /* maybe part of unk84[0x20]? */
-};                                /* size = 0x104 */
+}; /* size = 0x104 */
 
 typedef struct {
     /* 0x00 */ char pad0[8];

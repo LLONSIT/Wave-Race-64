@@ -5,8 +5,8 @@
 #include "functions.h"
 
 // TODO: Classify by .bss, .data etc..
-OSTask* second_task;
-OSTask* first_task;
+extern OSTask* second_task;
+extern OSTask* first_task;
 
 //.data, .rodata
 extern s32 D_800D4600;
@@ -23,29 +23,30 @@ extern OSViMode D_800E8770;
 extern OSViMode D_800E8BD0;
 
 //.bss
-void* D_80154148;
-s32 D_801521E0;
-OSThread D_80153B90;
-OSMesgQueue D_801540A0;
-OSThread* gIdleThread;
-void* D_80151DE0;
-s32 D_801531E0;
-OSThread gAudioThread;
-OSThread D_80153EF0;
-OSMesgQueue D_801540B8;
-OSMesgQueue D_801540E8;
-OSMesgQueue D_80154100;
-OSMesgQueue D_80154118;
-void* D_80154248;
-void* D_8015424C;
-void* D_80154250;
-void* D_80154254;
-void* D_80154258;
-void* D_80154260;
+extern void* D_80154148;
+extern s32 D_801521E0;
+extern OSThread D_80153B90;
+extern OSMesgQueue D_801540A0;
+extern OSThread* gIdleThread;
+extern void* D_80151DE0;
+extern s32 D_801531E0;
+extern OSThread gAudioThread;
+extern OSThread D_80153EF0;
+extern OSMesgQueue D_801540B8;
+extern OSMesgQueue D_801540E8;
+extern OSMesgQueue D_80154100;
+extern OSMesgQueue D_80154118;
+extern void* D_80154248;
+extern void* D_8015424C;
+extern void* D_80154250;
+extern void* D_80154254;
+extern void* D_80154258;
+extern void* D_80154260;
 
-s32 D_8038F800;
-s32 D_803B5000;
-s32 D_803DA800;
+// Linker symbols or adresses
+extern s32 D_8038F800;
+extern s32 D_803B5000;
+extern s32 D_803DA800;
 
 // Function declaration (main.c)
 void func_80047470(void);

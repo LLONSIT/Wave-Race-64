@@ -42,6 +42,7 @@ segments:
     type: code
     start: 0x1000
     vram: 0x80046800
+    bss_size: 0xEC1D0
     subsegments:
      #Game layout
      #Main Segment -> ucode -> Data/Rodata -> MIO_SEGMENT | Overlays
@@ -253,6 +254,9 @@ segments:
 
       # DATA - Audio Microcode
       - [0xA9310, data, aspMain]
+
+      # Main bss
+      # - { start: 0xA95D0, type: bss, vram: 0x800EEDD0 }
 
   - name: codeseg # This segment is loaded into memory on func_80098190
     type: code
