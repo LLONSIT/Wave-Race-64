@@ -40,7 +40,7 @@ import shutil
 
 def import_c_file(in_file) -> str:
 
-    Message = '/**** \nSpeedy Context file for Project_AG!\nGenerated on '
+    Message = '/**** \nContext file for Wave Race 64!\nGenerated on '
 
     with open("/etc/os-release") as f:
         for line in f:
