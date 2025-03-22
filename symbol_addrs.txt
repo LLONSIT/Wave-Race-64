@@ -229,3 +229,4 @@ gOverlayTable = 0x800E4ED0;
 
 Libc_strncpy = 0x8006A140;
 Libc_strcmp = 0x8006A188;
+Load_Codeseg = 0x80098190;

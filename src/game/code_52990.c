@@ -1,6 +1,6 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/func_80098190.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/Load_Codeseg.s")
 
 #if 0
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/Overlay_Load.s")

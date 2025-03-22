@@ -188,14 +188,14 @@ void* idle_thread(void* entry) {
     osViBlack(TRUE);
     osViSwapBuffer(D_801542C0[1]);
 
-    while (osViGetCurrentFramebuffer() != (void*) D_801542C0[1]) {
+    while (osViGetCurrentFramebuffer() !=D_801542C0[1]) {
         ;
     }
 
     func_800980D0(D_801542C0[0]);
     osViSwapBuffer((void*) D_801542C0[0]);
 
-    while (osViGetCurrentFramebuffer() != (void*) D_801542C0[0]) {
+    while (osViGetCurrentFramebuffer() != D_801542C0[0]) {
         ;
     }
 
