@@ -6,12 +6,14 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
 
+#include "common.h"
 #include "wr64dma.h"
 #include "structs.h"
 // Used in game_1050, game_4C750
 extern int D_80151948;
 extern s32 D_80151948;
 extern s32 D_801542C0[];
+extern u16 D_80228A34;
 
 //Global GFX Pointer
 extern Gfx* gDisplayListHead;
@@ -44,7 +46,7 @@ extern void* D_801518B8;
 extern s32 D_80151948;
 extern s32 D_80151984;
 extern s32 D_801542C0[]; //tex save?
-extern void* D_801CE5F8;
+extern u8* D_801CE5F8;
 extern s32 D_801CE650;
 //overlay
 extern struct ovl_A95D0_B66E0_1 D_A95D0_80228A78;
@@ -60,4 +62,6 @@ extern s32 D_801CB328; //Selected course id??
 extern s32 D_801CE608;
 extern s8 D_800E5134;
 extern OSContPad gControllers[];
+extern Vp* D_106F008;
+
 #endif /* VARIABLES_H */

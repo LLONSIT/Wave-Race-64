@@ -1,17 +1,5 @@
 #include "common.h"
 
-struct Mtx {
-    s16 intarr[4][4];
-    u16 fracarr[4][4];
-};
-
-typedef union {
-    struct Mtx m;
-    struct {
-        s32 xx, yx, zx, wx, xy, yy, zy, wy, xz, yz, zz, wz, xw, yw, zw, ww;
-    };
-} MF;
-
 //.bss
 extern float gSinTable[0x1000];
 
