@@ -14,9 +14,9 @@ PINK    := \033[0;35m
 CYAN    := \033[0;36m
 
 # Directories
+ASM_DIRS  := $(shell find asm/ -type d -not -path "asm/nonmatchings/*")
 
 BUILD_DIR = build
-ASM_DIRS  = asm/data asm/data/overlays asm asm/libultra #For libultra handwritten files
 
 SRC_DIR   = src
 ASSETS_DIR = assets

@@ -341,7 +341,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1B55A0, c, ovl_1B55A0]
-    - [0x1B91E0, bin]
+    - [0x1B91E0, data]
+    - [0x1B9320, .rodata, ovl_1B55A0]
 
     # Rider selection?
   - name: ovl_i2
