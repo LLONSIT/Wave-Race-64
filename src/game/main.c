@@ -188,7 +188,7 @@ void* idle_thread(void* entry) {
     osViBlack(TRUE);
     osViSwapBuffer(D_801542C0[1]);
 
-    while (osViGetCurrentFramebuffer() !=D_801542C0[1]) {
+    while (osViGetCurrentFramebuffer() != D_801542C0[1]) {
         ;
     }
 
