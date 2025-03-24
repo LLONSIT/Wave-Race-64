@@ -70,6 +70,8 @@ LD       = $(CROSS)ld
 OBJCOPY  = $(CROSS)objcopy
 PYTHON   = python3
 GCC      = gcc
+TOOLS	 = tools
+TORCH    := $(TOOLS)/Torch/cmake-build-release/torch
 
 XGCC     = mips64-elf-gcc
 
@@ -185,6 +187,12 @@ verify: $(TARGET).z64
 no_verify: $(TARGET).z64
 	@echo "Skipping SHA1SUM check!"
 
+assets:
+	rm -r -f torch.hash.yml
+	@echo "Extracting assets from ROM..."
+	@$(TORCH) code $(TARGET).z64 -v
+	@$(TORCH) header $(TARGET).z64
+	@$(TORCH) modding export $(TARGET).z64
 
 splat: $(SPLAT)
 
@@ -279,5 +287,5 @@ baserom.$(VERSION).z64:
 
 ### Settings
 .SECONDARY:
-.PHONY: all clean default
+.PHONY: all clean default assets
 SHELL = /bin/bash -e -o pipefail

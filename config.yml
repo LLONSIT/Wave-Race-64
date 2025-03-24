@@ -1,0 +1,15 @@
+# Supported Wave Race Versions: US, Rev1
+
+508dfc2d4caa42b6f6de5263d0aed5e44ac7966a:
+  name: Wave Race 64 (U) (V1.1)
+  path: assets/yaml/rev1
+  config:
+    gbi: F3D
+    sort: OFFSET
+    logging: ERROR
+    output:
+      binary: wr64.otr
+      code: src/assets
+      # headers: include/assets
+      modding: src/assets
+#    enums:
