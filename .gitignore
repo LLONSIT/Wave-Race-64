@@ -16,10 +16,14 @@ build/
 assets/
 expected/
 asm/
+src/assets/*
+include/assets/*
+
 # Automatically generated files, so they should be ignored
 waverace64.ld
 undefined_funcs_auto.txt
 undefined_syms_auto.txt
+torch.hash.yml
 
 # CTX files for m2c should be ignored as we generate those
 ctx.c
