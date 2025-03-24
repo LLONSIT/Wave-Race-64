@@ -1,3 +1,6 @@
 [submodule "tools/ido-static-recomp"]
 	path = tools/ido-static-recomp
 	url = https://github.com/decompals/ido-static-recomp
+[submodule "tools/Torch"]
+	path = tools/Torch
+	url = git@github.com:HarbourMasters/Torch.git
