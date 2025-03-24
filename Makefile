@@ -19,9 +19,9 @@ ASM_DIRS  := $(shell find asm/ -type d -not -path "asm/nonmatchings/*")
 BUILD_DIR = build
 
 SRC_DIR   = src
-ASSETS_DIR = assets
+BIN_DIR = bin
 OVL_SRC_DIR   = $(SRC_DIR)/overlays
-OVL_ASSET_DIR = $(ASSETS_DIR)/overlays
+OVL_ASSET_DIR = $(BIN_DIR)/overlays
 
 LIBULTRA_SRC_DIRS = $(SRC_DIR)/os $(SRC_DIR)/os/libc $(SRC_DIR)/os/audio $(SRC_DIR)/libultra_nm $(SRC_DIR)/os/gu 
 
@@ -34,7 +34,7 @@ OVERLAY_ASSETS_DIRS = $(OVL_ASSET_DIR)/ovl_i0 $(OVL_ASSET_DIR)/ovl_i1 $(OVL_ASSE
 		$(OVL_ASSET_DIR)/ovl_i14 $(OVL_ASSET_DIR)/ovl_i15 $(OVL_ASSET_DIR)/ovl_i16
 
 
-BIN_DIRS  = assets assets/mio0_seg $(OVERLAY_ASSETS_DIRS)
+BIN_DIRS  = bin bin/mio0_seg $(OVERLAY_ASSETS_DIRS)
 
 DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/game $(SRC_DIR)/codeseg $(SRC_DIR)/game/core $(SRC_DIR)/game/audio $(OVERLAY_SRC_DIRS) $(LIBULTRA_SRC_DIRS)
 SRC_DIRS = $(DEFINE_SRC_DIRS)
@@ -108,7 +108,7 @@ LOOP_UNROLL    =
 
 MIPSISET       = -mips2 -32
 
-INCLUDE_CFLAGS = -I . -I include/libc  -I include/PR -I include -I assets -I src/os 
+INCLUDE_CFLAGS = -I . -I include/libc  -I include/PR -I include -I bin -I src/os 
 
 ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
 OBJCOPYFLAGS   = -O binary
@@ -203,6 +203,7 @@ extract: splat tools
 	rm -rf asm
 	rm -rf build
 	$(PYTHON) $(SPLAT) $(BASENAME).$(VERSION).yaml
+	@$(PYTHON) $(TOOLS_DIR)/mio0_extract.py baserom.$(VERSION).z64
 
 dependencies: tools
 	@make -C tools

@@ -17,6 +17,7 @@ options:
   - audio_symbols.txt
   asm_path: asm
   src_path: src
+  asset_path: bin
   build_path: build
   extensions_path: tools/splat_ext
   ld_legacy_generation: True
