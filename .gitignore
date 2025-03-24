@@ -13,7 +13,6 @@ __pycache__/
 
 # Automatically generated folders should be ignored
 build/
-assets/
 expected/
 asm/
 src/assets/*
