@@ -1,11 +1,11 @@
 #include "course.h"
 #include "common.h"
 
-Gfx* func_1C3D00_802C58DC(Gfx*);                    /* extern */
-void func_1C3D00_802C5D44(void);                           /* extern */
-void func_1C3D00_802C5E10(void);                           /* extern */
-Gfx* func_80093C44(Gfx*);                           /* extern */
-void func_800C30F8(void);                                  /* extern */
+Gfx* func_1C3D00_802C58DC(Gfx*); /* extern */
+void func_1C3D00_802C5D44(void); /* extern */
+void func_1C3D00_802C5E10(void); /* extern */
+Gfx* func_80093C44(Gfx*);        /* extern */
+void func_800C30F8(void);        /* extern */
 
 extern s16 D_80228A16;
 extern s32 D_802C5EF0;
