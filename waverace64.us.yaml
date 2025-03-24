@@ -411,7 +411,9 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1C3780, c, seg_1C3780]
-    - [0x1C3CB0, bin, seg_pad] # TODO: This is just fake
+    - [0x1C3CB0, data]
+    - [0x1C3CE0, .rodata, seg_1C3780]
+
 
   - name: seg_1C3D00
     type: code
@@ -421,7 +423,7 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1C3D00, c, seg_1C3D00]
-    - [0x1C43B0, bin]
+    - [0x1C43B0, data]
 
 
   # OPTIONS overlay

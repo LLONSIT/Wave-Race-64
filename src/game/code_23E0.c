@@ -20,7 +20,7 @@ s32 func_80047BE0(f32 arg0) {
 // Props to inspectrdc for matching this...
 
 // Initialize the sin table
-void func_80047C38(void) {
+void Init_SinTable(void) {
     f64 denominator;
     f64 minusSquareX;
     f64 x;
@@ -117,7 +117,6 @@ void func_80047F90(chr_struct* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32
     func_80047F80((chr_struct*) temp_a0, arg7, arg8, arg9);
 }
 
-#ifdef NEEDS_RODATA
 void func_80047FFC(s32 arg0, s32 arg1, s32 arg2, s32* arg3, s32* arg4, s32* arg5) {
     s32 temp_lo;
     s32 temp_t0;
@@ -167,9 +166,6 @@ void func_80047FFC(s32 arg0, s32 arg1, s32 arg2, s32* arg3, s32* arg4, s32* arg5
     *arg4 = (s32) ((*arg4 * temp_lo) + temp_t0) / 65025;
     *arg5 = (s32) ((*arg5 * temp_lo) + temp_t0) / 65025;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80047FFC.s")
-#endif
 
 void func_800481E0(MF* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7) {
     f32 temp_f0;
