@@ -187,6 +187,9 @@ verify: $(TARGET).z64
 no_verify: $(TARGET).z64
 	@echo "Skipping SHA1SUM check!"
 
+toolchain:
+	@$(MAKE) -s -C $(TOOLS)
+
 assets:
 	rm -r -f torch.hash.yml
 	@echo "Extracting assets from ROM..."
