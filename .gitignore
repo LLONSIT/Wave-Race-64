@@ -18,6 +18,7 @@ expected/
 asm/
 src/assets/*
 include/assets/*
+bin/
 
 # Automatically generated files, so they should be ignored
 waverace64.ld
