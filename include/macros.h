@@ -72,6 +72,8 @@
 
 #define FABS(x) ((x) >= 0.0f ? (x) : -(x))
 
+#define ABS(x) ((x) >= 0 ? (x) : -(x))
+
 #define UNK_TYPE int
 
 #endif

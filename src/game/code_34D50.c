@@ -10,7 +10,7 @@ void func_8007A550(Gfx** dListP) {
     gDPFillRectangle(gfxPtr++, 0, 0, 320 - 1, 240 - 1);
     gDPPipeSync(gfxPtr++);
     gDPSetCycleType(gfxPtr++, G_CYC_1CYCLE);
-    
+
     *dListP = gfxPtr;
 }
 

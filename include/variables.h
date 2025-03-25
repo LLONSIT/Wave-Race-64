@@ -49,7 +49,6 @@ extern s32 D_801542C0[]; //tex save?
 extern u8* D_801CE5F8;
 extern s32 D_801CE650;
 //overlay
-extern struct ovl_A95D0_B66E0_1 D_A95D0_80228A78;
 extern s32 D_800DAB2C;
 extern s16 D_800DAB0C;
 extern DmaTransfer D_800DAB38[];
@@ -63,5 +62,12 @@ extern s32 D_801CE608;
 extern s8 D_800E5134;
 extern OSContPad gControllers[];
 extern Vp* D_106F008;
+extern struct UnkStruct_801C3C50* D_801C3C50;
+extern struct UnkStruct_801C3C54* D_801C3C54;
+extern struct UnkStruct_80192690 D_80192690[];
+
+extern struct_801C3C58* D_801C3C58;
+extern s32 D_80228A90;
+
 
 #endif /* VARIABLES_H */
