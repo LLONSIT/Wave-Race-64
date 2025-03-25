@@ -1,10 +1,9 @@
 #include "common.h"
+#include "segment.h"
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/Load_Codeseg.s")
 
-#if 0
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/Overlay_Load.s")
-#else
 extern s32 D_800DAB24;
 extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
@@ -114,4 +113,3 @@ void Overlay_Load(void) {
         osRecvMesg(&D_801540B8, &D_80151954, OS_MESG_BLOCK);
     }
 }
-#endif
