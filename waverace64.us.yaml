@@ -202,11 +202,13 @@ segments:
       - [0x9F930, data]
 
       # GAME RODATA
-      - [0xA39F0, rodata]
+      - [0xA39F0, rodata] # Rodata from Libultra or some library?
       - [0xA3A20, .rodata, game/code_23E0]
       - [0xA3A70, .rodata, game/code_5480]
       - [0xA3A80, .rodata, game/water_69D0]
       - [0xA3B30, .rodata, game/code_C6C0]
+
+      # Individual data files?
       - [0xA4070, data]
       - [0xA40B0, data]
       - [0xA40F0, data]
@@ -217,10 +219,12 @@ segments:
       - [0xA4230, data]
       - [0xA4270, data]
       - [0xA42B0, data]
-      - [0xA4330, data, game/code_24B00] # Is this really data ?
+
+      - [0xA4330, .rodata, game/code_24B00]
+      - [0xA4340, rodata] # unreferenced print strings, probably from a C file nearby.
       - [0xA4370, .rodata, game/code_2C670]
       - [0xA4520, data] # looks like .rodata from code_2C670 but doesn't match together with it
-      - [0xA4610, data] # looks like .rodata from EEPROM code at code_355D0, but doesn't match
+      - [0xA4610, .rodata, game/core/code_355D0] # looks like .rodata from EEPROM code at code_355D0, but doesn't match
       - [0xA4BF0, .rodata, game/code_39F00]
       - [0xA4C00, .rodata, game/code_3A580]
       - [0xA4C10, .rodata, game/code_3AC00]

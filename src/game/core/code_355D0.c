@@ -1,5 +1,59 @@
 #include "common.h"
 
+static const char devstr1[] = "EEPROM read error 1 (%d)\n";
+static const char devstr2[] = "EEPROM check code error 1\n";
+static const char devstr3[] = "EEPROM check sum error %d %d\n";
+static const char devstr4[] = "EEPROM write error 1 (%d)\n";
+static const char devstr5[] = "no EEPROM\n";
+static const char devstr6[] = "EEPROM write error\n";
+static const char devstr7[] = "EEPROM write error\n";
+static const char devstr8[] = "EEPROM write error\n";
+static const char devstr9[] = "EEPROM write error\n";
+static const char devstr10[] = "EEPROM write error\n";
+static const char devstr11[] = "EEPROM write error\n";
+static const char devstr12[] = "EEPROM write error\n";
+static const char devstr13[] = "EEPROM write error\n";
+static const char devstr14[] = "EEPROM write error\n";
+static const char devstr15[] = "EEPROM write error\n";
+static const char devstr16[] = "EEPROM write error\n";
+static const char devstr17[] = "EEPROM write error\n";
+static const char devstr18[] = "EEPROM write error\n";
+static const char devstr19[] = "EEPROM write error\n";
+static const char devstr20[] = "EEPROM write error\n";
+static const char devstr21[] = "EEPROM write error\n";
+static const char devstr22[] = "EEPROM write error\n";
+static const char devstr23[] = "EEPROM write error\n";
+static const char devstr24[] = "EEPROM write error\n";
+static const char devstr25[] = "PfsisPlug: %02x %d\n";
+static const char devstr26[] = "no PFS in controller 1\n";
+static const char devstr27[] = "PFS corrupted\n";
+static const char devstr28[] = "no PFS in controller 1 !\n";
+static const char devstr29[] = "bad PFS %d\n";
+static const char devstr30[] = "PFS find file\n";
+static const char devstr31[] = "PFS file not exists\n";
+static const char devstr32[] = "PFS find file error %d\n";
+static const char devstr33[] = "PFS free size %d\n";
+static const char devstr34[] = "PFS file not exists\n";
+static const char devstr35[] = "PFS check free error %d\n";
+static const char devstr36[] = "file_no: %d\n";
+static const char devstr37[] = "PFS check code error\n";
+static const char devstr38[] = "PFS check sum error %d %d\n";
+static const char devstr39[] = "EEPROM write error\n";
+static const char devstr40[] = "EEPROM write error\n";
+static const char devstr41[] = "PFS read error\n";
+static const char devstr42[] = "PFS no data\n";
+static const char devstr43[] = "PFS file not exists ... making\n";
+static const char devstr44[] = "PFS data full\n";
+static const char devstr45[] = "PFS allocate file error %d\n";
+static const char devstr46[] = "PFS write file error %d\n";
+static const char devstr47[] = "PFS read error (write)\n";
+static const char devstr48[] = "PFS check code error\n";
+static const char devstr49[] = "PFS check sum error %d %d\n";
+static const char devstr50[] = "file_no: %d\n";
+static const char devstr51[] = "PFS write error\n";
+static const char devstr52[] = "PFS no delete file\n";
+static const char devstr53[] = "PFS delete error %d\n";
+
 s32 func_8007ADD0(s32 arg0) {
     if ((arg0 >= 0x41) && (arg0 < 0x5B)) {
         return arg0 - 0x40;
