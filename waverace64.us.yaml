@@ -62,7 +62,7 @@ segments:
       - [0x24B00, c, game/code_24B00]
       - [0x2C670, c, game/code_2C670]
       - [0x2FB10, c, game/code_2FB10]
-      - [0x34D50, c, game/code_34D50]
+      - [0x34D50, c, game/wr64_print]
       - [0x355D0, c, game/core/code_355D0]
       - [0x39F00, c, game/code_39F00]
       - [0x3A580, c, game/code_3A580]

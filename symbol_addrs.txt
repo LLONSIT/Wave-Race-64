@@ -231,3 +231,4 @@ Libc_strncpy = 0x8006A140;
 Libc_strcmp = 0x8006A188;
 Load_Codeseg = 0x80098190;
 Init_SinTable = 0x80047C38;
+synthesis_process_one_note = 0x800B5E70;

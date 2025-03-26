@@ -16,7 +16,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B59A8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B5E70.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/synthesis_process_one_note.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B67EC.s")
 
