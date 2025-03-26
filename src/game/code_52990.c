@@ -1,7 +1,6 @@
 #include "common.h"
 #include "segment.h"
 
-
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/Load_Codeseg.s")
 
 extern s32 D_800DAB24;

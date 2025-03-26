@@ -1,7 +1,7 @@
 /*
-* @file: wr64_print.c
-* @brief: This file seems to implement an unused print system
-*/
+ * @file: wr64_print.c
+ * @brief: This file seems to implement an unused print system
+ */
 #include "common.h"
 
 void func_8007A550(Gfx** dListP) {
@@ -31,10 +31,10 @@ void func_8007A8A8(char* str, s32 num) {
 
     // If num is negative we turn it into positive
     if (num < 0) {
-        num = -num; 
+        num = -num;
         was_negative = TRUE;
     }
-    
+
     do {
         dest[len++] = (num % 10) + '0';
         num /= 10;
@@ -43,10 +43,10 @@ void func_8007A8A8(char* str, s32 num) {
     if (was_negative) {
         dest[len++] = '-'; // minus sig
     }
-    
+
     for (i = 0; i < len; i++) {
         str[i] = dest[(len - 1) - i];
-    }    
+    }
 
     str[i] = 0;
 }
@@ -59,16 +59,16 @@ void func_8007A980(char* str, s32 num, s32 width) {
         s16 is_negative;
         s16 unk0_1;
     } neg;
-    
+
     len = 0;
     neg.is_negative = FALSE;
 
     // If num is negative we turn it into positive
     if (num < 0) {
-        num = -num; 
+        num = -num;
         neg.is_negative = TRUE;
     }
-    
+
     do {
         dest[len++] = (num % 10) + '0';
         num /= 10;
@@ -82,19 +82,19 @@ void func_8007A980(char* str, s32 num, s32 width) {
         neg.unk0_1 = width - len;
         for (i = 0; i < neg.unk0_1; i++) {
             dest[len++] = ' ';
-        } 
+        }
     }
-    
+
     for (i = 0; i < len; i++) {
         str[i] = dest[(len - 1) - i];
-    }    
+    }
 
     str[i] = 0;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_34D50/func_8007AAAC.s")
 
-void func_8007AD40(Gfx **gDisplayListHead, s32 arg1, s32 arg2, s32 arg3) {
+void func_8007AD40(Gfx** gDisplayListHead, s32 arg1, s32 arg2, s32 arg3) {
     s32 pad;
     char buf[60];
 
@@ -102,7 +102,7 @@ void func_8007AD40(Gfx **gDisplayListHead, s32 arg1, s32 arg2, s32 arg3) {
     func_8007AAAC(gDisplayListHead, arg1, arg2, buf);
 }
 
-void func_8007AD84(Gfx **gDisplayListHead, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void func_8007AD84(Gfx** gDisplayListHead, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 pad;
     char buf[60];
 

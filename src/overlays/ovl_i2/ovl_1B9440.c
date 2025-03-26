@@ -25,3 +25,5 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i2/ovl_1B9440/func_i2_802C86E4.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i2/ovl_1B9440/func_i2_802C88DC.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i2/ovl_1B9440/D_i2_802C8BE0.s")

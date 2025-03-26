@@ -17,6 +17,7 @@ options:
   - audio_symbols.txt
   asm_path: asm
   src_path: src
+  asset_path: bin
   build_path: build
   extensions_path: tools/splat_ext
   ld_legacy_generation: True
@@ -60,6 +61,7 @@ segments:
       - [0x24270, c, game/code_24270]
       - [0x24B00, c, game/code_24B00]
       - [0x2C670, c, game/code_2C670]
+      - [0x2FB10, c, game/code_2FB10]
       - [0x34D50, c, game/code_34D50]
       - [0x355D0, c, game/core/code_355D0]
       - [0x39F00, c, game/code_39F00]
@@ -193,7 +195,7 @@ segments:
       # Audio Microcode
       - [0x8DFB0, bin, aspMain]
 
-      - [0x8DFC0, data]
+      - [0x8EDD0, data]
       - [0x8EDF0, data]
       - [0x8EFE0, data]
       - [0x8F000, data]
@@ -201,25 +203,28 @@ segments:
       - [0x9F930, data]
 
       # GAME RODATA
-      - [0xA39F0, rodata]
+      - [0xA39F0, rodata] # Rodata from Libultra or some library?
       - [0xA3A20, .rodata, game/code_23E0]
       - [0xA3A70, .rodata, game/code_5480]
       - [0xA3A80, .rodata, game/water_69D0]
       - [0xA3B30, .rodata, game/code_C6C0]
-      - [0xA4070, rodata]
-      - [0xA40B0, rodata]
-      - [0xA40F0, rodata]
-      - [0xA4130, rodata]
-      - [0xA4170, rodata]
-      - [0xA41B0, rodata]
-      - [0xA41F0, rodata]
-      - [0xA4230, rodata]
-      - [0xA4270, rodata]
+
+      # Individual data files?
+      - [0xA4070, data]
+      - [0xA40B0, data]
+      - [0xA40F0, data]
+      - [0xA4130, data]
+      - [0xA4170, data]
+      - [0xA41B0, data]
+      - [0xA41F0, data]
+      - [0xA4230, data]
+      - [0xA4270, data]
       - [0xA42B0, data]
-      - [0xA4330, data] # code_24B00 ?
-      - [0xA4370, .rodata, game/code_2C670]
-      - [0xA4520, data] # looks like .rodata from code_2C670 but doesn't match together with it
-      - [0xA4610, data] # looks like .rodata from EEPROM code at code_355D0, but doesn't match
+
+      - [0xA4330, .rodata, game/code_24B00]
+      - [0xA4340, .rodata, game/code_2C670]
+      - [0xA4520, .rodata, game/code_2FB10]
+      - [0xA4610, .rodata, game/core/code_355D0]
       - [0xA4BF0, .rodata, game/code_39F00]
       - [0xA4C00, .rodata, game/code_3A580]
       - [0xA4C10, .rodata, game/code_3AC00]
@@ -227,7 +232,6 @@ segments:
       - [0xA52D0, .rodata, game/code_43A60]
       - [0xA52F0, .rodata, game/code_43DA0]
       - [0xA53B0, data] # could be rodata from code_4C750 but it's weird, i can't make it compile
-      - [0xA5620, rodata]
       - [0xA5630, data] # rodata from code_4C750 too?
       - [0xA5950, .rodata, game/code_4F850]
       - [0xA5B20, .rodata, game/code_52990]
@@ -297,9 +301,6 @@ segments:
   - name: segment_F6090 # looks like a bunch of uncompressed assets (Dlists and Textures)
     type: bin
     start: 0xF6090
-    # vram: 0x802A0000
-    # subsegments:
-    # - [0xF6090, data]
 
   - name: MIO0_chunk
     type: bin
@@ -327,9 +328,8 @@ segments:
     symbol_name_format: i0_$VRAM
     subsegments:
     - [0x1B3EC0, c, ovl_1B3EC0]
-    - [0x1B5280, bin]
-    # - [0x1B5280, data, ovl_1B3EC0]
-    # - [0x1B5280, .rodata, ovl_1B3EC0]
+    - [0x1B5280, data, ovl_1B3EC0]
+    - [0x1B5560, .rodata, ovl_1B3EC0]
 
     # Loaded when the game enters in a race
   - name: ovl_i1
@@ -341,7 +341,7 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1B55A0, c, ovl_1B55A0]
-    - [0x1B91E0, data]
+    - [0x1B91E0, data, ovl_1B55A0]
     - [0x1B9320, .rodata, ovl_1B55A0]
 
     # Rider selection?
@@ -354,7 +354,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1B9440, c, ovl_1B9440]
-    - [0x1BC7F0, bin]
+    - [0x1BC7F0, data, ovl_1B9440]
+    - [0x1BC820, .rodata, ovl_1B9440] # symbol D_i2_802C8BD8 leaked into rodata? that's weird
 
   # Before race (map overview?)
   - name: ovl_i3
@@ -366,7 +367,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1BC890, c, ovl_1BC890] 
-    - [0x1BDFE0, bin]
+    - [0x1BDFE0, data, ovl_1BC890]
+    - [0x1BE080, .rodata, ovl_1BC890]
 
   - name: ovl_i4
     type: code
@@ -377,7 +379,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1BE0B0, c, ovl_1BE0B0]
-    - [0x1BFDE0, bin]
+    - [0x1BFDE0, data, ovl_1BE0B0]
+    - [0x1BFF40, .rodata, ovl_1BE0B0]
 
   - name: ovl_i5
     type: code
@@ -389,7 +392,9 @@ segments:
     subsegments:
     - [0x1BFF50, c, ovl_1BFF50] # Pre - race (map overview?)
     - [0x1C17E0, c, ovl_1C17E0]
-    - [0x1C2150, bin]
+    - [0x1C2150, data, ovl_1BFF50]
+    - [0x1C2190, .rodata, ovl_1BFF50]
+    - [0x1C21F0, .rodata, ovl_1C17E0]
 
   - name: ovl_i6
     type: code
@@ -400,7 +405,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1C2250, c, ovl_1C2250]
-    - [0x1C36C0, bin]
+    - [0x1C36C0, data, ovl_1C2250]
+    - [0x1C3700, .rodata, ovl_1C2250]
 
     # Total points screen
   - name: seg_1C3780
@@ -411,7 +417,7 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1C3780, c, seg_1C3780]
-    - [0x1C3CB0, data]
+    - [0x1C3CB0, data, seg_1C3780]
     - [0x1C3CE0, .rodata, seg_1C3780]
 
 
@@ -423,7 +429,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1C3D00, c, seg_1C3D00]
-    - [0x1C43B0, data]
+    - [0x1C43B0, data, seg_1C3D00]
+    - [0x1C43E0, .rodata, seg_1C3D00]
 
 
   # OPTIONS overlay
@@ -436,7 +443,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1C43F0, c, ovl_1C43F0] 
-    - [0x1C4910, bin]
+    - [0x1C4910, data, ovl_1C43F0]
+    - [0x1C4970, .rodata, ovl_1C43F0]
 
   # Options - Change name
   - name: ovl_i8
@@ -448,7 +456,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1C49A0, c, ovl_1C49A0] 
-    - [0x1C61E0, bin]     
+    - [0x1C61E0, data, ovl_1C49A0]
+    - [0x1C66B0, .rodata, ovl_1C49A0]
 
     # Options - View records.
   - name: ovl_i9
@@ -460,7 +469,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1C66D0, c, ovl_1C66D0] 
-    - [0x1C8F90, bin]  
+    - [0x1C8F90, data, ovl_1C66D0]
+    - [0x1C9090, .rodata, ovl_1C66D0]
 
     # Options - Change names
   - name: ovl_i10
@@ -472,7 +482,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1C9150, c, ovl_1C9150] 
-    - [0x1CA3F0, bin]
+    - [0x1CA3F0, data, ovl_1C9150]
+    - [0x1CA470, .rodata, ovl_1C9150]
 
     # Options - Audio
   - name: ovl_i11
@@ -484,7 +495,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1CA480, c, ovl_1CA480] 
-    - [0x1CADD0, bin]  
+    - [0x1CADD0, data, ovl_1CA480]  
+    - [0x1CAE30, .rodata, ovl_1CA480]  
 
     # Options - Erase course records
   - name: ovl_i12
@@ -496,7 +508,7 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1CAE40, c, ovl_1CAE40] 
-    - [0x1CBAA0, bin]
+    - [0x1CBAA0, data, ovl_1CAE40]
 
     # Options - Save and load
   - name: ovl_i13
@@ -508,7 +520,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1CBAF0, c, ovl_1CBAF0] 
-    - [0x1CF040, bin]
+    - [0x1CF040, data, ovl_1CBAF0]
+    - [0x1CF0E0, .rodata, ovl_1CBAF0]
 
     # Menu for the stunt and time trials mode or GAME OVER
   - name: ovl_i14
@@ -520,7 +533,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1CF180, c, ovl_1CF180] 
-    - [0x1CFA70, bin]    
+    - [0x1CFA70, data, ovl_1CF180]
+    - [0x1CFAC0, .rodata, ovl_1CF180]
 
     # Prize scene
   - name: ovl_i15
@@ -532,7 +546,8 @@ segments:
     vram: 0x802C5800
     subsegments:
     - [0x1CFB60, c, ovl_1CFB60] 
-    - [0x1D10B0, bin]    
+    - [0x1D10B0, data, ovl_1CFB60]    
+    - [0x1D1180, .rodata, ovl_1CFB60]    
 
   - name: LAST_MIO0_SEG
     type: code
