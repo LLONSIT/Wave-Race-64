@@ -194,7 +194,7 @@ segments:
       # Audio Microcode
       - [0x8DFB0, bin, aspMain]
 
-      - [0x8DFC0, data]
+      - [0x8EDD0, data]
       - [0x8EDF0, data]
       - [0x8EFE0, data]
       - [0x8F000, data]
