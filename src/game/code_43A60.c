@@ -1,11 +1,5 @@
 #include "common.h"
 
-struct unk_D_801C3C58 {
-    char pad[0x5C];
-    s32 unk5C;
-    f32 unk60;
-};
-
 struct unk_D_801C3C60 {
     struct unk_D_801C3C58* unk0;
     char pad[0x4C];
@@ -15,7 +9,6 @@ struct unk_D_801C3C60 {
 
 extern s32 D_800D48DC;
 extern s32 D_801C26C0[];
-extern struct unk_D_801C3C58* D_801C3C58;
 extern struct unk_D_801C3C60 D_801C3C60[];
 extern s32 D_801C4100[];
 

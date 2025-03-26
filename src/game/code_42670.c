@@ -4,64 +4,6 @@
 #include "functions.h"
 #include "macros.h"
 
-struct UnkStruct_801C3C54 {
-    /* 0x000 */ f32 unk0;
-    /* 0x004 */ s32 unk4;
-    /* 0x008 */ f32 unk8;
-    /* 0x00C */ f32 unkC; /* inferred */
-    /* 0x010 */ char pad10[4];
-    /* 0x014 */ f32 unk14; /* inferred */
-    /* 0x018 */ f32 unk18; /* inferred */
-    /* 0x01C */ char pad1C[4];
-    /* 0x020 */ f32 unk20;        /* inferred */
-    /* 0x024 */ char pad24[0x4C]; /* maybe part of unk20[0x14]? */
-    /* 0x070 */ f32 unk70;        /* inferred */
-    /* 0x074 */ f32 unk74;        /* inferred */
-    /* 0x078 */ f32 unk78;        /* inferred */
-    /* 0x07C */ f32 unk7C;        /* inferred */
-    /* 0x080 */ f32 unk80;        /* inferred */
-    /* 0x084 */ f32 unk84;        /* inferred */
-    /* 0x088 */ char pad88[0x7C]; /* maybe part of unk84[0x20]? */
-}; /* size = 0x104 */
-
-typedef struct {
-    /* 0x00 */ char pad0[8];
-    /* 0x08 */ s32 unk8; /* inferred */
-    /* 0x0C */ char padC[4];
-    /* 0x10 */ s32 unk10;
-    /* 0x14 */ s32 unk14;
-    /* 0x18 */ s32 unk18;
-    /* 0x1C */ s32 unk1C;
-    /* 0x20 */ s32 unk20;
-    /* 0x24 */ s32 unk24;
-    /* 0x28 */ s32 unk28;
-    /* 0x2C */ s32 unk2C;
-    /* 0x30 */ s32 unk30;
-    s32 unk34;
-    s32 unk38;
-    s32 unk3C;
-    /* 0x34 */ s8 fill[0x27];
-    /* 0x69 */ char pad69[3];
-    /* 0x6C */ s32 unk6C;
-} struct_801C3C58;
-
-struct UnkStruct_80088B00 {
-    f32 unk0;
-    f32 unk4;
-    f32 unk8;
-    f32 unkC;
-    f32 unk10;
-    f32 unk14;
-    f32 unk18;
-};
-
-struct UnkStruct_801C3C50 {
-    char pad[0x44];
-    f32 unk44;
-    s32 pad48;
-    f32 unk4C;
-};
-
 extern struct UnkStruct_80088B00 D_801C4020;
 extern struct UnkStruct_80088B00 D_801C4040;
 extern struct UnkStruct_80088B00 D_801C4060;
@@ -70,14 +12,8 @@ extern struct UnkStruct_80088B00 D_801C40A0;
 extern struct UnkStruct_80088B00 D_801C40C0;
 extern struct UnkStruct_80088B00 D_801C40E0;
 extern f32 D_801C4058;
-extern struct UnkStruct_801C3C50* D_801C3C50;
-extern struct UnkStruct_801C3C54* D_801C3C54;
 
-extern struct_801C3C58* D_801C3C58;
 extern f32 D_801C4058;
-
-extern struct UnkStruct_801C3C50* D_801C3C50;
-extern struct UnkStruct_801C3C54* D_801C3C54;
 
 f32 func_801ED090(f32);
 f32 func_800C7010(f32);
