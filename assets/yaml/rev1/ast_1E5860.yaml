@@ -1,0 +1,9 @@
+:config:
+  autopads: false
+  compression:
+    offset: 0x1E5860
+  segments:
+    - [0x01,  0x1E5860]
+
+D_1002DC0:
+  { type: GFX, offset: 0x0002DC0, symbol: D_1002DC0 }
