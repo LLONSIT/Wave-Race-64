@@ -232,7 +232,6 @@ segments:
       - [0xA52D0, .rodata, game/code_43A60]
       - [0xA52F0, .rodata, game/code_43DA0]
       - [0xA53B0, data] # could be rodata from code_4C750 but it's weird, i can't make it compile
-      - [0xA5620, rodata]
       - [0xA5630, data] # rodata from code_4C750 too?
       - [0xA5950, .rodata, game/code_4F850]
       - [0xA5B20, .rodata, game/code_52990]
