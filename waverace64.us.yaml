@@ -224,7 +224,7 @@ segments:
       - [0xA4340, rodata] # unreferenced print strings, probably from a C file nearby.
       - [0xA4370, .rodata, game/code_2C670]
       - [0xA4520, data] # looks like .rodata from code_2C670 but doesn't match together with it
-      - [0xA4610, .rodata, game/core/code_355D0] # looks like .rodata from EEPROM code at code_355D0, but doesn't match
+      - [0xA4610, .rodata, game/core/code_355D0]
       - [0xA4BF0, .rodata, game/code_39F00]
       - [0xA4C00, .rodata, game/code_3A580]
       - [0xA4C10, .rodata, game/code_3AC00]
