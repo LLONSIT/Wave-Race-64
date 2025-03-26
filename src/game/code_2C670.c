@@ -1,5 +1,8 @@
 #include "common.h"
 
+static const char devstr1[] = "Error: number of buoy2\n";
+static const char devstr2[] = "Error: number of buoy3\n";
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80071E70.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_800735EC.s")
@@ -52,20 +55,20 @@ void func_80075274(void) {
 // (void)"rank value adjust\n";
 // (void)"simultaneously goal !!\n";
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80075310.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80076240.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_800762D0.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80076378.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_8007687C.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80077F5C.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80078264.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_800783AC.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80079528.s")
+// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80075310.s")
+//
+// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80076240.s")
+//
+// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_800762D0.s")
+//
+// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80076378.s")
+//
+// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_8007687C.s")
+//
+// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80077F5C.s")
+//
+// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80078264.s")
+//
+// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_800783AC.s")
+//
+// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80079528.s")

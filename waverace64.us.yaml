@@ -61,6 +61,7 @@ segments:
       - [0x24270, c, game/code_24270]
       - [0x24B00, c, game/code_24B00]
       - [0x2C670, c, game/code_2C670]
+      - [0x2FB10, c, game/code_2FB10]
       - [0x34D50, c, game/code_34D50]
       - [0x355D0, c, game/core/code_355D0]
       - [0x39F00, c, game/code_39F00]
@@ -221,9 +222,8 @@ segments:
       - [0xA42B0, data]
 
       - [0xA4330, .rodata, game/code_24B00]
-      - [0xA4340, rodata] # unreferenced print strings, probably from a C file nearby.
-      - [0xA4370, .rodata, game/code_2C670]
-      - [0xA4520, data] # looks like .rodata from code_2C670 but doesn't match together with it
+      - [0xA4340, .rodata, game/code_2C670]
+      - [0xA4520, .rodata, game/code_2FB10]
       - [0xA4610, .rodata, game/core/code_355D0]
       - [0xA4BF0, .rodata, game/code_39F00]
       - [0xA4C00, .rodata, game/code_3A580]
