@@ -5,6 +5,11 @@
 #include "wr64dma.h"
 
 // 0x800B
+void func_80071E70(void);
+void func_80073E6C(void);
+void func_800744EC(void);
+void func_80075310(void);
+void func_801FAEA8(void);
 void func_8004A2B4(void);
 void func_8006C5D8(Gfx**);
 void func_8006BE74(Gfx**);
