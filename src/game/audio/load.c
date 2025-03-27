@@ -1,4 +1,5 @@
 #include "common.h"
+#include "macros.h"
 #include <PR/os.h>
 
 #include "load.h"
@@ -93,8 +94,6 @@ extern u8 gSoundDataADSR[];
 extern u8 gSoundDataRaw[];
 extern u8 gMusicData[];
 extern u8 gBankSetsData[];
-
-#define PRINTF()
 
 #define PATCH(x, base) (patched = (void*) ((uintptr_t) (x) + (uintptr_t) base))
 

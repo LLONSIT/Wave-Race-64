@@ -76,4 +76,6 @@
 
 #define UNK_TYPE int
 
+#define PRINTF
+
 #endif
