@@ -20,7 +20,10 @@ void func_8007A550(Gfx** dListP) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/wr64_print/func_8007A5D4.s")
 
-void Format_Integer(char* str, s32 num) {
+/*
+* Formats an integer to a string
+*/
+void Str_Itoa(char* str, s32 num) {
     s16 i;
     s8 dest[20];
     s16 len;
@@ -51,7 +54,10 @@ void Format_Integer(char* str, s32 num) {
     str[i] = 0;
 }
 
-void func_8007A980(char* str, s32 num, s32 width) {
+/*
+* Formats an integer to a string with a width
+*/
+void Str_Itoaw(char* str, s32 num, s32 width) {
     s16 i;
     s8 dest[20];
     s16 len;
@@ -98,7 +104,7 @@ void func_8007AD40(Gfx** gDisplayListHead, s32 arg1, s32 arg2, s32 arg3) {
     s32 pad;
     char buf[60];
 
-    Format_Integer(buf, arg3);
+    Str_Itoa(buf, arg3);
     func_8007AAAC(gDisplayListHead, arg1, arg2, buf);
 }
 
@@ -106,6 +112,6 @@ void func_8007AD84(Gfx** gDisplayListHead, s32 arg1, s32 arg2, s32 arg3, s32 arg
     s32 pad;
     char buf[60];
 
-    func_8007A980(buf, arg3, arg4);
+    Str_Itoaw(buf, arg3, arg4);
     func_8007AAAC(gDisplayListHead, arg1, arg2, buf);
 }
