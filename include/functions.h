@@ -5,14 +5,28 @@
 #include "wr64dma.h"
 
 // 0x800B
+
+extern void func_i4_802C6BAC(void);
+extern void func_8009345C(void);
+extern void func_801EBD28(void);
+void func_i1_802C59E8(s32);
+void func_801E6FB0(s32, s32, s32);
+Gfx* func_i12_802C58A0(Gfx*);
+void func_i12_802C5F6C(void);
+void func_801EC304(void);
+void func_i1_802C9380(s32);
+void func_800BFDD0(void*);
+void func_800BFEF8(void*);
 s32 func_80093104(void);
+Gfx* func_8009328C(Gfx*);
+Gfx* func_80093C44(Gfx*);
 Gfx* func_80093F78(Gfx*);
 Gfx* func_801E1E8C(Gfx*);
 Gfx* func_801E34F8(Gfx*);
 Gfx* func_801E4440(Gfx*);
 void func_801E4C08(void);
 void func_801E4C38(void);
-s32 func_801E7908(Gfx*);
+Gfx* func_801E7908(Gfx*);
 void func_801EB180(void);
 void func_801ECAF4(void);
 Gfx* func_802C5800(Gfx*);
@@ -63,7 +77,7 @@ void func_800988D8(s32 arg0);
 void func_801FAEA8(void);
 void func_800C6DE0(void);
 void func_8009ADA8(void);
-void func_8009A460(s32, s32, s32, s32); // TODO: UNK TYPE here
+void func_8009A460(void*, f32*, s32, s32); // TODO: UNK TYPE here
 void func_800C53D4(s32, s32);
 void func_800C312C(void);
 void func_8008044C(void);
@@ -84,6 +98,7 @@ void play_sound(int sound, signed char arg1);
 void func_800C538C(s32 arg0, f32 arg1);
 Gfx* func_8008FB74(Gfx* arg0);
 Gfx* func_80090F58(Gfx*);
+Gfx* func_i4_802C5CDC(Gfx*);
 Gfx* func_800949B8(Gfx*, int arg1);
 void func_801E355C(void);
 Gfx* func_801E3698(Gfx*);
@@ -131,5 +146,60 @@ void func_800481E0(MF* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
 void func_80048A88(void* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9,
                    f32 argA);
 Gfx* func_801E7C58(Gfx* dList, u32 ulx, u32 uly, u32 lrx, u32 lry, u32 r, u32 g, u32 b, u32 a);
+void func_i4_802C7474(s32);
+void func_i8_802C6FD4(s8* arg0, void* arg1, s32 arg2);
+s32 func_800941D0(void*);
+void func_800C2FDC(s32);
+void func_800C3034(void);
+void func_800C3044(void);
+void func_i14_802C5E5C(s32);
+void func_800C30F8(void);
+Gfx* func_1C3780_802C58F4(Gfx*);
+void func_1C3780_802C5BD8(void);
+Gfx* func_80093C44(Gfx*);
+Gfx* func_i10_802C6200(Gfx*);
+Gfx* func_80094200(Gfx*, s32, s32, s32, s32);
+Gfx* func_80094338(Gfx*, s32, s32, s32, s32, s32);
+Gfx* func_801E3EE0(Gfx*, s32, s32, s32, s32, s32);
+Gfx* func_801E946C(Gfx*, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+void func_801EC9C8(UNK_TYPE*);
+void func_801ED004(UNK_TYPE*);
+void func_i15_802C6CAC(s32);
+void func_80099AD8(s8, void*, f32, f32, f32);
+void func_800BFD34(void);
+void func_800BFD68(void);
+void func_8007C50C(void);
+void func_i10_802C5A10(void);
+void func_800C1F60(s32);
+void func_800BFD9C(s32);
+void func_8009B57C(s32);
+void func_i4_802C5800(void);
+void func_i4_802C58F8(void);
+void func_80069740(void*, s32);
+void func_8006977C(void*, s32);
+void func_80069798(void*, void*, void*, void*, void*, void*);
+void func_80094ACC(void);
+void func_i5_802C5850(void);
+void func_i5_802C5A98(void);
+extern void func_i4_802C6C2C(void);
+extern void func_i4_802C6ED0(void);
+extern void func_i4_802C70C0(void);
+void func_i1_802C587C(void);
+void func_i1_802C5900(void);
+void func_800AD3C4(void);
+void func_801ECE50(void);
+void func_801EAF78(void);
+void func_80098514(void* arg0);
+void func_8009CD50(void);
+void func_8009BE40(s32, void*, void*, f32);
+void func_80099A00(f32*, void*, void*, s32);
+void func_8009BDE4(void);
+void func_800984F4(void*, f32, f32, f32);
+void func_80098AC4(s32, s32, s32, s32, s32);
+void func_8009A404(s32, s32);
+void func_8009B650(void*, f32, f32);
+void func_8009AA24(void* arg0); // Unk pointer type
+void func_8009AD3C(void);
+void func_8009AD74(void);
 
 #endif /*FUNCTIONS_H*/

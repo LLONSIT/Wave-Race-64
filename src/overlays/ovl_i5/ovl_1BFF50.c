@@ -1,6 +1,12 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i5/ovl_1BFF50/func_i5_802C5800.s")
+void func_i5_802C5800(void) {
+    if ((D_801CE63C != 0) && (D_800DAB24 == 52)) {
+        func_80094ACC();
+        func_i5_802C5A98();
+    }
+    func_i5_802C5850();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i5/ovl_1BFF50/func_i5_802C5850.s")
 

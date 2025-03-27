@@ -67,7 +67,7 @@ void func_80080630(void) {
     D_801C3C50->unkB52 = 0;
     D_801C3C50->unkB53 = 0;
 
-    switch (D_801C3C58->unk5C) { /* irregular */
+    switch (D_801C3C58->unk5C) {
         case -1:
             if (D_80228A90 < 0x10) {
                 D_801C3C50->unkB50 = (u16) (D_801C3C50->unkB50 | 0xA000);
@@ -76,14 +76,14 @@ void func_80080630(void) {
             D_801C3C50->unkB50 = (u16) (D_801C3C50->unkB50 & 0x5FFF);
             return;
         case 0:
-            switch (gDifficulty) { /* switch 1; irregular */
-                case NORMAL:       /* switch 1 */
+            switch (gDifficulty) {
+                case DIFFICULTY_NORMAL:
                     sp4 = 5;
                     break;
-                case HARD: /* switch 1 */
+                case DIFFICULTY_HARD:
                     sp4 = 2;
                     break;
-                case EXPERT: /* switch 1 */
+                case DIFFICULTY_EXPERT:
                     sp4 = 0;
                     break;
             }
@@ -94,14 +94,14 @@ void func_80080630(void) {
             D_801C3C50->unkB50 = (u16) (D_801C3C50->unkB50 & 0x5FFF);
             return;
         case 1:
-            switch (gDifficulty) { /* switch 2; irregular */
-                case NORMAL:       /* switch 2 */
+            switch (gDifficulty) {
+                case DIFFICULTY_NORMAL:
                     sp4 = 5;
                     break;
-                case HARD: /* switch 2 */
+                case DIFFICULTY_HARD:
                     sp4 = 3;
                     break;
-                case EXPERT: /* switch 2 */
+                case DIFFICULTY_EXPERT:
                     sp4 = 2;
                     break;
             }
@@ -112,14 +112,14 @@ void func_80080630(void) {
             D_801C3C50->unkB50 = (u16) (D_801C3C50->unkB50 & 0x5FFF);
             return;
         case 2:
-            switch (gDifficulty) { /* switch 3; irregular */
-                case NORMAL:       /* switch 3 */
+            switch (gDifficulty) {
+                case DIFFICULTY_NORMAL:
                     sp4 = 5;
                     break;
-                case HARD: /* switch 3 */
+                case DIFFICULTY_HARD:
                     sp4 = 4;
                     break;
-                case EXPERT: /* switch 3 */
+                case DIFFICULTY_EXPERT:
                     sp4 = 4;
                     break;
             }
@@ -147,7 +147,7 @@ void func_80080864(void) {
         if ((0.2f < D_801C3C50->unk70) && (D_801C3C50->unkC7C == 0) && ((f32) D_80192458 < D_801C3C50->unk48)) {
             D_801C3C50->unkB53 = 0x23;
         }
-    } else if ((gGameModes != CHAMPIONSHIP) && (gGameModes != TIME_TRIAL)) {
+    } else if ((gGameModes != GMODE_CHAMPIONSHIP) && (gGameModes != GMODE_TIME_TRIALS)) {
         if (((D_801C3C58->unk48 > 20.0f) || (D_801C3C58->unk4C > 20.0f)) && (D_801C3C50->unkC7C == 1)) {
             D_801C3C50->unkB53 = 0x46;
             return;
@@ -156,8 +156,8 @@ void func_80080864(void) {
             D_801C3C50->unkB53 = 0x34;
         }
     } else {
-        switch (gDifficulty) { /* irregular */
-            case HARD:
+        switch (gDifficulty) {
+            case DIFFICULTY_HARD:
                 if (((D_801C3C58->unk48 > 20.0f) || (D_801C3C58->unk4C > 20.0f)) && (D_801C3C50->unkC7C == 1)) {
                     D_801C3C50->unkB53 = 0x46;
                     return;
@@ -168,9 +168,9 @@ void func_80080864(void) {
                         D_801C3C50->unkB53 = 0x34;
                     }
                 }
-            case NORMAL:
+            case DIFFICULTY_NORMAL:
                 return;
-            case EXPERT:
+            case DIFFICULTY_EXPERT:
                 if (((D_801C3C58->unk48 > 20.0f) || (D_801C3C58->unk4C > 20.0f)) && (D_801C3C50->unkC7C == 1)) {
                     D_801C3C50->unkB53 = 0x46;
                 } else if ((D_801C3C50->unk70 > -0.0f) && (D_801C3C50->unkC7C == 0) &&
@@ -220,7 +220,7 @@ void func_80080E34(void) {
         D_801C3C50->unkB50 ^= 0x4000;
     }
     if ((D_801C3C50->unkC54 == 0x17) || (D_801C3C50->unkC54 == 7)) {
-        if ((D_801C2C24[D_801C3C58->unk0].unk0 == 0) && (gDifficulty != NORMAL)) {
+        if ((D_801C2C24[D_801C3C58->unk0].unk0 == 0) && (gDifficulty != DIFFICULTY_NORMAL)) {
             if (D_800D9914 == 0) {
                 D_801C3C50->unkB50 |= 0xA000;
             } else {
@@ -256,8 +256,8 @@ void func_80080E34(void) {
 
 #ifdef NON_MATCHING
 void func_80081048(void) {
-    switch (gDifficulty) { /* irregular */
-        case NORMAL:
+    switch (gDifficulty) {
+        case DIFFICULTY_NORMAL:
             if ((D_801C3C58->unkA4 != 0) ||
                 ((((D_801C2938->unk4 < D_801C2938[D_801C3C58->unk0].unk4))) && (D_801C3C58->unkB0 == 0))) {
 
@@ -276,26 +276,26 @@ void func_80081048(void) {
                         break;
                 }
             } else if (D_801C2938[D_801C3C58->unk0].unk4 < D_801C2938->unk4) {
-                switch (D_801C3C58->unk5C) { /* switch 2; irregular */
-                    case -1:                 /* switch 2 */
-                    case 0:                  /* switch 2 */
+                switch (D_801C3C58->unk5C) {
+                    case -1:
+                    case 0:
                         D_801C3C50->unk1578 = 0.7f;
                         break;
-                    case 1: /* switch 2 */
+                    case 1:
                         D_801C3C50->unk1578 = 0.6f;
                         break;
-                    case 2:                         /* switch 2 */
-                        switch (D_801C3C58->unk4) { /* switch 3; irregular */
-                            case 0:                 /* switch 3 */
+                    case 2:
+                        switch (D_801C3C58->unk4) {
+                            case 0:
                                 D_801C3C50->unk1578 = 0.4f;
                                 break;
-                            case 1: /* switch 3 */
+                            case 1:
                                 D_801C3C50->unk1578 = 0.57f;
                                 break;
-                            case 2: /* switch 3 */
+                            case 2:
                                 D_801C3C50->unk1578 = 0.4f;
                                 break;
-                            case 3: /* switch 3 */
+                            case 3:
                                 D_801C3C50->unk1578 = 0.5f;
                                 break;
                         }
@@ -303,20 +303,20 @@ void func_80081048(void) {
                 }
             } else {
                 switch (D_801C3C58->unk5C) { /* switch 1; irregular */
-                    case -1:                 /* switch 1 */
-                    case 0:                  /* switch 1 */
+                    case -1:
+                    case 0:
                         D_801C3C50->unk1578 = 0.9f;
                         break;
-                    case 1: /* switch 1 */
+                    case 1:
                         D_801C3C50->unk1578 = 0.8f;
                         break;
-                    case 2: /* switch 1 */
+                    case 2:
                         D_801C3C50->unk1578 = 0.7f;
                         break;
                 }
             }
             break;
-        case HARD:
+        case DIFFICULTY_HARD:
             if ((D_801C3C58->unkA4 != 0) ||
                 ((((D_801C2938->unk4 < D_801C2938[D_801C3C58->unk0].unk4))) && (D_801C3C58->unkB0 == 0))) {
                 switch (D_801C3C58->unk4) { /* switch 7; irregular */
@@ -359,7 +359,7 @@ void func_80081048(void) {
                 }
             }
             break;
-        case EXPERT:
+        case DIFFICULTY_EXPERT:
             if ((D_801C3C58->unkA4 != 0) ||
                 ((((D_801C2938->unk4 < D_801C2938[D_801C3C58->unk0].unk4))) && (D_801C3C58->unkB0 == 0))) {
 

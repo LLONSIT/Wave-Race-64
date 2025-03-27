@@ -1,10 +1,9 @@
-#include "common.h"
+#include "global.h"
 
 extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
 extern OSIoMesg D_801542A0;
 extern s32 D_800D45EC;
-extern s32 gCourseID;
 extern s32 D_800DCE3C[];
 extern s32 D_800DCE60[];
 extern s16 D_801CE60C;

@@ -1,11 +1,10 @@
 #include "course.h"
 #include "common.h"
 
-Gfx* func_1C3D00_802C58DC(Gfx*); /* extern */
-void func_1C3D00_802C5D44(void); /* extern */
-void func_1C3D00_802C5E10(void); /* extern */
-Gfx* func_80093C44(Gfx*);        /* extern */
-void func_800C30F8(void);        /* extern */
+Gfx* func_1C3D00_802C58DC(Gfx*);
+void func_1C3D00_802C5D44(void);
+void func_1C3D00_802C5E10(void);
+Gfx* func_80093C44(Gfx*);
 
 extern s16 D_80228A16;
 extern s32 D_802C5EF0;
@@ -34,8 +33,59 @@ Gfx* func_1C3D00_802C5800(Gfx* gDisplayListHead) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/seg_1C3D00/func_1C3D00_802C58DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/seg_1C3D00/func_1C3D00_802C5C4C.s")
+void func_1C3D00_802C5C4C(s32 arg0) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = arg0;
+    D_800DAB24 = 0x37;
+    D_801CE638 = 0x12;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 2;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/seg_1C3D00/func_1C3D00_802C5D44.s")
+    func_801E6FB0(5, 1, 0);
+
+    if (D_801CE630 == 2) {
+        func_800C1F60(0);
+        return;
+    }
+    if (D_801CE630 == 0xA) {
+        func_800C1F60(1);
+        return;
+    }
+    if (D_801CE630 == 0x14) {
+        func_800C1F60(0xA);
+        return;
+    }
+    if (D_801CE630 == 0x28) {
+        func_800C1F60(7);
+    }
+}
+
+void func_1C3D00_802C5D44(void) {
+    if (D_801CE692[0].unk0 & (A_BUTTON | Z_TRIG | START_BUTTON)) {
+        func_1C3D00_802C5C4C(D_1C3D00_802C5ED0[D_802C5EF0]);
+        func_800C37F4(0x11, 0);
+        return;
+    }
+
+    if (D_801CE692[0].unk0 & U_JPAD) {
+        D_802C5EF0--;
+        if (D_802C5EF0 < 0) {
+            D_802C5EF0 = 3;
+        }
+        func_800C37F4(0x10, 0);
+        return;
+    }
+
+    if (D_801CE692[0].unk0 & D_JPAD) {
+        D_802C5EF0++;
+        if (D_802C5EF0 == 4) {
+            D_802C5EF0 = 0;
+        }
+        func_800C37F4(0x10, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/seg_1C3D00/func_1C3D00_802C5E10.s")
