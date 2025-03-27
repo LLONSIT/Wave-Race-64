@@ -1,5 +1,27 @@
 #include "common.h"
 
+typedef struct UnkStruct_8007AEFC {
+    u8 unk0;
+    u8 unk1;
+    s8 unk2;
+    s8 unk3;
+    s8 unk4;
+    s8 unk5;
+    s8 unk6;
+    s8 unk7;
+    s8 unk8;
+    s8 unk9;
+    s8 unkA;
+    s8 unkB;
+    s8 unkC;
+    s8 unkD;
+    s8 unkE;
+    s8 unkF;
+    char pad[0x3];
+    s8 unk13;
+
+}UnkStruct_8007AEFC;
+
 static const char devstr1[] = "EEPROM read error 1 (%d)\n";
 static const char devstr2[] = "EEPROM check code error 1\n";
 static const char devstr3[] = "EEPROM check sum error %d %d\n";
@@ -88,7 +110,7 @@ s32 func_8007AE30(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007AE8C.s")
 
-void func_8007AEFC(chr_struct* arg0, chr_struct* arg1) {
+void func_8007AEFC(UnkStruct_8007AEFC* arg0, UnkStruct_8007AEFC* arg1) {
     s32 sp1C = (arg1->unk1 & 0xFF) + ((arg1->unk0 & 0x7F) << 8);
 
     arg0->unk0 = func_8007AE30((sp1C >> 10) & 0x1F);
