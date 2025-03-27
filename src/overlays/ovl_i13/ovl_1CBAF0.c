@@ -1,4 +1,4 @@
-#include "common.h"
+#include "global.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i13/ovl_1CBAF0/func_i13_802C5800.s")
 
@@ -28,7 +28,31 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i13/ovl_1CBAF0/func_i13_802C6F0C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i13/ovl_1CBAF0/func_i13_802C7060.s")
+void func_i13_802C7060(void) {
+    switch (D_i13_802C8D78) {
+        case 1:
+            if (D_802C8E98 >= 5) {
+                D_i13_802C8D78 = 2;
+                D_802C8E98 = 0;
+            }
+            break;
+
+        case 2:
+            if (++D_802C8E98 >= 0xA) {
+                D_i13_802C8D78 = 3;
+                D_802C8E98 = 0;
+            }
+            break;
+
+        case 3:
+            if (++D_i13_802C8DC0 >= 0x5B) {
+                D_i13_802C8D78 = 0;
+                D_802C8E98 = 0;
+                D_i13_802C8DC0 = 0;
+            }
+            break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i13/ovl_1CBAF0/func_i13_802C711C.s")
 

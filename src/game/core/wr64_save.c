@@ -20,7 +20,7 @@ typedef struct UnkStruct_8007AEFC {
     char pad[0x3];
     s8 unk13;
 
-}UnkStruct_8007AEFC;
+} UnkStruct_8007AEFC;
 
 static const char devstr1[] = "EEPROM read error 1 (%d)\n";
 static const char devstr2[] = "EEPROM check code error 1\n";

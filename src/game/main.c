@@ -120,7 +120,7 @@ void* main_thread(void* entry) {
             continue;
         }
         if (sp4C == (void*) 0x17) {
-            switch (D_800D4600) { /* irregular */
+            switch (D_800D4600) {
                 case 1:
                     if (osSpTaskYielded(first_task) != 0) {
                         D_800D4608 = 1;

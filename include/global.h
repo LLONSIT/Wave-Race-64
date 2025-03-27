@@ -1,14 +1,20 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef GLOBAL_H
+#define GLOBAL_H
+
 #include <ultra64.h>
 //#include "os.h"
+#include "macros.h"
 #include "structs.h"
 #include "variables.h"
 #include "functions.h"
-#include "macros.h"
+#include "sys_matrix.h"
 #include "math.h"
 #include "structs.h"
+#include "assets.h"
+#include "course.h"
+#include "player.h"
 #include "wr64dma.h"
 #include "wr64fade.h"
+#include "game.h"
 
-#endif /* COMMON_H */
+#endif /* GLOBAL_H */

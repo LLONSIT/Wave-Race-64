@@ -1,31 +1,5 @@
+#include "global.h"
 #include "course.h"
-#include "common.h"
-
-Gfx* func_1C3780_802C58F4(Gfx*); /* extern */
-void func_1C3780_802C5BD8(void); /* extern */
-Gfx* func_80093C44(Gfx*);
-Gfx* func_80094200(Gfx*, s32, s32, s32, s32);                                              /* extern */
-Gfx* func_80094338(Gfx*, s32, s32, s32, s32, s32);                                         /* extern */
-Gfx* func_801E3EE0(Gfx*, s32, s32, s32, s32, s32);                                         /* extern */
-Gfx* func_801E946C(Gfx*, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32); /* extern */
-void func_801EC9C8(UNK_TYPE*);                                                             /* extern */
-void func_801ED004(UNK_TYPE*);                                                             /* extern */
-
-extern UNK_TYPE D_106F628[];
-extern s32 D_801CE63C;
-extern s32 D_802C5D80;
-extern s32 D_802C5D84;
-extern s32 D_802C5D88;
-extern s32 D_802C5D8C;
-extern s32 D_800DAA34[];
-extern s32 D_801C26D0;
-extern s32 D_801C26D4;
-extern s32 D_801C26D8;
-extern s32 D_801C26DC;
-extern s32 D_801C2928;
-extern u16 D_801CE65A;
-
-extern s32 D_1C3780_802C5D30[];
 
 void func_1C3780_802C5800(void) {
     if (D_801CE63C != 0) {
@@ -91,50 +65,48 @@ Gfx* func_1C3780_802C58F4(Gfx* gDisplayListHead) {
 }
 
 void func_1C3780_802C5BD8(void) {
-    s32 var_a1;
-    s32 sp1C;
+    s32 flag = FALSE;
 
-    var_a1 = FALSE;
     switch (D_802C5D80) {
         case 0:
             D_802C5D80 = 1;
             break;
+
         case 1:
-            D_802C5D88 = D_802C5D88 + 0x14;
-            if (D_802C5D88 >= 0x14) {
+            D_802C5D88 += 20;
+            if (D_802C5D88 >= 20) {
                 D_802C5D80 = 2;
-                D_802C5D88 = 0x14;
+                D_802C5D88 = 20;
             }
             break;
+
         case 2:
-            if (D_801CE65A & 0xB000) {
+            if (D_801CE65A[0].unk0 & (A_BUTTON | Z_TRIG | START_BUTTON)) {
                 D_802C5D80 = 3;
-                var_a1 = TRUE;
+                flag = TRUE;
             }
             break;
+
         case 3:
-            D_802C5D88 = D_802C5D88 + 0x14;
-            if (D_802C5D88 >= 0x140) {
+            D_802C5D88 += 20;
+            if (D_802C5D88 >= 320) {
                 D_802C5D80 = 7;
-                D_802C5D88 = 0x140;
+                D_802C5D88 = 320;
                 D_802C5D84 = 0;
             }
             break;
+
         case 7:
-            D_802C5D84 = D_802C5D84 + 1;
-            if (D_802C5D84 >= 3) {
+            if (++D_802C5D84 >= 3) {
                 if (D_801C2928 != 0) {
-                    sp1C = FALSE;
                     func_801EC9C8(&D_802C5D84);
                 } else {
-                    sp1C = FALSE;
                     func_801ED004(&D_802C5D84);
                 }
-                var_a1 = sp1C;
             }
             break;
     }
-    if (var_a1) {
+    if (flag) {
         func_800C37F4(0x31, 0);
     }
     D_802C5D8C = 0x28 - D_802C5D88;

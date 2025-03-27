@@ -28,7 +28,23 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/external/func_800BFD9C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/external/func_800BFDD0.s")
+void func_800BFDD0(void* arg0) {
+    D_800E7CBC = 0;
+    D_800E7CE8 = 0x190;
+    D_800E7CAC = 0;
+    D_801D7DD8 = 0;
+
+    func_800C538C(0x01000000, 1.0f);
+    func_800C538C(0x01000200, 1.0f);
+    func_800C538C(0x04000000, 0.1f);
+    play_sound(0x06000000, 1);
+    func_800BFD9C(arg0);
+
+    D_800E7CC8 = 0.0f;
+    D_801D7DF8[0] = 0;
+    D_801D7DF8[1] = 0;
+    D_801D7DF8[3] = -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/external/func_800BFE70.s")
 

@@ -1,19 +1,25 @@
-#include "common.h"
+#include "global.h"
 
-void func_801E6FB0(s32, s32, s32);
+Gfx* func_i12_802C5800(Gfx* dList) {
+    if (D_801CE63C != 0) {
+        D_801CE63C = 0;
+        if (D_800DAB24 == 0x46) {
+            return func_80093C44(dList);
+        }
+    }
 
-extern s32 D_800D461C;
-extern s32 D_800DAB1C;
-extern s32 D_800DAB24;
-extern s32 D_801CE630;
-extern s32 D_801CE634;
-extern s32 D_801CE638;
-extern s32 D_801CE63C;
-extern s32 D_801CE640;
-extern s32 D_801CE644;
+    D_800DAB2C = 0;
 
-// https://decomp.me/scratch/mvbGJ almost matched but stack is too big?
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i12/ovl_1CAE40/func_i12_802C5800.s")
+    dList = func_i12_802C58A0(dList);
+
+    if (D_800DAB24 == 0x46) {
+        func_i12_802C5F6C();
+    } else if (D_80228A16 == 1) {
+        func_801EC304();
+    }
+
+    return dList;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i12/ovl_1CAE40/func_i12_802C58A0.s")
 

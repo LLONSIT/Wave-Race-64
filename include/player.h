@@ -1,12 +1,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-typedef enum {
-NO_PLAYERS,
-ONE_PLAYER,
-TWO_PLAYERS
-}PLAYERS;
+typedef enum Players {
+    /* 0 */ NO_PLAYERS,
+    /* 1 */ ONE_PLAYER,
+    /* 2 */ TWO_PLAYERS
+} Players;
 
-extern PLAYERS gPlayers;
+extern Players gPlayers;
 
 #endif /* PLAYER_H */

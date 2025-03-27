@@ -1,4 +1,4 @@
-#include "common.h"
+#include "global.h"
 
 //.bss
 extern float gSinTable[0x1000];

@@ -6,23 +6,23 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
 
-#include "common.h"
+#include "global.h"
 #include "wr64dma.h"
 #include "structs.h"
+
 // Used in game_1050, game_4C750
 extern int D_80151948;
 extern s32 D_80151948;
 extern s32 D_801542C0[];
 extern u16 D_80228A34;
 
-//Global GFX Pointer
+// Global GFX Pointer
 extern Gfx* gDisplayListHead;
 
-//Global message, used in main.c and game_1050
+// Global message, used in main.c and game_1050
 extern OSMesgQueue D_80154130;
 
-
-//Used in 3 files (or more)
+// Used in 3 files (or more)
 extern s32 D_800D461C;
 extern s32 D_800DAB1C;
 extern s32 D_800DAB24;
@@ -34,9 +34,9 @@ extern s32 D_801CE63C;
 extern s32 D_801CE640;
 extern s32 D_801CE644;
 extern s32 D_801CE620;
-extern OSTask *first_task;
+extern OSTask* first_task;
 extern s32 D_801542B8;
-extern Gfx *D_1000000;
+extern Gfx* D_1000000;
 extern s32 D_800D45E4;
 extern u8* D_800D45E8;
 extern u8* D_800D45F0;
@@ -45,10 +45,10 @@ extern void* D_8011EDE0;
 extern void* D_801518B8;
 extern s32 D_80151948;
 extern s32 D_80151984;
-extern s32 D_801542C0[]; //tex save?
+extern s32 D_801542C0[]; // tex save?
 extern u8* D_801CE5F8;
 extern s32 D_801CE650;
-//overlay
+// overlay
 extern s32 D_800DAB2C;
 extern s16 D_800DAB0C;
 extern DmaTransfer D_800DAB38[];
@@ -57,7 +57,7 @@ extern s16 D_800DA9AC;
 extern s32 D_801CE64C;
 extern s32 D_800DA9D0;
 extern s32 D_801542CC;
-extern s32 D_801CB328; //Selected course id??
+extern s32 D_801CB328; // Selected course id??
 extern s32 D_801CE608;
 extern s8 D_800E5134;
 extern OSContPad gControllers[];
@@ -65,9 +65,150 @@ extern Vp* D_106F008;
 extern struct UnkStruct_801C3C50* D_801C3C50;
 extern struct UnkStruct_801C3C54* D_801C3C54;
 extern struct UnkStruct_80192690 D_80192690[];
-
 extern struct_801C3C58* D_801C3C58;
 extern s32 D_80228A90;
+extern s32 D_800DAB2C;
+extern s32 D_801CE650;
+extern s16 D_80228A16;
+extern s32 D_i1_802C9440;
+extern s32 D_i1_802C9570;
+extern s32 D_80192610;
+extern s32 D_80192630;
+extern s32 D_800D461C;
+extern s32 D_800DAB1C;
+extern s32 D_800DAB24;
+extern s32 D_801CE630;
+extern s32 D_801CE634;
+extern s32 D_801CE638;
+extern s32 D_801CE63C;
+extern s32 D_801CE640;
+extern s32 D_801CE644;
+extern s16 D_80228A16;
+extern s32 D_802C96A8;
+extern s32 D_802C76A8;
+extern s32 D_i1_802C94EC;
+extern s32 D_i1_802C94F0;
+extern s32 D_i1_802C94F4;
+extern s32 D_800D8240;
+extern s32 D_800DAA04;
+extern s32 D_801CE61C;
+extern s32 D_i4_802C7538;
+extern s32 D_i4_802C753C;
+extern s32 D_i4_802C7554;
 
+// gMainController ?
+extern s32 D_802C76B0;
+
+// gController ?
+extern Controller D_801CE65A[];
+extern Controller D_801CE692[]; // to be confirmed
+
+extern s8 D_802C7548;
+extern s32 D_802C756C;
+extern s32 D_i8_802C7040;
+extern s32 D_i8_802C74F8[];
+extern u16 D_801CB298[];
+extern s32 D_802C7564;
+extern s32 D_800DA9EC[];
+extern s8 D_801CB280;
+extern s32 D_i11_802C6150;
+extern s32 D_802C8E98;
+extern s32 D_i13_802C8D78;
+extern s32 D_i13_802C8DC0;
+extern s32 D_802C61E0;
+extern s32 D_802C61E4;
+extern s32 D_802C61E8;
+extern s32 D_802C61EC;
+extern s32 D_i14_802C60F0;
+extern s32 D_i14_802C6124[];
+extern s32 D_i14_802C6134[];
+extern s32 D_i14_802C613C;
+extern UnkStruct_D_802C6E80 D_802C6E80[];
+extern UNK_TYPE D_106F628[];
+extern s32 D_801CE63C;
+extern s32 D_802C5D80;
+extern s32 D_802C5D84;
+extern s32 D_802C5D88;
+extern s32 D_802C5D8C;
+extern s32 D_800DAA34[];
+extern s32 D_801C26D0;
+extern s32 D_801C26D4;
+extern s32 D_801C26D8;
+extern s32 D_801C26DC;
+extern s32 D_801C2928;
+extern s32 D_1C3780_802C5D30[];
+extern s32 D_1C3D00_802C5ED0[];
+extern s32 D_i15_802C6DF4;
+extern s32 D_i15_802C6DF8;
+extern s32 D_802C6E74;
+extern s32 D_802C6E78;
+extern UnkStruct_8009A04C D_801CEAB0[];
+extern s32 D_80228AA4;
+extern s32 D_800E7CAC;
+extern s32 D_800E7CBC;
+extern f32 D_800E7CC8;
+extern s32 D_800E7CE8;
+extern s32 D_801D7DD8;
+extern s8 D_801D7DF8[];
+extern s32 D_801CE63C;
+extern s32 D_800DAB24;
+extern s32 D_i4_802C7530;
+extern s32 D_800DA9D0;
+extern s32 D_800DAAB4[];
+extern s32 D_i4_802C760C[];
+extern u8 D_80198310;
+extern u8 D_80198350;
+extern u8 D_802C76AC;
+extern s32 D_i3_802C6FE0;
+extern u8 D_802C7024;
+extern s16 D_801CE62A;
+extern s16 D_800DAB64;
+extern s32 D_i0_802C6BE0;
+extern s32 D_802C6EE0;
+extern s32 D_802C6F14;
+extern s32 D_802C6EE4;
+extern s32 D_800DA9D8;
+extern u8 D_801CEFF8[];
+extern u8 D_801CF004[];
+extern u8 D_801CF064[];
+extern u8 D_800E5148;
+extern u8 D_801CEAA4[];
+extern void* D_800E5F64;
+extern void* D_800E5FA0;
+extern void* D_800E5EFC;
+extern void* D_800E5F30;
+extern void* D_800E5E94;
+extern void* D_800E5EC8;
+extern void* D_800E5E54;
+extern void* D_800E5E74;
+extern void* D_800E5C6C;
+extern void* D_800E5C8C;
+extern void* D_800E5FDC;
+extern void* D_800E6018;
+extern void* D_800E5DC4;
+extern void* D_800E5E0C;
+extern void* D_800E5BAC;
+extern void* D_800E5BCC;
+extern void* D_800E5B6C;
+extern void* D_800E5B8C;
+extern void* D_800E59EC;
+extern void* D_800E5A14;
+extern void* D_800E599C;
+extern void* D_800E59C4;
+extern void* D_800E594C;
+extern void* D_800E5974;
+extern void* D_801CEC70;
+extern void* D_801CEC88;
+extern s32 D_800E5138;
+extern f32* D_801CF058[];
+extern s32 D_800E55CC;
+extern s32 D_800E55EC;
+extern s32 func_8009A97C;
+extern s16 D_801CEA98[];
+extern void* D_800E5684;
+extern void* D_800E5698;
+extern void* D_800E560C;
+extern void* D_800E5620;
+extern f32 D_800EB4E4;
 
 #endif /* VARIABLES_H */

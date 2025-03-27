@@ -21,8 +21,8 @@ void func_8007A550(Gfx** dListP) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game/wr64_print/func_8007A5D4.s")
 
 /*
-* Formats an integer to a string
-*/
+ * Formats an integer to a string
+ */
 void Str_Itoa(char* str, s32 num) {
     s16 i;
     s8 dest[20];
@@ -55,8 +55,8 @@ void Str_Itoa(char* str, s32 num) {
 }
 
 /*
-* Formats an integer to a string with a width
-*/
+ * Formats an integer to a string with a width
+ */
 void Str_Itoaw(char* str, s32 num, s32 width) {
     s16 i;
     s8 dest[20];
