@@ -146,7 +146,7 @@ segments:
       - [0x85310, hasm, libultra/exceptasm]
       - [0x85BC0, asm, libultra/osGetCount]
       - [0x85BD0, c, libultra_nm/osTimer]
-      - [0x85FD0, c, __osViInit]
+      - [0x85FD0, c, libultra_nm/__osViInit]
       - [0x86100, c, os/siacs]
       - [0x861C0, c, os/__osSiRawStartDma]
       - [0x86270, c, libultra_nm/unkSeg_86270]

@@ -236,7 +236,7 @@ $(TARGET).elf: dirs $(BASENAME).ld $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RN
 	@printf "[$(PINK) GNU Linker $(NO_COL)]  $<\n"
 
 ifndef PERMUTER
-$(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c  include/variables.h include/structs.h
+$(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c
 	@$(CC_CHECK) $<
 	@printf "[$(YELLOW) GCC Syntax check $(NO_COL)] $<\n"
 	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< > $(BUILD_DIR)/$<
