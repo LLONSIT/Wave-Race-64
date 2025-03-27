@@ -76,6 +76,5 @@
 
 #define UNK_TYPE int
 
-#define PRINTF
-
+#define PRINT(x) ((void)x)
 #endif

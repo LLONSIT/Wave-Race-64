@@ -18,9 +18,9 @@ void func_8007A550(Gfx** dListP) {
     *dListP = gfxPtr;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_34D50/func_8007A5D4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/wr64_print/func_8007A5D4.s")
 
-void func_8007A8A8(char* str, s32 num) {
+void Format_Integer(char* str, s32 num) {
     s16 i;
     s8 dest[20];
     s16 len;
@@ -92,13 +92,13 @@ void func_8007A980(char* str, s32 num, s32 width) {
     str[i] = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_34D50/func_8007AAAC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/wr64_print/func_8007AAAC.s")
 
 void func_8007AD40(Gfx** gDisplayListHead, s32 arg1, s32 arg2, s32 arg3) {
     s32 pad;
     char buf[60];
 
-    func_8007A8A8(buf, arg3);
+    Format_Integer(buf, arg3);
     func_8007AAAC(gDisplayListHead, arg1, arg2, buf);
 }
 
