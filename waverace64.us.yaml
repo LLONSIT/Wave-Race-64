@@ -128,7 +128,7 @@ segments:
       - [0x83270, c, libultra_nm/UnkLibultraSeg_83270]
       - [0x83410, c, libultra_nm/UnkLibultraSeg_83410]
       - [0x835C0, c, libultra_nm/UnkLibultraSeg_835C0]
-      - [0x840B0, c, libultra_nm/UnkLibultraSeg_840B0]
+      - [0x840B0, c, libultra_nm/pfsallocatefile]
       - [0x84620, c, os/osPhysicalToVirtual]
       - [0x84630, c, libultra_nm/UnkLibultraSeg_84630]
       - [0x84760, c, libultra_nm/UnkLibultraSeg_84760]
