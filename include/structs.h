@@ -130,15 +130,17 @@ struct UnkStruct_801C3C54 {
     /* 0x018 */ f32 unk18;
     /* 0x01C */ char pad1C[4];
     /* 0x020 */ f32 unk20;
-    /* 0x024 */ char pad24[0x4C]; /* maybe part of unk20[0x14]? */
+    /* 0x024 */ char pad24[0x4C];                   /* maybe part of unk20[0x14]? */
     /* 0x070 */ f32 unk70;
     /* 0x074 */ f32 unk74;
     /* 0x078 */ f32 unk78;
     /* 0x07C */ f32 unk7C;
     /* 0x080 */ f32 unk80;
     /* 0x084 */ f32 unk84;
-    /* 0x088 */ char pad88[0x7C]; /* maybe part of unk84[0x20]? */
-}; /* size = 0x104 */
+    /* 0x088 */ char pad88[0x34];                   /* maybe part of unk84[0xE]? */
+    /* 0x0BC */ s32 unkBC;                          /* inferred */
+    /* 0x0C0 */ char padC0[0x44];                   /* maybe part of unkBC[0x12]? */
+};               
 
 typedef struct {
     s32 unk0;

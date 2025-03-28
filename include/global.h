@@ -2,7 +2,6 @@
 #define GLOBAL_H
 
 #include <ultra64.h>
-//#include "os.h"
 #include "macros.h"
 #include "structs.h"
 #include "variables.h"

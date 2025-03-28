@@ -7,7 +7,6 @@ extern s16 D_800D47E8;
 extern s16 D_800D47EC;
 extern s16 D_800D47F0;
 extern s16 D_800D47F4;
-extern u32 D_800D47FC;
 
 void func_80051530(void) {
 }
