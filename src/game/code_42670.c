@@ -224,7 +224,7 @@ void func_80088B00(struct UnkStruct_80088B00* arg0) {
 
     arg0->unk10 = arg0->unk8 - arg0->unk0;
     arg0->unk14 = arg0->unkC - arg0->unk4;
-    
+
     temp_f12 = SQ(arg0->unk10) + SQ(arg0->unk14);
     arg0->unk18 = temp_f12;
     if (temp_f12 != 0.0f) {

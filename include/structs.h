@@ -191,11 +191,11 @@ typedef struct {
 // This probably part of UnkStruct_801C3C50
 struct UnkStruct_80192690 {
     /* 0x0000 */ char pad0[0x44];
-    /* 0x0044 */ f32 unk44; 
+    /* 0x0044 */ f32 unk44;
     /* 0x0048 */ char pad48[4];
-    /* 0x004C */ f32 unk4C;          
-    /* 0x0050 */ char pad50[0xB40];  /* maybe part of unk4C[0x2D1]? */
-    /* 0x0B90 */ f32 unkB90;         
+    /* 0x004C */ f32 unk4C;
+    /* 0x0050 */ char pad50[0xB40]; /* maybe part of unk4C[0x2D1]? */
+    /* 0x0B90 */ f32 unkB90;
     /* 0x0B94 */ char padB94[0xB84]; /* maybe part of unkB90[0x2E2]? */
 };
 
@@ -229,7 +229,7 @@ struct UnkStruct_801C3C50 {
     /* 0x0C60 */ char padC60[0x1C]; /* maybe part of unkC5C[8]? */
     /* 0x0C7C */ u16 unkC7C;
     /* 0x0C7E */ char padC7E[0x8FA]; /* maybe part of unkC7C[0x47E]? */
-    /* 0x1578 */ f32 unk1578;        
+    /* 0x1578 */ f32 unk1578;
     /* 0x157C */ char pad157C[0x38]; /* maybe part of unk1578[0xF]? */
     /* 0x15B4 */ f32 unk15B4;
     /* 0x15B8 */ f32 unk15B8;
@@ -237,11 +237,12 @@ struct UnkStruct_801C3C50 {
     /* 0x15C0 */ char pad15C0[0x1E]; /* maybe part of unk15BC[8]? */
     /* 0x15DE */ s16 unk15DE;
 };
+
 struct UnkStruct_801C2C24 {
     /* 0x000 */ s32 unk0;
-    /* 0x004 */ s32 unk4;          
-    /* 0x008 */ char pad8[0x2EC];  /* maybe part of unk4[0xBC]? */
-    /* 0x2F4 */ s32 unk2F4;        
+    /* 0x004 */ s32 unk4;
+    /* 0x008 */ char pad8[0x2EC]; /* maybe part of unk4[0xBC]? */
+    /* 0x2F4 */ s32 unk2F4;
     /* 0x2F8 */ char pad2F8[0x80]; /* maybe part of unk2F4[0x21]? */
 }; /* size = 0x378 */
 
@@ -266,5 +267,15 @@ typedef struct {
     u8 padE8[0xE8];
     s32 unkE8;
 } UnkStruct_func_8009CCE8;
+
+typedef struct UnkStruct_802C96A8 {
+    /* 0x00 */ s32 unk_0;
+    /* 0x04 */ char pad_4[0x20];
+} UnkStruct_802C96A8; // size = 0x24;
+
+typedef struct GfxPool {
+    /* 0x00000 */ Gfx dList[0xC00];
+    /* 0x00C00*/ char pad_0C00[0x12FE8];
+} GfxPool; // size = 0x18FE8
 
 #endif /* STRUCTS_H */

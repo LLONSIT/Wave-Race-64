@@ -11,8 +11,10 @@
 #include "structs.h"
 
 // Used in game_1050, game_4C750
-extern int D_80151948;
+extern s32 D_80151950;
 extern s32 D_80151948;
+extern s32 D_8015194C;
+extern s32 D_800D45D8;
 extern s32 D_801542C0[];
 extern u16 D_80228A34;
 
@@ -42,7 +44,6 @@ extern u8* D_800D45E8;
 extern u8* D_800D45F0;
 extern s32 D_800DAB1C;
 extern void* D_8011EDE0;
-extern void* D_801518B8;
 extern s32 D_80151948;
 extern s32 D_80151984;
 extern s32 D_801542C0[]; // tex save?
@@ -84,7 +85,6 @@ extern s32 D_801CE63C;
 extern s32 D_801CE640;
 extern s32 D_801CE644;
 extern s16 D_80228A16;
-extern s32 D_802C96A8;
 extern s32 D_802C76A8;
 extern s32 D_i1_802C94EC;
 extern s32 D_i1_802C94F0;
@@ -210,5 +210,29 @@ extern void* D_800E5698;
 extern void* D_800E560C;
 extern void* D_800E5620;
 extern f32 D_800EB4E4;
+extern UnkStruct_802C96A8 D_802C96A8;
+extern UnkStruct_802C96A8 D_i1_802C94C8;
+extern s32 D_i1_802C9514[];
+extern s32 D_802C96CC;
+extern s32 D_802C96D0;
+extern u32 D_i1_802C9520;
+extern s32 D_i1_802C9524;
+extern s32 D_i1_802C9528;
+extern s32 D_i1_802C952C;
+extern s32 D_i1_802C9530;
+extern s32 D_i1_802C9534;
+extern s32 D_i1_802C9538;
+extern s32 D_i1_802C953C;
+extern u32 D_i1_802C9540;
+extern s32 D_i1_802C9558;
+extern GfxPool D_8011F8E8[];
+extern GfxPool* gGfxPool;
+extern s32 D_8011F8E0;
+extern OSTask* D_80151940;
+extern OSTask D_801518C0[2];
+extern s32 D_800D45DC[];
+extern u64 gOSYieldData[];
+extern u64 gDramStack[];
+extern u64 gTaskOutputBuffer[];
 
 #endif /* VARIABLES_H */

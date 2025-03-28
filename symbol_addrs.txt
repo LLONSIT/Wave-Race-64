@@ -168,6 +168,9 @@ __osSpGetStatus = 0x800CBF10;
 osSpTaskYielded = 0x800C66C0;
 osEepromLongWrite = 0x800C8410;
 __osGetCause = 0x800D20B0;
+rspbootTextStart = 0x800D22B0;//name_end:rspbootTextEnd
+gspF3DEX_fifoTextStart = 0x800D2380;//name_end:gspF3DEX_fifoTextEnd
+gspF3DEX_fifoDataStart = 0x800EE310; //name_end:gspF3DEX_fifoDataEnd
 
 //TODO: Need to reference undefined function to the overlay address
 
@@ -178,6 +181,10 @@ create_obj =  0x800B490C;
 gDisplayListHead = 0x80151944; //Default name for display lists for both local and global declarations
 unk_game_load = 0x80095050;
 main_thread = 0x80047530;
+gDramStack = 0x80046400;
+gTaskOutputBuffer = 0x800EEDD0;
+gGfxPool = 0x801518B8;
+gOSYieldData = 0x80045800;
 
 //game_23E0
 srand = 0x80047E44;
@@ -191,7 +198,7 @@ gColorAlpha = 0x800D47F4;
 
 //not a very good name
 configSignalRectangle = 0x8006E024;
-fast3d_800D22B0 = 0x800D22B0;
+// fast3d_800D22B0 = 0x800D22B0;
 play_sound = 0x800C53D4;
 gCourseID = 0x800D8170;
 menu_buffer_1 = 0x80228930;
