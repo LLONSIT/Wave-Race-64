@@ -8,4 +8,6 @@
 // Sin table
 extern float gSinTable[0x400];
 
+void Math_Normalize_VectorComponents(f32* componentX, f32* componentY);
+
 #endif /* MATH_H */

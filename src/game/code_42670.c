@@ -224,6 +224,7 @@ void func_80088B00(struct UnkStruct_80088B00* arg0) {
 
     arg0->unk10 = arg0->unk8 - arg0->unk0;
     arg0->unk14 = arg0->unkC - arg0->unk4;
+    
     temp_f12 = SQ(arg0->unk10) + SQ(arg0->unk14);
     arg0->unk18 = temp_f12;
     if (temp_f12 != 0.0f) {
@@ -233,15 +234,15 @@ void func_80088B00(struct UnkStruct_80088B00* arg0) {
     }
 }
 
-void func_80088B84(f32* arg0, f32* arg1) {
-    f32 temp_f12;
-    f32 temp_f2_2;
+void Math_Normalize_VectorComponents(f32* componentX, f32* componentY) {
+    f32 result_square;
+    f32 reciprocal;
 
-    temp_f12 = (*arg0 * *arg0) + (*arg1 * *arg1);
-    if (temp_f12 != 0.0f) {
-        temp_f2_2 = 1.0f / sqrtf(temp_f12);
-        *arg0 *= temp_f2_2;
-        *arg1 *= temp_f2_2;
+    result_square = SQ(*componentX) + SQ(*componentY);
+    if (result_square != 0.0f) {
+        reciprocal = 1.0f / sqrtf(result_square);
+        *componentX *= reciprocal;
+        *componentY *= reciprocal;
     }
 }
 
@@ -257,8 +258,8 @@ void func_80088C00(void) {
     sp38 = D_801C3C54[D_801C3C58->unk10].unk8 - D_801C3C50->unk4C;
     sp34 = D_801C3C54[D_801C3C58->unk14].unk0 - D_801C3C54[D_801C3C58->unk10].unk0;
     sp30 = D_801C3C54[D_801C3C58->unk14].unk8 - D_801C3C54[D_801C3C58->unk10].unk8;
-    func_80088B84(&sp3C, &sp38);
-    func_80088B84(&sp34, &sp30);
+    Math_Normalize_VectorComponents(&sp3C, &sp38);
+    Math_Normalize_VectorComponents(&sp34, &sp30);
 
     var_f0 = (sp3C * sp30) - (sp34 * sp38);
     if (D_801C3C58->unk1C == 0) {
