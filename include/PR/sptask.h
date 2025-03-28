@@ -8,7 +8,9 @@
 #define M_HVQTASK 6
 #define M_HVQMTASK 7
 
-#if (defined(F3DEX_GBI) || defined(F3DLP_GBI) || defined(F3DEX_GBI_2))
+#define F3D_WR64
+
+#if (defined(F3DEX_GBI) || defined(F3DLP_GBI) || defined(F3DEX_GBI_2) || defined(F3D_WR64))
 #define OS_YIELD_DATA_SIZE 0xc00
 #else
 #define OS_YIELD_DATA_SIZE 0x900

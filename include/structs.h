@@ -271,9 +271,9 @@ typedef struct UnkStruct_802C96A8 {
     /* 0x04 */ char pad_4[0x20];
 } UnkStruct_802C96A8; // size = 0x24;
 
-typedef struct UnkStruct_D_8011F8E8 {
+typedef struct GfxPool {
     /* 0x00000 */ Gfx dList[0xC00];
     /* 0x00C00*/ char pad_0C00[0x12FE8];
-} UnkStruct_D_8011F8E8; // size = 0x18FE8
+} GfxPool; // size = 0x18FE8
 
 #endif /* STRUCTS_H */

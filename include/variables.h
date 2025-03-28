@@ -225,11 +225,14 @@ extern s32 D_i1_802C9538;
 extern s32 D_i1_802C953C;
 extern u32 D_i1_802C9540;
 extern s32 D_i1_802C9558;
-extern UnkStruct_D_8011F8E8 D_8011F8E8[];
-extern UnkStruct_D_8011F8E8* D_801518B8;
+extern GfxPool D_8011F8E8[];
+extern GfxPool* gGfxPool;
 extern s32 D_8011F8E0;
 extern OSTask* D_80151940;
 extern OSTask D_801518C0[2];
 extern s32 D_800D45DC[];
+extern u64 gOSYieldData[];
+extern u64 gDramStack[];
+extern u64 gTaskOutputBuffer[];
 
 #endif /* VARIABLES_H */

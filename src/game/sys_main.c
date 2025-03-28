@@ -1,4 +1,5 @@
 #include "global.h"
+#include "PR/ucode.h"
 
 void func_80046850(void) {
     s32 temp_t7 = D_8015194C;
@@ -24,7 +25,7 @@ void func_800468E0(void) {
     gSPSegment(gDisplayListHead++, 0, 0x6000000000);
     gSPSegment(gDisplayListHead++, 1, D_80151984);
     gSPSegment(gDisplayListHead++, 2, osVirtualToPhysical(&D_8011EDE0));
-    gSPSegment(gDisplayListHead++, 3, osVirtualToPhysical(D_801518B8));
+    gSPSegment(gDisplayListHead++, 3, osVirtualToPhysical(gGfxPool));
     gSPSegment(gDisplayListHead++, 7, osVirtualToPhysical(D_801CE5F8));
     gSPSegment(gDisplayListHead++, 8, D_800D45F0);
     gSPSegment(gDisplayListHead++, 13, D_800D45E4);
@@ -57,9 +58,29 @@ void func_800468E0(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_1050/func_80046BF4.s")
+void func_80046BF4(void) {
+    gDPFullSync(gDisplayListHead++);
+    gSPEndDisplayList(gDisplayListHead++);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_1050/func_80046C30.s")
+void func_80046C30(OSTask* task) {
+    task->t.type = M_GFXTASK;
+    task->t.flags = 0;
+    task->t.ucode_boot = (u64*) rspbootTextStart;
+    task->t.ucode_boot_size = (u32) rspbootTextEnd - (u32) rspbootTextStart;
+    task->t.ucode = (u64*) gspF3DEX_fifoTextStart;
+    task->t.ucode_size = SP_UCODE_SIZE;
+    task->t.ucode_data = (u64*) gspF3DEX_fifoDataStart;
+    task->t.ucode_data_size = SP_UCODE_DATA_SIZE;
+    task->t.dram_stack = (u64*) gDramStack;
+    task->t.dram_stack_size = SP_DRAM_STACK_SIZE8;
+    task->t.output_buff = (u64*) (ALIGN16((u32) gTaskOutputBuffer));
+    task->t.output_buff_size = (u64*) (ALIGN16((u32) gTaskOutputBuffer) + 0x6000);
+    task->t.data_ptr = (u64*) gGfxPool->dList;
+    task->t.data_size = ((s32) (gDisplayListHead - gGfxPool->dList)) * 8;
+    task->t.yield_data_ptr = gOSYieldData;
+    task->t.yield_data_size = OS_YIELD_DATA_SIZE;
+}
 
 void func_80046CF8(OSTask* task) {
     first_task = task;
@@ -69,8 +90,8 @@ void func_80046CF8(OSTask* task) {
 void func_80046D2C(void) {
     D_8011F8E0 ^= 1;
     D_80151940 = &D_801518C0[D_8011F8E0];
-    D_801518B8 = &D_8011F8E8[D_8011F8E0];
-    gDisplayListHead = D_801518B8->dList;
+    gGfxPool = &D_8011F8E8[D_8011F8E0];
+    gDisplayListHead = gGfxPool->dList;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_1050/func_80046DA0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_main/func_80046DA0.s")

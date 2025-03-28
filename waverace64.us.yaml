@@ -50,7 +50,7 @@ segments:
 
       # GAME CODE
       - [0x1000, hasm, entrypoint]
-      - [0x1050, c, game/code_1050] # Some GFX macros
+      - [0x1050, c, game/sys_main] # Some GFX macros
       - [0x1C70, c, game/main]
       - [0x23E0, c, game/code_23E0]
       - [0x5480, c, game/code_5480]
@@ -190,8 +190,8 @@ segments:
       - [0x8C920, c, os/libc/ldiv]
       
       # GFX MICROCODE
-      - [0x8CAB0, bin, fast3d_part1] # TODO: Put these on a separated segment
-      - [0x8CB80, bin, fast3d_part2]
+      - [0x8CAB0, textbin, rspboot] # TODO: Put these on a separated segment
+      - [0x8CB80, textbin, f3d]
 
       # Audio Microcode
       - [0x8DFB0, bin, aspMain]
