@@ -9,7 +9,7 @@
 
 
 
-default: torch
+default:# torch
 	@$(CC) n64crc.c -o n64crc
 	@make  -C ido-static-recomp/ setup
 	@make  -C ido-static-recomp/ VERSION=5.3

@@ -38,18 +38,25 @@ segments:
   - name: boot
     type: bin
     start: 0x40
-
-  - name: main_segment # This segment is static, always present in memory
+  
+  - name: entry
     type: code
     start: 0x1000
     vram: 0x80046800
+    subsegments:
+      - [0x1000, hasm, entrypoint]
+
+  - name: main_segment # This segment is static, always present in memory
+    type: code
+    start: 0x1050
+    vram: 0x80046850
+    follows_vram: entry
     bss_size: 0xEC1D0
     subsegments:
      #Game layout
      #Main Segment -> ucode -> Data/Rodata -> MIO_SEGMENT | Overlays
 
       # GAME CODE
-      - [0x1000, hasm, entrypoint]
       - [0x1050, c, game/sys_main] # Some GFX macros
       - [0x1C70, c, game/main]
       - [0x23E0, c, game/code_23E0]
@@ -194,7 +201,7 @@ segments:
       - [0x8CB80, textbin, f3d]
 
       # Audio Microcode
-      - [0x8DFB0, bin, aspMain]
+      - [0x8DFB0, textbin, aspMain]
 
       - [0x8EDD0, data]
       - [0x8EDF0, data]
@@ -271,18 +278,20 @@ segments:
     subsegments:
     - [0xA95D0, c, codeseg/A95D0]
     - [0xAF8C0, c, codeseg/AF8C0]
+    - [0xB17D0, c, codeseg/B17D0]
     - [0xB2510, c, codeseg/B2510]
     - [0xB2A70, c, codeseg/B2A70]
     - [0xB3AA0, c, codeseg/B3AA0]
     - [0xB55E0, c, codeseg/wr64_fade]
     - [0xB66E0, c, codeseg/B66E0]
     - [0xCAE70, data]
+    - [0xF2810, data]
     - [0xF4540, .rodata, codeseg/A95D0]
-    - [0xF4670, data]
-    - [0xF4840, data]
-    - [0xF4970, data]
-    - [0xF49B0, .rodata, codeseg/AF8C0]
-    - [0xF49F0, data]
+    - [0xF4670, data, codeseg/AF8C0]
+    - [0xF4840, .rodata, codeseg/AF8C0]
+    - [0xF4960, data, codeseg/B17D0]
+    - [0xF49B0, .rodata, codeseg/B17D0]
+    - [0xF49F0, data, codeseg/B2510]
     - [0xF51B0, .rodata, codeseg/B2510]
     - [0xF51D0, data]
     - [0xF5240, data]
