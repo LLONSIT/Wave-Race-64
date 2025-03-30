@@ -1,14 +1,13 @@
 #include "global.h"
 
-
 struct UnkStruct_801CEBE0 {
-    /* 0x00 */ Vec3f unk0;                          /* inferred */
-    /* 0x0C */ Vec3f unkC;                          /* inferred */
+    /* 0x00 */ Vec3f unk0; /* inferred */
+    /* 0x0C */ Vec3f unkC; /* inferred */
     /* 0x18 */ char pad18[0xC];
-    /* 0x24 */ Vec3f unk24;                         /* inferred */
-    /* 0x30 */ Vec3f unk30;                         /* inferred */
+    /* 0x24 */ Vec3f unk24; /* inferred */
+    /* 0x30 */ Vec3f unk30; /* inferred */
     /* 0x3C */ char pad3C[0xC];
-};                                                  /* size = 0x48 */
+}; /* size = 0x48 */
 
 struct UnkStruct_80099858 {
     char unk0;
@@ -26,14 +25,14 @@ struct UnkStruct_80099858_1 {
 };
 
 extern u8 D_801CEAA6[];
-extern struct UnkStruct_801CEBE0  D_801CEBE0[];
+extern struct UnkStruct_801CEBE0 D_801CEBE0[];
 
 extern f32 D_801CEFE0[];
 extern s16 D_801CEFE8[];
 extern s16 D_801CEFEC[];
 extern u8 D_801CEFF0[];
 
-extern f32 func_801ED154(f32, f32);                          /* extern */
+extern f32 func_801ED154(f32, f32); /* extern */
 
 f32 Math_Fabs(f32 x) {
     if (x < 0.0f) {
@@ -226,7 +225,7 @@ void func_80098AC4(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4) {
         if (arg2) {
             var_s1->vec.z = D_80192690[var_s0].unk4C;
         }
-        
+
         if (arg3) {
             var_s1->unkC = func_80098918(var_s0);
         } else {
@@ -235,7 +234,7 @@ void func_80098AC4(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4) {
         if (arg4) {
             var_s1->unk10 = func_8009898C(var_s0);
         }
-    } 
+    }
 }
 
 void func_80098BFC(void) {
@@ -247,38 +246,38 @@ extern s32 D_80192458;
 void func_80098C04(Vec3f* arg0, s32 arg1, s8 arg2) {
     struct UnkStruct_801CEFF8* temp_s1;
 
-    switch (arg2) {                                 /* irregular */
-    case 1:
-        temp_s1 = &D_801CEFF8[arg1];
-        func_80098574(arg0, arg0, (s32) temp_s1->unk10);
-        arg0->x += temp_s1->vec.x;
-        arg0->y = (((arg0->y + temp_s1->vec.y) - D_80192458) * D_800EB4C0) + D_80192458;
-        arg0->z += temp_s1->vec.z;
-        return;
-    case 3:
-        temp_s1 = &D_801CEFF8[arg1];
-        func_80098574(arg0, arg0, (s32) temp_s1->unk10);
-        arg0->x += temp_s1->vec.x;
-        arg0->y += (f32) D_80192458;
-        arg0->z += temp_s1->vec.z;
-        return;
-    case 2:
-        temp_s1 = &D_801CEFF8[arg1];
-        func_80098644(arg0, arg0, (s32) temp_s1->unkC);
-        func_80098574(arg0, arg0, (s32) temp_s1->unk10);
-        arg0->x += temp_s1->vec.x;
-        arg0->y += temp_s1->vec.y;
-        arg0->z += temp_s1->vec.z;
+    switch (arg2) { /* irregular */
+        case 1:
+            temp_s1 = &D_801CEFF8[arg1];
+            func_80098574(arg0, arg0, (s32) temp_s1->unk10);
+            arg0->x += temp_s1->vec.x;
+            arg0->y = (((arg0->y + temp_s1->vec.y) - D_80192458) * D_800EB4C0) + D_80192458;
+            arg0->z += temp_s1->vec.z;
+            return;
+        case 3:
+            temp_s1 = &D_801CEFF8[arg1];
+            func_80098574(arg0, arg0, (s32) temp_s1->unk10);
+            arg0->x += temp_s1->vec.x;
+            arg0->y += (f32) D_80192458;
+            arg0->z += temp_s1->vec.z;
+            return;
+        case 2:
+            temp_s1 = &D_801CEFF8[arg1];
+            func_80098644(arg0, arg0, (s32) temp_s1->unkC);
+            func_80098574(arg0, arg0, (s32) temp_s1->unk10);
+            arg0->x += temp_s1->vec.x;
+            arg0->y += temp_s1->vec.y;
+            arg0->z += temp_s1->vec.z;
     }
 }
 
-void func_80098DE0(Vec3f *vec) {
+void func_80098DE0(Vec3f* vec) {
     func_80098714(&vec->x, 0.0f, 0.05f);
     func_80098714(&vec->y, 0.0f, 0.05f);
     func_80098714(&vec->z, 0.0f, 0.05f);
 }
 
-void Math_Vec3f_Substract(Vec3f *dest, Vec3f *vec1, Vec3f *vec2) {
+void Math_Vec3f_Substract(Vec3f* dest, Vec3f* vec1, Vec3f* vec2) {
     dest->x = vec1->x - vec2->x;
     dest->y = vec1->y - vec2->y;
     dest->z = vec1->z - vec2->z;
@@ -305,11 +304,11 @@ void func_80098FF8(Vec3f* arg0, Vec3f* arg1, f32* arg2, f32* arg3, f32* arg4) {
     f32 x;
     f32 y;
     f32 z;
-    
+
     x = arg1->x - arg0->x;
     y = arg1->y - arg0->y;
     z = arg1->z - arg0->z;
-    
+
     *arg2 = sqrtf(SQ(x) + SQ(y) + SQ(z));
     *arg3 = func_801ED154(y, sqrtf(SQ(x) + SQ(z)));
     *arg4 = func_801ED154(x, z);
@@ -320,8 +319,8 @@ void func_800990A8(Vec3f* arg0, Vec3f* arg1, f32 arg2, f32 arg3, f32 arg4) {
     s32 temp_f10;
     s32 temp_f4;
 
-    temp_f10 = (s32)((arg4 / 360.0f) * 4096.0f);
-    temp_f4 = (s32)((arg3 / 360.0f) * 4096.0f);
+    temp_f10 = (s32) ((arg4 / 360.0f) * 4096.0f);
+    temp_f4 = (s32) ((arg3 / 360.0f) * 4096.0f);
 
     arg1->x += (SIN(temp_f10) * (arg3 * COS(temp_f4)));
     arg1->y = arg0->y + (SIN(temp_f4) * arg2);
@@ -337,30 +336,28 @@ typedef struct two_vectors {
         f32 x;
         f32 z;
         f32 y;
-    }vec;
+    } vec;
     Vec3f vec1;
 } two_vectors;
 
-void func_8009917C(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3) {    
+void func_8009917C(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3) {
     two_vectors sp24;
 
-    
     Math_Vec3f_Copy(&sp24.vec1, arg1);
 
-
-    sp24.vec.y =
-        -((arg2->z * COS((s32)((arg3->x / 360.0f) * 4096.0f))) - (SIN((s32)((arg3->x / 360.0f) * 4096.0f)) * arg2->y));
+    sp24.vec.y = -((arg2->z * COS((s32) ((arg3->x / 360.0f) * 4096.0f))) -
+                   (SIN((s32) ((arg3->x / 360.0f) * 4096.0f)) * arg2->y));
     sp24.vec.z =
-        (arg2->z * SIN((s32)((arg3->x / 360.0f) * 4096.0f))) + (arg2->y * COS((s32)((arg3->x / 360.0f) * 4096.0f)));
+        (arg2->z * SIN((s32) ((arg3->x / 360.0f) * 4096.0f))) + (arg2->y * COS((s32) ((arg3->x / 360.0f) * 4096.0f)));
     sp24.vec.x = arg2->x;
 
-    arg0->x = (arg1->x + (sp24.vec.y * gSinTable[((s32)((arg3->y / 360.0f) * ((float)4096.0f))) & 0xFFF]))
-        + (gSinTable[(((s32)((arg3->y / 360.0f) * 4096.0f)) + 0x400) & 0xFFF] * sp24.vec.x);
+    arg0->x = (arg1->x + (sp24.vec.y * gSinTable[((s32) ((arg3->y / 360.0f) * ((float) 4096.0f))) & 0xFFF])) +
+              (gSinTable[(((s32) ((arg3->y / 360.0f) * 4096.0f)) + 0x400) & 0xFFF] * sp24.vec.x);
 
     arg0->y = arg1->y + (sp24.vec.z = sp24.vec.z);
-    
-    arg0->z = (arg1->z + (sp24.vec.y * COS((s32)((arg3->y / 360.0f) * 4096.0f))))
-        - (SIN((s32)((arg3->y / 360.0f) * 4096.0f)) * sp24.vec.x);
+
+    arg0->z = (arg1->z + (sp24.vec.y * COS((s32) ((arg3->y / 360.0f) * 4096.0f)))) -
+              (SIN((s32) ((arg3->y / 360.0f) * 4096.0f)) * sp24.vec.x);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009934C.s")
