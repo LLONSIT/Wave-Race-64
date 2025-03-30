@@ -1,3 +1,4 @@
+[![Discord Invitation](https://discordapp.com/api/guilds/1355614626657861753/widget.png?style=banner2 'Wave Race 64')](https://discord.gg/MeHBUTx6)
 
 
 # Wave Race 64
@@ -7,7 +8,7 @@ A early decompilation of a game with many waves!
 - Game Code
 <p align="left">
     <a href="" alt="WR64_Total_Functions">
-        <img src="https://img.shields.io/badge/Functions%2097%2F1148-8.46%25-blue" /></a>
+        <img src="https://img.shields.io/badge/Functions%2097%2F1148-17.78%25-blue" /></a>
   
 </p>
 
