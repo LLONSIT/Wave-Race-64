@@ -10,6 +10,21 @@ struct UnkStruct_801CEBE0 {
     /* 0x3C */ char pad3C[0xC];
 };                                                  /* size = 0x48 */
 
+struct UnkStruct_80099858 {
+    char unk0;
+    char unk1;
+    char unk2;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+};
+
+struct UnkStruct_80099858_1 {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+};
+
 extern u8 D_801CEAA6[];
 extern struct UnkStruct_801CEBE0  D_801CEBE0[];
 
@@ -316,42 +331,54 @@ void func_800990A8(Vec3f* arg0, Vec3f* arg1, f32 arg2, f32 arg3, f32 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800990A8.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_8009917C(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3) {
-    Vec3f sp24;
-    
-    s32 temp_f10;    
-    s32 temp_f10_3;
-    
-    
+// Not sure if this struct is real..
+typedef struct two_vectors {
+    struct {
+        f32 x;
+        f32 z;
+        f32 y;
+    }vec;
+    Vec3f vec1;
+} two_vectors;
 
-    Math_Vec3f_Copy(&sp24, arg1);
+void func_8009917C(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3) {    
+    two_vectors sp24;
+
     
-    temp_f10 = (s32) ((arg3->x / 360.0f) * 4096.0f);
+    Math_Vec3f_Copy(&sp24.vec1, arg1);
+
+
+    sp24.vec.y =
+        -((arg2->z * COS((s32)((arg3->x / 360.0f) * 4096.0f))) - (SIN((s32)((arg3->x / 360.0f) * 4096.0f)) * arg2->y));
+    sp24.vec.z =
+        (arg2->z * SIN((s32)((arg3->x / 360.0f) * 4096.0f))) + (arg2->y * COS((s32)((arg3->x / 360.0f) * 4096.0f)));
+    sp24.vec.x = arg2->x;
+
+    arg0->x = (arg1->x + (sp24.vec.y * gSinTable[((s32)((arg3->y / 360.0f) * ((float)4096.0f))) & 0xFFF]))
+        + (gSinTable[(((s32)((arg3->y / 360.0f) * 4096.0f)) + 0x400) & 0xFFF] * sp24.vec.x);
+
+    arg0->y = arg1->y + (sp24.vec.z = sp24.vec.z);
     
-    sp24.y =  -((arg2->z * COS(temp_f10)) - (SIN(temp_f10) * arg2->y));
-    
-    temp_f10 = (s32) ((arg3->x / 360.0f) * 4096.0f);
-    
-    sp24.z = (COS(temp_f10)  * arg2->y) + (arg2->z * SIN(temp_f10));
-    
-    temp_f10 = (s32) ((arg3->y / 360.0f) * 4096.0f);
-    
-    arg0->x = (COS(temp_f10) *  arg2->x) + (arg1->x + (sp24.y * SIN(temp_f10)));
-    arg0->y = sp24.z + arg1->y;
-    
-    temp_f10 = (s32) ((arg3->y / 360.0f) * 4096.0f);
-    arg0->z = (arg1->z + (sp24.y * COS(temp_f10))) - (SIN(temp_f10) *  arg2->x);
+    arg0->z = (arg1->z + (sp24.vec.y * COS((s32)((arg3->y / 360.0f) * 4096.0f))))
+        - (SIN((s32)((arg3->y / 360.0f) * 4096.0f)) * sp24.vec.x);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009917C.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009934C.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80099514.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80099858.s")
+void func_80099858(struct UnkStruct_80099858* arg0, s8 arg1, s8 arg2, u16 arg3, s16* arg4, s32 arg5) {
+    arg0->unk0 = arg1;
+    arg0->unk1 = arg2;
+    arg0->unk2 = arg3;
+    if (arg5) {
+        arg0->unk4 = -arg4[0];
+    } else {
+        arg0->unk4 = arg4[0];
+    }
+    arg0->unk6 = arg4[1];
+    arg0->unk8 = arg4[2];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800998B0.s")
 
