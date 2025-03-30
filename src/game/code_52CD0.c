@@ -1,74 +1,351 @@
 #include "global.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800984D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800984F4.s")
+struct UnkStruct_801CEBE0 {
+    /* 0x00 */ Vec3f unk0;                          /* inferred */
+    /* 0x0C */ Vec3f unkC;                          /* inferred */
+    /* 0x18 */ char pad18[0xC];
+    /* 0x24 */ Vec3f unk24;                         /* inferred */
+    /* 0x30 */ Vec3f unk30;                         /* inferred */
+    /* 0x3C */ char pad3C[0xC];
+};                                                  /* size = 0x48 */
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098514.s")
+extern u8 D_801CEAA6[];
+extern struct UnkStruct_801CEBE0  D_801CEBE0[];
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009852C.s")
+extern f32 D_801CEFE0[];
+extern s16 D_801CEFE8[];
+extern s16 D_801CEFEC[];
+extern u8 D_801CEFF0[];
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098548.s")
+extern f32 func_801ED154(f32, f32);                          /* extern */
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098564.s")
+f32 Math_Fabs(f32 x) {
+    if (x < 0.0f) {
+        x = -x;
+    }
+    return x;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098574.s")
+void Math_Vec3f_Set(Vec3f* vec, f32 x, f32 y, f32 z) {
+    vec->x = x;
+    vec->y = y;
+    vec->z = z;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098644.s")
+void Math_Vec3f_Initialize(Vec3f* vec) {
+    vec->x = 0.0f;
+    vec->y = 0.0f;
+    vec->z = 0.0f;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098714.s")
+void Math_Vec3f_Copy(Vec3f* dest, Vec3f* src) {
+    dest->x = src->x;
+    dest->y = src->y;
+    dest->z = src->z;
+}
 
+UNUSED void Math_Vec3s_Copy(Vec3s* dest, Vec3s* src) {
+    dest->x = src->x;
+    dest->y = src->y;
+    dest->z = src->z;
+}
+
+UNUSED void func_80098564(void) {
+}
+
+UNUSED void stub(void) {
+}
+
+void func_80098574(Vec3f* dest, Vec3f* src, s32 arg2) {
+    Vec3f sp1C;
+    s32 theta;
+
+    Math_Vec3f_Copy(&sp1C, src);
+    theta = ((arg2 / 360.0f) * 4096.0f);
+
+    dest->x = ((sp1C.z * SIN(theta)) + (COS(theta) * sp1C.x));
+    dest->y = sp1C.y;
+    dest->z = ((sp1C.z * COS(theta)) - (SIN(theta) * sp1C.x));
+}
+
+void func_80098644(Vec3f* dest, Vec3f* src, s32 arg2) {
+    Vec3f sp1C;
+    s32 theta;
+
+    Math_Vec3f_Copy(&sp1C, src);
+    theta = ((arg2 / 360.0f) * 4096.0f);
+
+    dest->z = ((sp1C.z * COS(theta)) - (SIN(theta) * sp1C.y));
+    dest->y = ((sp1C.z * SIN(theta)) + (COS(theta) * sp1C.y));
+    dest->x = sp1C.x;
+}
+
+s32 func_80098714(f32* arg0, f32 arg1, f32 arg2) {
+
+    if (arg2 > 1.0f) {
+        arg2 = 1.0f;
+    }
+
+    *arg0 = *arg0 + ((arg1 - *arg0) * arg2);
+    if (arg1 == *arg0) {
+        return FALSE;
+    }
+    return TRUE;
+}
+
+/*
+ * Current score: 62.44% (1615)
+ * Scratch: https://decomp.me/scratch/x65Bk
+ */
+#ifdef NON_EQUIVALENT
+s32 func_80098774(s16* arg0, s16 arg1, s16 arg2) {
+    s16 temp_v0;
+
+    if (arg2 == 0) {
+        *arg0 = arg1;
+    } else {
+        temp_v0 = *arg0 - arg1;
+        *arg0 = (temp_v0 - (temp_v0 / arg2)) + arg1;
+    }
+    if (arg1 == *arg0) {
+        return 0;
+    }
+    return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098774.s")
+#endif
 
+/*
+ * Current score: 97.93% (95)
+ * Scratch: https://decomp.me/scratch/x65Bk
+ */
+#ifdef NON_MATCHING
+s32 func_80098820(f32* arg0, f32 arg1, f32 arg2) {
+    f32 temp_f0;
+
+    temp_f0 = arg1 - *arg0;
+    if (arg2 < 0.0f) {
+        arg2 = -1.0f * arg2;
+    }
+
+    if (temp_f0 > 0.0f) {
+        if (((temp_f0 - arg1) - arg2) > 0.0f) {
+            *arg0 = arg1 - (temp_f0);
+        } else {
+            *arg0 = arg1;
+        }
+    } else {
+        if ((temp_f0 + arg2) < 0.0f) {
+            *arg0 = arg1 - (temp_f0 + arg2);
+        } else {
+            *arg0 = arg1;
+        }
+    }
+    if (arg1 == *arg0) {
+        return 0;
+    }
+    return 1;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098820.s")
+#endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800988D8.s")
+void func_800988D8(s32 arg0) {
+    D_801CEFE8[arg0] = 0;
+    D_801CEFE0[arg0] = 0.0f;
+    D_801CEFEC[arg0] = 0;
+    D_801CEFF0[arg0] = 0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098918.s")
+f32 func_80098918(s32 arg0) {
+    struct UnkStruct_80192690* temp_v0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009898C.s")
+    temp_v0 = &D_80192690[arg0];
+    return func_801ED154(temp_v0->unk70, sqrtf(SQ(temp_v0->unk6C) + SQ(temp_v0->unk74)));
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800989E0.s")
+f32 func_8009898C(s32 arg0) {
+    struct UnkStruct_80192690* temp_v0;
+
+    temp_v0 = &D_80192690[arg0];
+    return func_801ED154(temp_v0->unk6C, temp_v0->unk74);
+}
+
+void func_800989E0(Vec3f* arg0, s32 arg1, f32 arg2, f32 arg3, f32 arg4) {
+    struct UnkStruct_80192690* temp_v0;
+
+    temp_v0 = &D_80192690[arg1];
+    arg0->x = (f32) (arg0->x + (temp_v0->unkB78 * arg2));
+    arg0->y = (f32) (arg0->y + (temp_v0->unkB7C * arg3));
+    arg0->z = (f32) (arg0->z + (temp_v0->unkB80 * arg4));
+}
 
 void func_80098A5C(void) {
 }
 
 void func_80098A64(void) {
-    u8* s1 = D_801CEFF8;
-    u8* new_var;
-    u8* s0;
-    u8* s2 = D_801CF064;
+    s32 i;
 
-    // clang-format off
-    s0 = D_801CF004; s1 = s1; new_var = s2;
-    // clang-format on
+    for (i = 0; i < 4; i++) {
+        struct UnkStruct_801CEFF8* var_s0 = &D_801CEFF8[i];
+        struct UnkStruct_801CEFF8* var_s1 = &D_801CF004[i];
 
-    do {
-        func_80098514(s1);
-        func_80098514(s0);
-        s0 += 0x18;
-        s1 += 0x18;
-    } while (s0 != new_var);
+        Math_Vec3f_Initialize(&var_s0->vec);
+        Math_Vec3f_Initialize(&var_s1->vec);
+    }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098AC4.s")
+void func_80098AC4(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4) {
+    s32 var_s0;
+    struct UnkStruct_801CEFF8* var_s1;
+
+    for (var_s0 = 0, var_s1 = D_801CEFF8; var_s0 < 4; var_s0++, var_s1++) {
+        if (arg0) {
+            var_s1->vec.x = D_80192690[var_s0].unk44;
+        }
+        if (arg1) {
+            var_s1->vec.y = D_80192690[var_s0].unk48;
+        }
+        if (arg2) {
+            var_s1->vec.z = D_80192690[var_s0].unk4C;
+        }
+        
+        if (arg3) {
+            var_s1->unkC = func_80098918(var_s0);
+        } else {
+            var_s1->unkC = 0.0f;
+        }
+        if (arg4) {
+            var_s1->unk10 = func_8009898C(var_s0);
+        }
+    } 
+}
 
 void func_80098BFC(void) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098C04.s")
+extern f32 D_800EB4C0;
+extern s32 D_80192458;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098DE0.s")
+void func_80098C04(Vec3f* arg0, s32 arg1, s8 arg2) {
+    struct UnkStruct_801CEFF8* temp_s1;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098E3C.s")
+    switch (arg2) {                                 /* irregular */
+    case 1:
+        temp_s1 = &D_801CEFF8[arg1];
+        func_80098574(arg0, arg0, (s32) temp_s1->unk10);
+        arg0->x += temp_s1->vec.x;
+        arg0->y = (((arg0->y + temp_s1->vec.y) - D_80192458) * D_800EB4C0) + D_80192458;
+        arg0->z += temp_s1->vec.z;
+        return;
+    case 3:
+        temp_s1 = &D_801CEFF8[arg1];
+        func_80098574(arg0, arg0, (s32) temp_s1->unk10);
+        arg0->x += temp_s1->vec.x;
+        arg0->y += (f32) D_80192458;
+        arg0->z += temp_s1->vec.z;
+        return;
+    case 2:
+        temp_s1 = &D_801CEFF8[arg1];
+        func_80098644(arg0, arg0, (s32) temp_s1->unkC);
+        func_80098574(arg0, arg0, (s32) temp_s1->unk10);
+        arg0->x += temp_s1->vec.x;
+        arg0->y += temp_s1->vec.y;
+        arg0->z += temp_s1->vec.z;
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098E70.s")
+void func_80098DE0(Vec3f *vec) {
+    func_80098714(&vec->x, 0.0f, 0.05f);
+    func_80098714(&vec->y, 0.0f, 0.05f);
+    func_80098714(&vec->z, 0.0f, 0.05f);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098FF8.s")
+void Math_Vec3f_Substract(Vec3f *dest, Vec3f *vec1, Vec3f *vec2) {
+    dest->x = vec1->x - vec2->x;
+    dest->y = vec1->y - vec2->y;
+    dest->z = vec1->z - vec2->z;
+}
 
+void func_80098E70(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, s32 arg3) {
+    if (D_801CEAA6[D_800E5138] != 0) {
+        if (D_801CEAA4[D_800E5138] == 0) {
+            Math_Vec3f_Substract(&D_801CEBE0[D_800E5138].unkC, arg0 + 1, arg1);
+            Math_Vec3f_Substract(&D_801CEBE0[D_800E5138].unk0, arg0, arg2);
+        } else {
+            Math_Vec3f_Substract(&D_801CEBE0[D_800E5138].unk30, arg0 + 1, arg1);
+            Math_Vec3f_Substract(&D_801CEBE0[D_800E5138].unk24, arg0, arg2);
+        }
+        D_801CEAA6[D_800E5138] = 0;
+    }
+    func_80098DE0(&D_801CEBE0[D_800E5138].unkC);
+    func_80098DE0(&D_801CEBE0[D_800E5138].unk0);
+    func_80098DE0(&D_801CEBE0[D_800E5138].unk30);
+    func_80098DE0(&D_801CEBE0[D_800E5138].unk24);
+}
+
+void func_80098FF8(Vec3f* arg0, Vec3f* arg1, f32* arg2, f32* arg3, f32* arg4) {
+    f32 x;
+    f32 y;
+    f32 z;
+    
+    x = arg1->x - arg0->x;
+    y = arg1->y - arg0->y;
+    z = arg1->z - arg0->z;
+    
+    *arg2 = sqrtf(SQ(x) + SQ(y) + SQ(z));
+    *arg3 = func_801ED154(y, sqrtf(SQ(x) + SQ(z)));
+    *arg4 = func_801ED154(x, z);
+}
+
+#ifdef NON_EQUIVALENT
+void func_800990A8(Vec3f* arg0, Vec3f* arg1, f32 arg2, f32 arg3, f32 arg4) {
+    s32 temp_f10;
+    s32 temp_f4;
+
+    temp_f10 = (s32)((arg4 / 360.0f) * 4096.0f);
+    temp_f4 = (s32)((arg3 / 360.0f) * 4096.0f);
+
+    arg1->x += (SIN(temp_f10) * (arg3 * COS(temp_f4)));
+    arg1->y = arg0->y + (SIN(temp_f4) * arg2);
+    arg1->z = arg0->z + (COS(temp_f10) * (arg2 * COS(temp_f4)));
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800990A8.s")
+#endif
 
+#ifdef NON_MATCHING
+void func_8009917C(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3) {
+    Vec3f sp24;
+    
+    s32 temp_f10;    
+    s32 temp_f10_3;
+    
+    
+
+    Math_Vec3f_Copy(&sp24, arg1);
+    
+    temp_f10 = (s32) ((arg3->x / 360.0f) * 4096.0f);
+    
+    sp24.y =  -((arg2->z * COS(temp_f10)) - (SIN(temp_f10) * arg2->y));
+    
+    temp_f10 = (s32) ((arg3->x / 360.0f) * 4096.0f);
+    
+    sp24.z = (COS(temp_f10)  * arg2->y) + (arg2->z * SIN(temp_f10));
+    
+    temp_f10 = (s32) ((arg3->y / 360.0f) * 4096.0f);
+    
+    arg0->x = (COS(temp_f10) *  arg2->x) + (arg1->x + (sp24.y * SIN(temp_f10)));
+    arg0->y = sp24.z + arg1->y;
+    
+    temp_f10 = (s32) ((arg3->y / 360.0f) * 4096.0f);
+    arg0->z = (arg1->z + (sp24.y * COS(temp_f10))) - (SIN(temp_f10) *  arg2->x);
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009917C.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009934C.s")
 
@@ -228,8 +505,8 @@ void func_8009B4AC(f32* arg0) {
 }
 
 void func_8009B530(s32 arg0) {
-    func_800984F4(&D_801CEC70, 56.0f, 50.0f, -238.0f);
-    func_800984F4(&D_801CEC88, -100.0f, -80.0f, -50.0f);
+    Math_Vec3f_Set(&D_801CEC70, 56.0f, 50.0f, -238.0f);
+    Math_Vec3f_Set(&D_801CEC88, -100.0f, -80.0f, -50.0f);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009B57C.s")
@@ -369,14 +646,14 @@ f32 func_8009D4DC(f32 arg0, f32 arg1) {
     return SQ(arg0) + SQ(arg1);
 }
 
-f32 func_8009D4F0(f32 arg0) {
-    while (arg0 > 180.0f) {
-        arg0 -= 360.0f;
+f32 Math_Normalize_Angle(f32 x) {
+    while (x > 180.0f) {
+        x -= 360.0f;
     }
-    while (arg0 < -180.0f) {
-        arg0 += 360.0f;
+    while (x < -180.0f) {
+        x += 360.0f;
     }
-    return arg0;
+    return x;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009D564.s")

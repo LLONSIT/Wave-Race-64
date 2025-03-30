@@ -98,6 +98,12 @@ typedef struct Vec3f {
     /* 0x8 */ f32 z;
 } Vec3f; // size = 0xC
 
+typedef struct Vec3s {
+    /* 0x0 */ s16 x;
+    /* 0x4 */ s16 y;
+    /* 0x8 */ s16 z;
+} Vec3s; // size = 0x8
+
 struct UnkStruct_800E6DD0 {
     f32 unk0;
     f32 unk4;
@@ -201,12 +207,20 @@ struct UnkStruct_801C3C60 {
 struct UnkStruct_80192690 {
     /* 0x0000 */ char pad0[0x44];
     /* 0x0044 */ f32 unk44;
-    /* 0x0048 */ char pad48[4];
+    /* 0x0048 */ f32 unk48;
     /* 0x004C */ f32 unk4C;
-    /* 0x0050 */ char pad50[0xB40]; /* maybe part of unk4C[0x2D1]? */
+    /* 0x0050 */ char pad50[0x1C];                  /* maybe part of unk4C[8]? */
+    /* 0x006C */ f32 unk6C;
+    /* 0x0070 */ f32 unk70;
+    /* 0x0074 */ f32 unk74;
+    /* 0x0078 */ char pad78[0xB00];                 /* maybe part of unk74[0x2C1]? */
+    /* 0x0B78 */ f32 unkB78;                        /* inferred */
+    /* 0x0B7C */ f32 unkB7C;                        /* inferred */
+    /* 0x0B80 */ f32 unkB80;                        /* inferred */
+    /* 0x0B84 */ char padB84[0xC];                  /* maybe part of unkB80[4]? */
     /* 0x0B90 */ f32 unkB90;
-    /* 0x0B94 */ char padB94[0xB84]; /* maybe part of unkB90[0x2E2]? */
-};
+    /* 0x0B94 */ char padB94[0xB84];                /* maybe part of unkB90[0x2E2]? */
+};                                                  /* size = 0x1718 */
 
 struct UnkStruct_80088B00 {
     f32 unk0;
@@ -299,4 +313,10 @@ typedef struct GfxPool {
     /* 0x00C00*/ char pad_0C00[0x12FE8];
 } GfxPool; // size = 0x18FE8
 
+struct UnkStruct_801CEFF8 {
+    /* 0x00 */ Vec3f vec;
+    /* 0x0C */ f32 unkC;                            /* inferred */
+    /* 0x10 */ f32 unk10;                           /* inferred */
+    /* 0x14 */ char pad14[4];
+};         
 #endif /* STRUCTS_H */

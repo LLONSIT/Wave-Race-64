@@ -1,6 +1,6 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B4DD0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/prepare_reverb_ring_buffer.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B5064.s")
 
@@ -16,9 +16,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B59A8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/synthesis_process_one_note.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/synthesis_process_note.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B67EC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/load_wave_samples.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B68A4.s")
 
