@@ -118,7 +118,19 @@ void func_8007AEFC(UnkStruct_8007AEFC* arg0, UnkStruct_8007AEFC* arg1) {
     arg0->unk2 = func_8007AE30(sp1C & 0x1F);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007AF78.s")
+void func_8007AF78(UnkStruct_func_8007AF78_1* arg0, UnkStruct_func_8007AF78_2* arg1) {
+    s32 temp_t3;
+    unsigned char new_var;
+    temp_t3 = arg0->unk0;
+    arg1->unk0 = (s8) (((temp_t3 >> 0x10) & 0xFFFF) + (arg0->unk7 << 5));
+    new_var = temp_t3 >> 8;
+    arg1->unk1 = (s8) new_var;
+    new_var = temp_t3;
+    arg1->unk2 = new_var ^ 0;
+    func_8007AE8C(&arg1->unk3, &arg0->unk10, arg1, arg0);
+    arg1->unk3 = (arg1->unk3 ^ (arg0->unkB << 7));
+    arg1->unk5 = arg0->unkC;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007AFF4.s")
 

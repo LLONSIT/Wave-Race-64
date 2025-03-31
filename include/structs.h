@@ -330,5 +330,36 @@ typedef struct UnkStruct_8007B2BC {
     char unk1;
     char unk2;
 }UnkStruct_8007B2BC;
+typedef struct UnkStruct_func_8007AF78_1
+{
+  s32 unk0;
+  u8 unk4;
+  u8 unk5;
+  u8 unk6;
+  u8 unk7;
+  u8 unk8;
+  u8 unk9;
+  u8 unkA;
+  u8 unkB;
+  s32 unkC;
+  u8 unk10;
+} UnkStruct_func_8007AF78_1;
+
+typedef struct UnkStruct_func_8007AF78_2
+{
+  u8 unk0;
+  u8 unk1;
+  u8 unk2;
+  u8 unk3;
+  u8 unk4;
+  u8 unk5;
+  u8 unk6;
+  u8 unk7;
+  u8 unk8;
+  u8 unk9;
+  u8 unkA;
+  u8 unkB;
+  s32 unkC;
+} UnkStruct_func_8007AF78_2;
 
 #endif /* STRUCTS_H */
