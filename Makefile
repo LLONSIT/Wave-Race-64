@@ -77,6 +77,8 @@ XGCC     = mips64-elf-gcc
 
 GREP     = grep -rl
 
+N_THREADS ?= $(shell nproc)
+
 #For segments without GLOBAL_ASM
 
 USE_QEMU_IRIX ?= 0
@@ -198,6 +200,11 @@ assets:
 	@$(TORCH) modding export $(TARGET).z64
 
 splat: $(SPLAT)
+
+init: splat tools
+	@$(MAKE) clean
+	@make extract
+	@make -j $(N_THREADS)
 
 extract: splat tools
 	rm -rf asm
