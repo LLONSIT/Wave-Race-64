@@ -400,4 +400,14 @@ void func_80094ABC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094ACC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094FE8.s")
+void func_80094FE8(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 0;
+    D_801CE638 = 0x11;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 1;
+}
