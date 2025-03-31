@@ -402,7 +402,12 @@ void func_8009A04C(s32 arg0, s16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009A2E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009A404.s")
+void func_8009A404(char arg0, s16 arg1) {
+    D_801CEAA4[D_800E5138] = arg0;
+    D_801CEA94[D_800E5138] = arg1;
+    D_801CEA98[D_800E5138] = 0x4000;
+    func_800988D8(D_800E5138);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009A460.s")
 

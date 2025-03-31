@@ -196,7 +196,6 @@ void func_8009BDE4(void);
 void func_800984F4(void*, f32, f32, f32);
 void func_80098AC4(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4);
 // void func_80098AC4(s32, s32, s32, s32, s32);
-void func_8009A404(s32, s32);
 void func_8009B650(void*, f32, f32);
 void func_8009AA24(void* arg0); // Unk pointer type
 void func_8009AD3C(void);
@@ -212,6 +211,6 @@ void func_800C1DEC();
 void func_800988D8(s32);
 f32 func_800A6628(s32, f32, f32);
 void func_8009A97C(s32 arg0);
-void func_8009A404(s32, s32);
+void func_800988D8(s32);
 
 #endif /*FUNCTIONS_H*/
