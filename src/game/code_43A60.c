@@ -41,7 +41,6 @@ void func_80088EA0(void) {
 }
 
 #ifdef NON_MATCHING
-
 void func_80088EA8(void) {
     s32 var_s4;
     s32 var_s6;

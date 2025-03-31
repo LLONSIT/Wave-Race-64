@@ -40,5 +40,5 @@ jobs:
       run: make extract; make
 
     - name: Upload progress to Discord
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       run: python3 tools/upload_progress.py --discord_url ${{ secrets.DISCORD_URL }}
