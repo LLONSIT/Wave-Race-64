@@ -214,5 +214,6 @@ void func_8009A97C(s32 arg0);
 void func_800988D8(s32);
 void func_8009A520(s32 arg0);
 void func_800988D8(s32); 
+void func_8009A04C(s32, s16);
 
 #endif /*FUNCTIONS_H*/

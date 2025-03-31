@@ -467,7 +467,9 @@ void func_8009A7A8(f32* arg0) {
     func_80099A00(arg0, &D_800E53BC, &D_800E53DC, D_801C1F90);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009A818.s")
+void func_8009A818(s32 arg0) {
+    func_8009A04C(D_800E5138, 5);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009A844.s")
 

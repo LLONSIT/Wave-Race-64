@@ -265,5 +265,6 @@ extern u16 D_801CEA94[];
 extern int D_800E5138;
 extern s16 D_801CEA98[];
 extern s32 D_800E5138;
+extern s32 D_800E5138;
 
 #endif /* VARIABLES_H */
