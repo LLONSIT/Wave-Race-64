@@ -3,6 +3,7 @@
 #include "macros.h"
 #include "variables.h"
 #include "functions.h"
+#include "os_vi.h"
 
 // TODO: Classify by .bss, .data etc..
 extern OSTask* second_task;
@@ -188,14 +189,14 @@ void* idle_thread(void* entry) {
     osViBlack(TRUE);
     osViSwapBuffer(D_801542C0[1]);
 
-    while (osViGetCurrentFramebuffer() != D_801542C0[1]) {
+    while ((u32) osViGetCurrentFramebuffer() != (u32) D_801542C0[1]) {
         ;
     }
 
     func_800980D0(D_801542C0[0]);
     osViSwapBuffer((void*) D_801542C0[0]);
 
-    while (osViGetCurrentFramebuffer() != D_801542C0[0]) {
+    while ((u32) osViGetCurrentFramebuffer() != (u32) D_801542C0[0]) {
         ;
     }
 

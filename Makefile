@@ -77,6 +77,8 @@ XGCC     = mips64-elf-gcc
 
 GREP     = grep -rl
 
+N_THREADS ?= $(shell nproc)
+
 #For segments without GLOBAL_ASM
 
 USE_QEMU_IRIX ?= 0
@@ -135,7 +137,7 @@ VERIFY = verify
 CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn  -nostdinc -g0
 CFLAGS += $(DEFINES)
 # ignore compiler warnings about anonymous structs
-CFLAGS += -woff 649,838
+CFLAGS += -woff 624,649,838,712,516,513,596,564,594,709,807
 CFLAGS += $(INCLUDE_CFLAGS)
 
 CHECK_WARNINGS := -Wall -Wextra -Wno-format-security -Wno-unknown-pragmas -Wunused-function -Wno-unused-parameter -Wno-unused-variable -Wno-missing-braces -Wno-int-conversion
@@ -198,6 +200,11 @@ assets:
 	@$(TORCH) modding export $(TARGET).z64
 
 splat: $(SPLAT)
+
+init: splat tools
+	@$(MAKE) clean
+	@make extract
+	@make -j $(N_THREADS)
 
 extract: splat tools
 	rm -rf asm

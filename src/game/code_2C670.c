@@ -30,12 +30,12 @@ static const char devstr2[] = "Error: number of buoy3\n";
 void func_80075274(void) {
     func_80071E70();
     if (D_801CE638 != 21) {
-        func_800735EC(&D_801AEE20, D_801BB120);
+        func_800735EC((struct_801AEE20**) &D_801AEE20, D_801BB120);
         if (D_801BB124 != 0) {
-            func_800735EC(&D_801B2F20, D_801BB124);
+            func_800735EC((struct_801AEE20**) &D_801B2F20, D_801BB124);
         }
         if (D_801BB128 != 0) {
-            func_800735EC(&D_801B7020, D_801BB128);
+            func_800735EC((struct_801AEE20**) &D_801B7020, D_801BB128);
         }
         func_80073E6C();
         func_800744EC();

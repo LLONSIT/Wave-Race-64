@@ -122,6 +122,7 @@ if __name__ == "__main__":
         rom_data = f.read()
     
     target_mio0_offsets = [
+        0x1AE660,
         0x1D11D0,
         0x1E5860,
         0x1EFCF0,

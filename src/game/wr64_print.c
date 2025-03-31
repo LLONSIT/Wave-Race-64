@@ -100,18 +100,18 @@ void Str_Itoaw(char* str, s32 num, s32 width) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/wr64_print/func_8007AAAC.s")
 
-void func_8007AD40(Gfx** gDisplayListHead, s32 arg1, s32 arg2, s32 arg3) {
+void func_8007AD40(Gfx** gdl, s32 arg1, s32 arg2, s32 arg3) {
     s32 pad;
     char buf[60];
 
     Str_Itoa(buf, arg3);
-    func_8007AAAC(gDisplayListHead, arg1, arg2, buf);
+    func_8007AAAC(gdl, arg1, arg2, buf);
 }
 
-void func_8007AD84(Gfx** gDisplayListHead, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void func_8007AD84(Gfx** gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 pad;
     char buf[60];
 
     Str_Itoaw(buf, arg3, arg4);
-    func_8007AAAC(gDisplayListHead, arg1, arg2, buf);
+    func_8007AAAC(gdl, arg1, arg2, buf);
 }
