@@ -280,31 +280,30 @@ Gfx* func_80093AFC(Gfx* GfxPtr) {
     return GfxPtr;
 }
 
-Gfx* func_80093C44(Gfx* gDisplayListHead) {
+Gfx* func_80093C44(Gfx* gdl) {
     size_t i;
 
-    gSPClearGeometryMode(gDisplayListHead++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
-                                                 G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH |
-                                                 0xFFE0CDF8);
+    gSPClearGeometryMode(gdl++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
+                                    G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | 0xFFE0CDF8);
 
-    gSPSetGeometryMode(gDisplayListHead++, 4);
-    gSPTexture(gDisplayListHead++, 0, 0, 0, G_TX_RENDERTILE, G_OFF);
-    gDPPipeSync(gDisplayListHead++);
-    gDPSetCycleType(gDisplayListHead++, G_CYC_1CYCLE | 0x300000);
-    gDPSetCombineMode(gDisplayListHead++, G_CC_DECALRGBA, G_CC_DECALRGBA);
-    gDPSetRenderMode(gDisplayListHead++, G_RM_NOOP, G_RM_NOOP2);
-    gDPSetAlphaCompare(gDisplayListHead++, G_AC_NONE);
-    gDPSetScissor(gDisplayListHead++, G_SC_NON_INTERLACE, 0, 0, 319, 239);
+    gSPSetGeometryMode(gdl++, 4);
+    gSPTexture(gdl++, 0, 0, 0, G_TX_RENDERTILE, G_OFF);
+    gDPPipeSync(gdl++);
+    gDPSetCycleType(gdl++, G_CYC_1CYCLE | 0x300000);
+    gDPSetCombineMode(gdl++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+    gDPSetRenderMode(gdl++, G_RM_NOOP, G_RM_NOOP2);
+    gDPSetAlphaCompare(gdl++, G_AC_NONE);
+    gDPSetScissor(gdl++, G_SC_NON_INTERLACE, 0, 0, 319, 239);
 
     for (i = 0; i < 3; i++) {
-        gDPPipeSync(gDisplayListHead++);
-        gDPSetColorImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, VIRTUAL_TO_PHYSICAL2(D_801542C0[i]));
+        gDPPipeSync(gdl++);
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, VIRTUAL_TO_PHYSICAL2(D_801542C0[i]));
 
-        gDPSetFillColor(gDisplayListHead++, 0x10001);
-        gDPFillRectangle(gDisplayListHead++, 0, 0, 319, 239);
+        gDPSetFillColor(gdl++, 0x10001);
+        gDPFillRectangle(gdl++, 0, 0, 319, 239);
     }
 
-    return gDisplayListHead;
+    return gdl;
 }
 
 Gfx* func_80093DBC(Gfx* gfxPtr, u16 arg1, u16 arg2, u16 arg3) {

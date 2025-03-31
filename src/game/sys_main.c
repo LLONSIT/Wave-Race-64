@@ -126,16 +126,16 @@ void* func_80046DA0(void* entry) {
     D_8015198C = D_80151988;
     D_80151990 = D_8015198C + ALIGN16(D_106FB70 - D_1008290_2);
 
-    D_801519CC = osVirtualToPhysical((u8*)0x802C5800);
+    D_801519CC = osVirtualToPhysical((u8*) 0x802C5800);
     D_801519D0 = D_801519CC + 0x11000;
 
-    D_801519BC = osVirtualToPhysical((u8*)0x802D6800);
+    D_801519BC = osVirtualToPhysical((u8*) 0x802D6800);
     D_801519C0 = D_801519BC + 0x40000;
 
-    D_801519C4 = osVirtualToPhysical((u8*)0x802D6800) + 0x30000;
+    D_801519C4 = osVirtualToPhysical((u8*) 0x802D6800) + 0x30000;
     D_801519C8 = D_801519C4 + 0x10000;
 
-    D_801519B4 = osVirtualToPhysical((u8*)0x80316800);
+    D_801519B4 = osVirtualToPhysical((u8*) 0x80316800);
     D_801519B8 = D_801519B4 + 0x79000;
 
     D_80151994 = osVirtualToPhysical(&D_8011F820);
@@ -147,16 +147,16 @@ void* func_80046DA0(void* entry) {
     D_801519AC = D_8015197C;
     D_801519B0 = D_80151980;
 
-    D_801519D4 = (u32)(osVirtualToPhysical((void*)0x8029A200)
-      - (D_80151970 + ALIGN16(D_1008290 - D_1000000) + ALIGN16(D_106FB70 - D_1008290_2)));
+    D_801519D4 = (u32) (osVirtualToPhysical((void*) 0x8029A200) -
+                        (D_80151970 + ALIGN16(D_1008290 - D_1000000) + ALIGN16(D_106FB70 - D_1008290_2)));
 
     Load_Codeseg();
 
-    game_dma_copy((u8*)codeseg_ROM_END, (u8*)D_80151984, ALIGN16(D_FE320 - codeseg_ROM_END));
-    game_dma_copy((u8*)D_FE320, (u8*)D_8015198C, ALIGN16(D_165C00 - D_FE320));
+    game_dma_copy((u8*) codeseg_ROM_END, (u8*) D_80151984, ALIGN16(D_FE320 - codeseg_ROM_END));
+    game_dma_copy((u8*) D_FE320, (u8*) D_8015198C, ALIGN16(D_165C00 - D_FE320));
 
     D_8011F8E0 = 0;
-    
+
     D_8015194C = 2;
     D_80151948 = 0;
     D_80151950 = 1;
@@ -195,11 +195,10 @@ void* func_80046DA0(void* entry) {
 
         osRecvMesg(&D_80154118, D_8015195C, OS_MESG_BLOCK);
 
-        while (osDpGetStatus() & 0x170) {
-        }
+        while (osDpGetStatus() & 0x170) {}
 
         if ((D_801CE634 == 6) && (D_801CE63C != 0)) {
-            game_dma_copy((u8*)D_FE320, (u8*)D_8015198C, ALIGN16(D_165C00 - D_FE320));
+            game_dma_copy((u8*) D_FE320, (u8*) D_8015198C, ALIGN16(D_165C00 - D_FE320));
         }
 
         if (D_801CE63C != 0) {
@@ -214,9 +213,9 @@ void* func_80046DA0(void* entry) {
         func_80046C30(D_80151940);
 
         if (D_800DAB1C == 2) {
-            temp_v1 = (u32*)D_801542C0[D_8015194C] + 38399;
-            temp_v0 = (u32*)D_801542C0[3] + 38399;
-            for (; (u32)temp_v0 >= (u32)D_801542C0[3]; --temp_v0, --temp_v1) {
+            temp_v1 = (u32*) D_801542C0[D_8015194C] + 38399;
+            temp_v0 = (u32*) D_801542C0[3] + 38399;
+            for (; (u32) temp_v0 >= (u32) D_801542C0[3]; --temp_v0, --temp_v1) {
                 *temp_v0 = *temp_v1;
             }
         }
@@ -245,9 +244,8 @@ void* func_80046DA0(void* entry) {
                     osViSetMode(D_800E8BD0);
                 }
 
-                osViSetSpecialFeatures(
-                    OS_VI_GAMMA_OFF | OS_VI_GAMMA_DITHER_ON | OS_VI_DIVOT_OFF | OS_VI_DITHER_FILTER_ON
-                );
+                osViSetSpecialFeatures(OS_VI_GAMMA_OFF | OS_VI_GAMMA_DITHER_ON | OS_VI_DIVOT_OFF |
+                                       OS_VI_DITHER_FILTER_ON);
             }
             osViSwapBuffer(D_801542C0[D_8015194C]);
         }
