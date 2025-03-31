@@ -348,7 +348,19 @@ Gfx* func_80093F78(Gfx* gfxPtr) {
     return gfxPtr;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094088.s")
+s32 func_80094088(u32 arg0) {
+    s32 var_v1;
+    s32 var;
+
+    var_v1 = arg0 >> 0x18;
+    if (var_v1 >= 0x10) {
+        var_v1 = 0;
+    }
+
+    var = D_801CE6B0[var_v1] + (arg0 & 0xFFFFFF) + 0x80000000;
+
+    return var;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800940C4.s")
 
