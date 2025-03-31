@@ -837,7 +837,22 @@ void func_800A93C8(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AB25C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AB890.s")
+void func_800AB890(s32 arg0) {
+    s32 temp_v1;
+    StructAB90* temp_v0;
+
+    if ((D_801CE650 == 3) && (D_801CE624 == -1)) {
+        temp_v0 = (StructAB90*) ((arg0 * 0xBC) + (u32) &D_801CF060);
+
+        if (temp_v0->unk8 == 2) {
+            temp_v0->unk78 = (s32) (temp_v0->unk78 + 1);
+        } else if (temp_v0->unk8 == 1) {
+            temp_v0->unk74 = 1;
+            temp_v0->unk78 = (s32) (temp_v0->unk78 + 1);
+            func_800A52D8(arg0, 200.0f);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AB92C.s")
 

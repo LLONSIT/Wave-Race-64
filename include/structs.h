@@ -379,5 +379,15 @@ typedef struct Struct801926D8 {
     s32 unk0;
     char pad[0x1714];
 } Struct801926D8;
+typedef struct StructAB90{
+    s32 unk0;       // +0x00
+    s32 unk4;       // +0x04
+    s32 unk8;       // +0x08
+    u8 pad0C[0x68 - 0x0C]; // Padding up to offset 0x68
+    s32 unk68;      // +0x68 (optional, in case needed)
+    u8 pad6C[0x74 - 0x6C]; // Padding to 0x74
+    s32 unk74;      // +0x74
+    s32 unk78;      // +0x78
+} StructAB90;
 
 #endif /* STRUCTS_H */
