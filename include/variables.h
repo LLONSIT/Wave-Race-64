@@ -38,7 +38,7 @@ extern s32 D_801CE644;
 extern s32 D_801CE620;
 extern OSTask* first_task;
 extern s32 D_801542B8;
-extern Gfx* D_1000000;
+extern Gfx D_1000000[];
 extern s32 D_800D45E4;
 extern u8* D_800D45E8;
 extern u8* D_800D45F0;
