@@ -307,7 +307,7 @@ Gfx* func_80093C44(Gfx* gDisplayListHead) {
     return gDisplayListHead;
 }
 
-void* func_80093DBC(Gfx* gfxPtr, u16 arg1, u16 arg2, u16 arg3) {
+Gfx* func_80093DBC(Gfx* gfxPtr, u16 arg1, u16 arg2, u16 arg3) {
     s32 i;
 
     gSPClearGeometryMode(gfxPtr++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
@@ -331,7 +331,22 @@ void* func_80093DBC(Gfx* gfxPtr, u16 arg1, u16 arg2, u16 arg3) {
     return gfxPtr;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80093F78.s")
+Gfx* func_80093F78(Gfx* gfxPtr) {
+    gSPClearGeometryMode(gfxPtr++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
+                                     G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | 0xFFE0CDF8);
+    gSPTexture(gfxPtr++, 0, 0, 0, G_TX_RENDERTILE, G_OFF);
+    gDPPipeSync(gfxPtr++);
+    gDPSetCycleType(gfxPtr++, G_CYC_FILL);
+    gDPSetCombineMode(gfxPtr++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+    gDPSetRenderMode(gfxPtr++, G_RM_NOOP, G_RM_NOOP2);
+    gDPSetAlphaCompare(gfxPtr++, G_AC_NONE);
+    gDPSetScissor(gfxPtr++, G_SC_NON_INTERLACE, 0, 0, 319, 239);
+    gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, (s32) (D_801542C0[D_80151948] + 0x80000000));
+    gDPSetFillColor(gfxPtr++, 0x00010001);
+    gDPFillRectangle(gfxPtr++, 0, 0, 319, 239);
+
+    return gfxPtr;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094088.s")
 
