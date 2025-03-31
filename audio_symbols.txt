@@ -99,5 +99,11 @@ init_sequence_players = 0x800BF1F4; //defined:true
 
 alSeqFileNew = 0x800CA908; //defined:true
 
+// synthesis.c
+prepare_reverb_ring_buffer = 0x800B4DD0;
+load_wave_samples = 0x800B67EC;
+
+gSynthesisReverbs = 0x80038110;
+
 aspMainTextStart = 0x800D37B0; //name_end:aspMainTextEnd
 aspMainDataStart = 0x800EEB10; //name_end:aspMainDataEnd

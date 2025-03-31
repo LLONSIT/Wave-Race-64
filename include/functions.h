@@ -1,7 +1,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 #include <ultra64.h>
-#include "common.h"
+#include "global.h"
 #include "wr64dma.h"
 
 // 0x800B
@@ -188,13 +188,13 @@ void func_i1_802C5900(void);
 void func_800AD3C4(void);
 void func_801ECE50(void);
 void func_801EAF78(void);
-void func_80098514(void* arg0);
+void func_80098514(Vec3f* arg0);
 void func_8009CD50(void);
 void func_8009BE40(s32, void*, void*, f32);
 void func_80099A00(f32*, void*, void*, s32);
 void func_8009BDE4(void);
 void func_800984F4(void*, f32, f32, f32);
-void func_80098AC4(s32, s32, s32, s32, s32);
+void func_80098AC4(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4);
 void func_8009A404(s32, s32);
 void func_8009B650(void*, f32, f32);
 void func_8009AA24(void* arg0); // Unk pointer type
