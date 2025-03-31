@@ -235,5 +235,7 @@ extern u64 gOSYieldData[];
 extern u64 gDramStack[];
 extern u64 gTaskOutputBuffer[];
 extern s32 D_801CE6B0[];
+extern Gfx D_106F8A0[];
+extern RGB short_RGB[];
 
 #endif /* VARIABLES_H */

@@ -382,7 +382,15 @@ s32 func_800941D0(s8* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800948DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800949B8.s")
+Gfx* func_800949B8(Gfx* gdl, s32 arg1) {
+    RGB* temp = &short_RGB[arg1];
+
+    gSPDisplayList(gdl++, D_106F8A0);
+    gDPSetPrimColor(gdl++, 0, 0, temp->r, temp->g, temp->b, 0xFF);
+    gDPFillRectangle(gdl++, 8, 20, 311, 219);
+
+    return gdl;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094A44.s")
 
