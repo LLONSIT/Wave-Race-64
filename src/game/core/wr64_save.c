@@ -108,7 +108,28 @@ s32 func_8007AE30(s32 arg0) {
     return 0;
 }
 
+#if 1
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007AE8C.s")
+#else
+// s32 func_8007ADD0(s8);                              /* extern */
+typedef struct UnkStruct_func_8007AE8C {
+    s8 unk0;
+    s8 unk1;
+    s8 unk2;
+} UnkStruct_func_8007AE8C;
+
+void func_8007AE8C(UnkStruct_func_8007AE8C* arg0, UnkStruct_func_8007AE8C* arg1) {
+    s32 sp1C;
+    s32 sp18;
+    s32 temp_t5;
+
+    sp1C = func_8007ADD0(arg1->unk0);
+    sp18 = func_8007ADD0(arg1->unk1);
+    temp_t5 = func_8007ADD0(arg1->unk2);
+    arg0->unk0 = (((sp1C * 1024) + (sp18 * 32) + temp_t5) >> 8);
+    arg0->unk1 = ((sp1C * 1024) + (sp18 * 32) + temp_t5) & 0xFF;
+}
+#endif
 
 void func_8007AEFC(UnkStruct_8007AEFC* arg0, UnkStruct_8007AEFC* arg1) {
     s32 sp1C = (arg1->unk1 & 0xFF) + ((arg1->unk0 & 0x7F) << 8);

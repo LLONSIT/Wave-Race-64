@@ -375,5 +375,9 @@ typedef struct UnkStruct_801CF060 {
  s16 unk0;
  char pad[0xA0];
 }UnkStruct_801CF060;
+typedef struct Struct801926D8 {
+    s32 unk0;
+    char pad[0x1714];
+} Struct801926D8;
 
 #endif /* STRUCTS_H */
