@@ -77,7 +77,7 @@ void func_800988D8(s32 arg0);
 void func_801FAEA8(void);
 void func_800C6DE0(void);
 void func_8009ADA8(void);
-void func_8009A460(void*, f32*, s32, s32); // TODO: UNK TYPE here
+s32 func_8009A460(void (*arg0)(s32), s32 arg1, s16 arg2, s16 arg3);
 void func_800C53D4(s32, s32);
 void func_800C312C(void);
 void func_8008044C(void);
@@ -191,15 +191,15 @@ void func_801EAF78(void);
 void func_80098514(Vec3f* arg0);
 void func_8009CD50(void);
 void func_8009BE40(s32, void*, void*, f32);
-void func_80099A00(f32*, void*, void*, s32);
-void func_8009BDE4(void);
+void func_80099A00(s32, void*, void*, s32);
+void func_8009BDE4(s32);
 void func_800984F4(void*, f32, f32, f32);
 void func_80098AC4(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4);
 // void func_80098AC4(s32, s32, s32, s32, s32);
 void func_8009B650(void*, f32, f32);
-void func_8009AA24(void* arg0); // Unk pointer type
+void func_8009AA24(s32 arg0); // Unk pointer type
 void func_8009AD3C(s32 arg0);
-void func_8009AD74(void);
+void func_8009AD74(s32);
 void func_8007AE8C(void*, void*, void*, void*);
 s32 func_8008962C(f32, f32, f32, f32*);
 f32 func_8009D4A8(f32, f32);
