@@ -371,7 +371,7 @@ typedef struct StructVarS0{
     char pad[0xA2];
 } StructVarS0; // size = 0xBC
 
-struct UnkStruct_801CF060 {
+typedef struct UnkStruct_801CF060 {
  s16 unk0;
  char pad[0xA0];
 }UnkStruct_801CF060;
