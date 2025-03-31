@@ -158,8 +158,18 @@ void Libc_strncpy(s8* s1, s8* s2, s32 n) {
     while ((n-- > 0) && (*s1++ = *s2++) != '\0') {}
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24270/Libc_strcmp.s")
+int Libc_strcmp(s8 *s, s8 *t) {
+    while (*s == *t) {
+        *s++;
+        *t++;
+        if (*s == '\0') {
+            return 0;
+        }
+    }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24270/func_8006A1CC.s")
+    return *s - *t;
+}
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24270/Libc_strncmp.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_24270/func_8006A264.s")
