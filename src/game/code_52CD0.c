@@ -717,7 +717,19 @@ f32 Math_Normalize_Angle(f32 x) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A9130.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A93C8.s")
+void func_800A93C8(s32 arg0) {
+
+    // This is a an array access:
+    // temp_v0 = (StructVarS0*)((arg0 * 0xBC) + D_801CF060); where 0xBC is the type size and arg0 is the index
+    D_801D0754 = func_8009D4A8(D_801CF060[arg0].unkC - D_801D06BC, D_801CF060[arg0].unk14 - D_801D06C4) / 40.0f;
+    D_801D0758 = 0.0f;
+
+    func_800C1BD8(D_801D0754, D_801D0758);
+
+    if ((D_801CE624 == -1) && (D_801CF060[arg0].unk8 == 1)) {
+        func_800A52D8(arg0, 400.0f); // 400.0f
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A9494.s")
 

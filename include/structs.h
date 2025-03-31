@@ -361,5 +361,19 @@ typedef struct UnkStruct_func_8007AF78_2
   u8 unkB;
   s32 unkC;
 } UnkStruct_func_8007AF78_2;
+typedef struct StructVarS0{
+    s32 unk0;        // 0x00
+    s32 unk4;
+    s32 unk8;
+    f32 unkC;        // 0x0C
+    u8  pad10[4];    // 0x10 – 0x17
+    f32 unk14;       // 0x18
+    char pad[0xA2];
+} StructVarS0; // size = 0xBC
+
+struct UnkStruct_801CF060 {
+ s16 unk0;
+ char pad[0xA0];
+}UnkStruct_801CF060;
 
 #endif /* STRUCTS_H */

@@ -202,5 +202,9 @@ void func_8009AD3C(void);
 void func_8009AD74(void);
 void func_8007AE8C(void*, void*, void*, void*);
 s32 func_8008962C(f32, f32, f32, f32*);
+f32 func_8009D4A8(f32, f32);
+void func_800A52D8(s32, f32);
+void func_800C1BD8(f32, f32);
+void func_800C1DB8(f32, f32);
 
 #endif /*FUNCTIONS_H*/

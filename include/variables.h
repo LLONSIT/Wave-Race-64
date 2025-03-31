@@ -238,5 +238,12 @@ extern s32 D_801CE6B0[];
 extern Gfx D_106F8A0[];
 extern RGB short_RGB[];
 extern f32 D_801C4188;
+extern s16 D_801CE624;
+extern f32 D_801D06BC;
+extern f32 D_801D06C4;
+extern f32 D_801D0754;
+extern f32 D_801D0758;
+extern StructVarS0 D_801D0668[]; // use if defined elsewhere
+extern  StructVarS0 D_801CF060[];
 
 #endif /* VARIABLES_H */
