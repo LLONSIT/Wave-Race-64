@@ -6,7 +6,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_80089C08.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_80089DEC.s")
+void func_80089DEC(void) {
+    func_8008962C(2000.0f, 315.0f, 90.0f, &D_801C4188);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_80089E24.s")
 

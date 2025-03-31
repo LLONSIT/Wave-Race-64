@@ -237,5 +237,6 @@ extern u64 gTaskOutputBuffer[];
 extern s32 D_801CE6B0[];
 extern Gfx D_106F8A0[];
 extern RGB short_RGB[];
+extern f32 D_801C4188;
 
 #endif /* VARIABLES_H */

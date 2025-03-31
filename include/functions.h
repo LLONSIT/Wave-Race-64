@@ -201,5 +201,6 @@ void func_8009AA24(void* arg0); // Unk pointer type
 void func_8009AD3C(void);
 void func_8009AD74(void);
 void func_8007AE8C(void*, void*, void*, void*);
+s32 func_8008962C(f32, f32, f32, f32*);
 
 #endif /*FUNCTIONS_H*/
