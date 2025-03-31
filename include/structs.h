@@ -325,5 +325,59 @@ typedef struct RGB {
     /* 0x2 */ u16 g;
     /* 0x4 */ u16 b;
 } RGB; // size = 0x6
+typedef struct UnkStruct_8007B2BC {
+    char unk0;
+    char unk1;
+    char unk2;
+}UnkStruct_8007B2BC;
+typedef struct UnkStruct_func_8007AF78_1
+{
+  s32 unk0;
+  u8 unk4;
+  u8 unk5;
+  u8 unk6;
+  u8 unk7;
+  u8 unk8;
+  u8 unk9;
+  u8 unkA;
+  u8 unkB;
+  s32 unkC;
+  u8 unk10;
+} UnkStruct_func_8007AF78_1;
+
+typedef struct UnkStruct_func_8007AF78_2
+{
+  u8 unk0;
+  u8 unk1;
+  u8 unk2;
+  u8 unk3;
+  u8 unk4;
+  u8 unk5;
+  u8 unk6;
+  u8 unk7;
+  u8 unk8;
+  u8 unk9;
+  u8 unkA;
+  u8 unkB;
+  s32 unkC;
+} UnkStruct_func_8007AF78_2;
+typedef struct StructVarS0{
+    s32 unk0;        // 0x00
+    s32 unk4;
+    s32 unk8;
+    f32 unkC;        // 0x0C
+    u8  pad10[4];    // 0x10 – 0x17
+    f32 unk14;       // 0x18
+    char pad[0xA2];
+} StructVarS0; // size = 0xBC
+
+typedef struct UnkStruct_801CF060 {
+ s16 unk0;
+ char pad[0xA0];
+}UnkStruct_801CF060;
+typedef struct Struct801926D8 {
+    s32 unk0;
+    char pad[0x1714];
+} Struct801926D8;
 
 #endif /* STRUCTS_H */
