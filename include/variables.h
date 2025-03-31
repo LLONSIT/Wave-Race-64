@@ -199,7 +199,6 @@ extern void* D_800E594C;
 extern void* D_800E5974;
 extern Vec3f D_801CEC70;
 extern Vec3f D_801CEC88;
-extern s32 D_800E5138;
 extern f32* D_801CF058[];
 extern s32 D_800E55CC;
 extern s32 D_800E55EC;
@@ -244,19 +243,15 @@ extern f32 D_801D0754;
 extern f32 D_801D0758;
 extern StructVarS0 D_801D0668[]; // use if defined elsewhere
 extern  StructVarS0 D_801CF060[];
-extern s32 D_800E5138;
-extern s32 D_800E5138;
 extern s32 D_800E531C;
 extern s32 D_800E5344;
 extern s32 D_800E536C;
 extern s32 D_800E5394;
 extern s32 D_801C1F90;
-extern s32 func_8009A520;
 extern s32 D_800E53BC;
 extern s32 D_800E53DC;
 extern s32 D_801C1F90;
 extern s32 func_8009A764;
-extern s32 D_800E5138;
 extern s32 D_800E544C;
 extern s32 D_800E5474;
 extern s32 D_801C1F90;
@@ -269,5 +264,7 @@ extern s32 D_801CE638;
 extern Struct801926D8 D_801932E4[];
 extern s32 D_800E5138;
 extern u16 D_801CEA94[];
+extern int D_800E5138;
+extern s16 D_801CEA98[];
 
 #endif /* VARIABLES_H */

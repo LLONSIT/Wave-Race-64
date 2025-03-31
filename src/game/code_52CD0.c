@@ -409,14 +409,39 @@ void func_8009A404(char arg0, s16 arg1) {
     func_800988D8(D_800E5138);
 }
 
+#if 1
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009A460.s")
+#else
+extern s32 D_800E5138;
+extern s16 D_801CEA98;
+
+s32 func_8009A460(u8 (*arg0)(s32), s32 arg1, s16 arg2, s16 arg3) {
+    s16 temp_v0;
+    s16 new_var2;
+    unsigned char new_var;
+    new_var = 2;
+    new_var = 1;
+    temp_v0 = *((&D_801CEA98) + ((D_800E5138 ^ 0) * new_var));
+    if ((temp_v0 >= arg2) && (((new_var2 = arg3) == (-new_var)) || (new_var2 >= temp_v0))) {
+        arg0(arg1);
+    }
+    return 0;
+}
+#endif
 
 void func_8009A4DC(s32 arg0) {
     func_800988D8(D_800E5138);
     func_80098AC4(1, 1, 1, 1, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009A520.s")
+void func_8009A520(s32 arg0) {
+    int new_var;
+    if (!D_800E5138) {}
+    D_801CEAA6[D_800E5138] = 1;
+    D_801CEA98[D_800E5138] = -0x8000;
+
+    new_var = new_var * 2;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009A554.s")
 
