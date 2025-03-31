@@ -3,13 +3,13 @@
 #include "game.h"
 #include "common.h"
 
-struct UnkStruct_800D9854 {
+typedef struct UnkStruct_800D9854 {
     s32 unk0;
     s32 unk4;
     s32 unk8;
     s32 unkC;
     char pad[0x10];
-};
+} UnkStruct_800D9854;
 
 struct UnkStruct_801C4000 {
     f32 unk0;
@@ -140,9 +140,11 @@ void func_80080630(void) {
 }
 
 void func_80080864(void) {
-    struct UnkStruct_800D9854 sp28;
+    UnkStruct_800D9854 sp28;
 
     sp28 = D_800D9854;
+
+    (void) sp28;
 
     D_801C3C58->unk48 = (func_8004D30C(D_801C3C50->unk44, D_801C3C50->unk4C) - (f32) D_80192458);
 
@@ -1073,7 +1075,7 @@ void func_80085EEC(s32 arg0) {
     if ((D_801CE638 == 0x15) || (gGameModes == GMODE_2P_VS)) {
         D_801C3C54 = &D_801AEE20;
     } else {
-        switch (gCourseID) { /* irregular */
+        switch (gCourseID) {
             case PORT_BLUE:
                 if ((D_801C3C58->unk4 == 1) && (gDifficulty != DIFFICULTY_EXPERT)) {
                     D_801C3C54 = &D_801B2F20;
@@ -1085,6 +1087,7 @@ void func_80085EEC(s32 arg0) {
             case TWILIGHT_CITY:
                 func_80085B78();
                 break;
+
             default:
                 break;
         }
@@ -1154,7 +1157,7 @@ s32 func_800873D4(s32 arg0, s32 arg1) {
     return sqrtf(SQ(temp_f0) + SQ(temp_f2));
 }
 
-void func_80088B00(struct UnkStruct_801C4000*); /* extern */
+void func_80088B00(struct UnkStruct_801C4000*);
 extern s32 D_800D48DC;
 
 void func_80087444(void) {

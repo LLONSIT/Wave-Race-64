@@ -1,4 +1,5 @@
 #include "global.h"
+#include "os_pi.h"
 
 extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
@@ -137,14 +138,14 @@ void func_80097F74(uintptr_t devAddr, s32 vAddr, u32 arg2) {
     u8* var_s0;
     s32 var_s1;
     s32 var_s2;
-    s32 temp_hi;
+    u32 temp_hi;
     s32 temp_lo;
 
     temp_lo = arg2 / 10240U;
     temp_hi = arg2 % 10240U;
 
     sp2C = temp_hi;
-    if ((temp_hi != 0) && (temp_hi < 0x10U)) {
+    if ((temp_hi != 0) && (temp_hi < 0x10)) {
         sp2C = 0x10;
     }
 
