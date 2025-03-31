@@ -146,7 +146,15 @@ void func_8007B1AC(Unkstruct_8007B1AC_arg0* arg0, Unkstruct_8007B1AC_arg1* arg1)
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B220.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B2BC.s")
+void func_8007B2BC(s32 arg0, UnkStruct_8007B2BC* arg1) {
+    if (arg0 < 0) {
+        arg0 = 0xFFFFFF;
+    }
+
+    arg1->unk0 = (s8) (arg0 >> 0x10);
+    arg1->unk1 = (arg0 >> 8) & 0xFF;
+    arg1->unk2 = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B2E4.s")
 

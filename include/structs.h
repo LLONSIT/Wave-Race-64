@@ -325,5 +325,10 @@ typedef struct RGB {
     /* 0x2 */ u16 g;
     /* 0x4 */ u16 b;
 } RGB; // size = 0x6
+typedef struct UnkStruct_8007B2BC {
+    char unk0;
+    char unk1;
+    char unk2;
+}UnkStruct_8007B2BC;
 
 #endif /* STRUCTS_H */
