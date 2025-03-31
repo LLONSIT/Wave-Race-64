@@ -1,11 +1,11 @@
 #include "global.h"
 
 struct UnkStruct_801CEBE0 {
-    /* 0x00 */ Vec3f unk0; /* inferred */
-    /* 0x0C */ Vec3f unkC; /* inferred */
+    /* 0x00 */ Vec3f unk0;
+    /* 0x0C */ Vec3f unkC;
     /* 0x18 */ char pad18[0xC];
-    /* 0x24 */ Vec3f unk24; /* inferred */
-    /* 0x30 */ Vec3f unk30; /* inferred */
+    /* 0x24 */ Vec3f unk24;
+    /* 0x30 */ Vec3f unk30;
     /* 0x3C */ char pad3C[0xC];
 }; /* size = 0x48 */
 
@@ -32,7 +32,7 @@ extern s16 D_801CEFE8[];
 extern s16 D_801CEFEC[];
 extern u8 D_801CEFF0[];
 
-extern f32 func_801ED154(f32, f32); /* extern */
+extern f32 func_801ED154(f32, f32);
 
 f32 Math_Fabs(f32 x) {
     if (x < 0.0f) {
@@ -235,21 +235,23 @@ extern s32 D_80192458;
 void func_80098C04(Vec3f* arg0, s32 arg1, s8 arg2) {
     struct UnkStruct_801CEFF8* temp_s1;
 
-    switch (arg2) { /* irregular */
+    switch (arg2) {
         case 1:
             temp_s1 = &D_801CEFF8[arg1];
             func_80098574(arg0, arg0, (s32) temp_s1->unk10);
             arg0->x += temp_s1->vec.x;
             arg0->y = (((arg0->y + temp_s1->vec.y) - D_80192458) * D_800EB4C0) + D_80192458;
             arg0->z += temp_s1->vec.z;
-            return;
+            break;
+
         case 3:
             temp_s1 = &D_801CEFF8[arg1];
             func_80098574(arg0, arg0, (s32) temp_s1->unk10);
             arg0->x += temp_s1->vec.x;
             arg0->y += (f32) D_80192458;
             arg0->z += temp_s1->vec.z;
-            return;
+            break;
+
         case 2:
             temp_s1 = &D_801CEFF8[arg1];
             func_80098644(arg0, arg0, (s32) temp_s1->unkC);
@@ -257,6 +259,7 @@ void func_80098C04(Vec3f* arg0, s32 arg1, s8 arg2) {
             arg0->x += temp_s1->vec.x;
             arg0->y += temp_s1->vec.y;
             arg0->z += temp_s1->vec.z;
+            break;
     }
 }
 
@@ -316,18 +319,18 @@ void func_800990A8(Vec3f* src, Vec3f* dest, f32 radius, f32 pitch, f32 yaw) {
     dest->z = src->z + ((rad * COS(pitchFixed)) * COS(yawFixed));
 }
 
-// Not sure if this struct is real..
-typedef struct two_vectors {
+// Not sure if this struct is real..|
+typedef struct TwoVectors {
     struct {
         f32 x;
         f32 z;
         f32 y;
     } vec;
     Vec3f vec1;
-} two_vectors;
+} TwoVectors;
 
 void func_8009917C(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3) {
-    two_vectors sp24;
+    TwoVectors sp24;
 
     Math_Vec3f_Copy(&sp24.vec1, arg1);
 
@@ -337,10 +340,10 @@ void func_8009917C(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3) {
         (arg2->z * SIN((s32) ((arg3->x / 360.0f) * 4096.0f))) + (arg2->y * COS((s32) ((arg3->x / 360.0f) * 4096.0f)));
     sp24.vec.x = arg2->x;
 
-    arg0->x = (arg1->x + (sp24.vec.y * gSinTable[((s32) ((arg3->y / 360.0f) * ((float) 4096.0f))) & 0xFFF])) +
-              (gSinTable[(((s32) ((arg3->y / 360.0f) * 4096.0f)) + 0x400) & 0xFFF] * sp24.vec.x);
+    arg0->x = (arg1->x + (sp24.vec.y * SIN((s32) ((arg3->y / 360.0f) * 4096.0f)))) +
+              (COS((s32) ((arg3->y / 360.0f) * 4096.0f)) * sp24.vec.x);
 
-    arg0->y = arg1->y + (sp24.vec.z = sp24.vec.z);
+    arg0->y = arg1->y + (sp24.vec.z = sp24.vec.z); //! FAKE
 
     arg0->z = (arg1->z + (sp24.vec.y * COS((s32) ((arg3->y / 360.0f) * 4096.0f)))) -
               (SIN((s32) ((arg3->y / 360.0f) * 4096.0f)) * sp24.vec.x);
