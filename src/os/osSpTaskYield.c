@@ -1,3 +1,5 @@
-#include "common.h"
+#include "libultra_internal.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/os/osSpTaskYield/osSpTaskYield.s")
+void osSpTaskYield(void) {
+    __osSpSetStatus(SPSTATUS_SET_SIGNAL0);
+}

@@ -1,3 +1,10 @@
-#include "common.h"
+#include "libultra_internal.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/os/osViSwapBuffer/osViSwapBuffer.s")
+extern OSViContext *__osViNext;
+
+void osViSwapBuffer(void *vaddr) {
+    u32 int_disabled = __osDisableInt();
+    __osViNext->buffer = vaddr;
+    __osViNext->unk00 |= 0x10; // TODO: figure out what this flag means
+    __osRestoreInt(int_disabled);
+}
