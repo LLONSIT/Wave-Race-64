@@ -50,7 +50,7 @@ void func_80088EA8(void) {
         D_801C4100[D_801C26C0[var_s4]] = var_s4;
     }
     for (var_s4 = 0; var_s4 < gRiders; var_s4++) {
-        D_801C3C58->unk60 = 1.0f; //???
+        D_801C3C58->unk60 = 1.0f;
     }
     for (var_s4 = 0; var_s4 < gRiders; var_s4++) {
         D_801C3C58 = &D_801C3C60[var_s4];
