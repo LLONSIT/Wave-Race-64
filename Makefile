@@ -207,7 +207,8 @@ extract: splat tools
 
 dependencies: tools
 	@make -C tools
-	@$(PYTHON) -m pip install -r tools/splat/requirements.txt #Installing the splat dependencies
+	@$(PYTHON) -m pip install -r tools/splat/requirements.txt #Install the splat dependencies
+	@$(PYTHON) -m pip install GitPython colour
 
 expected:
 	mkdir -p expected/build

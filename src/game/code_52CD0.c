@@ -108,63 +108,52 @@ s32 func_80098714(f32* arg0, f32 arg1, f32 arg2) {
     return TRUE;
 }
 
-/*
- * Current score: 62.44% (1615)
- * Scratch: https://decomp.me/scratch/x65Bk
- */
-#ifdef NON_EQUIVALENT
 s32 func_80098774(s16* arg0, s16 arg1, s16 arg2) {
-    s16 temp_v0;
+    s16 temp_v0 = *arg0;
 
     if (arg2 == 0) {
         *arg0 = arg1;
     } else {
-        temp_v0 = *arg0 - arg1;
-        *arg0 = (temp_v0 - (temp_v0 / arg2)) + arg1;
+        temp_v0 -= arg1;
+        temp_v0 -= (temp_v0 / arg2);
+        temp_v0 += arg1;
+        *arg0 = temp_v0;
     }
+
     if (arg1 == *arg0) {
         return 0;
     }
     return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098774.s")
-#endif
 
-/*
- * Current score: 97.93% (95)
- * Scratch: https://decomp.me/scratch/x65Bk
- */
-#ifdef NON_MATCHING
 s32 func_80098820(f32* arg0, f32 arg1, f32 arg2) {
-    f32 temp_f0;
+    f32 temp_f0 = arg1 - *arg0;
 
-    temp_f0 = arg1 - *arg0;
     if (arg2 < 0.0f) {
         arg2 = -1.0f * arg2;
     }
 
     if (temp_f0 > 0.0f) {
-        if (((temp_f0 - arg1) - arg2) > 0.0f) {
-            *arg0 = arg1 - (temp_f0);
+        temp_f0 -= arg2;
+        if (temp_f0 > 0.0f) {
+            *arg0 = arg1 - temp_f0;
         } else {
             *arg0 = arg1;
         }
     } else {
-        if ((temp_f0 + arg2) < 0.0f) {
-            *arg0 = arg1 - (temp_f0 + arg2);
+        temp_f0 += arg2;
+        if (temp_f0 < 0.0f) {
+            *arg0 = arg1 - temp_f0;
         } else {
             *arg0 = arg1;
         }
     }
+
     if (arg1 == *arg0) {
         return 0;
     }
     return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80098820.s")
-#endif
 
 void func_800988D8(s32 arg0) {
     D_801CEFE8[arg0] = 0;
@@ -314,21 +303,18 @@ void func_80098FF8(Vec3f* arg0, Vec3f* arg1, f32* arg2, f32* arg3, f32* arg4) {
     *arg4 = func_801ED154(x, z);
 }
 
-#ifdef NON_EQUIVALENT
-void func_800990A8(Vec3f* arg0, Vec3f* arg1, f32 arg2, f32 arg3, f32 arg4) {
-    s32 temp_f10;
-    s32 temp_f4;
+void func_800990A8(Vec3f* src, Vec3f* dest, f32 radius, f32 pitch, f32 yaw) {
+    f32 rad = radius;
+    s32 yawFixed;
+    s32 pitchFixed;
 
-    temp_f10 = (s32) ((arg4 / 360.0f) * 4096.0f);
-    temp_f4 = (s32) ((arg3 / 360.0f) * 4096.0f);
+    yawFixed = (s32) ((yaw / 360.0f) * 4096.0f);
+    pitchFixed = (s32) ((pitch / 360.0f) * 4096.0f);
 
-    arg1->x += (SIN(temp_f10) * (arg3 * COS(temp_f4)));
-    arg1->y = arg0->y + (SIN(temp_f4) * arg2);
-    arg1->z = arg0->z + (COS(temp_f10) * (arg2 * COS(temp_f4)));
+    dest->x = src->x + ((rad * COS(pitchFixed)) * SIN(yawFixed));
+    dest->y = src->y + (rad * SIN(pitchFixed));
+    dest->z = src->z + ((rad * COS(pitchFixed)) * COS(yawFixed));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800990A8.s")
-#endif
 
 // Not sure if this struct is real..
 typedef struct two_vectors {

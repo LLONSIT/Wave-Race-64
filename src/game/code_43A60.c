@@ -21,7 +21,7 @@ struct UnkStruct_801CB058 {
     f32 unk108;
 };
 
-void func_800890B4(void); /* extern */
+void func_800890B4(void);
 
 extern s32 D_800D48DC;
 extern s32 D_801C26C0[];
@@ -41,7 +41,6 @@ void func_80088EA0(void) {
 }
 
 #ifdef NON_MATCHING
-
 void func_80088EA8(void) {
     s32 var_s4;
     s32 var_s6;
@@ -51,7 +50,7 @@ void func_80088EA8(void) {
         D_801C4100[D_801C26C0[var_s4]] = var_s4;
     }
     for (var_s4 = 0; var_s4 < gRiders; var_s4++) {
-        D_801C3C58->unk60 = 1.0f; //???
+        D_801C3C58->unk60 = 1.0f;
     }
     for (var_s4 = 0; var_s4 < gRiders; var_s4++) {
         D_801C3C58 = &D_801C3C60[var_s4];
