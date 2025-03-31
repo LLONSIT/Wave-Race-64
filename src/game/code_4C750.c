@@ -333,7 +333,7 @@ Gfx* func_80093DBC(Gfx* gfxPtr, u16 arg1, u16 arg2, u16 arg3) {
 
 Gfx* func_80093F78(Gfx* gfxPtr) {
     gSPClearGeometryMode(gfxPtr++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
-                                     G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | 0xFFE0CDF8);
+                                       G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | 0xFFE0CDF8);
     gSPTexture(gfxPtr++, 0, 0, 0, G_TX_RENDERTILE, G_OFF);
     gDPPipeSync(gfxPtr++);
     gDPSetCycleType(gfxPtr++, G_CYC_FILL);
