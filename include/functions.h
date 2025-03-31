@@ -76,7 +76,7 @@ void func_80088488(s32 arg0);
 void func_800988D8(s32 arg0);
 void func_801FAEA8(void);
 void func_800C6DE0(void);
-void func_8009ADA8(void);
+void func_8009ADA8(StructADA8* arg0);
 s32 func_8009A460(void (*arg0)(s32), s32 arg1, s16 arg2, s16 arg3);
 void func_800C53D4(s32, s32);
 void func_800C312C(void);

@@ -508,7 +508,26 @@ void func_8009AD3C(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009AD74.s")
 
+#if 1
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009ADA8.s")
+#else
+
+extern s32 D_800D48DC;
+extern s32 D_800E54B0;
+extern s32 D_800E54D0;
+
+extern Struct801926D8 D_801926D8[];
+
+void func_8009ADA8(StructADA8* arg0) {
+    f32 temp_f0;
+
+    func_80098AC4(1, 1, 1, 0, 1);
+    func_8009A460(&func_8009AD14, arg0, 0, 0);
+    func_80099A00(arg0, &D_800E54B0, &D_800E54D0, 0);
+    temp_f0 = arg0->unk4;
+    arg0->unk4 = (((D_801926D8[D_800D48DC].unk0 - temp_f0) * 0.5f) + temp_f0);
+}
+#endif
 
 void func_8009AE6C(s32 arg0) {
     func_8009A404(0x89, 6);
@@ -522,7 +541,7 @@ void func_8009AE94(s32 arg0) {
 }
 
 void func_8009AF14(s32 arg0) {
-    func_8009ADA8();
+    func_8009ADA8(arg0);
     func_8009A460(func_8009AA24, arg0, 30, -1);
     func_8009A460(func_8009AE6C, arg0, 80, 80);
 }
@@ -534,7 +553,7 @@ void func_8009AF14(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009B030.s")
 
 void func_8009B0C8(s32 arg0) {
-    func_8009ADA8();
+    func_8009ADA8(arg0);
     func_8009A460(func_8009AE6C, arg0, 60, 60);
 }
 

@@ -395,5 +395,9 @@ typedef struct UnkStruct_func_8007AE8C {
     s8 unk1;
     s8 unk2;
 } UnkStruct_func_8007AE8C;
+typedef struct StructADA8 {
+    u8 pad0[4];   // padding to offset 0x4
+    f32 unk4;     // accessed at arg0->unk4
+} StructADA8;
 
 #endif /* STRUCTS_H */
