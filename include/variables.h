@@ -246,5 +246,12 @@ extern f32 D_801D0758;
 extern StructVarS0 D_801D0668[]; // use if defined elsewhere
 extern  StructVarS0 D_801CF060[];
 extern s32 D_800E5138;
+extern s32 D_800E5138;
+extern s32 D_800E531C;
+extern s32 D_800E5344;
+extern s32 D_800E536C;
+extern s32 D_800E5394;
+extern s32 D_801C1F90;
+extern s32 func_8009A520;
 
 #endif /* VARIABLES_H */
