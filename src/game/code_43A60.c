@@ -21,7 +21,7 @@ struct UnkStruct_801CB058 {
     f32 unk108;
 };
 
-void func_800890B4(void); /* extern */
+void func_800890B4(void);
 
 extern s32 D_800D48DC;
 extern s32 D_801C26C0[];
