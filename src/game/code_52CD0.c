@@ -749,7 +749,18 @@ void func_800A93C8(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AC184.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AD3C4.s")
+void func_800AD3C4(void) {
+    switch (gCourseID) {
+        case DRAKE_LAKE:
+            func_800C1DEC();
+            break;
+        case PORT_BLUE:
+            func_800C1B98();
+            break;
+        default:
+            break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AD418.s")
 
