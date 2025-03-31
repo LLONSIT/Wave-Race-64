@@ -394,7 +394,9 @@ Gfx* func_800949B8(Gfx* gdl, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094A44.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094ABC.s")
+void func_80094ABC(void) {
+    D_800DAB0C = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094ACC.s")
 
