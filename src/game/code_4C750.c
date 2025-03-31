@@ -364,7 +364,17 @@ s32 func_80094088(u32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800940C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800941D0.s")
+s32 func_800941D0(s8* arg0) {
+    s32 len;
+
+    len = 0;
+
+    while (*arg0++) {
+        len++;
+    }
+
+    return len;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094200.s")
 

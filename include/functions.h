@@ -147,7 +147,7 @@ void func_80048A88(void* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5,
 Gfx* func_801E7C58(Gfx* dList, u32 ulx, u32 uly, u32 lrx, u32 lry, u32 r, u32 g, u32 b, u32 a);
 void func_i4_802C7474(s32);
 void func_i8_802C6FD4(s8* arg0, void* arg1, s32 arg2);
-s32 func_800941D0(void*);
+s32 func_800941D0(s8*);
 void func_800C2FDC(s32);
 void func_800C3034(void);
 void func_800C3044(void);
