@@ -307,15 +307,74 @@ Gfx* func_80093C44(Gfx* gDisplayListHead) {
     return gDisplayListHead;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80093DBC.s")
+Gfx* func_80093DBC(Gfx* gfxPtr, u16 arg1, u16 arg2, u16 arg3) {
+    s32 i;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80093F78.s")
+    gSPClearGeometryMode(gfxPtr++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
+                                       G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | 0xFFE0CDF8);
+    gSPTexture(gfxPtr++, 0, 0, 0, G_TX_RENDERTILE, G_OFF);
+    gDPPipeSync(gfxPtr++);
+    gDPSetCycleType(gfxPtr++, G_CYC_FILL);
+    gDPSetCombineMode(gfxPtr++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+    gDPSetRenderMode(gfxPtr++, G_RM_NOOP, G_RM_NOOP2);
+    gDPSetAlphaCompare(gfxPtr++, G_AC_NONE);
+    gDPSetScissor(gfxPtr++, G_SC_NON_INTERLACE, 8, 20, 310, 218);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094088.s")
+    for (i = 0; i < 3; i++) {
+
+        gDPPipeSync(gfxPtr++);
+        gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, (D_801542C0[i] + 0x80000000));
+        gDPSetFillColor(gfxPtr++, (GPACK_RGBA5551(arg1, arg2, arg3, 1) << 0x10) | GPACK_RGBA5551(arg1, arg2, arg3, 1));
+        gDPFillRectangle(gfxPtr++, 8, 20, 310, 219);
+    }
+
+    return gfxPtr;
+}
+
+Gfx* func_80093F78(Gfx* gfxPtr) {
+    gSPClearGeometryMode(gfxPtr++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
+                                       G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | 0xFFE0CDF8);
+    gSPTexture(gfxPtr++, 0, 0, 0, G_TX_RENDERTILE, G_OFF);
+    gDPPipeSync(gfxPtr++);
+    gDPSetCycleType(gfxPtr++, G_CYC_FILL);
+    gDPSetCombineMode(gfxPtr++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+    gDPSetRenderMode(gfxPtr++, G_RM_NOOP, G_RM_NOOP2);
+    gDPSetAlphaCompare(gfxPtr++, G_AC_NONE);
+    gDPSetScissor(gfxPtr++, G_SC_NON_INTERLACE, 0, 0, 319, 239);
+    gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, (s32) (D_801542C0[D_80151948] + 0x80000000));
+    gDPSetFillColor(gfxPtr++, 0x00010001);
+    gDPFillRectangle(gfxPtr++, 0, 0, 319, 239);
+
+    return gfxPtr;
+}
+
+s32 func_80094088(u32 arg0) {
+    s32 var_v1;
+    s32 var;
+
+    var_v1 = arg0 >> 0x18;
+    if (var_v1 >= 0x10) {
+        var_v1 = 0;
+    }
+
+    var = D_801CE6B0[var_v1] + (arg0 & 0xFFFFFF) + 0x80000000;
+
+    return var;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800940C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800941D0.s")
+s32 func_800941D0(s8* arg0) {
+    s32 len;
+
+    len = 0;
+
+    while (*arg0++) {
+        len++;
+    }
+
+    return len;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094200.s")
 
@@ -323,12 +382,32 @@ Gfx* func_80093C44(Gfx* gDisplayListHead) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800948DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800949B8.s")
+Gfx* func_800949B8(Gfx* gdl, s32 arg1) {
+    RGB* temp = &short_RGB[arg1];
+
+    gSPDisplayList(gdl++, D_106F8A0);
+    gDPSetPrimColor(gdl++, 0, 0, temp->r, temp->g, temp->b, 0xFF);
+    gDPFillRectangle(gdl++, 8, 20, 311, 219);
+
+    return gdl;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094A44.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094ABC.s")
+void func_80094ABC(void) {
+    D_800DAB0C = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094ACC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094FE8.s")
+void func_80094FE8(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 0;
+    D_801CE638 = 0x11;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 1;
+}

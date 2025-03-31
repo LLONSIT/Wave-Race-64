@@ -318,5 +318,12 @@ struct UnkStruct_801CEFF8 {
     /* 0x0C */ f32 unkC;                            /* inferred */
     /* 0x10 */ f32 unk10;                           /* inferred */
     /* 0x14 */ char pad14[4];
-};         
+};
+
+typedef struct RGB {
+    /* 0x0 */ u16 r;
+    /* 0x2 */ u16 g;
+    /* 0x4 */ u16 b;
+} RGB; // size = 0x6
+
 #endif /* STRUCTS_H */
