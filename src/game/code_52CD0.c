@@ -442,7 +442,7 @@ void func_8009A8C8(s32 arg0) {
     func_8009A04C(D_800E5138, 4);
 }
 
-void func_8009A8F4(s32 arg0) {
+void func_8009A8F4(f32* arg0) {
     func_80098AC4(1, 1, 1, 0, 1);
     func_8009A460(&func_8009A764, arg0, 0, 0);
     func_8009A460(&func_8009A8C8, arg0, 0x1D, 0x1D);
@@ -736,7 +736,41 @@ f32 Math_Normalize_Angle(f32 x) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A6628.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A6684.s")
+s32 func_800A6684(s32 arg0) {
+    s32 var_v0;
+
+    if (func_800A6628(arg0, 112.0f, 5108.0f) < D_800EB828) {
+        return 1;
+    }
+    if (func_800A6628(arg0, 3252.0f, 3922.0f) < 1200.0f) {
+        return 1;
+    }
+    if (func_800A6628(arg0, -3520.0f, -85.0f) < D_800EB82C) {
+        return 1;
+    }
+    if (func_800A6628(arg0, 179.0f, -2485.0f) < 1400.0f) {
+        return 1;
+    }
+    if (func_800A6628(arg0, 3063.0f, -1319.0f) < D_800EB830) {
+        return 1;
+    }
+    if (func_800A6628(arg0, 1425.0f, 3603.0f) < 1000.0f) {
+        return 1;
+    }
+    if (func_800A6628(arg0, 1159.0f, 4182.0f) < 1000.0f) {
+        return 1;
+    }
+    if (func_800A6628(arg0, 2441.0f, -5018.0f) < 1000.0f) {
+        return 1;
+    }
+    if (func_800A6628(arg0, 32.0f, -4958.0f) < 1000.0f) {
+        return 1;
+    }
+    if (func_800A6628(arg0, -2511.0f, -4971.0f) < 1000.0f) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A68A4.s")
 

@@ -262,5 +262,8 @@ extern s32 D_800E544C;
 extern s32 D_800E5474;
 extern s32 D_801C1F90;
 extern s32 func_8009A764;
+extern f32 D_800EB828;
+extern f32 D_800EB82C;
+extern f32 D_800EB830;
 
 #endif /* VARIABLES_H */

@@ -210,5 +210,6 @@ void func_800C1DB8(f32, f32);
 void func_800C1B98();
 void func_800C1DEC();
 void func_800988D8(s32);
+f32 func_800A6628(s32, f32, f32);
 
 #endif /*FUNCTIONS_H*/
