@@ -139,7 +139,7 @@ void func_80097F74(u32, s32, u32); // arg1 is confirmed to be s32
 void func_800C6740();
 void Mio0_Decompress(u8*, u8*);
 s32 func_8007AE30(s32);
-void func_8007AE8C(void*, void*, void*, void*);
+//void func_8007AE8C(void*, void*, void*, void*);
 void func_800C37F4(s32, s32);
 void func_800481E0(MF* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
 void func_80048A88(void* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9,
@@ -200,7 +200,8 @@ void func_8009B650(void*, f32, f32);
 void func_8009AA24(s32 arg0); // Unk pointer type
 void func_8009AD3C(s32 arg0);
 void func_8009AD74(s32);
-void func_8007AE8C(void*, void*, void*, void*);
+// void func_8007AE8C(void*, void*, void*, void*);
+void func_8007AE8C(UnkStruct_func_8007AE8C* arg0, UnkStruct_func_8007AE8C* arg1);
 s32 func_8008962C(f32, f32, f32, f32*);
 f32 func_8009D4A8(f32, f32);
 void func_800A52D8(s32, f32);

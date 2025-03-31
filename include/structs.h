@@ -390,4 +390,10 @@ typedef struct StructAB90{
     s32 unk78;      // +0x78
 } StructAB90;
 
+typedef struct UnkStruct_func_8007AE8C {
+    s8 unk0;
+    s8 unk1;
+    s8 unk2;
+} UnkStruct_func_8007AE8C;
+
 #endif /* STRUCTS_H */
