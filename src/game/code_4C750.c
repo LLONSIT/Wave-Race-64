@@ -253,7 +253,51 @@ Gfx* func_80092CF0(Gfx* dList) {
 }
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80093104.s")
+// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80093104.s")
+
+s32 func_80093104(void) {
+    s32 i;
+    s32 result;
+
+    if (D_80154340 == 0) {
+        return 0;
+    }
+
+    D_801CB404 = D_80154330;
+
+    if ((D_801542E2[D_801CB404][0] & 1) == 0) {
+        return 0;
+    }
+
+    if ((gControllerOne[D_801CB404][0] & 0x1000) == 0) {
+        return 0;
+    }
+
+    if (func_800C85C0(&D_801540D0, &D_801CB6C0) != 0) {
+        return 0;
+    }
+
+    if (osPfsInit(&D_801540D0, &D_801CB658, D_801CB404) != 0) {
+        return 0;
+    }
+
+    if (func_800C9E30(&D_801CB658, &D_801CB40C, &D_801CB408) != 0) {
+        return 0;
+    }
+
+    for (i = 0; i < 0x10; i++) {
+        result = func_800C9F60(&D_801CB658, i, &D_801CB418[i << 5]);
+        D_801CB618[i] = result;
+    }
+
+    if (func_800C8C10(&D_801CB658, &D_801CB410) != 0) {
+        return 0;
+    }
+
+    D_801CB410 >>= 8;
+
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_8009328C.s")
 

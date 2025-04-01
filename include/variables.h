@@ -305,5 +305,18 @@ extern void* D_800E5CAC;
 extern void* D_800E5CC0;
 extern s32 D_8011F8E0;
 extern u8 D_801C43F8;
+extern s32 D_80154330;
+extern s32 D_801CB410;
+extern u8 D_80154340;
+extern s32 D_801CB404;
+extern u8 D_801542E2[][4];
+extern u8 D_801CB408[];
+extern u8 D_801CB40C[];
+extern s32 D_801CB410;
+extern u8 D_801CB418[];
+extern s32 D_801CB618[];
+extern u8 D_801CB658[];
+extern u8 D_801CB6C0[];
+extern u16 gControllerOne[][5];
 
 #endif /* VARIABLES_H */

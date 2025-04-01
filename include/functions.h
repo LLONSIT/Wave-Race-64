@@ -219,6 +219,10 @@ void func_8009A04C(s32, s16);
 f32 func_8009AC50(s32, f32*, f32, f32, f32);
 void func_8009AFA0(void* arg0);
 void func_8009BE40(s32, void*, void*, f32);
-
+s32 func_800C85C0(OSMesgQueue*, void*);
+s32 func_800C8C10(void*, s32*);
+s32 func_800C9E30(void*, void*, void*);
+s32 func_800C9F60(void*, s32, void*);
+s32 osPfsInit(OSMesgQueue*, void*, s32);
 
 #endif /*FUNCTIONS_H*/
