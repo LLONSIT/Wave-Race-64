@@ -719,7 +719,9 @@ void func_8009C044(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009C074.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009C0A4.s")
+void func_8009C0A4(s32 arg0) {
+    func_8009BE40(arg0, &D_800E5CD4, &D_800E5D4C, 45.0f);
+}
 
 void func_8009C0D4(s32 arg0) {
     func_8009BE40(arg0, &D_800E5DC4, &D_800E5E0C, 45.0f);

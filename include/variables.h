@@ -295,5 +295,7 @@ extern StructCEC70 D_801CECB8;
 extern struct UnkStruct_801CEFF8 D_801CEFF8[];
 extern s32 D_800E5A3C;
 extern s32 D_800E5A84;
+extern void* D_800E5CD4;
+extern void* D_800E5D4C;
 
 #endif /* VARIABLES_H */
