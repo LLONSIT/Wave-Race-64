@@ -317,7 +317,7 @@ extern u8 D_801CB418[];
 extern s32 D_801CB618[];
 extern u8 D_801CB658[];
 extern u8 D_801CB6C0[];
-extern u16 gControllerOne[][5];
+extern struct Controller_info gControllerOne[];
 extern u16 D_80226F00;
 extern f32 D_80226F08[];
 
