@@ -552,7 +552,13 @@ void func_8009AF64(f32* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009AFA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009B030.s")
+void func_8009B030(s32 arg0) {
+    func_80098AC4(1, 1, 1, 1, 1);
+    func_8009A460(&func_8009AD14, arg0, 0, 0);
+    func_8009A460(&func_8009AF64, arg0, 0, 0);
+    func_8009A460(&func_8009AFA0, arg0, 0, -1);
+    D_801CEC70[2].x -= 20.0f;
+}
 
 void func_8009B0C8(s32 arg0) {
     func_8009ADA8(arg0);
@@ -626,7 +632,7 @@ void func_8009B4AC(s32 arg0) {
 }
 
 void func_8009B530(s32 arg0) {
-    Math_Vec3f_Set(&D_801CEC70, 56.0f, 50.0f, -238.0f);
+    Math_Vec3f_Set(D_801CEC70, 56.0f, 50.0f, -238.0f);
     Math_Vec3f_Set(&D_801CEC88, -100.0f, -80.0f, -50.0f);
 }
 

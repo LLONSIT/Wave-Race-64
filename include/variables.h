@@ -197,7 +197,7 @@ extern void* D_800E599C;
 extern void* D_800E59C4;
 extern void* D_800E594C;
 extern void* D_800E5974;
-extern Vec3f D_801CEC70;
+extern Vec3f D_801CEC70[];
 extern Vec3f D_801CEC88;
 extern s32 D_800E55CC;
 extern s32 D_800E55EC;
