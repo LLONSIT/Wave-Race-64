@@ -11,15 +11,6 @@ struct UnkStruct_80069E44 {
     s32 unk1C;
 };
 
-struct Controller_info {
-    u16 unk0;
-    u16 unk2;
-    u16 unk4;
-    u16 unk6;
-    s8 unk8;
-    s8 unk9;
-};
-
 struct UnkStruct_801AE958 {
     s32 unk0;
     s32 unk4;
