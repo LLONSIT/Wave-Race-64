@@ -7,9 +7,9 @@ __OSEventState __osEventStateTab[OS_NUM_EVENTS];
 u32 __osPreNMI = 0;
 #endif
 
-void osSetEventMesg(OSEvent e, OSMesgQueue *mq, OSMesg msg) {
+void osSetEventMesg(OSEvent e, OSMesgQueue* mq, OSMesg msg) {
     register u32 int_disabled;
-    __OSEventState *msgs;
+    __OSEventState* msgs;
     int_disabled = __osDisableInt();
 
     msgs = __osEventStateTab + e;

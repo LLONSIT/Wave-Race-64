@@ -158,7 +158,7 @@ void Libc_strncpy(s8* s1, s8* s2, s32 n) {
     while ((n-- > 0) && (*s1++ = *s2++) != '\0') {}
 }
 
-int Libc_strcmp(s8 *s, s8 *t) {
+int Libc_strcmp(s8* s, s8* t) {
     while (*s == *t) {
         *s++;
         *t++;

@@ -1,6 +1,6 @@
 #include "libultra_internal.h"
 
-extern OSViContext *__osViNext;
+extern OSViContext* __osViNext;
 
 // TODO: name magic constants
 void osViBlack(u8 active) {
