@@ -269,7 +269,7 @@ s32 func_80093104(void) {
         return 0;
     }
 
-    if ((gControllerOne[D_801CB404][0] & 0x1000) == 0) {
+    if ((gControllerOne[D_801CB404].unk0 & 0x1000) == 0) {
         return 0;
     }
 
