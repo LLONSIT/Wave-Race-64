@@ -4,7 +4,21 @@ void func_801DAFA0(void** arg0, s32 arg1) {
     *(f32*) (((u8*) (*arg0)) + 0x50) = 3.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DAFB8.s")
+void func_801DAFB8(void* arg0) {
+    u32 randVal;
+    u32 result;
+    void* savedArg0 = arg0;
+
+    randVal = rand();
+    if ((randVal & 7) != 0) {
+        result = rand();
+        *(u32*) ((u8*) savedArg0 + 8) = result % 15;
+        return;
+    }
+
+    result = rand();
+    *(u32*) ((u8*) savedArg0 + 8) = (result % 19) + 0x19;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB024.s")
 
