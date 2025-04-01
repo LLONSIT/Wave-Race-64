@@ -1,6 +1,8 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DAFA0.s")
+void func_801DAFA0(void** arg0, s32 arg1) {
+    *(f32*) (((u8*) (*arg0)) + 0x50) = 3.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DAFB8.s")
 
