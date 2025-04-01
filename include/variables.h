@@ -301,5 +301,7 @@ extern void* D_800E5BEC;
 extern void* D_800E5C0C;
 extern s32 D_800E5ACC;
 extern s32 D_800E5B1C;
+extern void* D_800E5CAC;
+extern void* D_800E5CC0;
 
 #endif /* VARIABLES_H */
