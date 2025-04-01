@@ -1170,12 +1170,27 @@ typedef struct {
  * First 8 words are integer portion of the 4x4 matrix
  * Last 8 words are the fraction portion of the 4x4 matrix
  */
-typedef s32	Mtx_t[4][4];
+typedef long int Mtx_t[4][4];
+typedef union {
+    Mtx_t m;
+    struct {
+        s16 intPart[4][4];
+        u16 fracPart[4][4];
+    } mu;
+    long long int forc_structure_alignment;
+} Mtx;
+
+typedef float MtxF_t[4][4];
 
 typedef union {
-    Mtx_t		m;
-    long long int	force_structure_alignment;
-} Mtx;
+    MtxF_t mf;
+    struct {
+        float xx, yx, zx, wx,
+              xy, yy, zy, wy,
+              xz, yz, zz, wz,
+              xw, yw, zw, ww;
+    };
+} MtxF;
 
 /*
  * Viewport

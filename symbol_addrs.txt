@@ -249,3 +249,4 @@ Math_Vec3f_Initialize = 0x80098514;
 Math_Vec3f_Copy = 0x8009852C;
 Math_Vec3f_Substract = 0x80098E3C;
 Math_Normalize_Angle = 0x8009D4F0;
+_MtxF_to_Mtx = 0x801EDD90;
