@@ -711,7 +711,12 @@ void func_8009BFDC(s32 arg0) {
     func_8009BE40(arg0, &D_800E5BAC, &D_800E5BCC, 45.0f);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009C00C.s")
+void func_8009C00C(s32 arg0) {
+    func_8009BE40(arg0, &D_800E5BEC, &D_800E5C0C, 45.0f);
+}
+
+void func_8009C00C_padding(void) {
+}
 
 void func_8009C044(s32 arg0) {
     func_8009BE40(arg0, &D_800E5C6C, &D_800E5C8C, 45.0f);

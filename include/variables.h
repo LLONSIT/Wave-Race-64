@@ -297,5 +297,7 @@ extern s32 D_800E5A3C;
 extern s32 D_800E5A84;
 extern void* D_800E5CD4;
 extern void* D_800E5D4C;
+extern void* D_800E5BEC;
+extern void* D_800E5C0C;
 
 #endif /* VARIABLES_H */

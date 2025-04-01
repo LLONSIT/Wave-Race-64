@@ -219,5 +219,6 @@ void func_8009A04C(s32, s16);
 f32 func_8009AC50(s32, f32*, f32, f32, f32);
 void func_8009AFA0(void* arg0);
 void func_8009BE40(s32, void*, void*, f32);
+void func_8009BE40(s32, void*, void*, f32);
 
 #endif /*FUNCTIONS_H*/
