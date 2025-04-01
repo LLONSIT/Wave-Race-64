@@ -274,5 +274,9 @@ extern s16 D_801CEA98[];
 extern s16 D_801CE624;
 extern s32 D_801CE650;
 extern f32 D_800E5518;
+extern s32 D_800D48DC;
+extern s32 D_800E565C;
+extern s32 D_800E5670;
+extern f32 D_800EB4E0;
 
 #endif /* VARIABLES_H */

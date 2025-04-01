@@ -400,4 +400,13 @@ typedef struct StructADA8 {
     f32 unk4;     // accessed at arg0->unk4
 } StructADA8;
 
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+} StructCEFF8; // size = 0x18
+
 #endif /* STRUCTS_H */
