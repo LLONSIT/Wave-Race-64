@@ -576,7 +576,24 @@ void func_8009B178(s32 arg0) {
     D_801CEA98[D_800E5138] = 0x3FFF;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009B19C.s")
+void func_8009B19C(s32 arg0) {
+    void* temp_v0;
+
+    temp_v0 = D_801CF058[D_800E5138];
+    if (temp_v0 != NULL) {
+        *(f32*) ((u8*) temp_v0 + 0x88) = 45.0f;
+    }
+
+    func_8009A460(&func_8009B130, arg0, 0, 0);
+    func_80099A00(arg0, &D_800E552C, &D_800E557C, 0);
+
+    if (D_800E5148 != 0) {
+        func_8009B178(arg0);
+        D_800E5148 = 0;
+    }
+
+    func_8009A460(&func_8009A97C, arg0, 0xA0, -1);
+}
 
 void func_8009B250(s32 arg0) {
     func_8009A460(func_8009B130, arg0, 0, 0);

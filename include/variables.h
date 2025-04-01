@@ -199,7 +199,6 @@ extern void* D_800E594C;
 extern void* D_800E5974;
 extern Vec3f D_801CEC70;
 extern Vec3f D_801CEC88;
-extern f32* D_801CF058[];
 extern s32 D_800E55CC;
 extern s32 D_800E55EC;
 extern s16 D_801CEA98[];
@@ -278,5 +277,10 @@ extern s32 D_800D48DC;
 extern s32 D_800E565C;
 extern s32 D_800E5670;
 extern f32 D_800EB4E0;
+extern s32 D_800E5138;
+extern u8 D_800E5148;
+extern s32 D_800E552C;
+extern s32 D_800E557C;
+extern void* D_801CF058[];
 
 #endif /* VARIABLES_H */
