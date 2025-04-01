@@ -32,7 +32,7 @@ void Init_SinTable(void) {
         x = (i * (6.28318530700000011)) / ARRAY_COUNT(gSinTable);
         numerator = -x * x * x;
         minusSquareX = -x * x;
-        denominator = 1 * 2 * 3;
+        denominator = 3 * 2 * 1;
 
         for (j = 2; j < 14; j++) {
             x += (numerator / denominator);

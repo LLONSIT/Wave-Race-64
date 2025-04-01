@@ -39,8 +39,12 @@ extern struct UnkStruct_801C2C24 D_801C2C2C[];
 struct UnkStruct_801C4000 D_801C4000;
 extern struct UnkStruct_801C3C60 D_801C3C60[];
 extern s32 D_800D9914;
+extern s32 D_800D48DC;
+extern s32 D_800D9680[2][3];
+struct UnkStruct_801C4000 D_80192420;
 
 void Math_Normalize_VectorComponents(f32*, f32*);
+void func_80086CE0(void);
 
 void func_80080400(s32 arg0) {
     func_80085EEC(arg0);
@@ -1137,7 +1141,87 @@ s32 func_80086C40(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80086CE0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80086DA8.s")
+void func_80086DA8(void) {
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f0_3;
+    f32 temp_f12;
+    f32 temp_f14;
+    f32 temp_f2;
+    f32 temp_f2_2;
+    s32 temp_a0;
+    s32 temp_v0;
+    s32 var_a0;
+    s32 var_v1;
+    struct UnkStruct_801C3C50* temp;
+
+    switch (D_801C3C50->unkC54) { /* irregular */
+        case 23:
+            D_801C3C58->unk8C = 1;
+            break;
+        case 7:
+            if (D_801C3C58->unk8C == 1) {
+                D_801C3C58->unk8C = 2;
+            }
+            if ((D_801C3C58->unk8C == 2) && (D_801C3C50->unkC58 >= 0x38)) {
+                D_801C3C58->unk8C = 3;
+            }
+            break;
+    }
+    D_801C3C58->unkD0 = D_801C3C58->unkB8 = D_801C3C50->unk5C + (D_801C3C50->unk5C - D_801C3C58->unkC4);
+    D_801C3C58->unkBC = D_801C3C50->unk60 + (D_801C3C50->unk60 - D_801C3C58->unkC8);
+    D_801C3C58->unkD4 = D_801C3C58->unkC0 = D_801C3C50->unk64 + (D_801C3C50->unk64 - D_801C3C58->unkCC);
+
+    Math_Normalize_VectorComponents(&D_801C3C58->unkD0, &D_801C3C58->unkD4);
+    D_801C3C58->unkC4 = D_801C3C50->unk5C;
+    D_801C3C58->unkC8 = (D_801C3C50->unk60);
+    D_801C3C58->unkCC = D_801C3C50->unk64;
+
+    // wtf
+    temp = D_801C3C50;
+    if (temp->unk15B4 && D_801C3C50->unk15B4 && D_801C3C50->unkC54) {}
+
+    if ((D_801C3C50->unk15DC) && ((D_801C3C50->unkB90 * 1.8f) < 30)) {
+        D_801C3C58->unk90++;
+    } else {
+        D_801C3C58->unk90 = 0;
+    }
+    if (D_801C3C50->unk15DE != 0) {
+        D_801C3C58->unk9C = 1;
+    }
+    if (D_801C3C50->unkC7C != 0) {
+        D_801C3C58->unk9C = 0;
+    }
+
+    func_80086CE0();
+
+    temp_f0_3 = D_801C3C50->unk44 - D_80192420.unk8;
+    temp_f2_2 = D_801C3C50->unk4C - D_80192420.unkC;
+    if (D_80192420.unk10 < (SQ(temp_f0_3) + SQ(temp_f2_2))) {
+        D_801C3C58->unkA4 = 0;
+    } else {
+        D_801C3C58->unkA4 = 1;
+    }
+    if ((D_801C2938[D_800D48DC].unk4 < D_801C2938[D_801C3C58->unk0].unk4) && (D_801C3C58->unkA4 == 0)) {
+        if (D_801C3C58->unkAC < 0x3E8) {
+            D_801C3C58->unkAC++;
+        }
+    } else {
+        D_801C3C58->unkAC = 0;
+    }
+    if ((D_801C3C58->unk0 != 0) && (gPlayers == ONE_PLAYER)) {
+        if ((D_800D9680[gDifficulty][D_801C3C58->unk5C]) < D_801C3C58->unkAC) {
+            D_801C3C58->unkB0 = 1;
+            D_801C3C58->unkB4 = 0;
+        } else {
+            D_801C3C58->unkB0 = 0;
+            D_801C3C58->unkB4 = 1;
+        }
+    }
+    if (gCourseID == TWILIGHT_CITY) {
+        D_801C3C58->unkB4 = 1;
+    }
+}
 
 s32 func_80087134(f32 arg0, f32 arg1) {
     void* temp_s0;
