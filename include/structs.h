@@ -428,4 +428,14 @@ typedef struct StructCEC70{
     f32 unk4[20];
 } StructCEC70;
 
+
+struct Controller_info {
+    u16 unk0;
+    u16 unk2;
+    u16 unk4;
+    u16 unk6;
+    s8 unk8;
+    s8 unk9;
+};
+
 #endif /* STRUCTS_H */
