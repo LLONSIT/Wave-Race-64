@@ -1139,7 +1139,37 @@ s32 func_80086C40(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80086DA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80087134.s")
+s32 func_80087134(f32 arg0, f32 arg1) {
+    void* temp_s0;
+    s32 result;
+
+    temp_s0 = (void*) ((D_8011F8E0 * 0x3630) + 0x2D0 + (s32) &D_801C43F8);
+
+    if (func_80086C40((f32) ((s16*) temp_s0)[8],  // unk10
+                      (f32) ((s16*) temp_s0)[10], // unk14
+                      (f32) ((s16*) temp_s0)[0],  // unk00
+                      (f32) ((s16*) temp_s0)[2],  // unk04
+                      arg0, arg1) == -1 &&
+        func_80086C40((f32) ((s16*) temp_s0)[24], // unk30
+                      (f32) ((s16*) temp_s0)[26], // unk34
+                      (f32) ((s16*) temp_s0)[16], // unk20
+                      (f32) ((s16*) temp_s0)[18], // unk24
+                      arg0, arg1) == 1 &&
+        func_80086C40((f32) ((s16*) temp_s0)[8],  // unk10
+                      (f32) ((s16*) temp_s0)[10], // unk14
+                      (f32) ((s16*) temp_s0)[24], // unk30
+                      (f32) ((s16*) temp_s0)[26], // unk34
+                      arg0, arg1) == 1 &&
+        func_80086C40((f32) ((s16*) temp_s0)[0],  // unk00
+                      (f32) ((s16*) temp_s0)[2],  // unk04
+                      (f32) ((s16*) temp_s0)[16], // unk20
+                      (f32) ((s16*) temp_s0)[18], // unk24
+                      arg0, arg1) == -1) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80087304.s")
 
