@@ -62,7 +62,7 @@ f32 func_801ED154(f32 arg0, f32 arg1) {
 
     if ((arg1 == 0.0f) && (arg0 == 0.0f)) {
         return 0.0f;
-}
+    }
 
     if (arg1 < 0.0f) {
         arg1 = -arg1;
