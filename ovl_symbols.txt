@@ -180,7 +180,6 @@ func_801EDAE0 = 0x801edae0; //defined:true
 func_801EDBD4 = 0x801edbd4; //defined:true
 func_801EDC60 = 0x801edc60; //defined:true
 func_801EDD04 = 0x801edd04; //defined:true
-func_801EDD90 = 0x801edd90; //defined:true
 func_801EDF9C = 0x801edf9c; //defined:true
 func_801EDFFC = 0x801edffc; //defined:true
 func_801EE040 = 0x801ee040; //defined:true

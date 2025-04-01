@@ -74,7 +74,11 @@
 
 #define ABS(x) ((x) >= 0 ? (x) : -(x))
 
+#define ABS_DEG(x) ((x) %= 360, (x) >= 0 ? (x) : 360 + (x))
+
+#define SIGNUM(x) ((x) == 0 ? 0 : ((x) > 0 ? 1 : -1))
+
 #define UNK_TYPE int
 
-#define PRINT(x) ((void)x)
+#define PRINT(x) ((void) x)
 #endif

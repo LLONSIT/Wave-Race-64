@@ -101,7 +101,7 @@ void func_1C3780_802C5BD8(void) {
                 if (D_801C2928 != 0) {
                     func_801EC9C8(&D_802C5D84);
                 } else {
-                    func_801ED004(&D_802C5D84);
+                    func_801ED004();
                 }
             }
             break;

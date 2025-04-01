@@ -162,7 +162,7 @@ Gfx* func_80094338(Gfx*, s32, s32, s32, s32, s32);
 Gfx* func_801E3EE0(Gfx*, s32, s32, s32, s32, s32);
 Gfx* func_801E946C(Gfx*, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 void func_801EC9C8(UNK_TYPE*);
-void func_801ED004(UNK_TYPE*);
+void func_801ED004(void);
 void func_i15_802C6CAC(s32);
 void func_80099AD8(s8, void*, f32, f32, f32);
 void func_800BFD34(void);
