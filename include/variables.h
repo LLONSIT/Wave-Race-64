@@ -293,5 +293,7 @@ extern Vec3f D_801CEC70[];
 extern StructCEC70 D_801CECA0;
 extern StructCEC70 D_801CECB8;
 extern struct UnkStruct_801CEFF8 D_801CEFF8[];
+extern s32 D_800E5A3C;
+extern s32 D_800E5A84;
 
 #endif /* VARIABLES_H */
