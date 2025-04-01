@@ -797,7 +797,9 @@ void func_8009D320(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009D3AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009D4A8.s")
+f32 func_8009D4A8(f32 arg0, f32 arg1) {
+    return sqrtf(SQ(arg0) + SQ(arg1));
+}
 
 f32 func_8009D4DC(f32 arg0, f32 arg1) {
     return SQ(arg0) + SQ(arg1);
