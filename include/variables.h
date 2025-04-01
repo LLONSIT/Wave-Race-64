@@ -286,5 +286,12 @@ extern s32 D_800D48DC;
 extern s32 D_800E5634;
 extern s32 D_800E5648;
 extern f32 D_800EB4DC;
+extern s32 D_800D48DC;
+extern s32 D_800E5138;
+extern s32 D_80192458;
+extern Vec3f D_801CEC70[];
+extern StructCEC70 D_801CECA0;
+extern StructCEC70 D_801CECB8;
+extern struct UnkStruct_801CEFF8 D_801CEFF8[];
 
 #endif /* VARIABLES_H */

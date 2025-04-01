@@ -409,4 +409,9 @@ typedef struct {
     f32 unk14;
 } StructCEFF8; // size = 0x18
 
+typedef struct StructCEC70{
+    f32 unk0;
+    f32 unk4[20];
+} StructCEC70;
+
 #endif /* STRUCTS_H */

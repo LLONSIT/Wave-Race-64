@@ -642,7 +642,18 @@ void func_8009B530(s32 arg0) {
     Math_Vec3f_Set(&D_801CEC88, -100.0f, -80.0f, -50.0f);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009B57C.s")
+void func_8009B57C(s32 arg0) {
+    u8* temp_a1;
+    u8* temp_a1_2;
+    f32 v0;
+
+    func_80098AC4(1, 1, 1, 0, 1);
+    func_800988D8(D_800E5138);
+    func_8009917C(&D_801CECA0, &D_801CEFF8[D_800D48DC], &D_801CEC70, &D_801CEFF8[D_800D48DC].unkC);
+    func_8009917C(&D_801CECB8, &D_801CEFF8[D_800D48DC], &D_801CEC88, &D_801CEFF8[D_800D48DC].unkC);
+
+    D_801CEC70[4].y = D_801CEC70[0].y + (f32) D_80192458; // Weird
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009B650.s")
 
