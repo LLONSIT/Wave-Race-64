@@ -393,5 +393,49 @@ typedef struct Struct801926D8 {
     s32 unk0;
     char pad[0x1714];
 } Struct801926D8;
+typedef struct StructAB90{
+    s32 unk0;       // +0x00
+    s32 unk4;       // +0x04
+    s32 unk8;       // +0x08
+    u8 pad0C[0x68 - 0x0C]; // Padding up to offset 0x68
+    s32 unk68;      // +0x68 (optional, in case needed)
+    u8 pad6C[0x74 - 0x6C]; // Padding to 0x74
+    s32 unk74;      // +0x74
+    s32 unk78;      // +0x78
+} StructAB90;
+
+typedef struct UnkStruct_func_8007AE8C {
+    s8 unk0;
+    s8 unk1;
+    s8 unk2;
+} UnkStruct_func_8007AE8C;
+typedef struct StructADA8 {
+    u8 pad0[4];   // padding to offset 0x4
+    f32 unk4;     // accessed at arg0->unk4
+} StructADA8;
+
+typedef struct {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+} StructCEFF8; // size = 0x18
+
+typedef struct StructCEC70{
+    f32 unk0;
+    f32 unk4[20];
+} StructCEC70;
+
+
+struct Controller_info {
+    u16 unk0;
+    u16 unk2;
+    u16 unk4;
+    u16 unk6;
+    s8 unk8;
+    s8 unk9;
+};
 
 #endif /* STRUCTS_H */

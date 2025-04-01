@@ -76,7 +76,7 @@ void func_80088488(s32 arg0);
 void func_800988D8(s32 arg0);
 void func_801FAEA8(void);
 void func_800C6DE0(void);
-void func_8009ADA8(void);
+void func_8009ADA8(StructADA8* arg0);
 s32 func_8009A460(void (*arg0)(s32), s32 arg1, s16 arg2, s16 arg3);
 void func_800C53D4(s32, s32);
 void func_800C312C(void);
@@ -139,14 +139,14 @@ void func_80097F74(u32, s32, u32); // arg1 is confirmed to be s32
 void func_800C6740();
 void Mio0_Decompress(u8*, u8*);
 s32 func_8007AE30(s32);
-void func_8007AE8C(void*, void*, void*, void*);
+//void func_8007AE8C(void*, void*, void*, void*);
 void func_800C37F4(s32, s32);
 void func_800481E0(MF* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
 void func_80048A88(void* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9,
                    f32 argA);
 Gfx* func_801E7C58(Gfx* dList, u32 ulx, u32 uly, u32 lrx, u32 lry, u32 r, u32 g, u32 b, u32 a);
 void func_i4_802C7474(s32);
-void func_i8_802C6FD4(s8* arg0, void* arg1, s32 arg2);
+void func_i8_802C6FD4(s8* src, s8* dest, s32 count);
 s32 func_800941D0(s8*);
 void func_800C2FDC(s32);
 void func_800C3034(void);
@@ -200,7 +200,8 @@ void func_8009B650(void*, f32, f32);
 void func_8009AA24(s32 arg0); // Unk pointer type
 void func_8009AD3C(s32 arg0);
 void func_8009AD74(s32);
-void func_8007AE8C(void*, void*, void*, void*);
+// void func_8007AE8C(void*, void*, void*, void*);
+void func_8007AE8C(UnkStruct_func_8007AE8C* arg0, UnkStruct_func_8007AE8C* arg1);
 s32 func_8008962C(f32, f32, f32, f32*);
 f32 func_8009D4A8(f32, f32);
 void func_800A52D8(s32, f32);
@@ -216,5 +217,11 @@ void func_8009A520(s32 arg0);
 void func_800988D8(s32); 
 void func_8009A04C(s32, s16);
 f32 func_8009AC50(s32, f32*, f32, f32, f32);
+void func_8009AFA0(void* arg0);
+void func_8009BE40(s32, void*, void*, f32);
+s32 func_800C85C0(OSMesgQueue*, void*);
+s32 func_800C8C10(void*, s32*);
+s32 func_800C9E30(void*, void*, void*);
+s32 func_800C9F60(void*, s32, void*);
 
 #endif /*FUNCTIONS_H*/

@@ -49,7 +49,25 @@ void func_8006AA58(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006E01C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/configSignalRectangle.s")
+void configSignalRectangle(Gfx** arg0) {
+
+    s32 pad1[15];
+    Gfx* ptr = *arg0;
+    s32 pad[2];
+
+    gDPPipeSync((ptr)++);
+    gDPSetTextureLUT((ptr)++, G_TT_NONE);
+
+    if ((gPlayers == 1) && (gCourseID == 4)) {
+        func_8006C5D8(&(ptr));
+    }
+    if ((D_801CE638 == 1) && ((gGameModes == 4) || (gGameModes == 1))) {
+        func_8006BE74(&(ptr));
+    }
+    func_8006B334(&ptr);
+
+    *arg0 = ptr;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006E0F4.s")
 

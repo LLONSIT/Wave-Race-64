@@ -57,4 +57,10 @@ void func_i8_802C6F4C(void) {
     func_801E6FB0(1, 4, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6FD4.s")
+void func_i8_802C6FD4(s8* src, s8* dest, s32 count) {
+    s32 i;
+
+    for (i = 0; i < count; i++) {
+        *dest++ = *src++;
+    }
+}
