@@ -1211,6 +1211,7 @@ void func_80086DA8(void) {
     }
 }
 
+// TODO: Improve this match..
 s32 func_80087134(f32 arg0, f32 arg1) {
     void* temp_s0;
     s32 result;

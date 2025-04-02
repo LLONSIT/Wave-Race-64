@@ -438,4 +438,34 @@ struct Controller_info {
     s8 unk9;
 };
 
+
+
+struct UnkStruct_8004B0F8_1 {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    s32 unk1C;
+};
+struct UnkStruct_8004B0F8 {
+    /* 0x00 */ char pad0[0x28];
+    /* 0x28 */ u32 unk28;                           /* inferred */
+    /* 0x2C */ char pad2C[4];
+    /* 0x34 */ struct UnkStruct_8004B0F8_1* unk30;                    /* maybe part of unk30[5]? */
+               char pad[0x10];
+    /* 0x44 */ f32 unk44;                           /* inferred */
+    /* 0x48 */ f32 unk48;                           /* inferred */
+    /* 0x4C */ f32 unk4C;                           /* inferred */
+    /* 0x50 */ f32 unk50;                           /* inferred */
+    /* 0x54 */ f32 unk54;                           /* inferred */
+    /* 0x58 */ f32 unk58;                           /* inferred */
+    /* 0x5C */ f32 unk5C;                           /* inferred */
+    /* 0x60 */ f32 unk60;                           /* inferred */
+    /* 0x64 */ f32 unk64;                           /* inferred */
+    /* 0x68 */ f32 unk68;
+};  
+
 #endif /* STRUCTS_H */
