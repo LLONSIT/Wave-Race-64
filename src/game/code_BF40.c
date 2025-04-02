@@ -1,4 +1,4 @@
-#include "common.h"
+#include "global.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_BF40/func_80051740.s")
 
