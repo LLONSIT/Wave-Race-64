@@ -15,8 +15,8 @@ void func_8004B0F8(struct UnkStruct_8004B0F8* arg0) {
     f32 var_f2;
     struct UnkStruct_8004B0F8_1* var_v0;
 
-    var_f0 =  0.0f;
-    var_f2 =  0.0f;
+    var_f0 = 0.0f;
+    var_f2 = 0.0f;
     var_f12 = 0.0f;
     arg0->unk64 = 0.0f;
     arg0->unk60 = 0.0f;
@@ -26,8 +26,7 @@ void func_8004B0F8(struct UnkStruct_8004B0F8* arg0) {
     arg0->unk50 = 0.0f;
     arg0->unk68 = 0.0f;
 
-    
-    for (var_v0 = &arg0->unk30[arg0->unk28]; (u32)var_v0 >= (u32)arg0->unk30; var_v0--) {
+    for (var_v0 = &arg0->unk30[arg0->unk28]; (u32) var_v0 >= (u32) arg0->unk30; var_v0--) {
         var_v0->unk14 = 0.0f;
         var_v0->unk10 = 0.0f;
         var_v0->unkC = 0.0f;
@@ -38,14 +37,12 @@ void func_8004B0F8(struct UnkStruct_8004B0F8* arg0) {
         var_f0 += var_v0->unk8;
     }
 
-
     var_f14 = arg0->unk28 + 1;
-    
+
     arg0->unk44 = (f32) (var_f12 / var_f14);
     arg0->unk48 = (f32) (var_f2 / var_f14);
     arg0->unk4C = (f32) (var_f0 / var_f14);
 }
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004B1B4.s")
 
