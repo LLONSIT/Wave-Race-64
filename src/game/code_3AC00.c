@@ -215,7 +215,7 @@ s32 func_80080D20(void) {
 
     for (var_s1 = 0; var_s1 < gRiders; var_s1++) {
         if (var_s1 != D_801C3C58->unk0) {
-            if ((func_80087134(D_80192690[var_s1].unk44, D_80192690[var_s1].unk4C) == 1) &&
+            if ((func_80087134(D_80192690[var_s1].unk44.x, D_80192690[var_s1].unk44.z) == 1) &&
                 (((D_80192690[D_801C3C58->unk0].unkB90 - D_80192690[var_s1].unkB90) * 1.8f) > 15.0f)) {
                 return TRUE;
             }
@@ -940,7 +940,7 @@ void func_80081CC8(void) {
         break;
     }
     if (D_801C3C58->unkDC != 0) {
-        D_801C3C58->unkD8 = (s32) (D_801C3C58->unkD8 + 1);
+        D_801C3C58->unkD8++;
     } else {
         D_801C3C58->unkD8 = 0;
     }
@@ -1255,8 +1255,8 @@ s32 func_800873D4(s32 arg0, s32 arg1) {
     temp_v0 = &D_80192690[arg0];
     temp_v1 = &D_80192690[arg1];
 
-    temp_f0 = temp_v1->unk44 - temp_v0->unk44;
-    temp_f2 = temp_v1->unk4C - temp_v0->unk4C;
+    temp_f0 = temp_v1->unk44.x - temp_v0->unk44.x;
+    temp_f2 = temp_v1->unk44.z - temp_v0->unk44.z;
     return sqrtf(SQ(temp_f0) + SQ(temp_f2));
 }
 
@@ -1269,19 +1269,19 @@ void func_80087444(void) {
         f32 sp28;
         f32 sp24;
 
-        sp28 = temp_v1->unk44 - D_801C3C50->unk44;
-        sp24 = temp_v1->unk4C - D_801C3C50->unk4C;
+        sp28 = temp_v1->unk44.x - D_801C3C50->unk44;
+        sp24 = temp_v1->unk44.z - D_801C3C50->unk4C;
 
         Math_Normalize_VectorComponents(&sp28, &sp24);
 
         if (((D_801C4000.unk10 * sp28) + (D_801C4000.unk14 * sp24)) > 0.995) {
             if (((D_801C3C50->unk84 * sp28) + (D_801C3C50->unk8C * sp24)) > 0.0f) {
-                D_801C4000.unk8 = (temp_v1->unk44 - (60.0f * D_801C3C50->unk84));
-                D_801C4000.unkC = (temp_v1->unk4C - (60.0f * D_801C3C50->unk8C));
+                D_801C4000.unk8 = (temp_v1->unk44.x - (60.0f * D_801C3C50->unk84));
+                D_801C4000.unkC = (temp_v1->unk44.z - (60.0f * D_801C3C50->unk8C));
             } else {
 
-                D_801C4000.unk8 = (temp_v1->unk44 + (60.0f * D_801C3C50->unk84));
-                D_801C4000.unkC = (temp_v1->unk4C + (60.0f * D_801C3C50->unk8C));
+                D_801C4000.unk8 = (temp_v1->unk44.x + (60.0f * D_801C3C50->unk84));
+                D_801C4000.unkC = (temp_v1->unk44.z + (60.0f * D_801C3C50->unk8C));
             }
             func_80088B00(&D_801C4000);
         }
