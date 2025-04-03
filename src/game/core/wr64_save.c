@@ -137,7 +137,7 @@ void func_8007AF78(UnkStruct_func_8007AF78_1* arg0, UnkStruct_func_8007AF78_2* a
     arg1->unk1 = (s8) new_var;
     new_var = temp_t3;
     arg1->unk2 = new_var ^ 0;
-    func_8007AE8C(&arg1->unk3, &arg0->unk10);
+    func_8007AE8C((UnkStruct_func_8007AE8C*) &arg1->unk3, (UnkStruct_func_8007AE8C*) &arg0->unk10);
     arg1->unk3 = (arg1->unk3 ^ (arg0->unkB << 7));
     arg1->unk5 = arg0->unkC;
 }
@@ -162,7 +162,7 @@ void func_8007B1AC(Unkstruct_8007B1AC_arg0* arg0, Unkstruct_8007B1AC_arg1* arg1)
     new_var3 = (s8) temp_t3;
     arg1->unk1 = (new_var2 = temp_t3 >> 8);
     arg1->unk2 = new_var3 & 0xFFFF;
-    func_8007AE8C(&arg1->unk3, &arg0->unkC);
+    func_8007AE8C((UnkStruct_func_8007AE8C*) &arg1->unk3, (UnkStruct_func_8007AE8C*) &arg0->unkC);
     arg1->unk3 = (u8) (arg1->unk3 ^ (arg0->unkB << 7));
 }
 
