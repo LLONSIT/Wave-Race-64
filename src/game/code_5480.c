@@ -1,8 +1,29 @@
 #include "global.h"
 
+extern s32 D_1000140;
+extern s32 D_10001E0;
+extern s32 D_800D4650;
+extern s32 D_800D4658[];
+
+void func_8004AC80(struct UnkStruct_8004B0F8* arg0, f32 arg1, f32 arg2, f32 arg3);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004AC80.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004ADEC.s")
+void func_8004ADEC(struct UnkStruct_8004B0F8* arg0) {
+    f32* var_a2;
+    Vec3f* var_v0;
+    f32 var_f0;
+
+    var_f0 = (0.5f / ((arg0->unk20 * (arg0->unk28 - 1)) + 1.0f));
+
+    var_v0 = &arg0->unk34[arg0->unk2C];
+    var_a2 = &arg0->unk38[arg0->unk2C];
+
+    while (var_v0 >= arg0->unk34) {
+        var_v0->z = *var_a2 * var_f0;
+        var_v0--, var_a2--;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004AE88.s")
 
@@ -60,6 +81,11 @@ void func_8004B0F8(struct UnkStruct_8004B0F8* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004BA18.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004BC40.s")
+Gfx* func_8004BC40(Gfx* gDisplayList) {
+    gSPDisplayList(gDisplayList++, &D_1000140);
+    gDPSetFillColor(gDisplayList++, D_800D4658[D_800D4650]);
+    gSPDisplayList(gDisplayList++, &D_10001E0);
+    return gDisplayList;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004BC98.s")
