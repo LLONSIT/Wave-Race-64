@@ -176,7 +176,7 @@ segments:
       - [0x86F00, c, libultra/unkSeg_86F00]
       - [0x86F60, c, os/ll]
       - [0x87300, c, libultra/unkSeg_87300]
-      - [0x87570, c, libultra/unkLibultraSeg_87570]
+      - [0x87570, c, libultra/conteepread]
       - [0x87870, c, libultra/unkLibultraSeg_87870]
       - [0x897A0, asm, contramwrite]
       - [0x89B30, asm, xprintf]
