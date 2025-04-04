@@ -101,6 +101,10 @@ alSeqFileNew = 0x800CA908; //defined:true
 
 // synthesis.c
 prepare_reverb_ring_buffer = 0x800B4DD0;
+gCurrentRightVolRamping = 0x8003E54C;
+gCurrentLeftVolRamping = 0x8003E548;
+gVolume = 0x80038540;
+gUseReverb = 0x80038542;
 
 note_apply_headset_pan_effects = 0x800B6F18;
 

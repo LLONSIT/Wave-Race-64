@@ -168,7 +168,7 @@ typedef struct {
     /* 0x34 */ s32 unk34;
     /* 0x38 */ s32 unk38;
     /* 0x3C */ s32 unk3C;
-    /* 0x40 */ f32 unk40;
+    /* 0x40 */ s32 unk40;
     /* 0x44 */ f32 unk44;
     /* 0x48 */ f32 unk48;
     /* 0x4C */ f32 unk4C;
@@ -256,7 +256,7 @@ struct UnkStruct_801C3C50 {
     /* 0x0070 */ f32 unk70;
     /* 0x0074 */ f32 unk74;
     /* 0x0078 */ char pad78[4];
-    /* 0x007C */ f32 unk7C;                         /* inferred */
+    /* 0x007C */ f32 unk7C;
     /* 0x0080 */ char pad80[4];
     /* 0x0084 */ f32 unk84;
     /* 0x0088 */ char pad88[4];
@@ -267,14 +267,16 @@ struct UnkStruct_801C3C50 {
     /* 0x0B53 */ u8 unkB53;
     /* 0x0B54 */ char padB54[0x3C];                 /* maybe part of unkB53[0x3D]? */
     /* 0x0B90 */ f32 unkB90;
-    /* 0x0B94 */ char padB94[0xB8];                 /* maybe part of unkB90[0x2F]? */
+    /* 0x0B94 */ char padB94[0xB0];                 /* maybe part of unkB90[0x2D]? */
+    /* 0x0C44 */ f32 unkC44;                        /* inferred */
+    /* 0x0C48 */ char padC48[4];
     /* 0x0C4C */ f32 unkC4C;
     /* 0x0C50 */ char padC50[4];
     /* 0x0C54 */ s32 unkC54;
     /* 0x0C58 */ s32 unkC58;
     /* 0x0C5C */ s32 unkC5C;
     /* 0x0C60 */ char padC60[0x1C];                 /* maybe part of unkC5C[8]? */
-    /* 0x0C7C */ u16 unkC7C;
+    /* 0x0C7C */ u16 unkC7C[1]; // TODO
     /* 0x0C7E */ char padC7E[0x8FA];                /* maybe part of unkC7C[0x47E]? */
     /* 0x1578 */ f32 unk1578;
     /* 0x157C */ char pad157C[0x38];                /* maybe part of unk1578[0xF]? */
@@ -284,12 +286,12 @@ struct UnkStruct_801C3C50 {
     /* 0x15C0 */ char pad15C0[0x1C];                /* maybe part of unk15BC[8]? */
     /* 0x15DC */ s16 unk15DC;
     /* 0x15DE */ s16 unk15DE;
-                 char pad[0xF4];
-                 s32 unk16D4;
-                 char pad1[0x1C];
-                 u16 unk16F4;
-};                                         /* size = 0x15E0 */
-
+    /* 0x15E0 */ char pad15E0[0xF4];                /* maybe part of unk15DE[0x7B]? */
+    /* 0x16D4 */ s32 unk16D4;
+    /* 0x16D8 */ char pad16D8[0x1C];                /* maybe part of unk16D4[8]? */
+    /* 0x16F4 */ u16 unk16F4;
+    /* 0x16F6 */ char pad16F6[2];
+};                                                  /* size = 0x16F8 */
 
 struct UnkStruct_801C2C24 {
     /* 0x000 */ s32 unk0;

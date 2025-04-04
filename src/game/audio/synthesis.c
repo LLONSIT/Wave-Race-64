@@ -8,6 +8,12 @@
 #include "data.h"
 #include "port.h"
 
+// Synthesis.c variables
+extern f32* gCurrentLeftVolRamping;
+extern f32* gCurrentRightVolRamping;
+extern s16 gVolume;
+extern s8 gUseReverb;
+
 #define DMEM_ADDR_TEMP 0x0
 #define DMEM_ADDR_RESAMPLED 0x20
 #define DMEM_ADDR_RESAMPLED2 0x160
@@ -20,6 +26,8 @@
 #define DMEM_ADDR_RIGHT_CH 0x600
 #define DMEM_ADDR_WET_LEFT_CH 0x740
 #define DMEM_ADDR_WET_RIGHT_CH 0x880
+#define DEFAULT_LEN_1CH 0x140
+#define DEFAULT_LEN_2CH 0x280
 
 #define aSetLoadBufferPair(pkt, c, off)                                               \
     aSetBuffer(pkt, 0, c + DMEM_ADDR_WET_LEFT_CH, 0, DEFAULT_LEN_1CH - c);            \
@@ -55,7 +63,7 @@ u64* synthesis_process_note(struct Note* note, struct NoteSubEu* noteSubEu, stru
 u64* load_wave_samples(u64* cmd, struct NoteSubEu* noteSubEu, struct NoteSynthesisState* synthesisState,
                        s32 nSamplesToLoad);
 u64* final_resample(u64* cmd, struct NoteSynthesisState* synthesisState, s32 count, u16 pitch, u16 dmemIn, u32 flags);
-u64* process_envelope(u64* cmd, struct NoteSubEu* noteSubEu, struct NoteSynthesisState* synthesisState, s32 nSamples,
+u64* process_envelope(u64* cmd, struct NoteSubEu* note, struct NoteSynthesisState* synthesisState, s32 nSamples,
                       u16 inBuf, s32 headsetPanSettings, u32 flags);
 u64* note_apply_headset_pan_effects(u64* cmd, struct NoteSubEu* noteSubEu, struct NoteSynthesisState* note, s32 bufLen,
                                     s32 flags, s32 leftRight);
@@ -320,10 +328,232 @@ u64 *synthesis_process_note(struct Note *note, struct NoteSubEu *noteSubEu, stru
         }
     return cmd;
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/load_wave_samples.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/final_resample.s")
+u64 *load_wave_samples(u64 *cmd, struct NoteSubEu *noteSubEu, struct NoteSynthesisState *synthesisState, s32 nSamplesToLoad) {
+    s32 a3;
+    s32 repeats;
+    s32 i;
+    aSetBuffer(cmd++, /*flags*/ 0, /*dmemin*/ DMEM_ADDR_UNCOMPRESSED_NOTE, /*dmemout*/ 0, /*count*/ 128);
+    aLoadBuffer(cmd++, VIRTUAL_TO_PHYSICAL2(noteSubEu->sound.samples));
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/process_envelope.s")
+    synthesisState->samplePosInt &= 0x3f;
+    a3 = 64 - synthesisState->samplePosInt;
+    if (a3 < nSamplesToLoad) {
+        repeats = (nSamplesToLoad - a3 + 63) / 64;
+        for (i = 0; i < repeats; i++) {
+            aDMEMMove(cmd++,
+                      /*dmemin*/ DMEM_ADDR_UNCOMPRESSED_NOTE,
+                      /*dmemout*/ DMEM_ADDR_UNCOMPRESSED_NOTE + (1 + i) * 128,
+                      /*count*/ 128);
+        }
+    }
+    return cmd;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/note_apply_headset_pan_effects.s")
+u64 *final_resample(u64 *cmd, struct NoteSynthesisState *synthesisState, s32 count, u16 pitch, u16 dmemIn, u32 flags) {
+    aSetBuffer(cmd++, /*flags*/ 0, dmemIn, /*dmemout*/ DMEM_ADDR_TEMP, count);
+    aResample(cmd++, flags, pitch, VIRTUAL_TO_PHYSICAL2(synthesisState->synthesisBuffers->finalResampleState));
+    return cmd;
+}
+
+u64 *process_envelope(u64 *cmd, struct NoteSubEu *note, struct NoteSynthesisState *synthesisState, s32 nSamples, u16 inBuf, s32 headsetPanSettings, UNUSED u32 flags) {
+    UNUSED u8 pad1[20];
+    u16 sourceRight;
+    u16 sourceLeft;
+    UNUSED u8 pad2[4];
+    u16 targetLeft;
+    u16 targetRight;
+    s32 mixerFlags;
+    s32 rampLeft;
+    s32 rampRight;
+
+    sourceLeft = synthesisState->curVolLeft;
+    sourceRight = synthesisState->curVolRight;
+    targetLeft = (note->targetVolLeft << 5);
+    targetRight = (note->targetVolRight << 5);
+    if (targetLeft == 0) {
+        targetLeft++;
+    }
+    if (targetRight == 0) {
+        targetRight++;
+    }
+    synthesisState->curVolLeft = targetLeft;
+    synthesisState->curVolRight = targetRight;
+
+    // For aEnvMixer, five buffers and count are set using aSetBuffer.
+    // in, dry left, count without A_AUX flag.
+    // dry right, wet left, wet right with A_AUX flag.
+
+    if (note->usesHeadsetPanEffects) {
+        aClearBuffer(cmd++, DMEM_ADDR_NOTE_PAN_TEMP, DEFAULT_LEN_1CH);
+
+        switch (headsetPanSettings) {
+            case 1:
+                aSetBuffer(cmd++, 0, inBuf, DMEM_ADDR_NOTE_PAN_TEMP, nSamples * 2);
+                aSetBuffer(cmd++, A_AUX, DMEM_ADDR_RIGHT_CH, DMEM_ADDR_WET_LEFT_CH,
+                           DMEM_ADDR_WET_RIGHT_CH);
+                break;
+            case 2:
+                aSetBuffer(cmd++, 0, inBuf, DMEM_ADDR_LEFT_CH, nSamples * 2);
+                aSetBuffer(cmd++, A_AUX, DMEM_ADDR_NOTE_PAN_TEMP, DMEM_ADDR_WET_LEFT_CH,
+                           DMEM_ADDR_WET_RIGHT_CH);
+                break;
+            default:
+                aSetBuffer(cmd++, 0, inBuf, DMEM_ADDR_LEFT_CH, nSamples * 2);
+                aSetBuffer(cmd++, A_AUX, DMEM_ADDR_RIGHT_CH, DMEM_ADDR_WET_LEFT_CH,
+                           DMEM_ADDR_WET_RIGHT_CH);
+                break;
+        }
+    } else {
+        // It's a bit unclear what the "stereo strong" concept does.
+        // Instead of mixing the opposite channel to the normal buffers, the sound is first
+        // mixed into a temporary buffer and then subtracted from the normal buffer.
+        if (note->stereoStrongRight) {
+            aClearBuffer(cmd++, DMEM_ADDR_STEREO_STRONG_TEMP_DRY, DEFAULT_LEN_2CH);
+            aSetBuffer(cmd++, 0, inBuf, DMEM_ADDR_STEREO_STRONG_TEMP_DRY, nSamples * 2);
+            aSetBuffer(cmd++, A_AUX, DMEM_ADDR_RIGHT_CH, DMEM_ADDR_STEREO_STRONG_TEMP_WET,
+                       DMEM_ADDR_WET_RIGHT_CH);
+        } else if (note->stereoStrongLeft) {
+            aClearBuffer(cmd++, DMEM_ADDR_STEREO_STRONG_TEMP_DRY, DEFAULT_LEN_2CH);
+            aSetBuffer(cmd++, 0, inBuf, DMEM_ADDR_LEFT_CH, nSamples * 2);
+            aSetBuffer(cmd++, A_AUX, DMEM_ADDR_STEREO_STRONG_TEMP_DRY, DMEM_ADDR_WET_LEFT_CH,
+                       DMEM_ADDR_STEREO_STRONG_TEMP_WET);
+        } else {
+            aSetBuffer(cmd++, 0, inBuf, DMEM_ADDR_LEFT_CH, nSamples * 2);
+            aSetBuffer(cmd++, A_AUX, DMEM_ADDR_RIGHT_CH, DMEM_ADDR_WET_LEFT_CH, DMEM_ADDR_WET_RIGHT_CH);
+        }
+    }
+
+    if (targetLeft == sourceLeft && targetRight == sourceRight && !note->envMixerNeedsInit) {
+
+        mixerFlags = A_CONTINUE;
+    } else {
+        mixerFlags = A_INIT;
+
+        rampLeft = gCurrentLeftVolRamping[targetLeft >> 5] * gCurrentRightVolRamping[sourceLeft >> 5];
+        rampRight = gCurrentLeftVolRamping[targetRight >> 5] * gCurrentRightVolRamping[sourceRight >> 5];
+
+        // The operation's parameters change meanings depending on flags
+        aSetVolume(cmd++, A_VOL | A_LEFT, sourceLeft, 0, 0);
+        aSetVolume(cmd++, A_VOL | A_RIGHT, sourceRight, 0, 0);
+        aSetVolume32(cmd++, A_RATE | A_LEFT, targetLeft, rampLeft);
+        aSetVolume32(cmd++, A_RATE | A_RIGHT, targetRight, rampRight);
+        aSetVolume(cmd++, A_AUX, gVolume, 0, note->reverbVol << 8);
+    }
+
+    if (gUseReverb && note->reverbVol != 0) {
+        aEnvMixer(cmd++, mixerFlags | A_AUX,
+                  VIRTUAL_TO_PHYSICAL2(synthesisState->synthesisBuffers->mixEnvelopeState));
+
+        if (note->stereoStrongRight) {
+            aSetBuffer(cmd++, 0, 0, 0, nSamples * 2);
+            // 0x8000 is -100%, so subtract sound instead of adding...
+            aMix(cmd++, 0, /*gain*/ 0x8000, /*in*/ DMEM_ADDR_STEREO_STRONG_TEMP_DRY,
+                 /*out*/ DMEM_ADDR_LEFT_CH);
+            aMix(cmd++, 0, /*gain*/ 0x8000, /*in*/ DMEM_ADDR_STEREO_STRONG_TEMP_WET,
+                 /*out*/ DMEM_ADDR_WET_LEFT_CH);
+        } else if (note->stereoStrongLeft) {
+            aSetBuffer(cmd++, 0, 0, 0, nSamples * 2);
+            aMix(cmd++, 0, /*gain*/ 0x8000, /*in*/ DMEM_ADDR_STEREO_STRONG_TEMP_DRY,
+                 /*out*/ DMEM_ADDR_RIGHT_CH);
+            aMix(cmd++, 0, /*gain*/ 0x8000, /*in*/ DMEM_ADDR_STEREO_STRONG_TEMP_WET,
+                 /*out*/ DMEM_ADDR_WET_RIGHT_CH);
+        }
+    } else {
+        aEnvMixer(cmd++, mixerFlags, VIRTUAL_TO_PHYSICAL2(synthesisState->synthesisBuffers->mixEnvelopeState));
+
+        if (note->stereoStrongRight) {
+            aSetBuffer(cmd++, 0, 0, 0, nSamples * 2);
+            aMix(cmd++, 0, /*gain*/ 0x8000, /*in*/ DMEM_ADDR_STEREO_STRONG_TEMP_DRY,
+                 /*out*/ DMEM_ADDR_LEFT_CH);
+        } else if (note->stereoStrongLeft) {
+            aSetBuffer(cmd++, 0, 0, 0, nSamples * 2);
+            aMix(cmd++, 0, /*gain*/ 0x8000, /*in*/ DMEM_ADDR_STEREO_STRONG_TEMP_DRY,
+                 /*out*/ DMEM_ADDR_RIGHT_CH);
+        }
+    }
+    return cmd;
+}
+u64 *note_apply_headset_pan_effects(u64 *cmd, struct NoteSubEu *noteSubEu, struct NoteSynthesisState *note, s32 bufLen, s32 flags, s32 leftRight) {
+    u16 dest;
+    u16 pitch;
+    u8 prevPanShift;
+    u8 panShift;
+    UNUSED u8 unkDebug;
+
+    switch (leftRight) {
+        case 1:
+            dest = DMEM_ADDR_LEFT_CH;
+            panShift = noteSubEu->headsetPanRight;
+            note->prevHeadsetPanLeft = 0;
+            prevPanShift = note->prevHeadsetPanRight;
+            note->prevHeadsetPanRight = panShift;
+            break;
+        case 2:
+            dest = DMEM_ADDR_RIGHT_CH;
+            panShift = noteSubEu->headsetPanLeft;
+            note->prevHeadsetPanRight = 0;
+
+            prevPanShift = note->prevHeadsetPanLeft;
+            note->prevHeadsetPanLeft = panShift;
+            break;
+        default:
+            return cmd;
+    }
+
+    if (flags != 1) { // A_INIT?
+        // Slightly adjust the sample rate in order to fit a change in pan shift
+        if (prevPanShift == 0) {
+            // Kind of a hack that moves the first samples into the resample state
+            aDMEMMove(cmd++, DMEM_ADDR_NOTE_PAN_TEMP, DMEM_ADDR_TEMP, 8);
+            aClearBuffer(cmd++, 8, 8); // Set pitch accumulator to 0 in the resample state
+            aDMEMMove(cmd++, DMEM_ADDR_NOTE_PAN_TEMP, DMEM_ADDR_TEMP + 0x10,
+                      0x10); // No idea, result seems to be overwritten later
+
+            aSetBuffer(cmd++, 0, 0, DMEM_ADDR_TEMP, 32);
+            aSaveBuffer(cmd++, VIRTUAL_TO_PHYSICAL2(note->synthesisBuffers->panResampleState));
+
+            pitch = (bufLen << 0xf) / (bufLen + panShift - prevPanShift + 8);
+            if (pitch) {
+            }
+            aSetBuffer(cmd++, 0, DMEM_ADDR_NOTE_PAN_TEMP + 8, DMEM_ADDR_TEMP, panShift + bufLen - prevPanShift);
+            aResample(cmd++, 0, pitch, VIRTUAL_TO_PHYSICAL2(note->synthesisBuffers->panResampleState));
+        } else {
+            if (panShift == 0) {
+                pitch = (bufLen << 0xf) / (bufLen - prevPanShift - 4);
+            } else {
+                pitch = (bufLen << 0xf) / (bufLen + panShift - prevPanShift);
+            }
+
+            if (unkDebug) { // Fake
+            }
+            
+            aSetBuffer(cmd++, 0, DMEM_ADDR_NOTE_PAN_TEMP, DMEM_ADDR_TEMP, panShift + bufLen - prevPanShift);
+            aResample(cmd++, 0, pitch, VIRTUAL_TO_PHYSICAL2(note->synthesisBuffers->panResampleState));
+        }
+
+        if (prevPanShift != 0) {
+            aSetBuffer(cmd++, 0, DMEM_ADDR_NOTE_PAN_TEMP, 0, prevPanShift);
+            aLoadBuffer(cmd++, VIRTUAL_TO_PHYSICAL2(note->synthesisBuffers->panSamplesBuffer));
+            aDMEMMove(cmd++, DMEM_ADDR_TEMP, DMEM_ADDR_NOTE_PAN_TEMP + prevPanShift, panShift + bufLen - prevPanShift);
+        } else {
+            aDMEMMove(cmd++, DMEM_ADDR_TEMP, DMEM_ADDR_NOTE_PAN_TEMP, panShift + bufLen - prevPanShift);
+        }
+    } else {
+        // Just shift right
+        aDMEMMove(cmd++, DMEM_ADDR_NOTE_PAN_TEMP, DMEM_ADDR_TEMP, bufLen);
+        aDMEMMove(cmd++, DMEM_ADDR_TEMP, DMEM_ADDR_NOTE_PAN_TEMP + panShift, bufLen);
+        aClearBuffer(cmd++, DMEM_ADDR_NOTE_PAN_TEMP, panShift);
+    }
+
+    if (panShift) {
+        // Save excessive samples for next iteration
+        aSetBuffer(cmd++, 0, 0, DMEM_ADDR_NOTE_PAN_TEMP + bufLen, panShift);
+        aSaveBuffer(cmd++, VIRTUAL_TO_PHYSICAL2(note->synthesisBuffers->panSamplesBuffer));
+    }
+
+    aSetBuffer(cmd++, 0, 0, 0, bufLen);
+    aMix(cmd++, 0, /*gain*/ 0x7fff, /*in*/ DMEM_ADDR_NOTE_PAN_TEMP, /*out*/ dest);
+
+    return cmd;
+}

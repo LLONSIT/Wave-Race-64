@@ -74,7 +74,7 @@ extern s16 D_80228A16;
 extern s32 D_i1_802C9440;
 extern s32 D_i1_802C9570;
 extern s32 D_80192610;
-extern s32 D_80192630;
+extern s16 D_80192630[];
 extern s32 D_800D461C;
 extern s32 D_800DAB1C;
 extern s32 D_800DAB24;
