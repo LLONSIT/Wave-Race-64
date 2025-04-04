@@ -8,7 +8,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/libultra/87D50/__osCheckPackId.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/libultra/87D50/func_800CDB78.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/libultra/87D50/__osGetId.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/libultra/87D50/__osCheckId.s")
 

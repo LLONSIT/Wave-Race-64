@@ -168,6 +168,7 @@ __osSpGetStatus = 0x800CBF10;
 osSpTaskYielded = 0x800C66C0;
 osEepromLongWrite = 0x800C8410;
 __osGetCause = 0x800D20B0;
+__osGetId = 0x800CDB78;
 rspbootTextStart = 0x800D22B0;//name_end:rspbootTextEnd
 gspF3DEX_fifoTextStart = 0x800D2380;//name_end:gspF3DEX_fifoTextEnd
 gspF3DEX_fifoDataStart = 0x800EE310; //name_end:gspF3DEX_fifoDataEnd
