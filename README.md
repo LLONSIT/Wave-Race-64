@@ -9,7 +9,6 @@ A early decompilation of a game with many waves!
 <p align="left">
     <a href="" alt="WR64_Total_Functions">
         <img src="https://img.shields.io/badge/Functions%2097%2F1148-17.78%25-blue" /></a>
-  
 </p>
 
 - Assets

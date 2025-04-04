@@ -47,8 +47,10 @@ extern f32 D_801C4080[];
 extern f32 D_801C40A0[];
 extern f32 D_801C4058;
 extern struct UnkStruct_801C2C24 D_801C2948[];
+extern struct UnkStruct_801BC940 D_801BC940[];
+extern s32 D_801C4110;
 
-void Math_Normalize_VectorComponents(f32*, f32*);
+
 void func_80086CE0(void);
 f32 func_80088D94(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5);
 
@@ -76,7 +78,26 @@ void func_8008044C(void) {
     func_80087AE8();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_800804C4.s")
+void func_800804C4(void) {
+    s32 temp_a0;
+
+    temp_a0 = D_801C3C58->unk8;
+    
+    if (((D_801C3C54[temp_a0].unk70 * (D_801C3C50->unk44 - D_801C3C54[temp_a0].unk0) ) + 
+        (D_801C3C54[temp_a0].unk74 * (D_801C3C50->unk4C - D_801C3C54[temp_a0].unk8))) > 0.0f) {
+
+        D_801C2948[D_801C3C58->unk0].unk0 = D_801C3C54[temp_a0].unkCC[D_801C3C58->unk4];
+    }
+    
+    temp_a0 =  D_801C3C54[D_801C3C58->unk8].unkF4[D_801C3C58->unk4];
+
+    
+    if (((D_801C3C54[temp_a0].unk70 * (D_801C3C50->unk44 - D_801C3C54[temp_a0].unk0) ) + 
+        (D_801C3C54[temp_a0].unk74 * (D_801C3C50->unk4C - D_801C3C54[temp_a0].unk8))) < 0.0f) {
+        
+        D_801C2948[D_801C3C58->unk0].unk0 = D_801C3C54[temp_a0].unkF4[D_801C3C58->unk4];
+    }
+}
 
 void func_80080630(void) {
     s32 sp4;
@@ -1609,7 +1630,35 @@ s32 func_80086C40(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
     return -1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80086CE0.s")
+void func_80086CE0(void) {
+    f32 temp_f14;
+    f32 temp_f18;
+    f32 temp_f2;
+    f32 temp_f4;
+    f32 temp_f6;
+    f32 var_f0;
+    struct UnkStruct_801BC940* var_v0;
+    s32 i;
+
+    var_f0 = 1e8f;
+
+    for (i = 0; i < D_801C4110; i++) {
+        temp_f2 = D_801BC940[i].unk0 - D_801C3C50->unk44;
+        temp_f14 = D_801BC940[i].unk8 - D_801C3C50->unk4C;
+        temp_f18 = SQ(temp_f2) + SQ(temp_f14);
+
+        if (temp_f18 < var_f0) {
+            var_f0 = temp_f18;
+        }
+    }
+
+    if (var_f0 < 2250000.0f) {
+        D_801C3C58->unk98 = 1;
+        return;
+    }
+    D_801C3C58->unk98 = 0;
+}
+
 
 void func_80086DA8(void) {
     f32 temp_f0;
