@@ -23,7 +23,7 @@ BIN_DIR = bin
 OVL_SRC_DIR   = $(SRC_DIR)/overlays
 OVL_ASSET_DIR = $(BIN_DIR)/overlays
 
-LIBULTRA_SRC_DIRS = $(SRC_DIR)/os $(SRC_DIR)/os/libc $(SRC_DIR)/os/audio $(SRC_DIR)/libultra_nm $(SRC_DIR)/os/gu 
+LIBULTRA_SRC_DIRS = $(SRC_DIR)/os $(SRC_DIR)/os/libc $(SRC_DIR)/os/audio $(SRC_DIR)/libultra $(SRC_DIR)/os/gu 
 
 OVERLAY_SRC_DIRS = $(OVL_SRC_DIR)/ovl_i0 $(OVL_SRC_DIR)/ovl_i1 $(OVL_SRC_DIR)/ovl_i2 $(OVL_SRC_DIR)/ovl_i3 $(OVL_SRC_DIR)/ovl_i4 $(OVL_SRC_DIR)/ovl_i5 $(OVL_SRC_DIR)/ovl_i6 \
 		$(OVL_SRC_DIR)/ovl_i7 $(OVL_SRC_DIR)/ovl_i8 $(OVL_SRC_DIR)/ovl_i9 $(OVL_SRC_DIR)/ovl_i10 $(OVL_SRC_DIR)/ovl_i11 $(OVL_SRC_DIR)/ovl_i12 $(OVL_SRC_DIR)/ovl_i13 \
