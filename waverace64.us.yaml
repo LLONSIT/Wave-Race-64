@@ -158,7 +158,7 @@ segments:
       - [0x861C0, c, os/__osSiRawStartDma]
       - [0x86270, c, libultra/unkSeg_86270]
       - [0x86280, c, libultra/unkSeg_86280]
-      - [0x86590, c, libultra/unkSeg_86590]
+      - [0x86590, asm, libultra/writebackdcache]
       - [0x86610, c, libultra/spsetpc]
       - [0x86650, c, libultra/sprawdma]
       - [0x866E0, c, os/__osSpDeviceBusy]
