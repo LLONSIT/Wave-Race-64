@@ -1,4 +1,4 @@
-#include "common.h"
+#include "global.h"
 
 // test
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80051EC0.s")

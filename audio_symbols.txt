@@ -101,9 +101,19 @@ alSeqFileNew = 0x800CA908; //defined:true
 
 // synthesis.c
 prepare_reverb_ring_buffer = 0x800B4DD0;
-load_wave_samples = 0x800B67EC;
+gCurrentRightVolRamping = 0x8003E54C;
+gCurrentLeftVolRamping = 0x8003E548;
+gVolume = 0x80038540;
+gUseReverb = 0x80038542;
+
+note_apply_headset_pan_effects = 0x800B6F18;
 
 gSynthesisReverbs = 0x80038110;
+
+// Unsorted
+load_wave_samples = 0x800B67EC;
+process_envelope = 0x800B6900;
+final_resample = 0x800B68A4;
 
 aspMainTextStart = 0x800D37B0; //name_end:aspMainTextEnd
 aspMainDataStart = 0x800EEB10; //name_end:aspMainDataEnd

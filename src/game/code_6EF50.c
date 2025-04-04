@@ -1,10 +1,18 @@
 #include "common.h"
 
+typedef struct UnkPool {
+    s8 pad0[0x4140];
+    Mtx unk_4140[1];
+} UnkPool;
+
+extern struct UnkPool* D_801AE948;
+extern struct UnkPool D_5000000;
 extern int D_801D7DB0;
 extern struct Vec3f D_800E6DD0[4];
 extern s32 D_800E6E30[];
 extern struct UnkStruct_801D7B70 D_801D7B70[];
 extern s32 D_801D7DB0;
+extern s32 D_801AE950;
 
 void func_801ED338(f32, f32);
 s32 func_801ED304(int);
@@ -71,6 +79,54 @@ void create_obj(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
     func_800AF43C(arg0, arg1 + 24.0f, arg2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_6EF50/func_800B49C4.s")
+void func_800B49C4(void) {
+    int i;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_6EF50/func_800B4ABC.s")
+    for (i = 0; i < 16; i++) {
+        struct UnkStruct_801D7B70* temp_v0 = &D_801D7B70[i];
+
+        if (temp_v0->unk0 != 0) {
+            temp_v0->unk4++;
+            temp_v0->unk8 += temp_v0->unk14;
+            temp_v0->unkC += temp_v0->unk18;
+            temp_v0->unk10 += temp_v0->unk1C;
+            temp_v0->unk18 -= 6.0f;
+            if (temp_v0->unkC < -128.0f) {
+                temp_v0->unk0 = 0;
+            }
+        }
+    }
+}
+
+void func_800B4ABC(Gfx** gdl) {
+    Gfx* gdlh;
+    s32 i;
+
+    gdlh = *gdl;
+    gSPClearGeometryMode(gdlh++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
+                                     G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | 0xFFE0CDF8);
+    gSPSetGeometryMode(gdlh++, G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH);
+    gSPTexture(gdlh++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+    gDPPipeSync(gdlh++);
+    gDPSetCycleType(gdlh++, G_CYC_2CYCLE);
+    gDPSetTexturePersp(gdlh++, G_TP_PERSP);
+    gDPSetTextureFilter(gdlh++, G_TF_BILERP);
+    gDPSetCombineMode(gdlh++, G_CC_MODULATEIA, G_CC_MODULATEIA2);
+    gDPSetRenderMode(gdlh++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+    gDPSetAlphaCompare(gdlh++, G_AC_NONE);
+
+    for (i = 0; i < 16; i++) {
+        struct UnkStruct_801D7B70* var_s0 = &D_801D7B70[i];
+
+        if (var_s0->unk0 != 0) {
+            func_801EE46C(&D_801AE948->unk_4140[D_801AE950], (-var_s0->unk4) * 8, -var_s0->unk1C, 0, var_s0->unk14,
+                          var_s0->unk8, var_s0->unkC, var_s0->unk10);
+
+            gSPMatrix(gdlh++, &D_5000000.unk_4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+
+            gSPDisplayList(gdlh++, var_s0->unk20);
+        }
+    }
+
+    *gdl = gdlh;
+}
