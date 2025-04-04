@@ -23,21 +23,9 @@ BIN_DIR = bin
 OVL_SRC_DIR   = $(SRC_DIR)/overlays
 OVL_ASSET_DIR = $(BIN_DIR)/overlays
 
-LIBULTRA_SRC_DIRS = $(SRC_DIR)/os $(SRC_DIR)/os/libc $(SRC_DIR)/os/audio $(SRC_DIR)/libultra_nm $(SRC_DIR)/os/gu 
-
-OVERLAY_SRC_DIRS = $(OVL_SRC_DIR)/ovl_i0 $(OVL_SRC_DIR)/ovl_i1 $(OVL_SRC_DIR)/ovl_i2 $(OVL_SRC_DIR)/ovl_i3 $(OVL_SRC_DIR)/ovl_i4 $(OVL_SRC_DIR)/ovl_i5 $(OVL_SRC_DIR)/ovl_i6 \
-		$(OVL_SRC_DIR)/ovl_i7 $(OVL_SRC_DIR)/ovl_i8 $(OVL_SRC_DIR)/ovl_i9 $(OVL_SRC_DIR)/ovl_i10 $(OVL_SRC_DIR)/ovl_i11 $(OVL_SRC_DIR)/ovl_i12 $(OVL_SRC_DIR)/ovl_i13 \
-		$(OVL_SRC_DIR)/ovl_i14 $(OVL_SRC_DIR)/ovl_i15 $(OVL_SRC_DIR)/ovl_i16
-
-OVERLAY_ASSETS_DIRS = $(OVL_ASSET_DIR)/ovl_i0 $(OVL_ASSET_DIR)/ovl_i1 $(OVL_ASSET_DIR)/ovl_i2 $(OVL_ASSET_DIR)/ovl_i3 $(OVL_ASSET_DIR)/ovl_i4 $(OVL_ASSET_DIR)/ovl_i5 $(OVL_ASSET_DIR)/ovl_i6 \
-		$(OVL_ASSET_DIR)/ovl_i7 $(OVL_ASSET_DIR)/ovl_i8 $(OVL_ASSET_DIR)/ovl_i9 $(OVL_ASSET_DIR)/ovl_i10 $(OVL_ASSET_DIR)/ovl_i11 $(OVL_ASSET_DIR)/ovl_i12 $(OVL_ASSET_DIR)/ovl_i13 \
-		$(OVL_ASSET_DIR)/ovl_i14 $(OVL_ASSET_DIR)/ovl_i15 $(OVL_ASSET_DIR)/ovl_i16
-
-
 BIN_DIRS  = bin bin/mio0_seg $(OVERLAY_ASSETS_DIRS)
 
-DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/game $(SRC_DIR)/codeseg $(SRC_DIR)/game/core $(SRC_DIR)/game/audio $(OVERLAY_SRC_DIRS) $(LIBULTRA_SRC_DIRS)
-SRC_DIRS = $(DEFINE_SRC_DIRS)
+SRC_DIRS      := $(shell find src -type d)
 
 TOOLS_DIR = tools
 
@@ -76,8 +64,6 @@ TORCH    := $(TOOLS)/Torch/cmake-build-release/torch
 XGCC     = mips64-elf-gcc
 
 GREP     = grep -rl
-
-N_THREADS ?= $(shell nproc)
 
 #For segments without GLOBAL_ASM
 
@@ -137,7 +123,7 @@ VERIFY = verify
 CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn  -nostdinc -g0
 CFLAGS += $(DEFINES)
 # ignore compiler warnings about anonymous structs
-CFLAGS += -woff 624,649,838,712,516,513,596,564,594,709,807
+CFLAGS += -woff 649,838
 CFLAGS += $(INCLUDE_CFLAGS)
 
 CHECK_WARNINGS := -Wall -Wextra -Wno-format-security -Wno-unknown-pragmas -Wunused-function -Wno-unused-parameter -Wno-unused-variable -Wno-missing-braces -Wno-int-conversion
@@ -201,11 +187,6 @@ assets:
 
 splat: $(SPLAT)
 
-init: splat tools
-	@$(MAKE) clean
-	@make extract
-	@make -j $(N_THREADS)
-
 extract: splat tools
 	rm -rf asm
 	rm -rf build
@@ -214,8 +195,7 @@ extract: splat tools
 
 dependencies: tools
 	@make -C tools
-	@$(PYTHON) -m pip install -r tools/splat/requirements.txt #Install the splat dependencies
-	@$(PYTHON) -m pip install GitPython colour
+	@$(PYTHON) -m pip install -r tools/splat/requirements.txt #Installing the splat dependencies
 
 expected:
 	mkdir -p expected/build

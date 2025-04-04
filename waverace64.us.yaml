@@ -4,6 +4,8 @@ sha1: 508dfc2d4caa42b6f6de5263d0aed5e44ac7966a
 options:
   basename: waverace64
   target_path: baserom.us.z64
+  elf_path: build/waverace64.us.elf
+
   base_path: .
   compiler: IDO
   find_file_boundaries: True
@@ -29,6 +31,10 @@ options:
   rodata_string_guesser_level: 2
   migrate_rodata_to_functions: True
   disasm_unknown: True
+  create_asm_dependencies: True
+  ld_dependencies: True
+#  o_as_suffix: True
+
 
 segments:
   - name: header
