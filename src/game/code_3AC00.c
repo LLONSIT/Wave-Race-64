@@ -233,8 +233,7 @@ s32 func_80080D20(void) {
 }
 
 void func_80080E34(void) {
-
-    D_801C3C50->unkB50 &= 0xFFEF;
+    D_801C3C50->unkB50 &= ~0x10;
     if ((D_801CE638 != 0) && (D_801CE638 != 8) && (D_801C3C50->unkC7C[0] == 0) && (D_801C3C58->unk98 == 0)) {
         D_801C3C50->unkB50 ^= 0x4000;
     }

@@ -128,7 +128,7 @@ segments:
       - [0x81DE0, c, libultra_nm/UnkLibultraSeg_81DE0] # gu funcs
       - [0x822A0, c, libultra_nm/UnkLibultraSeg_822A0]
       - [0x82AD0, c, os/osEepromLongRead]
-      - [0x82C10, c, libultra_nm/UnkLibultraSeg_82C10]
+      - [0x82C10, c, libultra_nm/conteeplongwrite]
       - [0x82D50, c, libultra_nm/UnkLibultraSeg_82D50]
       - [0x82DC0, c, libultra_nm/UnkLibultraSeg_82DC0]
       - [0x830F0, c, libultra_nm/UnkLibultraSeg_830F0]
