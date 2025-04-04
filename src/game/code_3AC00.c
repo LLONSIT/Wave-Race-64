@@ -76,7 +76,26 @@ void func_8008044C(void) {
     func_80087AE8();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_800804C4.s")
+void func_800804C4(void) {
+    s32 temp_a0;
+
+    temp_a0 = D_801C3C58->unk8;
+    
+    if (((D_801C3C54[temp_a0].unk70 * (D_801C3C50->unk44 - D_801C3C54[temp_a0].unk0) ) + 
+        (D_801C3C54[temp_a0].unk74 * (D_801C3C50->unk4C - D_801C3C54[temp_a0].unk8))) > 0.0f) {
+
+        D_801C2948[D_801C3C58->unk0].unk0 = D_801C3C54[temp_a0].unkCC[D_801C3C58->unk4];
+    }
+    
+    temp_a0 =  D_801C3C54[D_801C3C58->unk8].unkF4[D_801C3C58->unk4];
+
+    
+    if (((D_801C3C54[temp_a0].unk70 * (D_801C3C50->unk44 - D_801C3C54[temp_a0].unk0) ) + 
+        (D_801C3C54[temp_a0].unk74 * (D_801C3C50->unk4C - D_801C3C54[temp_a0].unk8))) < 0.0f) {
+        
+        D_801C2948[D_801C3C58->unk0].unk0 = D_801C3C54[temp_a0].unkF4[D_801C3C58->unk4];
+    }
+}
 
 void func_80080630(void) {
     s32 sp4;
