@@ -166,7 +166,7 @@ segments:
       - [0x86720, c, libultra/getthreadpri]
       - [0x86740, c, os/osPiGetDeviceType]
       - [0x86750, c, libultra/viswapcontext]
-      - [0x86AB0, c, libultra/unkSeg_86AB0]
+      - [0x86AB0, c, libultra/piacs]
       - [0x86B70, c, os/osPiRawStartDma]
       - [0x86C50, c, os/osDevMgrMain]
       - [0x86DD0, asm, libultra/__osSetSR]
