@@ -163,7 +163,7 @@ segments:
       - [0x86650, c, libultra/unkSeg_86650]
       - [0x866E0, c, os/__osSpDeviceBusy]
       - [0x86710, c, libultra/unkSeg_86710]
-      - [0x86720, c, libultra/unkSeg_86720]
+      - [0x86720, c, libultra/getthreadpri]
       - [0x86740, c, os/osPiGetDeviceType]
       - [0x86750, c, libultra/viswapcontext]
       - [0x86AB0, c, libultra/unkSeg_86AB0]
