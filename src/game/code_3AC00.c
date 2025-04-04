@@ -46,7 +46,7 @@ extern f32 D_801C4060[];
 extern f32 D_801C4080[];
 extern f32 D_801C40A0[];
 extern f32 D_801C4058;
-extern struct UnkStruct_801C2C24  D_801C2948[];
+extern struct UnkStruct_801C2C24 D_801C2948[];
 
 void Math_Normalize_VectorComponents(f32*, f32*);
 void func_80086CE0(void);
