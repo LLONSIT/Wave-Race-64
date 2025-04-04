@@ -130,7 +130,7 @@ segments:
       - [0x82AD0, c, os/osEepromLongRead]
       - [0x82C10, c, libultra/conteeplongwrite]
       - [0x82D50, c, libultra/conteepprobe]
-      - [0x82DC0, c, libultra/UnkLibultraSeg_82DC0]
+      - [0x82DC0, c, libultra/pidma]
       - [0x830F0, c, libultra/UnkLibultraSeg_830F0]
       - [0x83270, c, libultra/UnkLibultraSeg_83270]
       - [0x83410, c, libultra/UnkLibultraSeg_83410]
