@@ -180,6 +180,7 @@ segments:
       - [0x87870, c, libultra/conteepwrite]
       - [0x87D50, c, libultra/contpfs]
       - [0x889A0, c, libultra/889A0]
+      - [0x89410, c, libultra/contramread]
       - [0x897A0, asm, contramwrite]
       - [0x89B30, asm, xprintf]
       - [0x8ACC0, asm, strchr]
