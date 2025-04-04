@@ -25,6 +25,8 @@ OVL_ASSET_DIR = $(BIN_DIR)/overlays
 
 BIN_DIRS  = bin bin/mio0_seg $(OVERLAY_ASSETS_DIRS)
 
+DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/game $(SRC_DIR)/codeseg $(SRC_DIR)/game/core $(SRC_DIR)/game/audio $(OVERLAY_SRC_DIRS) $(LIBULTRA_SRC_DIRS)
+
 SRC_DIRS      := $(shell find src -type d)
 
 TOOLS_DIR = tools
@@ -64,6 +66,8 @@ TORCH    := $(TOOLS)/Torch/cmake-build-release/torch
 XGCC     = mips64-elf-gcc
 
 GREP     = grep -rl
+
+N_THREADS ?= $(shell nproc)
 
 #For segments without GLOBAL_ASM
 
@@ -123,7 +127,7 @@ VERIFY = verify
 CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn  -nostdinc -g0
 CFLAGS += $(DEFINES)
 # ignore compiler warnings about anonymous structs
-CFLAGS += -woff 649,838
+CFLAGS += -woff 624,649,838,712,516,513,596,564,594,709,807
 CFLAGS += $(INCLUDE_CFLAGS)
 
 CHECK_WARNINGS := -Wall -Wextra -Wno-format-security -Wno-unknown-pragmas -Wunused-function -Wno-unused-parameter -Wno-unused-variable -Wno-missing-braces -Wno-int-conversion
@@ -187,6 +191,11 @@ assets:
 
 splat: $(SPLAT)
 
+init: splat tools
+	@$(MAKE) clean
+	@make extract
+	@make -j $(N_THREADS)
+
 extract: splat tools
 	rm -rf asm
 	rm -rf build
@@ -195,7 +204,8 @@ extract: splat tools
 
 dependencies: tools
 	@make -C tools
-	@$(PYTHON) -m pip install -r tools/splat/requirements.txt #Installing the splat dependencies
+	@$(PYTHON) -m pip install -r tools/splat/requirements.txt #Install the splat dependencies
+	@$(PYTHON) -m pip install GitPython colour
 
 expected:
 	mkdir -p expected/build
