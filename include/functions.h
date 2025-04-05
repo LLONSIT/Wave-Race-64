@@ -231,5 +231,10 @@ Gfx* func_80069594(Gfx*);
 void func_8006E674(Gfx**);        
 Gfx* func_800ADF90(Gfx*);         
 void func_800B305C(Gfx**);   
+Gfx* func_80051538(Gfx*);                                 
+Gfx* func_8007FFA8(Gfx*);         
+Gfx* func_8008BD2C(Gfx*);         
+Gfx* func_800933C4(Gfx*);                    
+void func_801FC4D4(Gfx**);        
 
 #endif /*FUNCTIONS_H*/

@@ -299,7 +299,35 @@ s32 func_80093104(void) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_8009328C.s")
+Gfx* func_8009328C(Gfx* arg0) {
+    if (gPlayers == ONE_PLAYER) {
+        D_800DAB2C = 0;
+        arg0 = func_8008FB74(arg0);
+        func_8006E674(&arg0);
+        arg0 = func_800687A4(arg0);
+        arg0 = func_8007FFA8(arg0);
+        if ((D_801CE638 != 4) && (D_801CE638 != 0xA)) {
+            arg0 = func_800ADF90(arg0);
+        }
+        arg0 = func_80090F58(arg0);
+        arg0 = func_80069594(arg0);
+        arg0 = func_80068538(arg0);
+        configSignalRectangle(&arg0);
+        func_800B305C(&arg0);
+        arg0 = func_8008BD2C(arg0);
+    } else {
+        D_800DAB2C = 0;
+        arg0 = func_800933C4(arg0);
+        D_800DAB2C = 1;
+        arg0 = func_800933C4(arg0);
+        D_800DAB2C = 0;
+    }
+    arg0 = func_80051538(arg0);
+    if ((D_800DAB24 != 0x2D) || (D_80228AA4 != 2)) {
+        func_801FC4D4(&arg0);
+    }
+    return arg0;
+}
 
 Gfx* func_800933C4(Gfx* arg0) {
 
