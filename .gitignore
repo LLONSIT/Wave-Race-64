@@ -21,6 +21,7 @@ bin/
 
 # Automatically generated files, so they should be ignored
 waverace64.ld
+waverace64.d
 undefined_funcs_auto.txt
 undefined_syms_auto.txt
 torch.hash.yml
