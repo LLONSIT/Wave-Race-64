@@ -224,5 +224,18 @@ s32 func_800C9E30(void*, void*, void*);
 s32 func_800C9F60(void*, s32, void*);
 void func_801EE46C(Mtx* gdl, f32 arg1, f32 arg2,
 f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
+void configSignalRectangle(Gfx**);
+Gfx* func_80068538(Gfx*);         
+Gfx* func_800687A4(Gfx*);         
+Gfx* func_80069594(Gfx*);         
+void func_8006E674(Gfx**);        
+Gfx* func_800ADF90(Gfx*);         
+void func_800B305C(Gfx**);   
+Gfx* func_80051538(Gfx*);                                 
+Gfx* func_8007FFA8(Gfx*);         
+Gfx* func_8008BD2C(Gfx*);         
+Gfx* func_800933C4(Gfx*);                    
+void func_801FC4D4(Gfx**);        
 
+void func_801EBFE4(void);
 #endif /*FUNCTIONS_H*/

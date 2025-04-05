@@ -49,6 +49,8 @@ extern f32 D_801C4058;
 extern struct UnkStruct_801C2C24 D_801C2948[];
 extern struct UnkStruct_801BC940 D_801BC940[];
 extern s32 D_801C4110;
+extern s32 D_800D9874;
+extern s32 D_800DA9F8;
 
 void func_80086CE0(void);
 f32 func_80088D94(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5);
@@ -172,8 +174,6 @@ void func_80080864(void) {
     UnkStruct_800D9854 sp28;
 
     sp28 = D_800D9854;
-
-    (void) sp28;
 
     D_801C3C58->unk48 = (func_8004D30C(D_801C3C50->unk44, D_801C3C50->unk4C) - (f32) D_80192458);
 
@@ -1273,7 +1273,126 @@ void func_80085408(void) {
     }
 }
 
+/*
+ * Scratch: https://decomp.me/scratch/c7EJc
+ * Score: 105 (99.62&)
+ */
+// Regalloc :(
+#ifdef NON_MATCHING
+void func_80085510(void) {
+    f32 sp4C;
+    f32 sp48;
+    f32 sp44;
+    f32 sp40;
+    f32 var_f2;
+    f32 temp_f0;
+    f32 temp_f18;
+    f32 var_f0;
+    f32 var_f12;
+    f32 temp;
+
+    if (D_800DAB68 != 0) {
+        func_80083FBC();
+    } else {
+        func_80081CC8();
+    }
+
+    func_80085408();
+    func_80087444();
+
+    sp4C = D_801C4000.unk10;
+    sp48 = D_801C4000.unk14;
+
+    func_800853A0();
+
+    sp44 = D_801C3C50->unk84;
+    sp40 = D_801C3C50->unk8C;
+
+    Math_Normalize_VectorComponents(&sp44, &sp40);
+
+    var_f0 = (sp4C * sp44) + (sp48 * sp40);
+    if (var_f0 < 0.15) {
+        D_801C3C58->unk8C = 0;
+        var_f0 = (sp4C * sp44) + (sp48 * sp40);
+    }
+
+    temp_f18 = ((D_801C3C58->pad54 * 70.0f) / D_801C3C50->unkBB8);
+
+    var_f12 = var_f0;
+    D_801C3C58->pad58 = var_f0;
+
+    temp = ((D_801C3C58->unkD4 * sp4C) - (sp48 * D_801C3C58->unkD0));
+
+    if ((temp * var_f12) < 0.0f) {
+
+        sp4C = 0.0f;
+        D_801C3C50->unkB53 = 0;
+
+    } else {
+        if (ABS(var_f12) > 0.5f) {
+            if (var_f12 < 0) {
+                sp4C = (s32) temp_f18;
+                D_801C3C50->unkB53 = -0x2A;
+            } else {
+                sp4C = (s32) (-1.0f * temp_f18);
+                D_801C3C50->unkB53 = -0x2A;
+            }
+        } else {
+            temp = ABS(var_f12);
+            if (temp > 0.05f) {
+                if (var_f12 < 0) {
+                    var_f0 = (-1.0f * var_f12) / 0.5f;
+                    sp4C = (s32) (var_f0 * temp_f18);
+                    D_801C3C50->unkB53 = (s32) (var_f0 * -35.0f);
+                } else {
+                    temp = var_f12 / 0.5f;
+                    sp4C = (s32) (-temp_f18 * temp);
+                    D_801C3C50->unkB53 = (u8) (s32) (temp * -35.0f);
+                }
+            } else {
+                sp4C = 0.0f;
+                D_801C3C50->unkB53 = 0;
+            }
+        }
+    }
+    if (D_801C3C58->unk40 != 0) {
+        if (var_f0 < 0) {
+            sp4C = 70.0f;
+        } else {
+            sp4C = -70.0f;
+        }
+    }
+
+    if (sp4C > 70.0f) {
+        sp4C = 70.0f;
+    }
+    if (sp4C < -70.0f) {
+        sp4C = -70.0f;
+    }
+    var_f12 = sp4C - D_801C3C50->unkB52;
+
+    if (var_f12 > 35.0f) {
+        D_801C3C50->unkB52 = D_801C3C50->unkB52 + 0x23;
+        var_f12 = sp4C - D_801C3C50->unkB52;
+    }
+
+    if (var_f12 < -35.0f) {
+        D_801C3C50->unkB52 -= 0x23;
+        var_f12 = sp4C - D_801C3C50->unkB52;
+    }
+
+    var_f0 = D_801C3C50->unkB52;
+
+    if ((var_f0 <= sp4C ? var_f12 : -var_f12) <= 35.0f) {
+        D_801C3C50->unkB52 = (s8) (s32) sp4C;
+    }
+
+    func_80085964();
+    D_801C3C58->unkA8 = (s32) D_801C3C50->unkB52;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80085510.s")
+#endif
 
 void func_80085964(void) {
 
@@ -2013,4 +2132,75 @@ void func_800875B8(s32 arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80087AE8.s")
+void func_80087AE8(void) {
+
+    if (D_801C3C50->unkC7C[0] != 0) {
+        D_801C3C58->unkDC[1] = 0;
+    }
+    if (D_801C3C58->unkDC[1] == 1) {
+        D_801C3C58->unkDC[1] = 2;
+    }
+    if ((D_801C3C50->unk15DE != 0) && (D_801C3C50->unkC7C[0] == 0)) {
+        D_801C3C58->unkDC[1] = 1;
+    }
+    switch (gCourseID) {
+        case DOLPHIN_PARK:
+            switch (D_800DA9F8) {
+                case 0:
+                    if (D_801C3C58->unk0 == 0) {
+                        func_800875B8(3, 0);
+                    } else {
+                        func_800875B8(0, 2);
+                    }
+                    break;
+                case 1:
+                    if (D_801C3C58->unk0 == 0) {
+                        func_800875B8(1, 0);
+                    } else {
+                        func_800875B8(0, 3);
+                    }
+                    break;
+                case 2:
+                    if (D_801C3C58->unk0 == 0) {
+                        func_800875B8(2, 0);
+                    } else {
+                        func_800875B8(0, 1);
+                    }
+                    break;
+            }
+            break;
+        case SUNNY_BEACH:
+            if (gGameModes == GMODE_STUNT) {
+
+                if ((D_801C2948[D_801C3C58->unk0].unk0 == 7) && (D_800D9874 != D_801C2948[D_801C3C58->unk0].unk0)) {
+                    u32 temp = -0x46;
+                    D_801C3C50->unk16F4 = 2;
+                    D_801C3C50->unkB53 = temp;
+                }
+
+                if ((D_801C2948[D_801C3C58->unk0].unk0 == 0xD) && (D_800D9874 != D_801C2948[D_801C3C58->unk0].unk0)) {
+
+                    D_801C3C50->unk16F4 = 1;
+
+                    D_801C3C50->unkB53 = 0x46;
+                }
+
+                if ((D_801C3C50->unk15DE != 0) && (D_801C3C50->unk48 < 60.0f)) {
+
+                    D_801C3C50->unkB52 = -0x46;
+                }
+
+                if (((D_801C3C50->unk15DE != 0) && (D_801C3C50->unk48 > 60.0f)) ||
+                    ((D_801C3C58->unk9C != 0) && (D_801C3C50->unk15DE == 0) && (D_801C3C50->unkC7C[0] == 0))) {
+
+                    D_801C3C50->unkB52 = 0x46;
+                }
+
+                if ((D_801C3C50->unk16D4 == 2) && ((f64) D_801C3C50->unk7C > 0.5)) {
+                    D_801C3C50->unkB52 = 0;
+                }
+            }
+            break;
+    }
+    D_800D9874 = D_801C2948[D_801C3C58->unk0].unk0;
+}

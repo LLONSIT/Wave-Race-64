@@ -48,7 +48,7 @@ void srand(int seed) {
     Seed = seed;
 }
 
-int rand(void) {
+u32 rand(void) {
     Seed = (Seed * 0x41C64E6D) + 0x3039;
     return Seed;
 }

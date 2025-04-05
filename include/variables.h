@@ -107,7 +107,6 @@ extern s8 D_802C7548;
 extern s32 D_802C756C;
 extern s32 D_i8_802C7040;
 extern s32 D_i8_802C74F8[];
-extern u16 D_801CB298[];
 extern s32 D_802C7564;
 extern s32 D_800DA9EC[];
 extern s8 D_801CB280;
@@ -323,5 +322,9 @@ extern UnkStruct_80192690 D_801926D8[];
 // extern Vec3f D_801CECA0[];
 extern Vec3f D_801CECB8[];
 extern f32 D_801CECC0;
+extern UnkStruct_func_i8_802C6E00 D_801CB298[];
+extern f32 D_801C39B4;
+extern u8 D_80030EC;
+extern s32 D_8001C58;
 
 #endif /* VARIABLES_H */
