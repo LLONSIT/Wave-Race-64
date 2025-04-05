@@ -9,7 +9,21 @@ static const char devstr4[] = "simultaneously goal !!\n";
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_80076240.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_800762D0.s")
+void func_800762D0(struct_800762D0* arg0) {
+    if (D_801CE638 == 1) {
+        if ((gGameModes == GMODE_STUNT) && (arg0->unk2C4 <= 0)) {
+            arg0->unk2EC = 2;
+        } else if (arg0->unk19C >= 0x927BF) {
+            arg0->unk2EC = 2;
+        } else {
+            arg0->unk2EC = 1;
+        }
+        if ((gGameModes != GMODE_2P_VS) || (arg0->unk2EC != 2)) {
+            arg0->unk32C = D_801C39B4;
+            D_801C39B4 += 10000.0f;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_80076378.s")
 
