@@ -237,4 +237,5 @@ Gfx* func_8008BD2C(Gfx*);
 Gfx* func_800933C4(Gfx*);                    
 void func_801FC4D4(Gfx**);        
 
+void func_801EBFE4(void);
 #endif /*FUNCTIONS_H*/

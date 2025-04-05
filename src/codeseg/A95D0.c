@@ -1,5 +1,12 @@
 #include "common.h"
 
+struct UnkStruct_801DB024 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+// TODO: Improve these matches
 void func_801DAFA0(void** arg0, s32 arg1) {
     *(f32*) (((u8*) (*arg0)) + 0x50) = 3.0f;
 }
@@ -20,7 +27,34 @@ void func_801DAFB8(void* arg0) {
     *(u32*) ((u8*) savedArg0 + 8) = (result % 19) + 0x19;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB024.s")
+void func_801DB024(struct UnkStruct_801DB024* arg0) {
+    if ((arg0->unk8 >= 0) && (((arg0->unk8 < 0x10)))) {
+        arg0->unk8 += 2;
+        if (arg0->unk8 >= 0x10) {
+            if (rand() & 7) {
+                arg0->unk8 = 0;
+            } else {
+                arg0->unk8 = 0x10;
+            }
+        }
+    } else {
+        if ((arg0->unk8 >= 0x19) && (((arg0->unk8 < 0x2D)))) {
+            arg0->unk8++;
+            if (arg0->unk8 >= 0x2D) {
+                if (rand() & 0xF) {
+                    arg0->unk8 = 0x2D;
+                    return;
+                }
+                arg0->unk8 = 0x19;
+            }
+        } else {
+            arg0->unk8++;
+            if (arg0->unk8 >= 0x37) {
+                arg0->unk8 = 0;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB0E4.s")
 

@@ -289,7 +289,7 @@ struct UnkStruct_801C3C50 {
     /* 0x15E0 */ char pad15E0[0xF4];                /* maybe part of unk15DE[0x7B]? */
     /* 0x16D4 */ s32 unk16D4;
     /* 0x16D8 */ char pad16D8[0x1C];                /* maybe part of unk16D4[8]? */
-    /* 0x16F4 */ u16 unk16F4;
+    /* 0x16F4 */ s16 unk16F4;
     /* 0x16F6 */ char pad16F6[2];
 };                                                  /* size = 0x16F8 */
 
@@ -304,7 +304,7 @@ struct UnkStruct_801C2C24 {
     /* 0x2F8 */ char pad2F8[0x58];                  /* maybe part of unk2F4[0x17]? */
     /* 0x350 */ struct UnkStruct_801C3C54* unk350;  /* inferred */
     /* 0x354 */ char pad354[0x24];                  /* maybe part of unk350[0xA]? */
-};             
+};
 typedef struct Controller {
     /* 0x00*/ u16 unk0;
     /* 0x02 */ u8 pad[0x1A];
