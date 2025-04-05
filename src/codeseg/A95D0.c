@@ -6,7 +6,6 @@ struct UnkStruct_801DB024 {
     s32 unk8;
 };
 
-
 // TODO: Improve these matches
 void func_801DAFA0(void** arg0, s32 arg1) {
     *(f32*) (((u8*) (*arg0)) + 0x50) = 3.0f;
@@ -27,7 +26,6 @@ void func_801DAFB8(void* arg0) {
     result = rand();
     *(u32*) ((u8*) savedArg0 + 8) = (result % 19) + 0x19;
 }
-
 
 void func_801DB024(struct UnkStruct_801DB024* arg0) {
     if ((arg0->unk8 >= 0) && (((arg0->unk8 < 0x10)))) {

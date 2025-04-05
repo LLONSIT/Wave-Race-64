@@ -90,19 +90,19 @@ void func_1C3D00_802C5D44(void) {
 
 void func_1C3D00_802C5E10(void) {
     if (D_80228A16 == 1) {
-        switch (D_801CE630) {                       /* irregular */
-        case 2:
-            func_801EB180();
-            return;
-        case 40:
-            func_8009345C();
-            return;
-        case 10:
-            func_801EBD28();
-            return;
-        case 20:
-            func_801EBFE4();
-            break;
+        switch (D_801CE630) { /* irregular */
+            case 2:
+                func_801EB180();
+                return;
+            case 40:
+                func_8009345C();
+                return;
+            case 10:
+                func_801EBD28();
+                return;
+            case 20:
+                func_801EBFE4();
+                break;
         }
     }
 }
