@@ -319,12 +319,14 @@ extern struct Controller_info gControllerOne[];
 extern u16 D_80226F00;
 extern f32 D_80226F08[];
 extern UnkStruct_80192690 D_801926D8[];
-// extern Vec3f D_801CECA0[];
 extern Vec3f D_801CECB8[];
 extern f32 D_801CECC0;
 extern UnkStruct_func_i8_802C6E00 D_801CB298[];
 extern f32 D_801C39B4;
 extern u8 D_80030EC;
 extern s32 D_8001C58;
+extern u32 D_800DA920[];
+extern u8 D_165C00[];
+extern u8 D_801CE9B8[];
 
 #endif /* VARIABLES_H */

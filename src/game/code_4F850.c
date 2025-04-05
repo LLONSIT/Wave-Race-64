@@ -239,7 +239,21 @@ void func_80097F74(uintptr_t devAddr, s32 vAddr, u32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80098048.s")
+void func_80098048(s32 arg0, s32 arg1) {
+    s32 v1;
+    u32 size;
+    u32 new_var;
+    u32 romAddr;
+    if (arg0 == 0) {
+        v1 = 0x10;
+    } else {
+        v1 = 0xF;
+    }
+    size = v1 * 0xC;
+    new_var = D_800DA920[arg0];
+    romAddr = (new_var & 0xFFFFFF) + (size * arg1);
+    game_dma_copy((uintptr_t) (&D_165C00[romAddr]), D_801CE9B8, size);
+}
 
 void func_800980C8(void) {
 }
