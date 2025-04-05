@@ -13,7 +13,7 @@ s16 D_800D47F8 = 255;
 void func_80051530(void) {
 }
 
-void* func_80051538(Gfx* gdl) {
+Gfx* func_80051538(Gfx* gdl) {
     static u32 D_800D47FC = { 0 };
 
     if (D_800D47E0[0] == 0) {
