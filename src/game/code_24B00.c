@@ -47,7 +47,8 @@ void func_8006AA58(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006DE24.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006E01C.s")
+void func_8006E01C(s32 arg0) {
+}
 
 void configSignalRectangle(Gfx** arg0) {
 

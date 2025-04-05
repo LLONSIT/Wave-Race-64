@@ -236,6 +236,7 @@ Gfx* func_8007FFA8(Gfx*);
 Gfx* func_8008BD2C(Gfx*);         
 Gfx* func_800933C4(Gfx*);                    
 void func_801FC4D4(Gfx**);        
-
 void func_801EBFE4(void);
+void game_dma_copy(uintptr_t devAddr, void *vAddr, u32 nbytes);
+
 #endif /*FUNCTIONS_H*/
