@@ -140,7 +140,7 @@ segments:
       - [0x830F0, c, libultra/pfsinit]
       - [0x83270, c, libultra/pfssearchfile]
       - [0x83410, c, libultra/UnkLibultraSeg_83410]
-      - [0x835C0, c, libultra/UnkLibultraSeg_835C0]
+      - [0x835C0, c, libultra/pfsreadwritefile]
       - [0x83A10, c, libultra/pfsallocatefile]
       - [0x840B0, c, libultra/pfsdeletefile]
       - [0x84620, c, os/osPhysicalToVirtual]
