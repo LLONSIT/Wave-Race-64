@@ -14,25 +14,12 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6DA8.s")
 
-// https://decomp.me/scratch/Kuenk
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6E00.s")
-#else
 void func_i8_802C6E00(void) {
-    u32 temp_t7;
-    u32 temp_t8;
-    u32 temp_t9;
-    u32 temp_t0;
-    s32* temp_a1;
-
-    if (D_802C7548 != 0) {
-        temp_t8 = D_i8_802C74F8[D_i8_802C7040];
-        temp_t0 = (temp_t8 * 8 - temp_t8);
-        func_i8_802C6FD4(&D_802C7548, &D_801CB298[temp_t0], 11);
+    if ((D_802C7548) != 0) {
+        func_i8_802C6FD4(&D_802C7548, &D_801CB298[D_i8_802C74F8[D_i8_802C7040]].unk0, 11);
     }
     D_802C756C = 1;
 }
-#endif
 
 void func_i8_802C6E68(void* arg0) {
     func_i8_802C6FD4(arg0, &D_802C7548, 0xB);

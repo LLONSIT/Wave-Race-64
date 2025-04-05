@@ -445,6 +445,10 @@ struct Controller_info {
     s8 unk8;
     s8 unk9;
 };
+typedef struct UnkStruct_func_i8_802C6E00 {
+    s16 unk0;
+    char pad[11]; // <------------------- :'(
+} UnkStruct_func_i8_802C6E00;
 
 
 
