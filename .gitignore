@@ -10,6 +10,7 @@ __pycache__/
 *.z64
 *.n64
 *.rom
+*.eeprom
 *.pak
 
 # Automatically generated folders should be ignored
