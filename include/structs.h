@@ -289,7 +289,7 @@ struct UnkStruct_801C3C50 {
     /* 0x15E0 */ char pad15E0[0xF4];                /* maybe part of unk15DE[0x7B]? */
     /* 0x16D4 */ s32 unk16D4;
     /* 0x16D8 */ char pad16D8[0x1C];                /* maybe part of unk16D4[8]? */
-    /* 0x16F4 */ u16 unk16F4;
+    /* 0x16F4 */ s16 unk16F4;
     /* 0x16F6 */ char pad16F6[2];
 };                                                  /* size = 0x16F8 */
 
