@@ -301,7 +301,23 @@ s32 func_80093104(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_8009328C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800933C4.s")
+Gfx* func_800933C4(Gfx* arg0) {
+
+    Gfx* temp_v0_3;
+
+    arg0 = func_8008FB74(arg0);
+    func_8006E674(&arg0);
+    arg0 = func_800687A4(arg0);
+    if ((D_801CE638 != 4) && (D_801CE638 != 10)) {
+        arg0 = func_800ADF90(arg0);
+    }
+    arg0 = func_80090F58(arg0);
+    arg0 = func_80069594(arg0);
+    arg0 = func_80068538(arg0);
+    configSignalRectangle(&arg0);
+    func_800B305C(&arg0);
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_8009345C.s")
 
