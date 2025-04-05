@@ -184,7 +184,7 @@ osPfsReadWriteFile = 0x800C8EA0;
 __osPfsRequestData = 0x800C8754;
 __osPfsGetInitData = 0x800C8834;
 osPfsIsPlug = 0x800C85C0;
-
+osPfsNumFiles = 0x800C9E30;
 guLookAtHiliteF = 0x800C7AA0; // Unconfirmed, since the function is a little different than the one we have in ultralib
 guLookAtHilite = 0x800C820C; // Calls previous
 guLookAtReflectF = 0x800C75E0; // Unconfirmed, since the function is a little different than the one we have in ultralib

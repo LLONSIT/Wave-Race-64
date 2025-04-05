@@ -144,7 +144,7 @@ segments:
       - [0x83A10, c, libultra/pfsallocatefile]
       - [0x840B0, c, libultra/pfsdeletefile]
       - [0x84620, c, os/osPhysicalToVirtual]
-      - [0x84630, c, libultra/UnkLibultraSeg_84630]
+      - [0x84630, c, libultra/pfsnumfiles]
       - [0x84760, c, libultra/UnkLibultraSeg_84760]
       - [0x84A10, c, os/sprintf]
       - [0x84AC0, hasm, libultra/invaldcache]

@@ -281,7 +281,7 @@ s32 func_80093104(void) {
         return 0;
     }
 
-    if (func_800C9E30(&D_801CB658, &D_801CB40C, &D_801CB408) != 0) {
+    if (osPfsNumFiles(&D_801CB658, &D_801CB40C, &D_801CB408) != 0) {
         return 0;
     }
 

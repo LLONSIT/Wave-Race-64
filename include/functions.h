@@ -220,7 +220,6 @@ f32 func_8009AC50(Vec3f *, f32*, f32, f32, f32);
 void func_8009AFA0(Vec3f* arg0);
 s32 func_800C85C0(OSMesgQueue*, void*);
 s32 func_800C8C10(void*, s32*);
-s32 func_800C9E30(void*, void*, void*);
 s32 func_800C9F60(void*, s32, void*);
 void func_801EE46C(Mtx* gdl, f32 arg1, f32 arg2,
 f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
