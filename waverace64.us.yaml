@@ -132,7 +132,7 @@ segments:
       - [0x81B80, asm, guOrtho]
       - [0x81D40, c, os/gu/guTranslate] #TODO
       - [0x81DE0, c, libultra/UnkLibultraSeg_81DE0] # gu funcs
-      - [0x822A0, c, libultra/UnkLibultraSeg_822A0]
+      - [0x822A0, c, libultra/lookathil]
       - [0x82AD0, c, os/osEepromLongRead]
       - [0x82C10, c, libultra/conteeplongwrite]
       - [0x82D50, c, libultra/conteepprobe]
