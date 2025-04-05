@@ -484,4 +484,12 @@ struct UnkStruct_8004B0F8 {
     /* 0x68 */ f32 unk68;
 };  
 
+
+struct UnkStruct_801BC940 {
+    /* 0x00 */ f32 unk0;                            /* inferred */
+    /* 0x04 */ char pad4[4];
+    /* 0x08 */ f32 unk8;                            /* inferred */
+    /* 0x0C */ char padC[0xB8];                     /* maybe part of unk8[0x2F]? */
+};                                                  /* size = 0xC4 */
+
 #endif /* STRUCTS_H */

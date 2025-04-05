@@ -23,21 +23,11 @@ BIN_DIR = bin
 OVL_SRC_DIR   = $(SRC_DIR)/overlays
 OVL_ASSET_DIR = $(BIN_DIR)/overlays
 
-LIBULTRA_SRC_DIRS = $(SRC_DIR)/os $(SRC_DIR)/os/libc $(SRC_DIR)/os/audio $(SRC_DIR)/libultra_nm $(SRC_DIR)/os/gu 
-
-OVERLAY_SRC_DIRS = $(OVL_SRC_DIR)/ovl_i0 $(OVL_SRC_DIR)/ovl_i1 $(OVL_SRC_DIR)/ovl_i2 $(OVL_SRC_DIR)/ovl_i3 $(OVL_SRC_DIR)/ovl_i4 $(OVL_SRC_DIR)/ovl_i5 $(OVL_SRC_DIR)/ovl_i6 \
-		$(OVL_SRC_DIR)/ovl_i7 $(OVL_SRC_DIR)/ovl_i8 $(OVL_SRC_DIR)/ovl_i9 $(OVL_SRC_DIR)/ovl_i10 $(OVL_SRC_DIR)/ovl_i11 $(OVL_SRC_DIR)/ovl_i12 $(OVL_SRC_DIR)/ovl_i13 \
-		$(OVL_SRC_DIR)/ovl_i14 $(OVL_SRC_DIR)/ovl_i15 $(OVL_SRC_DIR)/ovl_i16
-
-OVERLAY_ASSETS_DIRS = $(OVL_ASSET_DIR)/ovl_i0 $(OVL_ASSET_DIR)/ovl_i1 $(OVL_ASSET_DIR)/ovl_i2 $(OVL_ASSET_DIR)/ovl_i3 $(OVL_ASSET_DIR)/ovl_i4 $(OVL_ASSET_DIR)/ovl_i5 $(OVL_ASSET_DIR)/ovl_i6 \
-		$(OVL_ASSET_DIR)/ovl_i7 $(OVL_ASSET_DIR)/ovl_i8 $(OVL_ASSET_DIR)/ovl_i9 $(OVL_ASSET_DIR)/ovl_i10 $(OVL_ASSET_DIR)/ovl_i11 $(OVL_ASSET_DIR)/ovl_i12 $(OVL_ASSET_DIR)/ovl_i13 \
-		$(OVL_ASSET_DIR)/ovl_i14 $(OVL_ASSET_DIR)/ovl_i15 $(OVL_ASSET_DIR)/ovl_i16
-
-
 BIN_DIRS  = bin bin/mio0_seg $(OVERLAY_ASSETS_DIRS)
 
 DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/game $(SRC_DIR)/codeseg $(SRC_DIR)/game/core $(SRC_DIR)/game/audio $(OVERLAY_SRC_DIRS) $(LIBULTRA_SRC_DIRS)
-SRC_DIRS = $(DEFINE_SRC_DIRS)
+
+SRC_DIRS      := $(shell find src -type d)
 
 TOOLS_DIR = tools
 
