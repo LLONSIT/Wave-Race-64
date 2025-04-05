@@ -118,7 +118,33 @@ u32* func_800962F0(s32 arg0) {
 void func_800964C4(void) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_800964CC.s")
+u32* func_800964CC(s32 arg0) {
+    s32 pad[2];
+    u32* sp34;
+    u32* var_s2;
+    u32 temp_s0;
+    u32* temp_ptr;
+    s32 i;
+
+    var_s2 = func_80094088((u32) &D_8001C58) + arg0;
+    sp34 = var_s2;
+
+    for (i = 0; i != 8; i += 4, var_s2++) {
+        temp_s0 = func_80094088(*var_s2) + arg0;
+        *var_s2 = temp_s0;
+        temp_ptr = (u32*) temp_s0;
+
+        temp_ptr[1] = func_80094088(temp_ptr[1]) + arg0;
+        temp_ptr[2] = func_80094088(temp_ptr[2]) + arg0;
+        temp_ptr[3] = func_80094088(temp_ptr[3]) + arg0;
+        temp_ptr[4] = func_80094088(temp_ptr[4]) + arg0;
+        temp_ptr[5] = func_80094088(temp_ptr[5]) + arg0;
+        temp_ptr[6] = func_80094088(temp_ptr[6]) + arg0;
+        temp_ptr[7] = func_80094088(temp_ptr[7]) + arg0;
+    }
+
+    return sp34;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_800965B8.s")
 
