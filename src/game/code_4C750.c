@@ -273,7 +273,7 @@ s32 func_80093104(void) {
         return 0;
     }
 
-    if (func_800C85C0(&D_801540D0, &D_801CB6C0) != 0) {
+    if (osPfsIsPlug(&D_801540D0, &D_801CB6C0) != 0) {
         return 0;
     }
 

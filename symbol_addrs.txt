@@ -181,8 +181,15 @@ osPfsFreeBlocks = 0x800C8C10;
 osPfsAllocateFile = 0x800C9210;
 __osPfsGetNextPage = 0x800C8DC0;
 osPfsReadWriteFile = 0x800C8EA0;
-guLookAtHiliteF = 0x800C7AA0;
-guLookAtHilite = 0x800C820C;
+__osPfsRequestData = 0x800C8754;
+__osPfsGetInitData = 0x800C8834;
+osPfsIsPlug = 0x800C85C0;
+
+guLookAtHiliteF = 0x800C7AA0; // Unconfirmed, since the function is a little different than the one we have in ultralib
+guLookAtHilite = 0x800C820C; // Calls previous
+guLookAtReflectF = 0x800C75E0; // Unconfirmed, since the function is a little different than the one we have in ultralib
+guLookAtReflect = 0x800C7A20; // Calls previous
+
 rspbootTextStart = 0x800D22B0;//name_end:rspbootTextEnd
 gspF3DEX_fifoTextStart = 0x800D2380;//name_end:gspF3DEX_fifoTextEnd
 gspF3DEX_fifoDataStart = 0x800EE310; //name_end:gspF3DEX_fifoDataEnd

@@ -131,12 +131,12 @@ segments:
       - [0x81820, c, libultra/controller]
       - [0x81B80, asm, guOrtho]
       - [0x81D40, c, os/gu/guTranslate] #TODO
-      - [0x81DE0, c, libultra/UnkLibultraSeg_81DE0] # gu funcs
+      - [0x81DE0, c, libultra/lookatref] # gu funcs
       - [0x822A0, c, libultra/lookathil]
       - [0x82AD0, c, os/osEepromLongRead]
       - [0x82C10, c, libultra/conteeplongwrite]
       - [0x82D50, c, libultra/conteepprobe]
-      - [0x82DC0, c, libultra/UnkLibultraSeg_82DC0]
+      - [0x82DC0, c, libultra/pfsisplug]
       - [0x830F0, c, libultra/pfsinit]
       - [0x83270, c, libultra/pfssearchfile]
       - [0x83410, c, libultra/pfsfreeblocks]
@@ -269,7 +269,7 @@ segments:
       - [0xA6DB0, .rodata, game/audio/port]
 
       # LIBULTRA RODATA
-      - [0xA6DD0, rodata] # UnkLibultraSeg_81DE0
+      - [0xA6DD0, rodata] # lookatref
       - [0xA6DE0, rodata] # UnkLibultraSeg_822A0
       - [0xA6E00, rodata]
       - [0xA6E50, rodata]
