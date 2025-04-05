@@ -175,8 +175,6 @@ void func_80080864(void) {
 
     sp28 = D_800D9854;
 
-    (void) sp28;
-
     D_801C3C58->unk48 = (func_8004D30C(D_801C3C50->unk44, D_801C3C50->unk4C) - (f32) D_80192458);
 
     D_801C3C58->unk4C = (func_8004D30C(D_801C3C50->unk44 + (512.0f * D_801C3C50->unk6C),

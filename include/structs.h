@@ -304,7 +304,7 @@ struct UnkStruct_801C2C24 {
     /* 0x2F8 */ char pad2F8[0x58];                  /* maybe part of unk2F4[0x17]? */
     /* 0x350 */ struct UnkStruct_801C3C54* unk350;  /* inferred */
     /* 0x354 */ char pad354[0x24];                  /* maybe part of unk350[0xA]? */
-};             
+};
 typedef struct Controller {
     /* 0x00*/ u16 unk0;
     /* 0x02 */ u8 pad[0x1A];
