@@ -273,7 +273,7 @@ s32 func_80093104(void) {
         return 0;
     }
 
-    if (func_800C85C0(&D_801540D0, &D_801CB6C0) != 0) {
+    if (osPfsIsPlug(&D_801540D0, &D_801CB6C0) != 0) {
         return 0;
     }
 
@@ -290,7 +290,7 @@ s32 func_80093104(void) {
         D_801CB618[i] = result;
     }
 
-    if (func_800C8C10(&D_801CB658, &D_801CB410) != 0) {
+    if (osPfsFreeBlocks(&D_801CB658, &D_801CB410) != 0) {
         return 0;
     }
 

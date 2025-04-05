@@ -131,17 +131,18 @@ segments:
       - [0x81820, c, libultra/controller]
       - [0x81B80, asm, guOrtho]
       - [0x81D40, c, os/gu/guTranslate] #TODO
-      - [0x81DE0, c, libultra/UnkLibultraSeg_81DE0] # gu funcs
-      - [0x822A0, c, libultra/UnkLibultraSeg_822A0]
+      - [0x81DE0, c, libultra/lookatref] # gu funcs
+      - [0x822A0, c, libultra/lookathil]
       - [0x82AD0, c, os/osEepromLongRead]
       - [0x82C10, c, libultra/conteeplongwrite]
       - [0x82D50, c, libultra/conteepprobe]
-      - [0x82DC0, c, libultra/UnkLibultraSeg_82DC0]
+      - [0x82DC0, c, libultra/pfsisplug]
       - [0x830F0, c, libultra/pfsinit]
-      - [0x83270, c, libultra/UnkLibultraSeg_83270]
-      - [0x83410, c, libultra/UnkLibultraSeg_83410]
-      - [0x835C0, c, libultra/UnkLibultraSeg_835C0]
-      - [0x840B0, c, libultra/pfsallocatefile]
+      - [0x83270, c, libultra/pfssearchfile]
+      - [0x83410, c, libultra/pfsfreeblocks]
+      - [0x835C0, c, libultra/pfsreadwritefile]
+      - [0x83A10, c, libultra/pfsallocatefile]
+      - [0x840B0, c, libultra/pfsdeletefile]
       - [0x84620, c, os/osPhysicalToVirtual]
       - [0x84630, c, libultra/UnkLibultraSeg_84630]
       - [0x84760, c, libultra/UnkLibultraSeg_84760]
@@ -181,9 +182,9 @@ segments:
       - [0x86E00, c, libultra/sirawread]
       - [0x86E50, c, libultra/sirawwrite]
       - [0x86EA0, asm, libultra/osMapTLBRdb]
-      - [0x86F00, c, libultra/unkSeg_86F00]
+      - [0x86F00, c, libultra/pirawread]
       - [0x86F60, c, os/ll]
-      - [0x87300, c, libultra/unkSeg_87300]
+      - [0x87300, c, libultra/mtxutil]
       - [0x87570, c, libultra/conteepread]
       - [0x87870, c, libultra/conteepwrite]
       - [0x87D50, c, libultra/contpfs]
@@ -196,7 +197,7 @@ segments:
       - [0x8AEB0, c, os/osPiGetCmdQueue]
       - [0x8AEE0, asm, osAiSetNextBuffer]
       - [0x8AF10, c, libultra/unkSeg_8AF10]
-      - [0x8B390, c, libultra/unkSeg_8B390]
+      - [0x8B390, c, libultra/syncputchars]
       - [0x8B4C0, c, libultra/unkLibultraSeg_8B4C0]
       - [0x8B520, c, os/osDestroyThread]
       - [0x8B620, hasm, libultra/setcompare]
@@ -268,7 +269,7 @@ segments:
       - [0xA6DB0, .rodata, game/audio/port]
 
       # LIBULTRA RODATA
-      - [0xA6DD0, rodata] # UnkLibultraSeg_81DE0
+      - [0xA6DD0, rodata] # lookatref
       - [0xA6DE0, rodata] # UnkLibultraSeg_822A0
       - [0xA6E00, rodata]
       - [0xA6E50, rodata]
