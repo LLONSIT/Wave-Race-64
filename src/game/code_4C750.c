@@ -1,4 +1,4 @@
-#include "common.h"
+#include "global.h"
 
 extern s16 D_800DAB74;
 extern s16 D_800DAB78;

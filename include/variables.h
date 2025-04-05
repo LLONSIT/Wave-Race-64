@@ -324,5 +324,6 @@ extern Vec3f D_801CECB8[];
 extern f32 D_801CECC0;
 extern UnkStruct_func_i8_802C6E00 D_801CB298[];
 extern f32 D_801C39B4;
+extern u8 D_80030EC;
 
 #endif /* VARIABLES_H */
