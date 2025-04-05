@@ -150,7 +150,35 @@ u32* func_800964CC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80096694.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_800967EC.s")
+void func_800967EC(u32* arg0, s32 arg1) {
+    s32 var_a0;
+    s32* temp_v1;
+    u32 temp_t6;
+    u32* var_v0;
+
+    var_v0 = arg0;
+
+    for (;;) {
+        temp_t6 = *var_v0 >> 0x18;
+
+        if (temp_t6 != 0xB8) {
+            var_a0 = 0;
+            if (temp_t6 == 4) {
+                var_a0 = 1;
+            } else if (temp_t6 == 0xFD) {
+                var_a0 = 2;
+            }
+
+            temp_v1 = (s32*) (var_v0 + 1);
+            if (var_a0 != 0) {
+                *temp_v1 += arg1;
+            }
+        }
+
+        var_v0 += 2;
+    }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_8009684C.s")
 
