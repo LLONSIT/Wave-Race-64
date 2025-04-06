@@ -35,7 +35,6 @@ options:
   ld_dependencies: True
 #  o_as_suffix: True
 
-
 segments:
   - name: header
     type: header

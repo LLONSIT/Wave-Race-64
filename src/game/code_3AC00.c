@@ -1885,9 +1885,9 @@ s32 func_80087134(f32 arg0, f32 arg1) {
                       (f32) ((s16*) temp_s0)[16], // unk20
                       (f32) ((s16*) temp_s0)[18], // unk24
                       arg0, arg1) == -1) {
-        return 1;
+        return TRUE;
     } else {
-        return 0;
+        return FALSE;
     }
 }
 

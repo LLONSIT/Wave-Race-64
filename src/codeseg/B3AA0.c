@@ -13,7 +13,7 @@ void func_801E5470(void) {
     UnkStruct_menu_buffer_1* var_s0;
     s32 i;
 
-    for (i = 0; i != 5; i++) {
+    for (i = 0; i < 5; i++) {
         switch (menu_buffer_1[i].unk_0) {
             case 1:
                 menu_buffer_1[i].unk_6 = 1;

@@ -81,11 +81,11 @@ void func_8004B0F8(struct UnkStruct_8004B0F8* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004BA18.s")
 
-Gfx* func_8004BC40(Gfx* gDisplayList) {
-    gSPDisplayList(gDisplayList++, &D_1000140);
-    gDPSetFillColor(gDisplayList++, D_800D4658[D_800D4650]);
-    gSPDisplayList(gDisplayList++, &D_10001E0);
-    return gDisplayList;
+Gfx* func_8004BC40(Gfx* gdl) {
+    gSPDisplayList(gdl++, &D_1000140);
+    gDPSetFillColor(gdl++, D_800D4658[D_800D4650]);
+    gSPDisplayList(gdl++, &D_10001E0);
+    return gdl;
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004BC98.s")
