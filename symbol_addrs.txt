@@ -1,6 +1,8 @@
 
 //Libultra Symbols
 osRomBase		= 0x80000308;
+__osPfsPifRam = 0x801DABF0;
+__osMaxControllers = 0x801DABA1;
 osSyncPrintf 		= 0x8004B690; //defined:true
 alSynFreeFX             = 0x800C00A4; //defined:true
 osViSwapBuffer          = 0x800C59B0; //defined:true
@@ -184,7 +186,7 @@ osPfsReadWriteFile = 0x800C8EA0;
 __osPfsRequestData = 0x800C8754;
 __osPfsGetInitData = 0x800C8834;
 osPfsIsPlug = 0x800C85C0;
-
+osPfsNumFiles = 0x800C9E30;
 guLookAtHiliteF = 0x800C7AA0; // Unconfirmed, since the function is a little different than the one we have in ultralib
 guLookAtHilite = 0x800C820C; // Calls previous
 guLookAtReflectF = 0x800C75E0; // Unconfirmed, since the function is a little different than the one we have in ultralib
