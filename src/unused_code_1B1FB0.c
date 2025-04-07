@@ -24,7 +24,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C73B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C7510.s")
+void func_1B1FB0_802C7510(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 6;
+    D_801CE638 = 0x13;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 3;
+    D_800D461C = 2;
+}
 
 void* func_1B1FB0_802C7578(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 
