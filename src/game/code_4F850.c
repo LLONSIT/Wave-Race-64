@@ -1,5 +1,4 @@
 #include "global.h"
-#include "os_pi.h"
 
 extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
