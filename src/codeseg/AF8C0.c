@@ -1,6 +1,5 @@
-#include "common.h"
+#include "global.h"
 
-void func_801E6FB0(s32, s32, s32); /* extern */
 extern s32 D_800D461C;
 extern s32 D_800DAB1C;
 extern s32 D_800DAB24;

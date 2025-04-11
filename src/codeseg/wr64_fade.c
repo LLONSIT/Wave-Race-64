@@ -12,7 +12,7 @@ FadeTransition D_80228A10;
 extern s16 D_80228A30;
 extern s16 D_80228A32;
 
-void func_801E6FB0(s32 arg0, s32 arg1, s32 arg2) {
+void func_801E6FB0(s32 arg0, u32 arg1, s32 arg2) {
     s32 fade_color = 255;
     FadeTransition* transition = &D_80228A10;
 

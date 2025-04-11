@@ -1,4 +1,7 @@
-#include "global.h"
+#include <ultra64.h>
+#include "variables.h"
+#include "rider.h"
+#include "camera.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EB180.s")
 
@@ -18,21 +21,154 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC3AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC500.s")
+void func_801EC500(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 0x42;
+    D_801CE638 = 0xC;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 2;
+    gPlayers = ONE_PLAYER;
+    func_80096960(2, 0, 1, 2, 3);
+    func_801E6FB0(2, 4, 0);
+    func_801E6A4C(0, 0);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC5B4.s")
+void func_801EC5B4(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 0x44;
+    D_801CE638 = 0xE;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 2;
+    gPlayers = ONE_PLAYER;
+    func_801E6FB0(2, 4, 0);
+    func_801E6A4C(0, 0);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC650.s")
+void func_801EC650(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 0x48;
+    D_801CE638 = 0x14;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 2;
+    gPlayers = ONE_PLAYER;
+    func_801E6FB0(2, 4, 0);
+    func_801E6A4C(0, 0);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC6EC.s")
+void func_801EC6EC(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 0x46;
+    D_801CE638 = 0x10;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 2;
+    func_801E6FB0(2, 4, 0);
+    func_801E6A4C(0, 0);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC780.s")
+void func_801EC780(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 0x40;
+    D_801CE638 = 0xB;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 2;
+    func_80096960(2, 0, 1, 2, 3);
+    func_801E6FB0(2, 4, 0);
+    func_801E6A4C(0, 0);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC830.s")
+void func_801EC830(void) {
+    s32 var_v1;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC944.s")
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 0x50;
+    D_801CE638 = 0xD;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 2;
+    gPlayers = ONE_PLAYER;
+    gRiderGameModes = 1;
+    D_801CE64C = 1;
+    D_801CE650 = 0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC9C8.s")
+    var_v1 = FALSE;
+
+    if (D_801CE608 == 4) {
+        if (D_801CE634 == 0x43) {
+            var_v1 = TRUE;
+        }
+    } else if ((D_801CE634 != 0x32) && (D_801CE634 != 0x39)) {
+        var_v1 = TRUE;
+    }
+    if (var_v1) {
+        func_801E6FB0(4, 1, 0);
+        osViBlack(TRUE);
+    }
+    func_801E6A4C(0, 0);
+    gCameraPerspective->unk0 = 1;
+}
+
+void func_801EC944(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 0x5A;
+    D_801CE638 = 0xF;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 2;
+    func_800C21F4(5, 0);
+}
+
+void func_801EC9C8(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 0x64;
+    D_801CE638 = 6;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 2;
+    gPlayers = 1;
+    gRiderGameModes = 1;
+    D_801CE64C = 1;
+    D_801CE650 = 0;
+    if ((D_801CE608 == 0) || (D_801CE608 == 0xB)) {
+        func_80096960(2, 0, 1, 2, 3);
+    }
+    if (D_801CE634 == 0x67) {
+        func_801E6FB0(7, 0x14, 0);
+    } else if (D_801CE634 == 0x2A) {
+        func_801E6FB0(4, 1, 0);
+    }
+    func_801E6A4C(0, 0);
+    gCameraPerspective->unk0 = 1;
+    func_800C21F4(0xC, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801ECAF4.s")
 
