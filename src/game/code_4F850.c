@@ -1,24 +1,24 @@
 #include "global.h"
 
 struct UnkStruct_800DACD0 {
-    /* 0x00 */ s32 unk0;                            /* inferred */
-    /* 0x04 */ s32 unk4;                            /* inferred */
-    /* 0x08 */ s32 unk8;                            /* inferred */
-    /* 0x0C */ s32 unkC;                            /* inferred */
-    /* 0x10 */ s32 unk10;                           /* inferred */
-    /* 0x14 */ s32 unk14;                           /* inferred */
-    /* 0x18 */ s32 unk18;                           /* inferred */
-    /* 0x1C */ s32 unk1C;                           /* inferred */
-    /* 0x20 */ s32 unk20;                           /* inferred */
-    /* 0x24 */ s32 unk24;                           /* inferred */
-    /* 0x28 */ s32 unk28;                           /* inferred */
-    /* 0x2C */ s32 unk2C;                           /* inferred */
-    /* 0x30 */ s32 unk30;                           /* inferred */
-    /* 0x34 */ s32 unk34;                           /* inferred */
-    /* 0x38 */ s32 unk38;                           /* inferred */
-    /* 0x3C */ s32 unk3C;                           /* inferred */
-    /* 0x40 */ s32 unk40;                           /* inferred */
-};    
+    /* 0x00 */ s32 unk0;  /* inferred */
+    /* 0x04 */ s32 unk4;  /* inferred */
+    /* 0x08 */ s32 unk8;  /* inferred */
+    /* 0x0C */ s32 unkC;  /* inferred */
+    /* 0x10 */ s32 unk10; /* inferred */
+    /* 0x14 */ s32 unk14; /* inferred */
+    /* 0x18 */ s32 unk18; /* inferred */
+    /* 0x1C */ s32 unk1C; /* inferred */
+    /* 0x20 */ s32 unk20; /* inferred */
+    /* 0x24 */ s32 unk24; /* inferred */
+    /* 0x28 */ s32 unk28; /* inferred */
+    /* 0x2C */ s32 unk2C; /* inferred */
+    /* 0x30 */ s32 unk30; /* inferred */
+    /* 0x34 */ s32 unk34; /* inferred */
+    /* 0x38 */ s32 unk38; /* inferred */
+    /* 0x3C */ s32 unk3C; /* inferred */
+    /* 0x40 */ s32 unk40; /* inferred */
+};
 extern s32 D_800DAB90[];
 extern s32 D_800DABA0[];
 extern s32 D_800DABC0[];
@@ -113,10 +113,10 @@ void func_80095A28(DmaEntry* entry) {
 }
 
 void func_80095CE8(u8* arg0, s32 arg1) {
-    
+
     s32 var_a1;
     s32 sp68;
-    
+
     s32 var_v0;
     s32 sp60;
     s32 pad;
@@ -131,8 +131,8 @@ void func_80095CE8(u8* arg0, s32 arg1) {
     } else {
         sp60 = 1;
     }
-    
-    for (sp68 = 0; sp68 < sp60 ; sp68++) {
+
+    for (sp68 = 0; sp68 < sp60; sp68++) {
         temp_s0 = (var_a2[0] * 3) + var_a2[1] + sp68;
 
         for (var_s5 = 0; var_s5 != 0x11; var_s5++) {
@@ -140,7 +140,7 @@ void func_80095CE8(u8* arg0, s32 arg1) {
             var_v0 = 0;
 
             switch (var_s5) {
-        
+
                 case 0:
 
                     var_s1 = D_800DACD0[temp_s0].unk0 & 0xFFFFFF;
@@ -240,9 +240,9 @@ void func_80095CE8(u8* arg0, s32 arg1) {
             }
 
             // @note This condition is never true
-            if (var_v0 == 1) { 
+            if (var_v0 == 1) {
                 if (sp68 == 1) {
-                    continue;   
+                    continue;
                 }
             } else if (var_v0 == 2 && *var_a2 != 2 && *var_a2 != 6) {
                 continue;
@@ -260,7 +260,6 @@ void func_80095CE8(u8* arg0, s32 arg1) {
         }
     }
 }
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80096048.s")
 
