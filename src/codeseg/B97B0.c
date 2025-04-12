@@ -170,7 +170,20 @@ void func_801EC9C8(void) {
     func_800C21F4(0xC, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801ECAF4.s")
+void func_801ECAF4(void) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = 0;
+    D_800DAB24 = 5;
+    D_801CE638 = 0x13;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 3;
+    D_800D461C = 2;
+    func_801E6FB0(0, 0, 0);
+    func_801E6A4C(0, 0);
+    func_800C21F4(8, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801ECB98.s")
 
