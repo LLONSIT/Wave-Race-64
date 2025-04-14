@@ -328,5 +328,21 @@ extern s32 D_8001C58;
 extern u32 D_800DA920[];
 extern u8 D_165C00[];
 extern u8 D_801CE9B8[];
+extern f32 D_801C4278;
+extern f32 D_801C4290;
+extern f32 D_801C42A8;
+extern f32 D_801C42C0;
+extern f32 D_801C42D8;
+extern f32 D_801C42F0;
+extern f32 D_801C4308;
+extern f32 D_801C4320;
+extern f32 D_801C4338;
+extern f32 D_801C4350;
+extern f32 D_801C4368;
+extern f32 D_801C4380;
+extern f32 D_801C4398;
+extern f32 D_801C43B0;
+extern f32 D_801C43C8;
+extern f32 D_801C43E0;
 
 #endif /* VARIABLES_H */

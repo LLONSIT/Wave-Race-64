@@ -1,4 +1,14 @@
-#include "common.h"
+#include "global.h"
+
+extern s32 D_800D461C;
+extern s32 D_800DAB1C;
+extern s32 D_800DAB24;
+extern s32 D_801CE630;
+extern s32 D_801CE634;
+extern s32 D_801CE638;
+extern s32 D_801CE63C;
+extern s32 D_801CE640;
+extern s32 D_801CE644;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/AF8C0/func_801E1290.s")
 
@@ -70,6 +80,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/AF8C0/func_801E2530.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/AF8C0/func_801E2B8C.s")
+void func_801E2B8C(s32 arg0) {
+    D_801CE634 = D_800DAB24;
+    D_801CE630 = arg0;
+    D_800DAB24 = 0x65;
+    D_801CE638 = 6;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 2;
+    func_801E6FB0(1, 0xE, 0x14);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/AF8C0/func_801E2C14.s")

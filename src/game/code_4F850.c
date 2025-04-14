@@ -1,5 +1,30 @@
 #include "global.h"
-#include "os_pi.h"
+
+struct UnkStruct_800DACD0 {
+    /* 0x00 */ s32 unk0;  /* inferred */
+    /* 0x04 */ s32 unk4;  /* inferred */
+    /* 0x08 */ s32 unk8;  /* inferred */
+    /* 0x0C */ s32 unkC;  /* inferred */
+    /* 0x10 */ s32 unk10; /* inferred */
+    /* 0x14 */ s32 unk14; /* inferred */
+    /* 0x18 */ s32 unk18; /* inferred */
+    /* 0x1C */ s32 unk1C; /* inferred */
+    /* 0x20 */ s32 unk20; /* inferred */
+    /* 0x24 */ s32 unk24; /* inferred */
+    /* 0x28 */ s32 unk28; /* inferred */
+    /* 0x2C */ s32 unk2C; /* inferred */
+    /* 0x30 */ s32 unk30; /* inferred */
+    /* 0x34 */ s32 unk34; /* inferred */
+    /* 0x38 */ s32 unk38; /* inferred */
+    /* 0x3C */ s32 unk3C; /* inferred */
+    /* 0x40 */ s32 unk40; /* inferred */
+};
+extern s32 D_800DAB90[];
+extern s32 D_800DABA0[];
+extern s32 D_800DABC0[];
+extern struct UnkStruct_800DACD0 D_800DACD0[];
+extern s32 D_801CE73C;
+extern s32 D_801CE740[];
 
 extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
@@ -12,6 +37,9 @@ extern u32 D_801CE6E8;
 extern s32 D_801CE730;
 extern s32 D_801CE734;
 extern s32 D_801CE738;
+
+void func_80095CE8(u8* arg0, s32 arg1);
+void func_800967EC(u32* arg0, s32 arg1);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/unk_game_load.s")
 
@@ -84,7 +112,154 @@ void func_80095A28(DmaEntry* entry) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80095CE8.s")
+void func_80095CE8(u8* arg0, s32 arg1) {
+
+    s32 var_a1;
+    s32 sp68;
+
+    s32 var_v0;
+    s32 sp60;
+    s32 pad;
+    s32 var_s1;
+    s16* var_a2;
+    u32 var_s5;
+    s32 temp_s0;
+
+    var_a2 = &D_801CE740[arg1];
+    if (var_a2[1] != 0) {
+        sp60 = 2;
+    } else {
+        sp60 = 1;
+    }
+
+    for (sp68 = 0; sp68 < sp60; sp68++) {
+        temp_s0 = (var_a2[0] * 3) + var_a2[1] + sp68;
+
+        for (var_s5 = 0; var_s5 != 0x11; var_s5++) {
+
+            var_v0 = 0;
+
+            switch (var_s5) {
+
+                case 0:
+
+                    var_s1 = D_800DACD0[temp_s0].unk0 & 0xFFFFFF;
+
+                    break;
+
+                case 1:
+
+                    var_s1 = D_800DACD0[temp_s0].unk4 & 0xFFFFFF;
+
+                    break;
+
+                case 2:
+
+                    var_s1 = D_800DACD0[temp_s0].unk8 & 0xFFFFFF;
+
+                    break;
+
+                case 3:
+
+                    var_s1 = D_800DACD0[temp_s0].unkC & 0xFFFFFF;
+
+                    break;
+
+                case 4:
+
+                    var_s1 = D_800DACD0[temp_s0].unk10 & 0xFFFFFF;
+
+                    break;
+
+                case 5:
+
+                    var_s1 = D_800DACD0[temp_s0].unk14 & 0xFFFFFF;
+
+                    break;
+
+                case 6:
+
+                    var_s1 = D_800DACD0[temp_s0].unk18 & 0xFFFFFF;
+
+                    break;
+
+                case 7:
+
+                    var_s1 = D_800DACD0[temp_s0].unk1C & 0xFFFFFF;
+
+                    break;
+
+                case 8:
+
+                    var_s1 = D_800DACD0[temp_s0].unk20 & 0xFFFFFF;
+
+                    break;
+
+                case 9:
+
+                    var_s1 = D_800DACD0[temp_s0].unk24 & 0xFFFFFF;
+
+                    break;
+
+                case 10:
+
+                    var_s1 = D_800DACD0[temp_s0].unk28 & 0xFFFFFF;
+
+                    break;
+
+                case 11:
+
+                    var_s1 = D_800DACD0[temp_s0].unk2C & 0xFFFFFF;
+
+                    break;
+
+                case 12:
+                    var_v0 = 2;
+                    var_s1 = D_800DACD0[temp_s0].unk30 & 0xFFFFFF;
+                    break;
+
+                case 13:
+                    var_v0 = 2;
+                    var_s1 = D_800DACD0[temp_s0].unk34 & 0xFFFFFF;
+                    break;
+
+                case 14:
+                    var_v0 = 2;
+                    var_s1 = D_800DACD0[temp_s0].unk38 & 0xFFFFFF;
+                    break;
+
+                case 15:
+                    var_v0 = 2;
+                    var_s1 = D_800DACD0[temp_s0].unk3C & 0xFFFFFF;
+                    break;
+
+                case 16:
+                    var_v0 = 2;
+                    var_s1 = D_800DACD0[temp_s0].unk40 & 0xFFFFFF;
+                    break;
+            }
+
+            // @note This condition is never true
+            if (var_v0 == 1) {
+                if (sp68 == 1) {
+                    continue;
+                }
+            } else if (var_v0 == 2 && *var_a2 != 2 && *var_a2 != 6) {
+                continue;
+            }
+
+            if ((D_801CE73C == 3) || (D_801CE73C == 2)) {
+                var_a1 = D_800DABA0[arg1];
+            } else if (D_801CE73C == 4) {
+                var_a1 = D_800DABC0[arg1];
+            } else {
+                var_a1 = D_800DAB90[arg1];
+            }
+
+            func_800967EC(arg0 + var_s1, var_a1);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80096048.s")
 

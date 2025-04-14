@@ -99,7 +99,7 @@ void func_1C3780_802C5BD8(void) {
         case 7:
             if (++D_802C5D84 >= 3) {
                 if (D_801C2928 != 0) {
-                    func_801EC9C8(&D_802C5D84);
+                    func_801EC9C8();
                 } else {
                     func_801ED004();
                 }
