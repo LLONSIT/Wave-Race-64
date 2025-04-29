@@ -162,7 +162,7 @@ segments:
       - [0x85BD0, c, libultra/osTimer]
       - [0x85FD0, c, libultra/vi]
       - [0x86100, c, libultra/os/siacs]
-      - [0x861C0, c, libultra/os/__osSiRawStartDma]
+      - [0x861C0, c, libultra/io/sirawdma]
       - [0x86270, c, libultra/spsetstat]
       - [0x86280, c, libultra/unkSeg_86280]
       - [0x86590, asm, libultra/writebackdcache]
@@ -205,7 +205,7 @@ segments:
       - [0x8B660, c, libultra/crc]
       - [0x8B7E0, c, libultra/os/libultra_Segment] # mix Litob and Ltob
       - [0x8C8B0, hasm, libultra/getcause]
-      - [0x8C8C0, c, libultra/os/__osAtomicDec]
+      - [0x8C8C0, c, libultra/os/atomic]
       - [0x8C920, c, libultra/os/libc/ldiv]
       
       # GFX MICROCODE
