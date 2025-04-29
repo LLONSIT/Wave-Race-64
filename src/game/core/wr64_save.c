@@ -188,9 +188,13 @@ void func_8007B2BC(s32 arg0, UnkStruct_8007B2BC* arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B930.s")
 
-void func_8007BBE8(void) {}
 
-void func_8007BBF0(void) {}
+void func_8007BBE8() {
+}
+
+void func_8007BBF0() {
+
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007BBF8.s")
 
