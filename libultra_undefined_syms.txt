@@ -1,4 +1,4 @@
 __osContPifRam          = 0x801D56FC;
-__osCurrentTime         = 0x801D58A4;
+__osCurrentTime         = 0x801DAC50;
 __osContPifRam		= 0x801DAB60;
 osClockRate             = 0x800E1FA4;
