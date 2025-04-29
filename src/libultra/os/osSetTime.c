@@ -1,3 +1,7 @@
-#include "common.h"
+#include "osint.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/libultra/os/osSetTime/osSetTime.s")
+extern OSTime __osCurrentTime;
+
+void osSetTime(OSTime time) {
+    __osCurrentTime = time;
+}
