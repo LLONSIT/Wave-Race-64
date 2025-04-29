@@ -276,4 +276,4 @@ Math_Vec3f_Substract = 0x80098E3C;
 Math_Normalize_Angle = 0x8009D4F0;
 _MtxF_to_Mtx = 0x801EDD90;
 D_800D47FC = 0x800D47FC; // ignore:true
-func_i3_802C5800 = 0x802C5800; //size:0x2E4 segment:ovl_i3
+func_i3_802C5800 = 0x802C5800; //size:0x2E8 segment:ovl_i3
