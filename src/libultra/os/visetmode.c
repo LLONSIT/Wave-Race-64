@@ -2,9 +2,9 @@
 
 extern u32 __osBbIsBb;
 
-extern OSViContext *__osViNext;
+extern OSViContext* __osViNext;
 
-void osViSetMode(OSViMode *mode) {
+void osViSetMode(OSViMode* mode) {
     register u32 int_disabled = __osDisableInt();
 #ifdef VERSION_CN
     if (__osBbIsBb != 0) {
