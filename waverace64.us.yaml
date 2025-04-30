@@ -100,10 +100,10 @@ segments:
       - [0x7F440, c, game/audio/port] 
 
       # LIBULTRA CODE
-      - [0x7FF20, c, libultra/os/osVirtualtoPhysical]
-      - [0x7FFA0, c, libultra/os/osSendMesg]
-      - [0x800F0, c, libultra/os/osGetTime]
-      - [0x80180, c, libultra/os/osSetTime]
+      - [0x7FF20, c, libultra/os/virtualtophysical]
+      - [0x7FFA0, c, libultra/os/sendmesg]
+      - [0x800F0, c, libultra/os/gettime]
+      - [0x80180, c, libultra/os/settime]
       - [0x801B0, c, libultra/os/osViSwapBuffer]
       - [0x80200, c, libultra/os/osContReadData] # pending
       - [0x80460, c, libultra/os/osRecvMesg]
