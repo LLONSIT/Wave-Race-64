@@ -110,7 +110,7 @@ segments:
       - [0x805A0, hasm, libultra/os/dpgetstat] # might be C according to ultralib, but i don't see a way to generate those nops at the end
       - [0x805F0, c, libultra/os/visetmode]
       - [0x80660, c, libultra/os/visetspecial]
-      - [0x80820, c, libultra/os/osSpTaskYield]
+      - [0x80820, c, libultra/os/sptaskyield]
       - [0x80840, c, libultra/os/sptask]
       - [0x80B00, c, libultra/os/osDpSetStatus]
       - [0x80B10, c, libultra/os/osCreateMesgQueue]
