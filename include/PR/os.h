@@ -36,7 +36,13 @@ extern "C" {
 #endif
 
 #include <PR/ultratypes.h>
-#include "PR/os_message.h"
+#include <PR/os_message.h>
+#include <PR/os_pi.h>
+#include <PR/os_vi.h>
+#include <PR/os_exception.h>
+#include <PR/os_tlb.h>
+#include <PR/os_cont.h>
+#include <PR/os_time.h>
 
 #if defined(_LANGUAGE_C) || defined(_LANGUAGE_C_PLUS_PLUS)
 

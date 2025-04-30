@@ -69,7 +69,7 @@ __osRunningThread       = 0x800E9010;
 __osActiveQueue		= 0x800E900C; 
 osRomType		= 0x800E90B0; 
 __osViNext              = 0x800E90B4;
-__osCurrentTime		= 0x801D58A4;
+__osCurrentTime		= 0x801DAC50;
 __osEventStateTab       = 0x801D86F0;
 
 __osContLastCmd         = 0x801DABA0; 
