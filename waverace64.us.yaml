@@ -100,17 +100,17 @@ segments:
       - [0x7F440, c, game/audio/port] 
 
       # LIBULTRA CODE
-      - [0x7FF20, c, libultra/os/osVirtualtoPhysical]
-      - [0x7FFA0, c, libultra/os/osSendMesg]
-      - [0x800F0, c, libultra/os/osGetTime]
-      - [0x80180, c, libultra/os/osSetTime]
+      - [0x7FF20, c, libultra/os/virtualtophysical]
+      - [0x7FFA0, c, libultra/os/sendmesg]
+      - [0x800F0, c, libultra/os/gettime]
+      - [0x80180, c, libultra/os/settime]
       - [0x801B0, c, libultra/os/osViSwapBuffer]
-      - [0x80200, c, libultra/os/osContReadData]
+      - [0x80200, c, libultra/os/osContReadData] # pending
       - [0x80460, c, libultra/os/osRecvMesg]
-      - [0x805A0, c, libultra/os/osDpgetStat]
-      - [0x805F0, c, libultra/os/osViSetMode]
-      - [0x80660, c, libultra/os/osViSetSpecialFeatures]
-      - [0x80820, c, libultra/os/osSpTaskYield]
+      - [0x805A0, hasm, libultra/os/dpgetstat] # might be C according to ultralib, but i don't see a way to generate those nops at the end
+      - [0x805F0, c, libultra/os/visetmode]
+      - [0x80660, c, libultra/os/visetspecial]
+      - [0x80820, c, libultra/os/sptaskyield]
       - [0x80840, c, libultra/os/sptask]
       - [0x80B00, c, libultra/os/osDpSetStatus]
       - [0x80B10, c, libultra/os/osCreateMesgQueue]
