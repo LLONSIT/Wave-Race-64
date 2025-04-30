@@ -27,7 +27,7 @@ def main(args):
         "embeds": [{
             "title": f"{commit.message.splitlines()[0]}",
             "description": f"**{len(matching_funcs)}** matched functions / **{len(all_funcs)}** total (**{funcs_matching_ratio:.2f}%**)\n**{matching_size}** matching bytes / **{total_size}** total (**{matching_ratio:.2f}%**)",
-            "url": f"https://github.com/LLONSIT/wr64/commit/{commit.hexsha}",
+            "url": f"https://github.com/LLONSIT/Wave-Race-64/commit/{commit.hexsha}",
             "color": commit.authored_date & 0xFFFFFF
         }]
     }
