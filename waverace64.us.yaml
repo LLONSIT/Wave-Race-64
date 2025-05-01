@@ -104,15 +104,15 @@ segments:
       - [0x7FFA0, c, libultra/os/sendmesg]
       - [0x800F0, c, libultra/os/gettime]
       - [0x80180, c, libultra/os/settime]
-      - [0x801B0, c, libultra/os/osViSwapBuffer]
-      - [0x80200, c, libultra/os/osContReadData] # pending
-      - [0x80460, c, libultra/os/osRecvMesg]
+      - [0x801B0, c, libultra/os/viswapbuf]
+      - [0x80200, c, libultra/os/contreaddata] # pending
+      - [0x80460, c, libultra/os/recvmesg]
       - [0x805A0, hasm, libultra/os/dpgetstat] # might be C according to ultralib, but i don't see a way to generate those nops at the end
       - [0x805F0, c, libultra/os/visetmode]
       - [0x80660, c, libultra/os/visetspecial]
       - [0x80820, c, libultra/os/sptaskyield]
       - [0x80840, c, libultra/os/sptask]
-      - [0x80B00, c, libultra/os/osDpSetStatus]
+      - [0x80B00, c, libultra/os/dpsetstat]
       - [0x80B10, c, libultra/os/osCreateMesgQueue]
       - [0x80B40, c, libultra/os/osSetEventMesg]
       - [0x80BB0, c, libultra/os/osViSetEvent]
@@ -164,7 +164,7 @@ segments:
       - [0x86100, c, libultra/os/siacs]
       - [0x861C0, c, libultra/io/sirawdma]
       - [0x86270, c, libultra/spsetstat]
-      - [0x86280, c, libultra/unkSeg_86280]
+      - [0x86280, hasm, libultra/bcopy]
       - [0x86590, asm, libultra/writebackdcache]
       - [0x86610, c, libultra/spsetpc]
       - [0x86650, c, libultra/sprawdma]
