@@ -191,7 +191,8 @@ guLookAtHiliteF = 0x800C7AA0; // Unconfirmed, since the function is a little dif
 guLookAtHilite = 0x800C820C; // Calls previous
 guLookAtReflectF = 0x800C75E0; // Unconfirmed, since the function is a little different than the one we have in ultralib
 guLookAtReflect = 0x800C7A20; // Calls previous
-
+tmpTask = 0x801D86B0;
+bcopy = 0x800CBA80;
 rspbootTextStart = 0x800D22B0;//name_end:rspbootTextEnd
 gspF3DEX_fifoTextStart = 0x800D2380;//name_end:gspF3DEX_fifoTextEnd
 gspF3DEX_fifoDataStart = 0x800EE310; //name_end:gspF3DEX_fifoDataEnd
