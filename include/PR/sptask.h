@@ -64,6 +64,7 @@
 #define SPSTATUS_SIGNAL6_SET 0x2000
 #define SPSTATUS_SIGNAL7_SET 0x4000
 
+#include "ultratypes.h"
 /* Types */
 /* Types */
 
