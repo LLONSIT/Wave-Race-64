@@ -1,4 +1,4 @@
-[![Discord Invitation](https://discordapp.com/api/guilds/1355614626657861753/widget.png?style=banner2 'Wave Race 64')](https://discord.gg/MeHBUTx6)
+[![Discord Invitation](https://discordapp.com/api/guilds/1355614626657861753/widget.png?style=banner2 'Wave Race 64')](https://discord.gg/gK5HSJp49G)
 
 
 # Wave Race 64
