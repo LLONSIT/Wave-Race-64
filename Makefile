@@ -160,6 +160,7 @@ $(BUILD_DIR)/src/libultra/os/audio/%.c.o: OPT_FLAGS := -O2
 $(BUILD_DIR)/src/libultra/os/libc/%.c.o: OPT_FLAGS := -O2
 $(BUILD_DIR)/src/libultra/os/gu/%.c.o: OPT_FLAGS := -O2
 $(BUILD_DIR)/src/libultra/os/osVirtualtoPhysical.c.o: OPT_FLAGS := -O1
+$(BUILD_DIR)/src/libultra/io/%.c.o: OPT_FLAGS := -O1
 
 ### Targets
 

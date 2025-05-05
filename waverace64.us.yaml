@@ -201,7 +201,7 @@ segments:
       - [0x8B4C0, c, libultra/unkLibultraSeg_8B4C0]
       - [0x8B520, c, libultra/os/osDestroyThread]
       - [0x8B620, hasm, libultra/setcompare]
-      - [0x8B630, c, libultra/si]
+      - [0x8B630, c, libultra/io/si]
       - [0x8B660, c, libultra/crc]
       - [0x8B7E0, c, libultra/os/libultra_Segment] # mix Litob and Ltob
       - [0x8C8B0, hasm, libultra/getcause]
