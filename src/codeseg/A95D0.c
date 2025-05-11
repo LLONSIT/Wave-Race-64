@@ -6,6 +6,24 @@ struct UnkStruct_801DB024 {
     s32 unk8;
 };
 
+struct UnkStruct_801DB0E4_arg0 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    f32 unkC[3]; // Guess
+    f32 unk14[3];
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+};
+struct UnkStruct_801DB0E4_arg1 {
+    f32 unk0[3]; // TODO: Guessing here
+    f32 unk4[3];
+    f32 unk18;
+    s32 unk1C;
+};
+
 // TODO: Improve these matches
 void func_801DAFA0(void** arg0, s32 arg1) {
     *(f32*) (((u8*) (*arg0)) + 0x50) = 3.0f;
@@ -27,7 +45,7 @@ void func_801DAFB8(void* arg0) {
     *(u32*) ((u8*) savedArg0 + 8) = (result % 19) + 0x19;
 }
 
-void func_801DB024(struct UnkStruct_801DB024* arg0) {
+void func_801DB024(struct UnkStruct_801DB0E4_arg0* arg0) {
     if ((arg0->unk8 >= 0) && (((arg0->unk8 < 0x10)))) {
         arg0->unk8 += 2;
         if (arg0->unk8 >= 0x10) {
@@ -56,11 +74,52 @@ void func_801DB024(struct UnkStruct_801DB024* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB0E4.s")
+void func_801DB0E4(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0E4_arg1* arg1, s32* arg2) {
+    f32 sp2C[3];
+    f32 magnitud;
+    s32 i;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB1DC.s")
+    arg0->unk0 = 3;
+    arg0->unk4 = 0;
+
+    func_801DAFB8(arg0);
+
+    for (i = 0; i < 3; i++) {
+        arg0->unkC[i] = arg1->unk0[i];
+        sp2C[i] = arg1->unk4[i] - arg1->unk0[i];
+    }
+  
+    magnitud = sqrtf(SQ(sp2C[0]) + SQ(sp2C[1]) + SQ(sp2C[2]));
+
+    for (i = 0; i < 3; i++) {
+        arg0->unk14[i] = sp2C[i] / magnitud;
+    }
+
+    arg0->unk24 = 0.0f;
+    arg0->unk28 = 1.0f;
+    arg0->unk2C = 0.0f;
+    arg0->unk30 = 0.1f;
+
+    *arg2 = arg1->unk1C;
+}
+
+void func_801DB1DC(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0E4_arg1* arg1, s32* arg2) {
+    s32 i;
+
+    func_801DB024(arg0);
+
+    if (*arg2 > 0) {
+        for (i = 0; i < 3; i++) {
+            arg0->unkC[i] += arg0->unk14[i] * arg1->unk18;
+        }
+        return;
+    }
+
+    arg0->unk0 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB284.s")
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB430.s")
 
