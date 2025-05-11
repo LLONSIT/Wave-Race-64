@@ -88,7 +88,7 @@ void func_801DB0E4(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0
         arg0->unkC[i] = arg1->unk0[i];
         sp2C[i] = arg1->unk4[i] - arg1->unk0[i];
     }
-  
+
     magnitud = sqrtf(SQ(sp2C[0]) + SQ(sp2C[1]) + SQ(sp2C[2]));
 
     for (i = 0; i < 3; i++) {
@@ -119,7 +119,6 @@ void func_801DB1DC(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB284.s")
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB430.s")
 
