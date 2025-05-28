@@ -19,8 +19,21 @@ typedef struct UnkStruct_8007AEFC {
     s8 unkF;
     char pad[0x3];
     s8 unk13;
-
 } UnkStruct_8007AEFC;
+
+extern s32 D_800D8260;
+struct {
+    s16 unk0;
+    u16 unk2;
+    u8 pad[0x4C];
+    u8 unk50[1][3];
+} D_801AEA18;
+extern u8 D_801AEA68;
+extern s32 D_801CB308[1][3];
+extern s32 D_801CB32C;
+extern u8 D_800D8268[1];
+extern s32 D_800D826A;
+#define EEPROM_SUCCESS 0
 
 static const char devstr1[] = "EEPROM read error 1 (%d)\n";
 static const char devstr2[] = "EEPROM check code error 1\n";
@@ -52,58 +65,45 @@ static const char devstr27[] = "PFS corrupted\n";
 static const char devstr28[] = "no PFS in controller 1 !\n";
 static const char devstr29[] = "bad PFS %d\n";
 static const char devstr30[] = "PFS find file\n";
-static const char devstr31[] = "PFS file not exists\n";
-static const char devstr32[] = "PFS find file error %d\n";
-static const char devstr33[] = "PFS free size %d\n";
-static const char devstr34[] = "PFS file not exists\n";
-static const char devstr35[] = "PFS check free error %d\n";
-static const char devstr36[] = "file_no: %d\n";
-static const char devstr37[] = "PFS check code error\n";
-static const char devstr38[] = "PFS check sum error %d %d\n";
-static const char devstr39[] = "EEPROM write error\n";
-static const char devstr40[] = "EEPROM write error\n";
-static const char devstr41[] = "PFS read error\n";
-static const char devstr42[] = "PFS no data\n";
-static const char devstr43[] = "PFS file not exists ... making\n";
-static const char devstr44[] = "PFS data full\n";
-static const char devstr45[] = "PFS allocate file error %d\n";
-static const char devstr46[] = "PFS write file error %d\n";
-static const char devstr47[] = "PFS read error (write)\n";
-static const char devstr48[] = "PFS check code error\n";
-static const char devstr49[] = "PFS check sum error %d %d\n";
-static const char devstr50[] = "file_no: %d\n";
-static const char devstr51[] = "PFS write error\n";
-static const char devstr52[] = "PFS no delete file\n";
-static const char devstr53[] = "PFS delete error %d\n";
+
+s32 func_8007BBF8(u8*);
+void func_8007BBF0(void);                                  
+s32 func_8007BDB8(void);    
+s32 func_8007D110(void);
+void func_8007B370(void *);               
+void func_8007B630(void);                                  
+s32 func_8007BE64(void);
+
 
 s32 func_8007ADD0(s32 arg0) {
-    if ((arg0 >= 0x41) && (arg0 < 0x5B)) {
+    if ((arg0 >= 'A') && (arg0 < '[')) {
         return arg0 - 0x40;
     }
-    if (arg0 == 0x20) {
+    if (arg0 == ' ') {
         return 0x1B;
     }
-    if (arg0 == 0x2D) {
+    if (arg0 == '-') {
         return 0x1C;
     }
-    if (arg0 == 0x2E) {
+    if (arg0 == '.') {
         return 0x1D;
     }
     return 0;
 }
 
+//de-encode?
 s32 func_8007AE30(s32 arg0) {
     if ((arg0 > 0) && (arg0 < 0x1B)) {
-        return arg0 + 0x40;
+        return arg0 + '@';
     }
     if (arg0 == 0x1B) {
-        return 0x20;
+        return ' ';
     }
     if (arg0 == 0x1C) {
-        return 0x2D;
+        return '-';
     }
     if (arg0 == 0x1D) {
-        return 0x2E;
+        return '.';
     }
     return 0;
 }
@@ -194,19 +194,104 @@ void func_8007BBE8() {
 void func_8007BBF0() {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007BBF8.s")
+s32 func_8007BBF8(u8* arg0) {
+    u16 chksum;
+    s32 i;
+    u8* temp;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007BC44.s")
+    temp = &arg0[4];
+    chksum = 0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007BD20.s")
+    for (i = 0; i < 508; i++) {
+        chksum += *temp++;
+    }
+    
+    return chksum;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007BD70.s")
+s32 func_8007BC44(void) {
+    s32 temp_v0;
+    s32 var_a1;
+    s32 i;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007BDB8.s")
+    if (osEepromLongRead(&D_801540D0, 0U, &D_801AEA18, 0x200) != 0) {
+        return 2;
+    }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007BE00.s")
+    for (i = 0, var_a1 = 0; i < 2; i++) {
+        if (D_801AEA18.pad[i - 4] != D_800D8268[i]) {
+            var_a1 = 1;
+            break;
+        }
+    }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007BE64.s")
+    if (var_a1 == 0) {
+        temp_v0 = func_8007BBF8(&D_801AEA18);
+        if (temp_v0 != D_801AEA18.unk2) {
+            var_a1 = 1;
+            func_8007BBF0();
+        }
+    }
+    if (var_a1 != 0) {
+        temp_v0 = func_8007BDB8();
+        if (temp_v0 != 0) {
+            return temp_v0;
+        }
+    }
+    return 0;
+}
+
+s32 func_8007BD20(void) {
+    D_801AEA18.unk2 = func_8007BBF8(&D_801AEA18);
+    if (osEepromLongWrite(&D_801540D0, 0U, &D_801AEA18, 0x200) != 0) {
+        return 3;
+    }
+    return 0;
+}
+
+extern s32 D_800D8260;
+
+s32 func_8007BD70(void) {
+    if (osEepromProbe(&D_801540D0) == 0) {
+        D_800D8260 = 0;
+        return 1;
+    }
+    D_800D8260 = 1;
+    return 0;
+}
+
+s32 func_8007BDB8(void) {
+    if (D_800D8260 == 0) {
+        return 1;
+    }
+    func_8007B370(&D_801AEA18);
+    func_8007B630();
+    return func_8007BD20();
+}
+
+s32 func_8007BE00(void) {
+    s32 temp_v0;
+
+    if (D_800D8260 == 0) {
+        func_8007B370(&D_801AEA18);
+        func_8007B630();
+        return 1;
+    }
+    temp_v0 = func_8007BC44();
+    if (temp_v0 != 0) {
+        return temp_v0;
+    }
+    func_8007B630();
+    return 0;
+}
+
+s32 func_8007BE64(void) {
+    if (D_800D8260 == 0) {
+        return 1;
+    }
+    func_8007B930();
+    return func_8007BD20();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007BEA4.s")
 
@@ -218,7 +303,32 @@ void func_8007BBF0() {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C494.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C50C.s")
+int func_8007C50C(void) {
+    int i;
+    int j;
+
+    if (D_800D8260 == 0) {
+        return 1;
+    }
+
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++) {
+            D_801AEA18.unk50[i][j] = D_801CB308[i][j];
+        }
+    }
+
+    func_8007B31C();
+    D_801AEA18.unk2 = func_8007BBF8(&D_801AEA18);
+    if (osEepromLongWrite(&D_801540D0, 0U, &D_801AEA18, 16) != 0) {
+        return 3;
+    }
+
+    if (osEepromLongWrite(&D_801540D0, ((u32) ((u32) &D_801AEA68 - (u32) &D_801AEA18.unk0) >> 3), &D_801AEA68, 16) !=
+        0) {
+        return 3;
+    }
+    return EEPROM_SUCCESS;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C604.s")
 
@@ -228,9 +338,88 @@ void func_8007BBF0() {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D110.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D1B8.s")
+s32 func_8007D110(); 
+extern u8 D_800D82D8;
+extern u8 D_800D82E8;
+extern OSPfs D_801C3AD0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D24C.s")
+s32 func_8007D1B8(void) {
+    s32 temp_v0;
+    s32 sp20;
+
+    temp_v0 = func_8007D110();
+    if (temp_v0 != 0) {
+        return temp_v0;
+    }
+    temp_v0 = osPfsFindFile(&D_801C3AD0, 1U, 0x4E57524AU, &D_800D82E8, &D_800D82D8, &sp20);
+    switch (temp_v0) {
+        case 0:
+            return EEPROM_SUCCESS;
+        case PFS_ERR_INVALID:
+            PRINTF("PFS file not exists\n");
+            return 4;
+
+        default:
+        case PFS_ERR_NOPACK:
+        case PFS_ERR_NEW_PACK:
+        case PFS_ERR_INCONSISTENT:
+        case PFS_ERR_CONTRFAIL:
+            PRINTF("PFS find file error %d\n", temp_v0);
+            return 2;
+    }
+}
+
+s32 func_8007D110(); 
+extern OSPfs D_801C3AD0;
+
+s32 func_8007D24C(void) {
+    s32 temp_v0;
+    s32 sp18;
+
+    temp_v0 = func_8007D110();
+    if (temp_v0 != 0) {
+        return temp_v0;
+    }
+    temp_v0 = osPfsFreeBlocks(&D_801C3AD0, &sp18);
+    switch (temp_v0) {
+        case 0:
+            PRINTF("PFS free size %d\n", sp18);
+            if (sp18 >= 0x200) {
+                return 0;
+            }
+            return 3;
+        case 5:
+            PRINTF("PFS file not exists\n");
+            return 4;
+        default:
+        case PFS_ERR_NOPACK:
+        case PFS_ERR_NEW_PACK:
+        case PFS_ERR_INCONSISTENT:
+        case PFS_ERR_CONTRFAIL:
+            PRINTF("PFS check free error %d\n", temp_v0);
+            return 2;
+    }
+}
+
+static const char devstr36[] = "file_no: %d\n";
+static const char devstr37[] = "PFS check code error\n";
+static const char devstr38[] = "PFS check sum error %d %d\n";
+static const char devstr39[] = "EEPROM write error\n";
+static const char devstr40[] = "EEPROM write error\n";
+static const char devstr41[] = "PFS read error\n";
+static const char devstr42[] = "PFS no data\n";
+static const char devstr43[] = "PFS file not exists ... making\n";
+static const char devstr44[] = "PFS data full\n";
+static const char devstr45[] = "PFS allocate file error %d\n";
+static const char devstr46[] = "PFS write file error %d\n";
+static const char devstr47[] = "PFS read error (write)\n";
+static const char devstr48[] = "PFS check code error\n";
+static const char devstr49[] = "PFS check sum error %d %d\n";
+static const char devstr50[] = "file_no: %d\n";
+static const char devstr51[] = "PFS write error\n";
+static const char devstr52[] = "PFS no delete file\n";
+static const char devstr53[] = "PFS delete error %d\n";
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D2D4.s")
 

@@ -1,5 +1,33 @@
 #include "global.h"
 
+struct unaligned_struct {
+    u16 b[5];
+};
+struct UnkStruct_800DAB10 {
+    struct unaligned_struct unk0;
+    s32 unk4;
+    s32 unk8;
+};
+
+struct UnkStruct_801CE658 {
+    struct unaligned_struct unal[2];
+    s32 unk0;
+    s32 unk4;
+};
+
+struct UnkStruct_801CB6C8 {
+    Mtx unk0[1];
+    char pad[0x1758];
+};
+
+void func_8004BA18(void);
+void func_80051530(void);
+void func_8007BD70(void);
+void func_8007BE00(void);
+void func_80088EA0(void);
+void func_801DD85C(void);
+void func_80094FE8(void);
+
 extern s16 D_800DAB74;
 extern s16 D_800DAB78;
 extern s32 D_801AE948;
@@ -12,8 +40,107 @@ extern s32 D_801CE650;
 extern u16 D_801CE690;
 extern s16 D_80228A36;
 extern s32 D_80228A40;
+extern u8 D_1008290[];
+extern s32 D_800DA940[];
+extern s32 D_800DA950;
+extern s32 D_800DA988[][3];
+extern struct unaligned_struct D_800DAB10;
+extern s32 D_800DCE90;
+extern f32 D_800EAC78;
+extern s32 D_801519AC;
+extern s32 D_801CB288[];
+extern s32 D_801CB308[1][3];
+extern Mtx D_801CCE60;
+extern s16 D_801CE628;
+extern s16 D_801CE62C;
+extern struct UnkStruct_801CE658 D_801CE658[];
+extern s32 D_801CE6AC;
+extern s16 D_801CE72E;
+extern struct UnkStruct_801CB6C8 D_801CB6C8[];
+extern s32 D_800DAB60[];
+extern s32 D_800DC4F0[];
+extern s32 D_800DC514[];
+extern s32 D_800DC698[];
+extern s32 D_800DC6BC[];
 
+#ifndef NEEDS_RODATA_IMPORTED
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80091F50.s")
+#else
+void func_80091F50(void) {
+    s8 temp_t3;
+    s32 i;
+    s32 j;
+    s32 one = 1;
+
+    D_801CE6B0[0] = 0;
+    D_801CE6B0[2] = 0;
+    D_801CE6B0[3] = 0;
+    D_801CE6B0[1] = D_80151984;
+    D_801CE6B0[4] = D_801519AC;
+    D_801CE6B0[5] = 0;
+    D_801CE6B0[6] = 0;
+    D_801CE6B0[7] = 0;
+    D_801CE6B0[8] = osVirtualToPhysical(D_800D45F0);
+    D_801CE6B0[9] = 0;
+    D_801CE6B0[13] = osVirtualToPhysical((void*) D_800D45E4);
+    D_801CE6B0[14] = osVirtualToPhysical(D_800D45E8);
+
+    D_800DCE90 = (u8*) osPhysicalToVirtual(D_80151984) + (ALIGN16(D_1008290 - (u8*) D_1000000));
+
+    D_801CE5F8 = &D_801CB6C8[D_8011F8E0];
+    D_801CE5FC = 0;
+    D_801CE624 = -1;
+    D_801CE628 = 0;
+    D_801CE62C = 0;
+    D_802C6EE4 = 0;
+    D_801CE72E = one;
+    D_801CB280 = 0;
+
+    for (i = 0; i < 5; i++) {
+        D_801CB288[i] = D_800DA940[i];
+    }
+
+    for (i = 0; i < 10; i++) {
+        for (j = 0; j < 3; j++) {
+            D_801CB308[i][j] = D_800DA988[i][j];
+        }
+    }
+
+    guFrustum(D_801CB6C8->unk0, 0.0f, 319.0f, 239.0f, 0.0f, 100.0f, -100.0f, 1.0f);
+    guFrustum(&D_801CCE60, 0.0f, 319.0f, 239.0f, 0.0f, 100.0f, -100.0f, 1.0f);
+    func_8004BA18();
+    func_80051530();
+    func_80088EA0();
+    func_801DD85C();
+    func_80094FE8();
+    func_8007BD70();
+    func_8007BE00();
+
+    temp_t3 = D_801CB280 & 0xC0;
+    if (temp_t3 & 0x40) {
+        D_800DA9EC[0] = 1;
+        func_800C2FDC(3);
+    } else if (temp_t3 & 0x80) {
+        D_800DA9EC[0] = 2;
+        func_800C2FDC(1);
+    } else {
+        D_800DA9EC[0] = 0;
+        func_800C2FDC(0);
+    }
+    if (D_801CB280 & 0x20) {
+        D_800DA9EC[1] = 0;
+        func_800C3044();
+    } else {
+        D_800DA9EC[1] = 1;
+        func_800C3034();
+    }
+
+    for (i = 0; i < 3; i++) {
+        D_801CE658[i].unal[0] = D_800DAB10;
+        D_801CE658[i].unk0 = D_801CE658[i].unk4 = 0;
+    }
+}
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800922E4.s")
 
@@ -253,8 +380,6 @@ Gfx* func_80092CF0(Gfx* dList) {
 }
 #endif
 
-// #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80093104.s")
-
 s32 func_80093104(void) {
     s32 i;
     s32 result;
@@ -449,7 +574,45 @@ s32 func_80094088(u32 arg0) {
     return var;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800940C4.s")
+void func_800940C4(s32 arg0, s32 arg1) {
+    s32 sp18;
+    DmaTransfer* var_v0;
+    s32 var_v1;
+
+    var_v0 = D_800DAB38;
+
+    for (var_v1 = 0; var_v1 < 5; var_v0++, var_v1++) {
+        if (var_v0->flag == 0) {
+            break;
+        }
+    }
+
+    if (var_v1 != 5) {
+        var_v0->flag = 1;
+        if (arg1 == 1) {
+            var_v0->entry = (DmaEntry*) D_800DC698[arg0];
+        } else {
+            var_v0->entry = (DmaEntry*) D_800DC6BC[arg0];
+        }
+        func_80097E68();
+
+        for (var_v1 = 0; var_v1 < 5; var_v1++) {
+            if (D_800DAB38[var_v1].flag == 0) {
+                break;
+            }
+        }
+
+        if (var_v1 != 5) {
+            D_800DAB38[var_v1].flag = 1;
+            if (arg1 == 1) {
+                D_800DAB38[var_v1].entry = D_800DC4F0[arg0];
+            } else {
+                D_800DAB38[var_v1].entry = D_800DC514[arg0];
+            }
+            func_80097E68();
+        }
+    }
+}
 
 s32 func_800941D0(s8* arg0) {
     s32 len;
@@ -479,7 +642,19 @@ Gfx* func_800949B8(Gfx* gdl, s32 arg1) {
     return gdl;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094A44.s")
+extern Gfx D_106F8E8[];
+extern Vtx* D_800DAA90[];
+
+Gfx* func_80094A44(Gfx* gDisplayList, s32 arg1) {
+    if ((arg1 < 0) || (arg1 >= 9)) {
+        arg1 = 0;
+    }
+    gSPDisplayList(gDisplayList++, D_106F8E8);
+    gSPVertex(gDisplayList++, D_800DAA90[arg1], 4, 0);
+    gSP1Triangle(gDisplayList++, 0, 3, 1, 0);
+    gSP1Triangle(gDisplayList++, 0, 2, 3, 0);
+    return gDisplayList;
+}
 
 void func_80094ABC(void) {
     D_800DAB0C = 1;

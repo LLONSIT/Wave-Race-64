@@ -1862,6 +1862,7 @@ typedef union {
 #else
 //Custom...
 #define gSPVertex(pkt,v,n,v0) gDma1p(pkt, G_VTX, v, ((n)<<9)|((n)*sizeof(Vtx)-1),(v0)*5)
+
 # define	gsSPVertex(v, n, v0) \
                 gsDma1p(G_VTX, v, sizeof(Vtx)*(n), ((n)-1)<<4|(v0))
 #endif
@@ -2038,8 +2039,8 @@ typedef union {
                    __gsSP1Triangle_w1(v3, v1, v2))
 #else
 #  define __gsSP1Triangle_w1f(v0, v1, v2, flag)			\
-     (_SHIFTL((flag), 24,8)|_SHIFTL((v0)*10,16,8)|		\
-      _SHIFTL((v1)*10, 8,8)|_SHIFTL((v2)*10, 0,8))
+     (_SHIFTL((flag), 24,8)|_SHIFTL((v0)*5,16,8)|		\
+      _SHIFTL((v1)*5, 8,8)|_SHIFTL((v2)*5, 0,8))
 #  define __gsSPLine3D_w1f(v0, v1, wd, flag)			\
      (_SHIFTL((flag), 24,8)|_SHIFTL((v0)*10,16,8)| 		\
       _SHIFTL((v1)*10, 8,8)|_SHIFTL((wd),    0,8))

@@ -10,19 +10,49 @@ struct UnkStruct_801DB0E4_arg0 {
     s32 unk0;
     s32 unk4;
     s32 unk8;
-    f32 unkC[3]; // Guess
+    f32 unkC[3];
     f32 unk14[3];
     f32 unk24;
     f32 unk28;
     f32 unk2C;
     f32 unk30;
 };
+
 struct UnkStruct_801DB0E4_arg1 {
-    f32 unk0[3]; // TODO: Guessing here
+    f32 unk0[3];
     f32 unk4[3];
     f32 unk18;
     s32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
 };
+
+typedef struct UnkStruct_801DBF68_s0 {
+    s32 unk0;
+    s32 unk4;
+    struct UnkStruct_801DB0E4_arg1* unk8;
+    s8 pad[0x1C];
+} UnkStruct_801DBF68_s0;
+
+typedef struct UnkStruct_801DBF68 {
+    UnkStruct_801DBF68_s0 unk0[4];
+} UnkStruct_801DBF68;
+extern struct UnkStruct_801DBF68 D_80225CF4;
+
+void func_800AB92C(void); /* extern */
+
+#define ANG_NORMALIZE_1(x) (x < 0.0f ? 360.0f : 0.0f)
+#define ANG_NORMALIZE_2(x) (x > 360.0f ? -360.0f : 0.0f)
+
+#define SIGNF(x) (x >= 0 ? 1.0f : -1.0f)
+
+extern s32 D_80228110;
+extern struct UnkStruct_801DB0E4_arg0 D_80228190;
+extern s32 D_802287A8;
+extern s32 D_802287AC;
 
 // TODO: Improve these matches
 void func_801DAFA0(void** arg0, s32 arg1) {
@@ -75,7 +105,7 @@ void func_801DB024(struct UnkStruct_801DB0E4_arg0* arg0) {
 }
 
 void func_801DB0E4(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0E4_arg1* arg1, s32* arg2) {
-    f32 sp2C[3];
+    f32 vec[3];
     f32 magnitud;
     s32 i;
 
@@ -86,13 +116,13 @@ void func_801DB0E4(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0
 
     for (i = 0; i < 3; i++) {
         arg0->unkC[i] = arg1->unk0[i];
-        sp2C[i] = arg1->unk4[i] - arg1->unk0[i];
+        vec[i] = arg1->unk4[i] - arg1->unk0[i];
     }
 
-    magnitud = sqrtf(SQ(sp2C[0]) + SQ(sp2C[1]) + SQ(sp2C[2]));
+    magnitud = sqrtf(SQ(vec[0]) + SQ(vec[1]) + SQ(vec[2]));
 
     for (i = 0; i < 3; i++) {
-        arg0->unk14[i] = sp2C[i] / magnitud;
+        arg0->unk14[i] = vec[i] / magnitud;
     }
 
     arg0->unk24 = 0.0f;
@@ -118,13 +148,103 @@ void func_801DB1DC(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0
     arg0->unk0 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB284.s")
+void func_801DB284(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0E4_arg1* arg1, f32 arg2[1][2],
+                   s32 arg3) {
+    s32 var_s1;
+    s32 var_s6;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB430.s")
+    for (var_s6 = 0; var_s6 < arg3; var_s6++, arg0++) {
+        arg0->unk0 = 3;
+        arg0->unk4 = 0;
+
+        func_801DAFB8(arg0);
+
+        for (var_s1 = 0; var_s1 < 3; var_s1++) {
+            arg0->unkC[var_s1] = ((arg1->unk0[var_s1] + arg1->unk4[var_s1]) - (arg1->unk4[var_s1 + 3] * 0.5f)) +
+                                 (((f32) (rand() % 256) / 256) * arg1->unk4[var_s1 + 3]);
+        }
+
+        arg0->unk30 = 0.1f;
+        arg2[var_s6][0] = rand() % 360;
+        arg2[var_s6][1] = rand() % 360;
+    }
+}
+
+void func_801DB430(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0E4_arg1* arg1, f32 arg2[1][2],
+                   s32 arg3) {
+    f32 magnitude; // f20
+    s32 i;
+    f32 vec[3];
+    s32 j;
+
+    for (i = 0; i < arg3; i++, arg0++) {
+        func_801DB024(arg0);
+        vec[0] = COS((s32) ((arg2[i][0] * 4096.0f) / 360.0f));
+        vec[2] = SIN((s32) ((arg2[i][0] * 4096.0f) / 360.0f));
+        vec[1] = (SIN((s32) ((arg2[i][1] * 4096.0f) / 360.0f)) * arg1->unk30) * (1.0f - ((rand() & 3) / 20.0f));
+
+        if (vec[1] * ((arg1->unk0[1] - arg0->unkC[1])) > 0) {
+            vec[1] *= 1.2f;
+        }
+
+        magnitude = sqrtf(SQ(vec[0]) + SQ(vec[1]) + SQ(vec[2]));
+
+        for (j = 0; j < 3; j++) {
+            arg0->unk14[j] = vec[j] / magnitude;
+            arg0->unkC[j] += arg0->unk14[j] * (arg1->unk24 + (f32) (rand() & 1));
+        }
+
+        vec[0] = arg1->unk0[0] - arg0->unkC[0];
+
+        vec[2] = arg1->unk0[2] - arg0->unkC[2];
+
+        magnitude = sqrtf(SQ(vec[0]) + SQ(vec[2]));
+
+        if (magnitude > 0.0f) {
+            magnitude = 1 / magnitude;
+        }
+
+        vec[0] *= magnitude * 3.0f;
+        vec[2] *= magnitude * 3.0f;
+        vec[1] = arg1->unk24 / arg1->unk28;
+
+        magnitude = sqrtf(SQ(vec[0]) + SQ(vec[1]) + SQ(vec[2]));
+
+        arg0->unk24 = vec[0] / magnitude;
+        arg0->unk28 = vec[1] / magnitude;
+        arg0->unk2C = vec[2] / magnitude;
+
+        magnitude = (arg0->unk14[0] * vec[2]) - (arg0->unk14[2] * vec[0]);
+
+        arg2[i][0] += (SIGNF(magnitude) * (arg1->unk28 + (rand() % 31U * 0.125f)));
+        arg2[i][0] += ANG_NORMALIZE_2(arg2[i][0]) + ANG_NORMALIZE_1(arg2[i][0]);
+        arg2[i][1] += ((arg1->unk2C * (0.9f + ((f32) (rand() & 3) / 20.0f))));
+        arg2[i][1] += ANG_NORMALIZE_2(arg2[i][1]);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DB8F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DBF68.s")
+void func_801DBF68(struct UnkStruct_801DB0E4_arg0* arg0) {
+    s32 var_s2;
+    UnkStruct_801DBF68 sp4C = D_80225CF4;
+    s32 i;
+
+    if (arg0->unk8 == 0) {
+        func_800AB92C();
+    }
+
+    for (var_s2 = 0; var_s2 < D_802287AC; var_s2++) {
+        if ((arg0->unk8 >= sp4C.unk0[var_s2].unk0) && (arg0->unk8 < sp4C.unk0[var_s2].unk4)) {
+            D_802287A8 = 1;
+
+            if (arg0->unk8 == sp4C.unk0[var_s2].unk0) {
+                func_801DB0E4(&D_80228190, &sp4C.unk0[var_s2].unk8, &D_80228110);
+            }
+            func_801DB1DC(&D_80228190, &sp4C.unk0[var_s2].unk8, &D_80228110);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DC0AC.s")
 

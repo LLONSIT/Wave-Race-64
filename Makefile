@@ -100,7 +100,7 @@ LOOP_UNROLL    =
 
 MIPSISET       = -mips2 -32
 
-INCLUDE_CFLAGS = -I . -I include/libc  -I include/PR -I include -I bin -I src/os 
+INCLUDE_CFLAGS = -I . -I include/libc  -I include/PR -I include -I bin -I src/libultra
 
 ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
 OBJCOPYFLAGS   = -O binary
@@ -158,7 +158,8 @@ ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
 $(BUILD_DIR)/src/libultra/os/%.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/src/libultra/os/audio/%.c.o: OPT_FLAGS := -O2
 $(BUILD_DIR)/src/libultra/os/libc/%.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/os/gu/%.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/gu/%.c.o: OPT_FLAGS := -O3
+$(BUILD_DIR)/src/libultra/gu/lookathil.c.o: OPT_FLAGS := -O2
 $(BUILD_DIR)/src/libultra/os/osVirtualtoPhysical.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/src/libultra/io/%.c.o: OPT_FLAGS := -O1
 

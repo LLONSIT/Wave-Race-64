@@ -32,8 +32,8 @@ osViGetCurrentFramebuffer = 0x800C6B40; //defined:true
 osCreatePiManager       = 0x800C6B80; //defined:true
 osSetThreadPri          = 0x800C6D00; //defined:true
 sqrtf			= 0x800C7010; //defined:true
-guFrustumF              = 0x800C7380; //defined:true
-guFrustum               = 0x800C74D4; //defined:true
+guOrthoF                = 0x800C7380; //defined:true
+guOrtho                 = 0x800C74D4; //defined:true
 guTranslateF            = 0x800C7540; //defined:true
 guTranslate            = 0x800C7588; //defined:true
 osEepromLongRead       = 0x800C82D0; //defined:true
@@ -196,14 +196,16 @@ bcopy = 0x800CBA80;
 rspbootTextStart = 0x800D22B0;//name_end:rspbootTextEnd
 gspF3DEX_fifoTextStart = 0x800D2380;//name_end:gspF3DEX_fifoTextEnd
 gspF3DEX_fifoDataStart = 0x800EE310; //name_end:gspF3DEX_fifoDataEnd
-
+sViContexts = 0x800E9050;
+sTvType = 0x800E90B8;
+osViClock = 0x800E90BC;
 //TODO: Need to reference undefined function to the overlay address
 
 //Game Symbols
 first_task  = 0x801542B4;
 second_task = 0x801542B8;
 create_obj =  0x800B490C;
-gDisplayListHead = 0x80151944; //Default name for display lists for both local and global declarations
+gDisplayListHead = 0x80151944;
 unk_game_load = 0x80095050;
 main_thread = 0x80047530;
 gDramStack = 0x80046400;

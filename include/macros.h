@@ -80,5 +80,10 @@
 
 #define UNK_TYPE int
 
-#define PRINT(x) ((void) x)
+#if defined(__sgi)
+#define PRINTF
+#else
+#define PRINTF(...)
+#endif
+
 #endif

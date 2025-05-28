@@ -128,10 +128,10 @@ segments:
       - [0x815E0, c, libultra/osInitialize]
       - [0x81810, hasm, libultra/sqrtf]
       - [0x81820, c, libultra/controller]
-      - [0x81B80, asm, guOrtho]
-      - [0x81D40, c, libultra/os/gu/guTranslate] #TODO
-      - [0x81DE0, c, libultra/lookatref] # gu funcs
-      - [0x822A0, c, libultra/lookathil]
+      - [0x81B80, c, libultra/gu/ortho]
+      - [0x81D40, c, libultra/gu/translate] #TODO
+      - [0x81DE0, c, libultra/gu/lookatref] # gu funcs
+      - [0x822A0, c, libultra/gu/lookathil]
       - [0x82AD0, c, libultra/os/osEepromLongRead]
       - [0x82C10, c, libultra/conteeplongwrite]
       - [0x82D50, c, libultra/conteepprobe]
@@ -160,7 +160,7 @@ segments:
       - [0x85350, hasm, libultra/exceptasm]
       - [0x85BC0, asm, libultra/osGetCount]
       - [0x85BD0, c, libultra/osTimer]
-      - [0x85FD0, c, libultra/vi]
+      - [0x85FD0, c, libultra/io/vi]
       - [0x86100, c, libultra/os/siacs]
       - [0x861C0, c, libultra/io/sirawdma]
       - [0x86270, c, libultra/spsetstat]
@@ -184,7 +184,7 @@ segments:
       - [0x86EA0, asm, libultra/osMapTLBRdb]
       - [0x86F00, c, libultra/pirawread]
       - [0x86F60, c, libultra/os/ll]
-      - [0x87300, c, libultra/mtxutil]
+      - [0x87300, c, libultra/gu/mtxutil]
       - [0x87570, c, libultra/conteepread]
       - [0x87870, c, libultra/conteepwrite]
       - [0x87D50, c, libultra/contpfs]
@@ -221,6 +221,8 @@ segments:
       - [0x8F000, data]
       - [0x9F6D0, .data, ovl_table]
       - [0x9F930, data]
+      - [0xA3850, .data, libultra/io/vi]
+      - [0xA38C0, data]
 
       # GAME RODATA
       - [0xA39F0, rodata] # Rodata from Libultra or some library?
@@ -269,8 +271,8 @@ segments:
       - [0xA6DB0, .rodata, game/audio/port]
 
       # LIBULTRA RODATA
-      - [0xA6DD0, rodata] # lookatref
-      - [0xA6DE0, rodata] # UnkLibultraSeg_822A0
+      - [0xA6DD0, .rodata, libultra/gu/lookatref]
+      - [0xA6DE0, .rodata, libultra/gu/lookathil]
       - [0xA6E00, rodata]
       - [0xA6E50, rodata]
       - [0xA6F50, rodata]
