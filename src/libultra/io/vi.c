@@ -3,8 +3,8 @@
 #include "PR/os.h"
 
 OSViContext sViContexts[2] = { 0 };
-OSViContext *__osViCurr = &sViContexts[0];
-OSViContext *__osViNext = &sViContexts[1];
+OSViContext* __osViCurr = &sViContexts[0];
+OSViContext* __osViNext = &sViContexts[1];
 u32 sTvType = TV_TYPE_NTSC;
 u32 osViClock = VI_NTSC_CLOCK;
 

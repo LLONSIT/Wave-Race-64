@@ -44,8 +44,7 @@ void osSpTaskLoad(OSTask* task) {
     while (__osSpDeviceBusy()) {
         ;
     }
-    while (__osSpRawStartDma(1,  SP_IMEM_START, physicalTask->t.ucode_boot, physicalTask->t.ucode_boot_size) ==
-           -1) {
+    while (__osSpRawStartDma(1, SP_IMEM_START, physicalTask->t.ucode_boot, physicalTask->t.ucode_boot_size) == -1) {
         ;
     }
 }

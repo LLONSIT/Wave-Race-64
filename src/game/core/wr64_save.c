@@ -67,13 +67,12 @@ static const char devstr29[] = "bad PFS %d\n";
 static const char devstr30[] = "PFS find file\n";
 
 s32 func_8007BBF8(u8*);
-void func_8007BBF0(void);                                  
-s32 func_8007BDB8(void);    
+void func_8007BBF0(void);
+s32 func_8007BDB8(void);
 s32 func_8007D110(void);
-void func_8007B370(void *);               
-void func_8007B630(void);                                  
+void func_8007B370(void*);
+void func_8007B630(void);
 s32 func_8007BE64(void);
-
 
 s32 func_8007ADD0(s32 arg0) {
     if ((arg0 >= 'A') && (arg0 < '[')) {
@@ -91,7 +90,7 @@ s32 func_8007ADD0(s32 arg0) {
     return 0;
 }
 
-//de-encode?
+// de-encode?
 s32 func_8007AE30(s32 arg0) {
     if ((arg0 > 0) && (arg0 < 0x1B)) {
         return arg0 + '@';
@@ -205,7 +204,7 @@ s32 func_8007BBF8(u8* arg0) {
     for (i = 0; i < 508; i++) {
         chksum += *temp++;
     }
-    
+
     return chksum;
 }
 
@@ -338,7 +337,7 @@ int func_8007C50C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D110.s")
 
-s32 func_8007D110(); 
+s32 func_8007D110();
 extern u8 D_800D82D8;
 extern u8 D_800D82E8;
 extern OSPfs D_801C3AD0;
@@ -369,7 +368,7 @@ s32 func_8007D1B8(void) {
     }
 }
 
-s32 func_8007D110(); 
+s32 func_8007D110();
 extern OSPfs D_801C3AD0;
 
 s32 func_8007D24C(void) {
@@ -419,7 +418,6 @@ static const char devstr50[] = "file_no: %d\n";
 static const char devstr51[] = "PFS write error\n";
 static const char devstr52[] = "PFS no delete file\n";
 static const char devstr53[] = "PFS delete error %d\n";
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D2D4.s")
 

@@ -13,8 +13,8 @@ void guPerspective(Mtx *m, u16 *perspNorm, float fovy, float aspect, float near,
                    float far, float scale);
 void guFrustum(Mtx *m, float left, float right, float bottom, float top,
              float near, float far, float scale);
-void guOrtho(Mtx *m, float left, float right, float bottom, float top,
-             float near, float far, float scale);
+void guOrtho(Mtx *m, float l, float r, float b, float t,
+             float n, float f, float scale);
 void guTranslate(Mtx *m, float x, float y, float z);
 void guRotate(Mtx *m, float a, float x, float y, float z);
 void guScale(Mtx *m, float x, float y, float z);
