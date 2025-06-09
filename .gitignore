@@ -5,6 +5,7 @@ tools/ido5.3_recomp/
 # Ignore OS and IDE folders
 .vscode/
 __pycache__/
+.venv/
 
 # Ignore the baserom so it doesn't get accidentally added
 *.z64

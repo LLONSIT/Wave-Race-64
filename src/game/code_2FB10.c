@@ -28,7 +28,7 @@ void func_800762D0(struct_800762D0* arg0) {
     if (D_801CE638 == 1) {
         if ((gGameModes == GMODE_STUNT) && (arg0->unk2C4 <= 0)) {
             arg0->unk2EC = 2;
-        } else if (arg0->unk19C >= 0x927BF) {
+        } else if (arg0->unk19C >= 599999) {
             arg0->unk2EC = 2;
         } else {
             arg0->unk2EC = 1;

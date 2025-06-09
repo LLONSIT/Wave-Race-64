@@ -110,13 +110,13 @@ void* main_thread(void* entry) {
     while (TRUE) {
         osRecvMesg(&D_80154130, &sp4C, 1);
         if (sp4C == (void*) 0x19) {
-            osSendMesg(&D_801540E8, (void*) 0x1F, 0);
+            osSendMesg(&D_801540E8, (void*) 0x1F, OS_MESG_NOBLOCK);
 
             D_800D4610++;
             if ((D_800D4610 - D_800D4614) >= D_800D4618) {
                 D_800D4614 = D_800D4610;
                 D_800D4618 = D_800D461C;
-                osSendMesg(&D_80154100, (void*) 0x29, 0);
+                osSendMesg(&D_80154100, (void*) 0x29, OS_MESG_NOBLOCK);
             }
             continue;
         }
@@ -172,7 +172,7 @@ void* main_thread(void* entry) {
         if (sp4C != (void*) 0x18) {
             continue;
         }
-        osSendMesg(&D_80154118, (void*) 0x33, 0);
+        osSendMesg(&D_80154118, (void*) 0x33, OS_MESG_NOBLOCK);
     }
 }
 
@@ -232,7 +232,7 @@ void audio_thread(void* entry) {
         osRecvMesg(&D_801540E8, &D_801542D0, 1);
         if (D_800D4630 != 0) {
             second_task = D_800D4630;
-            osSendMesg(&D_80154130, (void*) 0x16, 0);
+            osSendMesg(&D_80154130, (void*) 0x16, OS_MESG_NOBLOCK);
         }
         D_800D4630 = func_800C4C40();
     }

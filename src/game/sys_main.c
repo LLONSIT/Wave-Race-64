@@ -40,20 +40,22 @@ void func_800468E0(void) {
     switch (D_800DAB1C) {
         case 0:
             gDPPipeSync(gDisplayListHead++);
-            gDPSetColorImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, D_801542C0[D_80151948] + 0x80000000);
+            gDPSetColorImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320,
+                             OS_K0_TO_PHYSICAL(D_801542C0[D_80151948]));
             break;
 
         case 1:
         case 2:
-            gSPSegment(gDisplayListHead++, 4, D_801542C0[0xC - 10 + 1] + 0x80000000);
+            gSPSegment(gDisplayListHead++, 4, OS_K0_TO_PHYSICAL(D_801542C0[0xC - 10 + 1]));
             gDPPipeSync(gDisplayListHead++);
             gDPSetColorImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320,
-                             D_801542C0[0xC - 10 + 1] + 0x80000000);
+                             OS_K0_TO_PHYSICAL(D_801542C0[0xC - 10 + 1]));
             break;
 
         case 3:
             gDPPipeSync(gDisplayListHead++);
-            gDPSetColorImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 640, D_800D45DC[D_800D45D8] + 0x80000000);
+            gDPSetColorImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 640,
+                             OS_K0_TO_PHYSICAL(D_800D45DC[D_800D45D8]));
             break;
     }
 }
@@ -84,7 +86,7 @@ void func_80046C30(OSTask* task) {
 
 void func_80046CF8(OSTask* task) {
     first_task = task;
-    osSendMesg(&D_80154130, (OSMesg) 0x15, 0);
+    osSendMesg(&D_80154130, (OSMesg) 0x15, OS_MESG_NOBLOCK);
 }
 
 void func_80046D2C(void) {
