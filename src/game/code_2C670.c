@@ -21,6 +21,7 @@ static const char devstr2[] = "Error: number of buoy3\n";
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80073E6C.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_800741A4.s")
+
 s32 func_80074264(f32 arg0, f32 arg1) {
     s32 i;
     s32 ret;
