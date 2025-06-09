@@ -59,10 +59,11 @@ void func_8006C5D8(Gfx**);
 void func_8006BE74(Gfx**);
 void func_8006B334(Gfx**);
 void func_80071E70(void);
-void func_800735EC(struct_801AEE20**, s32);
+void func_800735EC(struct_801AEE20*, s32);
 void func_80073E6C(void);
 s32 func_80074264(f32 arg0, f32 arg1);
 void func_80074368(f32 arg0, f32 arg1, s32* firstMatchIndex, s32* lastMatchIndex);
+s32 func_80074448(f32 arg0, f32 arg1);
 void func_800AF43C(f32, f32, f32);
 void func_800B4788(s32 source_id, f32 x_position, f32 y_position, f32 z_position, f32 x_velocity, f32 y_velocity,
                    f32 z_velocity);

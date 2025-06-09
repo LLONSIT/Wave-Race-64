@@ -510,7 +510,7 @@ Gfx* func_80093C44(Gfx* gdl) {
 
     for (i = 0; i < 3; i++) {
         gDPPipeSync(gdl++);
-        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, VIRTUAL_TO_PHYSICAL2(D_801542C0[i]));
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(D_801542C0[i]));
 
         gDPSetFillColor(gdl++, 0x10001);
         gDPFillRectangle(gdl++, 0, 0, 319, 239);
@@ -535,7 +535,7 @@ Gfx* func_80093DBC(Gfx* gfxPtr, u16 arg1, u16 arg2, u16 arg3) {
     for (i = 0; i < 3; i++) {
 
         gDPPipeSync(gfxPtr++);
-        gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, (D_801542C0[i] + 0x80000000));
+        gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(D_801542C0[i]));
         gDPSetFillColor(gfxPtr++, (GPACK_RGBA5551(arg1, arg2, arg3, 1) << 0x10) | GPACK_RGBA5551(arg1, arg2, arg3, 1));
         gDPFillRectangle(gfxPtr++, 8, 20, 310, 219);
     }
@@ -553,7 +553,7 @@ Gfx* func_80093F78(Gfx* gfxPtr) {
     gDPSetRenderMode(gfxPtr++, G_RM_NOOP, G_RM_NOOP2);
     gDPSetAlphaCompare(gfxPtr++, G_AC_NONE);
     gDPSetScissor(gfxPtr++, G_SC_NON_INTERLACE, 0, 0, 319, 239);
-    gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, (s32) (D_801542C0[D_80151948] + 0x80000000));
+    gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(D_801542C0[D_80151948]));
     gDPSetFillColor(gfxPtr++, 0x00010001);
     gDPFillRectangle(gfxPtr++, 0, 0, 319, 239);
 
