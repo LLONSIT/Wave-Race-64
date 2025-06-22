@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -997,6 +997,9 @@
+   sp58 = temp_f18;
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
++  if (!arg8)
++  {
++  }
+   temp_f22 = new_var;
+   temp_f20 = temp_f14;
+   temp_f24 = temp_f18;

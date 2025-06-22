@@ -1,0 +1,32 @@
+--- before
++++ after
+@@ -969,8 +969,9 @@
+   f32 ty;
+   f32 tz;
+   f32 dummy;
++  len2 = arg6;
+   temp_f14 = arg2 - arg8;
+-  temp_f16 = arg3 - arg6;
++  temp_f16 = arg3 - len2;
+   temp_f18 = arg4 - arg9;
+   len1 = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
+   if (len1 <= 0.0f)
+@@ -997,7 +998,8 @@
+   s_y *= inv_len2;
+   s_z *= inv_len2;
+   u_x = (s_y * z) - (s_z * y);
+-  u_y = (s_z * x) - (s_x * z);
++  dummy = x;
++  u_y = (s_z * dummy) - (s_x * z);
+   u_z = (s_x * y) - (s_y * x);
+   len3 = ((u_x * u_x) + (u_y * u_y)) + (u_z * u_z);
+   if (len3 <= 0.0f)
+@@ -1009,7 +1011,7 @@
+   u_x *= inv_len3;
+   u_y *= inv_len3;
+   u_z *= inv_len3;
+-  tx = -(((x * arg2) + (y * arg3)) + (z * arg4));
++  tx = -(((dummy * arg2) + (y * arg3)) + (z * arg4));
+   ty = -(((s_x * arg2) + (s_y * arg3)) + (s_z * arg4));
+   tz = -(((u_x * arg2) + (u_y * arg3)) + (u_z * arg4));
+   dummy = 0.0f;

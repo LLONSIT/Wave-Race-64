@@ -1,0 +1,34 @@
+--- before
++++ after
+@@ -988,7 +988,7 @@
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
+   temp_len = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
+-  if (temp_len <= 0.0f)
++  if ((temp_len - 1) < 0.0f)
+   {
+     return;
+   }
+@@ -1033,7 +1033,7 @@
+   up_y = (temp_f18 * cross2_x) - (temp_f14 * cross2_z);
+   up_z = (temp_f14 * cross2_y) - (temp_f16 * cross2_x);
+   temp_len = ((up_x * up_x) + (up_y * up_y)) + (up_z * up_z);
+-  if (temp_len <= 0.0f)
++  if (temp_len <= (temp_f16 * 0.0f))
+   {
+     return;
+   }
+@@ -1045,10 +1045,13 @@
+   arg1->xz = temp_f12;
+   arg1->yz = temp_f14;
+   arg1->zz = temp_f16;
++  if (1)
++  {
+   final_trans = (((-arg2) * temp_f14) + (arg3 * temp_f12)) - (arg4 * temp_f16);
+   arg1->wx = 0.0f;
+   arg1->wy = 0.0f;
+   arg1->wz = 0.0f;
++  }
+   arg1->ww = 1.0f;
+   arg1->xw = final_trans;
+   func_80047EE0(arg1, arg0);

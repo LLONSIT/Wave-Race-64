@@ -1,0 +1,20 @@
+--- before
++++ after
+@@ -977,14 +977,14 @@
+       ControllerInput *ctrl = (&gControllerOne) + i;
+       OSContPad *pad = &gControllers[i];
+       u16 button = ctrl->button;
+-      ctrl->prevButton = button;
+       ctrl->button = pad->button;
+-      ctrl->pressedButton = ctrl->button & (ctrl->button ^ button);
++      ctrl->pressedButton = ctrl->button & (ctrl->button ^ ((0, button)));
+       ctrl->releasedButton = button & (ctrl->button ^ button);
+       ctrl->stick_x = pad->stick_x;
++      ctrl->prevButton = button;
+       ctrl->stick_y = pad->stick_y;
+     }
+-    controllerMask <<= 1;
++    controllerMask = controllerMask << 1;
+   }
+ 
+ }

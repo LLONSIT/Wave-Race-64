@@ -1,0 +1,15 @@
+--- before
++++ after
+@@ -972,9 +972,9 @@
+   osContGetReadData(gControllers);
+   for (i = 0; i < 4; i++)
+   {
+-    if (D_80154340 & controllerMask)
+-    {
+-      ControllerInput *ctrl = (&gControllerOne) + i;
++    if (controllerMask & D_80154340)
++    {
++      ControllerInput *ctrl = i + (&gControllerOne);
+       OSContPad *pad = &gControllers[i];
+       ctrl->prevButton = ctrl->button;
+       ctrl->button = pad->button;

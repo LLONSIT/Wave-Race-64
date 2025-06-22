@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -978,7 +978,8 @@
+       OSContPad *pad = &gControllers[i];
+       ctrl->prevButton = ctrl->button;
+       ctrl->button = pad->button;
+-      ctrl->pressedButton = ctrl->button & (ctrl->button ^ ctrl->prevButton);
++      ctrl->pressedButton = ctrl->button ^ ctrl->prevButton;
++      ctrl->pressedButton = ctrl->button & ctrl->pressedButton;
+       ctrl->releasedButton = ctrl->prevButton & (ctrl->button ^ ctrl->prevButton);
+       ctrl->stick_x = pad->stick_x;
+       ctrl->stick_y = pad->stick_y;

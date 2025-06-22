@@ -1,0 +1,18 @@
+--- before
++++ after
+@@ -1012,7 +1012,6 @@
+   cross1_z = (arg8 * temp_f22) - (arg6 * temp_f20);
+   cross2_x = (argA * sp50) - (arg9 * temp_f12);
+   cross2_y = (arg9 * sp48) - (argA * sp50);
+-  cross2_z = (arg8 * temp_f12) - (arg6 * sp48);
+   temp_len = ((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z);
+   if (temp_len <= 0.0f)
+   {
+@@ -1030,6 +1029,7 @@
+   cross3_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
+   cross3_z = (temp_f14 * cross1_y) - (temp_f16 * cross1_x);
+   up_x = (temp_f16 * cross2_z) - (temp_f18 * cross2_y);
++  cross2_z = (arg8 * temp_f12) - (arg6 * sp48);
+   up_y = (temp_f18 * cross2_x) - (temp_f14 * cross2_z);
+   up_z = (temp_f14 * cross2_y) - (temp_f16 * cross2_x);
+   temp_len = ((up_x * up_x) + (up_y * up_y)) + (up_z * up_z);

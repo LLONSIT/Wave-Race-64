@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -1017,6 +1017,9 @@
+   {
+     return;
+   }
++  if (!cross1_y)
++  {
++  }
+   cross2_x = new_var;
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;

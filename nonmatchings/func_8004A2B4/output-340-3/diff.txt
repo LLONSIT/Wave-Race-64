@@ -1,0 +1,24 @@
+--- before
++++ after
+@@ -968,6 +968,7 @@
+ {
+   u8 controllerMask = 1;
+   s32 i;
++ do { } while (0);
+   osRecvMesg(&D_801540D0, &D_80154348, 1);
+   osContGetReadData(gControllers);
+   for (i = 0; i < 4; i++)
+@@ -977,12 +978,7 @@
+       ControllerInput *ctrl = (&gControllerOne) + i;
+       OSContPad *pad = &gControllers[i];
+       u16 button = ctrl->button;
+-      ctrl->prevButton = button;
+-      ctrl->button = pad->button;
+-      ctrl->pressedButton = ctrl->button & (ctrl->button ^ button);
+-      ctrl->releasedButton = button & (ctrl->button ^ button);
+-      ctrl->stick_x = pad->stick_x;
+-      ctrl->stick_y = pad->stick_y;
++ ctrl->prevButton = button; ctrl->button = pad->button; ctrl->pressedButton = ctrl->button & (ctrl->button ^ button); ctrl->stick_x = pad->stick_x; ctrl->releasedButton = button & (ctrl->button ^ button); ctrl->stick_y = pad->stick_y;
+     }
+     controllerMask <<= 1;
+   }

@@ -1,0 +1,21 @@
+--- before
++++ after
+@@ -969,6 +969,7 @@
+   f32 cross1_z;
+   f32 cross2_x;
+   f32 cross2_y;
++  float new_var3;
+   f32 cross2_z;
+   f32 cross3_x;
+   f32 cross3_y;
+@@ -982,8 +983,9 @@
+   temp_f16 = arg3 - arg6;
+   ;
+   new_var = temp_f16;
++  new_var3 = temp_f14 * temp_f14;
+   new_var2 = new_var;
+-  if ((((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f)
++  if (((new_var3 + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f)
+   {
+     return;
+   }

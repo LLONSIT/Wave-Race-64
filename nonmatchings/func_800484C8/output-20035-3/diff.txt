@@ -1,0 +1,35 @@
+--- before
++++ after
+@@ -954,6 +954,7 @@
+   f32 uY;
+   f32 uZ;
+   f32 len;
++  MF *new_var;
+   f32 invLen;
+   fX = eyeX - centerX;
+   fY = eyeY - centerY;
+@@ -970,6 +971,7 @@
+   fZ *= invLen;
+   sX = (upZ * fZ) - (upY * fY);
+   sY = (upX * fY) - (upZ * fX);
++ dummy_label_638611: ;
+   sZ = (upY * fX) - (upX * fZ);
+   len = ((sX * sX) + (sY * sY)) + (sZ * sZ);
+   if (len <= 0.0f)
+@@ -985,6 +987,7 @@
+   uY = (fZ * sX) - (fX * sZ);
+   uZ = (fX * sY) - (fY * sX);
+   arg1->xx = fX;
++  arg1->zx = fZ;
+   arg1->yx = fY;
+   arg1->zx = fZ;
+   arg1->wx = 0.0f;
+@@ -999,7 +1002,7 @@
+   arg1->xw = -(((eyeX * fX) + (eyeY * fY)) + (eyeZ * fZ));
+   arg1->yw = -(((eyeX * sX) + (eyeY * sY)) + (eyeZ * sZ));
+   arg1->zw = -(((eyeX * uX) + (eyeY * uY)) + (eyeZ * uZ));
+-  arg1->ww = 1.0f;
++  (new_var = arg1)->ww = 1.0f;
+   func_80047EE0(arg1, arg0);
+ }
+ 

@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -1005,8 +1005,8 @@
+   temp_len = sqrtf(((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z));
+   if (temp_len <= 0.0f)
+   {
++  }
+     return;
+-  }
+   temp_f2 = 1.0f / temp_len;
+   cross1_x *= temp_f2;
+   cross1_y *= temp_f2;

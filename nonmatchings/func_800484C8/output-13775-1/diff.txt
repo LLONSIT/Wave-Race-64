@@ -1,0 +1,20 @@
+--- before
++++ after
+@@ -965,6 +965,7 @@
+   f32 temp_f18;
+   f32 temp_f12;
+   f32 temp_f2;
++  float new_var2;
+   f32 temp_f22;
+   f32 temp_f20;
+   f32 temp_f24;
+@@ -1014,7 +1015,8 @@
+   cross2_x = (argA * sp50) - (arg9 * temp_f12);
+   cross2_y = (arg9 * sp48) - (argA * sp50);
+   cross2_z = (arg8 * temp_f12) - (arg6 * sp48);
+-  temp_len = ((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z);
++  new_var2 = (cross1_x * cross1_x) + (cross1_y * cross1_y);
++  temp_len = new_var2 + (cross1_z * cross1_z);
+   if (temp_len <= 0.0f)
+   {
+     return;

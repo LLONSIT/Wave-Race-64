@@ -1,0 +1,15 @@
+--- before
++++ after
+@@ -986,10 +986,10 @@
+   f32 final_trans;
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+-  temp_len = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
++  ;
+   new_var = temp_f16;
+   new_var2 = new_var;
+-  if (temp_len <= 0.0f)
++  if ((((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f)
+   {
+     return;
+   }

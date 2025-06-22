@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -997,7 +997,8 @@
+   temp_f20 = temp_f14;
+   temp_f24 = temp_f18;
+   temp_f12 = temp_f22 * temp_f2;
+-  temp_f14 = temp_f20 * temp_f2;
++  temp_f24 = temp_f20 * temp_f2;
++  temp_f14 = temp_f24;
+   temp_f16 = temp_f24 * temp_f2;
+   cross1_x = (argA * temp_f16) - (arg7 * temp_f12);
+   cross1_y = (arg5 * temp_f12) - (argA * temp_f14);

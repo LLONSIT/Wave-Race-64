@@ -1,0 +1,41 @@
+--- before
++++ after
+@@ -950,6 +950,8 @@
+ } Vec3f;
+ void func_800484C8(MF *arg0, MF *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 argA)
+ {
++  float new_var2;
++  f32 *new_var;
+   Vec3f forward;
+   Vec3f side;
+   Vec3f up;
+@@ -966,10 +968,11 @@
+   forward.x *= len;
+   forward.y *= len;
+   forward.z *= len;
++  new_var = &side.x;
+   side.x = (argA * forward.z) - (arg7 * forward.y);
+   side.y = (arg7 * forward.x) - (arg5 * forward.z);
+   side.z = (arg5 * forward.y) - (argA * forward.x);
+-  len = sqrtf(((side.x * side.x) + (side.y * side.y)) + (side.z * side.z));
++  len = sqrtf(((side.x * (*new_var)) + (side.y * side.y)) + (side.z * side.z));
+   if (len <= 0.0f)
+   {
+     return;
+@@ -985,6 +988,7 @@
+   arg1->yx = up.x;
+   arg1->zx = -forward.x;
+   arg1->xy = side.y;
++  new_var2 = arg2 * up.x;
+   arg1->yy = up.y;
+   arg1->zy = -forward.y;
+   arg1->xz = side.z;
+@@ -995,7 +999,7 @@
+   arg1->wz = 0.0f;
+   arg1->ww = 1.0f;
+   arg1->xw = -(((arg2 * side.x) + (arg3 * side.y)) + (arg4 * side.z));
+-  arg1->yw = -(((arg2 * up.x) + (arg3 * up.y)) + (arg4 * up.z));
++  arg1->yw = -((new_var2 + (up.y * arg3)) + (arg4 * up.z));
+   arg1->zw = ((arg2 * forward.x) + (arg3 * forward.y)) + (arg4 * forward.z);
+   func_80047EE0(arg1, arg0);
+ }

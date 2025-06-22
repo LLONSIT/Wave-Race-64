@@ -1,0 +1,13 @@
+--- before
++++ after
+@@ -965,9 +965,8 @@
+   }
+   len = sqrtf(len);
+   invLen = 1.0f / len;
+-  fX *= invLen;
++  fZ = (fX *= invLen);
+   fY *= invLen;
+-  fZ *= invLen;
+   sX = (upZ * fZ) - (upY * fY);
+   sY = (upX * fY) - (upZ * fX);
+   sZ = (upY * fX) - (upX * fZ);

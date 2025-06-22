@@ -182,3 +182,80 @@ The successfully decompiled function handles:
 - **Data Structure Updates**: Fills `ControllerInput` structs with current state
 
 This represents a core input handling function that runs every frame to update controller state for the game engine.
+
+## Git Workflow for Contributing to Wave-Race-64 Repository
+
+### Initial Setup
+```bash
+# Fork the repository on GitHub first (via web interface)
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+
+# Clone your fork (replace USERNAME with your GitHub username)
+git clone https://github.com/USERNAME/Wave-Race-64.git
+cd Wave-Race-64
+
+# Switch to the active development branch
+git checkout full-split
+
+# Add upstream remote to stay in sync
+git remote add upstream https://github.com/LLONSIT/Wave-Race-64.git
+```
+
+### Creating a Contribution
+```bash
+# Create a new branch for your decompilation work
+git checkout -b decompile-func_NAME
+
+# Work on decompilation using permuter
+# Achieve perfect score 0 with the function
+
+# Stage and commit your changes
+git add .
+git commit -m "$(cat <<'EOF'
+Decompile func_NAME with perfect assembly match
+
+- Achieved score 0 (exact assembly match) using decomp-permuter
+- [Brief description of function purpose]
+- Added necessary struct definitions to structs.h if needed
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+EOF
+)"
+
+# Push to your fork
+git push -u origin decompile-func_NAME
+```
+
+### Creating Pull Request
+```bash
+# Create PR using GitHub CLI (ensure it targets full-split branch)
+gh pr create --title "Decompile func_NAME" --body "$(cat <<'EOF'
+## Summary
+- Decompiled func_NAME achieving perfect assembly match (score 0)
+- [Brief description of what the function does]
+- Added any necessary struct definitions
+
+## Test plan
+- [x] Achieved permuter score 0 (perfect assembly match)
+- [x] Builds successfully with `make`
+- [x] No regression in existing functionality
+
+🤖 Generated with [Claude Code](https://claude.ai/code)
+EOF
+)"
+```
+
+### Important Notes
+- **Always target the `full-split` branch**, not `master`
+- **Fork the repository first** on GitHub before cloning
+- **Achieve score 0** with decomp-permuter before submitting
+- **Test builds successfully** with `make` before creating PR
+- **Include function purpose** in commit message and PR description
+
+### Common Issues and Solutions
+- **Permission denied when pushing**: Fork repository first, then clone your fork
+- **PR targets wrong branch**: Ensure you're creating PR to `LLONSIT:full-split`, not `LLONSIT:master`
+- **Merge conflicts**: Cherry-pick commits to correct branch if needed

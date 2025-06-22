@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -996,8 +996,8 @@
+   arg1->yz = uY;
+   arg1->zz = uZ;
+   arg1->wz = 0.0f;
++  arg1->yw = -(((eyeX * sX) + (eyeY * sY)) + (eyeZ * sZ));
+   arg1->xw = -(((eyeX * fX) + (eyeY * fY)) + (eyeZ * fZ));
+-  arg1->yw = -(((eyeX * sX) + (eyeY * sY)) + (eyeZ * sZ));
+   arg1->zw = -(((eyeX * uX) + (eyeY * uY)) + (eyeZ * uZ));
+   arg1->ww = 1.0f;
+   func_80047EE0(arg1, arg0);

@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -958,7 +958,7 @@
+   forward.y = arg3 - arg6;
+   forward.z = arg4 - arg9;
+   len = sqrtf(((forward.x * forward.x) + (forward.y * forward.y)) + (forward.z * forward.z));
+-  if (len <= 0.0f)
++  if ((len + 1) <= (0.0f + 1))
+   {
+     return;
+   }

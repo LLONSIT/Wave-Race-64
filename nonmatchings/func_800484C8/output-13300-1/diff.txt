@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -1035,7 +1035,7 @@
+   temp_f18 = arg4 - arg9;
+   sp48 = argA * temp_f24;
+   cross1_y = (arg7 * temp_f20) - sp48;
+-  up_y = (temp_f18 * cross2_x) - (temp_f14 * cross2_z);
++  up_y = (cross2_x * temp_f18) - (temp_f14 * cross2_z);
+   up_z = (temp_f14 * cross2_y) - (cross2_x * cross2_x);
+   temp_len = ((up_x * up_x) + (up_y * up_y)) + (up_z * up_z);
+   if (temp_len <= 0.0f)

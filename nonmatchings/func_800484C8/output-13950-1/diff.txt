@@ -1,0 +1,20 @@
+--- before
++++ after
+@@ -986,7 +986,8 @@
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
+-  temp_len = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
++  up_z = (temp_f14 * temp_f14) + (temp_f16 * temp_f16);
++  temp_len = up_z + (temp_f18 * temp_f18);
+   new_var = temp_f16;
+   if (temp_len <= 0.0f)
+   {
+@@ -1055,6 +1056,7 @@
+   sp44--;
+   arg1->wy = 0.0f;
+   arg1->wz = 0.0f;
++ if (0) { }
+   arg1->ww = 1.0f;
+   arg1->xw = final_trans;
+   func_80047EE0(arg1, arg0);

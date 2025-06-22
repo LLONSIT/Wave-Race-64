@@ -1,0 +1,21 @@
+--- before
++++ after
+@@ -956,7 +956,8 @@
+   f32 len;
+   f32 invLen;
+   fX = eyeX - centerX;
+-  fY = eyeY - centerY;
++  fY = eyeY;
++  fY = fY - centerY;
+   fZ = eyeZ - centerZ;
+   len = ((fX * fX) + (fY * fY)) + (fZ * fZ);
+   if (len <= 0.0f)
+@@ -983,7 +984,7 @@
+   sZ *= invLen;
+   uX = (fY * sZ) - (fZ * sY);
+   uY = (fZ * sX) - (fX * sZ);
+-  uZ = (fX * sY) - (fY * sX);
++  uZ = (sY * fX) - (fY * sX);
+   arg1->xx = fX;
+   arg1->yx = fY;
+   arg1->zx = fZ;

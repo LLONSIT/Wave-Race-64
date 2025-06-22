@@ -1,0 +1,18 @@
+--- before
++++ after
+@@ -1025,6 +1025,7 @@
+   cross2_z *= temp_f2;
+   arg1->xx = cross1_x;
+   arg1->yx = cross1_y;
++  sp44--;
+   arg1->zx = cross1_z;
+   arg1->xy = cross2_x;
+   arg1->yy = cross2_y;
+@@ -1035,7 +1036,6 @@
+   final_trans = (((-arg2) * temp_f14) + (cross2_z * temp_f12)) - (arg4 * temp_f16);
+   arg1->wx = 0.0f;
+   sp44++;
+-  sp44--;
+   (void) sp54;
+   (void) sp50;
+   (void) sp4C;

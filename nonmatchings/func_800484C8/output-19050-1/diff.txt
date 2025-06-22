@@ -1,0 +1,13 @@
+--- before
++++ after
+@@ -1007,7 +1007,9 @@
+   {
+     return;
+   }
+-  temp_f2 = 1.0f / temp_len;
++  temp_f2 = 1.0f;
++  temp_f2 = temp_len;
++  temp_f2 = temp_f2 / temp_f2;
+   cross1_x *= temp_f2;
+   cross1_y *= temp_f2;
+   cross1_z *= temp_f2;

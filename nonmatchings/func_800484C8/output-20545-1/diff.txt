@@ -1,0 +1,44 @@
+--- before
++++ after
+@@ -950,7 +950,7 @@
+ void func_80047F90(chr_struct *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s32 arg9);
+ #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80047FFC.s")
+ void func_800481E0(MF *arg0, u16 *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
+-void func_800484C8(MF *arg0, MF *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 argA)
++char func_800484C8(MF *arg0, MF *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 argA)
+ {
+   f32 sp60;
+   f32 sp5C;
+@@ -959,6 +959,7 @@
+   f32 sp50;
+   f32 sp4C;
+   f32 sp48;
++  f32 new_var;
+   f32 sp44;
+   f32 sp3C;
+   f32 sp30;
+@@ -1020,9 +1021,12 @@
+   }
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
++  arg7++;
++  arg7--;
+   temp_f12 = cross1_y * temp_f2;
+-  sp3C = cross1_x * temp_f2;
+-  sp44 = cross1_z * temp_f2;
++  new_var = temp_f2;
++  sp3C = cross1_x * new_var;
++  sp44 = cross1_z * new_var;
+   arg1->xy = temp_f12;
+   arg1->yy = sp3C;
+   arg1->zy = sp44;
+@@ -1031,7 +1035,8 @@
+   cross3_z = (temp_f14 * cross1_y) - (temp_f16 * cross1_x);
+   up_x = (temp_f16 * cross2_z) - (temp_f18 * cross2_y);
+   up_y = (temp_f18 * cross2_x) - (temp_f14 * cross2_z);
+-  up_z = (temp_f14 * cross2_y) - (temp_f16 * cross2_x);
++  sp54 = temp_f16;
++  up_z = (temp_f14 * cross2_y) - (sp54 * cross2_x);
+   temp_len = ((up_x * up_x) + (up_y * up_y)) + (up_z * up_z);
+   if (temp_len <= 0.0f)
+   {

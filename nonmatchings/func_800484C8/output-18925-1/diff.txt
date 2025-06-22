@@ -1,0 +1,51 @@
+--- before
++++ after
+@@ -946,31 +946,35 @@
+ {
+   f32 fX;
+   f32 fY;
++  f32 sX;
+   f32 fZ;
+-  f32 sX;
+   f32 sY;
++  float new_var;
+   f32 sZ;
+   f32 uX;
+   f32 uY;
+   f32 uZ;
+   f32 len;
+   f32 invLen;
++  float new_var2;
+   fX = eyeX - centerX;
+   fY = eyeY - centerY;
+   fZ = eyeZ - centerZ;
+-  len = ((fX * fX) + (fY * fY)) + (fZ * fZ);
++  len = ((fX * fX) + ((float) (fY * fY))) + (fZ * fZ);
+   if (len <= 0.0f)
+   {
+     return;
+   }
+   len = sqrtf(len);
+-  invLen = 1.0f / len;
++  uZ = 1.0f / len;
++  invLen = uZ;
+   fX *= invLen;
+   fY *= invLen;
+   fZ *= invLen;
+   sX = (upZ * fZ) - (upY * fY);
+-  sY = (upX * fY) - (upZ * fX);
++  sY = (new_var = upX * fY) - (upZ * fX);
+   sZ = (upY * fX) - (upX * fZ);
++  new_var2 = (eyeX * fX) + (eyeY * fY);
+   len = ((sX * sX) + (sY * sY)) + (sZ * sZ);
+   if (len <= 0.0f)
+   {
+@@ -996,7 +1000,7 @@
+   arg1->yz = uY;
+   arg1->zz = uZ;
+   arg1->wz = 0.0f;
+-  arg1->xw = -(((eyeX * fX) + (eyeY * fY)) + (eyeZ * fZ));
++  arg1->xw = -(new_var2 + (eyeZ * fZ));
+   arg1->yw = -(((eyeX * sX) + (eyeY * sY)) + (eyeZ * sZ));
+   arg1->zw = -(((eyeX * uX) + (eyeY * uY)) + (eyeZ * uZ));
+   arg1->ww = 1.0f;

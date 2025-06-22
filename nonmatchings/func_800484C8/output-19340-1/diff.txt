@@ -1,0 +1,69 @@
+--- before
++++ after
+@@ -972,18 +972,21 @@
+   f32 cross2_z;
+   f32 cross3_x;
+   f32 cross3_y;
++  f32 new_var4;
+   f32 cross3_z;
+   f32 up_x;
+   f32 up_y;
++  float new_var3;
+   f32 up_z;
+   f32 new_var;
+   f32 final_trans;
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   ;
++  new_var3 = arg2 - arg8;
+   new_var = temp_f16;
+   new_var2 = new_var;
+-  if ((((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f)
++  if ((((new_var3 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f)
+   {
+     return;
+   }
+@@ -1000,7 +1003,8 @@
+   temp_f14 = temp_f20 * temp_f2;
+   temp_f16 = temp_f24 * temp_f2;
+   cross1_x = (argA * temp_f16) - (arg7 * temp_f12);
+-  cross1_y = (arg5 * temp_f12) - (argA * temp_f14);
++  temp_f2 = argA;
++  cross1_y = (arg5 * temp_f12) - (temp_f2 * temp_f14);
+   cross1_z = (arg7 * temp_f14) - (arg5 * temp_f16);
+   temp_len = sqrtf(((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z));
+   if (temp_len <= 0.0f)
+@@ -1014,7 +1018,7 @@
+   cross2_x = (new_var2 * temp_f16) - (temp_f18 * cross1_y);
+   cross2_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
+   cross2_z = (temp_f14 * cross1_y) - (new_var2 * cross1_x);
+-  temp_len = sqrtf(((cross2_x * cross2_x) + (cross2_y * cross2_y)) + (cross2_z * cross2_z));
++  temp_len = sqrtf(((cross2_x * cross2_x) + (((0, cross2_y)) * cross2_y)) + (cross2_z * cross2_z));
+   if (temp_len <= 0.0f)
+   {
+     return;
+@@ -1022,17 +1026,22 @@
+   temp_f2 = 1.0f / temp_len;
+   cross2_x *= temp_f2;
+   cross2_y *= temp_f2;
++  if (cross1_y)
++  {
++ do { } while (0);
++  }
+   cross2_z *= temp_f2;
+   arg1->xx = cross1_x;
+   arg1->yx = cross1_y;
++  new_var4 = cross2_z;
+   arg1->zx = cross1_z;
+   arg1->xy = cross2_x;
+   arg1->yy = cross2_y;
+-  arg1->zy = cross2_z;
++  arg1->zy = new_var4;
+   arg1->xz = temp_f12;
+   arg1->yz = temp_f14;
+   arg1->zz = temp_f16;
+-  final_trans = (((-arg2) * temp_f14) + (cross2_z * temp_f12)) - (arg4 * temp_f16);
++  final_trans = (((-arg2) * temp_f14) + (new_var4 * temp_f12)) - (arg4 * temp_f16);
+   arg1->wx = 0.0f;
+   sp44++;
+   sp44--;

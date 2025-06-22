@@ -1,0 +1,19 @@
+--- before
++++ after
+@@ -1006,7 +1006,7 @@
+   arg1->yx = temp_f12;
+   arg1->xx = sp48;
+   arg1->zx = sp50;
+-  sp3C = (((-arg2) * sp48) + (arg3 * temp_f12)) - (arg4 * sp50);
++  sp3C = (temp_f14 = ((-arg2) * sp48) + (arg3 * temp_f12)) - (arg4 * sp50);
+   cross1_x = (argA * temp_f24) - (arg7 * temp_f22);
+   cross1_y = (arg7 * temp_f20) - (argA * temp_f24);
+   cross1_z = (arg8 * temp_f22) - (arg6 * temp_f20);
+@@ -1033,7 +1033,6 @@
+   up_y = (temp_f18 * cross2_x) - (temp_f14 * cross2_z);
+   up_z = (temp_f14 * cross2_y) - (temp_f16 * cross2_x);
+   temp_len = ((up_x * up_x) + (up_y * up_y)) + (up_z * up_z);
+-  if (temp_len <= 0.0f)
+   {
+     return;
+   }

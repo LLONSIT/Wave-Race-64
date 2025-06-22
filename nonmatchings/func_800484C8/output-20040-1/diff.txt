@@ -1,0 +1,10 @@
+--- before
++++ after
+@@ -1028,6 +1028,7 @@
+   arg1->zy = sp44;
+   cross3_x = (temp_f16 * cross1_z) - (temp_f18 * cross1_y);
+   cross3_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
++ if (1) { }
+   cross3_z = (temp_f14 * cross1_y) - (temp_f16 * cross1_x);
+   up_x = (temp_f16 * cross2_z) - (temp_f18 * cross2_y);
+   up_y = (temp_f18 * cross2_x) - (temp_f14 * cross2_z);

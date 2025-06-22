@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -979,6 +979,9 @@
+   f32 new_var;
+   f32 final_trans;
+   temp_f14 = arg2 - arg8;
++  if (!temp_len)
++  {
++  }
+   temp_f16 = arg3 - arg6;
+   ;
+   new_var = temp_f16;

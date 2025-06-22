@@ -1,0 +1,27 @@
+--- before
++++ after
+@@ -957,6 +957,7 @@
+   f32 sp58;
+   f32 sp54;
+   f32 sp50;
++  f32 *new_var;
+   f32 sp4C;
+   f32 sp48;
+   f32 sp44;
+@@ -1020,6 +1021,7 @@
+   }
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
++  new_var = &temp_f18;
+   temp_f12 = cross1_y * temp_f2;
+   sp3C = cross1_x * temp_f2;
+   sp44 = cross1_z * temp_f2;
+@@ -1027,7 +1029,7 @@
+   arg1->yy = sp3C;
+   arg1->zy = sp44;
+   cross3_x = (temp_f16 * cross1_z) - (temp_f18 * cross1_y);
+-  cross3_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
++  cross3_y = ((*new_var) * cross1_x) - (temp_f14 * cross1_z);
+   cross3_z = (temp_f14 * cross1_y) - (temp_f16 * cross1_x);
+   up_x = (temp_f16 * cross2_z) - (temp_f18 * cross2_y);
+   up_y = (temp_f18 * cross2_x) - (temp_f14 * cross2_z);

@@ -1,0 +1,20 @@
+--- before
++++ after
+@@ -950,6 +950,7 @@
+   f32 len1;
+   f32 inv_len1;
+   f32 x;
++  float new_var;
+   f32 y;
+   f32 z;
+   f32 up_x;
+@@ -1011,7 +1012,8 @@
+   u_z *= inv_len3;
+   tx = -(((x * arg2) + (y * arg3)) + (z * arg4));
+   ty = -(((s_x * arg2) + (s_y * arg3)) + (s_z * arg4));
+-  tz = -(((u_x * arg2) + (u_y * arg3)) + (u_z * arg4));
++  new_var = (u_x * arg2) + (u_y * arg3);
++  tz = -(new_var + (u_z * arg4));
+   dummy = 0.0f;
+   dummy++;
+   dummy--;

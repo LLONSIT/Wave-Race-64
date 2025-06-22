@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -993,6 +993,9 @@
+   sp58 = temp_f18;
+   temp_len = sqrtf(((temp_f14 * temp_f14) + (new_var2 * new_var2)) + (temp_f18 * temp_f18));
+   temp_f2 = 1.0f / temp_len;
++  if (!temp_f2)
++  {
++  }
+   temp_f22 = new_var2;
+   temp_f20 = temp_f14;
+   temp_f24 = temp_f18;

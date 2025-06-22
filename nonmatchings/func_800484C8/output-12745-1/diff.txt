@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -989,7 +989,7 @@
+   ;
+   new_var = temp_f16;
+   new_var2 = new_var;
+-  if ((((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f)
++  if ((((temp_f14 * temp_f14) + ((0, temp_f16 * temp_f16))) + (temp_f18 * temp_f18)) <= 0.0f)
+   {
+     return;
+   }

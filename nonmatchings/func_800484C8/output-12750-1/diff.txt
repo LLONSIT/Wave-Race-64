@@ -1,0 +1,18 @@
+--- before
++++ after
+@@ -1044,6 +1044,7 @@
+   if (temp_len <= 0.0f)
+   {
+     return;
++    arg1->wy = 0.0f;
+   }
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
+@@ -1057,7 +1058,6 @@
+   arg1->wx = 0.0f;
+   sp44++;
+   sp44--;
+-  arg1->wy = 0.0f;
+   arg1->wz = 0.0f;
+   arg1->ww = 1.0f;
+   arg1->xw = final_trans;

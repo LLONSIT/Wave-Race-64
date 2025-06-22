@@ -1,0 +1,15 @@
+--- before
++++ after
+@@ -1000,10 +1000,10 @@
+   temp_f22 = temp_f16;
+   temp_f20 = temp_f14;
+   temp_f24 = temp_f18;
+-  temp_f12 = temp_f22 * temp_f2;
++  ;
+   sp48 = temp_f20 * temp_f2;
+   sp50 = temp_f24 * temp_f2;
+-  arg1->yx = temp_f12;
++  arg1->yx = temp_f22 * temp_f2;
+   arg1->xx = sp48;
+   arg1->zx = sp50;
+   sp3C = (((-arg2) * sp48) + (arg3 * temp_f12)) - (arg4 * sp50);

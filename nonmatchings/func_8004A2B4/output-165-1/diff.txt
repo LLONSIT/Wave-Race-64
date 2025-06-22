@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -976,7 +976,7 @@
+     {
+       ControllerInput *ctrl = (&gControllerOne) + i;
+       OSContPad *pad = &gControllers[i];
+-      ctrl->prevButton = ctrl->button;
++      ctrl->prevButton = ctrl->button & 0xFFFFu;
+       ctrl->button = pad->button;
+       ctrl->pressedButton = ctrl->button & (ctrl->button ^ ctrl->prevButton);
+       ctrl->releasedButton = ctrl->prevButton & (ctrl->button ^ ctrl->prevButton);

@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -974,7 +974,7 @@
+   {
+     if (D_80154340 & controllerMask)
+     {
+-      ControllerInput *ctrl = (&gControllerOne) + i;
++      ControllerInput *ctrl = i + (&gControllerOne);
+       OSContPad *pad = &gControllers[i];
+       ctrl->prevButton = ctrl->button;
+       ctrl->button = pad->button;

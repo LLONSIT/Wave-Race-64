@@ -1,0 +1,54 @@
+--- before
++++ after
+@@ -969,6 +969,7 @@
+   f32 temp_f2;
+   f32 temp_f20;
+   f32 temp_f22;
++  MF *new_var;
+   f32 temp_f24;
+   f32 temp_len;
+   f32 cross1_x;
+@@ -1016,7 +1017,10 @@
+   temp_len = ((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z);
+   if (temp_len <= 0.0f)
+   {
++    if (1)
++    {
+     return;
++    }
+   }
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
+@@ -1030,6 +1034,8 @@
+   cross3_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
+   cross3_z = (temp_f14 * cross1_y) - (temp_f16 * cross1_x);
+   up_x = (temp_f16 * cross2_z) - (temp_f18 * cross2_y);
++  arg8++;
++  arg8--;
+   up_y = (temp_f18 * cross2_x) - (temp_f14 * cross2_z);
+   up_z = (temp_f14 * cross2_y) - (temp_f16 * cross2_x);
+   temp_len = ((up_x * up_x) + (up_y * up_y)) + (up_z * up_z);
+@@ -1040,16 +1046,17 @@
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
+   temp_f12 = cross3_y * temp_f2;
++  new_var = arg1;
+   temp_f14 = cross3_x * temp_f2;
+   temp_f16 = cross3_z * temp_f2;
+-  arg1->xz = temp_f12;
+-  arg1->yz = temp_f14;
+-  arg1->zz = temp_f16;
++  new_var->xz = temp_f12;
++  new_var->yz = temp_f14;
++  new_var->zz = temp_f16;
+   final_trans = (((-arg2) * temp_f14) + (arg3 * temp_f12)) - (arg4 * temp_f16);
+   arg1->wx = 0.0f;
+-  arg1->wy = 0.0f;
+-  arg1->wz = 0.0f;
+-  arg1->ww = 1.0f;
++  new_var->wy = 0.0f;
++  new_var->wz = 0.0f;
++  new_var->ww = 1.0f;
+   arg1->xw = final_trans;
+   func_80047EE0(arg1, arg0);
+ }

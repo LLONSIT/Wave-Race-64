@@ -1,0 +1,29 @@
+--- before
++++ after
+@@ -946,6 +946,7 @@
+ {
+   f32 fX;
+   f32 fY;
++  MF *new_var;
+   f32 fZ;
+   f32 sX;
+   f32 sY;
+@@ -971,7 +972,7 @@
+   sX = (upZ * fZ) - (upY * fY);
+   sY = (upX * fY) - (upZ * fX);
+   sZ = (upY * fX) - (upX * fZ);
+-  len = ((sX * sX) + (sY * sY)) + (sZ * sZ);
++  len = ((((float) sX) * sX) + (sY * sY)) + (sZ * sZ);
+   if (len <= 0.0f)
+   {
+     return;
+@@ -994,7 +995,8 @@
+   arg1->wy = 0.0f;
+   arg1->xz = uX;
+   arg1->yz = uY;
+-  arg1->zz = uZ;
++  new_var = arg1;
++  new_var->zz = (fX * sY) - (fY * sX);
+   arg1->wz = 0.0f;
+   arg1->xw = -(((eyeX * fX) + (eyeY * fY)) + (eyeZ * fZ));
+   arg1->yw = -(((eyeX * sX) + (eyeY * sY)) + (eyeZ * sZ));

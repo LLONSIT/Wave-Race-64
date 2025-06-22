@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -1048,7 +1048,7 @@
+   final_trans = (((-arg2) * temp_f14) + (arg3 * temp_f12)) - (arg4 * temp_f16);
+   arg1->wx = 0.0f;
+   arg1->wy = 0.0f;
+-  arg1->wz = 0.0f;
++  arg1->wz = ((temp_f14 * cross2_y) - (temp_f16 * cross2_x)) * 0.0f;
+   arg1->ww = 1.0f;
+   arg1->xw = final_trans;
+   func_80047EE0(arg1, arg0);

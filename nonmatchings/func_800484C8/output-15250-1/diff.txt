@@ -1,0 +1,27 @@
+--- before
++++ after
+@@ -983,6 +983,7 @@
+   f32 up_z;
+   f32 new_var;
+   f32 final_trans;
++  float new_var2;
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
+@@ -1039,6 +1040,7 @@
+   {
+     return;
+   }
++  new_var2 = -arg2;
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
+   temp_f12 = cross3_y * temp_f2;
+@@ -1047,7 +1049,7 @@
+   arg1->xz = temp_f12;
+   arg1->yz = temp_f14;
+   arg1->zz = temp_f16;
+-  final_trans = (((-arg2) * temp_f14) + (arg3 * temp_f12)) - (arg4 * temp_f16);
++  final_trans = ((new_var2 * temp_f14) + (arg3 * temp_f12)) - (arg4 * temp_f16);
+   arg1->wx = 0.0f;
+   arg1->wy = 0.0f;
+   arg1->wz = 0.0f;

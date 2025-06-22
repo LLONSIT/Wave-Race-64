@@ -1,0 +1,22 @@
+--- before
++++ after
+@@ -949,6 +949,7 @@
+   f32 sp58;
+   f32 new_var2;
+   f32 sp54;
++  float new_var3;
+   f32 sp50;
+   f32 sp4C;
+   f32 sp48;
+@@ -996,9 +997,10 @@
+   temp_f22 = new_var2;
+   temp_f20 = temp_f14;
+   temp_f24 = temp_f18;
++  new_var3 = temp_f24 * temp_f2;
+   temp_f12 = temp_f22 * temp_f2;
+   temp_f14 = temp_f20 * temp_f2;
+-  temp_f16 = temp_f24 * temp_f2;
++  temp_f16 = new_var3;
+   cross1_x = (argA * temp_f16) - (arg7 * temp_f12);
+   cross1_y = (arg5 * temp_f12) - (argA * temp_f14);
+   cross1_z = (arg7 * temp_f14) - (arg5 * temp_f16);

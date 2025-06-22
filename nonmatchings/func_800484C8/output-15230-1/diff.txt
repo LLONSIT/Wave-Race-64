@@ -1,0 +1,72 @@
+--- before
++++ after
+@@ -960,6 +960,7 @@
+   f32 sp44;
+   f32 sp3C;
+   f32 sp30;
++  f32 *new_var2;
+   f32 temp_f14;
+   f32 temp_f16;
+   f32 temp_f18;
+@@ -986,16 +987,17 @@
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
+-  temp_len = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
++  ;
++  new_var2 = &temp_len;
+   new_var = temp_f16;
+-  if (temp_len <= 0.0f)
++  if ((((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f)
+   {
+     return;
+   }
+   sp60 = temp_f14;
+   sp5C = new_var;
+   sp58 = temp_f18;
+-  temp_len = sqrtf(temp_len);
++  temp_len = sqrtf(*new_var2);
+   temp_f2 = 1.0f / temp_len;
+   temp_f22 = new_var;
+   temp_f20 = temp_f14;
+@@ -1006,20 +1008,20 @@
+   arg1->yx = temp_f12;
+   arg1->xx = sp48;
+   arg1->zx = sp50;
+-  sp3C = (((-arg2) * sp48) + (arg3 * temp_f12)) - (arg4 * sp50);
++  sp3C = (float) ((((-arg2) * sp48) + (arg3 * temp_f12)) - (arg4 * sp50));
+   cross1_x = (argA * temp_f24) - (arg7 * temp_f22);
+   cross1_z = (arg8 * temp_f22) - (arg6 * temp_f20);
+   cross2_x = (argA * sp50) - (arg9 * temp_f12);
+   cross2_y = (arg9 * sp48) - (argA * sp50);
+   cross2_z = (arg8 * temp_f12) - (arg6 * sp48);
+   temp_len = ((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z);
+-  if (temp_len <= 0.0f)
++  if ((*new_var2) <= 0.0f)
+   {
+     return;
+   }
+   cross2_x = new_var;
+-  temp_len = sqrtf(temp_len);
+-  temp_f2 = 1.0f / temp_len;
++  temp_len = sqrtf(*new_var2);
++  temp_f2 = 1.0f / (*new_var2);
+   temp_f12 = cross1_y * temp_f2;
+   sp3C = cross1_x * temp_f2;
+   sp44 = cross1_z * temp_f2;
+@@ -1039,12 +1041,12 @@
+   {
+     return;
+   }
+-  temp_len = sqrtf(temp_len);
++  temp_len = sqrtf(*new_var2);
+   temp_f2 = 1.0f / temp_len;
+-  temp_f12 = cross3_y * temp_f2;
++  ;
+   temp_f14 = cross3_x * temp_f2;
+   temp_f16 = cross3_z * temp_f2;
+-  arg1->xz = temp_f12;
++  arg1->xz = cross3_y * temp_f2;
+   arg1->yz = temp_f14;
+   arg1->zz = temp_f16;
+   final_trans = (((-arg2) * temp_f14) + (arg3 * temp_f12)) - (arg4 * temp_f16);

@@ -1,0 +1,16 @@
+--- before
++++ after
+@@ -985,11 +985,12 @@
+   f32 new_var;
+   f32 final_trans;
+   temp_f14 = arg2 - arg8;
++ goto dummy_label_912618; dummy_label_912618: ;
+   temp_f16 = arg3 - arg6;
+   ;
+   new_var = temp_f16;
+   new_var2 = new_var;
+-  if ((((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f)
++  if ((((temp_f14 * temp_f14) + (temp_f16 * ((0, temp_f16)))) + (temp_f18 * temp_f18)) <= 0.0f)
+   {
+     return;
+   }

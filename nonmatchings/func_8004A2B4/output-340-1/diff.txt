@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -980,7 +980,7 @@
+       ctrl->prevButton = button;
+       ctrl->button = pad->button;
+       ctrl->pressedButton = ctrl->button & (ctrl->button ^ button);
+-      ctrl->releasedButton = button & (ctrl->button ^ button);
++      ctrl->releasedButton = button & ((*ctrl).button ^ button);
+       ctrl->stick_x = pad->stick_x;
+       ctrl->stick_y = pad->stick_y;
+     }
