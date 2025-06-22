@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -972,7 +972,7 @@
+   osContGetReadData(gControllers);
+   for (i = 0; i < 4; i++)
+   {
+-    if (D_80154340 & controllerMask)
++    if (D_80154340 & (controllerMask & 0xFFFF))
+     {
+       ControllerInput *ctrl = (&gControllerOne) + i;
+       OSContPad *pad = &gControllers[i];

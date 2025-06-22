@@ -1,0 +1,29 @@
+--- before
++++ after
+@@ -986,14 +986,15 @@
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
+-  temp_len = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
++  temp_len = (temp_f18 * temp_f18) + ((temp_f14 * temp_f14) + (temp_f16 * temp_f16));
+   new_var = temp_f16;
+   if (temp_len <= 0.0f)
+   {
+     return;
+   }
+   sp60 = temp_f14;
+-  sp5C = new_var;
++  temp_len = new_var;
++  sp5C = temp_len;
+   sp58 = temp_f18;
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
+@@ -1032,7 +1033,7 @@
+   cross3_z = (temp_f14 * cross1_y) - (new_var * cross1_x);
+   up_x = (new_var * cross2_z) - (temp_f18 * cross2_y);
+   cross1_y = (arg7 * temp_f20) - (argA * temp_f24);
+-  up_y = (temp_f18 * cross2_x) - (temp_f14 * cross2_z);
++  up_y = ((0, temp_f18 * cross2_x)) - (temp_f14 * cross2_z);
+   up_z = (temp_f14 * cross2_y) - (cross2_x * cross2_x);
+   temp_len = ((up_x * up_x) + (up_y * up_y)) + (up_z * up_z);
+   if (temp_len <= 0.0f)

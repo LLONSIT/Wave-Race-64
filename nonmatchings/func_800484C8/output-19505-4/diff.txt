@@ -1,0 +1,20 @@
+--- before
++++ after
+@@ -987,7 +987,7 @@
+   {
+     return;
+   }
+-  sp60 = temp_f14;
++  sp60 = temp_f14 * 1.0f;
+   sp5C = new_var2;
+   temp_f18 = arg4 - arg9;
+   sp58 = temp_f18;
+@@ -1000,7 +1000,7 @@
+   temp_f14 = temp_f20 * temp_f2;
+   temp_f16 = temp_f24 * temp_f2;
+   cross1_x = (argA * temp_f16) - (arg7 * temp_f12);
+-  cross1_y = (arg5 * temp_f12) - (argA * temp_f14);
++  cross1_y = (arg5 * ((0, temp_f12))) - (argA * temp_f14);
+   cross1_z = (arg7 * temp_f14) - (arg5 * temp_f16);
+   temp_len = sqrtf(((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z));
+   if (temp_len <= 0.0f)

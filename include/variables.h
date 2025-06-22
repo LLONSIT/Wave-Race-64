@@ -5,6 +5,8 @@
  * */
 #ifndef VARIABLES_H
 #define VARIABLES_H
+
+#include "structs.h"
 // Used in game_1050, game_4C750
 extern int D_80151948;
 extern s32 D_80151948;
@@ -56,4 +58,5 @@ extern s32 D_801CB328; //Selected course id??
 extern s32 D_801CE608;
 extern s8 D_800E5134;
 extern OSContPad gControllers[];
+extern ControllerInput gControllerOne;
 #endif /* VARIABLES_H */

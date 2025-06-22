@@ -1,0 +1,10 @@
+--- before
++++ after
+@@ -1000,7 +1000,6 @@
+   u_y = (s_z * x) - (s_x * z);
+   u_z = (s_x * y) - (s_y * x);
+   len3 = ((u_x * u_x) + (u_y * u_y)) + (u_z * u_z);
+-  if (len3 <= 0.0f)
+   {
+     return;
+     arg1->wy = 0.0f;

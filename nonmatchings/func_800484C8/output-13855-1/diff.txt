@@ -1,0 +1,37 @@
+--- before
++++ after
+@@ -986,7 +986,7 @@
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
+-  temp_len = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
++  temp_len = ((temp_f14 * temp_f14) + (temp_f16 * ((0, temp_f16)))) + (temp_f18 * temp_f18);
+   new_var = temp_f16;
+   if (temp_len <= 0.0f)
+   {
+@@ -1005,12 +1005,13 @@
+   sp50 = temp_f24 * temp_f2;
+   arg1->yx = temp_f12;
+   arg1->xx = sp48;
++  cross1_x = sp50;
+   arg1->zx = sp50;
+-  sp3C = (((-arg2) * sp48) + (arg3 * temp_f12)) - (arg4 * sp50);
++  sp3C = (((-arg2) * sp48) + (arg3 * temp_f12)) - (arg4 * cross1_x);
+   cross1_x = (argA * temp_f24) - (arg7 * temp_f22);
+   cross1_z = (arg8 * temp_f22) - (arg6 * temp_f20);
+-  cross2_x = (argA * sp50) - (arg9 * temp_f12);
+-  cross2_y = (arg9 * sp48) - (argA * sp50);
++  cross2_x = (argA * cross1_x) - (arg9 * temp_f12);
++  cross2_y = (arg9 * sp48) - (argA * cross1_x);
+   cross2_z = (arg8 * temp_f12) - (arg6 * sp48);
+   temp_len = ((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z);
+   if (temp_len <= 0.0f)
+@@ -1044,7 +1045,7 @@
+   temp_f12 = cross3_y * temp_f2;
+   temp_f14 = cross3_x * temp_f2;
+   temp_f16 = cross3_z * temp_f2;
+-  arg1->xz = temp_f12;
++  (*arg1).xz = temp_f12;
+   arg1->yz = temp_f14;
+   arg1->zz = temp_f16;
+   final_trans = (((-arg2) * temp_f14) + (arg3 * temp_f12)) - (arg4 * temp_f16);

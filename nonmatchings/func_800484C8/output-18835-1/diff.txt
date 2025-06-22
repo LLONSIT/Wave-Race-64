@@ -1,0 +1,19 @@
+--- before
++++ after
+@@ -1021,6 +1021,8 @@
+   }
+   temp_f2 = 1.0f / temp_len;
+   cross2_x *= temp_f2;
++  if (1)
++  {
+   cross2_y *= temp_f2;
+   cross2_z *= temp_f2;
+   arg1->xx = cross1_x;
+@@ -1041,6 +1043,7 @@
+   (void) sp4C;
+   (void) sp48;
+   (void) sp44;
++  }
+   (void) sp3C;
+   (void) sp30;
+   (void) cross3_x;

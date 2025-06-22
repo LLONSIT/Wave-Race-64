@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -985,8 +985,8 @@
+   arg1->yx = up.x;
+   arg1->zx = -forward.x;
+   arg1->xy = side.y;
++  arg1->zy = -forward.y;
+   arg1->yy = up.y;
+-  arg1->zy = -forward.y;
+   arg1->xz = side.z;
+   arg1->yz = up.z;
+   arg1->zz = -forward.z;

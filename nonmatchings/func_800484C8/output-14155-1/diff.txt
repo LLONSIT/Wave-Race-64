@@ -1,0 +1,10 @@
+--- before
++++ after
+@@ -1026,6 +1026,7 @@
+   arg1->xy = temp_f12;
+   arg1->yy = sp3C;
+   arg1->zy = sp44;
++ if (1) { }
+   cross3_x = (temp_f16 * cross1_z) - (temp_f18 * cross1_y);
+   cross3_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
+   cross3_z = (temp_f14 * cross1_y) - (temp_f16 * cross1_x);

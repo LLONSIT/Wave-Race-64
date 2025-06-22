@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -981,7 +981,8 @@
+       ctrl->pressedButton = ctrl->button & (ctrl->button ^ ctrl->prevButton);
+       ctrl->releasedButton = ctrl->prevButton & (ctrl->button ^ ctrl->prevButton);
+       ctrl->stick_x = pad->stick_x;
+-      ctrl->stick_y = pad->stick_y;
++      controllerMask = pad->stick_y;
++      ctrl->stick_y = controllerMask;
+     }
+     controllerMask <<= 1;
+   }

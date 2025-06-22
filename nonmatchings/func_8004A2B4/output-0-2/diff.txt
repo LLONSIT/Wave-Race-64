@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -980,7 +980,7 @@
+       ctrl->prevButton = ctrl->button;
+       ctrl->button = pad->button;
+       new_var = ctrl->button ^ ctrl->prevButton;
+-      ctrl->pressedButton = ctrl->button & (new_var & 0xFFFF);
++      ctrl->pressedButton = ctrl->button & new_var;
+       ctrl->releasedButton = ctrl->prevButton & new_var;
+       dummy_label_696994:
+       ;

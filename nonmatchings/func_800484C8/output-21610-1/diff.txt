@@ -1,0 +1,39 @@
+--- before
++++ after
+@@ -951,6 +951,7 @@
+ void func_800484C8(MF *arg0, MF *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 argA)
+ {
+   Vec3f forward;
++  f32 new_var;
+   Vec3f side;
+   Vec3f up;
+   f32 len;
+@@ -977,16 +978,17 @@
+   len = 1.0f / len;
+   side.x *= len;
+   side.y *= len;
++  new_var = side.z;
+   side.z *= len;
+   up.x = (forward.y * side.z) - (forward.z * side.y);
+-  up.y = (forward.z * side.x) - (forward.x * side.z);
++  up.y = (forward.z * side.x) - (forward.x * new_var);
+   up.z = (forward.x * side.y) - (forward.y * side.x);
+   arg1->xx = side.x;
+   arg1->yx = up.x;
+   arg1->zx = -forward.x;
+   arg1->xy = side.y;
++  arg1->zy = -forward.y;
+   arg1->yy = up.y;
+-  arg1->zy = -forward.y;
+   arg1->xz = side.z;
+   arg1->yz = up.z;
+   arg1->zz = -forward.z;
+@@ -994,7 +996,7 @@
+   arg1->wy = 0.0f;
+   arg1->wz = 0.0f;
+   arg1->ww = 1.0f;
+-  arg1->xw = -(((arg2 * side.x) + (arg3 * side.y)) + (arg4 * side.z));
++  arg1->xw = -(((arg2 * side.x) + (arg3 * side.y)) + (arg4 * new_var));
+   arg1->yw = -(((arg2 * up.x) + (arg3 * up.y)) + (arg4 * up.z));
+   arg1->zw = ((arg2 * forward.x) + (arg3 * forward.y)) + (arg4 * forward.z);
+   func_80047EE0(arg1, arg0);

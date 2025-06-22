@@ -1,0 +1,29 @@
+--- before
++++ after
+@@ -814,7 +814,7 @@
+ extern s32 D_801CE608;
+ extern s8 D_800E5134;
+ extern OSContPad gControllers[];
+-void func_8004A2B4(void);
++int func_8004A2B4(void);
+ void func_8006C5D8(Gfx **);
+ void func_8006BE74(Gfx **);
+ void func_8006B334(Gfx **);
+@@ -964,7 +964,7 @@
+   s8 stick_y;
+ } ControllerInput;
+ extern ControllerInput gControllerOne;
+-void func_8004A2B4(void)
++int func_8004A2B4(void)
+ {
+   u8 controllerMask = 1;
+   s32 i;
+@@ -974,7 +974,7 @@
+   {
+     if (D_80154340 & controllerMask)
+     {
+-      ControllerInput *ctrl = (&gControllerOne) + i;
++      ControllerInput *ctrl = (&gControllerOne) + (i & 0xFFFFFFFFFFFFFFFFu);
+       OSContPad *pad = &gControllers[i];
+       ctrl->prevButton = ctrl->button;
+       ctrl->button = pad->button;

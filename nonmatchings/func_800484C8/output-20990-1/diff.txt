@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -1000,8 +1000,8 @@
+   temp_f22 = temp_f16;
+   temp_f20 = temp_f14;
+   temp_f24 = temp_f18;
++  sp48 = temp_f20 * temp_f2;
+   temp_f12 = temp_f22 * temp_f2;
+-  sp48 = temp_f20 * temp_f2;
+   sp50 = temp_f24 * temp_f2;
+   arg1->yx = temp_f12;
+   arg1->xx = sp48;

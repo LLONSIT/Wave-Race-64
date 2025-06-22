@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -1000,6 +1000,9 @@
+   temp_f22 = temp_f16;
+   temp_f20 = temp_f14;
+   temp_f24 = temp_f18;
++  if (cross1_z)
++  {
++  }
+   temp_f12 = temp_f22 * temp_f2;
+   sp48 = temp_f20 * temp_f2;
+   sp50 = temp_f24 * temp_f2;

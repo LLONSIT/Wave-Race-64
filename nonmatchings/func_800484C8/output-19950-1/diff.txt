@@ -1,0 +1,10 @@
+--- before
++++ after
+@@ -972,7 +972,6 @@
+   sY = (upX * fY) - (upZ * fX);
+   sZ = (upY * fX) - (upX * fZ);
+   len = ((sX * sX) + (sY * sY)) + (sZ * sZ);
+-  if (len <= 0.0f)
+   {
+     return;
+   }

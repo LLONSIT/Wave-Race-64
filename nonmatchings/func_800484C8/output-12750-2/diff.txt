@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -1024,7 +1024,8 @@
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
+   temp_f12 = cross1_y * temp_f2;
+-  sp3C = cross1_x * temp_f2;
++  cross1_y = cross1_x * temp_f2;
++  sp3C = cross1_y;
+   sp44 = cross1_z * temp_f2;
+   arg1->xy = temp_f12;
+   arg1->yy = sp3C;

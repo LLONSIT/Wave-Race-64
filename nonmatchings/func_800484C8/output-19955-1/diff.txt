@@ -1,0 +1,47 @@
+--- before
++++ after
+@@ -979,6 +979,7 @@
+   f32 cross2_z;
+   f32 cross3_x;
+   f32 cross3_y;
++  MF *new_var;
+   f32 cross3_z;
+   f32 up_x;
+   f32 up_y;
+@@ -1013,8 +1014,8 @@
+   cross2_x = (argA * sp50) - (arg9 * temp_f12);
+   cross2_y = (arg9 * sp48) - (argA * sp50);
+   cross2_z = (arg8 * temp_f12) - (arg6 * sp48);
+-  temp_len = ((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z);
+-  if (temp_len <= 0.0f)
++  ;
++  if ((((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z)) <= 0.0f)
+   {
+     return;
+   }
+@@ -1025,7 +1026,8 @@
+   sp44 = cross1_z * temp_f2;
+   arg1->xy = temp_f12;
+   arg1->yy = sp3C;
+-  arg1->zy = sp44;
++  new_var = arg1;
++  new_var->zy = sp44;
+   cross3_x = (temp_f16 * cross1_z) - (temp_f18 * cross1_y);
+   cross3_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
+   cross3_z = (temp_f14 * cross1_y) - (temp_f16 * cross1_x);
+@@ -1046,12 +1048,12 @@
+   arg1->yz = temp_f14;
+   arg1->zz = temp_f16;
+   final_trans = (((-arg2) * temp_f14) + (arg3 * temp_f12)) - (arg4 * temp_f16);
+-  arg1->wx = 0.0f;
++  new_var->wx = 0.0f;
+   arg1->wy = 0.0f;
+-  arg1->wz = 0.0f;
++  new_var->wz = 0.0f;
+   arg1->ww = 1.0f;
+   arg1->xw = final_trans;
+-  func_80047EE0(arg1, arg0);
++  func_80047EE0(new_var, arg0);
+ }
+ 
+ #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80048854.s")

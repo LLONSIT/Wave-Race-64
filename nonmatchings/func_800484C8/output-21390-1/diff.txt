@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -972,7 +972,7 @@
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
+-  len1 = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
++  len1 = ((temp_f16 * temp_f16) + (temp_f14 * temp_f14)) + (temp_f18 * temp_f18);
+   if (len1 <= 0.0f)
+   {
+     return;

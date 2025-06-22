@@ -1,0 +1,27 @@
+--- before
++++ after
+@@ -974,14 +974,17 @@
+   {
+     if (D_80154340 & controllerMask)
+     {
+-      ControllerInput *ctrl = (&gControllerOne) + i;
++      ControllerInput *ctrl;
+       OSContPad *pad = &gControllers[i];
+-      ctrl->prevButton = ctrl->button;
+-      ctrl->button = pad->button;
+-      ctrl->pressedButton = ctrl->button & (ctrl->button ^ ctrl->prevButton);
+-      ctrl->releasedButton = ctrl->prevButton & (ctrl->button ^ ctrl->prevButton);
+-      ctrl->stick_x = pad->stick_x;
+-      ctrl->stick_y = pad->stick_y;
++      ((&gControllerOne) + i)->prevButton = ((&gControllerOne) + i)->button;
++      ((&gControllerOne) + i)->button = pad->button;
++      ((&gControllerOne) + i)->pressedButton = ((&gControllerOne) + i)->button & (((&gControllerOne) + i)->button ^ ((&gControllerOne) + i)->prevButton);
++      ((&gControllerOne) + i)->releasedButton = ((&gControllerOne) + i)->prevButton & (((&gControllerOne) + i)->button ^ ((&gControllerOne) + i)->prevButton);
++      ((&gControllerOne) + i)->stick_x = pad->stick_x;
++      ((&gControllerOne) + i)->stick_y = pad->stick_y;
++      if (!((&gControllerOne) + i)->prevButton)
++      {
++      }
+     }
+     controllerMask <<= 1;
+   }

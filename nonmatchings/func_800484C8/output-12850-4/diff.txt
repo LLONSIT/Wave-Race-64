@@ -1,0 +1,11 @@
+--- before
++++ after
+@@ -1033,7 +1033,7 @@
+   cross3_x = (new_var2 * temp_f18) - (temp_f18 * cross1_y);
+   cross3_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
+   cross3_z = (temp_f14 * cross1_y) - up_y;
+-  up_x = (new_var * cross2_z) - (temp_f18 * cross2_y);
++  up_x = (new_var * cross2_z) - (cross2_y * temp_f18);
+   temp_f18 = arg4 - arg9;
+   sp48 = argA * temp_f24;
+   cross1_y = (arg7 * temp_f20) - sp48;

@@ -1,0 +1,34 @@
+--- before
++++ after
+@@ -968,6 +968,7 @@
+   f32 temp_f22;
+   f32 temp_f20;
+   f32 temp_f24;
++  float new_var2;
+   f32 temp_len;
+   f32 cross1_x;
+   f32 cross1_y;
+@@ -1019,18 +1020,21 @@
+   }
+   cross2_x = new_var;
+   temp_len = sqrtf(temp_len);
+-  temp_f2 = 1.0f / temp_len;
++  temp_f2 = 1.0 / temp_len;
+   temp_f12 = cross1_y * temp_f2;
++ goto dummy_label_292579; dummy_label_292579: ;
+   sp3C = cross1_x * temp_f2;
+   sp44 = cross1_z * temp_f2;
+   arg1->xy = temp_f12;
+   arg1->yy = sp3C;
+   arg1->zy = sp44;
++  new_var2 = new_var * cross1_x;
+   temp_f18 = cross1_z;
+   cross3_x = (new_var * temp_f18) - (temp_f18 * cross1_y);
+   cross3_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
+-  cross3_z = (temp_f14 * cross1_y) - (new_var * cross1_x);
++  cross3_z = (temp_f14 * cross1_y) - new_var2;
+   up_x = (new_var * cross2_z) - (temp_f18 * cross2_y);
++ do { } while (0);
+   cross1_y = (arg7 * temp_f20) - (argA * temp_f24);
+   up_y = (temp_f18 * cross2_x) - (temp_f14 * cross2_z);
+   up_z = (temp_f14 * cross2_y) - (cross2_x * cross2_x);

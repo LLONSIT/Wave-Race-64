@@ -1,0 +1,25 @@
+--- before
++++ after
+@@ -966,6 +966,8 @@
+ extern ControllerInput gControllerOne;
+ void func_8004A2B4(void)
+ {
++  s8 new_var2;
++  u16 *new_var;
+   u8 controllerMask = 1;
+   s32 i;
+   osRecvMesg(&D_801540D0, &D_80154348, 1);
+@@ -978,9 +980,11 @@
+       OSContPad *pad = &gControllers[i];
+       ctrl->prevButton = ctrl->button;
+       ctrl->button = pad->button;
+-      ctrl->pressedButton = ctrl->button & (ctrl->button ^ ctrl->prevButton);
++      new_var = &ctrl->button;
++      new_var2 = pad->stick_x;
++      ctrl->pressedButton = ctrl->button & ((*new_var) ^ ctrl->prevButton);
+       ctrl->releasedButton = ctrl->prevButton & (ctrl->button ^ ctrl->prevButton);
+-      ctrl->stick_x = pad->stick_x;
++      ctrl->stick_x = new_var2;
+       ctrl->stick_y = pad->stick_y;
+     }
+     controllerMask <<= 1;

@@ -40,6 +40,16 @@ typedef struct {
     s8 unk13;
 } chr_struct;
 
+// Controller input structure for N64 controller data
+typedef struct {
+    u16 button;         // Current button state
+    u16 pressedButton;  // Buttons just pressed this frame
+    u16 releasedButton; // Buttons just released this frame
+    u16 prevButton;     // Previous frame button state
+    s8 stick_x;         // Analog stick X position
+    s8 stick_y;         // Analog stick Y position
+} ControllerInput;
+
 //Size: 0x10 bytes
 typedef struct {
 	f32 unk0;

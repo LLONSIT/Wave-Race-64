@@ -1,0 +1,24 @@
+--- before
++++ after
+@@ -1045,20 +1045,7 @@
+   {
+     return;
+   }
+-  temp_len = sqrtf(temp_len);
+-  temp_f2 = 1.0f / temp_len;
+-  temp_f12 = cross3_y * temp_f2;
+-  temp_f14 = cross3_x * temp_f2;
+-  temp_f16 = cross3_z * temp_f2;
+-  arg1->xz = temp_f12;
+-  arg1->yz = temp_f14;
+-  arg1->zz = temp_f16;
+-  final_trans = (((-arg2) * temp_f14) + (cross2_z * temp_f12)) - (arg4 * temp_f16);
+-  arg1->wx = 0.0f;
+-  sp44++;
+-  sp44--;
+-  arg1->wy = 0.0f;
+-  arg1->wz = 0.0f;
++ temp_len = sqrtf(temp_len); temp_f2 = 1.0f / temp_len; temp_f12 = cross3_y * temp_f2; temp_f14 = cross3_x * temp_f2; temp_f16 = cross3_z * temp_f2; arg1->xz = temp_f12; arg1->yz = temp_f14; arg1->zz = temp_f16; final_trans = (((-arg2) * temp_f14) + (cross2_z * temp_f12)) - (arg4 * temp_f16); arg1->wx = 0.0f; sp44++; sp44--; arg1->wy = 0.0f; arg1->wz = 0.0f;
+   arg1->ww = 1.0f;
+   arg1->xw = final_trans;
+   func_80047EE0(arg1, arg0);

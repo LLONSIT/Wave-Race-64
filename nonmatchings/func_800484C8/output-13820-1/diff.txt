@@ -1,0 +1,13 @@
+--- before
++++ after
+@@ -986,8 +986,8 @@
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
+-  temp_len = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
+-  new_var = temp_f16;
++  temp_len = ((temp_f14 * temp_f14) + (temp_f16 * (sp5C = temp_f16))) + (temp_f18 * temp_f18);
++  new_var = sp5C;
+   if (temp_len <= 0.0f)
+   {
+     return;

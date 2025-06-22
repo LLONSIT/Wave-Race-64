@@ -1,0 +1,34 @@
+--- before
++++ after
+@@ -968,6 +968,7 @@
+ {
+   u8 controllerMask = 1;
+   s32 i;
++  ControllerInput *new_var2;
+   unsigned short new_var;
+   osRecvMesg(&D_801540D0, &D_80154348, 1);
+   osContGetReadData(gControllers);
+@@ -978,16 +979,17 @@
+       ControllerInput *ctrl = (&gControllerOne) + i;
+       OSContPad *pad = &gControllers[i];
+       ctrl->prevButton = ctrl->button;
+-      ctrl->button = pad->button;
+-      new_var = ctrl->button ^ ctrl->prevButton;
+-      ctrl->pressedButton = ctrl->button & (new_var & 0xFFFF);
+-      ctrl->releasedButton = ctrl->prevButton & new_var;
++      new_var2 = ctrl;
++      new_var2->button = pad->button;
++      new_var = new_var2->button ^ new_var2->prevButton;
++      new_var2->pressedButton = new_var2->button & new_var;
++      new_var2->releasedButton = new_var2->prevButton & new_var;
+       dummy_label_696994:
+       ;
+ 
+       ;
+-      ctrl->stick_x = pad->stick_x;
+-      ctrl->stick_y = pad->stick_y;
++      new_var2->stick_x = pad->stick_x;
++      new_var2->stick_y = pad->stick_y;
+     }
+     controllerMask <<= 1;
+   }

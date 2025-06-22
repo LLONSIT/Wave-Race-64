@@ -1,0 +1,10 @@
+--- before
++++ after
+@@ -1039,6 +1039,7 @@
+   {
+     return;
+   }
++  arg1->xw = final_trans;
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
+   temp_f12 = cross3_y * temp_f2;

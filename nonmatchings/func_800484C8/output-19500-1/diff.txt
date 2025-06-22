@@ -1,0 +1,62 @@
+--- before
++++ after
+@@ -959,6 +959,7 @@
+   f32 temp_f16;
+   f32 temp_f18;
+   f32 temp_f12;
++  float new_var4;
+   f32 temp_f2;
+   f32 temp_f22;
+   f32 temp_f20;
+@@ -972,6 +973,7 @@
+   f32 cross2_z;
+   f32 cross3_x;
+   f32 cross3_y;
++  f32 new_var3;
+   f32 cross3_z;
+   f32 up_x;
+   f32 up_y;
+@@ -983,13 +985,10 @@
+   ;
+   new_var = temp_f16;
+   new_var2 = new_var;
+-  if ((((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f)
++  if (((((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f) & 0xFFFFFFFF)
+   {
+     return;
+-  }
+-  sp60 = temp_f14;
+-  sp5C = new_var2;
+-  temp_f18 = arg4 - arg9;
++ } sp60 = temp_f14; sp5C = new_var2; temp_f18 = arg4 - arg9;
+   sp58 = temp_f18;
+   temp_len = sqrtf(((temp_f14 * temp_f14) + (new_var2 * new_var2)) + (temp_f18 * temp_f18));
+   temp_f2 = 1.0f / temp_len;
+@@ -1011,11 +1010,14 @@
+   cross1_x *= temp_f2;
+   cross1_y *= temp_f2;
+   cross1_z *= temp_f2;
+-  cross2_x = (new_var2 * temp_f16) - (temp_f18 * cross1_y);
++  cross2_x = temp_f18 * cross1_y;
++  cross2_x = (new_var2 * temp_f16) - cross2_x;
+   cross2_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
+-  cross2_z = (temp_f14 * cross1_y) - (new_var2 * cross1_x);
+-  temp_len = sqrtf(((cross2_x * cross2_x) + (cross2_y * cross2_y)) + (cross2_z * cross2_z));
+-  if (temp_len <= 0.0f)
++  new_var3 = new_var2;
++  new_var4 = cross2_x * cross2_x;
++  cross2_z = (temp_f14 * cross1_y) - (new_var3 * cross1_x);
++  temp_len = sqrtf((new_var4 + (cross2_y * cross2_y)) + (cross2_z * cross2_z));
++  if (((arg4 - arg9) * 0.0f) >= temp_len)
+   {
+     return;
+   }
+@@ -1048,7 +1050,7 @@
+   (void) cross3_z;
+   (void) up_x;
+   (void) up_y;
+-  (void) up_z;
++  (void) (up_z * 1.0f);
+   (void) final_trans;
+   (void) new_var;
+   (void) sp58;

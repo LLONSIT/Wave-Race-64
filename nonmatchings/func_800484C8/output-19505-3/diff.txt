@@ -1,0 +1,32 @@
+--- before
++++ after
+@@ -1021,28 +1021,7 @@
+   }
+   temp_f2 = 1.0f / temp_len;
+   cross2_x *= temp_f2;
+-  cross2_y *= temp_f2;
+-  cross2_z *= temp_f2;
+-  arg1->xx = cross1_x;
+-  arg1->yx = cross1_y;
+-  arg1->zx = cross1_z;
+-  arg1->xy = cross2_x;
+-  arg1->yy = cross2_y;
+-  arg1->zy = cross2_z;
+-  arg1->xz = temp_f12;
+-  arg1->yz = temp_f14;
+-  arg1->zz = temp_f16;
+-  final_trans = (((-arg2) * temp_f14) + (cross2_z * temp_f12)) - (arg4 * temp_f16);
+-  arg1->wx = 0.0f;
+-  sp44++;
+-  sp44--;
+-  (void) sp54;
+-  (void) sp50;
+-  (void) sp4C;
+-  (void) sp48;
+-  (void) sp44;
+-  (void) sp3C;
+-  (void) sp30;
++ cross2_y *= temp_f2; cross2_z *= temp_f2; arg1->xx = cross1_x; arg1->yx = cross1_y; arg1->zx = cross1_z; arg1->xy = cross2_x; arg1->yy = cross2_y; arg1->zy = cross2_z; arg1->xz = temp_f12; arg1->yz = temp_f14; arg1->zz = temp_f16; final_trans = (((-arg2) * temp_f14) + (cross2_z * temp_f12)) - (arg4 * temp_f16); arg1->wx = 0.0f; sp44++; sp44--; (void) sp54; (void) sp50; (void) sp4C; (void) sp48; (void) sp44; (void) sp3C; (void) sp30;
+   (void) cross3_x;
+   (void) cross3_y;
+   (void) cross3_z;

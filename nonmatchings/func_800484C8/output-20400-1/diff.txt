@@ -1,0 +1,71 @@
+--- before
++++ after
+@@ -963,6 +963,7 @@
+   f32 u_x;
+   f32 u_y;
+   f32 u_z;
++  f32 new_var;
+   f32 len3;
+   f32 inv_len3;
+   f32 tx;
+@@ -981,11 +982,12 @@
+   x = temp_f14 * inv_len1;
+   y = temp_f16 * inv_len1;
+   z = temp_f18 * inv_len1;
++  new_var = z;
+   up_x = arg5;
+   up_y = arg6;
+   up_z = arg7;
+-  s_x = (y * up_z) - (z * up_y);
+-  s_y = (z * up_x) - (x * up_z);
++  s_x = (y * up_z) - (new_var * up_y);
++  s_y = (new_var * up_x) - (x * up_z);
+   s_z = (x * up_y) - (y * up_x);
+   len2 = ((s_x * s_x) + (s_y * s_y)) + (s_z * s_z);
+   if (len2 <= 0.0f)
+@@ -993,11 +995,11 @@
+     return;
+   }
+   inv_len2 = 1.0f / sqrtf(len2);
+-  s_x *= inv_len2;
++  s_x = s_x * inv_len2;
+   s_y *= inv_len2;
+   s_z *= inv_len2;
+-  u_x = (s_y * z) - (s_z * y);
+-  u_y = (s_z * x) - (s_x * z);
++  u_x = (s_y * new_var) - (s_z * y);
++  u_y = (s_z * x) - (s_x * new_var);
+   u_z = (s_x * y) - (s_y * x);
+   len3 = ((u_x * u_x) + (u_y * u_y)) + (u_z * u_z);
+   if (len3 <= 0.0f)
+@@ -1005,11 +1007,10 @@
+     return;
+     arg1->wy = 0.0f;
+   }
+-  inv_len3 = 1.0f / sqrtf(len3);
++  inv_len3 = (u_z = 1.0f / sqrtf(len3));
+   u_x *= inv_len3;
+   u_y *= inv_len3;
+-  u_z *= inv_len3;
+-  tx = -(((x * arg2) + (y * arg3)) + (z * arg4));
++  tx = -(((x * arg2) + (y * arg3)) + (new_var * arg4));
+   ty = -(((s_x * arg2) + (s_y * arg3)) + (s_z * arg4));
+   tz = -(((u_x * arg2) + (u_y * arg3)) + (u_z * arg4));
+   dummy = 0.0f;
+@@ -1017,7 +1018,7 @@
+   dummy--;
+   arg1->xx = x;
+   arg1->yx = y;
+-  arg1->zx = z;
++  arg1->zx = new_var;
+   arg1->wx = 0.0f;
+   arg1->xy = s_x;
+   arg1->yy = s_y;
+@@ -1025,6 +1026,7 @@
+   arg1->wy = 0.0f;
+   arg1->xz = u_x;
+   arg1->yz = u_y;
++  arg6 = arg6;
+   arg1->zz = u_z;
+   arg1->wz = 0.0f;
+   arg1->xw = tx;

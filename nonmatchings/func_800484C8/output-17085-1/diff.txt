@@ -1,0 +1,19 @@
+--- before
++++ after
+@@ -987,6 +987,8 @@
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
++  if (1)
++  {
+   temp_len = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
+   if (temp_len <= 0.0f)
+   {
+@@ -999,6 +1001,7 @@
+   temp_f2 = 1.0f / temp_len;
+   temp_f22 = temp_f16;
+   temp_f20 = temp_f14;
++ } ;
+   temp_f24 = temp_f18;
+   temp_f12 = temp_f22 * temp_f2;
+   sp48 = temp_f20 * temp_f2;

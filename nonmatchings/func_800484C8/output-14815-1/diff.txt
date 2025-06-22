@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -1020,6 +1020,9 @@
+   cross2_x = new_var;
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
++  if (temp_f18)
++  {
++  }
+   temp_f12 = cross1_y * temp_f2;
+   sp3C = cross1_x * temp_f2;
+   sp44 = cross1_z * temp_f2;

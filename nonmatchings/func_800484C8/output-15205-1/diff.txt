@@ -1,0 +1,66 @@
+--- before
++++ after
+@@ -950,6 +950,7 @@
+ void func_800481E0(MF *arg0, u16 *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
+ void func_800484C8(MF *arg0, MF *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 argA)
+ {
++  float new_var3;
+   f32 sp60;
+   f32 sp5C;
+   f32 sp58;
+@@ -971,6 +972,7 @@
+   f32 temp_len;
+   f32 cross1_x;
+   f32 cross1_y;
++  float new_var2;
+   f32 cross1_z;
+   f32 cross2_x;
+   f32 cross2_y;
+@@ -986,13 +988,14 @@
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
+-  temp_len = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
++  ;
+   new_var = temp_f16;
+-  if (temp_len <= 0.0f)
++  if ((((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18)) <= 0.0f)
+   {
+     return;
+   }
+   sp60 = temp_f14;
++  new_var3 = cross1_y * cross1_y;
+   sp5C = new_var;
+   sp58 = temp_f18;
+   temp_len = sqrtf(temp_len);
+@@ -1000,6 +1003,7 @@
+   temp_f22 = new_var;
+   temp_f20 = temp_f14;
+   temp_f24 = temp_f18;
++  new_var2 = arg7 * temp_f22;
+   temp_f12 = temp_f22 * temp_f2;
+   sp48 = temp_f20 * temp_f2;
+   sp50 = temp_f24 * temp_f2;
+@@ -1007,12 +1011,12 @@
+   arg1->xx = sp48;
+   arg1->zx = sp50;
+   sp3C = (((-arg2) * sp48) + (arg3 * temp_f12)) - (arg4 * sp50);
+-  cross1_x = (argA * temp_f24) - (arg7 * temp_f22);
++  cross1_x = (argA * temp_f24) - new_var2;
+   cross1_z = (arg8 * temp_f22) - (arg6 * temp_f20);
+   cross2_x = (argA * sp50) - (arg9 * temp_f12);
+   cross2_y = (arg9 * sp48) - (argA * sp50);
+   cross2_z = (arg8 * temp_f12) - (arg6 * sp48);
+-  temp_len = ((cross1_x * cross1_x) + (cross1_y * cross1_y)) + (cross1_z * cross1_z);
++  temp_len = ((cross1_x * cross1_x) + new_var3) + (cross1_z * cross1_z);
+   if (temp_len <= 0.0f)
+   {
+     return;
+@@ -1043,6 +1047,7 @@
+   temp_f2 = 1.0f / temp_len;
+   temp_f12 = cross3_y * temp_f2;
+   temp_f14 = cross3_x * temp_f2;
++  arg1->zz = temp_f16;
+   temp_f16 = cross3_z * temp_f2;
+   arg1->xz = temp_f12;
+   arg1->yz = temp_f14;

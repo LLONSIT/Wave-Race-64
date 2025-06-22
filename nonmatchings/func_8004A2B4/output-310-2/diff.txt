@@ -1,0 +1,12 @@
+--- before
++++ after
+@@ -982,6 +982,9 @@
+       ctrl->releasedButton = ctrl->prevButton & (ctrl->button ^ ctrl->prevButton);
+       ctrl->stick_x = pad->stick_x;
+       ctrl->stick_y = pad->stick_y;
++      if (!controllerMask)
++      {
++      }
+     }
+     controllerMask <<= 1;
+   }

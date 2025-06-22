@@ -1,0 +1,17 @@
+--- before
++++ after
+@@ -1054,10 +1054,13 @@
+   arg1->yz = temp_f14;
+   arg1->zz = temp_f16;
+   final_trans = (((-arg2) * temp_f14) + (cross2_z * temp_f12)) - (arg4 * temp_f16);
+-  arg1->wx = 0.0f;
++  arg1->wx = 0;
+   sp44++;
+   sp44--;
+   arg1->wy = 0.0f;
++  if (sp48)
++  {
++  }
+   arg1->wz = 0.0f;
+   arg1->ww = 1.0f;
+   arg1->xw = final_trans;

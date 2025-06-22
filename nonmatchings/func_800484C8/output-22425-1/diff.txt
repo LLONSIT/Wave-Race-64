@@ -1,0 +1,13 @@
+--- before
++++ after
+@@ -992,8 +992,9 @@
+   arg1->zz = -forward.z;
+   arg1->wx = 0.0f;
+   arg1->wy = 0.0f;
++  len = 1.0f;
+   arg1->wz = 0.0f;
+-  arg1->ww = 1.0f;
++  arg1->ww = len;
+   arg1->xw = -(((arg2 * side.x) + (arg3 * side.y)) + (arg4 * side.z));
+   arg1->yw = -(((arg2 * up.x) + (arg3 * up.y)) + (arg4 * up.z));
+   arg1->zw = ((arg2 * forward.x) + (arg3 * forward.y)) + (arg4 * forward.z);

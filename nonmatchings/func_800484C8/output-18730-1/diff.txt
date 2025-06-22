@@ -1,0 +1,20 @@
+--- before
++++ after
+@@ -973,6 +973,7 @@
+   f32 temp_len;
+   f32 cross1_x;
+   f32 cross1_y;
++  volatile int pad;
+   f32 cross1_z;
+   f32 cross2_x;
+   f32 cross2_y;
+@@ -1021,6 +1022,9 @@
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
+   temp_f12 = cross1_y * temp_f2;
++  if (arg1)
++  {
++  }
+   sp3C = cross1_x * temp_f2;
+   sp44 = cross1_z * temp_f2;
+   arg1->xy = temp_f12;

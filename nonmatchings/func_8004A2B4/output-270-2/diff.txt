@@ -1,0 +1,26 @@
+--- before
++++ after
+@@ -967,19 +967,21 @@
+ void func_8004A2B4(void)
+ {
+   u8 controllerMask = 1;
++  int new_var;
+   s32 i;
+   osRecvMesg(&D_801540D0, &D_80154348, 1);
+   osContGetReadData(gControllers);
+   for (i = 0; i < 4; i++)
+   {
+-    if (D_80154340 & controllerMask)
++    if (D_80154340 & ((0, controllerMask)))
+     {
+       ControllerInput *ctrl = (&gControllerOne) + i;
+       OSContPad *pad = &gControllers[i];
+       ctrl->prevButton = ctrl->button;
+       ctrl->button = pad->button;
+       ctrl->pressedButton = ctrl->button & (ctrl->button ^ ctrl->prevButton);
+-      ctrl->releasedButton = ctrl->prevButton & (ctrl->button ^ ctrl->prevButton);
++      new_var = ctrl->prevButton & (ctrl->button ^ ctrl->prevButton);
++      ctrl->releasedButton = new_var;
+       ctrl->stick_x = pad->stick_x;
+       ctrl->stick_y = pad->stick_y;
+     }

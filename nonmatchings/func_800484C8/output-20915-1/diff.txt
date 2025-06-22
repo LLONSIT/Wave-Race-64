@@ -1,0 +1,14 @@
+--- before
++++ after
+@@ -1041,10 +1041,9 @@
+   temp_f2 = 1.0f / temp_len;
+   temp_f12 = cross3_y * temp_f2;
+   temp_f14 = cross3_x * temp_f2;
+-  temp_f16 = cross3_z * temp_f2;
++  temp_f16 = (arg1->zz = cross3_z * temp_f2);
+   arg1->xz = temp_f12;
+   arg1->yz = temp_f14;
+-  arg1->zz = temp_f16;
+   final_trans = (((-arg2) * temp_f14) + (arg3 * temp_f12)) - (arg4 * temp_f16);
+   arg1->wx = 0.0f;
+   arg1->wy = 0.0f;

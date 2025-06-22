@@ -1,0 +1,10 @@
+--- before
++++ after
+@@ -1001,6 +1001,7 @@
+   temp_f20 = temp_f14;
+   temp_f24 = temp_f18;
+   temp_f12 = temp_f22 * temp_f2;
++ do { } while (0);
+   sp48 = temp_f20 * temp_f2;
+   sp50 = temp_f24 * temp_f2;
+   arg1->yx = temp_f12;

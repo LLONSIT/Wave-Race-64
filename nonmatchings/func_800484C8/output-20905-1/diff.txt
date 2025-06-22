@@ -1,0 +1,37 @@
+--- before
++++ after
+@@ -957,13 +957,13 @@
+   f32 sp58;
+   f32 sp54;
+   f32 sp50;
++  f32 temp_f16;
+   f32 sp4C;
+   f32 sp48;
+   f32 sp44;
+   f32 sp3C;
+   f32 sp30;
+   f32 temp_f14;
+-  f32 temp_f16;
+   f32 temp_f18;
+   f32 temp_f12;
+   f32 temp_f2;
+@@ -984,6 +984,7 @@
+   f32 up_y;
+   f32 up_z;
+   f32 final_trans;
++  float new_var;
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
+   temp_f18 = arg4 - arg9;
+@@ -1043,9 +1044,10 @@
+   temp_f14 = cross3_x * temp_f2;
+   temp_f16 = cross3_z * temp_f2;
+   arg1->xz = temp_f12;
++  new_var = (-arg2) * temp_f14;
+   arg1->yz = temp_f14;
+   arg1->zz = temp_f16;
+-  final_trans = (((-arg2) * temp_f14) + (arg3 * temp_f12)) - (arg4 * temp_f16);
++  final_trans = (new_var + (arg3 * temp_f12)) - (arg4 * temp_f16);
+   arg1->wx = 0.0f;
+   arg1->wy = 0.0f;
+   arg1->wz = 0.0f;

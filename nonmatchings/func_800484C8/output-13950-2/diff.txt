@@ -1,0 +1,10 @@
+--- before
++++ after
+@@ -985,6 +985,7 @@
+   f32 final_trans;
+   temp_f14 = arg2 - arg8;
+   temp_f16 = arg3 - arg6;
++ goto dummy_label_78480; dummy_label_78480: ;
+   temp_f18 = arg4 - arg9;
+   temp_len = ((temp_f14 * temp_f14) + (temp_f16 * temp_f16)) + (temp_f18 * temp_f18);
+   new_var = temp_f16;

@@ -1,0 +1,36 @@
+--- before
++++ after
+@@ -974,6 +974,7 @@
+   f32 cross3_y;
+   f32 cross3_z;
+   f32 up_x;
++  float new_var3;
+   f32 up_y;
+   f32 up_z;
+   f32 new_var;
+@@ -1014,13 +1015,16 @@
+   cross2_x = (new_var2 * temp_f16) - (temp_f18 * cross1_y);
+   cross2_y = (temp_f18 * cross1_x) - (temp_f14 * cross1_z);
+   cross2_z = (temp_f14 * cross1_y) - (new_var2 * cross1_x);
+-  temp_len = sqrtf(((cross2_x * cross2_x) + (cross2_y * cross2_y)) + (cross2_z * cross2_z));
++  new_var3 = cross2_x * cross2_x;
++  temp_len = sqrtf((new_var3 + (cross2_y * cross2_y)) + (cross2_z * cross2_z));
+   if (temp_len <= 0.0f)
+   {
+     return;
+   }
+   temp_f2 = 1.0f / temp_len;
+   cross2_x *= temp_f2;
++  if (1)
++  {
+   cross2_y *= temp_f2;
+   cross2_z *= temp_f2;
+   arg1->xx = cross1_x;
+@@ -1041,6 +1045,7 @@
+   (void) sp4C;
+   (void) sp48;
+   (void) sp44;
++  }
+   (void) sp3C;
+   (void) sp30;
+   (void) cross3_x;

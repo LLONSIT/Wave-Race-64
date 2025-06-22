@@ -1,0 +1,32 @@
+--- before
++++ after
+@@ -1000,10 +1000,9 @@
+   temp_f20 = temp_f14;
+   temp_f24 = temp_f18;
+   temp_f12 = temp_f22 * temp_f2;
+-  sp48 = temp_f20 * temp_f2;
++  arg1->xx = (sp48 = temp_f20 * temp_f2);
+   sp50 = temp_f24 * temp_f2;
+   arg1->yx = temp_f12;
+-  arg1->xx = sp48;
+   cross2_z = arg3;
+   arg1->zx = sp50;
+   sp3C = (((-arg2) * sp48) + (cross2_z * temp_f12)) - (arg4 * sp50);
+@@ -1041,15 +1040,15 @@
+   if (temp_len <= 0.0f)
+   {
+     return;
++ do { } while (0);
+   }
+   temp_len = sqrtf(temp_len);
+   temp_f2 = 1.0f / temp_len;
+   temp_f12 = cross3_y * temp_f2;
+   temp_f14 = cross3_x * temp_f2;
+-  temp_f16 = cross3_z * temp_f2;
++  arg1->zz = (temp_f16 = cross3_z * temp_f2);
+   arg1->xz = temp_f12;
+   arg1->yz = temp_f14;
+-  arg1->zz = temp_f16;
+   final_trans = (((-arg2) * temp_f14) + (cross2_z * temp_f12)) - (arg4 * temp_f16);
+   arg1->wx = 0.0f;
+   sp44++;
