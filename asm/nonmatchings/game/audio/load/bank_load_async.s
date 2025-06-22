@@ -1,0 +1,92 @@
+glabel bank_load_async
+    /* 740C0 800B98C0 27BDFF90 */  addiu      $sp, $sp, -0x70
+    /* 740C4 800B98C4 3C0E8004 */  lui        $t6, %hi(gAlCtlHeader)
+    /* 740C8 800B98C8 8DCE5508 */  lw         $t6, %lo(gAlCtlHeader)($t6)
+    /* 740CC 800B98CC 000478C0 */  sll        $t7, $a0, 3
+    /* 740D0 800B98D0 AFBF002C */  sw         $ra, 0x2C($sp)
+    /* 740D4 800B98D4 AFB20028 */  sw         $s2, 0x28($sp)
+    /* 740D8 800B98D8 AFB10024 */  sw         $s1, 0x24($sp)
+    /* 740DC 800B98DC AFB00020 */  sw         $s0, 0x20($sp)
+    /* 740E0 800B98E0 01CF1021 */  addu       $v0, $t6, $t7
+    /* 740E4 800B98E4 8C510008 */  lw         $s1, 0x8($v0)
+    /* 740E8 800B98E8 2401FFF0 */  addiu      $at, $zero, -0x10
+    /* 740EC 800B98EC 8C590004 */  lw         $t9, 0x4($v0)
+    /* 740F0 800B98F0 2631001E */  addiu      $s1, $s1, 0x1E
+    /* 740F4 800B98F4 00809025 */  or         $s2, $a0, $zero
+    /* 740F8 800B98F8 0221C024 */  and        $t8, $s1, $at
+    /* 740FC 800B98FC 00C08025 */  or         $s0, $a2, $zero
+    /* 74100 800B9900 00A03825 */  or         $a3, $a1, $zero
+    /* 74104 800B9904 2711FFF0 */  addiu      $s1, $t8, -0x10
+    /* 74108 800B9908 3C048004 */  lui        $a0, %hi(gBankLoadedPool)
+    /* 7410C 800B990C 2484E7A0 */  addiu      $a0, $a0, %lo(gBankLoadedPool)
+    /* 74110 800B9910 02203025 */  or         $a2, $s1, $zero
+    /* 74114 800B9914 24050001 */  addiu      $a1, $zero, 0x1
+    /* 74118 800B9918 AFB20010 */  sw         $s2, 0x10($sp)
+    /* 7411C 800B991C 0C02DEC5 */  jal        alloc_bank_or_seq
+    /* 74120 800B9920 AFB90040 */   sw        $t9, 0x40($sp)
+    /* 74124 800B9924 14400003 */  bnez       $v0, .L800B9934
+    /* 74128 800B9928 00404025 */   or        $t0, $v0, $zero
+    /* 7412C 800B992C 10000037 */  b          .L800B9A0C
+    /* 74130 800B9930 00001025 */   or        $v0, $zero, $zero
+  .L800B9934:
+    /* 74134 800B9934 8FA40040 */  lw         $a0, 0x40($sp)
+    /* 74138 800B9938 27A50050 */  addiu      $a1, $sp, 0x50
+    /* 7413C 800B993C 24060010 */  addiu      $a2, $zero, 0x10
+    /* 74140 800B9940 0C02E32C */  jal        audio_dma_copy_immediate
+    /* 74144 800B9944 AFA80044 */   sw        $t0, 0x44($sp)
+    /* 74148 800B9948 8FA80044 */  lw         $t0, 0x44($sp)
+    /* 7414C 800B994C 8FA40050 */  lw         $a0, 0x50($sp)
+    /* 74150 800B9950 8FA50054 */  lw         $a1, 0x54($sp)
+    /* 74154 800B9954 3C038004 */  lui        $v1, %hi(gCtlEntries)
+    /* 74158 800B9958 24635518 */  addiu      $v1, $v1, %lo(gCtlEntries)
+    /* 7415C 800B995C A2120006 */  sb         $s2, 0x6($s0)
+    /* 74160 800B9960 8C690000 */  lw         $t1, 0x0($v1)
+    /* 74164 800B9964 00121080 */  sll        $v0, $s2, 2
+    /* 74168 800B9968 00521023 */  subu       $v0, $v0, $s2
+    /* 7416C 800B996C 00021080 */  sll        $v0, $v0, 2
+    /* 74170 800B9970 01225021 */  addu       $t2, $t1, $v0
+    /* 74174 800B9974 A1440001 */  sb         $a0, 0x1($t2)
+    /* 74178 800B9978 8C6B0000 */  lw         $t3, 0x0($v1)
+    /* 7417C 800B997C 250D0004 */  addiu      $t5, $t0, 0x4
+    /* 74180 800B9980 24060001 */  addiu      $a2, $zero, 0x1
+    /* 74184 800B9984 01626021 */  addu       $t4, $t3, $v0
+    /* 74188 800B9988 A1850002 */  sb         $a1, 0x2($t4)
+    /* 7418C 800B998C 8C6E0000 */  lw         $t6, 0x0($v1)
+    /* 74190 800B9990 2605011C */  addiu      $a1, $s0, 0x11C
+    /* 74194 800B9994 01C27821 */  addu       $t7, $t6, $v0
+    /* 74198 800B9998 ADED0004 */  sw         $t5, 0x4($t7)
+    /* 7419C 800B999C 8C790000 */  lw         $t9, 0x0($v1)
+    /* 741A0 800B99A0 8D180000 */  lw         $t8, 0x0($t0)
+    /* 741A4 800B99A4 03224821 */  addu       $t1, $t9, $v0
+    /* 741A8 800B99A8 AD380008 */  sw         $t8, 0x8($t1)
+    /* 741AC 800B99AC AE080134 */  sw         $t0, 0x134($s0)
+    /* 741B0 800B99B0 8FAA0040 */  lw         $t2, 0x40($sp)
+    /* 741B4 800B99B4 AE11013C */  sw         $s1, 0x13C($s0)
+    /* 741B8 800B99B8 26110104 */  addiu      $s1, $s0, 0x104
+    /* 741BC 800B99BC 254B0010 */  addiu      $t3, $t2, 0x10
+    /* 741C0 800B99C0 AE0B0138 */  sw         $t3, 0x138($s0)
+    /* 741C4 800B99C4 02202025 */  or         $a0, $s1, $zero
+    /* 741C8 800B99C8 0C0318C4 */  jal        osCreateMesgQueue
+    /* 741CC 800B99CC AFA80044 */   sw        $t0, 0x44($sp)
+    /* 741D0 800B99D0 920E0000 */  lbu        $t6, 0x0($s0)
+    /* 741D4 800B99D4 260F0120 */  addiu      $t7, $s0, 0x120
+    /* 741D8 800B99D8 26040138 */  addiu      $a0, $s0, 0x138
+    /* 741DC 800B99DC 35CD0008 */  ori        $t5, $t6, 0x8
+    /* 741E0 800B99E0 A20D0000 */  sb         $t5, 0x0($s0)
+    /* 741E4 800B99E4 AFAF0010 */  sw         $t7, 0x10($sp)
+    /* 741E8 800B99E8 26050134 */  addiu      $a1, $s0, 0x134
+    /* 741EC 800B99EC 2606013C */  addiu      $a2, $s0, 0x13C
+    /* 741F0 800B99F0 0C02E362 */  jal        audio_dma_partial_copy_async
+    /* 741F4 800B99F4 02203825 */   or        $a3, $s1, $zero
+    /* 741F8 800B99F8 3C018004 */  lui        $at, %hi(gBankLoadStatus)
+    /* 741FC 800B99FC 00320821 */  addu       $at, $at, $s2
+    /* 74200 800B9A00 24190001 */  addiu      $t9, $zero, 0x1
+    /* 74204 800B9A04 8FA20044 */  lw         $v0, 0x44($sp)
+    /* 74208 800B9A08 A039EB78 */  sb         $t9, %lo(gBankLoadStatus)($at)
+  .L800B9A0C:
+    /* 7420C 800B9A0C 8FBF002C */  lw         $ra, 0x2C($sp)
+    /* 74210 800B9A10 8FB00020 */  lw         $s0, 0x20($sp)
+    /* 74214 800B9A14 8FB10024 */  lw         $s1, 0x24($sp)
+    /* 74218 800B9A18 8FB20028 */  lw         $s2, 0x28($sp)
+    /* 7421C 800B9A1C 03E00008 */  jr         $ra
+    /* 74220 800B9A20 27BD0070 */   addiu     $sp, $sp, 0x70

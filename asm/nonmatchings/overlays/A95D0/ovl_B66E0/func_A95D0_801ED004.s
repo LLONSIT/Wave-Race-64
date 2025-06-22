@@ -1,0 +1,36 @@
+glabel func_A95D0_801ED004
+    /* BB634 801ED004 3C02800E */  lui        $v0, %hi(D_800DAB24)
+    /* BB638 801ED008 2442AB24 */  addiu      $v0, $v0, %lo(D_800DAB24)
+    /* BB63C 801ED00C 8C4E0000 */  lw         $t6, 0x0($v0)
+    /* BB640 801ED010 3C01801D */  lui        $at, %hi(D_801CE634)
+    /* BB644 801ED014 240F0039 */  addiu      $t7, $zero, 0x39
+    /* BB648 801ED018 AC2EE634 */  sw         $t6, %lo(D_801CE634)($at)
+    /* BB64C 801ED01C 3C01801D */  lui        $at, %hi(D_801CE630)
+    /* BB650 801ED020 AC20E630 */  sw         $zero, %lo(D_801CE630)($at)
+    /* BB654 801ED024 AC4F0000 */  sw         $t7, 0x0($v0)
+    /* BB658 801ED028 3C01801D */  lui        $at, %hi(D_801CE638)
+    /* BB65C 801ED02C 24180017 */  addiu      $t8, $zero, 0x17
+    /* BB660 801ED030 AC38E638 */  sw         $t8, %lo(D_801CE638)($at)
+    /* BB664 801ED034 24030001 */  addiu      $v1, $zero, 0x1
+    /* BB668 801ED038 3C01801D */  lui        $at, %hi(D_801CE63C)
+    /* BB66C 801ED03C AC23E63C */  sw         $v1, %lo(D_801CE63C)($at)
+    /* BB670 801ED040 3C01801D */  lui        $at, %hi(D_801CE640)
+    /* BB674 801ED044 AC20E640 */  sw         $zero, %lo(D_801CE640)($at)
+    /* BB678 801ED048 3C01801D */  lui        $at, %hi(D_801CE644)
+    /* BB67C 801ED04C AC20E644 */  sw         $zero, %lo(D_801CE644)($at)
+    /* BB680 801ED050 3C01800E */  lui        $at, %hi(D_800DAB1C)
+    /* BB684 801ED054 AC20AB1C */  sw         $zero, %lo(D_800DAB1C)($at)
+    /* BB688 801ED058 3C01800D */  lui        $at, %hi(D_800D461C)
+    /* BB68C 801ED05C 24190002 */  addiu      $t9, $zero, 0x2
+    /* BB690 801ED060 AC39461C */  sw         $t9, %lo(D_800D461C)($at)
+    /* BB694 801ED064 3C01800E */  lui        $at, %hi(gPlayers)
+    /* BB698 801ED068 AC23AB28 */  sw         $v1, %lo(gPlayers)($at)
+    /* BB69C 801ED06C 3C01801D */  lui        $at, %hi(gRiderGameModes)
+    /* BB6A0 801ED070 AC23E648 */  sw         $v1, %lo(gRiderGameModes)($at)
+    /* BB6A4 801ED074 3C01801D */  lui        $at, %hi(D_801CE64C)
+    /* BB6A8 801ED078 AC23E64C */  sw         $v1, %lo(D_801CE64C)($at)
+    /* BB6AC 801ED07C 3C01801D */  lui        $at, %hi(D_801CE650)
+    /* BB6B0 801ED080 AC20E650 */  sw         $zero, %lo(D_801CE650)($at)
+    /* BB6B4 801ED084 3C018022 */  lui        $at, %hi(D_A95D0_80227C80)
+    /* BB6B8 801ED088 03E00008 */  jr         $ra
+    /* BB6BC 801ED08C AC237C80 */   sw        $v1, %lo(D_A95D0_80227C80)($at)

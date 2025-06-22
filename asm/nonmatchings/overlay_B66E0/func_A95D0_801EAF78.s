@@ -1,0 +1,17 @@
+glabel func_A95D0_801EAF78
+    /* B95A8 801EAF78 3C0F8022 */  lui        $t7, %hi(D_A95D0_80226E30)
+    /* B95AC 801EAF7C 25EF6E30 */  addiu      $t7, $t7, %lo(D_A95D0_80226E30)
+    /* B95B0 801EAF80 8DE10000 */  lw         $at, 0x0($t7)
+    /* B95B4 801EAF84 3C0E8023 */  lui        $t6, %hi(D_A95D0_80228A78)
+    /* B95B8 801EAF88 25CE8A78 */  addiu      $t6, $t6, %lo(D_A95D0_80228A78)
+    /* B95BC 801EAF8C ADC10000 */  sw         $at, 0x0($t6)
+    /* B95C0 801EAF90 8DE10008 */  lw         $at, 0x8($t7)
+    /* B95C4 801EAF94 8DE80004 */  lw         $t0, 0x4($t7)
+    /* B95C8 801EAF98 ADC10008 */  sw         $at, 0x8($t6)
+    /* B95CC 801EAF9C ADC80004 */  sw         $t0, 0x4($t6)
+    /* B95D0 801EAFA0 8DE8000C */  lw         $t0, 0xC($t7)
+    /* B95D4 801EAFA4 8DE10010 */  lw         $at, 0x10($t7)
+    /* B95D8 801EAFA8 ADC8000C */  sw         $t0, 0xC($t6)
+    /* B95DC 801EAFAC 03E00008 */  jr         $ra
+    /* B95E0 801EAFB0 ADC10010 */   sw        $at, 0x10($t6)
+.size func_A95D0_801EAF78, . - func_A95D0_801EAF78

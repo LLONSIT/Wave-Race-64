@@ -1,0 +1,36 @@
+glabel func_800CB3D0
+    /* 85BD0 800CB3D0 3C01801E */  lui        $at, %hi(D_801DAC54)
+    /* 85BD4 800CB3D4 240E0000 */  addiu      $t6, $zero, 0x0
+    /* 85BD8 800CB3D8 240F0000 */  addiu      $t7, $zero, 0x0
+    /* 85BDC 800CB3DC AC2FAC54 */  sw         $t7, %lo(D_801DAC54)($at)
+    /* 85BE0 800CB3E0 AC2EAC50 */  sw         $t6, %lo(D_801DAC50)($at)
+    /* 85BE4 800CB3E4 3C01801E */  lui        $at, %hi(__osBaseCounter)
+    /* 85BE8 800CB3E8 3C18800F */  lui        $t8, %hi(D_800E9040)
+    /* 85BEC 800CB3EC 8F189040 */  lw         $t8, %lo(D_800E9040)($t8)
+    /* 85BF0 800CB3F0 AC20AC58 */  sw         $zero, %lo(__osBaseCounter)($at)
+    /* 85BF4 800CB3F4 3C01801E */  lui        $at, %hi(D_801DAC5C)
+    /* 85BF8 800CB3F8 AC20AC5C */  sw         $zero, %lo(D_801DAC5C)($at)
+    /* 85BFC 800CB3FC 3C19800F */  lui        $t9, %hi(D_800E9040)
+    /* 85C00 800CB400 AF180004 */  sw         $t8, 0x4($t8)
+    /* 85C04 800CB404 8F399040 */  lw         $t9, %lo(D_800E9040)($t9)
+    /* 85C08 800CB408 3C09800F */  lui        $t1, %hi(D_800E9040)
+    /* 85C0C 800CB40C 240A0000 */  addiu      $t2, $zero, 0x0
+    /* 85C10 800CB410 8F280004 */  lw         $t0, 0x4($t9)
+    /* 85C14 800CB414 240B0000 */  addiu      $t3, $zero, 0x0
+    /* 85C18 800CB418 3C0C800F */  lui        $t4, %hi(D_800E9040)
+    /* 85C1C 800CB41C AF280000 */  sw         $t0, 0x0($t9)
+    /* 85C20 800CB420 8D299040 */  lw         $t1, %lo(D_800E9040)($t1)
+    /* 85C24 800CB424 3C0D800F */  lui        $t5, %hi(D_800E9040)
+    /* 85C28 800CB428 3C18800F */  lui        $t8, %hi(D_800E9040)
+    /* 85C2C 800CB42C AD2A0010 */  sw         $t2, 0x10($t1)
+    /* 85C30 800CB430 AD2B0014 */  sw         $t3, 0x14($t1)
+    /* 85C34 800CB434 8D8C9040 */  lw         $t4, %lo(D_800E9040)($t4)
+    /* 85C38 800CB438 8D8E0010 */  lw         $t6, 0x10($t4)
+    /* 85C3C 800CB43C 8D8F0014 */  lw         $t7, 0x14($t4)
+    /* 85C40 800CB440 AD8E0008 */  sw         $t6, 0x8($t4)
+    /* 85C44 800CB444 AD8F000C */  sw         $t7, 0xC($t4)
+    /* 85C48 800CB448 8DAD9040 */  lw         $t5, %lo(D_800E9040)($t5)
+    /* 85C4C 800CB44C ADA00018 */  sw         $zero, 0x18($t5)
+    /* 85C50 800CB450 8F189040 */  lw         $t8, %lo(D_800E9040)($t8)
+    /* 85C54 800CB454 03E00008 */  jr         $ra
+    /* 85C58 800CB458 AF00001C */   sw        $zero, 0x1C($t8)
