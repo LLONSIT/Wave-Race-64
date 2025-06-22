@@ -287,7 +287,36 @@ void func_800481E0(MF *arg0, u16 *arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A208.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A2B4.s")
+void func_8004A2B4(void) {
+    u8 controllerMask = 1;
+    s32 i;
+    OSContPad *new_var3;
+    int new_var2;
+    unsigned short new_var;
+    
+    osRecvMesg(&D_801540D0, &D_80154348, 1);
+    osContGetReadData(gControllers);
+    
+    for (i = 0; i < 4; i++) {
+        if (D_80154340 & controllerMask) {
+            ControllerInput* ctrl = &gControllerOne + i;
+            OSContPad* pad = &gControllers[i];
+            new_var3 = pad;
+            ctrl->prevButton = ctrl->button;
+            ctrl->button = pad->button;
+            new_var = ctrl->button ^ ctrl->prevButton;
+            new_var2 = new_var;
+            ctrl->pressedButton = ctrl->button & new_var2;
+            ctrl->releasedButton = ctrl->prevButton & new_var;
+            new_var2 = new_var & 0xFFFF;
+dummy_label_696994: ;
+;
+            ctrl->stick_x = pad->stick_x;
+            ctrl->stick_y = new_var3->stick_y;
+        }
+        controllerMask <<= 1;
+    }
+}
 
 void func_8004A394(void) {
     osContStartReadData(&D_801540D0);
