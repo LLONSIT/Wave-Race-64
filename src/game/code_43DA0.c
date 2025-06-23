@@ -1,6 +1,21 @@
 #include "global.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_800895A0.s")
+void func_800895A0(f64* arg0, f64* arg1, f32 arg2, f32 arg3) {
+    f64 sp0;
+    f64 temp_f0;
+    s32 pad[4];
+
+    temp_f0 = (*arg0 * arg2) + (*arg1 * arg3);
+
+    if (1000 <= temp_f0) {
+        f64 temp;
+
+        sp0 = *arg0 - (arg2 * temp_f0);
+        temp = *arg1 - (arg3 * temp_f0);
+        *arg0 = (arg2 * (f64) 1000) + sp0;
+        *arg1 = (arg3 * (f64) 1000) + temp;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008962C.s")
 

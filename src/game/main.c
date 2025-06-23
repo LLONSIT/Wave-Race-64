@@ -201,7 +201,7 @@ void* idle_thread(void* entry) {
     }
 
     osViBlack(FALSE);
-    osViSetSpecialFeatures(0x66U);
+    osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON | OS_VI_DIVOT_OFF | OS_VI_GAMMA_DITHER_ON | OS_VI_GAMMA_OFF);
     osCreatePiManager(0x96, &D_801540A0, &D_80154148, 0x40);
     osCreateThread(&D_80153B90, 3, &main_thread, NULL, &D_801521E0, 0x64);
     if (D_800D4620) {

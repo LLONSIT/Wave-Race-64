@@ -27,15 +27,15 @@ void Str_Itoa(char* str, s32 num) {
     s16 i;
     s8 dest[20];
     s16 len;
-    s16 was_negative;
+    s16 negative;
 
     len = 0;
-    was_negative = FALSE;
+    negative = FALSE;
 
     // If num is negative we turn it into positive
     if (num < 0) {
         num = -num;
-        was_negative = TRUE;
+        negative = TRUE;
     }
 
     do {
@@ -43,7 +43,7 @@ void Str_Itoa(char* str, s32 num) {
         num /= 10;
     } while (num > 0);
 
-    if (was_negative) {
+    if (negative) {
         dest[len++] = '-'; // minus sig
     }
 

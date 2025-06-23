@@ -41,9 +41,10 @@ extern f32 D_801AE970;
 extern f32 D_801AE974;
 extern struct Controller_info gControllerOne[];
 
+// Unused function
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_24270/func_80069A70.s")
 
-void func_80069D48(s32 arg0) {
+UNUSED void func_80069D48(s32 arg0) {
     struct Controller_info* temp_v0;
 
     temp_v0 = &gControllerOne[arg0];
@@ -58,13 +59,13 @@ void func_80069D48(s32 arg0) {
     D_801AE974 = sqrtf(SQ(D_801AE96C) + SQ(D_801AE970));
 }
 
-void func_80069DE8(void) {
+UNUSED void func_80069DE8(void) {
     D_801AE9FC = D_801AEA00 = 1;
     D_801AE9E0 = D_801AE9DC = 0;
     D_801AEA04 = D_801AEA08 = D_801AEA0C = D_801AEA10 = 0;
 }
 
-void func_80069E44(struct UnkStruct_80069E44* arg0) {
+UNUSED void func_80069E44(struct UnkStruct_80069E44* arg0) {
     s32 temp_v0;
     s32 var_v0;
     s32 var_v0_2;

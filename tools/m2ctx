@@ -46,7 +46,11 @@ def import_c_file(in_file) -> str:
         for line in f:
             if "PRETTY_NAME" in line:
                 Message += line.split("=")[1].strip('"\n') + "\n"
-                Message += 'Linux Kernel ' + subprocess.check_output(['uname', '-r']).strip().decode('utf-8') + ')\n****/\n'
+                if ("Linux" in Message):
+                    Message += 'Linux Kernel ' + subprocess.check_output(['uname', '-r']).strip().decode('utf-8') + ')\n****/\n'
+                elif ("FreeBSD" in Message):
+                    Message += 'FreeBSD Kernel ' + subprocess.check_output(['uname', '-r']).strip().decode('utf-8') + ')\n****/\n'
+
                 break
 
     Message += '/* by tools/m2ctx\n****/\n'

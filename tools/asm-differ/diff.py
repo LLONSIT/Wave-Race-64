@@ -472,7 +472,7 @@ def create_project_settings(settings: Dict[str, Any]) -> ProjectSettings:
         myimg=settings.get("myimg"),
         mapfile=settings.get("mapfile"),
         build_command=settings.get(
-            "make_command", ["make", *settings.get("makeflags", [])]
+            "make_command", ["gmake", *settings.get("makeflags", [])]
         ),
         source_directories=settings.get("source_directories"),
         source_extensions=settings.get(

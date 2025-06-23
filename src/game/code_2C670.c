@@ -28,7 +28,7 @@ s32 func_80074264(f32 arg0, f32 arg1) {
 
     ret = TRUE;
     if (gCourseID == 0) {
-        if (sqrtf((arg0 * arg0) + (arg1 * arg1)) <= 7700.0f) {
+        if (sqrtf(SQ(arg0) + SQ(arg1)) <= 7700.0f) {
             ret = FALSE;
         }
     } else {
