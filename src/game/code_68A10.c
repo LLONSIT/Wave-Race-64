@@ -1,6 +1,5 @@
 #include "global.h"
 
-
 extern s32 D_801D7ADC;
 extern f32 D_801D7AE0;
 extern f32 D_801D7AE4;
@@ -8,7 +7,6 @@ extern f32 D_801D7AE8;
 extern s32 D_801D7B10;
 extern s32 D_801D7AD8;
 UnkStruct_801D7A18 D_801D7A18[];
-
 
 f32 func_801ED338(f32);
 
@@ -24,7 +22,6 @@ void func_800AF40C(f32 arg0, f32 arg1, f32 arg2) {
     D_801D7AE4 = arg1;
     D_801D7AE8 = arg2;
 }
-
 
 extern UnkStruct_801D7AF0 D_801D7AF0[];
 void func_800AF43C(f32 arg0, f32 arg1, f32 arg2) {
@@ -64,12 +61,8 @@ void func_800AF51C(void) {
         temp_f24 = func_801ED338(32.0f);
         temp_f20 = func_801ED338(4.0f);
 
-        func_800AF4A0((0, temp_f24) + (D_801D7AE0 - 16.0f), 
-                      (0, temp_f20) + (D_801D7AE4 - 2.0f), 
-                      func_801ED338(32.0f) + (D_801D7AE8 - 16.0f),
-                      ((f32) D_801D7ADC * 0.2f) + 1.2f);
-
-        
+        func_800AF4A0((0, temp_f24) + (D_801D7AE0 - 16.0f), (0, temp_f20) + (D_801D7AE4 - 2.0f),
+                      func_801ED338(32.0f) + (D_801D7AE8 - 16.0f), ((f32) D_801D7ADC * 0.2f) + 1.2f);
     }
 
     for (i = 0; i < 2; i++) {
@@ -78,9 +71,8 @@ void func_800AF51C(void) {
             temp_f22 = func_801ED338(32.0f);
             temp_f24 = func_801ED338(4.0f);
             temp_f20 = func_801ED338(32.0f);
-            func_800AF4A0((D_801D7AF0[i].unk4 - 16.0f) + (0,temp_f22), // FAKE
-                            (D_801D7AF0[i].unk8 - 2.0f) + (0, temp_f24), 
-                          (D_801D7AF0[i].unkC - 16.0f) + (0, temp_f20), 
+            func_800AF4A0((D_801D7AF0[i].unk4 - 16.0f) + (0, temp_f22), // FAKE
+                          (D_801D7AF0[i].unk8 - 2.0f) + (0, temp_f24), (D_801D7AF0[i].unkC - 16.0f) + (0, temp_f20),
                           func_801ED338(2.0f) + 2);
         }
     }
