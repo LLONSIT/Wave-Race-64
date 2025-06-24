@@ -28,7 +28,7 @@ typedef struct UnkStruct_80099858_1 {
 typedef struct UnkStruct_801CF008 {
     f32 unk0;
     char pad[0x14];
-}UnkStruct_801CF008;
+} UnkStruct_801CF008;
 
 typedef struct UnkStruct_801CF058 {
     char pad[0x1C];
@@ -36,7 +36,7 @@ typedef struct UnkStruct_801CF058 {
     f32 unk22;
     char pad1[0x64];
     f32 unk88;
-}UnkStruct_801CF058;
+} UnkStruct_801CF058;
 
 typedef struct UnkStruct_8009BB98 {
     s32 unk0;
@@ -44,8 +44,7 @@ typedef struct UnkStruct_8009BB98 {
     s32 unk8;
     s32 unkC;
     f32 unk10;
-}UnkStruct_8009BB98;
-
+} UnkStruct_8009BB98;
 
 extern u8 D_801CEAA6[];
 extern struct UnkStruct_801CEBE0 D_801CEBE0[];
@@ -747,8 +746,8 @@ void func_8009BA14(Vec3f* arg0) {
 extern UNK_TYPE D_800E5764;
 extern UNK_TYPE D_800E5798;
 
-void func_8009BAE0(Vec3f *arg0) {
-    UnkStruct_801CF058 *temp_v0;
+void func_8009BAE0(Vec3f* arg0) {
+    UnkStruct_801CF058* temp_v0;
 
     temp_v0 = D_801CF058[D_800E5138];
     if (temp_v0 != NULL) {
@@ -782,7 +781,6 @@ void func_8009BB98(struct UnkStruct_8009BB98* arg0) {
     arg0->y += temp_f0;
     func_8009A460(func_8009AA24, arg0, 0xA, -1);
 }
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009BCA4.s")
 
@@ -870,7 +868,7 @@ extern f32 D_800E5130;
 extern f32 D_800EB4F0;
 extern s32 D_801CE638;
 
-void func_8009C240(UnkStruct_801CEBE0 *arg0) {
+void func_8009C240(UnkStruct_801CEBE0* arg0) {
     f32 temp_f0;
     f32 temp_f14;
     f32 temp_f2;
@@ -884,7 +882,6 @@ void func_8009C240(UnkStruct_801CEBE0 *arg0) {
     }
     D_800E5130 = -1.0f;
 }
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009C2CC.s")
 
