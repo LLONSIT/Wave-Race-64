@@ -56,7 +56,7 @@ void func_i15_802C6CAC(s32 arg0) {
     D_800DAB1C = 0;
     D_800D461C = 3;
 
-    func_801E6FB0(3, 0x14, 0);
+    Set_FadeTransition(3, 0x14, 0);
 
     if (D_801CE630 == 2) {
         func_800C1F60(0);

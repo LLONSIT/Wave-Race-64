@@ -44,7 +44,7 @@ void func_1C3D00_802C5C4C(s32 arg0) {
     D_800DAB1C = 0;
     D_800D461C = 2;
 
-    func_801E6FB0(5, 1, 0);
+    Set_FadeTransition(5, 1, 0);
 
     if (D_801CE630 == 2) {
         func_800C1F60(0);

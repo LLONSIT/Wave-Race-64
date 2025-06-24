@@ -527,13 +527,22 @@ struct UnkStruct_8004B0F8 {
     /* 0x60 */ f32 unk60;
     /* 0x64 */ f32 unk64;
     /* 0x68 */ f32 unk68;
-};  
-struct UnkStruct_801BC940 {
-    /* 0x00 */ f32 unk0;                            /* inferred */
-    /* 0x04 */ char pad4[4];
-    /* 0x08 */ f32 unk8;                            /* inferred */
-    /* 0x0C */ char padC[0xB8];                     /* maybe part of unk8[0x2F]? */
-};                                                  /* size = 0xC4 */
+};
+typedef struct UnkStruct_801BC940 {
+    /* 0x00 */ f32 unk0;
+    /* 0x04 */ f32 unk4;                            /* inferred */
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ char padC[0xC];                      /* maybe part of unk8[4]? */
+    /* 0x18 */ f32 unk18;                           /* inferred */
+    /* 0x1C */ f32 unk1C;                           /* inferred */
+    /* 0x20 */ f32 unk20;                           /* inferred */
+    /* 0x24 */ f32 unk24;                           /* inferred */
+    /* 0x28 */ char pad28[4];
+    /* 0x2C */ f32 unk2C;                           /* inferred */
+    /* 0x30 */ char pad30[0x28];                    /* maybe part of unk2C[0xB]? */
+    /* 0x58 */ s32 unk58;                           /* inferred */
+    /* 0x5C */ char pad5C[0x68];                    /* maybe part of unk58[0x1B]? */
+}UnkStruct_801BC940;                                                  /* size = 0xC4 */
 
 // Used in code_68A10
 typedef struct UnkStruct_801D7AF0 {

@@ -41,7 +41,7 @@ void func_i8_802C6F4C(void) {
     D_801CE644 = 0;
     D_800DAB1C = 0;
     D_800D461C = 3;
-    func_801E6FB0(1, 4, 0);
+    Set_FadeTransition(1, 4, 0);
 }
 
 void func_i8_802C6FD4(s8* src, s8* dest, s32 count) {

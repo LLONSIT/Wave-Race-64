@@ -7,16 +7,16 @@ void func_801E73A0(FadeTransition* fade);
 void func_801E76C0(FadeTransition* fade);
 void func_801E74BC(FadeTransition* fade);
 
-FadeTransition D_80228A10;
+FadeTransition sCurrentFadeTransitionProps;
 
 extern s16 D_80228A30;
 extern s16 D_80228A32;
 
-void func_801E6FB0(s32 arg0, u32 arg1, s32 arg2) {
+void Set_FadeTransition(s32 arg0, u32 arg1, s32 arg2) {
     s32 fade_color = 255;
-    FadeTransition* transition = &D_80228A10;
+    FadeTransition* transition = &sCurrentFadeTransitionProps;
 
-    D_80228A10 = D_80226CC0;
+    sCurrentFadeTransitionProps = sFadeTransitionDefaultProps;
 
     switch (arg0) {
         case 1:
@@ -94,7 +94,7 @@ void func_801E6FB0(s32 arg0, u32 arg1, s32 arg2) {
 }
 
 void func_801E71A8(void) {
-    FadeTransition* fade = &D_80228A10;
+    FadeTransition* fade = &sCurrentFadeTransitionProps;
 
     if (fade->completed == 1) {
         fade->completed = 0;
@@ -152,7 +152,7 @@ void func_801E7280(FadeTransition* fade) {
 
         case 2:
             if (fade->fadeTimer >= fade->holdTime) {
-                D_80228A10 = D_80226CC0;
+                sCurrentFadeTransitionProps = sFadeTransitionDefaultProps;
                 fade->completed = 1;
             } else {
                 fade->fadeTimer++;
@@ -187,7 +187,7 @@ void func_801E73A0(FadeTransition* fade) {
 
         case 2:
             if (fade->fadeTimer >= fade->holdTime) {
-                D_80228A10 = D_80226CC0;
+                sCurrentFadeTransitionProps = sFadeTransitionDefaultProps;
                 fade->completed = 1;
             } else {
                 fade->fadeTimer++;
@@ -223,7 +223,7 @@ void func_801E74BC(FadeTransition* fade) {
 
         case 2:
             if (fade->fadeTimer >= fade->holdTime) {
-                D_80228A10 = D_80226CC0;
+                sCurrentFadeTransitionProps = sFadeTransitionDefaultProps;
                 fade->completed = 1;
             } else {
                 fade->fadeTimer++;
@@ -276,7 +276,7 @@ void func_801E76C0(FadeTransition* fade) {
 
         case 2:
             if (fade->fadeTimer >= fade->holdTime) {
-                D_80228A10 = D_80226CC0;
+                sCurrentFadeTransitionProps = sFadeTransitionDefaultProps;
                 fade->completed = 1;
             } else {
                 fade->fadeTimer++;

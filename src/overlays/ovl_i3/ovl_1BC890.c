@@ -28,7 +28,7 @@ void func_i3_802C6E9C(void) {
 
     D_i3_802C6FE0 = 1;
 
-    func_801E6FB0(5, 0, 20);
+    Set_FadeTransition(5, 0, 20);
     func_801E6A4C(0, 0);
     func_800C37F4(58, 0);
 }

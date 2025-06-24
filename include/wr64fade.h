@@ -25,6 +25,6 @@ typedef struct FadeTransition {
 } FadeTransition; // size = 0x24;
 
 extern FadeTransition D_80226CC0; // default?
-extern FadeTransition D_80228A10; // current?
+extern FadeTransition sFadeTransitionDefaultProps; // current?
 
 #endif

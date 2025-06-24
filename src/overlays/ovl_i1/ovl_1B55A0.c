@@ -85,7 +85,7 @@ void func_i1_802C7394(void) {
     D_800DAB1C = 0;
     D_800D461C = 3;
 
-    func_801E6FB0(1, 4, 100);
+    Set_FadeTransition(1, 4, 100);
     func_801E6A4C(0, 0);
 
     D_801CE62A = 0;
@@ -107,7 +107,7 @@ void func_i1_802C744C(s32 arg0) {
     D_800DAB1C = 0;
     D_800D461C = 3;
 
-    func_801E6FB0(1, 4, 0);
+    Set_FadeTransition(1, 4, 0);
 
     D_801CE62A = 0;
 
@@ -257,7 +257,7 @@ void func_i1_802C8E70(void) {
                 D_i1_802C9520 = 7;
                 D_802C96D0 = 0;
                 D_i1_802C9558 = 1;
-                func_801E6FB0(3, 0x14, 0x14);
+                Set_FadeTransition(3, 0x14, 0x14);
                 func_800C1F60(0xB);
             }
             break;
@@ -352,7 +352,7 @@ void func_i1_802C9380(s32 arg0) {
     D_800DAB1C = 0;
     D_800D461C = 3;
 
-    func_801E6FB0(1, 4, 0);
+    Set_FadeTransition(1, 4, 0);
     func_801E6A4C(0, 0);
     func_800BFD34();
     func_800BFD68();

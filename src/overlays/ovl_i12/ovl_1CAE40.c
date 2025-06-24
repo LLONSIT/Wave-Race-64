@@ -33,7 +33,7 @@ void func_i12_802C5EE4(s32 arg0) {
     D_801CE644 = 0;
     D_800DAB1C = 0;
     D_800D461C = 2;
-    func_801E6FB0(1, 4, 0);
+    Set_FadeTransition(1, 4, 0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i12/ovl_1CAE40/func_i12_802C5F6C.s")

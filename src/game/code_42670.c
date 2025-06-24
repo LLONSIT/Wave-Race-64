@@ -217,10 +217,7 @@ void func_80088488(s32 arg0) {
 }
 
 void func_80088B00(struct UnkStruct_80088B00* arg0) {
-    f32 temp_f0;
-    f32 temp_f0_2;
     f32 temp_f12;
-    f32 temp_f2;
 
     arg0->unk10 = arg0->unk8 - arg0->unk0;
     arg0->unk14 = arg0->unkC - arg0->unk4;

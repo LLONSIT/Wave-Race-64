@@ -281,7 +281,7 @@ extern s32 D_800E5138;
 extern u8 D_800E5148;
 extern s32 D_800E552C;
 extern s32 D_800E557C;
-extern void* D_801CF058[];
+//extern void* D_801CF058[];
 extern s32 D_800E5634;
 extern s32 D_800E5648;
 extern f32 D_800EB4DC;

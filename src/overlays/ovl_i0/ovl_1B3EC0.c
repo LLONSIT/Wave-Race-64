@@ -127,7 +127,7 @@ void func_i0_802C6A1C(s32 arg0) {
     D_800DAB1C = 0;
     D_800D461C = 3;
 
-    func_801E6FB0(1, 4, 0);
+    Set_FadeTransition(1, 4, 0);
     func_801E6A4C(0, 0);
 
     if (D_801CE630 == 10) {
