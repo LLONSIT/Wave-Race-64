@@ -3,10 +3,10 @@
 
 // TODO: Some lazy names here
 
-//struct Mtx {
-//    s16 intarr[4][4];
-/    u16 fracarr[4][4];
-//};
+struct Mtx {
+    s16 intarr[4][4];
+    u16 fracarr[4][4];
+};
 
 typedef union {
     struct Mtx m;
