@@ -332,7 +332,7 @@ void func_80048854(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     }
 
     temp_fa0 = 1.0f / sqrtf(temp_fa0);
-    
+
     arg1->mf[2][0] = temp_fa0 * arg2;
     arg1->mf[2][1] = temp_fa0 * arg3;
     arg1->mf[2][2] = temp_fa0 * arg4;
@@ -340,15 +340,15 @@ void func_80048854(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     sp50 = (arg6 * arg4) - (arg7 * arg3);
     sp4C = (arg7 * arg2) - (arg5 * arg4);
     sp48 = (arg5 * arg3) - (arg6 * arg2);
-    
-    temp_fa0 = SQ(sp50 ) + SQ(sp4C) + SQ(sp48);
+
+    temp_fa0 = SQ(sp50) + SQ(sp4C) + SQ(sp48);
 
     if (temp_fa0 == 0.0f) {
         return;
     }
 
     temp_fa0 = 1 / sqrtf(temp_fa0);
-    
+
     arg1->mf[0][0] = temp_fa0 * sp50;
     arg1->mf[0][1] = temp_fa0 * sp4C;
     arg1->mf[0][2] = temp_fa0 * sp48;
@@ -374,16 +374,17 @@ void func_80048854(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
         temp->mf[0][3] = temp->mf[1][3] = temp->mf[2][3] = 0.0f;
         temp->mf[3][2] = argA;
     }
-    
-    arg1->wx = arg1->wy =  arg1->wz = 0.0f;
+
+    arg1->wx = arg1->wy = arg1->wz = 0.0f;
     arg1->ww = 1;
 
-    //Note: this should be: func_80047EE0(arg0, arg1)
+    // Note: this should be: func_80047EE0(arg0, arg1)
     func_80047EE0(arg1, arg0);
 }
 
-#define	FTO32(x)	(long) (65536.0f * (x))
-void func_80048A88(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 argA) {
+#define FTO32(x) (long) (65536.0f * (x))
+void func_80048A88(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9,
+                   f32 argA) {
     f32 temp_fa0;
     f32 sp68;
     f32 sp64;
@@ -403,11 +404,11 @@ void func_80048A88(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
 
     temp_fa0 = (argA * 65536.0f) / sqrtf(temp_fa0);
     {
-        
+
         temp_f4 = arg1 * temp_fa0;
         temp_f8 = arg2 * temp_fa0;
         temp_f4_2 = arg3 * temp_fa0;
-        
+
         arg0->m[1][0] = (temp_f4 & 0xFFFF0000) | ((u32) temp_f8 >> 0x10);
         arg0->m[1][1] = temp_f4_2 & 0xFFFF0000;
         arg0->m[3][0] = (temp_f4 << 0x10) | (temp_f8 & 0xFFFF);
@@ -429,7 +430,7 @@ void func_80048A88(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
         temp_f4 = sp68 * temp_fa0;
         temp_f8 = sp64 * temp_fa0;
         temp_f4_2 = (sp60 * temp_fa0);
-        
+
         arg0->m[0][0] = (temp_f4 & 0xFFFF0000) | ((u32) temp_f8 >> 0x10);
         arg0->m[0][1] = temp_f4_2 & 0xFFFF0000;
         arg0->m[2][0] = (temp_f4 << 0x10) | (temp_f8 & 0xFFFF);
@@ -455,7 +456,7 @@ void func_80048A88(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
         arg0->m[0][3] = temp_f4_2 & 0xFFFF0000;
         arg0->m[2][2] = (temp_f4 << 0x10) | (temp_f8 & 0xFFFF);
         arg0->m[2][3] = temp_f4_2 << 0x10;
-        
+
         arg0->m[1][2] = (FTO32(arg7) & 0xFFFF0000) | ((u32) FTO32(arg8) >> 0x10);
         arg0->m[1][3] = (FTO32(arg9) & 0xFFFF0000) | 1;
         arg0->m[3][2] = (FTO32(arg7) << 0x10) | (FTO32(arg8) & 0xFFFF);
@@ -516,19 +517,18 @@ void func_80048E0C(Vtx* vtx, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 // TODO: Move this from here...
 typedef struct {
-	u16 i[4][4];
-	u16 f[4][4];
+    u16 i[4][4];
+    u16 f[4][4];
 } Mtx_u;
 
 typedef union {
-	Mtx_u		u;
-    Mtx_t		m;
-    long long int	force_structure_alignment;
+    Mtx_u u;
+    Mtx_t m;
+    long long int force_structure_alignment;
 } _Mtx;
 
-#define FTO32(x) (long) ((x) *65536.0f)
+#define FTO32(x) (long) ((x) * 65536.0f)
 #define MTXTOMTXF(mtx, i1, i2) ((((s16) mtx->u.i[(i1)][(i2)] << 0x10) | mtx->u.f[(i1)][(i2)]) / 65536.0f)
-
 
 // Similar to func_8006B33C from fzerox
 void func_80049144(_Mtx* arg0, _Mtx* arg1, _Mtx* dest, f32 arg3) {
@@ -646,7 +646,8 @@ void func_80049144(_Mtx* arg0, _Mtx* arg1, _Mtx* dest, f32 arg3) {
     dest->m[3][3] = z2 << 0x10;
 }
 
-void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 argA) {
+void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8,
+                   f32 arg9, f32 argA) {
     f32 temp_fv0;
     f32 temp_fv1;
 
@@ -654,7 +655,7 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     if (SQ(temp_fv1) < 0.01) {
         return;
     }
-     
+
     temp_fv1 = -1.0f / temp_fv1;
     temp_fv0 = (((-arg8 * arg5) - (arg9 * arg6)) - (argA * arg7)) * temp_fv1;
     arg8 *= temp_fv1;
