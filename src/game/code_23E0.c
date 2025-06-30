@@ -704,10 +704,10 @@ void func_8004A2B4(void) {
             OSContPad* new_var3;
             unsigned short new_var;
             int new_var2;
-            
+
             ctrl = &gControllerOne[i];
             new_var3 = &gControllers[i];
-            
+
             ctrl->unk6 = ctrl->unk0;
             ctrl->unk0 = new_var3->button;
             new_var = ctrl->unk0 ^ ctrl->unk6;
