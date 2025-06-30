@@ -306,6 +306,7 @@ extern u8 D_801C43F8;
 extern s32 D_80154330;
 extern s32 D_801CB410;
 extern u8 D_80154340;
+extern OSMesg D_80154348;
 extern s32 D_801CB404;
 extern u8 D_801542E2[][4];
 extern u8 D_801CB408[];
