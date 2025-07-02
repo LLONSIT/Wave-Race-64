@@ -41,9 +41,19 @@ void Audio_NoteDisable(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB24C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB2F0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_InitNoteList.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_InitNoteLists.s")
+// Original name: Nas_InitChNode
+void Audio_InitNoteLists(NotePool* pool) {
+    Audio_InitNoteList(&pool->disabled);
+    Audio_InitNoteList(&pool->decaying);
+    Audio_InitNoteList(&pool->releasing);
+    Audio_InitNoteList(&pool->active);
+    pool->disabled.pool = pool;
+    pool->decaying.pool = pool;
+    pool->releasing.pool = pool;
+    pool->active.pool = pool;
+}
 
 // Original name: Nas_InitChannelList
 void Audio_InitNoteFreeList(void) {

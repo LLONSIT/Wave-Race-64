@@ -154,6 +154,7 @@ Audio_NoteDisable = 0x800BAB18;
 Audio_AudioListRemove = 0x800BB6DC;
 AudioSeq_AudioListPushBack = 0x800BCFAC;
 Audio_InitNoteLists = 0x800BB300;
+Audio_InitNoteList = 0x800BB2F0;
 
 // Unsorted
 load_wave_samples = 0x800B67EC;
