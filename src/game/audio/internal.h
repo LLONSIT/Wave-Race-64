@@ -101,7 +101,7 @@ struct M64ScriptState {
     u8 remLoopIters[4];
     u8 depth;
 };
-struct SequencePlayer {
+typedef struct SequencePlayer {
                             u8 enabled : 1;
                      u8 finished : 1;
                      u8 muted : 1;
@@ -142,7 +142,7 @@ struct SequencePlayer {
                      u8 *bankDmaCurrMemAddr;
                      uintptr_t bankDmaCurrDevAddr;
                      ssize_t bankDmaRemaining;
-};
+} SequencePlayer;
 struct AdsrSettings {
     u8 releaseRate;
     u8 sustain;
@@ -328,7 +328,7 @@ struct NoteSubEu {
         struct AudioBankSound *audioBankSound;
     } sound;
 };
-struct Note {
+typedef struct Note {
                          struct AudioListItem listItem;
                          struct NoteSynthesisState synthesisState;
     u8 pad0[12];
@@ -347,7 +347,7 @@ struct Note {
                    struct VibratoState vibratoState;
     u8 pad3[8];
                          struct NoteSubEu noteSubEu;
-};
+} Note;
 struct NoteSynthesisBuffers {
     s16 adpcmdecState[0x10];
     s16 finalResampleState[0x10];
