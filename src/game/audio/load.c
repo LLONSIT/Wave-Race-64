@@ -543,7 +543,7 @@ u8 get_missing_bank(u32 seqId, s32* nonNullCount, s32* nullCount) {
     for (i = gAlBankSets[offset++], ret = 0; i != 0; i--) {
         bankId = gAlBankSets[offset++];
         if ((gFontLoadStatus[bankId] >= 2) == 1) {
-            temp = get_bank_or_seq(&gBankLoadedPool, 2, bankId);
+            temp = AudioHeap_SearchRegularCaches(&gBankLoadedPool, 2, bankId);
         } else {
             temp = (void*) 0;
         }
@@ -566,7 +566,7 @@ struct AudioBank* load_banks_immediate(s32 seqId, u8* outDefaultBank) {
     for (i = gAlBankSets[offset++]; i != 0; i--) {
         bankId = gAlBankSets[offset++];
         if ((gFontLoadStatus[bankId] >= 2) == 1) {
-            bank = get_bank_or_seq(&gBankLoadedPool, 2, bankId);
+            bank = AudioHeap_SearchRegularCaches(&gBankLoadedPool, 2, bankId);
         } else {
             bank = NULL;
         }
@@ -595,7 +595,7 @@ void preload_sequence(u32 seqId, u8 preloadMask) {
         // @bug should be IS_SEQ_LOAD_COMPLETE
         if ((gFontLoadStatus[seqId] >= 2) == TRUE) {
             // eu_stubbed_printf_1("SEQ  %d ALREADY CACHED\n", seqId);
-            sequenceData = get_bank_or_seq(&gSeqLoadedPool, 2, seqId);
+            sequenceData = AudioHeap_SearchRegularCaches(&gSeqLoadedPool, 2, seqId);
         } else {
             sequenceData = NULL;
         }
@@ -649,7 +649,7 @@ void load_sequence_internal(u32 player, u32 seqId, s32 loadAsync) {
     };
     ;
     seqPlayer->seqId = seqId;
-    sequenceData = get_bank_or_seq(&gSeqLoadedPool, 2, seqId);
+    sequenceData = AudioHeap_SearchRegularCaches(&gSeqLoadedPool, 2, seqId);
     if (sequenceData == (void*) 0) {
         if (seqPlayer->seqDmaInProgress) {
             ;

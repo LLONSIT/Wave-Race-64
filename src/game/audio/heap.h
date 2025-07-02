@@ -54,7 +54,7 @@ typedef struct SoundMultiPool {
 
 void *alloc_bank_or_seq(struct SoundMultiPool *arg0, s32 arg1, s32 size, s32 arg3, s32 id);
 void *AudioHeap_AllocZeroed(struct SoundAllocPool *pool, u32 size);
-void *get_bank_or_seq(s32 poolIdx, s32 arg1, s32 id);
+void *AudioHeap_SearchRegularCaches(struct SoundMultiPool *multiPool, s32 arg1, s32 id);
 extern struct SoundMultiPool gSeqLoadedPool;
 extern u8 gSeqLoadStatus[256];
 extern struct SoundAllocPool gAudioInitPool;

@@ -131,5 +131,8 @@ extern struct NoteSubEu* gNoteSubsEu;
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
+void init_sample_dma_buffers(s32);
+void init_note_free_list(void);
+void note_init_all(void);
 
 #endif

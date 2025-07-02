@@ -107,7 +107,7 @@ load_sequence_internal = 0x800B9F90; //defined:true
 //audio_heap.c
 AudioHeap_AllocZeroed = 0x800B7760; //defined:true
 alloc_bank_or_seq = 0x800B7B14; //defined:true
-get_bank_or_seq = 0x800B811C; //defined:true
+AudioHeap_SearchRegularCaches = 0x800B811C; //defined:true
 AudioHeap_ResetStep = 0x800B8480; //defined:true
 port_init = 0x800C56F4; //defined:true
 AudioHeap_InitMainPools = 0x800B7848; //defined:true

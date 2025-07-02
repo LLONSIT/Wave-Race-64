@@ -219,11 +219,80 @@ void AudioHeap_InitTemporaryPoolsAndCaches(PoolSplit* split) {
     AudioHeap_InitTemporaryCache(&gUnusedLoadedPool.temporary);
 }
 
+/// Original name: Nas_SzHeapAlloc
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/alloc_bank_or_seq.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/get_bank_or_seq.s")
+/// Original name: __Nas_SzCacheCheck_Inner
+void* AudioHeap_SearchRegularCaches(SoundMultiPool* multiPool, s32 arg1, s32 id) {
+    u32 i;
+    void* ret;
+    TemporaryPool* temporary = &multiPool->temporary;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/func_800B81C4.s")
+    if (arg1 == 0) {
+        // Try not to overwrite sound that we have just accessed, by setting nextSide appropriately.
+        if (temporary->entries[0].id == id) {
+            temporary->nextSide = 1;
+            return temporary->entries[0].ptr;
+        } else if (temporary->entries[1].id == id) {
+            temporary->nextSide = 0;
+            return temporary->entries[1].ptr;
+        }
+        // eu_stubbed_printf_1("Auto Heap Unhit for ID %d\n", id);
+        return NULL;
+    } else {
+        PersistentPool* persistent = &multiPool->persistent;
+        for (i = 0; i < persistent->numEntries; i++) {
+            if (id == persistent->entries[i].id) {
+                // eu_stubbed_printf_2("Cache hit %d at stay %d\n", id, i);
+                return persistent->entries[i].ptr;
+            }
+        }
+
+        if (arg1 == 2) {
+            return AudioHeap_SearchRegularCaches(multiPool, 0, id);
+        }
+        return NULL;
+    }
+}
+
+// Original name: Nas_InitFilterCoef
+void func_800B81C4(f32 arg0, f32 arg1, u16* arg2) {
+    // With the bug below fixed, this mysterious unused function computes two recurrences
+    // out[0..7] = a_i, out[8..15] = b_i, where
+    // a_{-2} = b_{-1} = 262159 = 2^18 + 15
+    // a_{-1} = b_{-2} = 0
+    // a_i = q * a_{i-1} + p * a_{i-2}
+    // b_i = q * b_{i-1} + p * b_{i-2}
+    // These grow exponentially if p < -1 or p + |q| > 1.
+    s32 i;
+    f32 tmp[16];
+
+    tmp[0] = (f32) (arg1 * 262159.0f);
+    tmp[8] = (f32) (arg0 * 262159.0f);
+    tmp[1] = (f32) ((arg1 * arg0) * 262159.0f);
+    tmp[9] = (f32) (((arg0 * arg0) + arg1) * 262159.0f);
+
+    for (i = 2; i < 8; i++) {
+        //! @bug value should be stored to tmp[i] and tmp[8 + i], otherwise we read
+        //! garbage in later loop iterations.
+        arg2[i] = arg1 * tmp[i - 2] + arg0 * tmp[i - 1];
+        arg2[8 + i] = arg1 * tmp[6 + i] + arg0 * tmp[7 + i];
+    }
+
+    for (i = 0; i < 16; i++) {
+        arg2[i] = tmp[i];
+    }
+
+    for (i = 0; i < 8; i++) {
+        //  eu_stubbed_printf_1("%d ", arg2[i]);
+    }
+    // eu_stubbed_printf_0("\n");
+
+    for (i = 8; i < 16; i++) {
+        //  eu_stubbed_printf_1("%d ", arg2[i]);
+    }
+    // eu_stubbed_printf_0("\n");
+}
 
 // Original name: __Nas_DelayDown
 void AudioHeap_UpdateReverbs(void) {
@@ -241,7 +310,7 @@ s32 AudioHeap_ResetStep(void) {
 
     switch (gAudioResetStatus) {
         case 5:
-            for (i = 0; i < 4; i++) {
+            for (i = 0; i < ARRAY_COUNT(gSequencePlayers); i++) {
                 AudioSeq_SequencePlayerDisable(&gSequencePlayers[i]);
             }
             gAudioResetFadeOutFramesLeft = 4;
@@ -269,7 +338,7 @@ s32 AudioHeap_ResetStep(void) {
                 gAudioResetFadeOutFramesLeft--;
                 AudioHeap_UpdateReverbs();
             } else {
-                for (i = 0; i < 3; i++) {
+                for (i = 0; i < ARRAY_COUNT(gAiBuffers); i++) {
                     for (j = 0; j < (s32) (AIBUFFER_LEN / sizeof(s16)); j++) {
                         gAiBuffers[i][j] = 0;
                     }
@@ -370,13 +439,12 @@ void AudioHeap_Init(void) {
 
     AudioHeap_ResetLoadStatus();
 
-    gNotes = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, gMaxSimultaneousNotes * sizeof(struct Note));
+    gNotes = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, gMaxSimultaneousNotes * sizeof(Note));
     note_init_all();
     init_note_free_list();
 
-    gNoteSubsEu =
-        AudioHeap_AllocZeroed(&gNotesAndBuffersPool, (gAudioBufferParameters.updatesPerFrame * gMaxSimultaneousNotes) *
-                                                         sizeof(struct NoteSubEu));
+    gNoteSubsEu = AudioHeap_AllocZeroed(
+        &gNotesAndBuffersPool, (gAudioBufferParameters.updatesPerFrame * gMaxSimultaneousNotes) * sizeof(NoteSubEu));
 
     for (j = 0; j != 2; j++) {
         gAudioCmdBuffers[j] = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, gMaxAudioCmds * sizeof(u64));
