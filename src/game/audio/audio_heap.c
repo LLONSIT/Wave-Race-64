@@ -308,4 +308,128 @@ s32 AudioHeap_ResetStep(void) {
 }
 
 // Original name: __Nas_MemoryReconfig
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/AudioHeap_Init.s")
+void AudioHeap_Init(void) {
+    AudioSessionSettingsEU* preset = &gAudioSessionPresets[gAudioResetPresetIdToLoad];
+    ReverbSettingsEU* reverbSettings;
+    s16* mem;
+    s32 i;
+    s32 j;
+    s32 persistentMem;
+    s32 temporaryMem;
+    s32 totalMem;
+    s32 wantMisc;
+    SynthesisReverb* reverb;
+
+    // eu_stubbed_printf_1("Heap Reconstruct Start %x\n", gAudioResetPresetIdToLoad);
+
+    gSampleDmaNumListItems = 0;
+
+    gAudioBufferParameters.frequency = preset->frequency;
+    gAudioBufferParameters.aiFrequency = osAiSetFrequency(gAudioBufferParameters.frequency);
+    gAudioBufferParameters.samplesPerFrameTarget = ALIGN16(gAudioBufferParameters.frequency / gRefreshRate);
+    gAudioBufferParameters.minAiBufferLength = gAudioBufferParameters.samplesPerFrameTarget - 0x10;
+    gAudioBufferParameters.maxAiBufferLength = gAudioBufferParameters.samplesPerFrameTarget + 0x10;
+    gAudioBufferParameters.updatesPerFrame = (gAudioBufferParameters.samplesPerFrameTarget + 0x10) / 160 + 1;
+    gAudioBufferParameters.samplesPerUpdate =
+        (gAudioBufferParameters.samplesPerFrameTarget / gAudioBufferParameters.updatesPerFrame) & 0xfff8;
+    gAudioBufferParameters.samplesPerUpdateMax = gAudioBufferParameters.samplesPerUpdate + 8;
+    gAudioBufferParameters.samplesPerUpdateMin = gAudioBufferParameters.samplesPerUpdate - 8;
+    gAudioBufferParameters.resampleRate = 32000.0f / (s32) gAudioBufferParameters.frequency;
+    gAudioBufferParameters.unkUpdatesPerFrameScaled = (3.0f / 2560.0f) / gAudioBufferParameters.updatesPerFrame;
+    gAudioBufferParameters.updatesPerFrameInv = 1.0f / gAudioBufferParameters.updatesPerFrame;
+
+    gMaxSimultaneousNotes = preset->maxSimultaneousNotes;
+    gVolume = preset->volume;
+
+    gTempoInternalToExternal =
+        (u32) (gAudioBufferParameters.updatesPerFrame * 2880000.0f / gTatumsPerBeat / gAudio_Unk80045610);
+
+    gAudioBufferParameters.presetUnk4 = preset->unk1;
+    gAudioBufferParameters.samplesPerFrameTarget *= gAudioBufferParameters.presetUnk4;
+    gAudioBufferParameters.maxAiBufferLength *= gAudioBufferParameters.presetUnk4;
+    gAudioBufferParameters.minAiBufferLength *= gAudioBufferParameters.presetUnk4;
+    gAudioBufferParameters.updatesPerFrame *= gAudioBufferParameters.presetUnk4;
+
+    gMaxAudioCmds =
+        gMaxSimultaneousNotes * 0x10 * gAudioBufferParameters.updatesPerFrame + preset->numReverbs * 0x20 + 0x3C8;
+
+    persistentMem = DOUBLE_SIZE_ON_64_BIT(preset->persistentSeqMem + preset->persistentBankMem);
+    temporaryMem = DOUBLE_SIZE_ON_64_BIT(preset->temporarySeqMem + preset->temporaryBankMem);
+
+    totalMem = persistentMem + temporaryMem;
+    wantMisc = gAudioSessionPool.size - totalMem - 0x100;
+    sSessionPoolSplit.wantSeq = wantMisc;
+    sSessionPoolSplit.wantCustom = totalMem;
+    AudioHeap_InitSessionPools(&sSessionPoolSplit);
+
+    sSeqAndBankPoolSplit.wantPersistent = persistentMem;
+    sSeqAndBankPoolSplit.wantTemporary = temporaryMem;
+    AudioHeap_InitCachePools(&sSeqAndBankPoolSplit);
+
+    sPersistentCommonPoolSplit.wantSeq = DOUBLE_SIZE_ON_64_BIT(preset->persistentSeqMem);
+    sPersistentCommonPoolSplit.wantBank = DOUBLE_SIZE_ON_64_BIT(preset->persistentBankMem);
+    sPersistentCommonPoolSplit.wantUnused = 0;
+    AudioHeap_InitPersistentPoolsAndCaches(&sPersistentCommonPoolSplit);
+
+    sTemporaryCommonPoolSplit.wantSeq = DOUBLE_SIZE_ON_64_BIT(preset->temporarySeqMem);
+    sTemporaryCommonPoolSplit.wantBank = DOUBLE_SIZE_ON_64_BIT(preset->temporaryBankMem);
+    sTemporaryCommonPoolSplit.wantUnused = 0;
+    AudioHeap_InitTemporaryPoolsAndCaches(&sTemporaryCommonPoolSplit);
+
+    AudioHeap_ResetLoadStatus();
+
+    gNotes = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, gMaxSimultaneousNotes * sizeof(struct Note));
+    note_init_all();
+    init_note_free_list();
+
+    gNoteSubsEu =
+        AudioHeap_AllocZeroed(&gNotesAndBuffersPool, (gAudioBufferParameters.updatesPerFrame * gMaxSimultaneousNotes) *
+                                                         sizeof(struct NoteSubEu));
+
+    for (j = 0; j != 2; j++) {
+        gAudioCmdBuffers[j] = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, gMaxAudioCmds * sizeof(u64));
+    }
+
+    for (j = 0; j < 4; j++) {
+        gSynthesisReverbs[j].useReverb = 0;
+    }
+
+    gNumSynthesisReverbs = preset->numReverbs;
+    for (j = 0; j < gNumSynthesisReverbs; j++) {
+        reverb = &gSynthesisReverbs[j];
+        reverbSettings = &preset->reverbSettings[j];
+        reverb->windowSize = reverbSettings->windowSize * 64;
+        reverb->downsampleRate = reverbSettings->downsampleRate;
+        reverb->reverbGain = reverbSettings->gain;
+        reverb->useReverb = 8;
+        reverb->ringBuffer.left = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, reverb->windowSize * 2);
+        reverb->ringBuffer.right = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, reverb->windowSize * 2);
+        reverb->nextRingBufferPos = 0;
+        reverb->unkC = 0;
+        reverb->curFrame = 0;
+        reverb->bufSizePerChannel = reverb->windowSize;
+        reverb->framesLeftToIgnore = 2;
+
+        if (reverb->downsampleRate != 1) {
+            reverb->resampleFlags = A_INIT;
+            reverb->resampleRate = 0x8000 / reverb->downsampleRate;
+            reverb->resampleStateLeft = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, 16 * sizeof(s16));
+            reverb->resampleStateRight = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, 16 * sizeof(s16));
+            reverb->unk24 = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, 16 * sizeof(s16));
+            reverb->unk28 = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, 16 * sizeof(s16));
+
+            for (i = 0; i < gAudioBufferParameters.updatesPerFrame; i++) {
+                mem = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, DEFAULT_LEN_2CH);
+                reverb->items[0][i].toDownsampleLeft = mem;
+                reverb->items[0][i].toDownsampleRight = mem + DEFAULT_LEN_1CH / sizeof(s16);
+                mem = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, DEFAULT_LEN_2CH);
+                reverb->items[1][i].toDownsampleLeft = mem;
+                reverb->items[1][i].toDownsampleRight = mem + DEFAULT_LEN_1CH / sizeof(s16);
+            }
+        }
+    }
+
+    init_sample_dma_buffers(gMaxSimultaneousNotes);
+    BuildVolRampingsTBL(0, gAudioBufferParameters.samplesPerUpdate);
+    osWritebackDCacheAll();
+}

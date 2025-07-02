@@ -58,6 +58,17 @@ gUnusedLoadedPool = 0x8003E970;
 gNumSynthesisReverbs = 0x80038543;
 gAudioResetFadeOutFramesLeft = 0x8003ECBC;
 gNotes = 0x8003FCC0;
+sSessionPoolSplit = 0x8003EB40;
+gMaxAudioCmds = 0x80045544;
+gTatumsPerBeat = 0x800EE2F0;
+gAudioCmdBuffers = 0x80045560;
+gNoteSubsEu = 0x80038544;
+sTemporaryCommonPoolSplit = 0x8003EB68;
+sPersistentCommonPoolSplit = 0x8003EB58;
+sSeqAndBankPoolSplit = 0x8003EB50;
+gTempoInternalToExternal = 0x8004554C;
+gAudioSessionPresets = 0x800EC884;
+
 // Some linker symbols
 sound_data_ctl_ROM_START = 0x40B530; //defined:true
 sound_data_ROM_START = 0x428C30; //defined:true
@@ -114,6 +125,8 @@ AudioHeap_InitPersistentPoolsAndCaches = 0x800B799C;
 AudioHeap_InitTemporaryPoolsAndCaches = 0x800B7A58;
 AudioHeap_UpdateReverbs = 0x800B842C;
 AudioHeap_Init = 0x800B86C4;
+note_init_all = 0x800BBD1C;
+init_note_free_list = 0x800BB350;
 
 //seqplayer.c
 init_sequence_player = 0x800BF13C; //defined:true

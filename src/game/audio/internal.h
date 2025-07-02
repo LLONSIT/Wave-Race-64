@@ -303,7 +303,7 @@ struct NotePlaybackState {
                          struct Portamento portamento;
                          struct VibratoState vibratoState;
 };
-struct NoteSubEu {
+typedef struct NoteSubEu {
              volatile u8 enabled : 1;
              u8 needsInit : 1;
              u8 finished : 1;
@@ -327,7 +327,7 @@ struct NoteSubEu {
         s16 *samples;
         struct AudioBankSound *audioBankSound;
     } sound;
-};
+} NoteSubEu;
 typedef struct Note {
                          struct AudioListItem listItem;
                          struct NoteSynthesisState synthesisState;
@@ -356,12 +356,12 @@ struct NoteSynthesisBuffers {
     s16 panSamplesBuffer[0x20];
     s16 dummyResampleState[0x10];
 };
-struct ReverbSettingsEU {
+typedef struct ReverbSettingsEU {
     u8 downsampleRate;
     u8 windowSize;
     u16 gain;
-};
-struct AudioSessionSettingsEU {
+} ReverbSettingsEU;
+typedef struct AudioSessionSettingsEU {
                u32 frequency;
                u8 unk1;
                u8 maxSimultaneousNotes;
@@ -372,9 +372,10 @@ struct AudioSessionSettingsEU {
                u16 unk3;
                u32 persistentSeqMem;
                u32 persistentBankMem;
-                     u32 temporarySeqMem;
-                     u32 temporaryBankMem;
-};
+               u32 temporarySeqMem;
+               u32 temporaryBankMem;
+} AudioSessionSettingsEU;
+
 struct AudioSessionSettings {
              u32 frequency;
              u8 maxSimultaneousNotes;

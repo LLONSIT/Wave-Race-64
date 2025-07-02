@@ -30,7 +30,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/playback/func_800BB300.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/playback/func_800BB350.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/playback/init_note_free_list.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/playback/func_800BB400.s")
 
@@ -56,4 +56,4 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/playback/func_800BBA2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/playback/func_800BBD1C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/playback/note_init_all.s")
