@@ -118,9 +118,9 @@ void AudioHeap_DiscardFont(s32 bankId) {
                 note->parentLayer->enabled = false; // is 0x48, should be 0x44
                 note->parentLayer->finished = true;
             }
-            func_800BAB18(note);
-            func_800BB6DC(&note->listItem);
-            func_800BCFAC(&gNoteFreeLists.disabled, &note->listItem);
+            Audio_NoteDisable(note);
+            Audio_AudioListRemove(&note->listItem);
+            AudioSeq_AudioListPushBack(&gNoteFreeLists.disabled, &note->listItem);
         }
     }
 }

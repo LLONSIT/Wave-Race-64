@@ -93,7 +93,7 @@ segments:
       - [0x6F5D0, c, game/audio/synthesis]
       - [0x71AF0, c, game/audio/audio_heap]
       - [0x734B0, c, game/audio/load]
-      - [0x74D80, c, game/audio/playback]
+      - [0x74D80, c, game/audio/audio_playback]
       - [0x76630, c, game/audio/effects]
       - [0x77080, c, game/audio/seqplayer]
       - [0x79B70, c, game/audio/external]
@@ -264,7 +264,7 @@ segments:
       # AUDIO RODATA
       - [0xA6420, .rodata, game/audio/audio_heap]
       - [0xA6450, .rodata, game/audio/load]
-      - [0xA6460, .rodata, game/audio/playback]
+      - [0xA6460, .rodata, game/audio/audio_playback]
       - [0xA6490, .rodata, game/audio/effects]
       - [0xA64C0, .rodata, game/audio/seqplayer]
       - [0xA6B60, .rodata, game/audio/external]

@@ -1,0 +1,74 @@
+#include "global.h"
+#include "internal.h"
+#include "heap.h"
+#include "wr64audio.h"
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BA580.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BA7E0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BA8AC.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BA8E8.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAA08.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAA84.s")
+
+// Original name: Nas_StopVoice
+void Audio_NoteDisable(struct Note* note) {
+    if (note->noteSubEu.needsInit == true) {
+        note->noteSubEu.needsInit = false;
+    } else {
+        func_800BA580(note, 0.0f, 64, 0);
+    }
+    note->priority = NOTE_PRIORITY_DISABLED;
+    note->parentLayer = NO_LAYER;
+    note->prevParentLayer = NO_LAYER;
+    note->noteSubEu.enabled = false;
+    note->noteSubEu.finished = false;
+}
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAB94.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAF2C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB108.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB128.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB148.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB24C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB2F0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB300.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/init_note_free_list.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB400.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB560.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB69C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_AudioListRemove.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB708.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB7A8.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB8DC.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB910.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB938.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB984.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB9D4.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BBA2C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/note_init_all.s")

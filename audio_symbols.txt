@@ -149,6 +149,11 @@ note_apply_headset_pan_effects = 0x800B6F18;
 
 gSynthesisReverbs = 0x80038110;
 
+// audio_playback.c
+Audio_NoteDisable = 0x800BAB18;
+Audio_AudioListRemove = 0x800BB6DC;
+AudioSeq_AudioListPushBack = 0x800BCFAC;
+
 // Unsorted
 load_wave_samples = 0x800B67EC;
 process_envelope = 0x800B6900;

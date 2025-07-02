@@ -1,6 +1,8 @@
 #ifndef WR64_AUDIO_H
 #define WR64_AUDIO_H
 
+#include "global.h"
+
 #define ADSR_STATE_DISABLED 0
 #define ADSR_STATE_INITIAL 1
 #define ADSR_STATE_START_LOOP 2
@@ -29,6 +31,13 @@
 #define DEFAULT_LEN_1CH 0x140
 #define DEFAULT_LEN_2CH 0x280
 #define DOUBLE_SIZE_ON_64_BIT(size) ((size) * (sizeof(void*) / 4))
+
+#define NOTE_PRIORITY_DISABLED 0
+#define NOTE_PRIORITY_STOPPING 1
+#define NOTE_PRIORITY_MIN 2
+#define NOTE_PRIORITY_DEFAULT 3
+
+#define NO_LAYER ((struct SequenceChannelLayer*) (-1))
 
 typedef struct PoolSplit {
     u32 wantSeq;
@@ -135,5 +144,6 @@ void AudioHeap_Init(void);
 void init_sample_dma_buffers(s32);
 void init_note_free_list(void);
 void note_init_all(void);
+void func_800BA580(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
 
 #endif
