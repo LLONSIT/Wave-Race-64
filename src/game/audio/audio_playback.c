@@ -43,9 +43,19 @@ void Audio_NoteDisable(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB2F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB300.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_InitNoteLists.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/init_note_free_list.s")
+// Original name: Nas_InitChannelList
+void Audio_InitNoteFreeList(void) {
+    s32 i;
+
+    Audio_InitNoteLists(&gNoteFreeLists);
+    for (i = 0; i < gMaxSimultaneousNotes; i++) {
+        gNotes[i].listItem.u.value = &gNotes[i];
+        gNotes[i].listItem.prev = NULL;
+        AudioSeq_AudioListPushBack(&gNoteFreeLists.disabled, &gNotes[i].listItem);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB400.s")
 

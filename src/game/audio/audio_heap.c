@@ -673,7 +673,7 @@ void AudioHeap_Init(void) {
 
     gNotes = AudioHeap_AllocZeroed(&gNotesAndBuffersPool, gMaxSimultaneousNotes * sizeof(Note));
     note_init_all();
-    init_note_free_list();
+    Audio_InitNoteFreeList();
 
     gNoteSubsEu = AudioHeap_AllocZeroed(
         &gNotesAndBuffersPool, (gAudioBufferParameters.updatesPerFrame * gMaxSimultaneousNotes) * sizeof(NoteSubEu));

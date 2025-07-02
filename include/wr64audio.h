@@ -142,7 +142,7 @@ extern NotePool gNoteFreeLists;
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
 void init_sample_dma_buffers(s32);
-void init_note_free_list(void);
+void Audio_InitNoteFreeList(void);
 void note_init_all(void);
 void func_800BA580(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
 

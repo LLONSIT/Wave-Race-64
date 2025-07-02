@@ -129,7 +129,7 @@ AudioHeap_InitTemporaryPoolsAndCaches = 0x800B7A58;
 AudioHeap_UpdateReverbs = 0x800B842C;
 AudioHeap_Init = 0x800B86C4;
 note_init_all = 0x800BBD1C;
-init_note_free_list = 0x800BB350;
+Audio_InitNoteFreeList = 0x800BB350;
 
 //seqplayer.c
 init_sequence_player = 0x800BF13C; //defined:true
@@ -153,6 +153,7 @@ gSynthesisReverbs = 0x80038110;
 Audio_NoteDisable = 0x800BAB18;
 Audio_AudioListRemove = 0x800BB6DC;
 AudioSeq_AudioListPushBack = 0x800BCFAC;
+Audio_InitNoteLists = 0x800BB300;
 
 // Unsorted
 load_wave_samples = 0x800B67EC;
