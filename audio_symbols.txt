@@ -50,6 +50,29 @@ gAiBuffers = 0x80045618;
 
 gAudioResetPresetIdToLoad = 0x8003ECB9;
 gAudioResetStatus = 0x8003ECB8;
+gAudioSessionPool = 0x8003E550;
+gSeqAndBankPool = 0x8003E5A0;
+gPersistentCommonPool = 0x8003E5B0;
+gTemporaryCommonPool = 0x8003E5C0;
+gUnusedLoadedPool = 0x8003E970;
+gNumSynthesisReverbs = 0x80038543;
+gAudioResetFadeOutFramesLeft = 0x8003ECBC;
+gNotes = 0x8003FCC0;
+sSessionPoolSplit = 0x8003EB40;
+gMaxAudioCmds = 0x80045544;
+gTatumsPerBeat = 0x800EE2F0;
+gAudioCmdBuffers = 0x80045560;
+gNoteSubsEu = 0x80038544;
+sTemporaryCommonPoolSplit = 0x8003EB68;
+sPersistentCommonPoolSplit = 0x8003EB58;
+sSeqAndBankPoolSplit = 0x8003EB50;
+gTempoInternalToExternal = 0x8004554C;
+gAudioSessionPresets = 0x800EC884;
+gRightVolRampings = 0x8003B548;
+gLeftVolRampings = 0x80038548;
+gNoteFreeLists = 0x80044760;
+gWaveSamples = 0x800EDC30;
+// Audio_SeqLayerNoteRelease = 0x800EDC30;
 
 // Some linker symbols
 sound_data_ctl_ROM_START = 0x40B530; //defined:true
@@ -84,17 +107,36 @@ preload_sequence = 0x800B9E40; //defined:true
 load_sequence = 0x800B9F3C; //defined:true
 load_sequence_internal = 0x800B9F90; //defined:true
  
-//heap.c
-soundAlloc = 0x800B7760; //defined:true
-alloc_bank_or_seq = 0x800B7B14; //defined:true
-get_bank_or_seq = 0x800B811C; //defined:true
-audio_shut_down_and_reset_step = 0x800B8480; //defined:true
+//audio_heap.c
+AudioHeap_AllocZeroed = 0x800B7760; //defined:true
+AudioHeap_AllocCached = 0x800B7B14; //defined:true
+AudioHeap_SearchRegularCaches = 0x800B811C; //defined:true
+AudioHeap_ResetStep = 0x800B8480; //defined:true
 port_init = 0x800C56F4; //defined:true
-sound_init_main_pools = 0x800B7848; //defined:true
+AudioHeap_InitMainPools = 0x800B7848; //defined:true
+RootNewtonStep = 0x800B72F0;
+KTHRoot = 0x800B7378;
+BuildVolRampingsTBL = 0x800B7450;
+AudioHeap_ResetLoadStatus = 0x800B75BC;
+AudioHeap_DiscardSequence = 0x800B76F0;
+AudioHeap_DiscardFont = 0x800B760C;
+AudioHeap_InitPool = 0x800B77D4;
+AudioHeap_InitPersistentCache = 0x800B77F4;
+AudioHeap_InitTemporaryCache = 0x800B7808;
+AudioHeap_ResetPool = 0x800B7838;
+AudioHeap_InitSessionPools = 0x800B78A4;
+AudioHeap_InitCachePools = 0x800B7920;
+AudioHeap_InitPersistentPoolsAndCaches = 0x800B799C;
+AudioHeap_InitTemporaryPoolsAndCaches = 0x800B7A58;
+AudioHeap_UpdateReverbs = 0x800B842C;
+AudioHeap_Init = 0x800B86C4;
+note_init_all = 0x800BBD1C;
+Audio_InitNoteFreeList = 0x800BB350;
 
 //seqplayer.c
+AudioSeq_AudioListPushBack = 0x800BCFAC;
 init_sequence_player = 0x800BF13C; //defined:true
-sequence_player_disable = 0x800BCEE0; //defined:true
+AudioSeq_SequencePlayerDisable = 0x800BCEE0; //defined:true
 init_sequence_players = 0x800BF1F4; //defined:true
 
 alSeqFileNew = 0x800CA908; //defined:true
@@ -109,6 +151,18 @@ gUseReverb = 0x80038542;
 note_apply_headset_pan_effects = 0x800B6F18;
 
 gSynthesisReverbs = 0x80038110;
+
+// audio_playback.c
+Audio_NoteDisable = 0x800BAB18;
+Audio_AudioListRemove = 0x800BB6DC;
+Audio_InitNoteLists = 0x800BB300;
+Audio_InitNoteList = 0x800BB2F0;
+Audio_BuildSyntheticWave = 0x800BB148;
+Audio_InitSyntheticWave = 0x800BB24C;
+Audio_SeqLayerNoteRelease = 0x800BB128;
+Audio_SeqLayerDecayRelease = 0x800BAF2C;
+Audio_SeqLayerNoteDecay = 0x800BB108;
+Audio_AudioListPushFront = 0x800BB69C;
 
 // Unsorted
 load_wave_samples = 0x800B67EC;

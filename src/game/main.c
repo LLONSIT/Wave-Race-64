@@ -107,7 +107,7 @@ void* main_thread(void* entry) {
         osStartThread(&D_80153EF0);
     }
 
-    while (TRUE) {
+    while (true) {
         osRecvMesg(&D_80154130, &sp4C, 1);
         if (sp4C == (void*) 0x19) {
             osSendMesg(&D_801540E8, (void*) 0x1F, OS_MESG_NOBLOCK);
@@ -186,7 +186,7 @@ void* idle_thread(void* entry) {
     } else {
         osViSetMode(&D_800E8BD0);
     }
-    osViBlack(TRUE);
+    osViBlack(true);
     osViSwapBuffer(D_801542C0[1]);
 
     while ((u32) osViGetCurrentFramebuffer() != (u32) D_801542C0[1]) {
@@ -200,7 +200,7 @@ void* idle_thread(void* entry) {
         ;
     }
 
-    osViBlack(FALSE);
+    osViBlack(false);
     osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON | OS_VI_DIVOT_OFF | OS_VI_GAMMA_DITHER_ON | OS_VI_GAMMA_OFF);
     osCreatePiManager(0x96, &D_801540A0, &D_80154148, 0x40);
     osCreateThread(&D_80153B90, 3, &main_thread, NULL, &D_801521E0, 0x64);
@@ -208,7 +208,7 @@ void* idle_thread(void* entry) {
         osStartThread(&D_80153B90);
     }
     osSetThreadPri(NULL, 0);
-    while (TRUE) {
+    while (true) {
         ;
     }
 }
@@ -228,7 +228,7 @@ void audio_thread(void* entry) {
     static s32 D_800D4630;
     audio_init();
 
-    while (TRUE) {
+    while (true) {
         osRecvMesg(&D_801540E8, &D_801542D0, 1);
         if (D_800D4630 != 0) {
             second_task = D_800D4630;

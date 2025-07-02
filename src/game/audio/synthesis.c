@@ -68,22 +68,30 @@ u64* process_envelope(u64* cmd, struct NoteSubEu* note, struct NoteSynthesisStat
 u64* note_apply_headset_pan_effects(u64* cmd, struct NoteSubEu* noteSubEu, struct NoteSynthesisState* note, s32 bufLen,
                                     s32 flags, s32 leftRight);
 
+// Looks like AudioSynth_InitNextRingBuf (SF64)
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/prepare_reverb_ring_buffer.s")
 
+// Looks like AudioSynth_LoadRingBufferPart (SF64)
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B5064.s")
 
+// Looks like AudioSynth_SaveRingBufferPart (SF64)
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B5114.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B51C4.s")
 
+// Looks like synthesis_execute (SM64), name should be AudioSynth_Update
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B527C.s")
 
+// Looks like AudioSynth_LoadReverbSamples (SF64)
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B5500.s")
 
+// Looks like AudioSynth_SaveReverbSamples (SF64)
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B5858.s")
 
+// Looks like AudioSynth_DoOneAudioUpdate (SF64)
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/synthesis/func_800B59A8.s")
 
+// AudioSynth_ProcessNote
 /* clang-format off */
 u64 *synthesis_process_note(struct Note *note, struct NoteSubEu *noteSubEu, struct NoteSynthesisState *synthesisState, s16 *aiBuf, s32 bufLen, u64 *cmd) {
     s32 pad0[3];
@@ -329,6 +337,7 @@ u64 *synthesis_process_note(struct Note *note, struct NoteSubEu *noteSubEu, stru
     return cmd;
 }
 
+// AudioSynth_LoadWaveSamples
 u64 *load_wave_samples(u64 *cmd, struct NoteSubEu *noteSubEu, struct NoteSynthesisState *synthesisState, s32 nSamplesToLoad) {
     s32 a3;
     s32 repeats;
@@ -350,12 +359,14 @@ u64 *load_wave_samples(u64 *cmd, struct NoteSubEu *noteSubEu, struct NoteSynthes
     return cmd;
 }
 
+// AudioSynth_FinalResample
 u64 *final_resample(u64 *cmd, struct NoteSynthesisState *synthesisState, s32 count, u16 pitch, u16 dmemIn, u32 flags) {
     aSetBuffer(cmd++, /*flags*/ 0, dmemIn, /*dmemout*/ DMEM_ADDR_TEMP, count);
     aResample(cmd++, flags, pitch, VIRTUAL_TO_PHYSICAL2(synthesisState->synthesisBuffers->finalResampleState));
     return cmd;
 }
 
+// AudioSynth_ProcessEnvelope
 u64 *process_envelope(u64 *cmd, struct NoteSubEu *note, struct NoteSynthesisState *synthesisState, s32 nSamples, u16 inBuf, s32 headsetPanSettings, UNUSED u32 flags) {
     UNUSED u8 pad1[20];
     u16 sourceRight;
@@ -474,6 +485,13 @@ u64 *process_envelope(u64 *cmd, struct NoteSubEu *note, struct NoteSynthesisStat
     }
     return cmd;
 }
+
+/**
+ * The Haas Effect gives directionality to sound by applying a small (< 35ms) delay to either the left or right channel.
+ * The delay is small enough that the sound is still perceived as one sound, but the channel that is not delayed will
+ * reach our ear first and give a sense of directionality. The sound is directed towards the opposite side of the delay.
+ */
+// AudioSynth_ApplyHaasEffect
 u64 *note_apply_headset_pan_effects(u64 *cmd, struct NoteSubEu *noteSubEu, struct NoteSynthesisState *note, s32 bufLen, s32 flags, s32 leftRight) {
     u16 dest;
     u16 pitch;

@@ -18,9 +18,9 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BCE18.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/sequence_player_disable.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequencePlayerDisable.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BCFAC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_AudioListPushBack.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BCFEC.s")
 

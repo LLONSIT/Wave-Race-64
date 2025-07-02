@@ -242,13 +242,13 @@ s32 func_80080D20(void) {
         if (var_s1 != D_801C3C58->unk0) {
             if ((func_80087134(D_80192690[var_s1].unk44.x, D_80192690[var_s1].unk44.z) == 1) &&
                 (((D_80192690[D_801C3C58->unk0].unkB90 - D_80192690[var_s1].unkB90) * 1.8f) > 15.0f)) {
-                return TRUE;
+                return true;
             }
             continue;
         }
     }
 
-    return FALSE;
+    return false;
 }
 
 void func_80080E34(void) {
@@ -1885,9 +1885,9 @@ s32 func_80087134(f32 arg0, f32 arg1) {
                       (f32) ((s16*) temp_s0)[16], // unk20
                       (f32) ((s16*) temp_s0)[18], // unk24
                       arg0, arg1) == -1) {
-        return TRUE;
+        return true;
     } else {
-        return FALSE;
+        return false;
     }
 }
 
@@ -1900,7 +1900,7 @@ void func_80087304(void) {
                       D_801C3C50->unk4C, D_801C3C50->unk44 + (256.0f * D_801C3C50->unk5C),
                       D_801C3C50->unk4C + (256.0f * D_801C3C50->unk64));
 
-        if ((D_801C3C50 && TRUE) && TRUE) // FAKE
+        if ((D_801C3C50 && true) && true) // FAKE
         {}
     }
     D_801C3C58->unk70 = 1;
@@ -1992,7 +1992,7 @@ void func_800875B8(s32 arg0, s32 arg1) {
                             if ((D_801C3C50->unk16D4 == 2) && (((f64) D_801C3C50->unk7C) > 0.5)) {
                                 D_801C3C50->unkB52 = 0;
                                 D_801C3C50->unkB53 = 0;
-                                if (TRUE) {} // FAKE
+                                if (true) {} // FAKE
                                 return;
                             }
                             break;
@@ -2088,7 +2088,7 @@ void func_800875B8(s32 arg0, s32 arg1) {
                                     D_801C3C50->unkB53 = 0;
 
                                     // Wtf
-                                    if (TRUE) {}
+                                    if (true) {}
                                     return;
                                 }
                                 break;

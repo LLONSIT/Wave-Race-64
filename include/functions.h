@@ -93,7 +93,6 @@ void func_80087AE8(void);
 void func_80087E70(void);
 void func_80088418(void);
 void play_sound(int sound, signed char arg1);
-void func_800BB108(void);
 void play_sound(int sound, signed char arg1);
 void func_800C538C(s32 arg0, f32 arg1);
 Gfx* func_8008FB74(Gfx* arg0);

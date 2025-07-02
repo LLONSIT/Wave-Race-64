@@ -30,12 +30,12 @@ void Str_Itoa(char* str, s32 num) {
     s16 negative;
 
     len = 0;
-    negative = FALSE;
+    negative = false;
 
     // If num is negative we turn it into positive
     if (num < 0) {
         num = -num;
-        negative = TRUE;
+        negative = true;
     }
 
     do {
@@ -67,12 +67,12 @@ void Str_Itoaw(char* str, s32 num, s32 width) {
     } neg;
 
     len = 0;
-    neg.is_negative = FALSE;
+    neg.is_negative = false;
 
     // If num is negative we turn it into positive
     if (num < 0) {
         num = -num;
-        neg.is_negative = TRUE;
+        neg.is_negative = true;
     }
 
     do {

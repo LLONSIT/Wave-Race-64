@@ -10,12 +10,12 @@
 
 #define IS_BANK_LOAD_COMPLETE(bankId) (gBankLoadStatus[bankId] >= SOUND_LOAD_STATUS_COMPLETE)
 
-struct SoundAllocPool {
+typedef struct SoundAllocPool {
     u8 *start;
     u8 *cur;
     u32 size;
     s32 numAllocatedEntries;
-}; // size = 0x10
+} SoundAllocPool; // size = 0x10
 
 struct SeqOrBankEntry {
     u8 *ptr;
@@ -23,13 +23,13 @@ struct SeqOrBankEntry {
     s32 id; // seqId or bankId
 }; // size = 0xC
 
-struct PersistentPool {
+typedef struct PersistentPool {
     /*0x00*/ u32 numEntries;
     /*0x04*/ struct SoundAllocPool pool;
     /*0x14*/ struct SeqOrBankEntry entries[32];
-}; // size = 0x194
+} PersistentPool; // size = 0x194
 
-struct TemporaryPool {
+typedef struct TemporaryPool {
     /*EU,   SH*/
     /*0x00, 0x00*/ u32 nextSide;
     /*0x04,     */ struct SoundAllocPool pool;
@@ -44,17 +44,17 @@ struct TemporaryPool {
     /*0x20, 0x20   entries[1].ptr */
     /*0x24,        entries[1].size*/
     /*0x28, 0x2A   entries[1].id  */
-}; // size = 0x2C
+} TemporaryPool; // size = 0x2C
 
-struct SoundMultiPool {
+typedef struct SoundMultiPool {
     /*0x000*/ struct PersistentPool persistent;
     /*0x194*/ struct TemporaryPool temporary;
     /*     */ u32 pad2[4];
-}; // size = 0x1D0
+} SoundMultiPool; // size = 0x1D0
 
-void *alloc_bank_or_seq(struct SoundMultiPool *arg0, s32 arg1, s32 size, s32 arg3, s32 id);
-void *soundAlloc(struct SoundAllocPool *pool, u32 size);
-void *get_bank_or_seq(s32 poolIdx, s32 arg1, s32 id);
+void *AudioHeap_AllocCached(struct SoundMultiPool *arg0, s32 arg1, s32 size, s32 arg3, s32 id);
+void *AudioHeap_AllocZeroed(struct SoundAllocPool *pool, u32 size);
+void *AudioHeap_SearchRegularCaches(struct SoundMultiPool *multiPool, s32 arg1, s32 id);
 extern struct SoundMultiPool gSeqLoadedPool;
 extern u8 gSeqLoadStatus[256];
 extern struct SoundAllocPool gAudioInitPool;

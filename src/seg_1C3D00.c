@@ -14,7 +14,7 @@ Gfx* func_1C3D00_802C5800(Gfx* gDisplayListHead) {
         D_801CE63C = 0;
         if (D_800DAB24 == 0x36) {
             D_802C5EF0 = 0;
-            osViBlack(FALSE);
+            osViBlack(false);
             return func_80093C44(gDisplayListHead);
         }
     }

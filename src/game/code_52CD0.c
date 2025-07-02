@@ -137,9 +137,9 @@ s32 func_80098714(f32* arg0, f32 arg1, f32 arg2) {
 
     *arg0 = *arg0 + ((arg1 - *arg0) * arg2);
     if (arg1 == *arg0) {
-        return FALSE;
+        return false;
     }
-    return TRUE;
+    return true;
 }
 
 s32 func_80098774(s16* arg0, s16 arg1, s16 arg2) {

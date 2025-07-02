@@ -2,7 +2,7 @@
 #define INTERNAL_H
 
 struct NotePool;
-struct AudioListItem {
+typedef struct AudioListItem {
     struct AudioListItem *prev;
     struct AudioListItem *next;
     union {
@@ -10,13 +10,13 @@ struct AudioListItem {
         s32 count;
     } u;
     struct NotePool *pool;
-};
-struct NotePool {
+} AudioListItem;
+typedef struct NotePool {
     struct AudioListItem disabled;
     struct AudioListItem decaying;
     struct AudioListItem releasing;
     struct AudioListItem active;
-};
+} NotePool;
 
 struct VibratoState {
                    struct SequenceChannel *seqChannel;
@@ -101,7 +101,7 @@ struct M64ScriptState {
     u8 remLoopIters[4];
     u8 depth;
 };
-struct SequencePlayer {
+typedef struct SequencePlayer {
                             u8 enabled : 1;
                      u8 finished : 1;
                      u8 muted : 1;
@@ -142,7 +142,7 @@ struct SequencePlayer {
                      u8 *bankDmaCurrMemAddr;
                      uintptr_t bankDmaCurrDevAddr;
                      ssize_t bankDmaRemaining;
-};
+} SequencePlayer;
 struct AdsrSettings {
     u8 releaseRate;
     u8 sustain;
@@ -184,12 +184,12 @@ struct ReverbInfo {
     s32 unused;
     s16 *filter;
 };
-struct NoteAttributes {
+typedef struct NoteAttributes {
     u8 reverbVol;
     u8 pan;
     f32 freqScale;
     f32 velocity;
-};
+} NoteAttributes;
 struct SequenceChannel {
                    u8 enabled : 1;
                    u8 finished : 1;
@@ -242,7 +242,7 @@ struct SequenceChannel {
                    struct AdsrSettings adsr;
                    struct NotePool notePool;
 };
-struct SequenceChannelLayer {
+typedef struct SequenceChannelLayer {
                    u8 enabled : 1;
                    u8 finished : 1;
                    u8 stopSomething : 1;
@@ -276,7 +276,7 @@ struct SequenceChannelLayer {
                    struct M64ScriptState scriptState;
                    struct AudioListItem listItem;
     u8 pad2[4];
-};
+} SequenceChannelLayer;
 struct NoteSynthesisState {
              u8 restart;
              u8 sampleDmaIndex;
@@ -303,7 +303,7 @@ struct NotePlaybackState {
                          struct Portamento portamento;
                          struct VibratoState vibratoState;
 };
-struct NoteSubEu {
+typedef struct NoteSubEu {
              volatile u8 enabled : 1;
              u8 needsInit : 1;
              u8 finished : 1;
@@ -327,8 +327,8 @@ struct NoteSubEu {
         s16 *samples;
         struct AudioBankSound *audioBankSound;
     } sound;
-};
-struct Note {
+} NoteSubEu;
+typedef struct Note {
                          struct AudioListItem listItem;
                          struct NoteSynthesisState synthesisState;
     u8 pad0[12];
@@ -347,7 +347,7 @@ struct Note {
                    struct VibratoState vibratoState;
     u8 pad3[8];
                          struct NoteSubEu noteSubEu;
-};
+} Note;
 struct NoteSynthesisBuffers {
     s16 adpcmdecState[0x10];
     s16 finalResampleState[0x10];
@@ -356,12 +356,12 @@ struct NoteSynthesisBuffers {
     s16 panSamplesBuffer[0x20];
     s16 dummyResampleState[0x10];
 };
-struct ReverbSettingsEU {
+typedef struct ReverbSettingsEU {
     u8 downsampleRate;
     u8 windowSize;
     u16 gain;
-};
-struct AudioSessionSettingsEU {
+} ReverbSettingsEU;
+typedef struct AudioSessionSettingsEU {
                u32 frequency;
                u8 unk1;
                u8 maxSimultaneousNotes;
@@ -372,9 +372,10 @@ struct AudioSessionSettingsEU {
                u16 unk3;
                u32 persistentSeqMem;
                u32 persistentBankMem;
-                     u32 temporarySeqMem;
-                     u32 temporaryBankMem;
-};
+               u32 temporarySeqMem;
+               u32 temporaryBankMem;
+} AudioSessionSettingsEU;
+
 struct AudioSessionSettings {
              u32 frequency;
              u8 maxSimultaneousNotes;
@@ -387,7 +388,7 @@ struct AudioSessionSettings {
              u32 temporarySeqMem;
              u32 temporaryBankMem;
 };
-struct AudioBufferParametersEU {
+typedef struct AudioBufferParametersEU {
              s16 presetUnk4;
              u16 frequency;
              u16 aiFrequency;
@@ -401,7 +402,7 @@ struct AudioBufferParametersEU {
              f32 resampleRate;
              f32 updatesPerFrameInv;
              f32 unkUpdatesPerFrameScaled;
-};
+} AudioBufferParametersEU;
 struct EuAudioCmd {
     union {
         struct {
