@@ -37,15 +37,53 @@ void Audio_NoteDisable(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB128.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_BuildSyntheticWave.s")
+s32 Audio_BuildSyntheticWave(struct Note* note, struct SequenceChannelLayer* seqLayer, s32 waveId) {
+    f32 freqScale;
+    f32 ratio;
+    u8 sampleCountIndex;
+
+    if (waveId < 128) {
+        // stubbed_printf("Audio:Wavemem: Bad voiceno (%d)\n", waveId);
+        waveId = 128;
+    }
+
+    freqScale = seqLayer->freqScale;
+    if (seqLayer->portamento.mode != 0 && 0.0f < seqLayer->portamento.extent) {
+        freqScale *= (seqLayer->portamento.extent + 1.0f);
+    }
+
+    if (freqScale < 1.0f) {
+        sampleCountIndex = 0;
+        ratio = 1.0465f;
+    } else if (freqScale < 2.0f) {
+        sampleCountIndex = 1;
+        ratio = 0.52325f;
+    } else if (freqScale < 4.0f) {
+        sampleCountIndex = 2;
+        ratio = 0.26263f;
+    } else {
+        sampleCountIndex = 3;
+        ratio = 0.13081f;
+    }
+
+    seqLayer->freqScale *= ratio;
+    note->waveId = waveId;
+    note->sampleCountIndex = sampleCountIndex;
+
+    note->noteSubEu.sound.samples = &gWaveSamples[waveId - 128][sampleCountIndex * 64];
+
+    return sampleCountIndex;
+}
 
 void Audio_InitSyntheticWave(Note* note, SequenceChannelLayer* seqLayer) {
     s32 sampleCountIndex;
     s32 waveSampleCountIndex;
     s32 waveId = seqLayer->instOrWave;
-    if (waveId == 0xff) {
+
+    if (waveId == 0xFF) {
         waveId = seqLayer->seqChannel->instOrWave;
     }
+
     sampleCountIndex = note->sampleCountIndex;
     waveSampleCountIndex = Audio_BuildSyntheticWave(note, seqLayer, waveId);
     note->synthesisState.samplePosInt =
