@@ -8,7 +8,7 @@
 #define SOUND_LOAD_STATUS_4              4
 #define SOUND_LOAD_STATUS_5              5
 
-#define IS_BANK_LOAD_COMPLETE(bankId) (gFontLoadStatus[bankId] >= SOUND_LOAD_STATUS_COMPLETE)
+#define IS_BANK_LOAD_COMPLETE(bankId) (gBankLoadStatus[bankId] >= SOUND_LOAD_STATUS_COMPLETE)
 
 typedef struct SoundAllocPool {
     u8 *start;
@@ -52,7 +52,7 @@ typedef struct SoundMultiPool {
     /*     */ u32 pad2[4];
 } SoundMultiPool; // size = 0x1D0
 
-void *alloc_bank_or_seq(struct SoundMultiPool *arg0, s32 arg1, s32 size, s32 arg3, s32 id);
+void *AudioHeap_AllocCached(struct SoundMultiPool *arg0, s32 arg1, s32 size, s32 arg3, s32 id);
 void *AudioHeap_AllocZeroed(struct SoundAllocPool *pool, u32 size);
 void *AudioHeap_SearchRegularCaches(struct SoundMultiPool *multiPool, s32 arg1, s32 id);
 extern struct SoundMultiPool gSeqLoadedPool;

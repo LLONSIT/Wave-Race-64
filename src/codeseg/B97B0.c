@@ -113,18 +113,18 @@ void func_801EC830(void) {
     D_801CE64C = 1;
     D_801CE650 = 0;
 
-    var_v1 = FALSE;
+    var_v1 = false;
 
     if (D_801CE608 == 4) {
         if (D_801CE634 == 0x43) {
-            var_v1 = TRUE;
+            var_v1 = true;
         }
     } else if ((D_801CE634 != 0x32) && (D_801CE634 != 0x39)) {
-        var_v1 = TRUE;
+        var_v1 = true;
     }
     if (var_v1) {
         Set_FadeTransition(4, 1, 0);
-        osViBlack(TRUE);
+        osViBlack(true);
     }
     func_801E6A4C(0, 0);
     gCameraPerspective->unk0 = 1;

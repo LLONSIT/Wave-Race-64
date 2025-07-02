@@ -23,7 +23,7 @@ gAlCtlHeader = 0x80045508;
 gBankLoadedPool = 0x8003E7A0;
 gAlTbl = 0x8004550C;
 gCtlEntries = 0x80045518;
-gFontLoadStatus = 0x8003EB78;
+gBankLoadStatus = 0x8003EB78;
 gSeqFileHeader = 0x80045504;
 gSeqLoadedPool = 0x8003E5D0;
 gSeqLoadStatus = 0x8003EBB8;
@@ -106,7 +106,7 @@ load_sequence_internal = 0x800B9F90; //defined:true
  
 //audio_heap.c
 AudioHeap_AllocZeroed = 0x800B7760; //defined:true
-alloc_bank_or_seq = 0x800B7B14; //defined:true
+AudioHeap_AllocCached = 0x800B7B14; //defined:true
 AudioHeap_SearchRegularCaches = 0x800B811C; //defined:true
 AudioHeap_ResetStep = 0x800B8480; //defined:true
 port_init = 0x800C56F4; //defined:true

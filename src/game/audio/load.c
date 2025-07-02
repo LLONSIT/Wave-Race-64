@@ -7,6 +7,7 @@
 #include "internal.h"
 #include "data.h"
 #include "port.h"
+#include "wr64audio.h"
 
 struct SharedDma {
     /*0x0*/ u8* buffer;       // target, points to pre-allocated buffer
@@ -48,7 +49,7 @@ struct CtlEntry {
     struct Drum** drums;
 }; // size = 0xC
 
-struct AudioBufferParameters gAudioBufferParameters;
+extern struct AudioBufferParametersEU gAudioBufferParameters;
 
 extern struct SoundAllocPool gNotesAndBuffersPool;
 extern s32 gMaxSimultaneousNotes;
@@ -61,7 +62,7 @@ extern OSMesgQueue gCurrAudioFrameDmaQueue;
 
 extern struct SoundMultiPool gBankLoadedPool;
 extern struct CtlEntry* gCtlEntries;
-extern u8 gFontLoadStatus[0x40];
+extern u8 gBankLoadStatus[0x40];
 
 ALSeqFile* gSeqFileHeader;
 ALSeqFile* gAlCtlHeader;
@@ -158,7 +159,7 @@ void decrease_sample_dma_ttls(void) {
 }
 
 void* dma_sample_data(uintptr_t devAddr, u32 size, s32 arg2, u8* dmaIndexRef) {
-    s32 hasDma = FALSE;
+    s32 hasDma = false;
     struct SharedDma* dma;
     uintptr_t dmaDevAddr;
     u32 transfer;
@@ -195,7 +196,7 @@ void* dma_sample_data(uintptr_t devAddr, u32 size, s32 arg2, u8* dmaIndexRef) {
             dmaIndex = sSampleDmaReuseQueue2[sSampleDmaReuseQueueTail2];
             sSampleDmaReuseQueueTail2++;
             dma = sSampleDmas + dmaIndex;
-            hasDma = TRUE;
+            hasDma = true;
         }
     } else {
         dma = sSampleDmas;
@@ -207,7 +208,7 @@ void* dma_sample_data(uintptr_t devAddr, u32 size, s32 arg2, u8* dmaIndexRef) {
                 // Move the DMA out of the reuse queue, by swapping it with the
                 // tail, and then incrementing the tail.
                 if (dma->reuseIndex != sSampleDmaReuseQueueTail1) {
-                    if (TRUE) {} // FAKE MATCH
+                    if (true) {} // FAKE MATCH
                     sSampleDmaReuseQueue1[dma->reuseIndex] = sSampleDmaReuseQueue1[sSampleDmaReuseQueueTail1];
                     sSampleDmas[sSampleDmaReuseQueue1[sSampleDmaReuseQueueTail1]].reuseIndex = dma->reuseIndex;
                 }
@@ -223,7 +224,7 @@ void* dma_sample_data(uintptr_t devAddr, u32 size, s32 arg2, u8* dmaIndexRef) {
         // be empty, since TTL 2 is so small.
         dmaIndex = sSampleDmaReuseQueue1[sSampleDmaReuseQueueTail1++];
         dma = sSampleDmas + dmaIndex;
-        hasDma = TRUE;
+        hasDma = true;
     }
 
     transfer = dma->bufSize;
@@ -418,7 +419,7 @@ struct AudioBank* bank_load_immediate(s32 bankId, s32 arg1) {
     alloc = ALIGN16(alloc);
     alloc -= 0x10;
     ctlData = gAlCtlHeader->seqArray[bankId].offset;
-    ret = alloc_bank_or_seq(&gBankLoadedPool, 1, alloc, arg1, bankId);
+    ret = AudioHeap_AllocCached(&gBankLoadedPool, 1, alloc, arg1, bankId);
     if (ret == NULL) {
         return NULL;
     }
@@ -432,7 +433,7 @@ struct AudioBank* bank_load_immediate(s32 bankId, s32 arg1) {
     gCtlEntries[bankId].numDrums = (u8) numDrums;
     gCtlEntries[bankId].instruments = ret->instruments;
     gCtlEntries[bankId].drums = ret->drums;
-    gFontLoadStatus[bankId] = SOUND_LOAD_STATUS_COMPLETE;
+    gBankLoadStatus[bankId] = SOUND_LOAD_STATUS_COMPLETE;
     return ret;
 }
 
@@ -451,7 +452,7 @@ struct AudioBank* bank_load_async(s32 bankId, s32 arg1, struct SequencePlayer* s
     alloc = ALIGN16(alloc);
     alloc -= 0x10;
     ctlData = gAlCtlHeader->seqArray[bankId].offset;
-    bank = alloc_bank_or_seq(&gBankLoadedPool, 1, alloc, arg1, bankId);
+    bank = AudioHeap_AllocCached(&gBankLoadedPool, 1, alloc, arg1, bankId);
     if (bank == NULL) {
         return NULL;
     }
@@ -466,14 +467,14 @@ struct AudioBank* bank_load_async(s32 bankId, s32 arg1, struct SequencePlayer* s
     seqPlayer->bankDmaCurrMemAddr = (u8*) bank;
     seqPlayer->bankDmaCurrDevAddr = (uintptr_t) (ctlData + 0x10);
     seqPlayer->bankDmaRemaining = alloc;
-    if (TRUE) {}
+    if (true) {}
 
     mesgQueue = &seqPlayer->bankDmaMesgQueue;
     osCreateMesgQueue(mesgQueue, &seqPlayer->bankDmaMesg, 1);
     seqPlayer->bankDmaInProgress = 1;
     audio_dma_partial_copy_async(&seqPlayer->bankDmaCurrDevAddr, &seqPlayer->bankDmaCurrMemAddr,
                                  &seqPlayer->bankDmaRemaining, mesgQueue, &seqPlayer->bankDmaIoMesg);
-    gFontLoadStatus[bankId] = 1;
+    gBankLoadStatus[bankId] = 1;
     return bank;
 }
 
@@ -485,7 +486,7 @@ void* sequence_dma_immediate(s32 seqId, s32 arg1) {
     seqLength = gSeqFileHeader->seqArray[seqId].len + 0xf;
     seqLength = ALIGN16(seqLength);
     seqData = gSeqFileHeader->seqArray[seqId].offset;
-    ptr = alloc_bank_or_seq(&gSeqLoadedPool, 1, seqLength, arg1, seqId);
+    ptr = AudioHeap_AllocCached(&gSeqLoadedPool, 1, seqLength, arg1, seqId);
     if (ptr == NULL) {
         return NULL;
     }
@@ -507,7 +508,7 @@ void* sequence_dma_async(s32 seqId, s32 arg1, struct SequencePlayer* seqPlayer) 
     seqLength = gSeqFileHeader->seqArray[seqId].len + 0xf;
     seqLength = (((seqLength) + 0xF) & ~0xF);
     seqData = gSeqFileHeader->seqArray[seqId].offset;
-    seq = alloc_bank_or_seq(&gSeqLoadedPool, 1, seqLength, arg1, seqId);
+    seq = AudioHeap_AllocCached(&gSeqLoadedPool, 1, seqLength, arg1, seqId);
     if (seq == NULL) {
 #ifdef NEEDS_RODATA
         PRINTF("Heap Overflow Error\n");
@@ -542,7 +543,7 @@ u8 get_missing_bank(u32 seqId, s32* nonNullCount, s32* nullCount) {
     offset = ((u16*) gAlBankSets)[seqId];
     for (i = gAlBankSets[offset++], ret = 0; i != 0; i--) {
         bankId = gAlBankSets[offset++];
-        if ((gFontLoadStatus[bankId] >= 2) == 1) {
+        if ((gBankLoadStatus[bankId] >= 2) == 1) {
             temp = AudioHeap_SearchRegularCaches(&gBankLoadedPool, 2, bankId);
         } else {
             temp = (void*) 0;
@@ -565,7 +566,7 @@ struct AudioBank* load_banks_immediate(s32 seqId, u8* outDefaultBank) {
     offset = ((u16*) gAlBankSets)[seqId];
     for (i = gAlBankSets[offset++]; i != 0; i--) {
         bankId = gAlBankSets[offset++];
-        if ((gFontLoadStatus[bankId] >= 2) == 1) {
+        if ((gBankLoadStatus[bankId] >= 2) == 1) {
             bank = AudioHeap_SearchRegularCaches(&gBankLoadedPool, 2, bankId);
         } else {
             bank = NULL;
@@ -593,7 +594,7 @@ void preload_sequence(u32 seqId, u8 preloadMask) {
 
     if (preloadMask & PRELOAD_SEQUENCE) {
         // @bug should be IS_SEQ_LOAD_COMPLETE
-        if ((gFontLoadStatus[seqId] >= 2) == TRUE) {
+        if ((gBankLoadStatus[seqId] >= 2) == true) {
             // eu_stubbed_printf_1("SEQ  %d ALREADY CACHED\n", seqId);
             sequenceData = AudioHeap_SearchRegularCaches(&gSeqLoadedPool, 2, seqId);
         } else {

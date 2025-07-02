@@ -94,7 +94,7 @@ typedef struct SynthesisReverb {
 // #endif
 } SynthesisReverb; // 0xCC <= size <= 0x100
 
-extern u8 gFontLoadStatus[64];
+extern u8 gBankLoadStatus[64];
 extern u8 gSeqLoadStatus[256];
 extern SequencePlayer gSequencePlayers[4];
 extern f32 gLeftVolRampings[3][1024];

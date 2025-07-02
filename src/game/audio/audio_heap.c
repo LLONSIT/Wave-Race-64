@@ -92,8 +92,8 @@ void BuildVolRampingsTBL(s32 unused, s32 len) {
 void AudioHeap_ResetLoadStatus(void) {
     s32 i;
 
-    for (i = 0; i < ARRAY_COUNT(gFontLoadStatus); i++) {
-        gFontLoadStatus[i] = 0;
+    for (i = 0; i < ARRAY_COUNT(gBankLoadStatus); i++) {
+        gBankLoadStatus[i] = 0;
     }
 
     for (i = 0; i < ARRAY_COUNT(gSeqLoadStatus); i++) {
@@ -101,7 +101,7 @@ void AudioHeap_ResetLoadStatus(void) {
     }
 }
 
-// looks like discard_bank from sm64, but maybe a bit different
+// looks like AudioHeap_DiscardFont from sm64, but maybe a bit different
 // Original name: Nas_ForceStopChannel
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/AudioHeap_DiscardFont.s")
 
@@ -220,7 +220,219 @@ void AudioHeap_InitTemporaryPoolsAndCaches(PoolSplit* split) {
 }
 
 /// Original name: Nas_SzHeapAlloc
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/alloc_bank_or_seq.s")
+void* AudioHeap_AllocCached(SoundMultiPool* arg0, s32 arg1, s32 size, s32 arg3, s32 id) {
+    struct TemporaryPool* tp;
+    struct SoundAllocPool* pool;
+    void* ret;
+    u16 _firstVal;
+    u16 _secondVal;
+    u16 firstVal;
+    u16 secondVal;
+    s32 var_v1_2;
+    u8* table;
+    u8 isSound;
+    if (arg3 == 0) {
+        tp = &arg0->temporary;
+        if (arg0 == (&gSeqLoadedPool)) {
+            table = gSeqLoadStatus;
+            isSound = 0;
+        } else {
+            firstVal += 0;
+            if (arg0 == (&gBankLoadedPool)) {
+                isSound = 1;
+                table = gBankLoadStatus;
+            }
+        }
+        if (tp->entries[0].id == (-1)) {
+            firstVal = 0;
+        } else {
+            firstVal = table[tp->entries[0].id];
+        }
+        if (tp->entries[1].id == (-1)) {
+            secondVal = 0;
+        } else {
+            secondVal = table[tp->entries[1].id];
+        }
+        if (isSound == 1) {
+            if (firstVal == 4) {
+                for (var_v1_2 = 0; var_v1_2 < gMaxSimultaneousNotes; var_v1_2++) {
+                    if ((gNotes[var_v1_2].noteSubEu.bankId == tp->entries[0].id)) {
+                        break;
+                    }
+                }
+
+                if (var_v1_2 == gMaxSimultaneousNotes) {
+                    gBankLoadStatus[tp->entries[0].id] = 3;
+                    firstVal = 3;
+                }
+            }
+            if (secondVal == 4) {
+                for (var_v1_2 = 0; var_v1_2 < gMaxSimultaneousNotes; var_v1_2++) {
+                    if ((gNotes[var_v1_2].noteSubEu.bankId == tp->entries[1].id)) {
+                        break;
+                    }
+                }
+
+                if (var_v1_2 == gMaxSimultaneousNotes) {
+                    gBankLoadStatus[tp->entries[1].id] = 3;
+                    secondVal = 3;
+                }
+            }
+        }
+        if (firstVal == 0) {
+            tp->nextSide = 0;
+        } else if (secondVal == 0) {
+            tp->nextSide = 1;
+        } else if ((firstVal == 3) && (secondVal == 3)) {
+
+        } else if (firstVal == 3) {
+            tp->nextSide = 0;
+        } else if (secondVal == 3) {
+            tp->nextSide = 1;
+        } else {
+            if (isSound == 0) {
+                if (firstVal == 2) {
+                    for (var_v1_2 = 0; var_v1_2 < ARRAY_COUNT(gSequencePlayers); var_v1_2++) {
+                        if (gSequencePlayers[var_v1_2].enabled &&
+                            (gSequencePlayers[var_v1_2].seqId == tp->entries[0].id)) {
+                            break;
+                        }
+                    }
+
+                    if (var_v1_2 == ARRAY_COUNT(gSequencePlayers)) {
+                        tp->nextSide = 0;
+                        goto done;
+                    }
+                }
+                if (secondVal == 2) {
+                    for (var_v1_2 = 0; var_v1_2 < ARRAY_COUNT(gSequencePlayers); var_v1_2++) {
+                        if (gSequencePlayers[var_v1_2].enabled &&
+                            (gSequencePlayers[var_v1_2].seqId == tp->entries[1].id)) {
+                            break;
+                        }
+                    }
+
+                    if (var_v1_2 == ARRAY_COUNT(gSequencePlayers)) {
+                        tp->nextSide = 1;
+                        goto done;
+                    }
+                }
+            } else if (isSound == 1) {
+                if (firstVal == 2) {
+                    for (var_v1_2 = 0; var_v1_2 < gMaxSimultaneousNotes; var_v1_2++) {
+                        if ((gNotes[var_v1_2].noteSubEu.bankId == tp->entries[0].id)) {
+                            break;
+                        }
+                    }
+
+                    if (var_v1_2 == gMaxSimultaneousNotes) {
+                        tp->nextSide = 0;
+                        goto done;
+                    }
+                }
+                if (secondVal == 2) {
+                    for (var_v1_2 = 0; var_v1_2 < gMaxSimultaneousNotes; var_v1_2++) {
+                        if ((gNotes[var_v1_2].noteSubEu.bankId == tp->entries[1].id)) {
+                            break;
+                        }
+                    }
+
+                    if (var_v1_2 == gMaxSimultaneousNotes) {
+                        tp->nextSide = 1;
+                        goto done;
+                    }
+                }
+            }
+
+            if (firstVal != 1) {
+                tp->nextSide = 0;
+                goto done;
+            }
+
+            if (secondVal != 1) {
+                tp->nextSide = 1;
+                goto done;
+            }
+
+            return NULL;
+        }
+    done:
+        pool = &arg0->temporary.pool;
+        if (tp->entries[tp->nextSide].id != ((s8) (-1))) {
+            table[tp->entries[tp->nextSide].id] = 0;
+            if (isSound == true) {
+                AudioHeap_DiscardFont(tp->entries[tp->nextSide].id);
+            }
+        }
+        switch (tp->nextSide) {
+            case 0:
+                tp->entries[0].ptr = pool->start;
+                tp->entries[0].id = id;
+                tp->entries[0].size = (u32) size;
+                pool->cur = pool->start + size;
+                if (tp->entries[1].ptr < pool->cur) {
+                    table[tp->entries[1].id] = 0;
+                    switch (isSound) {
+                        case 0:
+                            AudioHeap_DiscardSequence((s32) tp->entries[1].id);
+                            break;
+
+                        case 1:
+                            AudioHeap_DiscardFont((s32) tp->entries[1].id);
+                            break;
+                    }
+
+                    tp->entries[1].id = -1;
+                    tp->entries[1].ptr = pool->start + pool->size;
+                }
+                ret = tp->entries[0].ptr;
+                break;
+
+            case 1:
+                tp->entries[1].ptr = ((pool->start + pool->size) - size) - 0x10;
+                tp->entries[1].id = id;
+                tp->entries[1].size = (u32) size;
+                if (((u32) tp->entries[1].ptr) < ((u32) pool->cur)) {
+                    table[tp->entries[0].id] = 0;
+                    switch (isSound) {
+                        case 0:
+                            AudioHeap_DiscardSequence((s32) tp->entries[0].id);
+                            break;
+
+                        case 1:
+                            AudioHeap_DiscardFont((s32) tp->entries[0].id);
+                            break;
+                    }
+
+                    tp->entries[0].id = -1;
+                    pool->cur = pool->start;
+                }
+                ret = tp->entries[1].ptr;
+                break;
+
+            default:
+                return NULL;
+        }
+
+        tp->nextSide ^= 1;
+        return ret;
+    }
+    ret = AudioHeap_AllocZeroed(&arg0->persistent.pool, arg1 * size);
+    arg0->persistent.entries[arg0->persistent.numEntries].ptr = ret;
+    if (ret == NULL) {
+        switch (arg3) {
+            case 2:
+                return AudioHeap_AllocCached(arg0, arg1, size, 0, id);
+
+            case 1:
+
+                return NULL;
+        }
+    }
+    arg0->persistent.entries[arg0->persistent.numEntries].id = id;
+    arg0->persistent.entries[arg0->persistent.numEntries].size = (u32) size;
+    return arg0->persistent.entries[arg0->persistent.numEntries++].ptr;
+}
 
 /// Original name: __Nas_SzCacheCheck_Inner
 void* AudioHeap_SearchRegularCaches(SoundMultiPool* multiPool, s32 arg1, s32 id) {
