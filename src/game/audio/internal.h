@@ -11,12 +11,12 @@ struct AudioListItem {
     } u;
     struct NotePool *pool;
 };
-struct NotePool {
+typedef struct NotePool {
     struct AudioListItem disabled;
     struct AudioListItem decaying;
     struct AudioListItem releasing;
     struct AudioListItem active;
-};
+} NotePool;
 
 struct VibratoState {
                    struct SequenceChannel *seqChannel;
@@ -388,7 +388,7 @@ struct AudioSessionSettings {
              u32 temporarySeqMem;
              u32 temporaryBankMem;
 };
-struct AudioBufferParametersEU {
+typedef struct AudioBufferParametersEU {
              s16 presetUnk4;
              u16 frequency;
              u16 aiFrequency;
@@ -402,7 +402,7 @@ struct AudioBufferParametersEU {
              f32 resampleRate;
              f32 updatesPerFrameInv;
              f32 unkUpdatesPerFrameScaled;
-};
+} AudioBufferParametersEU;
 struct EuAudioCmd {
     union {
         struct {

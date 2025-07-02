@@ -70,6 +70,7 @@ gTempoInternalToExternal = 0x8004554C;
 gAudioSessionPresets = 0x800EC884;
 gRightVolRampings = 0x8003B548;
 gLeftVolRampings = 0x80038548;
+gNoteFreeLists = 0x80044760;
 
 // Some linker symbols
 sound_data_ctl_ROM_START = 0x40B530; //defined:true

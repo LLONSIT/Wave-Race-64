@@ -101,9 +101,29 @@ void AudioHeap_ResetLoadStatus(void) {
     }
 }
 
-// looks like AudioHeap_DiscardFont from sm64, but maybe a bit different
 // Original name: Nas_ForceStopChannel
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/AudioHeap_DiscardFont.s")
+void AudioHeap_DiscardFont(s32 bankId) {
+    s32 i;
+
+    for (i = 0; i < gMaxSimultaneousNotes; i++) {
+        Note* note = &gNotes[i];
+
+        if (note->noteSubEu.bankId == bankId) {
+            // (These prints are unclear. Arguments are picked semi-randomly.)
+            // eu_stubbed_printf_1("Warning:Kill Note  %x \n", i);
+            if (note->priority >= 2) {
+                // eu_stubbed_printf_3("Kill Voice %d (ID %d) %d\n", note->waveId,
+                //         bankId, note->priority);
+                // eu_stubbed_printf_0("Warning: Running Sequence's data disappear!\n");
+                note->parentLayer->enabled = false; // is 0x48, should be 0x44
+                note->parentLayer->finished = true;
+            }
+            func_800BAB18(note);
+            func_800BB6DC(&note->listItem);
+            func_800BCFAC(&gNoteFreeLists.disabled, &note->listItem);
+        }
+    }
+}
 
 // Original name: Nas_ForceStopSeq
 void AudioHeap_DiscardSequence(s32 seqId) {
