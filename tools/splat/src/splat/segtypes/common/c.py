@@ -36,6 +36,8 @@ class CommonSegC(CommonSegCodeSubsegment):
 
         self.file_extension = "c"
 
+        self.use_gp_rel_macro = options.opts.use_gp_rel_macro_nonmatching
+
     @staticmethod
     def strip_c_comments(text):
         def replacer(match):
@@ -149,9 +151,12 @@ class CommonSegC(CommonSegCodeSubsegment):
             self.scan_code(rom_bytes)
 
     def split(self, rom_bytes: bytes):
+        if self.is_auto_segment:
+            return
+
         if self.rom_start != self.rom_end:
             asm_out_dir = options.opts.nonmatchings_path / self.dir
-            asm_out_dir.mkdir(parents=True, exist_ok=True)
+            matching_asm_out_dir = options.opts.matchings_path / self.dir
 
             self.print_file_boundaries()
 
@@ -169,21 +174,39 @@ class CommonSegC(CommonSegCodeSubsegment):
                     if rodata_sibling is None:
                         continue
 
+                    if rodata_sibling.is_generated:
+                        continue
+
                     assert isinstance(
                         rodata_sibling, CommonSegRodata
-                    ), rodata_sibling.type
+                    ), f"{rodata_sibling}, {rodata_sibling.type}"
+
+                    if not rodata_sibling.type.startswith("."):
+                        # Emit an error if we try to migrate the rodata symbols to functions if the rodata section is not prefixed with a dot
+                        # (ie `- [0x1234, rodata, some_file]` instead of `- [0x1234, .rodata, some_file]`).
+                        # Not prefixing the type with a dot would produce splat to both disassemble the rodata section to its own assembly file
+                        # and to migrate the symbols to the corresponding functions, generating link-time errors and many headaches.
+                        log.write(
+                            f"\nProblem detected with the `{rodata_sibling.type}` section of the `{rodata_sibling.name}` file during rodata migration.",
+                            status="warn",
+                        )
+                        log.write(
+                            f"\t The `{rodata_sibling.type}` section was not prefixed with a dot, which is required for the rodata migration feature to work properly and avoid build errors due to duplicated symbols at link-time."
+                        )
+                        log.error(
+                            f"\t To fix this, please prefix the section type with a dot (like `.{rodata_sibling.type}`)."
+                        )
 
                     rodata_section_type = (
                         rodata_sibling.get_linker_section_linksection()
                     )
 
-                    # rodata_sibling.spim_section may be None if said sibling is an auto inserted one
-                    if rodata_sibling.spim_section is not None:
-                        assert isinstance(
-                            rodata_sibling.spim_section.get_section(),
-                            spimdisasm.mips.sections.SectionRodata,
-                        )
-                        rodata_spim_segment = rodata_sibling.spim_section.get_section()
+                    assert rodata_sibling.spim_section is not None, f"{rodata_sibling}"
+                    assert isinstance(
+                        rodata_sibling.spim_section.get_section(),
+                        spimdisasm.mips.sections.SectionRodata,
+                    )
+                    rodata_spim_segment = rodata_sibling.spim_section.get_section()
 
                     # Stop searching
                     break
@@ -226,7 +249,17 @@ class CommonSegC(CommonSegCodeSubsegment):
                         )
                         assert func_sym is not None
 
-                        self.create_c_asm_file(entry, asm_out_dir, func_sym)
+                        if (
+                            entry.function.getName() not in self.global_asm_funcs
+                            and options.opts.disassemble_all
+                            and not is_new_c_file
+                        ):
+                            self.create_c_asm_file(
+                                entry, matching_asm_out_dir, func_sym
+                            )
+                        else:
+                            self.create_c_asm_file(entry, asm_out_dir, func_sym)
+
                 else:
                     for spim_rodata_sym in entry.rodataSyms:
                         if (
@@ -242,6 +275,14 @@ class CommonSegC(CommonSegCodeSubsegment):
                             self.create_unmigrated_rodata_file(
                                 spim_rodata_sym, asm_out_dir, rodata_sym
                             )
+
+            if options.opts.make_full_disasm_for_code:
+                # Disable gpRelHack since this file is expected to be built with modern gas
+                section = self.spim_section.get_section()
+                old_value = section.getGpRelHack()
+                section.setGpRelHack(False)
+                self.split_as_asmtu_file(self.asm_out_path())
+                section.setGpRelHack(old_value)
 
     def get_c_preamble(self):
         ret = []
@@ -263,7 +304,7 @@ class CommonSegC(CommonSegCodeSubsegment):
 
             if rodata_sym.vramEnd != next_rodata_sym.vram:
                 log.write(
-                    f"\nA gap was detected in migrated rodata symbols!", status="warn"
+                    "\nA gap was detected in migrated rodata symbols!", status="warn"
                 )
                 log.write(
                     f"\t In function '{func.getName()}' (0x{func.vram:08X}), gap detected between '{rodata_sym.getName()}' (0x{rodata_sym.vram:08X}) and '{next_rodata_sym.getName()}' (0x{next_rodata_sym.vram:08X})"
@@ -272,7 +313,7 @@ class CommonSegC(CommonSegCodeSubsegment):
                     f"\t The address of the missing rodata symbol is 0x{rodata_sym.vramEnd:08X}"
                 )
                 log.write(
-                    f"\t Try to force the migration of that symbol with `force_migration:True` in the symbol_addrs.txt file; or avoid the migration of symbols around this address with `force_not_migration:True`"
+                    "\t Try to force the migration of that symbol with `force_migration:True` in the symbol_addrs.txt file; or avoid the migration of symbols around this address with `force_not_migration:True`"
                 )
 
     def create_c_asm_file(
@@ -328,8 +369,6 @@ class CommonSegC(CommonSegCodeSubsegment):
         outpath.parent.mkdir(parents=True, exist_ok=True)
 
         with outpath.open("w", newline="\n") as f:
-            if options.opts.include_macro_inc:
-                f.write('.include "macro.inc"\n\n')
             preamble = options.opts.generated_s_preamble
             if preamble:
                 f.write(preamble + "\n")
@@ -349,13 +388,16 @@ class CommonSegC(CommonSegCodeSubsegment):
             # IDO uses the asm processor to embeed assembly, and it doesn't require a special directive to include symbols
             asm_outpath = asm_out_dir / self.name / f"{sym.filename}.s"
             rel_asm_outpath = os.path.relpath(asm_outpath, options.opts.base_path)
-            return f'#pragma GLOBAL_ASM("{rel_asm_outpath}")'
+            final_path = Path(rel_asm_outpath).as_posix()
+            return f'#pragma GLOBAL_ASM("{final_path}")'
 
         if options.opts.use_legacy_include_asm:
             rel_asm_out_dir = asm_out_dir.relative_to(options.opts.nonmatchings_path)
-            return f'{macro_name}(const s32, "{rel_asm_out_dir / self.name}", {sym.filename});'
+            final_path = (rel_asm_out_dir / self.name).as_posix()
+            return f'{macro_name}(const s32, "{final_path}", {sym.filename});'
 
-        return f'{macro_name}("{asm_out_dir / self.name}", {sym.filename});'
+        final_path = (asm_out_dir / self.name).as_posix()
+        return f'{macro_name}("{final_path}", {sym.filename});'
 
     def get_c_lines_for_function(
         self,
@@ -417,7 +459,7 @@ class CommonSegC(CommonSegCodeSubsegment):
                     c_lines += self.get_c_lines_for_rodata_sym(rodata_sym, asm_out_dir)
 
         c_path.parent.mkdir(parents=True, exist_ok=True)
-        with c_path.open("w") as f:
+        with c_path.open("w", newline=options.opts.c_newline) as f:
             f.write("\n".join(c_lines))
         log.write(f"Wrote {self.name} to {c_path}")
 
@@ -441,12 +483,12 @@ class CommonSegC(CommonSegCodeSubsegment):
 
         dep_path = build_path / c_path.with_suffix(".asmproc.d")
         dep_path.parent.mkdir(parents=True, exist_ok=True)
-        with dep_path.open("w") as f:
+        with dep_path.open("w", newline=options.opts.c_newline) as f:
             if options.opts.use_o_as_suffix:
                 o_path = build_path / c_path.with_suffix(".o")
             else:
                 o_path = build_path / c_path.with_suffix(c_path.suffix + ".o")
-            f.write(f"{o_path}:")
+            f.write(f"{o_path.as_posix()}:")
             depend_list = []
             for entry in symbols_entries:
                 if entry.function is not None:
@@ -454,18 +496,22 @@ class CommonSegC(CommonSegCodeSubsegment):
 
                     if func_name in self.global_asm_funcs or is_new_c_file:
                         outpath = asm_out_dir / self.name / (func_name + ".s")
+                        outpath.parent.mkdir(parents=True, exist_ok=True)
+
                         depend_list.append(outpath)
-                        f.write(f" \\\n    {outpath}")
+                        f.write(f" \\\n    {outpath.as_posix()}")
                 else:
                     for rodata_sym in entry.rodataSyms:
                         rodata_name = rodata_sym.getName()
 
                         if rodata_name in self.global_asm_rodata_syms or is_new_c_file:
                             outpath = asm_out_dir / self.name / (rodata_name + ".s")
+                            outpath.parent.mkdir(parents=True, exist_ok=True)
+
                             depend_list.append(outpath)
-                            f.write(f" \\\n    {outpath}")
+                            f.write(f" \\\n    {outpath.as_posix()}")
 
             f.write("\n")
 
             for depend_file in depend_list:
-                f.write(f"{depend_file}:\n")
+                f.write(f"{depend_file.as_posix()}:\n")

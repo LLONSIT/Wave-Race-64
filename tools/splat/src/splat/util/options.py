@@ -41,6 +41,10 @@ class SplatOpts:
     gp: Optional[int]
     # Checks and errors if there are any non consecutive segment types
     check_consecutive_segment_types: bool
+    # Disable checks on `platform` option.
+    is_unsupported_platform: bool
+    # Allows to take precedence over the splat builtin platform segments via splat extension.
+    allow_segment_overrides: bool
 
     # Paths
     asset_path: Path
@@ -61,6 +65,8 @@ class SplatOpts:
     data_path: Path
     # Determines the path to the asm nonmatchings directory
     nonmatchings_path: Path
+    # Determines the path to the asm matchings directory (used alongside `disassemble_all` to organize matching functions from nonmatching functions)
+    matchings_path: Path
     # Determines the path to the cache file (used when supplied --use-cache via the CLI)
     cache_path: Path
     # Tells splat to consider `hasm` files to be relative to `src_path` instead of `asm_path`.
@@ -90,10 +96,10 @@ class SplatOpts:
     # Linker script
     # Determines the default subalign value to be specified in the generated linker script
     subalign: Optional[int]
-    # The following option determines whether to automatically configure the linker script to link against
-    # specified sections for all "base" (asm/c) files when the yaml doesn't have manual configurations
-    # for these sections.
-    auto_all_sections: List[str]
+    # Determines whether to emit the subalign directive in the generated linker script
+    emit_subalign: bool
+    # The following option determines a list of sections for which automatic linker script entries should be added
+    auto_link_sections: List[str]
     # Determines the desired path to the linker script that splat will generate
     ld_script_path: Path
     # Determines the desired path to the linker symbol header,
@@ -131,6 +137,8 @@ class SplatOpts:
     ld_fill_value: Optional[int]
     # Allows to control if `bss` sections (and derivatived sections) will be put on a `NOLOAD` segment on the generated linker script or not.
     ld_bss_is_noload: bool
+    # Aligns the start of the segment to the given value
+    ld_align_segment_start: Optional[int]
     # Allows to toggle aligning the `*_VRAM_END` linker symbol for each segment.
     ld_align_segment_vram_end: bool
     # Allows to toggle aligning the `*_END` linker symbol for each section of each section.
@@ -179,10 +187,10 @@ class SplatOpts:
     asm_data_macro: str
     # Determines the macro used at the end of a function, such as endlabel or .end
     asm_end_label: str
+    # Determines the macro used to declare ehtable labels in asm files
+    asm_ehtable_label_macro: str
     # Toggles the .size directive emitted by the disassembler
     asm_emit_size_directive: Optional[bool]
-    # Determines including the macro.inc file on non-migrated rodata variables
-    include_macro_inc: bool
     # Determines the number of characters to left align before the TODO finish documenting
     mnemonic_ljust: int
     # Determines whether to pad the rom address
@@ -216,6 +224,22 @@ class SplatOpts:
     detect_redundant_function_end: bool
     # Don't skip disassembling already matched functions and migrated sections
     disassemble_all: bool
+    # Emit a full `.s` file for each `c`/`cpp` segment besides the generated `nonmatchings` individual functions
+    make_full_disasm_for_code: bool
+    # Allow specifying that the global memory range may be larger than what was automatically detected.
+    # Useful for projects where splat is used in multiple individual files, meaning the expected global segment may not be properly detected because each instance of splat can't see the info from other files.
+    global_vram_start: Optional[int]
+    global_vram_end: Optional[int]
+    # For `c` segments (functions under the nonmatchings folder).
+    # If True then use the `%gp_rel` explicit relocation parameter on instructions that use the $gp register,
+    # otherwise strip the `%gp_rel` parameter entirely and convert those instructions into macro instructions that may not assemble to the original
+    # bytes. In the latter case, it is the user's responsability to provide the symbol's information to the assembler so it can assemble the
+    # instruction with the proper relocation.
+    use_gp_rel_macro_nonmatching: bool
+    # Does the same as `use_gp_rel_macro_nonmatching`, except it is only applied to `asm` and `hasm` segments.
+    use_gp_rel_macro: bool
+    # Allows emitting suggestions for where the rodata may start by examining the data section.
+    suggestion_rodata_section_start: bool
 
     ################################################################################
     # N64-specific options
@@ -326,19 +350,26 @@ class OptParser:
 
 def _parse_yaml(
     yaml: Dict,
-    config_paths: List[str],
+    config_paths: List[Path],
     modes: List[str],
     verbose: bool = False,
     disasm_all: bool = False,
+    make_full_disasm_for_code: bool = False,
 ) -> SplatOpts:
     p = OptParser(yaml)
 
     basename = p.parse_opt("basename", str)
-    platform = p.parse_opt_within("platform", str, ["n64", "psx", "ps2", "psp"])
+    is_unsupported_platform = p.parse_opt("is_unsupported_platform", bool, False)
+
+    if is_unsupported_platform:
+        platform = p.parse_opt("platform", str)
+    else:
+        platform = p.parse_opt_within("platform", str, ["n64", "psx", "ps2", "psp"])
+
     comp = compiler.for_name(p.parse_opt("compiler", str, "IDO"))
 
     base_path = Path(
-        os.path.normpath(Path(config_paths[0]).parent / p.parse_opt("base_path", str))
+        os.path.normpath(config_paths[0].parent / p.parse_opt("base_path", str))
     )
     asm_path: Path = p.parse_path(base_path, "asm_path", "asm")
 
@@ -366,6 +397,10 @@ def _parse_yaml(
     if platform == "psx":
         default_ld_bss_is_noload = False
 
+    default_add_set_gp_64 = True
+    if platform in ("psx", "ps2"):
+        default_add_set_gp_64 = False
+
     ret = SplatOpts(
         verbose=verbose,
         dump_symbols=p.parse_opt("dump_symbols", bool, False),
@@ -374,6 +409,8 @@ def _parse_yaml(
         target_path=p.parse_path(base_path, "target_path"),
         elf_path=p.parse_optional_path(base_path, "elf_path"),
         platform=platform,
+        is_unsupported_platform=is_unsupported_platform,
+        allow_segment_overrides=p.parse_opt("allow_segment_overrides", bool, False),
         compiler=comp,
         endianness=parse_endianness(),
         section_order=p.parse_opt(
@@ -384,7 +421,7 @@ def _parse_yaml(
         ),
         generated_s_preamble=p.parse_opt("generated_s_preamble", str, ""),
         use_o_as_suffix=p.parse_opt("o_as_suffix", bool, False),
-        gp=p.parse_opt("gp_value", int, 0),
+        gp=p.parse_optional_opt("gp_value", int),
         check_consecutive_segment_types=p.parse_opt(
             "check_consecutive_segment_types", bool, True
         ),
@@ -400,6 +437,7 @@ def _parse_yaml(
         asm_path=asm_path,
         data_path=p.parse_path(asm_path, "data_path", "data"),
         nonmatchings_path=p.parse_path(asm_path, "nonmatchings_path", "nonmatchings"),
+        matchings_path=p.parse_path(asm_path, "matchings_path", "matchings"),
         cache_path=p.parse_path(base_path, "cache_path", ".splache"),
         hasm_in_src_path=p.parse_opt("hasm_in_src_path", bool, False),
         create_undefined_funcs_auto=p.parse_opt(
@@ -418,8 +456,9 @@ def _parse_yaml(
         lib_path=p.parse_path(base_path, "lib_path", "lib"),
         elf_section_list_path=p.parse_optional_path(base_path, "elf_section_list_path"),
         subalign=p.parse_optional_opt_with_default("subalign", int, 16),
-        auto_all_sections=p.parse_opt(
-            "auto_all_sections", list, [".data", ".rodata", ".bss"]
+        emit_subalign=p.parse_opt("emit_subalign", bool, True),
+        auto_link_sections=p.parse_opt(
+            "auto_link_sections", list, [".data", ".rodata", ".bss"]
         ),
         ld_script_path=p.parse_path(base_path, "ld_script_path", f"{basename}.ld"),
         ld_symbol_header_path=p.parse_optional_path(base_path, "ld_symbol_header_path"),
@@ -448,10 +487,13 @@ def _parse_yaml(
         ld_bss_is_noload=p.parse_opt(
             "ld_bss_is_noload", bool, default_ld_bss_is_noload
         ),
+        ld_align_segment_start=p.parse_optional_opt_with_default(
+            "ld_align_segment_start", int, None
+        ),
         ld_align_segment_vram_end=p.parse_opt("ld_align_segment_vram_end", bool, True),
         ld_align_section_vram_end=p.parse_opt("ld_align_section_vram_end", bool, True),
         ld_generate_symbol_per_data_segment=p.parse_opt(
-            "ld_generate_symbol_per_data_segment", bool, True
+            "ld_generate_symbol_per_data_segment", bool, False
         ),
         ld_bss_contains_common=p.parse_opt("ld_bss_contains_common", bool, False),
         create_c_files=p.parse_opt("create_c_files", bool, True),
@@ -481,10 +523,10 @@ def _parse_yaml(
         ),
         asm_data_macro=p.parse_opt("asm_data_macro", str, comp.asm_data_macro),
         asm_end_label=p.parse_opt("asm_end_label", str, comp.asm_end_label),
-        asm_emit_size_directive=asm_emit_size_directive,
-        include_macro_inc=p.parse_opt(
-            "include_macro_inc", bool, comp.include_macro_inc
+        asm_ehtable_label_macro=p.parse_opt(
+            "asm_ehtable_label_macro", str, comp.asm_ehtable_label_macro
         ),
+        asm_emit_size_directive=asm_emit_size_directive,
         mnemonic_ljust=p.parse_opt("mnemonic_ljust", int, 11),
         rom_address_padding=p.parse_opt("rom_address_padding", bool, False),
         mips_abi_gpr=p.parse_opt_within(
@@ -500,7 +542,7 @@ def _parse_yaml(
             "numeric",
         ),
         named_regs_for_c_funcs=p.parse_opt("named_regs_for_c_funcs", bool, True),
-        add_set_gp_64=p.parse_opt("add_set_gp_64", bool, True),
+        add_set_gp_64=p.parse_opt("add_set_gp_64", bool, default_add_set_gp_64),
         create_asm_dependencies=p.parse_opt("create_asm_dependencies", bool, False),
         string_encoding=p.parse_optional_opt("string_encoding", str),
         data_string_encoding=p.parse_optional_opt("data_string_encoding", str),
@@ -522,14 +564,25 @@ def _parse_yaml(
         ique_symbols=p.parse_opt("ique_symbols", bool, False),
         hardware_regs=p.parse_opt("hardware_regs", bool, False),
         image_type_in_extension=p.parse_opt("image_type_in_extension", bool, False),
-        use_legacy_include_asm=p.parse_opt("use_legacy_include_asm", bool, True),
+        use_legacy_include_asm=p.parse_opt("use_legacy_include_asm", bool, False),
         disasm_unknown=p.parse_opt("disasm_unknown", bool, False),
         detect_redundant_function_end=p.parse_opt(
             "detect_redundant_function_end", bool, True
         ),
-        # Command line argument takes precedence over yaml option
-        disassemble_all=(
-            disasm_all if disasm_all else p.parse_opt("disassemble_all", bool, False)
+        # Setting either option will produce a full disassembly,
+        # but we still have to check the yaml option first to avoid leaving option unparsed,
+        # because splat would complain about an unrecognized yaml option otherwise.
+        disassemble_all=p.parse_opt("disassemble_all", bool, False) or disasm_all,
+        make_full_disasm_for_code=p.parse_opt("make_full_disasm_for_code", bool, False)
+        or make_full_disasm_for_code,
+        global_vram_start=p.parse_optional_opt("global_vram_start", int),
+        global_vram_end=p.parse_optional_opt("global_vram_end", int),
+        use_gp_rel_macro_nonmatching=p.parse_opt(
+            "use_gp_rel_macro_nonmatching", bool, True
+        ),
+        use_gp_rel_macro=p.parse_opt("use_gp_rel_macro", bool, True),
+        suggestion_rodata_section_start=p.parse_opt(
+            "suggestion_rodata_section_start", bool, True
         ),
     )
     p.check_no_unread_opts()
@@ -538,14 +591,22 @@ def _parse_yaml(
 
 def initialize(
     config: Dict,
-    config_paths: List[str],
+    config_paths: List[Path],
     modes: Optional[List[str]] = None,
     verbose=False,
     disasm_all=False,
+    make_full_disasm_for_code=False,
 ):
     global opts
 
     if not modes:
         modes = ["all"]
 
-    opts = _parse_yaml(config["options"], config_paths, modes, verbose, disasm_all)
+    opts = _parse_yaml(
+        config["options"],
+        config_paths,
+        modes,
+        verbose,
+        disasm_all,
+        make_full_disasm_for_code,
+    )

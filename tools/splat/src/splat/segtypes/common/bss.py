@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ...util import options, symbols, log
 
 from .data import CommonSegData
@@ -10,6 +12,9 @@ from ...disassembler.disassembler_section import DisassemblerSection, make_bss_s
 class CommonSegBss(CommonSegData):
     def get_linker_section(self) -> str:
         return ".bss"
+
+    def get_section_flags(self) -> Optional[str]:
+        return "wa"
 
     @staticmethod
     def is_data() -> bool:
@@ -35,6 +40,9 @@ class CommonSegBss(CommonSegData):
             super().disassemble_data(rom_bytes)
             return
 
+        if self.is_auto_segment:
+            return
+
         if not isinstance(self.rom_start, int):
             log.error(
                 f"Segment '{self.name}' (type '{self.type}') requires a rom_start. Got '{self.rom_start}'"
@@ -52,7 +60,9 @@ class CommonSegBss(CommonSegData):
                 f"Segment '{self.name}' (type '{self.type}') requires a vram address. Got '{self.vram_start}'"
             )
 
-        next_subsegment = self.parent.get_next_subsegment_for_ram(self.vram_start)
+        next_subsegment = self.parent.get_next_subsegment_for_ram(
+            self.vram_start, self.index_within_group
+        )
         if next_subsegment is None:
             bss_end = self.get_most_parent().vram_end
         else:

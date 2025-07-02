@@ -43,6 +43,30 @@ Hand-written Assembly, `hasm`, similar to `asm` except it will not overwrite any
   start: 0xABC
 ```
 
+### `asmtu`
+
+**Description:**
+
+Allows disassembling every section of an object that share the same name into the same assembly file.
+This is a better parallel to how an object is compiled from a [TU](https://en.wikipedia.org/wiki/Translation_unit_(programming)) than disassembling each section to individual assembly files.
+
+This is specially useful when dealing with symbols that may not be globally visible (locally binded symbols), because those symbols should be visible to the whole TU but disassembling each section individually disallows this visibility.
+
+This segment requires that every other segment that shares the same name must have their segment type be prefixed with a dot.
+
+```yaml
+    subsegments:
+      # ...
+      - [0x000100, asmtu, code/allai]
+      # ...
+      - [0x324680, .data, code/allai] # Note `.data` instead of `data`
+      # ...
+      - [0x350100, .rodata, code/allai]
+      # ...
+      - { type: .bss, vram: 0x004B10C8, name: code/allai }
+      # ...
+```
+
 ## `bin`
 
 **Description:**
@@ -121,6 +145,10 @@ This is platform specific; parses the data and interprets as a header for e.g. N
   start: 0xABC
 ```
 
+## `cpp`
+
+The `cpp` segment behaves the same as the `c` segment but uses the .cpp file extension (for C++ source files).
+
 ## `data`
 
 **Description:**
@@ -161,6 +189,10 @@ Data located in the ROM that is linked from a C file. Use the `.data` segment to
 
 **NOTE:** `splat` will not generate any `.data.s` files for these `.` (dot) sections.
 
+## `.sdata`
+
+The `.sdata` segment behaves the same as the `.data` segment but supports "small data" linker sections named `.sdata`.
+
 ## `rodata`
 
 **Description:**
@@ -199,6 +231,10 @@ Read-only data located in the ROM, linked to a C file. Use the `.rodata` segment
   start: 0xABC
 ```
 
+## `.rdata`
+
+The `.rdata` segment behaves the same as the `.rodata` segment but supports rodata linker sections that happened to be named `.rdata` rather than `.rodata`.
+
 **NOTE:** `splat` will not generate any `.rodata.s` files for these `.` (dot) sections.
 
 ## `bss`
@@ -227,7 +263,100 @@ Links the `.bss` section of the associated `c` file.
 - { start: 0x7D1AD0, type: .bss, name: filepath, vram: 0x803C0420 }
 ```
 
-## Images
+## `.sbss`
+
+The `.sbss` segment behaves the same as the `.bss` segment but supports "small bss" linker sections named `.sbss`.
+
+## `lib`
+
+The `lib` segment can be used to link to a section of an object in an existing library archive. It is purely used to configure the output linker script and does not do any extraction.
+
+It looks for libraries in the [`lib_path`](https://github.com/ethteck/splat/wiki/Configuration#lib_path) global option.
+
+**Example:**
+
+```yaml
+# link to .text of b_obj in a_lib
+- [auto, lib, a_lib, b_obj]
+```
+
+```yaml
+# link to .data of b_obj in a_lib
+- [auto, lib, a_lib, b_obj, .data]
+```
+
+```yaml
+# link to .text of b_obj in a_lib (dict representation)
+- { type: lib, name: a_lib, object: b_obj, section: .text }
+```
+
+
+## `pad`
+
+`pad` is a segment that represents a rom region that's filled with zeroes and decomping it doesn't have much value.
+
+This segment does not generate an assembly (`.s`) or binary (`.bin`) file, it simply increments the position of the linker script, avoding to build zero-filled files.
+
+While this kind of segment can be represented by other segment types ([`asm`](#asm), [`data`](#data), etc), it is better practice to use this segment instead to better reflect the contents of the file.
+
+**Example:**
+
+```yaml
+- [0x00B250, pad, nops_00B250]
+```
+
+**Warning:** `pad` cannot be the last segment in your yaml, as the way it is implemented requires a linked object to follow it.
+If the rom contains padding at the end, we recommend treating only the non-padded portion of the rom with splat and padding the rest during the build process.
+
+## incbins
+
+incbin segments correpond to a family of segments used for extracting binary blobs.
+
+Their main advantage over the [`bin`](#bin) segment is the incbins allows to specify a specific section type instead of defaulting to simply `.data`. This is done by generating an assembly file that uses the `.incbin` asm directive to include the binary blob.
+
+Generating assembly files enables better customization of these binaries, like allowing different sections or to define a symbol for the binary blob.
+
+If a known symbol (via a symbol_addrs file) matches the vram of a incbin segment then it will be emitted accordingly at the top. If the symbol contains a [`name_end`](Adding-Symbols.md#name_end) property then it will be emitted after the `.incbin` (useful for Nintendo64's RSP ucodes).
+
+Curretly there are 3 types of incbins, `textbin`, `databin` and `rodatabin`, which are intended for binary blobs of `.text`, `.data` and `.rodata` sections.
+
+If a `textbin` section has a corresponding `databin` and/or `rodatabin` section with the same name then those will be included in the same generated assembly file.
+
+By default the generated assembly file will be written relative to the configured [`data_path`](docs/Configuration.md#data_path). The per segment `use_src_path` option allows to tell splat that a given incbin should be relative to the [`src_path`](docs/Configuration.md#src_path) instead. This behavior can be useful to allow committing those assembly files to the repo since splat will not override them if they already exist, and still extract the binary blobs.
+
+```yaml
+- { start: 0x06C4B0, type: textbin, use_src_path: True, name: rsp/rspboot }
+- [0x06C580, textbin, rsp/aspMain]
+
+# ...
+
+- [0x093D60, databin, rsp/aspMain]
+```
+
+## `gcc_except_table`
+
+Used by certain compilers (like GCC) to store the Exception Handler Table (`ehtable`), used for implementing C++ exceptions.
+
+This table contains references to addresses within functions, which normally the disassembler would automatically reject as being valid addresses. This special section bypasses that restriction by generating special labels within the functions in question. The macro used for these labels can be changed with the [`asm_ehtable_label_macro`](Configuration.md#asm_ehtable_label_macro) option.
+
+## `eh_frame`
+
+Used by certain compilers (like GCC) to store the Exception Handler Frame, used for implementing C++ exceptions.
+
+This frame contains more metadata used by exceptions at runtime.
+
+## `linker_offset`
+
+This segment adds a symbol into the linker script at its relative section position.
+
+A segment named "john" with type `linker_offset` will cause a generated symbol with the name `john_OFFSET` to be placed into the linker script.
+This can be useful for naming and referencing certain address locations from source code.
+
+# Platform-specific segments
+
+## N64
+
+### Images
 
 **Description:**
 
@@ -261,21 +390,75 @@ These segments will parse the image data and dump out a `png` file.
 
 Palette segments can specify a `global_id`, which can be referred to from a `ci`'s `palettes` list. The `global_id` space is searched first, and this allows cross-segment links between palettes and rasters.
 
-## `pad`
+We recommend using [pigment64](https://github.com/decompals/pigment64) to convert extracted images back into original formats.
 
-`pad` is a segment that represents a rom region that's filled with zeroes and decomping it doesn't have much value.
+### `gfx`
 
-This segment does not generate an assembly (`.s`) or binary (`.bin`) file, it simply increments the position of the linker script, avoding to build zero-filled files.
+`gfx` can be used to extract static f3dex ["display lists"](https://hackmd.io/@Roman971/Hk01jRxRr#Static-Data) into a .gfx.inc.c file, which is meant to be `#include`d from a source c file.
 
-While this kind of segment can be represented by other segment types ([`asm`](#asm), [`data`](#data), etc), it is better practice to use this segment instead to better reflect the contents of the file.
+These segments support an optional `data_only` attribute, which is False by default. If enabled, the extracted file will contain only the data rather than the enclosing symbol definition.
 
-**Example:**
+Example output with `data_only` off (default):
 
-```yaml
-- [0x00B250, pad, nops_00B250]
+```c
+Gfx displayList[] = {
+    gsDPPipeSync(),
+    gsDPSetPrimColor(0, 0, 0x80, 0x80, 0x80, 0x80),
+    gsDPSetEnvColor(0x80, 0x80, 0x80, 0x80),
+    gsSPEndDisplayList(),
+};
 ```
 
-## PS2 exclusive segments
+to be used in a source c file like
+```c
+#include "example.gfx.inc.c"
+```
+
+Example output with `data_only` on:
+```c
+gsDPPipeSync(),
+gsDPSetPrimColor(0, 0, 0x80, 0x80, 0x80, 0x80),
+gsDPSetEnvColor(0x80, 0x80, 0x80, 0x80),
+gsSPEndDisplayList(),
+```
+
+to be used in a source c file like
+```c
+Gfx displayList[] = {
+  #include "example.gfx.inc.c"
+};
+```
+
+Some may prefer to define symbol names in source c files, rather than having splat be responsible for naming these symbols, which is why this option is provided.
+
+[Example usage](https://github.com/pmret/papermario/blob/c43d15e/ver/us/splat.yaml#L1707)
+
+### `vtx`
+
+`vtx` can be used to extract arrays of Vtx struct data, into a .vtx.inc.c file, which is meant to be `#include`d from a source c file.
+
+This option also supports the `data_only` attribute. See the section on the `gfx` segment for more details.
+
+[Example usage](https://github.com/pmret/papermario/blob/c43d15e/ver/us/splat.yaml#L1706)
+
+### `rsp`
+
+The `rsp` segment is used for disassembling RSP microcode. It is an extension of the `hasm` segment type and enables special instruction handling in the disassembler.
+
+### `ipl3`
+
+The `ipl3` segment is used for disassembling ipl3 code. It is an extension of the `hasm` segment type and opts out of standard symbol-tracking behavior, since it lives in an unconventional memory space.
+
+### Compressed segment types
+
+splat supports the compression types MIO0 and Yay0 with segment type names `mio0` and `yay0`, respectively. Both of these output a .bin file, which is expected to be re-compressed as part of the project's build system.
+The generated linker script then will expect a .`type`.o file to exist.
+
+For example, for a `yay0` segment named "john", splat will create a decompressed john.bin file. The build system should then compress this file into `john.Yay0.bin` and then turn that into an object named `john.Yay0.o`, which will be linked into the output rom.
+
+We recommend using [crunch64](https://github.com/decompals/crunch64) to re-compress MIO0 and Yay0 assets that are extracted with splat.
+
+## PS2
 
 ### `lit4`
 
@@ -291,17 +474,17 @@ splat will try to disassemble all the data from this segment as individual doubl
 
 ### `ctor`
 
-`ctor` is used by certain compilers (like MWCC) to store pointers to functions that initialize C++ global data objects.
+`ctor` is used by certain compilers (like MWCCPS2) to store pointers to functions that initialize C++ global data objects.
 
 The disassembly of this section is tweaked to avoid confusing its data with other types of data, this is because the disassembler can sometimes get confused and disassemble a pointer as a float, string, etc.
 
 ### `vtables`
 
-`vtables` is used by certain compilers (like MWCC) to store the virtual tables of C++ classes
+`vtables` is used by certain compilers (like MWCCPS2) to store the virtual tables of C++ classes
 
 The disassembly of this section is tweaked to avoid confusing its data with other types of data, this is because the disassembler can sometimes get confused and disassemble a pointer as a float, string, etc.
 
-## General segment options
+# General segment options
 
 All splat's segments can be passed extra options for finer configuration. Note that those extra options require to rewrite the entry using the dictionary yaml notation instead of the list one.
 
@@ -355,6 +538,14 @@ If not set, then the global configuration is used. See [ld_fill_value](Configura
 
 Defaults to the value of the global option.
 
+### `ld_align_segment_start`
+
+Specify the current segment should be aligned before starting it.
+
+This option specifies the desired alignment value, or `null` if no aligment should be imposed on the segment start.
+
+If not set, then the global configuration is used. See [ld_align_segment_start](Configuration.md#ld_align_segment_start) on the Configuration section.
+
 ### `subalign`
 
 Sub-alignment (in bytes) of sections.
@@ -370,3 +561,25 @@ Only works on top-level segments
 ```
 
 Defaults to the global `subalign` option.
+
+### `suggestion_rodata_section_start`
+
+splat is able to suggest where the rodata section may start by inspecting a corresponding data section (as long as the rodata section follows rodata and not the other way around).
+Don't trust this suggestion blindly since it may be incorrect, either because the rodata section may start a lot before than what splat suggests or splat even may be completely wrong and suggest something that
+actually is data as if it were rodata.
+
+This option allows turning off the suggestion for this segment in case you have checked the suggestion is not correct. This option is inherited from the parent segment if a subsegment does not specify it.
+
+This can be turned off [globally](Configuration.md#suggestion_rodata_section_start), but it is not recommended to globally turn it off unless you are confident you have mapped every data/rodata section of every segment.
+
+Defaults to the global option.
+
+**Example:**
+
+```yaml
+  - name: boot
+    type: code
+    start: 0x001060
+    vram: 0x80000460
+    suggestion_rodata_section_start: False
+```

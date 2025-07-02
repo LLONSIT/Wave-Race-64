@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 
-from spimdisasm.common import FileSectionType
-
-from src.splat.scripts.split import *
-import unittest
-import io
+import difflib
 import filecmp
-from src.splat.util import symbols, options
+import io
+import pathlib
 import spimdisasm
+import unittest
+
+from src.splat import __version__
+from src.splat.scripts.split import *
+from src.splat.util import symbols, options
 from src.splat.segtypes.common.rodata import CommonSegRodata
 from src.splat.segtypes.common.code import CommonSegCode
 from src.splat.segtypes.common.c import CommonSegC
 from src.splat.segtypes.common.bss import CommonSegBss
-from src.splat import __version__
-import difflib
 
 
 class Testing(unittest.TestCase):
@@ -21,28 +21,32 @@ class Testing(unittest.TestCase):
         with io.open(test_path) as test_f, io.open(ref_path) as ref_f:
             self.assertListEqual(list(test_f), list(ref_f))
 
-    def get_same_files(self, dcmp, out):
+    def get_same_files(self, dcmp: filecmp.dircmp, out: List[Tuple[str, str, str]]):
         for name in dcmp.same_files:
             out.append((name, dcmp.left, dcmp.right))
 
         for sub_dcmp in dcmp.subdirs.values():
             self.get_same_files(sub_dcmp, out)
 
-    def get_diff_files(self, dcmp, out):
+    def get_diff_files(self, dcmp: filecmp.dircmp, out: List[Tuple[str, str, str]]):
         for name in dcmp.diff_files:
             out.append((name, dcmp.left, dcmp.right))
 
         for sub_dcmp in dcmp.subdirs.values():
             self.get_diff_files(sub_dcmp, out)
 
-    def get_left_only_files(self, dcmp, out):
+    def get_left_only_files(
+        self, dcmp: filecmp.dircmp, out: List[Tuple[str, str, str]]
+    ):
         for name in dcmp.left_only:
             out.append((name, dcmp.left, dcmp.right))
 
         for sub_dcmp in dcmp.subdirs.values():
             self.get_left_only_files(sub_dcmp, out)
 
-    def get_right_only_files(self, dcmp, out):
+    def get_right_only_files(
+        self, dcmp: filecmp.dircmp, out: List[Tuple[str, str, str]]
+    ):
         for name in dcmp.right_only:
             out.append((name, dcmp.left, dcmp.right))
 
@@ -51,9 +55,11 @@ class Testing(unittest.TestCase):
 
     def test_basic_app(self):
         spimdisasm.common.GlobalConfig.ASM_GENERATED_BY = False
-        main(["test/basic_app/splat.yaml"], None, False)
+        main([pathlib.Path("test/basic_app/splat.yaml")], None, False)
 
-        comparison = filecmp.dircmp("test/basic_app/split", "test/basic_app/expected")
+        comparison = filecmp.dircmp(
+            "test/basic_app/split", "test/basic_app/expected", [".gitkeep"]
+        )
 
         diff_files: List[Tuple[str, str, str]] = []
         self.get_diff_files(comparison, diff_files)
@@ -121,7 +127,9 @@ def test_init():
             [0x1290],
         ],
     }
-    options.initialize(options_dict, ["./test/basic_app/splat.yaml"], [], False)
+    options.initialize(
+        options_dict, [pathlib.Path("./test/basic_app/splat.yaml")], [], False
+    )
 
 
 class Symbols(unittest.TestCase):
@@ -183,7 +191,7 @@ class Symbols(unittest.TestCase):
             vram=0x40000000,
             filename="test",
             words=[],
-            sectionType=FileSectionType.Text,
+            sectionType=spimdisasm.common.FileSectionType.Text,
             segmentVromStart=0x0,
             overlayCategory=None,
         )
@@ -340,8 +348,6 @@ class Bss(unittest.TestCase):
 
 class SymbolsInitialize(unittest.TestCase):
     def test_attrs(self):
-        import pathlib
-
         symbols.reset_symbols()
         test_init()
 
@@ -372,8 +378,6 @@ class SymbolsInitialize(unittest.TestCase):
         assert symbols.all_symbols[0].given_name_end == "the_name_end"
 
     def test_boolean_attrs(self):
-        import pathlib
-
         symbols.reset_symbols()
         test_init()
 
@@ -405,8 +409,6 @@ class SymbolsInitialize(unittest.TestCase):
 
     # test spim ban range
     def test_ignore(self):
-        import pathlib
-
         symbols.reset_symbols()
         test_init()
 

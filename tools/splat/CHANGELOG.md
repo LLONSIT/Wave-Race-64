@@ -1,5 +1,205 @@
 # splat Release Notes
 
+### 0.34.1
+* Deprecate `--stdout-only` cli flag. Changed output such that errors and warnings go to stderr and all other output goes to stdout.
+
+### 0.34.0
+* Add new global option `is_unsupported_platform`. If enabled, disable checks on platform option.
+* Add new global option `allow_segment_overrides`. If enabled, allows to take precedence over the splat builtin platform segments via splat extension.
+
+### 0.33.2
+* Change `make_full_disasm_for_code` to output other sections for the TU in addition to .text.
+
+### 0.33.1
+* Fix `hasm` segments overwriting files already on disk
+
+### 0.33.0
+
+* BREAKING: Move splat config loading and parsing into "splat.util.conf" to modularize this part of the code and allow projects to interface with segment loading more gracefully.
+  * `initialize_config` is now `splat.util.conf.load`. It takes `Path`s instead of `str`s for YAML paths. It will no longer `exit` if config merging fails, but will throw a `TypeError` which can be handled as desired by callers.
+* Fix splat on Windows not using forward slashes on generated paths.
+* Setup CI to be run on Windows and MacOS too.
+* Fix output of incbin segments for SN64 projects
+* New yaml option: `make_full_disasm_for_code`
+  * Emit a full `.s` file for each `c`/`cpp` segment besides the generated `nonmatchings` individual functions.
+  * Can be used to generate "target" or "expected" objects for asm diffing.
+  * Also available as a cli parameter: `--make-full-disasm-for-code`
+* `spimdisasm` 1.33.0 or above is now required.
+
+### 0.32.3
+
+* Fix "unrecognized YAML option" error if disassemble_all is provided via CLI and as a YAML option.
+* Slightly speed up `bss` disassembly for projects over thousands of subsegments in the same top-level segment.
+
+### 0.32.2
+
+* Fix jumptable labels not being properly formatted with the given `symbol_name_format`.
+* `spimdisasm` 1.32.0 or above is now required.
+
+### 0.32.1
+
+* Include subsegment information when aggregating split statistics.
+
+### 0.32.0
+
+* Tag `PSYQ` as a compiler that uses `j` instructions as branches.
+  * Fixes incorrect detection of non existing functions under the mentioned compiler.
+* Try to tell the users what segments are causing the overlapping issue.
+* The overlap warning has been promoted to an error.
+
+### 0.31.0
+
+* Fix subsegments of auto `data` segments not being split.
+
+### 0.30.1
+
+* Fix `create_config` not handling unsafe path characters.
+
+### 0.30.0
+
+* New `asmtu` segment type.
+  * Allows writing the disassembly of every section for a given object into the same assembly file.
+  * Useful for dealing with symbols with local visibility.
+* Cleanup some redundant code regarding duplicated `asm` segments.
+* The global option `add_set_gp_64` now defaults to `False` on psx and ps2 platforms.
+* Add compiler options supported by spimdisasm.
+  * New compilers: `KMC` (n64), `EGCS` (iQue), `PSYQ` (PS1) and `MWCCPS2` (PS2)
+  * It is highly recommended to use the specific compiler that the game uses (i.e. `KMC`) than just a general option like `GCC` because splat won't be able to adjust as best as it can.
+* `spimdisasm` 1.31.0 or above is now required.
+* Python 3.9 or above is now required.
+
+### 0.29.0
+
+* Fix bss/sbss asm files not being generated.
+* Remove `...` as a valid rom start address for segments.
+
+### 0.28.2
+
+* New global option and per-segment option: `suggestion_rodata_section_start`
+  * Allows to toggle the rodata section start suggestion that is emitted by inspecting the data section
+* Avoid running spimdisasm on auto segments.
+  * Should improve runtime performance and avoid giving redundant filesplit suggestions.
+* A zero-sized bin segment is now considered a hard error.
+
+### 0.28.1
+
+* Fix a crash when listing zero-sized segments on the yaml.
+  * It is discouraged to have zero sized segments on the yaml, but they may be needed on games that have a "segment address" table of any kind and shows the segments having a zero size.
+  * This allows to have segment symbols for those kind of segments without having to go through linker script hacks.
+
+### 0.28.0
+
+* Minor version release for previous release's breaking change that should have had its own minor release (oopsh, yanked 0.27.4)
+* BREKAING: Change the default value for `ld_generate_symbol_per_data_segment`. It defaults to `False` now.
+* Improve `create_config` to avoid choking on SN64 games.
+  * The results may not be completely accurate but should give a decent enough starting yaml.
+
+### 0.27.3
+
+* Fix a possible infinite recursion due to a segment being its own sibling.
+
+### 0.27.2
+
+* Added new global option `emit_subalign`. If disabled, subalign directives will not be emitted in the generated linker script. Enabled by default (no change in default behavior).
+
+### 0.27.1
+
+* Add new symbol attributes:
+  * `function_owner`: Allows to force a rodata symbol to be migrated to the given function, skipping over the rodata migration heuristic.
+  * `can_reference`: Allows toggling if the symbol is allowed to reference other symbols.
+  * `can_be_referenced`: Allows toggling if the symbol is allowed to be referenced by other symbols.
+* `spimdisasm` 1.29.0 or above is now required.
+
+### 0.27.0
+
+* BREAKING: Renamed `auto_all_sections` to `auto_link_sections` and documented its behavior.
+* BREAKING: Removed redundant `N64Segment`, `PSXSegment`, `PSPSegment` stub classes. Any references to these should be instead to the base `Segment`
+* Promoted `linker_offset` segment type to common, so it's now usable by all platforms.
+* Added documentation for the remaining undocumented segment types and did some general doc tidying.
+* Splat will now error when the last segment is `pad`, as this will not work as expected.
+* Attempting to retrieve the `subalign` property of a non-top-level segment will now return an error.
+
+### 0.26.2
+
+* Fixed not being able to disable the `subalign` directive for a given segment.
+* Removed bugged alignment check on image segments.
+* splat will now error out if any of the following attributes is specified in a non top-level segment.
+  * `subalign`
+  * `ld_fill_value`.
+* `spimdisasm` 1.28.1 or above is now required.
+
+### 0.26.1
+
+* Fix pairing text to other sections on cases where text is not be the first section.
+* Fix some code that assumes that `.rodata` will always be present on the `sections_order` list.
+* Fix `.text`/`.rdata` section pairing (hopefully).
+* Emit an error if we try to migrate the rodata symbols to functions if the rodata section is not prefixed with a dot (ie `- [0x1234, rodata, some_file]` instead of `- [0x1234, .rodata, some_file]`)
+  * Not prefixing the type with a dot would produce splat to both disassemble the rodata section to its own assembly file and to migrate the symbols to the corresponding functions, generating link-time errors and many headaches.
+* Rewrite the `ld_legacy_generation` docs for clarity.
+
+### 0.26.0
+
+* Fixed the `subalign` segment property logic to be more straightforward
+* Updated required versions of rabbitizier, n64img, and crunch64
+* BREAKING: Removed `include_macro_inc` option, as it was never required and often detrimental
+
+### 0.25.3
+
+* Fix incorrect calculation for `$gp` value in create_config.py for PSX when immediate value is negative.
+
+### 0.25.2
+
+* Two new yaml options: `use_gp_rel_macro_nonmatching` and `use_gp_rel_macro`
+  * Allows to toggle the use of `%gp_rel`s.
+  * Not using `%gp_rel`s may be desirable for projects that use old assemblers that do not support said relocation parameter.
+  * The assembler is free to choose the kind of relocation to use if no explicit relocation parameter is used for a given instruction, it may even expand the instruction into multiple instructions. To avoid this, it is the user's responsability to provide the symbol's information (like the symbol's size) to the assembler so it can pick the correct relocation.
+
+### 0.25.1
+
+* Added two new segment types: `gcc_except_table` and `eh_frame`.
+  * Used by GCC to handle C++ exceptions.
+* New yaml option: `asm_ehtable_label_macro`
+  * Allows to specify the macro used by ehlabels, the ones generated by `gcc_except_table` references.
+
+### 0.25.0
+
+* BREAKING: Changed the default value of `use_legacy_include_asm` to false
+
+### 0.24.7
+
+* splat no longer creates unnecessary directories for asm
+
+### 0.24.6
+
+* Handle PS-X EXE header that includes .text/.data vram address
+
+### 0.24.5
+
+* New `use_src_path` option for incbins segments.
+  * Allows to make the generated assembly files relative to the `src_path` directory instead of the default `data_path`.
+* New yaml option: `global_vram_start` and `global_vram_end`.
+  * Allow specifying that the global memory range may be larger than what was automatically detected.
+  * Useful for projects where splat is used in multiple individual files, meaning the expected global segment may not be properly detected because each instance of splat can't see the info from other files (like in PSX and PSP projects).
+
+### 0.24.4
+
+* New yaml option: `matchings_path`
+  * Determines the path to the asm matchings directory
+  * This is used alongside `disassemble_all` to organize matching functions from nonmatching functions
+
+### 0.24.3
+
+* New yaml option: `ld_align_segment_start`
+  * Allows specifying an alignment for the start of all the segments.
+  * The alignment can be overriden or disabled per segment too.
+* Add `visibility` attribute to symbols.
+  * Allows to specify if a symbol should be declared as `local`, `weak`, etc in the disassembly.
+* `spimdisasm` 1.26.0 or above is now required
+
+### 0.24.2
+
+* Fixed create_config to replace "/" in detected binary names with "_"
+
 ### 0.24.1
 
 * Tweak the disassembler's configuration for PSP platform to improve assembly analysis.
@@ -142,7 +342,7 @@
     ```py
     from util import log, options
 
-    from segtypes.n64.segment import N64Segment
+    from segtypes.common.segment import Segment
     from segtypes.common.data import CommonSegData
     ```
 
@@ -154,7 +354,7 @@
       ```py
       from splat.util import log, options
 
-      from splat.segtypes.n64.segment import N64Segment
+      from splat.segtypes.common.segment import Segment
       from splat.segtypes.common.data import CommonSegData
       ```
 
@@ -169,7 +369,7 @@
       ```py
       from ...util import log, options
 
-      from .segment import N64Segment
+      from ..common.segment import Segment
       from ..common.data import CommonSegData
       ```
 

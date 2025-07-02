@@ -7,6 +7,29 @@ from .segment import CommonSegment
 
 
 class CommonSegTextbin(CommonSegment):
+    def __init__(
+        self,
+        rom_start: Optional[int],
+        rom_end: Optional[int],
+        type: str,
+        name: str,
+        vram_start: Optional[int],
+        args: list,
+        yaml,
+    ):
+        super().__init__(
+            rom_start,
+            rom_end,
+            type,
+            name,
+            vram_start,
+            args=args,
+            yaml=yaml,
+        )
+        self.use_src_path: bool = isinstance(yaml, dict) and yaml.get(
+            "use_src_path", False
+        )
+
     @staticmethod
     def is_text() -> bool:
         return True
@@ -18,6 +41,9 @@ class CommonSegTextbin(CommonSegment):
         return "ax"
 
     def out_path(self) -> Optional[Path]:
+        if self.use_src_path:
+            return options.opts.src_path / self.dir / f"{self.name}.s"
+
         return options.opts.data_path / self.dir / f"{self.name}.s"
 
     def bin_path(self) -> Path:
@@ -57,9 +83,13 @@ class CommonSegTextbin(CommonSegment):
 
         if sym is not None:
             f.write(f"{asm_label} {sym.name}\n")
+            if asm_label == ".globl":
+                if self.is_text():
+                    f.write(f".ent {sym.name}\n")
+                f.write(f"{sym.name}:\n")
             sym.defined = True
 
-        f.write(f'.incbin "{binpath}"\n')
+        f.write(f'.incbin "{binpath.as_posix()}"\n')
 
         if sym is not None:
             if self.is_text() and options.opts.asm_end_label != "":
@@ -71,6 +101,8 @@ class CommonSegTextbin(CommonSegment):
                     or sym.given_size == self.rom_end - self.rom_start
                 ):
                     f.write(f"{asm_label} {sym.given_name_end}\n")
+                    if asm_label == ".globl":
+                        f.write(f"{sym.given_name_end}:\n")
 
     def split(self, rom_bytes):
         if self.rom_end is None:

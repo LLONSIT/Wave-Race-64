@@ -4,10 +4,10 @@ from typing import Dict, List, Tuple, Type, Optional, Union
 from n64img.image import Image
 from ...util import log, options
 
-from .segment import N64Segment
+from ..segment import Segment
 
 
-class N64SegImg(N64Segment):
+class N64SegImg(Segment):
     @staticmethod
     def parse_dimensions(yaml: Union[Dict, List]) -> Tuple[int, int]:
         if isinstance(yaml, dict):
@@ -52,17 +52,15 @@ class N64SegImg(N64Segment):
         self.n64img.width = self.width
         self.n64img.height = self.height
 
-        self.check_len()
-
         self.image_type_in_extension = options.opts.image_type_in_extension
 
     def check_len(self) -> None:
         expected_len = int(self.n64img.size())
         assert isinstance(self.rom_start, int)
         assert isinstance(self.rom_end, int)
-        assert isinstance(self.subalign, int)
+
         actual_len = self.rom_end - self.rom_start
-        if actual_len > expected_len and actual_len - expected_len > self.subalign:
+        if actual_len > expected_len:
             log.error(
                 f"Error: {self.name} should end at 0x{self.rom_start + expected_len:X}, but it ends at 0x{self.rom_end:X}\n(hint: add a 'bin' segment after it)"
             )
@@ -76,11 +74,10 @@ class N64SegImg(N64Segment):
         return options.opts.is_mode_active("img")
 
     def split(self, rom_bytes):
+        self.check_len()
+
         path = self.out_path()
         path.parent.mkdir(parents=True, exist_ok=True)
-
-        assert isinstance(self.rom_start, int)
-        assert isinstance(self.rom_end, int)
 
         if self.n64img.data == b"":
             self.n64img.data = rom_bytes[self.rom_start : self.rom_end]
@@ -91,7 +88,7 @@ class N64SegImg(N64Segment):
     @staticmethod
     def estimate_size(yaml: Union[Dict, List]) -> int:
         width, height = N64SegImg.parse_dimensions(yaml)
-        typ = N64Segment.parse_segment_type(yaml)
+        typ = Segment.parse_segment_type(yaml)
 
         if typ == "ci4" or typ == "i4" or typ == "ia4":
             return width * height // 2
