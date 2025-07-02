@@ -68,6 +68,8 @@ sPersistentCommonPoolSplit = 0x8003EB58;
 sSeqAndBankPoolSplit = 0x8003EB50;
 gTempoInternalToExternal = 0x8004554C;
 gAudioSessionPresets = 0x800EC884;
+gRightVolRampings = 0x8003B548;
+gLeftVolRampings = 0x80038548;
 
 // Some linker symbols
 sound_data_ctl_ROM_START = 0x40B530; //defined:true

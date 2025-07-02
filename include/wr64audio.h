@@ -97,7 +97,8 @@ typedef struct SynthesisReverb {
 extern u8 gFontLoadStatus[64];
 extern u8 gSeqLoadStatus[256];
 extern SequencePlayer gSequencePlayers[4];
-
+extern f32 gLeftVolRampings[3][1024];
+extern f32 gRightVolRampings[3][1024];
 extern u8 gAudioHeap[];
 extern SoundAllocPool gAudioSessionPool;
 extern s32 gAudioHeapSize;

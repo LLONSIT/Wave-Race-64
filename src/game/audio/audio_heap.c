@@ -67,13 +67,6 @@ f64 KTHRoot(f64 d, s32 k) {
     return root;
 }
 
-#if 1
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/BuildVolRampingsTBL.s")
-#else
-// TODO: find right symbol addresses
-extern f32 gLeftVolRampings[3][1024];
-extern f32 gRightVolRampings[3][1024];
-
 void BuildVolRampingsTBL(s32 unused, s32 len) {
     s32 i;
     s32 step;
@@ -94,7 +87,6 @@ void BuildVolRampingsTBL(s32 unused, s32 len) {
         gRightVolRampings[2][i] = KTHRoot(1.0 / d, k + 1) * 65536.0;
     }
 }
-#endif
 
 // Original name: Nas_ResetIDtable
 void AudioHeap_ResetLoadStatus(void) {
