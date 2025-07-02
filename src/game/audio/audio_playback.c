@@ -37,11 +37,27 @@ void Audio_NoteDisable(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB128.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB148.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_BuildSyntheticWave.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB24C.s")
+void Audio_InitSyntheticWave(Note* note, SequenceChannelLayer* seqLayer) {
+    s32 sampleCountIndex;
+    s32 waveSampleCountIndex;
+    s32 waveId = seqLayer->instOrWave;
+    if (waveId == 0xff) {
+        waveId = seqLayer->seqChannel->instOrWave;
+    }
+    sampleCountIndex = note->sampleCountIndex;
+    waveSampleCountIndex = Audio_BuildSyntheticWave(note, seqLayer, waveId);
+    note->synthesisState.samplePosInt =
+        note->synthesisState.samplePosInt * D_800EDC48[waveSampleCountIndex] / D_800EDC48[sampleCountIndex];
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_InitNoteList.s")
+// Original name: __Nas_InitList
+void Audio_InitNoteList(AudioListItem* list) {
+    list->prev = list;
+    list->next = list;
+    list->u.count = 0;
+}
 
 // Original name: Nas_InitChNode
 void Audio_InitNoteLists(NotePool* pool) {

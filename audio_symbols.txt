@@ -155,6 +155,8 @@ Audio_AudioListRemove = 0x800BB6DC;
 AudioSeq_AudioListPushBack = 0x800BCFAC;
 Audio_InitNoteLists = 0x800BB300;
 Audio_InitNoteList = 0x800BB2F0;
+Audio_BuildSyntheticWave = 0x800BB148;
+Audio_InitSyntheticWave = 0x800BB24C;
 
 // Unsorted
 load_wave_samples = 0x800B67EC;

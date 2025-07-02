@@ -2,7 +2,7 @@
 #define INTERNAL_H
 
 struct NotePool;
-struct AudioListItem {
+typedef struct AudioListItem {
     struct AudioListItem *prev;
     struct AudioListItem *next;
     union {
@@ -10,7 +10,7 @@ struct AudioListItem {
         s32 count;
     } u;
     struct NotePool *pool;
-};
+} AudioListItem;
 typedef struct NotePool {
     struct AudioListItem disabled;
     struct AudioListItem decaying;
@@ -242,7 +242,7 @@ struct SequenceChannel {
                    struct AdsrSettings adsr;
                    struct NotePool notePool;
 };
-struct SequenceChannelLayer {
+typedef struct SequenceChannelLayer {
                    u8 enabled : 1;
                    u8 finished : 1;
                    u8 stopSomething : 1;
@@ -276,7 +276,7 @@ struct SequenceChannelLayer {
                    struct M64ScriptState scriptState;
                    struct AudioListItem listItem;
     u8 pad2[4];
-};
+} SequenceChannelLayer;
 struct NoteSynthesisState {
              u8 restart;
              u8 sampleDmaIndex;
