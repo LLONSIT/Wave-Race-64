@@ -3,12 +3,17 @@
 import argparse
 import hashlib
 import importlib
+import pickle
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 from pathlib import Path
 
 from .. import __package_name__, __version__
 from ..disassembler import disassembler_instance
 from ..util import cache_handler, progress_bar, vram_classes, statistics
+
+# This unused import makes the yaml library faster. don't remove
+import pylibyaml  # pyright: ignore
+import yaml
 
 from colorama import Fore, Style
 from intervaltree import Interval, IntervalTree
@@ -19,7 +24,7 @@ from ..segtypes.linker_entry import (
     get_segment_vram_end_symbol_name,
 )
 from ..segtypes.segment import Segment
-from ..util import conf, log, options, palettes, symbols, relocs
+from ..util import log, options, palettes, symbols, relocs
 
 linker_writer: LinkerWriter
 config: Dict[str, Any]
@@ -36,7 +41,7 @@ def initialize_segments(config_segments: Union[dict, list]) -> List[Segment]:
     segment_rams = IntervalTree()
 
     segments_by_name: Dict[str, Segment] = {}
-    ret: List[Segment] = []
+    ret = []
 
     last_rom_end = 0
 
@@ -49,13 +54,11 @@ def initialize_segments(config_segments: Union[dict, list]) -> List[Segment]:
 
         segment_class = Segment.get_class_for_type(seg_type)
 
-        this_start, is_auto_segment = Segment.parse_segment_start(seg_yaml)
+        this_start = Segment.parse_segment_start(seg_yaml)
 
         j = i + 1
         while j < len(config_segments):
-            next_start, next_is_auto_segment = Segment.parse_segment_start(
-                config_segments[j]
-            )
+            next_start = Segment.parse_segment_start(config_segments[j])
             if next_start is not None:
                 break
             j += 1
@@ -71,7 +74,7 @@ def initialize_segments(config_segments: Union[dict, list]) -> List[Segment]:
             next_start = last_rom_end
 
         segment: Segment = Segment.from_yaml(
-            segment_class, seg_yaml, this_start, next_start, None
+            segment_class, seg_yaml, this_start, next_start
         )
 
         if segment.require_unique_name:
@@ -107,11 +110,6 @@ def initialize_segments(config_segments: Union[dict, list]) -> List[Segment]:
                 segments_by_name[segment.given_follows_vram]
             )
 
-    if ret[-1].type == "pad":
-        log.error(
-            "Last segment in config cannot be a pad segment; see https://github.com/ethteck/splat/wiki/Segments#pad"
-        )
-
     return ret
 
 
@@ -136,6 +134,34 @@ def assign_symbols_to_segments():
             for seg in segs:
                 if not seg.get_exclusive_ram_id():
                     seg.add_symbol(symbol)
+
+
+def merge_configs(main_config, additional_config):
+    # Merge rules are simple
+    # For each key in the dictionary
+    # - If list then append to list
+    # - If a dictionary then repeat merge on sub dictionary entries
+    # - Else assume string or number and replace entry
+
+    for curkey in additional_config:
+        if curkey not in main_config:
+            main_config[curkey] = additional_config[curkey]
+        elif type(main_config[curkey]) != type(additional_config[curkey]):
+            log.error(f"Type for key {curkey} in configs does not match")
+        else:
+            # keys exist and match, see if a list to append
+            if type(main_config[curkey]) == list:
+                main_config[curkey] += additional_config[curkey]
+            elif type(main_config[curkey]) == dict:
+                # need to merge sub areas
+                main_config[curkey] = merge_configs(
+                    main_config[curkey], additional_config[curkey]
+                )
+            else:
+                # not a list or dictionary, must be a number or string, overwrite
+                main_config[curkey] = additional_config[curkey]
+
+    return main_config
 
 
 def brief_seg_name(seg: Segment, limit: int, ellipsis="…") -> str:
@@ -169,6 +195,25 @@ def calc_segment_dependences(
                         vram_class
                     ] += vram_class_to_segments[follows_class]
     return vram_class_to_follows_segments
+
+
+def initialize_config(
+    config_path: List[str],
+    modes: Optional[List[str]],
+    verbose: bool,
+    disassemble_all: bool = False,
+) -> Dict[str, Any]:
+    config: Dict[str, Any] = {}
+    for entry in config_path:
+        with open(entry) as f:
+            additional_config = yaml.load(f.read(), Loader=yaml.SafeLoader)
+        config = merge_configs(config, additional_config)
+
+    vram_classes.initialize(config.get("vram_classes"))
+
+    options.initialize(config, config_path, modes, verbose, disassemble_all)
+
+    return config
 
 
 def read_target_binary() -> bytes:
@@ -220,9 +265,11 @@ def do_scan(
     for segment in scan_bar:
         assert isinstance(segment, Segment)
         scan_bar.set_description(f"Scanning {brief_seg_name(segment, 20)}")
+        typ = segment.type
+        if segment.type == "bin" and segment.is_name_default():
+            typ = "unk"
 
-        for ty, sub_stats in segment.statistics.items():
-            stats.add_size(ty, sub_stats.size)
+        stats.add_size(typ, segment.size)
 
         if segment.should_scan():
             # Check cache but don't write anything
@@ -234,8 +281,7 @@ def do_scan(
 
             processed_segments.append(segment)
 
-            for ty, sub_stats in segment.statistics.items():
-                stats.count_split(ty, sub_stats.count)
+            stats.count_split(typ)
 
     symbols.mark_c_funcs_as_defined()
     return processed_segments
@@ -253,8 +299,7 @@ def do_split(
         split_bar.set_description(f"Splitting {brief_seg_name(segment, 20)}")
 
         if cache.check_cache_hit(segment, True):
-            for ty, sub_stats in segment.statistics.items():
-                stats.count_cached(ty, sub_stats.count)
+            stats.count_cached(segment.type)
             continue
 
         if segment.should_split():
@@ -442,28 +487,20 @@ def dump_symbols() -> None:
 
 
 def main(
-    config_path: List[Path],
+    config_path: List[str],
     modes: Optional[List[str]],
     verbose: bool,
     use_cache: bool = True,
     skip_version_check: bool = False,
     stdout_only: bool = False,
     disassemble_all: bool = False,
-    make_full_disasm_for_code=False,
 ):
     if stdout_only:
-        log.write("--stdout-only flag is deprecated", status="warn")
-    progress_bar.out_file = sys.stdout
+        progress_bar.out_file = sys.stdout
 
     # Load config
     global config
-    config = conf.load(
-        config_path,
-        modes,
-        verbose,
-        disassemble_all,
-        make_full_disasm_for_code,
-    )
+    config = initialize_config(config_path, modes, verbose, disassemble_all)
 
     disassembler_instance.create_disassembler_instance(skip_version_check, __version__)
 
@@ -476,8 +513,7 @@ def main(
 
     cache = cache_handler.Cache(config, use_cache, verbose)
 
-    if not options.opts.is_unsupported_platform:
-        initialize_platform(rom_bytes)
+    initialize_platform(rom_bytes)
 
     # Initialize segments
     all_segments = initialize_segments(config["segments"])
@@ -523,10 +559,7 @@ def main(
 
 def add_arguments_to_parser(parser: argparse.ArgumentParser):
     parser.add_argument(
-        "config",
-        help="path to a compatible config .yaml file",
-        nargs="+",
-        type=Path,
+        "config", help="path to a compatible config .yaml file", nargs="+"
     )
     parser.add_argument("--modes", nargs="+", default="all")
     parser.add_argument("--verbose", action="store_true", help="Enable debug logging")
@@ -539,18 +572,11 @@ def add_arguments_to_parser(parser: argparse.ArgumentParser):
         help="Skips the disassembler's version check",
     )
     parser.add_argument(
-        "--stdout-only",
-        help="Print all output to stdout (deprecated)",
-        action="store_true",
+        "--stdout-only", help="Print all output to stdout", action="store_true"
     )
     parser.add_argument(
         "--disassemble-all",
         help="Disasemble matched functions and migrated data",
-        action="store_true",
-    )
-    parser.add_argument(
-        "--make-full-disasm-for-code",
-        help="Emit a full `.s` file for each `c`/`cpp` segment besides the generated `nonmatchings` individual functions",
         action="store_true",
     )
 
@@ -564,7 +590,6 @@ def process_arguments(args: argparse.Namespace):
         args.skip_version_check,
         args.stdout_only,
         args.disassemble_all,
-        args.make_full_disasm_for_code,
     )
 
 

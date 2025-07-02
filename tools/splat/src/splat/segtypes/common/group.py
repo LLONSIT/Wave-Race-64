@@ -3,7 +3,7 @@ from typing import List, Optional
 from ...util import log
 
 from .segment import CommonSegment
-from ..segment import empty_statistics, Segment, SegmentStatistics
+from ..segment import Segment
 
 
 class CommonSegGroup(CommonSegment):
@@ -29,10 +29,10 @@ class CommonSegGroup(CommonSegment):
 
         self.subsegments: List[Segment] = self.parse_subsegments(yaml)
 
-    def get_next_seg_start(self, i, subsegment_yamls) -> Optional[int]:
+    def get_next_seg_start(self, i, subsegment_yamls):
         j = i + 1
         while j < len(subsegment_yamls):
-            ret, is_auto_segment = Segment.parse_segment_start(subsegment_yamls[j])
+            ret = Segment.parse_segment_start(subsegment_yamls[j])
             if ret is not None:
                 return ret
             j += 1
@@ -55,7 +55,7 @@ class CommonSegGroup(CommonSegment):
                 continue
 
             typ = Segment.parse_segment_type(subsegment_yaml)
-            start, is_auto_segment = Segment.parse_segment_start(subsegment_yaml)
+            start = Segment.parse_segment_start(subsegment_yaml)
 
             segment_class = Segment.get_class_for_type(typ)
 
@@ -73,9 +73,7 @@ class CommonSegGroup(CommonSegment):
             # Third, try to get the end address from the next segment with a start address
             end: Optional[int] = None
             if i < len(yaml["subsegments"]) - 1:
-                end, end_is_auto_segment = Segment.parse_segment_start(
-                    yaml["subsegments"][i + 1]
-                )
+                end = Segment.parse_segment_start(yaml["subsegments"][i + 1])
             if start is not None and end is None:
                 est_size = segment_class.estimate_size(subsegment_yaml)
                 if est_size is not None:
@@ -104,21 +102,16 @@ class CommonSegGroup(CommonSegment):
                 end = last_rom_end
 
             segment: Segment = Segment.from_yaml(
-                segment_class, subsegment_yaml, start, end, self, vram
+                segment_class, subsegment_yaml, start, end, vram
             )
+            segment.parent = self
             if segment.special_vram_segment:
                 self.special_vram_segment = True
-            segment.is_auto_segment = is_auto_segment
-
-            segment.index_within_group = len(ret)
 
             ret.append(segment)
             prev_start = start
             if end is not None:
                 last_rom_end = end
-
-        for i, seg in enumerate(ret):
-            seg.index_within_group = i
 
         return ret
 
@@ -128,14 +121,6 @@ class CommonSegGroup(CommonSegment):
             if seg.needs_symbols:
                 return True
         return False
-
-    @property
-    def statistics(self) -> SegmentStatistics:
-        stats = empty_statistics()
-        for sub in self.subsegments:
-            for ty, info in sub.statistics.items():
-                stats[ty] = stats[ty].merge(info)
-        return stats
 
     def get_linker_entries(self):
         return [entry for sub in self.subsegments for entry in sub.get_linker_entries()]
@@ -170,17 +155,13 @@ class CommonSegGroup(CommonSegment):
                 return sub
         return None
 
-    def get_next_subsegment_for_ram(
-        self, addr: int, current_subseg_index: Optional[int]
-    ) -> Optional[Segment]:
+    def get_next_subsegment_for_ram(self, addr: int) -> Optional[Segment]:
         """
         Returns the first subsegment which comes after the specified address,
         or None in case this address belongs to the last subsegment of this group
         """
 
-        start = current_subseg_index if current_subseg_index is not None else 0
-
-        for sub in self.subsegments[start:]:
+        for sub in self.subsegments:
             if sub.vram_start is None:
                 continue
             assert isinstance(sub.vram_start, int)

@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from typing import OrderedDict, List, Optional, Type, Tuple
 
-from ...util import log, options, utils
+from ...util import log, options
 
 from .group import CommonSegGroup
 from ..segment import Segment, parse_segment_align
@@ -52,7 +52,7 @@ class CommonSegCode(CommonSegGroup):
         else:
             return None
 
-    # Generates a placeholder segment for the auto_link_sections option
+    # Generates a placeholder segment for the auto_all_sections option
     def _generate_segment_from_all(
         self,
         rep_type: str,
@@ -78,11 +78,9 @@ class CommonSegCode(CommonSegGroup):
         rep.given_dir = self.given_dir
         rep.given_symbol_name_format = self.symbol_name_format
         rep.given_symbol_name_format_no_rom = self.symbol_name_format_no_rom
-        assert rep != base_seg, rep
         rep.sibling = base_seg
         rep.parent = self
-        rep.is_generated = True
-        rep.is_auto_segment = True
+        rep.is_auto_all = True
         if rep.special_vram_segment:
             self.special_vram_segment = True
         rep.bss_contains_common = self.bss_contains_common
@@ -92,9 +90,8 @@ class CommonSegCode(CommonSegGroup):
         self,
         ret: List[Segment],
         base_segments: OrderedDict[str, Segment],
-        readonly_before: bool,
     ) -> List[Segment]:
-        if len(options.opts.auto_link_sections) == 0:
+        if len(options.opts.auto_all_sections) == 0:
             return ret
 
         base_segments_list: List[Tuple[str, Segment]] = list(base_segments.items())
@@ -105,11 +102,13 @@ class CommonSegCode(CommonSegGroup):
             if seg.is_text():
                 last_inserted_index = i
 
-            elif readonly_before:
+            elif self.section_order.index(".rodata") < self.section_order.index(
+                ".text"
+            ):
                 if seg.is_rodata():
                     last_inserted_index = i
 
-        for i, sect in enumerate(options.opts.auto_link_sections):
+        for i, sect in enumerate(options.opts.auto_all_sections):
             for name, seg in base_segments_list:
                 link_section = seg.get_linker_section_order()
                 if link_section == sect or link_section == "":
@@ -135,7 +134,7 @@ class CommonSegCode(CommonSegGroup):
                 link_section = ret[last_inserted_index].get_linker_section_order()
                 if (
                     link_section != ""
-                    and link_section not in options.opts.auto_link_sections[: i + 1]
+                    and link_section not in options.opts.auto_all_sections[: i + 1]
                 ):
                     last_inserted_index -= 1
                     if last_inserted_index < 0:
@@ -160,25 +159,13 @@ class CommonSegCode(CommonSegGroup):
 
         last_rom_end = None
 
-        # Determine what comes first, either text or rodata/rdata
-        readonly_before = False
-        text_index = utils.list_index(self.section_order, ".text")
-        if text_index is not None:
-            rodata_index = utils.list_index(self.section_order, ".rodata")
-            if rodata_index is not None:
-                readonly_before = rodata_index < text_index
-            else:
-                rdata_index = utils.list_index(self.section_order, ".rdata")
-                if rdata_index is not None:
-                    readonly_before = rdata_index < text_index
-
         for i, subsegment_yaml in enumerate(segment_yaml["subsegments"]):
             # endpos marker
             if isinstance(subsegment_yaml, list) and len(subsegment_yaml) == 1:
                 continue
 
             typ = Segment.parse_segment_type(subsegment_yaml)
-            start, is_auto_segment = Segment.parse_segment_start(subsegment_yaml)
+            start = Segment.parse_segment_start(subsegment_yaml)
 
             segment_class = Segment.get_class_for_type(typ)
 
@@ -196,9 +183,7 @@ class CommonSegCode(CommonSegGroup):
             # Third, try to get the end address from the next segment with a start address
             end: Optional[int] = None
             if i < len(segment_yaml["subsegments"]) - 1:
-                end, end_is_auto_segment = Segment.parse_segment_start(
-                    segment_yaml["subsegments"][i + 1]
-                )
+                end = Segment.parse_segment_start(segment_yaml["subsegments"][i + 1])
             if start is not None and end is None:
                 est_size = segment_class.estimate_size(subsegment_yaml)
                 if est_size is not None:
@@ -223,9 +208,8 @@ class CommonSegCode(CommonSegGroup):
                 end = last_rom_end
 
             segment: Segment = Segment.from_yaml(
-                segment_class, subsegment_yaml, start, end, self, vram
+                segment_class, subsegment_yaml, start, end, vram
             )
-            segment.is_auto_segment = is_auto_segment
 
             if (
                 segment.vram_start is not None
@@ -237,41 +221,37 @@ class CommonSegCode(CommonSegGroup):
                     + f"Detected when processing file '{segment.name}' of type '{segment.type}'"
                 )
 
+            segment.sibling = base_segments.get(segment.name, None)
+
+            if segment.sibling is not None:
+                # Make siblings reference between them
+                segment.siblings[segment.sibling.get_linker_section_linksection()] = (
+                    segment.sibling
+                )
+                segment.sibling.siblings[segment.get_linker_section_linksection()] = (
+                    segment
+                )
+
+            segment.parent = self
+            if segment.special_vram_segment:
+                self.special_vram_segment = True
+
+            segment.bss_contains_common = self.bss_contains_common
             ret.append(segment)
 
             if segment.is_text():
                 base_segments[segment.name] = segment
 
-            if readonly_before:
+            if self.section_order.index(".rodata") < self.section_order.index(".text"):
                 if segment.is_rodata() and segment.sibling is None:
                     base_segments[segment.name] = segment
-
-            if segment.special_vram_segment:
-                self.special_vram_segment = True
-
-            segment.bss_contains_common = self.bss_contains_common
 
             prev_start = start
             prev_vram = segment.vram_start
             if end is not None:
                 last_rom_end = end
 
-        # We need base_segments to be fully constructed before start assigning siblings to segments,
-        # otherwise we may miss segments that are placed before any text segment
-        for segment in ret:
-            sibling = base_segments.get(segment.name, None)
-            if sibling == segment:
-                sibling = None
-            segment.sibling = sibling
-
-            if sibling is not None:
-                # Make siblings reference between them
-                segment.siblings[sibling.get_linker_section_linksection()] = sibling
-                sibling.siblings[segment.get_linker_section_linksection()] = segment
-
-        ret = self._insert_all_auto_sections(ret, base_segments, readonly_before)
-        for i, seg in enumerate(ret):
-            seg.index_within_group = i
+        ret = self._insert_all_auto_sections(ret, base_segments)
 
         return ret
 

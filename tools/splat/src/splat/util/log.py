@@ -18,12 +18,7 @@ def write(*args, status=None, **kwargs):
         print("")
         newline = True
 
-    print(
-        status_to_ansi(status) + str(args[0]),
-        *args[1:],
-        **kwargs,
-        file=output_file(status),
-    )
+    print(status_to_ansi(status) + str(args[0]), *args[1:], **kwargs)
 
 
 def error(*args, **kwargs) -> NoReturn:
@@ -49,9 +44,3 @@ def status_to_ansi(status: Status):
         return Style.DIM
     else:
         return ""
-
-
-def output_file(status: Status):
-    if status == "warn" or status == "error":
-        return sys.stderr
-    return sys.stdout

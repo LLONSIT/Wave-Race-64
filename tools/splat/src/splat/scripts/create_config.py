@@ -30,19 +30,11 @@ def main(file_path: Path):
     log.error(f"create_config does not support the file format of '{file_path}'")
 
 
-def remove_invalid_path_characters(p: str) -> str:
-    invalid_characters = ["<", ">", ":", '"', "/", "\\", "|", "?", "*"]
-    for invalid in invalid_characters:
-        p = p.replace(invalid, "_")
-    return p
-
-
 def create_n64_config(rom_path: Path):
     rom_bytes = rominfo.read_rom(rom_path)
 
     rom = rominfo.get_info(rom_path, rom_bytes)
     basename = rom.name.replace(" ", "").lower()
-    cleaned_basename = remove_invalid_path_characters(basename)
 
     header = f"""\
 name: {rom.name.title()} ({rom.get_country_name()})
@@ -50,7 +42,7 @@ sha1: {rom.sha1}
 options:
   basename: {basename}
   target_path: {rom_path.with_suffix(".z64")}
-  elf_path: build/{cleaned_basename}.elf
+  elf_path: build/{basename}.elf
   base_path: .
   platform: n64
   compiler: {rom.compiler}
@@ -60,7 +52,7 @@ options:
   # build_path: build
   # create_asm_dependencies: True
 
-  ld_script_path: {cleaned_basename}.ld
+  ld_script_path: {basename}.ld
   ld_dependencies: True
 
   find_file_boundaries: True
@@ -75,7 +67,7 @@ options:
   asm_data_macro: dlabel
 
   # section_order: [".text", ".data", ".rodata", ".bss"]
-  # auto_link_sections: [".data", ".rodata", ".bss"]
+  # auto_all_sections: [".data", ".rodata", ".bss"]
 
   symbol_addrs_path:
     - symbol_addrs.txt
@@ -96,14 +88,7 @@ options:
   # gfx_ucode: # one of [f3d, f3db, f3dex, f3dexb, f3dex2]
 """
 
-    # Start analysing after the entrypoint segment.
-    first_section_end = find_code_length.run(
-        rom_bytes, 0x1000 + rom.entrypoint_info.segment_size(), rom.entry_point
-    )
-
-    extra_message = ""
-    if not rom.entrypoint_info.traditional_entrypoint:
-        extra_message = " # This game uses a non-traditional entrypoint, meaning splat's analysis may be wrong"
+    first_section_end = find_code_length.run(rom_bytes, 0x1000, rom.entry_point)
 
     segments = f"""\
 segments:
@@ -115,25 +100,17 @@ segments:
     type: bin
     start: 0x40
 
-  - name: entry{extra_message}
+  - name: entry
     type: code
     start: 0x1000
     vram: 0x{rom.entry_point:X}
     subsegments:
       - [0x1000, hasm]
-"""
-    if rom.entrypoint_info.data_size > 0:
-        segments += f"""\
-      - [0x{0x1000 + rom.entrypoint_info.entry_size:X}, data]
-"""
-
-    main_rom_start = 0x1000 + rom.entrypoint_info.segment_size()
-    segments += f"""\
 
   - name: main
     type: code
-    start: 0x{main_rom_start:X}
-    vram: 0x{rom.entry_point + rom.entrypoint_info.segment_size():X}
+    start: 0x{0x1000 + rom.entrypoint_info.entry_size:X}
+    vram: 0x{rom.entry_point + rom.entrypoint_info.entry_size:X}
     follows_vram: entry
 """
 
@@ -144,37 +121,31 @@ segments:
 
     segments += f"""\
     subsegments:
-      - [0x{main_rom_start:X}, asm]
+      - [0x{0x1000 + rom.entrypoint_info.entry_size:X}, asm]
 """
 
     if (
         rom.entrypoint_info.bss_size is not None
         and rom.entrypoint_info.bss_start_address is not None
-        and first_section_end > main_rom_start
     ):
         bss_start = rom.entrypoint_info.bss_start_address - rom.entry_point + 0x1000
         # first_section_end points to the start of data
         segments += f"""\
       - [0x{first_section_end:X}, data]
-      - {{ type: bss, vram: 0x{rom.entrypoint_info.bss_start_address:08X} }}
+      - {{ start: 0x{bss_start:X}, type: bss, vram: 0x{rom.entrypoint_info.bss_start_address:08X} }}
 """
         # Point next segment to the detected end of the main one
         first_section_end = bss_start
 
-    if first_section_end > main_rom_start:
-        segments += f"""\
+    segments += f"""\
 
   - type: bin
     start: 0x{first_section_end:X}
     follows_vram: main
-"""
-
-    segments += f"""\
-
   - [0x{rom.size:X}]
 """
 
-    out_file = f"{cleaned_basename}.yaml"
+    out_file = f"{basename}.yaml"
     with open(out_file, "w", newline="\n") as f:
         print(f"Writing config to {out_file}")
         f.write(header)
@@ -184,7 +155,6 @@ segments:
 def create_psx_config(exe_path: Path, exe_bytes: bytes):
     exe = psxexeinfo.PsxExe.get_info(exe_path, exe_bytes)
     basename = exe_path.name.replace(" ", "").lower()
-    cleaned_basename = remove_invalid_path_characters(basename)
 
     header = f"""\
 name: {exe_path.name}
@@ -192,18 +162,16 @@ sha1: {exe.sha1}
 options:
   basename: {basename}
   target_path: {exe_path}
-  elf_path: build/{cleaned_basename}.elf
   base_path: .
   platform: psx
-  compiler: PSYQ
+  compiler: GCC
 
   # asm_path: asm
   # src_path: src
   # build_path: build
   # create_asm_dependencies: True
 
-  ld_script_path: {cleaned_basename}.ld
-  ld_dependencies: True
+  ld_script_path: {basename}.ld
 
   find_file_boundaries: False
   gp_value: 0x{exe.initial_gp:08X}
@@ -216,7 +184,7 @@ options:
   asm_data_macro: dlabel
 
   section_order: [".rodata", ".text", ".data", ".bss"]
-  # auto_link_sections: [".data", ".rodata", ".bss"]
+  # auto_all_sections: [".data", ".rodata", ".bss"]
 
   symbol_addrs_path:
     - symbol_addrs.txt
@@ -268,7 +236,7 @@ segments:
   - [0x{exe.size:X}]
 """
 
-    out_file = f"{cleaned_basename}.yaml"
+    out_file = f"{basename}.yaml"
     with open(out_file, "w", newline="\n") as f:
         print(f"Writing config to {out_file}")
         f.write(header)

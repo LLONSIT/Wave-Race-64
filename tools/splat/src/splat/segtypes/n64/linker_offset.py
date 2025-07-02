@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import List
 
+from .segment import N64Segment
 from ..linker_entry import LinkerEntry, LinkerWriter
 from ..segment import Segment
 
@@ -17,7 +18,7 @@ class LinkerEntryOffset(LinkerEntry):
         linker_writer._write_symbol(f"{self.segment.get_cname()}_OFFSET", ".")
 
 
-class CommonSegLinker_offset(Segment):
+class N64SegLinker_offset(N64Segment):
     def get_linker_section_order(self) -> str:
         return ""
 

@@ -124,8 +124,6 @@ For a GCC example, see the [include.h](https://github.com/AngheloAlf/drmario64/b
 
 For IDO, you will need to use [asm-processor](https://github.com/simonlindholm/asm-processor) in order to include assembly code within the c files.
 
-For MWCC, you will need [mwccgap](https://github.com/mkst/mwccgap) to include assembly code in the c files, similar to asm-processor.
-
 ## Assembly macros
 
 splat relies on some assembly macros for the asm generation. They usually live on the `include/macro.inc` file. Without these macros then an assembler would not be able to build our disassemblies.
@@ -247,7 +245,7 @@ to:
 
 
 **NOTE:**
-If using `auto_link_sections` and data is fully migrated, the subsegments can also be changed to the following and splat will add the appropriate entries into the linker script.
+If using `auto_all_section` and there are no other `data`/`.data`/`rodata`/`.rodata` in the subsegments in the code segment, the subsegments can also be changed to
 
 ```yaml
 - [0x42100, c, energy_orb_wave]

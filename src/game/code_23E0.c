@@ -685,59 +685,11 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80049C9C.s")
 
-void func_80049EB8(MtxF* arg0, MtxF* arg1, MtxF* arg2) {
-    arg2->mf[0][0] =
-        arg0->mf[0][0] * arg1->mf[0][0] + arg0->mf[1][0] * arg1->mf[0][1] + arg0->mf[2][0] * arg1->mf[0][2];
-    arg2->mf[0][1] =
-        arg0->mf[0][1] * arg1->mf[0][0] + arg0->mf[1][1] * arg1->mf[0][1] + arg0->mf[2][1] * arg1->mf[0][2];
-    arg2->mf[0][2] =
-        arg0->mf[0][2] * arg1->mf[0][0] + arg0->mf[1][2] * arg1->mf[0][1] + arg0->mf[2][2] * arg1->mf[0][2];
-
-    arg2->mf[1][0] =
-        arg0->mf[0][0] * arg1->mf[1][0] + arg0->mf[1][0] * arg1->mf[1][1] + arg0->mf[2][0] * arg1->mf[1][2];
-    arg2->mf[1][1] =
-        arg0->mf[0][1] * arg1->mf[1][0] + arg0->mf[1][1] * arg1->mf[1][1] + arg0->mf[2][1] * arg1->mf[1][2];
-    arg2->mf[1][2] =
-        arg0->mf[0][2] * arg1->mf[1][0] + arg0->mf[1][2] * arg1->mf[1][1] + arg0->mf[2][2] * arg1->mf[1][2];
-
-    arg2->mf[2][0] =
-        arg0->mf[0][0] * arg1->mf[2][0] + arg0->mf[1][0] * arg1->mf[2][1] + arg0->mf[2][0] * arg1->mf[2][2];
-    arg2->mf[2][1] =
-        arg0->mf[0][1] * arg1->mf[2][0] + arg0->mf[1][1] * arg1->mf[2][1] + arg0->mf[2][1] * arg1->mf[2][2];
-    arg2->mf[2][2] =
-        arg0->mf[0][2] * arg1->mf[2][0] + arg0->mf[1][2] * arg1->mf[2][1] + arg0->mf[2][2] * arg1->mf[2][2];
-
-    arg2->mf[3][0] = arg0->mf[0][0] * arg1->mf[3][0] + arg0->mf[1][0] * arg1->mf[3][1] +
-                     arg0->mf[2][0] * arg1->mf[3][2] + arg0->mf[3][0];
-    arg2->mf[3][1] = arg0->mf[0][1] * arg1->mf[3][0] + arg0->mf[1][1] * arg1->mf[3][1] +
-                     arg0->mf[2][1] * arg1->mf[3][2] + arg0->mf[3][1];
-    arg2->mf[3][2] = arg0->mf[0][2] * arg1->mf[3][0] + arg0->mf[1][2] * arg1->mf[3][1] +
-                     arg0->mf[2][2] * arg1->mf[3][2] + arg0->mf[3][2];
-
-    arg2->mf[0][3] = 0.0f;
-    arg2->mf[1][3] = 0.0f;
-    arg2->mf[2][3] = 0.0f;
-    arg2->mf[3][3] = 1.0f;
-}
+#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80049EB8.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A130.s")
 
-void func_8004A208(void) {
-    struct Controller_info* temp_v0;
-    u8 var_v0;
-    s32 var_v1;
-
-    var_v0 = 1;
-    for (var_v1 = 0; var_v1 < 4; var_v1++) {
-        if (D_80154340 & var_v0) {
-            temp_v0 = &gControllerOne[var_v1];
-            temp_v0->unk2 = temp_v0->unk4 = temp_v0->unk6 = 0;
-            temp_v0->unk0 = 0;
-            temp_v0->unk8 = temp_v0->unk9 = 0;
-        }
-        var_v0 = (var_v0) * 2;
-    }
-}
+#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A208.s")
 
 void func_8004A2B4(void) {
     s32 i;
@@ -752,10 +704,10 @@ void func_8004A2B4(void) {
             OSContPad* new_var3;
             unsigned short new_var;
             int new_var2;
-
+            
             ctrl = &gControllerOne[i];
             new_var3 = &gControllers[i];
-
+            
             ctrl->unk6 = ctrl->unk0;
             ctrl->unk0 = new_var3->button;
             new_var = ctrl->unk0 ^ ctrl->unk6;
