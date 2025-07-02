@@ -16,7 +16,7 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAA84.s")
 
 // Original name: Nas_StopVoice
-void Audio_NoteDisable(struct Note* note) {
+void Audio_NoteDisable(Note* note) {
     if (note->noteSubEu.needsInit == true) {
         note->noteSubEu.needsInit = false;
     } else {
@@ -53,7 +53,15 @@ void Audio_NoteDisable(struct Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB69C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_AudioListRemove.s")
+// Original name: Nas_CutList
+void Audio_AudioListRemove(Note* note) {
+    // remove 'item' from the list it's in, if any
+    if (note->listItem.prev != NULL) {
+        note->listItem.prev->next = note->listItem.next;
+        note->listItem.next->prev = note->listItem.prev;
+        note->listItem.prev = NULL;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB708.s")
 
