@@ -31,11 +31,14 @@ void Audio_NoteDisable(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAB94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAF2C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_SeqLayerDecayRelease.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB108.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB128.s")
+// Original name: Nas_Release_Channel_Force
+void Audio_SeqLayerNoteRelease(SequenceChannelLayer* layer) {
+    Audio_SeqLayerDecayRelease(layer, ADSR_STATE_RELEASE);
+}
 
 s32 Audio_BuildSyntheticWave(struct Note* note, struct SequenceChannelLayer* seqLayer, s32 waveId) {
     f32 freqScale;
