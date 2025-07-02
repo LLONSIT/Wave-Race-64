@@ -233,7 +233,14 @@ void AudioHeap_InitTemporaryPoolsAndCaches(PoolSplit* split) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/func_800B81C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/func_800B842C.s")
+// Original name: __Nas_DelayDown
+void AudioHeap_UpdateReverbs(void) {
+    s32 i;
+
+    for (i = 0; i < gNumSynthesisReverbs; i++) {
+        gSynthesisReverbs[i].reverbGain -= gSynthesisReverbs[i].reverbGain / 4;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/audio_shut_down_and_reset_step.s")
 

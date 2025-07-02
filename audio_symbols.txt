@@ -55,6 +55,7 @@ gSeqAndBankPool = 0x8003E5A0;
 gPersistentCommonPool = 0x8003E5B0;
 gTemporaryCommonPool = 0x8003E5C0;
 gUnusedLoadedPool = 0x8003E970;
+gNumSynthesisReverbs = 0x80038543;
 
 // Some linker symbols
 sound_data_ctl_ROM_START = 0x40B530; //defined:true
@@ -110,6 +111,7 @@ AudioHeap_InitSessionPools = 0x800B78A4;
 AudioHeap_InitCachePools = 0x800B7920;
 AudioHeap_InitPersistentPoolsAndCaches = 0x800B799C;
 AudioHeap_InitTemporaryPoolsAndCaches = 0x800B7A58;
+AudioHeap_UpdateReverbs = 0x800B842C;
 
 //seqplayer.c
 init_sequence_player = 0x800BF13C; //defined:true
