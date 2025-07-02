@@ -1,6 +1,27 @@
 #ifndef WR64_AUDIO_H
 #define WR64_AUDIO_H
 
+#define ADSR_STATE_DISABLED 0
+#define ADSR_STATE_INITIAL 1
+#define ADSR_STATE_START_LOOP 2
+#define ADSR_STATE_LOOP 3
+#define ADSR_STATE_FADE 4
+#define ADSR_STATE_HANG 5
+#define ADSR_STATE_DECAY 6
+#define ADSR_STATE_RELEASE 7
+#define ADSR_STATE_SUSTAIN 8
+
+#define ADSR_ACTION_RELEASE 0x10
+#define ADSR_ACTION_DECAY 0x20
+#define ADSR_ACTION_HANG 0x40
+
+#define ADSR_DISABLE 0
+#define ADSR_HANG -1
+#define ADSR_GOTO -2
+#define ADSR_RESTART -3
+
+#define AIBUFFER_LEN (0xa0 * 16)
+
 typedef struct PoolSplit {
     u32 wantSeq;
     u32 wantBank;
@@ -77,6 +98,13 @@ extern SoundAllocPool gSeqAndBankPool;
 extern SoundMultiPool gUnusedLoadedPool;
 extern s8 gNumSynthesisReverbs;
 extern SynthesisReverb gSynthesisReverbs[4];
+extern volatile u8 gAudioResetStatus;
+extern u8 gAudioResetPresetIdToLoad;
+extern s32 gAudioResetFadeOutFramesLeft;
+extern s32 gMaxSimultaneousNotes;
+extern struct Note *gNotes;
+extern struct AudioBufferParametersEU gAudioBufferParameters;
+extern s16 *gAiBuffers[3];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 

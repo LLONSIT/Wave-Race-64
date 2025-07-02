@@ -242,6 +242,70 @@ void AudioHeap_UpdateReverbs(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/audio_shut_down_and_reset_step.s")
+// Original name: Nas_SpecChange
+s32 AudioHeap_ResetStep(void) {
+    s32 i;
+    s32 j;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/func_800B86C4.s")
+    switch (gAudioResetStatus) {
+        case 5:
+            for (i = 0; i < 4; i++) {
+                AudioSeq_SequencePlayerDisable(&gSequencePlayers[i]);
+            }
+            gAudioResetFadeOutFramesLeft = 4;
+            gAudioResetStatus--;
+            break;
+
+        case 4:
+            if (gAudioResetFadeOutFramesLeft != 0) {
+                gAudioResetFadeOutFramesLeft--;
+                AudioHeap_UpdateReverbs();
+            } else {
+                for (i = 0; i < gMaxSimultaneousNotes; i++) {
+                    if (gNotes[i].noteSubEu.enabled && gNotes[i].adsr.state != ADSR_STATE_DISABLED) {
+                        gNotes[i].adsr.fadeOutVel = gAudioBufferParameters.updatesPerFrameInv;
+                        gNotes[i].adsr.action |= ADSR_ACTION_RELEASE;
+                    }
+                }
+                gAudioResetFadeOutFramesLeft = 16;
+                gAudioResetStatus--;
+            }
+            break;
+
+        case 3:
+            if (gAudioResetFadeOutFramesLeft != 0) {
+                gAudioResetFadeOutFramesLeft--;
+                AudioHeap_UpdateReverbs();
+            } else {
+                for (i = 0; i < 3; i++) {
+                    for (j = 0; j < (s32) (AIBUFFER_LEN / sizeof(s16)); j++) {
+                        gAiBuffers[i][j] = 0;
+                    }
+                }
+                gAudioResetFadeOutFramesLeft = 4;
+                gAudioResetStatus--;
+            }
+            break;
+
+        case 2:
+            if (gAudioResetFadeOutFramesLeft != 0) {
+                gAudioResetFadeOutFramesLeft--;
+            } else {
+                gAudioResetStatus--;
+            }
+            break;
+
+        case 1:
+            AudioHeap_Init();
+            gAudioResetStatus = 0;
+    }
+
+    if (gAudioResetStatus < 3) {
+        return 0;
+    }
+
+    return 1;
+}
+
+// Original name: __Nas_MemoryReconfig
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/AudioHeap_Init.s")

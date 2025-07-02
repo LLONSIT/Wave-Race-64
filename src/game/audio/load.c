@@ -743,7 +743,7 @@ void audio_init() {
     }
     gAudioResetPresetIdToLoad = 0;
     gAudioResetStatus = 1;
-    audio_shut_down_and_reset_step();
+    AudioHeap_ResetStep();
     // PRINTF("Heap reset.Synth Change %x \n", 0);
     // PRINTF("Heap %x %x %x\n", 0, 0, 0);
     // PRINTF("Main Heap Initialize.\n");
