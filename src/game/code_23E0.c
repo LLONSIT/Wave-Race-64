@@ -686,24 +686,33 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80049C9C.s")
 
 void func_80049EB8(MtxF* arg0, MtxF* arg1, MtxF* arg2) {
-    arg2->mf[0][0] = arg0->mf[0][0] * arg1->mf[0][0] + arg0->mf[1][0] * arg1->mf[0][1] + arg0->mf[2][0] * arg1->mf[0][2];
-    arg2->mf[0][1] = arg0->mf[0][1] * arg1->mf[0][0] + arg0->mf[1][1] * arg1->mf[0][1] + arg0->mf[2][1] * arg1->mf[0][2];
-    arg2->mf[0][2] = arg0->mf[0][2] * arg1->mf[0][0] + arg0->mf[1][2] * arg1->mf[0][1] + arg0->mf[2][2] * arg1->mf[0][2];
+    arg2->mf[0][0] =
+        arg0->mf[0][0] * arg1->mf[0][0] + arg0->mf[1][0] * arg1->mf[0][1] + arg0->mf[2][0] * arg1->mf[0][2];
+    arg2->mf[0][1] =
+        arg0->mf[0][1] * arg1->mf[0][0] + arg0->mf[1][1] * arg1->mf[0][1] + arg0->mf[2][1] * arg1->mf[0][2];
+    arg2->mf[0][2] =
+        arg0->mf[0][2] * arg1->mf[0][0] + arg0->mf[1][2] * arg1->mf[0][1] + arg0->mf[2][2] * arg1->mf[0][2];
 
-    arg2->mf[1][0] = arg0->mf[0][0] * arg1->mf[1][0] + arg0->mf[1][0] * arg1->mf[1][1] + arg0->mf[2][0] * arg1->mf[1][2];
-    arg2->mf[1][1] = arg0->mf[0][1] * arg1->mf[1][0] + arg0->mf[1][1] * arg1->mf[1][1] + arg0->mf[2][1] * arg1->mf[1][2];
-    arg2->mf[1][2] = arg0->mf[0][2] * arg1->mf[1][0] + arg0->mf[1][2] * arg1->mf[1][1] + arg0->mf[2][2] * arg1->mf[1][2];
+    arg2->mf[1][0] =
+        arg0->mf[0][0] * arg1->mf[1][0] + arg0->mf[1][0] * arg1->mf[1][1] + arg0->mf[2][0] * arg1->mf[1][2];
+    arg2->mf[1][1] =
+        arg0->mf[0][1] * arg1->mf[1][0] + arg0->mf[1][1] * arg1->mf[1][1] + arg0->mf[2][1] * arg1->mf[1][2];
+    arg2->mf[1][2] =
+        arg0->mf[0][2] * arg1->mf[1][0] + arg0->mf[1][2] * arg1->mf[1][1] + arg0->mf[2][2] * arg1->mf[1][2];
 
-    arg2->mf[2][0] = arg0->mf[0][0] * arg1->mf[2][0] + arg0->mf[1][0] * arg1->mf[2][1] + arg0->mf[2][0] * arg1->mf[2][2];
-    arg2->mf[2][1] = arg0->mf[0][1] * arg1->mf[2][0] + arg0->mf[1][1] * arg1->mf[2][1] + arg0->mf[2][1] * arg1->mf[2][2];
-    arg2->mf[2][2] = arg0->mf[0][2] * arg1->mf[2][0] + arg0->mf[1][2] * arg1->mf[2][1] + arg0->mf[2][2] * arg1->mf[2][2];
+    arg2->mf[2][0] =
+        arg0->mf[0][0] * arg1->mf[2][0] + arg0->mf[1][0] * arg1->mf[2][1] + arg0->mf[2][0] * arg1->mf[2][2];
+    arg2->mf[2][1] =
+        arg0->mf[0][1] * arg1->mf[2][0] + arg0->mf[1][1] * arg1->mf[2][1] + arg0->mf[2][1] * arg1->mf[2][2];
+    arg2->mf[2][2] =
+        arg0->mf[0][2] * arg1->mf[2][0] + arg0->mf[1][2] * arg1->mf[2][1] + arg0->mf[2][2] * arg1->mf[2][2];
 
-    arg2->mf[3][0] =
-        arg0->mf[0][0] * arg1->mf[3][0] + arg0->mf[1][0] * arg1->mf[3][1] + arg0->mf[2][0] * arg1->mf[3][2] + arg0->mf[3][0];
-    arg2->mf[3][1] =
-        arg0->mf[0][1] * arg1->mf[3][0] + arg0->mf[1][1] * arg1->mf[3][1] + arg0->mf[2][1] * arg1->mf[3][2] + arg0->mf[3][1];
-    arg2->mf[3][2] =
-        arg0->mf[0][2] * arg1->mf[3][0] + arg0->mf[1][2] * arg1->mf[3][1] + arg0->mf[2][2] * arg1->mf[3][2] + arg0->mf[3][2];
+    arg2->mf[3][0] = arg0->mf[0][0] * arg1->mf[3][0] + arg0->mf[1][0] * arg1->mf[3][1] +
+                     arg0->mf[2][0] * arg1->mf[3][2] + arg0->mf[3][0];
+    arg2->mf[3][1] = arg0->mf[0][1] * arg1->mf[3][0] + arg0->mf[1][1] * arg1->mf[3][1] +
+                     arg0->mf[2][1] * arg1->mf[3][2] + arg0->mf[3][1];
+    arg2->mf[3][2] = arg0->mf[0][2] * arg1->mf[3][0] + arg0->mf[1][2] * arg1->mf[3][1] +
+                     arg0->mf[2][2] * arg1->mf[3][2] + arg0->mf[3][2];
 
     arg2->mf[0][3] = 0.0f;
     arg2->mf[1][3] = 0.0f;
