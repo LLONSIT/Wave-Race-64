@@ -161,6 +161,8 @@ Audio_BuildSyntheticWave = 0x800BB148;
 Audio_InitSyntheticWave = 0x800BB24C;
 Audio_SeqLayerNoteRelease = 0x800BB128;
 Audio_SeqLayerDecayRelease = 0x800BAF2C;
+Audio_SeqLayerNoteDecay = 0x800BB108;
+Audio_AudioListPushFront = 0x800BB69C;
 
 // Unsorted
 load_wave_samples = 0x800B67EC;

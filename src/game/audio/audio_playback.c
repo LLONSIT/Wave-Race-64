@@ -31,16 +31,76 @@ void Audio_NoteDisable(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAB94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_SeqLayerDecayRelease.s")
+// Original name: __Nas_Release_Channel_Main
+void Audio_SeqLayerDecayRelease(SequenceChannelLayer* seqLayer, s32 target) {
+    Note* note;
+    NoteAttributes* attributes;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB108.s")
+    if ((seqLayer == NO_LAYER) || (seqLayer->note == NULL)) {
+        return;
+    }
+
+    note = seqLayer->note;
+    attributes = &note->attributes;
+
+    if (note->wantedParentLayer == seqLayer) {
+        note->wantedParentLayer = NO_LAYER;
+    }
+
+    if (note->parentLayer != seqLayer) {
+        if (note->parentLayer == NO_LAYER && note->wantedParentLayer == NO_LAYER && note->prevParentLayer == seqLayer &&
+            target != ADSR_STATE_DECAY) {
+            // Just guessing that this printf goes here... it's hard to parse.
+            // eu_stubbed_printf_0("Slow Release Batting\n");
+            note->adsr.fadeOutVel = gAudioBufferParameters.updatesPerFrameInv;
+            note->adsr.action |= ADSR_ACTION_RELEASE;
+        }
+    } else {
+        seqLayer->status = SOUND_LOAD_STATUS_NOT_LOADED;
+        if (note->adsr.state != ADSR_STATE_DECAY) {
+            attributes->freqScale = seqLayer->noteFreqScale;
+            attributes->velocity = seqLayer->noteVelocity;
+            attributes->pan = seqLayer->notePan;
+            if (seqLayer->seqChannel != NULL) {
+                attributes->reverbVol = seqLayer->seqChannel->reverbVol;
+            }
+            note->priority = NOTE_PRIORITY_STOPPING;
+            note->prevParentLayer = note->parentLayer;
+            note->parentLayer = NO_LAYER;
+            if (target == ADSR_STATE_RELEASE) {
+                note->adsr.fadeOutVel = gAudioBufferParameters.updatesPerFrameInv;
+                note->adsr.action |= ADSR_ACTION_RELEASE;
+            } else {
+                note->adsr.action |= ADSR_ACTION_DECAY;
+                if (seqLayer->adsr.releaseRate == 0) {
+                    note->adsr.fadeOutVel =
+                        seqLayer->seqChannel->adsr.releaseRate * gAudioBufferParameters.unkUpdatesPerFrameScaled;
+                } else {
+                    note->adsr.fadeOutVel =
+                        seqLayer->adsr.releaseRate * gAudioBufferParameters.unkUpdatesPerFrameScaled;
+                }
+                note->adsr.sustain = ((s32) (seqLayer->seqChannel->adsr.sustain) * note->adsr.current) / 256.0f;
+            }
+        }
+
+        if (target == ADSR_STATE_DECAY) {
+            Audio_AudioListRemove(&note->listItem);
+            Audio_AudioListPushFront(&note->listItem.pool->decaying, &note->listItem);
+        }
+    }
+}
+
+// Original name: Nas_Release_Channel
+void Audio_SeqLayerNoteDecay(SequenceChannelLayer* seqLayer) {
+    Audio_SeqLayerDecayRelease(seqLayer, ADSR_STATE_DECAY);
+}
 
 // Original name: Nas_Release_Channel_Force
 void Audio_SeqLayerNoteRelease(SequenceChannelLayer* layer) {
     Audio_SeqLayerDecayRelease(layer, ADSR_STATE_RELEASE);
 }
 
-s32 Audio_BuildSyntheticWave(struct Note* note, struct SequenceChannelLayer* seqLayer, s32 waveId) {
+s32 Audio_BuildSyntheticWave(Note* note, SequenceChannelLayer* seqLayer, s32 waveId) {
     f32 freqScale;
     f32 ratio;
     u8 sampleCountIndex;
@@ -128,7 +188,7 @@ void Audio_InitNoteFreeList(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB560.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB69C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_AudioListPushFront.s")
 
 // Original name: Nas_CutList
 void Audio_AudioListRemove(Note* note) {

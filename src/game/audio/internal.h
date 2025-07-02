@@ -184,12 +184,12 @@ struct ReverbInfo {
     s32 unused;
     s16 *filter;
 };
-struct NoteAttributes {
+typedef struct NoteAttributes {
     u8 reverbVol;
     u8 pan;
     f32 freqScale;
     f32 velocity;
-};
+} NoteAttributes;
 struct SequenceChannel {
                    u8 enabled : 1;
                    u8 finished : 1;

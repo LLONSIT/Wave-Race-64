@@ -146,6 +146,7 @@ void AudioHeap_Init(void);
 void init_sample_dma_buffers(s32);
 void Audio_InitNoteFreeList(void);
 void note_init_all(void);
+void Audio_AudioListRemove(Note* note);
 void func_800BA580(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
 
 #endif
