@@ -3,13 +3,157 @@
 #include "heap.h"
 #include "wr64audio.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BA580.s")
+// Original name: Nas_smzSetParam
+void Audio_InitNoteSub(Note* note, f32 velocity, u8 pan, u8 reverbVol) {
+    NoteSubEu* sub = &note->noteSubEu;
+    f32 volRight, volLeft;
+    u8 strongRight;
+    u8 strongLeft;
+    s32 smallPanIndex;
+    u16 unkMask = ~0x80;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BA7E0.s")
+    pan &= unkMask;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BA8AC.s")
+    if (note->noteSubEu.stereoHeadsetEffects && gSoundMode == SOUND_MODE_HEADSET) {
+        smallPanIndex = pan >> 3;
+        if (smallPanIndex >= ARRAY_COUNT(gHeadsetPanQuantization)) {
+            smallPanIndex = ARRAY_COUNT(gHeadsetPanQuantization) - 1;
+        }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BA8E8.s")
+        sub->headsetPanLeft = gHeadsetPanQuantization[smallPanIndex];
+        sub->headsetPanRight = gHeadsetPanQuantization[ARRAY_COUNT(gHeadsetPanQuantization) - 1 - smallPanIndex];
+        sub->stereoStrongRight = false;
+        sub->stereoStrongLeft = false;
+        sub->usesHeadsetPanEffects = true;
+
+        volLeft = gHeadsetPanVolume[pan];
+        volRight = gHeadsetPanVolume[127 - pan];
+    } else if (sub->stereoHeadsetEffects && gSoundMode == SOUND_MODE_STEREO) {
+        strongLeft = false;
+        strongRight = false;
+        sub->headsetPanLeft = 0;
+        sub->headsetPanRight = 0;
+
+        sub->usesHeadsetPanEffects = false;
+
+        volLeft = gStereoPanVolume[pan];
+        volRight = gStereoPanVolume[127 - pan];
+        if (pan < 32) {
+            strongLeft = true;
+        } else if (pan > 96) {
+            strongRight = true;
+        }
+
+        sub->stereoStrongRight = strongRight;
+        sub->stereoStrongLeft = strongLeft;
+
+    } else if (gSoundMode == SOUND_MODE_MONO) {
+        volLeft = 0.707f;
+        volRight = 0.707f;
+    } else {
+        volLeft = gDefaultPanVolume[pan];
+        volRight = gDefaultPanVolume[127 - pan];
+    }
+
+    if (velocity < 0.0f) {
+        // stubbed_printf("Audio: setvol: volume minus %f\n", velocity);
+        velocity = 0.0f;
+    }
+    if (velocity > 32767.0f) {
+        // stubbed_printf("Audio: setvol: volume overflow %f\n", velocity);
+        velocity = 32767.0f;
+    }
+
+    sub->targetVolLeft = ((s32) (velocity * volLeft) & 0xFFFF) >> 5;
+    sub->targetVolRight = ((s32) (velocity * volRight) & 0xFFFF) >> 5;
+
+    //! @bug for the change to UQ0.7, the if statement should also have been changed accordingly
+    if (sub->reverbVol != reverbVol) {
+        sub->reverbVol = reverbVol;
+        sub->envMixerNeedsInit = true;
+        return;
+    }
+
+    if (sub->needsInit) {
+        sub->envMixerNeedsInit = true;
+    } else {
+        sub->envMixerNeedsInit = false;
+    }
+}
+
+// Original name: Nas_smzSetPitch
+void Audio_NoteSetResamplingRate(Note* note, f32 resamplingRateInput) {
+    f32 resamplingRate = 0.0f;
+    NoteSubEu* tempSub = &note->noteSubEu;
+
+    if (resamplingRateInput < 0.0f) {
+        // stubbed_printf("Audio: setpitch: pitch minus %f\n", resamplingRateInput);
+        resamplingRateInput = 0.0f;
+    }
+    if (resamplingRateInput < 2.0f) {
+        tempSub->hasTwoAdpcmParts = 0;
+
+        if (1.9999599f < resamplingRateInput) {
+            resamplingRate = 1.9999599f;
+        } else {
+            resamplingRate = resamplingRateInput;
+        }
+
+    } else {
+        tempSub->hasTwoAdpcmParts = 1;
+        if (2 * 1.9999599f < resamplingRateInput) {
+            resamplingRate = 1.9999599f;
+        } else {
+            resamplingRate = resamplingRateInput * 0.5f;
+        }
+    }
+    note->noteSubEu.resamplingRateFixedPoint = (s32) (resamplingRate * 32768.0f);
+}
+
+// Original name: NoteToVoice
+AudioBankSound* Audio_GetInstrumentTunedSample(Instrument* instrument, s32 semitone) {
+    AudioBankSound* sound;
+    if (semitone < instrument->normalRangeLo) {
+        sound = &instrument->lowNotesSound;
+    } else if (semitone <= instrument->normalRangeHi) {
+        sound = &instrument->normalNotesSound;
+    } else {
+        sound = &instrument->highNotesSound;
+    }
+    return sound;
+}
+
+// Original name: ProgToVp
+Instrument* Audio_GetInstrument(s32 fontId, s32 instId) {
+    Instrument* instrument;
+
+    if ((gBankLoadStatus[fontId] < 2) != 0) {
+        gAudioErrorFlags = fontId + 0x10000000;
+        return NULL;
+    }
+
+    if (instId >= gCtlEntries[fontId].numInstruments) {
+        gAudioErrorFlags = (fontId << 8) + instId + 0x03000000;
+        return NULL;
+    }
+
+    instrument = gCtlEntries[fontId].instruments[instId];
+    if (instrument == NULL) {
+        gAudioErrorFlags = (fontId << 8) + instId + 0x01000000;
+        return instrument;
+    }
+
+    // This part is missing in sm64/mk64/sf64
+    if ((((u32) instrument >= (u32) gBankLoadedPool.persistent.pool.start) &&
+         ((u32) &gBankLoadedPool.persistent.pool.start[gBankLoadedPool.persistent.pool.size] >= (u32) instrument)) ||
+        (((u32) instrument >= (u32) gBankLoadedPool.temporary.pool.start) &&
+         ((u32) &gBankLoadedPool.temporary.pool.start[gBankLoadedPool.temporary.pool.size] >= (u32) instrument))) {
+        return instrument;
+    }
+
+    gAudioErrorFlags = (fontId << 8) + instId + 0x02000000;
+    return NULL;
+}
 
 // Original name: PercToPp
 Drum* Audio_GetDrum(s32 bankId, s32 drumId) {
@@ -49,7 +193,7 @@ void Audio_NoteDisable(Note* note) {
     if (note->noteSubEu.needsInit == true) {
         note->noteSubEu.needsInit = false;
     } else {
-        func_800BA580(note, 0.0f, 64, 0);
+        Audio_InitNoteSub(note, 0.0f, 64, 0);
     }
     note->priority = NOTE_PRIORITY_DISABLED;
     note->parentLayer = NO_LAYER;

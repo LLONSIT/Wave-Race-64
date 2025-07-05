@@ -3,6 +3,10 @@
 
 #include "global.h"
 
+#define SOUND_MODE_STEREO 0
+#define SOUND_MODE_MONO 3
+#define SOUND_MODE_HEADSET 1
+
 #define ADSR_STATE_DISABLED 0
 #define ADSR_STATE_INITIAL 1
 #define ADSR_STATE_START_LOOP 2
@@ -157,6 +161,11 @@ extern s16 *gWaveSamples[6];
 extern NoteSubEu gDefaultNoteSub;
 extern s32 gAudioErrorFlags;
 extern CtlEntry* gCtlEntries;
+extern u16 gHeadsetPanQuantization[16];
+extern s8 gSoundMode;
+extern f32 gHeadsetPanVolume[128];
+extern f32 gStereoPanVolume[128];
+extern f32 gDefaultPanVolume[128];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
@@ -164,6 +173,6 @@ void init_sample_dma_buffers(s32);
 void Audio_InitNoteFreeList(void);
 void note_init_all(void);
 void Audio_AudioListRemove(Note* note);
-void func_800BA580(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
+void Audio_InitNoteSub(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
 
 #endif

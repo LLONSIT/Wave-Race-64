@@ -65,13 +65,13 @@ struct AudioBankSample {
     u32 sampleSize; // never read. either 0 or 1 mod 9, depending on padding
 };
 
-struct AudioBankSound {
+typedef struct AudioBankSound {
     struct AudioBankSample *sample;
     f32 tuning; // frequency scale factor
-}; // size = 0x8
+} AudioBankSound; // size = 0x8
 
 
-struct Instrument {
+typedef struct Instrument {
     /*0x00*/ u8 loaded;
     /*0x01*/ u8 normalRangeLo;
     /*0x02*/ u8 normalRangeHi;
@@ -80,7 +80,7 @@ struct Instrument {
     /*0x08*/ struct AudioBankSound lowNotesSound;
     /*0x10*/ struct AudioBankSound normalNotesSound;
     /*0x18*/ struct AudioBankSound highNotesSound;
-}; // size = 0x20
+} Instrument; // size = 0x20
 
 typedef struct Drum {
     u8 releaseRate;
