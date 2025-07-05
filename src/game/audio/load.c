@@ -35,20 +35,6 @@ struct AudioBufferParameters {
     /*0x1C*/ f32 unkUpdatesPerFrameScaled; // 3.0f / (1280.0f * updatesPerFrame)
 };
 
-struct CtlEntry {
-#if !defined(VERSION_SH) && !defined(VERSION_CN)
-    u8 unused;
-#endif
-    u8 numInstruments;
-    u8 numDrums;
-#if defined(VERSION_SH) || defined(VERSION_CN)
-    u8 bankId1;
-    u8 bankId2;
-#endif
-    struct Instrument** instruments;
-    struct Drum** drums;
-}; // size = 0xC
-
 extern struct AudioBufferParametersEU gAudioBufferParameters;
 
 extern struct SoundAllocPool gNotesAndBuffersPool;

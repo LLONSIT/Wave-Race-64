@@ -3,6 +3,10 @@
 
 #include "global.h"
 
+#define SOUND_MODE_STEREO 0
+#define SOUND_MODE_MONO 3
+#define SOUND_MODE_HEADSET 1
+
 #define ADSR_STATE_DISABLED 0
 #define ADSR_STATE_INITIAL 1
 #define ADSR_STATE_START_LOOP 2
@@ -60,7 +64,7 @@ typedef struct ReverbRingBufferItem {
     s16 lengthA;            // first length in ring buffer (from startPos, at most until end)
     s16 lengthB;            // second length in ring buffer (from pos 0)
 } ReverbRingBufferItem;     // size = 0x14
-// #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/func_800B842C.s")
+
 typedef struct SynthesisReverb {
     /*0x00, 0x00, 0x00*/ u8 resampleFlags;
     /*0x01, 0x01, 0x01*/ u8 useReverb;
@@ -103,6 +107,20 @@ typedef struct SynthesisReverb {
     // #endif
 } SynthesisReverb; // 0xCC <= size <= 0x100
 
+typedef struct CtlEntry {
+#if !defined(VERSION_SH) && !defined(VERSION_CN)
+    u8 unused;
+#endif
+    u8 numInstruments;
+    u8 numDrums;
+#if defined(VERSION_SH) || defined(VERSION_CN)
+    u8 bankId1;
+    u8 bankId2;
+#endif
+    struct Instrument** instruments;
+    struct Drum** drums;
+} CtlEntry; // size = 0xC
+
 extern u8 gBankLoadStatus[64];
 extern u8 gSeqLoadStatus[256];
 extern SequencePlayer gSequencePlayers[4];
@@ -140,6 +158,14 @@ extern NoteSubEu* gNoteSubsEu;
 extern NotePool gNoteFreeLists;
 extern const u8 D_800EDC48[4];
 extern s16 *gWaveSamples[6];
+extern NoteSubEu gDefaultNoteSub;
+extern s32 gAudioErrorFlags;
+extern CtlEntry* gCtlEntries;
+extern u16 gHeadsetPanQuantization[16];
+extern s8 gSoundMode;
+extern f32 gHeadsetPanVolume[128];
+extern f32 gStereoPanVolume[128];
+extern f32 gDefaultPanVolume[128];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
@@ -147,6 +173,6 @@ void init_sample_dma_buffers(s32);
 void Audio_InitNoteFreeList(void);
 void note_init_all(void);
 void Audio_AudioListRemove(Note* note);
-void func_800BA580(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
+void Audio_InitNoteSub(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
 
 #endif
