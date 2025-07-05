@@ -60,7 +60,7 @@ typedef struct ReverbRingBufferItem {
     s16 lengthA;            // first length in ring buffer (from startPos, at most until end)
     s16 lengthB;            // second length in ring buffer (from pos 0)
 } ReverbRingBufferItem;     // size = 0x14
-// #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_heap/func_800B842C.s")
+
 typedef struct SynthesisReverb {
     /*0x00, 0x00, 0x00*/ u8 resampleFlags;
     /*0x01, 0x01, 0x01*/ u8 useReverb;
@@ -103,6 +103,20 @@ typedef struct SynthesisReverb {
     // #endif
 } SynthesisReverb; // 0xCC <= size <= 0x100
 
+typedef struct CtlEntry {
+#if !defined(VERSION_SH) && !defined(VERSION_CN)
+    u8 unused;
+#endif
+    u8 numInstruments;
+    u8 numDrums;
+#if defined(VERSION_SH) || defined(VERSION_CN)
+    u8 bankId1;
+    u8 bankId2;
+#endif
+    struct Instrument** instruments;
+    struct Drum** drums;
+} CtlEntry; // size = 0xC
+
 extern u8 gBankLoadStatus[64];
 extern u8 gSeqLoadStatus[256];
 extern SequencePlayer gSequencePlayers[4];
@@ -141,6 +155,8 @@ extern NotePool gNoteFreeLists;
 extern const u8 D_800EDC48[4];
 extern s16 *gWaveSamples[6];
 extern NoteSubEu gDefaultNoteSub;
+extern s32 gAudioErrorFlags;
+extern CtlEntry* gCtlEntries;
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);

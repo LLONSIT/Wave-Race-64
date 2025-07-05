@@ -11,7 +11,27 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BA8E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAA08.s")
+// Original name: PercToPp
+Drum* Audio_GetDrum(s32 bankId, s32 drumId) {
+    Drum* drum;
+
+    if (drumId >= gCtlEntries[bankId].numDrums) {
+        // stubbed_printf("Audio: voiceman: Percussion Overflow %d,%d\n", drumId, gCtlEntries[bankId].numDrums);
+        gAudioErrorFlags = ((bankId << 8) + drumId) + 0x4000000;
+        return NULL;
+    }
+
+    drum = gCtlEntries[bankId].drums[drumId];
+    if (drum == NULL) {
+        // stubbed_printf("Audio: voiceman: Percpointer NULL %d,%d\n", bankId, drumId);
+        gAudioErrorFlags = ((bankId << 8) + drumId) + 0x5000000;
+    }
+    // Don't know where these actually belong, putting them here because why not
+    // Really, we just need these so the format strings could put into the .data section
+    // stubbed_printf("--4 %x\n", gAudioErrorFlags);
+    // stubbed_printf("Stoped Voice\n");
+    return drum;
+}
 
 // Original name: Nas_StartVoice
 void Audio_NoteInit(Note* note) {

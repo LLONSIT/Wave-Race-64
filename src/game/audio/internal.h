@@ -82,13 +82,13 @@ struct Instrument {
     /*0x18*/ struct AudioBankSound highNotesSound;
 }; // size = 0x20
 
-struct Drum {
+typedef struct Drum {
     u8 releaseRate;
     u8 pan;
     u8 loaded;
     struct AudioBankSound sound;
     struct AdsrEnvelope *envelope;
-};
+} Drum;
 
 struct AudioBank {
     struct Drum **drums;
