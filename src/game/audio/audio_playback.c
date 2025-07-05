@@ -13,7 +13,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAA08.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAA84.s")
+// Original name: Nas_StartVoice
+void Audio_NoteInit(Note* note) {
+    if (note->parentLayer->adsr.releaseRate == 0) {
+        Audio_AdsrInit(&note->adsr, note->parentLayer->seqChannel->adsr.envelope, &note->adsrVolScale);
+    } else {
+        Audio_AdsrInit(&note->adsr, note->parentLayer->adsr.envelope, &note->adsrVolScale);
+    }
+    note->adsr.state = ADSR_STATE_INITIAL;
+    note->noteSubEu = gDefaultNoteSub;
+}
 
 // Original name: Nas_StopVoice
 void Audio_NoteDisable(Note* note) {

@@ -72,7 +72,7 @@ gRightVolRampings = 0x8003B548;
 gLeftVolRampings = 0x80038548;
 gNoteFreeLists = 0x80044760;
 gWaveSamples = 0x800EDC30;
-// Audio_SeqLayerNoteRelease = 0x800EDC30;
+gDefaultNoteSub = 0x800ED020;
 
 // Some linker symbols
 sound_data_ctl_ROM_START = 0x40B530; //defined:true
@@ -163,6 +163,8 @@ Audio_SeqLayerNoteRelease = 0x800BB128;
 Audio_SeqLayerDecayRelease = 0x800BAF2C;
 Audio_SeqLayerNoteDecay = 0x800BB108;
 Audio_AudioListPushFront = 0x800BB69C;
+Audio_AdsrInit = 0x800BC598;
+Audio_NoteInit = 0x800BAA84;
 
 // Unsorted
 load_wave_samples = 0x800B67EC;

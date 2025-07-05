@@ -140,6 +140,7 @@ extern NoteSubEu* gNoteSubsEu;
 extern NotePool gNoteFreeLists;
 extern const u8 D_800EDC48[4];
 extern s16 *gWaveSamples[6];
+extern NoteSubEu gDefaultNoteSub;
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);

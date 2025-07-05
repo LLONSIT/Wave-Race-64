@@ -14,6 +14,6 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/func_800BC4B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/func_800BC598.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/Audio_AdsrInit.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/func_800BC5B8.s")
