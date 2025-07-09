@@ -78,6 +78,7 @@ gHeadsetPanQuantization = 0x800EDC4C;
 gHeadsetPanVolume = 0x800EDCF0;
 gStereoPanVolume = 0x800EDEF0;
 gDefaultPanVolume = 0x800EE0F0;
+gZeroNoteSub = 0x800ED010;
 
 // Some linker symbols
 sound_data_ctl_ROM_START = 0x40B530; //defined:true
@@ -135,7 +136,7 @@ AudioHeap_InitPersistentPoolsAndCaches = 0x800B799C;
 AudioHeap_InitTemporaryPoolsAndCaches = 0x800B7A58;
 AudioHeap_UpdateReverbs = 0x800B842C;
 AudioHeap_Init = 0x800B86C4;
-note_init_all = 0x800BBD1C;
+Audio_NoteInitAll = 0x800BBD1C;
 Audio_InitNoteFreeList = 0x800BB350;
 
 //seqplayer.c

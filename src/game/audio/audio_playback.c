@@ -389,4 +389,28 @@ void Audio_AudioListRemove(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BBA2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/note_init_all.s")
+// Original name: Nas_ChannelInit
+void Audio_NoteInitAll(void) {
+    Note* note;
+    s32 i;
+
+    for (i = 0; i < gMaxSimultaneousNotes; i++) {
+        note = &gNotes[i];
+        note->noteSubEu = gZeroNoteSub;
+        note->priority = NOTE_PRIORITY_DISABLED;
+        note->parentLayer = NO_LAYER;
+        note->wantedParentLayer = NO_LAYER;
+        note->prevParentLayer = NO_LAYER;
+        note->waveId = 0;
+        note->attributes.velocity = 0.0f;
+        note->adsrVolScale = 0;
+        note->adsr.state = ADSR_STATE_DISABLED;
+        note->adsr.action = 0;
+        note->vibratoState.active = false;
+        note->portamento.cur = 0.0f;
+        note->portamento.speed = 0.0f;
+        // This only works if NoteSynthesisBuffers are size 0xA0. See internal.h
+        note->synthesisState.synthesisBuffers =
+            AudioHeap_AllocZeroed(&gNotesAndBuffersPool, sizeof(NoteSynthesisBuffers));
+    }
+}

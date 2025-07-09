@@ -166,12 +166,13 @@ extern s8 gSoundMode;
 extern f32 gHeadsetPanVolume[128];
 extern f32 gStereoPanVolume[128];
 extern f32 gDefaultPanVolume[128];
+extern NoteSubEu gZeroNoteSub;
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
 void init_sample_dma_buffers(s32);
 void Audio_InitNoteFreeList(void);
-void note_init_all(void);
+void Audio_NoteInitAll(void);
 void Audio_AudioListRemove(Note* note);
 void Audio_InitNoteSub(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
 
