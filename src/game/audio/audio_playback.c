@@ -381,7 +381,13 @@ void Audio_AudioListRemove(Note* note) {
 // Original name: __Nas_InterTrack
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB8DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB910.s")
+// Original name: __Nas_InterReleaseTrack
+void Audio_NoteReleaseAndTakeOwnership(struct Note* note, struct SequenceChannelLayer* seqLayer) {
+    note->wantedParentLayer = seqLayer;
+    note->priority = NOTE_PRIORITY_STOPPING;
+    note->adsr.fadeOutVel = gAudioBufferParameters.updatesPerFrameInv;
+    note->adsr.action |= ADSR_ACTION_RELEASE;
+}
 
 // Original name: __Nas_ChLookFree
 Note* Audio_AllocNoteFromDisabled(NotePool* pool, SequenceChannelLayer* seqLayer) {
@@ -397,7 +403,7 @@ Note* Audio_AllocNoteFromDisabled(NotePool* pool, SequenceChannelLayer* seqLayer
 Note* Audio_AllocNoteFromDecaying(NotePool* pool, SequenceChannelLayer* seqLayer) {
     Note* note = AudioSeq_AudioListPopBack(&pool->decaying);
     if (note != NULL) {
-        func_800BB910(note, seqLayer);
+        Audio_NoteReleaseAndTakeOwnership(note, seqLayer);
         AudioSeq_AudioListPushBack(&pool->releasing, &note->listItem);
     }
     return note;
