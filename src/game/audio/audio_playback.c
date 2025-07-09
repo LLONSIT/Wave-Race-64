@@ -373,7 +373,32 @@ void Audio_AudioListRemove(Note* note) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_FindNodeWithPrioLessThan.s")
+// Original name: __Nas_GetLowerPrio
+Note* Audio_FindNodeWithPrioLessThan(AudioListItem* list, s32 limit) {
+    AudioListItem* cur = list->next;
+    AudioListItem* best;
+
+    if (cur == list) {
+        return NULL;
+    }
+
+    for (best = cur; cur != list; cur = cur->next) {
+        if (((Note*) best->u.value)->priority >= ((Note*) cur->u.value)->priority) {
+            best = cur;
+        }
+    }
+
+    if (best == NULL) {
+        return NULL;
+    }
+
+    if (limit <= ((Note*) best->u.value)->priority) {
+        return NULL;
+    }
+
+    Audio_AudioListRemove(best);
+    return best->u.value;
+}
 
 // Original name: Nas_EntryTrack
 void Audio_NoteInitForLayer(Note* note, SequenceChannelLayer* seqLayer) {
