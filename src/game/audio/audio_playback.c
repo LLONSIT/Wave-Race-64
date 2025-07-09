@@ -377,12 +377,16 @@ void Audio_AudioListRemove(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_NoteInitForLayer.s")
 
-// func_80012E28 in SF64
+// func_80012E28 in SF64 US 1.1
+// func_800BD8F4 in MK64 US
 // Original name: __Nas_InterTrack
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB8DC.s")
+void func_800BB8DC(Note* note, SequenceChannelLayer* seqLayer) {
+    Audio_SeqLayerNoteRelease(note->parentLayer);
+    note->wantedParentLayer = seqLayer;
+}
 
 // Original name: __Nas_InterReleaseTrack
-void Audio_NoteReleaseAndTakeOwnership(struct Note* note, struct SequenceChannelLayer* seqLayer) {
+void Audio_NoteReleaseAndTakeOwnership(Note* note, SequenceChannelLayer* seqLayer) {
     note->wantedParentLayer = seqLayer;
     note->priority = NOTE_PRIORITY_STOPPING;
     note->adsr.fadeOutVel = gAudioBufferParameters.updatesPerFrameInv;
