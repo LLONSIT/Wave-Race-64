@@ -373,34 +373,44 @@ void Audio_AudioListRemove(Note* note) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/AudioSeq_AudioListPopBack.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB7A8.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_NoteReleaseAndTakeOwnership.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_FindNodeWithPrioLessThan.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_NoteInitForLayer.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB938.s")
+// func_80012E28 in SF64
+// Original name: __Nas_InterTrack
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB8DC.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB910.s")
 
 // Original name: __Nas_ChLookFree
 Note* Audio_AllocNoteFromDisabled(NotePool* pool, SequenceChannelLayer* seqLayer) {
-    Note* note = AudioSeq_AudioListPopBack2(&pool->decaying);
+    Note* note = AudioSeq_AudioListPopBack(&pool->disabled);
     if (note != NULL) {
         Audio_NoteInitForLayer(note, seqLayer);
-        AudioSeq_AudioListPushBack(&pool->releasing, &note->listItem);
+        Audio_AudioListPushFront(&pool->active, &note->listItem);
     }
     return note;
 }
 
 // Original name: __Nas_ChLookRelease
 Note* Audio_AllocNoteFromDecaying(NotePool* pool, SequenceChannelLayer* seqLayer) {
-    Note* aNote = AudioSeq_AudioListPopBack(&pool->active, seqLayer->seqChannel->notePriority);
+    Note* note = AudioSeq_AudioListPopBack(&pool->decaying);
+    if (note != NULL) {
+        func_800BB910(note, seqLayer);
+        AudioSeq_AudioListPushBack(&pool->releasing, &note->listItem);
+    }
+    return note;
+}
+
+// Original name: __Nas_ChLookRelWait
+Note* Audio_AllocNoteFromActive(NotePool* pool, SequenceChannelLayer* seqLayer) {
+    Note* aNote = Audio_FindNodeWithPrioLessThan(&pool->active, seqLayer->seqChannel->notePriority);
 
     if (aNote == NULL) {
         // eu_stubbed_printf_0("Audio: C-Alloc : lowerPrio is NULL\n");
     } else {
-        Audio_NoteReleaseAndTakeOwnership(aNote, seqLayer);
+        func_800BB8DC(aNote, seqLayer);
         AudioSeq_AudioListPushBack(&pool->releasing, &aNote->listItem);
     }
 

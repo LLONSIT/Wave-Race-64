@@ -176,12 +176,14 @@ Audio_GetInstrument = 0x800BA8E8;
 Audio_GetInstrumentTunedSample = 0x800BA8AC;
 Audio_NoteSetResamplingRate = 0x800BA7E0;
 Audio_InitNoteSub = 0x800BA580;
-Audio_AllocNoteFromDecaying = 0x800BB9D4;
-AudioSeq_AudioListPopBack = 0x800BB708;
-Audio_NoteReleaseAndTakeOwnership = 0x800BB8DC;
-Audio_NoteInitForLayer = 0x800BB910;
-AudioSeq_AudioListPopBack2 = 0x800BCFEC;
-Audio_AllocNoteFromDisabled = 0x800BB984;
+Audio_AllocNoteFromActive = 0x800BB9D4;
+Audio_FindNodeWithPrioLessThan = 0x800BB708;
+func_800BB8DC = 0x800BB8DC;
+func_800BB910 = 0x800BB910;
+AudioSeq_AudioListPopBack = 0x800BCFEC;
+Audio_AllocNoteFromDecaying = 0x800BB984;
+Audio_NoteInitForLayer = 0x800BB7A8;
+Audio_AllocNoteFromDisabled = 0x800BB938;
 
 // Unsorted
 load_wave_samples = 0x800B67EC;
