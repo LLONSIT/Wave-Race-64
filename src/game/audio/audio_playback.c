@@ -361,7 +361,20 @@ void Audio_InitNoteFreeList(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB560.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_AudioListPushFront.s")
+// Original name: Nas_AddListHead
+void Audio_AudioListPushFront(AudioListItem* list, AudioListItem* item) {
+    // add 'item' to the front of the list given by 'list', if it's not in any list
+    if (item->prev != NULL) {
+        // eu_stubbed_printf_0("Error:Same List Add\n");
+    } else {
+        item->prev = list;
+        item->next = list->next;
+        list->next->prev = item;
+        list->next = item;
+        list->u.count++;
+        item->pool = list->pool;
+    }
+}
 
 // Original name: Nas_CutList
 void Audio_AudioListRemove(Note* note) {
