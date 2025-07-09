@@ -375,7 +375,43 @@ void Audio_AudioListRemove(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_FindNodeWithPrioLessThan.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_NoteInitForLayer.s")
+// Original name: Nas_EntryTrack
+void Audio_NoteInitForLayer(Note* note, SequenceChannelLayer* seqLayer) {
+    s32 pad[4];
+    s16 instId;
+    NoteSubEu* sub = &note->noteSubEu;
+
+    note->prevParentLayer = NO_LAYER;
+    note->parentLayer = seqLayer;
+    note->priority = seqLayer->seqChannel->notePriority;
+    seqLayer->notePropertiesNeedInit = true;
+    seqLayer->status = SOUND_LOAD_STATUS_DISCARDABLE; // "loaded"
+    seqLayer->note = note;
+    seqLayer->seqChannel->noteUnused = note;
+    seqLayer->seqChannel->layerUnused = seqLayer;
+    seqLayer->noteVelocity = 0.0f;
+
+    Audio_NoteInit(note);
+
+    instId = seqLayer->instOrWave;
+    if (instId == 0xFF) {
+        instId = seqLayer->seqChannel->instOrWave;
+    }
+    sub->sound.audioBankSound = seqLayer->sound;
+
+    if (instId >= 0x80) {
+        sub->isSyntheticWave = true;
+    } else {
+        sub->isSyntheticWave = false;
+    }
+
+    if (sub->isSyntheticWave) {
+        Audio_BuildSyntheticWave(note, seqLayer, instId);
+    }
+    sub->bankId = seqLayer->seqChannel->bankId;
+    sub->stereoHeadsetEffects = seqLayer->seqChannel->stereoHeadsetEffects;
+    sub->reverbIndex = seqLayer->seqChannel->reverbIndex & 3;
+}
 
 // func_80012E28 in SF64 US 1.1
 // func_800BD8F4 in MK64 US
@@ -423,7 +459,6 @@ Note* Audio_AllocNoteFromActive(NotePool* pool, SequenceChannelLayer* seqLayer) 
         func_800BB8DC(aNote, seqLayer);
         AudioSeq_AudioListPushBack(&pool->releasing, &aNote->listItem);
     }
-
     return aNote;
 }
 
