@@ -179,6 +179,9 @@ Audio_InitNoteSub = 0x800BA580;
 Audio_AllocNoteFromDecaying = 0x800BB9D4;
 AudioSeq_AudioListPopBack = 0x800BB708;
 Audio_NoteReleaseAndTakeOwnership = 0x800BB8DC;
+Audio_NoteInitForLayer = 0x800BB910;
+AudioSeq_AudioListPopBack2 = 0x800BCFEC;
+Audio_AllocNoteFromDisabled = 0x800BB984;
 
 // Unsorted
 load_wave_samples = 0x800B67EC;

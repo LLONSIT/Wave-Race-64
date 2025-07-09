@@ -379,11 +379,19 @@ void Audio_AudioListRemove(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_NoteReleaseAndTakeOwnership.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB910.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_NoteInitForLayer.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB938.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB984.s")
+// Original name: __Nas_ChLookFree
+Note* Audio_AllocNoteFromDisabled(NotePool* pool, SequenceChannelLayer* seqLayer) {
+    Note* note = AudioSeq_AudioListPopBack2(&pool->decaying);
+    if (note != NULL) {
+        Audio_NoteInitForLayer(note, seqLayer);
+        AudioSeq_AudioListPushBack(&pool->releasing, &note->listItem);
+    }
+    return note;
+}
 
 // Original name: __Nas_ChLookRelease
 Note* Audio_AllocNoteFromDecaying(NotePool* pool, SequenceChannelLayer* seqLayer) {
