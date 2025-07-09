@@ -22,7 +22,8 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_AudioListPushBack.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BCFEC.s")
+// In MK64 and SF64, this and the previous func are the same func. Investigate
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_AudioListPopBack.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BD02C.s")
 

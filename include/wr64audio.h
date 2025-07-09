@@ -157,7 +157,7 @@ extern PoolSplit sTemporaryCommonPoolSplit;
 extern NoteSubEu* gNoteSubsEu;
 extern NotePool gNoteFreeLists;
 extern const u8 D_800EDC48[4];
-extern s16 *gWaveSamples[6];
+extern s16* gWaveSamples[6];
 extern NoteSubEu gDefaultNoteSub;
 extern s32 gAudioErrorFlags;
 extern CtlEntry* gCtlEntries;
@@ -166,13 +166,14 @@ extern s8 gSoundMode;
 extern f32 gHeadsetPanVolume[128];
 extern f32 gStereoPanVolume[128];
 extern f32 gDefaultPanVolume[128];
+extern NoteSubEu gZeroNoteSub;
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
 void init_sample_dma_buffers(s32);
 void Audio_InitNoteFreeList(void);
-void note_init_all(void);
+void Audio_NoteInitAll(void);
 void Audio_AudioListRemove(Note* note);
 void Audio_InitNoteSub(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
-
+void Audio_AudioListPushFront(AudioListItem* list, AudioListItem* item);
 #endif

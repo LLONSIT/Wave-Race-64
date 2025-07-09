@@ -348,14 +348,14 @@ typedef struct Note {
     u8 pad3[8];
                          struct NoteSubEu noteSubEu;
 } Note;
-struct NoteSynthesisBuffers {
+typedef struct NoteSynthesisBuffers {
     s16 adpcmdecState[0x10];
     s16 finalResampleState[0x10];
     s16 mixEnvelopeState[0x28];
     s16 panResampleState[0x10];
     s16 panSamplesBuffer[0x20];
     s16 dummyResampleState[0x10];
-};
+} NoteSynthesisBuffers;
 typedef struct ReverbSettingsEU {
     u8 downsampleRate;
     u8 windowSize;

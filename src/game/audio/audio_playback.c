@@ -357,11 +357,71 @@ void Audio_InitNoteFreeList(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB400.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_NotePoolClear.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB560.s")
+// Original name: Nas_AllocVoices
+void Audio_NotePoolFill(NotePool* pool, s32 count) {
+    s32 i;
+    s32 j;
+    Note* note;
+    AudioListItem* source;
+    AudioListItem* dest;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_AudioListPushFront.s")
+    Audio_NotePoolClear(pool);
+
+    for (i = 0, j = 0; j < count; i++) {
+        if (i == 4) {
+            // eu_stubbed_printf_1("Alloc Error:Dim voice-Alloc %d", count);
+            return;
+        }
+
+        switch (i) {
+            case 0:
+                source = &gNoteFreeLists.disabled;
+                dest = &pool->disabled;
+                break;
+
+            case 1:
+                source = &gNoteFreeLists.decaying;
+                dest = &pool->decaying;
+                break;
+
+            case 2:
+                source = &gNoteFreeLists.releasing;
+                dest = &pool->releasing;
+                break;
+
+            case 3:
+                source = &gNoteFreeLists.active;
+                dest = &pool->active;
+                break;
+        }
+
+        while (j < count) {
+            note = AudioSeq_AudioListPopBack(source);
+            if (note == NULL) {
+                break;
+            }
+            AudioSeq_AudioListPushBack(dest, &note->listItem);
+            j++;
+        }
+    }
+}
+
+// Original name: Nas_AddListHead
+void Audio_AudioListPushFront(AudioListItem* list, AudioListItem* item) {
+    // add 'item' to the front of the list given by 'list', if it's not in any list
+    if (item->prev != NULL) {
+        // eu_stubbed_printf_0("Error:Same List Add\n");
+    } else {
+        item->prev = list;
+        item->next = list->next;
+        list->next->prev = item;
+        list->next = item;
+        list->u.count++;
+        item->pool = list->pool;
+    }
+}
 
 // Original name: Nas_CutList
 void Audio_AudioListRemove(Note* note) {
@@ -373,20 +433,144 @@ void Audio_AudioListRemove(Note* note) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB708.s")
+// Original name: __Nas_GetLowerPrio
+Note* Audio_FindNodeWithPrioLessThan(AudioListItem* list, s32 limit) {
+    AudioListItem* cur = list->next;
+    AudioListItem* best;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB7A8.s")
+    if (cur == list) {
+        return NULL;
+    }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB8DC.s")
+    for (best = cur; cur != list; cur = cur->next) {
+        if (((Note*) best->u.value)->priority >= ((Note*) cur->u.value)->priority) {
+            best = cur;
+        }
+    }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB910.s")
+    if (best == NULL) {
+        return NULL;
+    }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB938.s")
+    if (limit <= ((Note*) best->u.value)->priority) {
+        return NULL;
+    }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB984.s")
+    Audio_AudioListRemove(best);
+    return best->u.value;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB9D4.s")
+// Original name: Nas_EntryTrack
+void Audio_NoteInitForLayer(Note* note, SequenceChannelLayer* seqLayer) {
+    s32 pad[4];
+    s16 instId;
+    NoteSubEu* sub = &note->noteSubEu;
+
+    note->prevParentLayer = NO_LAYER;
+    note->parentLayer = seqLayer;
+    note->priority = seqLayer->seqChannel->notePriority;
+    seqLayer->notePropertiesNeedInit = true;
+    seqLayer->status = SOUND_LOAD_STATUS_DISCARDABLE; // "loaded"
+    seqLayer->note = note;
+    seqLayer->seqChannel->noteUnused = note;
+    seqLayer->seqChannel->layerUnused = seqLayer;
+    seqLayer->noteVelocity = 0.0f;
+
+    Audio_NoteInit(note);
+
+    instId = seqLayer->instOrWave;
+    if (instId == 0xFF) {
+        instId = seqLayer->seqChannel->instOrWave;
+    }
+    sub->sound.audioBankSound = seqLayer->sound;
+
+    if (instId >= 0x80) {
+        sub->isSyntheticWave = true;
+    } else {
+        sub->isSyntheticWave = false;
+    }
+
+    if (sub->isSyntheticWave) {
+        Audio_BuildSyntheticWave(note, seqLayer, instId);
+    }
+    sub->bankId = seqLayer->seqChannel->bankId;
+    sub->stereoHeadsetEffects = seqLayer->seqChannel->stereoHeadsetEffects;
+    sub->reverbIndex = seqLayer->seqChannel->reverbIndex & 3;
+}
+
+// func_80012E28 in SF64 US 1.1
+// func_800BD8F4 in MK64 US
+// Original name: __Nas_InterTrack
+void func_800BB8DC(Note* note, SequenceChannelLayer* seqLayer) {
+    Audio_SeqLayerNoteRelease(note->parentLayer);
+    note->wantedParentLayer = seqLayer;
+}
+
+// Original name: __Nas_InterReleaseTrack
+void Audio_NoteReleaseAndTakeOwnership(Note* note, SequenceChannelLayer* seqLayer) {
+    note->wantedParentLayer = seqLayer;
+    note->priority = NOTE_PRIORITY_STOPPING;
+    note->adsr.fadeOutVel = gAudioBufferParameters.updatesPerFrameInv;
+    note->adsr.action |= ADSR_ACTION_RELEASE;
+}
+
+// Original name: __Nas_ChLookFree
+Note* Audio_AllocNoteFromDisabled(NotePool* pool, SequenceChannelLayer* seqLayer) {
+    Note* note = AudioSeq_AudioListPopBack(&pool->disabled);
+    if (note != NULL) {
+        Audio_NoteInitForLayer(note, seqLayer);
+        Audio_AudioListPushFront(&pool->active, &note->listItem);
+    }
+    return note;
+}
+
+// Original name: __Nas_ChLookRelease
+Note* Audio_AllocNoteFromDecaying(NotePool* pool, SequenceChannelLayer* seqLayer) {
+    Note* note = AudioSeq_AudioListPopBack(&pool->decaying);
+    if (note != NULL) {
+        Audio_NoteReleaseAndTakeOwnership(note, seqLayer);
+        AudioSeq_AudioListPushBack(&pool->releasing, &note->listItem);
+    }
+    return note;
+}
+
+// Original name: __Nas_ChLookRelWait
+Note* Audio_AllocNoteFromActive(NotePool* pool, SequenceChannelLayer* seqLayer) {
+    Note* aNote = Audio_FindNodeWithPrioLessThan(&pool->active, seqLayer->seqChannel->notePriority);
+
+    if (aNote == NULL) {
+        // eu_stubbed_printf_0("Audio: C-Alloc : lowerPrio is NULL\n");
+    } else {
+        func_800BB8DC(aNote, seqLayer);
+        AudioSeq_AudioListPushBack(&pool->releasing, &aNote->listItem);
+    }
+    return aNote;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BBA2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/note_init_all.s")
+// Original name: Nas_ChannelInit
+void Audio_NoteInitAll(void) {
+    Note* note;
+    s32 i;
+
+    for (i = 0; i < gMaxSimultaneousNotes; i++) {
+        note = &gNotes[i];
+        note->noteSubEu = gZeroNoteSub;
+        note->priority = NOTE_PRIORITY_DISABLED;
+        note->parentLayer = NO_LAYER;
+        note->wantedParentLayer = NO_LAYER;
+        note->prevParentLayer = NO_LAYER;
+        note->waveId = 0;
+        note->attributes.velocity = 0.0f;
+        note->adsrVolScale = 0;
+        note->adsr.state = ADSR_STATE_DISABLED;
+        note->adsr.action = 0;
+        note->vibratoState.active = false;
+        note->portamento.cur = 0.0f;
+        note->portamento.speed = 0.0f;
+        // This only works if NoteSynthesisBuffers are size 0xA0. See internal.h
+        note->synthesisState.synthesisBuffers =
+            AudioHeap_AllocZeroed(&gNotesAndBuffersPool, sizeof(NoteSynthesisBuffers));
+    }
+}
