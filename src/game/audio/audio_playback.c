@@ -357,9 +357,56 @@ void Audio_InitNoteFreeList(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB400.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_NotePoolClear.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB560.s")
+// Original name: Nas_AllocVoices
+void Audio_NotePoolFill(NotePool* pool, s32 count) {
+    s32 i;
+    s32 j;
+    Note* note;
+    AudioListItem* source;
+    AudioListItem* dest;
+
+    Audio_NotePoolClear(pool);
+
+    for (i = 0, j = 0; j < count; i++) {
+        if (i == 4) {
+            // eu_stubbed_printf_1("Alloc Error:Dim voice-Alloc %d", count);
+            return;
+        }
+
+        switch (i) {
+            case 0:
+                source = &gNoteFreeLists.disabled;
+                dest = &pool->disabled;
+                break;
+
+            case 1:
+                source = &gNoteFreeLists.decaying;
+                dest = &pool->decaying;
+                break;
+
+            case 2:
+                source = &gNoteFreeLists.releasing;
+                dest = &pool->releasing;
+                break;
+
+            case 3:
+                source = &gNoteFreeLists.active;
+                dest = &pool->active;
+                break;
+        }
+
+        while (j < count) {
+            note = AudioSeq_AudioListPopBack(source);
+            if (note == NULL) {
+                break;
+            }
+            AudioSeq_AudioListPushBack(dest, &note->listItem);
+            j++;
+        }
+    }
+}
 
 // Original name: Nas_AddListHead
 void Audio_AudioListPushFront(AudioListItem* list, AudioListItem* item) {

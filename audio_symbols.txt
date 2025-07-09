@@ -184,6 +184,8 @@ AudioSeq_AudioListPopBack = 0x800BCFEC;
 Audio_AllocNoteFromDecaying = 0x800BB984;
 Audio_NoteInitForLayer = 0x800BB7A8;
 Audio_AllocNoteFromDisabled = 0x800BB938;
+Audio_NotePoolFill = 0x800BB560;
+Audio_NotePoolClear = 0x800BB400;
 
 // Unsorted
 load_wave_samples = 0x800B67EC;
