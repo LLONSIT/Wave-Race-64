@@ -176,6 +176,9 @@ Audio_GetInstrument = 0x800BA8E8;
 Audio_GetInstrumentTunedSample = 0x800BA8AC;
 Audio_NoteSetResamplingRate = 0x800BA7E0;
 Audio_InitNoteSub = 0x800BA580;
+Audio_AllocNoteFromDecaying = 0x800BB9D4;
+AudioSeq_AudioListPopBack = 0x800BB708;
+Audio_NoteReleaseAndTakeOwnership = 0x800BB8DC;
 
 // Unsorted
 load_wave_samples = 0x800B67EC;

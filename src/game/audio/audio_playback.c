@@ -373,11 +373,11 @@ void Audio_AudioListRemove(Note* note) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB708.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/AudioSeq_AudioListPopBack.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB7A8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB8DC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_NoteReleaseAndTakeOwnership.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB910.s")
 
@@ -385,7 +385,19 @@ void Audio_AudioListRemove(Note* note) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB984.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BB9D4.s")
+// Original name: __Nas_ChLookRelease
+Note* Audio_AllocNoteFromDecaying(NotePool* pool, SequenceChannelLayer* seqLayer) {
+    Note* aNote = AudioSeq_AudioListPopBack(&pool->active, seqLayer->seqChannel->notePriority);
+
+    if (aNote == NULL) {
+        // eu_stubbed_printf_0("Audio: C-Alloc : lowerPrio is NULL\n");
+    } else {
+        Audio_NoteReleaseAndTakeOwnership(aNote, seqLayer);
+        AudioSeq_AudioListPushBack(&pool->releasing, &aNote->listItem);
+    }
+
+    return aNote;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BBA2C.s")
 
