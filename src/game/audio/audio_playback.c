@@ -701,7 +701,72 @@ Note* Audio_AllocNoteFromActive(NotePool* pool, SequenceChannelLayer* seqLayer) 
     return aNote;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BBA2C.s")
+// Original name: Nas_AllocationOnRequest
+Note* Audio_AllocNote(struct SequenceChannelLayer* seqLayer) {
+    Note* ret;
+    u32 policy = seqLayer->seqChannel->noteAllocPolicy;
+
+    if (policy & NOTE_ALLOC_LAYER) {
+        ret = seqLayer->note;
+        if (ret != NULL && ret->prevParentLayer == seqLayer && ret->wantedParentLayer == NO_LAYER) {
+            Audio_NoteReleaseAndTakeOwnership(ret, seqLayer);
+            Audio_AudioListRemove(&ret->listItem);
+            AudioSeq_AudioListPushBack(&ret->listItem.pool->releasing, &ret->listItem);
+            return ret;
+        }
+    }
+
+    if (policy & NOTE_ALLOC_CHANNEL) {
+        if (!(ret = Audio_AllocNoteFromDisabled(&seqLayer->seqChannel->notePool, seqLayer)) &&
+            !(ret = Audio_AllocNoteFromDecaying(&seqLayer->seqChannel->notePool, seqLayer)) &&
+            !(ret = Audio_AllocNoteFromActive(&seqLayer->seqChannel->notePool, seqLayer))) {
+            // eu_stubbed_printf_0("Sub Limited Warning: Drop Voice");
+            seqLayer->status = SOUND_LOAD_STATUS_NOT_LOADED;
+            return NULL;
+        }
+        return ret;
+    }
+
+    if (policy & NOTE_ALLOC_SEQ) {
+        if (!(ret = Audio_AllocNoteFromDisabled(&seqLayer->seqChannel->notePool, seqLayer)) &&
+            !(ret = Audio_AllocNoteFromDisabled(&seqLayer->seqChannel->seqPlayer->notePool, seqLayer)) &&
+            !(ret = Audio_AllocNoteFromDecaying(&seqLayer->seqChannel->notePool, seqLayer)) &&
+            !(ret = Audio_AllocNoteFromDecaying(&seqLayer->seqChannel->seqPlayer->notePool, seqLayer)) &&
+            !(ret = Audio_AllocNoteFromActive(&seqLayer->seqChannel->notePool, seqLayer)) &&
+            !(ret = Audio_AllocNoteFromActive(&seqLayer->seqChannel->seqPlayer->notePool, seqLayer))) {
+            // eu_stubbed_printf_0("Warning: Drop Voice");
+            seqLayer->status = SOUND_LOAD_STATUS_NOT_LOADED;
+            return NULL;
+        }
+        return ret;
+    }
+
+    if (policy & NOTE_ALLOC_GLOBAL_FREELIST) {
+        if (!(ret = Audio_AllocNoteFromDisabled(&gNoteFreeLists, seqLayer)) &&
+            !(ret = Audio_AllocNoteFromDecaying(&gNoteFreeLists, seqLayer)) &&
+            !(ret = Audio_AllocNoteFromActive(&gNoteFreeLists, seqLayer))) {
+            // eu_stubbed_printf_0("Warning: Drop Voice");
+            seqLayer->status = SOUND_LOAD_STATUS_NOT_LOADED;
+            return NULL;
+        }
+        return ret;
+    }
+
+    if (!(ret = Audio_AllocNoteFromDisabled(&seqLayer->seqChannel->notePool, seqLayer)) &&
+        !(ret = Audio_AllocNoteFromDisabled(&seqLayer->seqChannel->seqPlayer->notePool, seqLayer)) &&
+        !(ret = Audio_AllocNoteFromDisabled(&gNoteFreeLists, seqLayer)) &&
+        !(ret = Audio_AllocNoteFromDecaying(&seqLayer->seqChannel->notePool, seqLayer)) &&
+        !(ret = Audio_AllocNoteFromDecaying(&seqLayer->seqChannel->seqPlayer->notePool, seqLayer)) &&
+        !(ret = Audio_AllocNoteFromDecaying(&gNoteFreeLists, seqLayer)) &&
+        !(ret = Audio_AllocNoteFromActive(&seqLayer->seqChannel->notePool, seqLayer)) &&
+        !(ret = Audio_AllocNoteFromActive(&seqLayer->seqChannel->seqPlayer->notePool, seqLayer)) &&
+        !(ret = Audio_AllocNoteFromActive(&gNoteFreeLists, seqLayer))) {
+        // eu_stubbed_printf_0("Warning: Drop Voice");
+        seqLayer->status = SOUND_LOAD_STATUS_NOT_LOADED;
+        return NULL;
+    }
+    return ret;
+}
 
 // Original name: Nas_ChannelInit
 void Audio_NoteInitAll(void) {

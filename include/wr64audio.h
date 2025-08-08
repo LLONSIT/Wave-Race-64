@@ -45,6 +45,17 @@
 #define NOTE_PRIORITY_MIN 2
 #define NOTE_PRIORITY_DEFAULT 3
 
+// Mask bits denoting where to allocate notes from, according to a channel's
+// noteAllocPolicy. Despite being checked as bitmask bits, the bits are not
+// orthogonal; rather, the smallest bit wins, except for NOTE_ALLOC_LAYER,
+// which *is* orthogonal to the other. SEQ implicitly includes CHANNEL.
+// If none of the CHANNEL/SEQ/GLOBAL_FREELIST bits are set, all three locations
+// are tried.
+#define NOTE_ALLOC_LAYER 1
+#define NOTE_ALLOC_CHANNEL 2
+#define NOTE_ALLOC_SEQ 4
+#define NOTE_ALLOC_GLOBAL_FREELIST 8
+
 #define NO_LAYER ((struct SequenceChannelLayer*) (-1))
 
 typedef struct PoolSplit {

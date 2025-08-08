@@ -159,6 +159,7 @@ note_apply_headset_pan_effects = 0x800B6F18;
 gSynthesisReverbs = 0x80038110;
 
 // audio_playback.c
+Audio_AllocNote = 0x800BBA2C;
 Audio_ProcessNotes = 0x800BAB94;
 Audio_NoteVibratoInit = 0x800BC4B0;
 Audio_AdsrUpdate = 0x800BC5B8;
