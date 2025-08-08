@@ -190,6 +190,7 @@ extern NoteSubEu gZeroNoteSub;
 extern f32 gResampleRate;
 extern NotePool gNoteFreeLists;
 extern SequenceChannel gSequenceChannelNone;
+extern f32 gPitchBendFrequencyScale[256];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);

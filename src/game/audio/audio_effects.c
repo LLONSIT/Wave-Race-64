@@ -82,7 +82,20 @@ void Audio_SequencePlayerProcessSound(SequencePlayer* seqPlayer) {
 }
 
 // Original name: Nas_SweepCalculator
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_GetPortamentoFreqScale.s")
+f32 Audio_GetPortamentoFreqScale(struct Portamento* p) {
+    u32 v0;
+    f32 result;
+
+    p->cur += p->speed;
+    v0 = (u32) p->cur;
+
+    if (v0 > 127) {
+        v0 = 127;
+    }
+
+    result = 1.0f + p->extent * (gPitchBendFrequencyScale[v0 + 128] - 1.0f);
+    return result;
+}
 
 // Original name: Nas_ModTableRead
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_GetVibratoPitchChange.s")

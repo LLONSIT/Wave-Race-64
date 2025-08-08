@@ -80,6 +80,7 @@ gStereoPanVolume = 0x800EDEF0;
 gDefaultPanVolume = 0x800EE0F0;
 gZeroNoteSub = 0x800ED010;
 gSequenceChannelNone = 0x80044688;
+gPitchBendFrequencyScale = 0x800EC9E4;
 
 // Some linker symbols
 sound_data_ctl_ROM_START = 0x40B530; //defined:true
