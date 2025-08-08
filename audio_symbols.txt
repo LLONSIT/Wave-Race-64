@@ -83,10 +83,10 @@ gSequenceChannelNone = 0x80044688;
 gPitchBendFrequencyScale = 0x800EC9E4;
 
 // Some linker symbols
-sound_data_ctl_ROM_START = 0x40B530; //defined:true
-sound_data_ROM_START = 0x428C30; //defined:true
-sound_sequences_ROM_START = 0x7AE8B0; //defined:true
-bank_sets_ROM_START = 0x7C4B70; //defined:true
+gSoundDataADSR = 0x40B530;
+gSoundDataRaw = 0x428C30;
+gMusicData = 0x7AE8B0;
+gBankSetsData = 0x7C4B70;
 
 //bank_sets_ROM_END = ????
 
@@ -97,23 +97,23 @@ gAudio_Unk80045610 = 0x80045610;
 // Functions
 
 //load.c
-audio_dma_copy_immediate = 0x800B8CB0; //defined:true
-audio_dma_copy_async = 0x800B8D28; // defined:true
-audio_dma_partial_copy_async = 0x800B8D88; //defined:true
-decrease_sample_dma_ttls = 0x800B8E34; //defined:true
-dma_sample_data = 0x800B8F3C; //defined:true
-init_sample_dma_buffers = 0x800B9244;
-patch_sound = 0x800B9518; //defined:true
-patch_audio_bank = 0x800B9618; //defined:true
-bank_load_immediate = 0x800B9774; //defined:true
-bank_load_async = 0x800B98C0; //defined:true
-sequence_dma_immediate = 0x800B9A24; //defined:true
-sequence_dma_async = 0x800B9AC4; //defined:true
-get_missing_bank = 0x800B9BEC; //defined:true
-load_banks_immediate = 0x800B9D24; //defined:true
-preload_sequence = 0x800B9E40; //defined:true
-load_sequence = 0x800B9F3C; //defined:true
-load_sequence_internal = 0x800B9F90; //defined:true
+Audio_DmaCopyImmediate = 0x800B8CB0; //defined:true
+Audio_DmaCopyAsync = 0x800B8D28; // defined:true
+Audio_DmaPartialCopyAsync = 0x800B8D88; //defined:true
+AudioLoad_DecreaseSampleDmaTtls = 0x800B8E34; //defined:true
+AudioLoad_DmaSampleData = 0x800B8F3C; //defined:true
+AudioLoad_InitSampleDmaBuffers = 0x800B9244;
+Audio_PatchSound = 0x800B9518; //defined:true
+Audio_PatchBank = 0x800B9618; //defined:true
+Audio_BankLoadImmediate = 0x800B9774; //defined:true
+Audio_BankLoadAsync = 0x800B98C0; //defined:true
+AudioLoad_SequenceDmaImmediate = 0x800B9A24; //defined:true
+AudioLoad_SequenceDmaAsync = 0x800B9AC4; //defined:true
+AudioLoad_GetMissingBank = 0x800B9BEC; //defined:true
+Audio_LoadBanksImmediate = 0x800B9D24; //defined:true
+Audio_PreLoadSequence = 0x800B9E40; //defined:true
+Audio_LoadSequence = 0x800B9F3C; //defined:true
+Audio_LoadSequenceInternal = 0x800B9F90; //defined:true
  
 //audio_heap.c
 AudioHeap_AllocZeroed = 0x800B7760; //defined:true

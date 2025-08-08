@@ -90,17 +90,17 @@ typedef struct Drum {
     struct AdsrEnvelope *envelope;
 } Drum;
 
-struct AudioBank {
+typedef struct AudioBank {
     struct Drum **drums;
     struct Instrument *instruments[1];
-}; // dynamic size
+} AudioBank; // dynamic size
 
-struct M64ScriptState {
+typedef struct M64ScriptState {
     u8 *pc;
     u8 *stack[4];
     u8 remLoopIters[4];
     u8 depth;
-};
+} M64ScriptState;
 typedef struct SequencePlayer {
                             u8 enabled : 1;
                      u8 finished : 1;

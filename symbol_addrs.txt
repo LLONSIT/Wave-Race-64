@@ -256,7 +256,7 @@ D_80228058 = 0x80228058;
 
 
 //Names from n64decomp/mk64
-audio_init = 0x800BA100;
+AudioLoad_Init = 0x800BA100;
 gSinTable = 0x80154350;
 gAudioThread = 0x80153D40;
 jtbl_800E9B70 = 0x800E9B70; //size:128 type:jtbl

@@ -50,6 +50,8 @@
 
 #define IS_SEQUENCE_CHANNEL_VALID(ptr) ((uintptr_t) (ptr) != (uintptr_t) & gSequenceChannelNone)
 
+#define PATCH(x, base) (patched = (void*) ((uintptr_t) (x) + (uintptr_t) base))
+
 // Mask bits denoting where to allocate notes from, according to a channel's
 // noteAllocPolicy. Despite being checked as bitmask bits, the bits are not
 // orthogonal; rather, the smallest bit wins, except for NOTE_ALLOC_LAYER,
@@ -143,6 +145,32 @@ typedef struct CtlEntry {
     struct Drum** drums;
 } CtlEntry; // size = 0xC
 
+typedef struct SharedDma {
+    /*0x0*/ u8* buffer;       // target, points to pre-allocated buffer
+    /*0x4*/ uintptr_t source; // device address
+    /*0x8*/ u16 sizeUnused;   // set to bufSize, never read
+    /*0xA*/ u16 bufSize;      // size of buffer
+    /*0xC*/ u8 unused2;       // set to 0, never read
+    /*0xD*/ u8 reuseIndex;    // position in sSampleDmaReuseQueue1/2, if ttl == 0
+    /*0xE*/ u8 ttl;           // duration after which the DMA can be discarded
+} SharedDma;
+
+typedef struct AudioBufferParameters {
+    /*0x00*/ s16 presetUnk4; // audio frames per vsync?
+    /*0x02*/ u16 frequency;
+    /*0x04*/ u16 aiFrequency; // ?16
+    /*0x06*/ s16 samplesPerFrameTarget;
+    /*0x08*/ s16 maxAiBufferLength;
+    /*0x0A*/ s16 minAiBufferLength;
+    /*0x0C*/ s16 updatesPerFrame;
+    /*0x0E*/ s16 samplesPerUpdate;
+    /*0x10*/ s16 samplesPerUpdateMax;
+    /*0x12*/ s16 samplesPerUpdateMin;
+    /*0x14*/ f32 resampleRate;             // contains 32000.0f / frequency
+    /*0x18*/ f32 updatesPerFrameInv;       // 1.0f / updatesPerFrame
+    /*0x1C*/ f32 unkUpdatesPerFrameScaled; // 3.0f / (1280.0f * updatesPerFrame)
+} AudioBufferParameters;
+
 extern u8 gBankLoadStatus[64];
 extern u8 gSeqLoadStatus[256];
 extern SequencePlayer gSequencePlayers[4];
@@ -193,10 +221,51 @@ extern f32 gResampleRate;
 extern NotePool gNoteFreeLists;
 extern SequenceChannel gSequenceChannelNone;
 extern f32 gPitchBendFrequencyScale[256];
+extern struct AudioBufferParametersEU gAudioBufferParameters;
+
+extern struct SoundAllocPool gNotesAndBuffersPool;
+extern s32 gMaxSimultaneousNotes;
+extern u32 sDmaBufSize;
+extern u8 sSampleDmaReuseQueueTail1;
+extern u8 sSampleDmaReuseQueueTail2;
+extern s32 gCurrAudioFrameDmaCount; // volatile?
+extern OSIoMesg gCurrAudioFrameDmaIoMesgBufs[200];
+extern OSMesgQueue gCurrAudioFrameDmaQueue;
+
+extern struct SoundMultiPool gBankLoadedPool;
+extern struct CtlEntry* gCtlEntries;
+extern u8 gBankLoadStatus[0x40];
+
+extern ALSeqFile* gSeqFileHeader;
+extern ALSeqFile* gAlCtlHeader;
+extern ALSeqFile* gAlTbl;
+extern s32 D_800452F8;
+extern u32 gSampleDmaNumListItems;
+extern u32 sSampleDmaListSize1;
+extern u8 sSampleDmaReuseQueue1[256];
+extern char sSampleDmaReuseQueue2[256];
+extern char sSampleDmaReuseQueueHead1;
+extern char sSampleDmaReuseQueueHead2;
+extern struct SharedDma sSampleDmas[0x60];
+extern OSMesgQueue gAudioDmaMesgQueue;
+extern OSMesg gAudioDmaMesg;
+extern OSIoMesg gAudioDmaIoMesg;
+extern u8* gAlBankSets;
+extern u16 gSequenceCount;
+extern struct SequencePlayer gSequencePlayers[4];
+extern s32 gRefreshRate;
+extern f32 gAudio_Unk80045610;
+extern s32 gAudioHeapSize;
+extern u64 gAudioGlobalsStartMarker;
+extern u64 gAudioGlobalsEndMarker;
+extern u8 gSoundDataADSR[];
+extern u8 gSoundDataRaw[];
+extern u8 gMusicData[];
+extern u8 gBankSetsData[];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
-void init_sample_dma_buffers(s32);
+void AudioLoad_InitSampleDmaBuffers(s32);
 void Audio_InitNoteFreeList(void);
 void Audio_NoteInitAll(void);
 void Audio_AudioListRemove(Note* note);
@@ -205,4 +274,9 @@ void Audio_AudioListPushFront(AudioListItem* list, AudioListItem* item);
 void Audio_SeqLayerNoteRelease(SequenceChannelLayer* layer);
 void Audio_NoteInitForLayer(Note *note, SequenceChannelLayer *seqLayer);
 f32 Audio_AdsrUpdate(AdsrState *adsr);
+void port_init(void);
+s32 init_sequence_players(void);
+void AudioHeap_InitMainPools(s32 initPoolSize);
+void Audio_LoadSequenceInternal(u32 player, u32 seqId, s32 loadAsync);
+
 #endif

@@ -54,7 +54,7 @@ struct VolumeChange {
 extern s16 D_800EDC70[64];
 
 // Externs
-void* dma_sample_data(uintptr_t devAddr, u32 size, s32 arg2, u8* dmaIndexRef);
+void* AudioLoad_DmaSampleData(uintptr_t devAddr, u32 size, s32 arg2, u8* dmaIndexRef);
 
 // File functions
 u64* synthesis_do_one_audio_update(s16* aiBuf, s32 bufLen, u64* cmd, s32 updateIndex);
@@ -215,7 +215,7 @@ u64 *synthesis_process_note(struct Note *note, struct NoteSubEu *noteSubEu, stru
                             if (audioBookSample->loaded == 0x81) {
                                 v0_2 = sampleAddr + temp * 9;
                             } else {
-                                v0_2 = dma_sample_data(
+                                v0_2 = AudioLoad_DmaSampleData(
                                     (uintptr_t) (sampleAddr + temp * 9),
                                     t0 * 9, flags, &synthesisState->sampleDmaIndex);
                             }
