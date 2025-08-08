@@ -45,7 +45,41 @@ void Audio_SequenceChannelProcessSound(SequenceChannel* seqChannel, s32 recalcul
 }
 
 // Original name: Nas_MainCtrl
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_SequencePlayerProcessSound.s")
+void Audio_SequencePlayerProcessSound(SequencePlayer* seqPlayer) {
+    s32 i;
+
+    if (seqPlayer->fadeRemainingFrames != 0) {
+        seqPlayer->fadeVolume += seqPlayer->fadeVelocity;
+        seqPlayer->recalculateVolume = true;
+
+        if (seqPlayer->fadeVolume > 1.0f) {
+            seqPlayer->fadeVolume = 1.0f;
+        }
+        if (seqPlayer->fadeVolume < 0) {
+            seqPlayer->fadeVolume = 0;
+        }
+
+        if (--seqPlayer->fadeRemainingFrames == 0) {
+            if (seqPlayer->state == 2) {
+                AudioSeq_SequencePlayerDisable(seqPlayer);
+                return;
+            }
+        }
+    }
+
+    if (seqPlayer->recalculateVolume) {
+        seqPlayer->appliedFadeVolume = seqPlayer->fadeVolume * seqPlayer->fadeVolumeScale;
+    }
+
+    // Process channels
+    for (i = 0; i < CHANNELS_MAX; i++) {
+        if (IS_SEQUENCE_CHANNEL_VALID(seqPlayer->channels[i]) == true && seqPlayer->channels[i]->enabled == true) {
+            Audio_SequenceChannelProcessSound(seqPlayer->channels[i], seqPlayer->recalculateVolume);
+        }
+    }
+
+    seqPlayer->recalculateVolume = false;
+}
 
 // Original name: Nas_SweepCalculator
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_GetPortamentoFreqScale.s")

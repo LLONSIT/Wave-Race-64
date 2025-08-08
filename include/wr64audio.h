@@ -45,6 +45,11 @@
 #define NOTE_PRIORITY_MIN 2
 #define NOTE_PRIORITY_DEFAULT 3
 
+#define LAYERS_MAX 4
+#define CHANNELS_MAX 16
+
+#define IS_SEQUENCE_CHANNEL_VALID(ptr) ((uintptr_t) (ptr) != (uintptr_t) & gSequenceChannelNone)
+
 // Mask bits denoting where to allocate notes from, according to a channel's
 // noteAllocPolicy. Despite being checked as bitmask bits, the bits are not
 // orthogonal; rather, the smallest bit wins, except for NOTE_ALLOC_LAYER,
@@ -184,6 +189,7 @@ extern f32 gDefaultPanVolume[128];
 extern NoteSubEu gZeroNoteSub;
 extern f32 gResampleRate;
 extern NotePool gNoteFreeLists;
+extern SequenceChannel gSequenceChannelNone;
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
