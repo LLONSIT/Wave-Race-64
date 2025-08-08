@@ -201,7 +201,13 @@ void Audio_NoteVibratoInit(Note* note) {
 }
 
 // Original name: Nas_EnvInit
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_AdsrInit.s")
+void Audio_AdsrInit(AdsrState* adsr, AdsrEnvelope* envelope, s16* volOut) {
+    adsr->action = 0;
+    adsr->state = ADSR_STATE_DISABLED;
+    adsr->delay = 0;
+    adsr->envelope = envelope;
+    adsr->current = 0.0f;
+}
 
 // Original name: Nas_EnvProcess
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_AdsrUpdate.s")

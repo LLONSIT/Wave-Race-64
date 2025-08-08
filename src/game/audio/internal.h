@@ -44,26 +44,26 @@ typedef struct AdpcmLoop {
     s16 state[16]; // only exists if count != 0. 8-byte aligned
 } AdpcmLoop;
 
-struct AdpcmBook {
+typedef struct AdpcmBook {
     s32 order;
     s32 npredictors;
     s16 book[1]; // size 8 * order * npredictors. 8-byte aligned
-};
+} AdpcmBook;
     
-struct AdsrEnvelope {
+typedef struct AdsrEnvelope {
     s16 delay;
     s16 arg;
-}; // size = 0x4
+} AdsrEnvelope; // size = 0x4
 
 
-struct AudioBankSample {
+typedef struct AudioBankSample {
     u8 unused;
     u8 loaded;
     u8 *sampleAddr;
     struct AdpcmLoop *loop;
     struct AdpcmBook *book;
     u32 sampleSize; // never read. either 0 or 1 mod 9, depending on padding
-};
+} AudioBankSample;
 
 typedef struct AudioBankSound {
     struct AudioBankSample *sample;
