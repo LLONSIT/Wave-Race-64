@@ -210,4 +210,116 @@ void Audio_AdsrInit(AdsrState* adsr, AdsrEnvelope* envelope, s16* volOut) {
 }
 
 // Original name: Nas_EnvProcess
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_AdsrUpdate.s")
+f32 Audio_AdsrUpdate(AdsrState* adsr) {
+    u8 action = adsr->action;
+    u8 state = adsr->state;
+
+    switch (state) {
+        case ADSR_STATE_DISABLED:
+            return 0;
+
+        case ADSR_STATE_INITIAL: {
+            if (action & ADSR_ACTION_HANG) {
+                adsr->state = ADSR_STATE_HANG;
+                break;
+            }
+            // fallthrough
+        }
+
+        case ADSR_STATE_START_LOOP:
+            adsr->envIndex = 0;
+            adsr->state = ADSR_STATE_LOOP;
+            // fallthrough
+
+        case ADSR_STATE_LOOP:
+            adsr->delay = (adsr->envelope[adsr->envIndex].delay);
+            switch (adsr->delay) {
+                case ADSR_DISABLE:
+                    adsr->state = ADSR_STATE_DISABLED;
+                    break;
+                case ADSR_HANG:
+                    adsr->state = ADSR_STATE_HANG;
+                    break;
+                case ADSR_GOTO:
+                    adsr->envIndex = (adsr->envelope[adsr->envIndex].arg);
+                    break;
+                case ADSR_RESTART:
+                    adsr->state = ADSR_STATE_INITIAL;
+                    break;
+
+                default:
+                    if (adsr->delay >= 4) {
+                        adsr->delay = adsr->delay * gAudioBufferParameters.updatesPerFrame / 4;
+                    }
+
+                    if (adsr->delay == 0) {
+                        adsr->delay = 1;
+                    }
+                    adsr->target = (f32) (adsr->envelope[adsr->envIndex].arg) / 32767.0f;
+                    adsr->target = adsr->target * adsr->target;
+                    adsr->velocity = (adsr->target - adsr->current) / adsr->delay;
+                    adsr->state = ADSR_STATE_FADE;
+                    adsr->envIndex++;
+                    break;
+            }
+            if (adsr->state != ADSR_STATE_FADE) {
+                break;
+            }
+            // fallthrough
+
+        case ADSR_STATE_FADE:
+            adsr->current += adsr->velocity;
+            if (--adsr->delay <= 0) {
+                adsr->state = ADSR_STATE_LOOP;
+            }
+            // fallthrough
+
+        case ADSR_STATE_HANG:
+            break;
+
+        case ADSR_STATE_DECAY:
+        case ADSR_STATE_RELEASE: {
+            adsr->current -= adsr->fadeOutVel;
+            if (adsr->sustain != 0.0f && state == ADSR_STATE_DECAY) {
+                if (adsr->current < adsr->sustain) {
+                    adsr->current = adsr->sustain;
+                    adsr->delay = 128;
+                    adsr->state = ADSR_STATE_SUSTAIN;
+                }
+                break;
+            }
+
+            if (adsr->current < 0) {
+                adsr->current = 0.0f;
+                adsr->state = ADSR_STATE_DISABLED;
+            }
+            break;
+        }
+
+        case ADSR_STATE_SUSTAIN:
+            adsr->delay -= 1;
+            if (adsr->delay == 0) {
+                adsr->state = ADSR_STATE_RELEASE;
+            }
+            break;
+    }
+
+    if ((action & ADSR_ACTION_DECAY)) {
+        adsr->state = ADSR_STATE_DECAY;
+        adsr->action = action & ~ADSR_ACTION_DECAY;
+    }
+
+    if ((action & ADSR_ACTION_RELEASE)) {
+        adsr->state = ADSR_STATE_RELEASE;
+        adsr->action = action & ~ADSR_ACTION_RELEASE;
+    }
+
+    if (adsr->current < 0.0f) {
+        return 0.0f;
+    }
+    if (adsr->current > 1.0f) {
+        // eu_stubbed_printf_1("Audio:Envp: overflow  %f\n", adsr->current);
+        return 1.0f;
+    }
+    return adsr->current;
+}
