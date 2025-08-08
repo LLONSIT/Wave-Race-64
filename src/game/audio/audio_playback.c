@@ -468,7 +468,50 @@ void Audio_InitNoteFreeList(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/Audio_NotePoolClear.s")
+// Original name: Nas_DeAllocAllVoices
+void Audio_NotePoolClear(NotePool* pool) {
+    s32 i;
+    AudioListItem* source;
+    AudioListItem* cur;
+    AudioListItem* dest;
+
+    for (i = 0; i < 4; i++) {
+        switch (i) {
+            case 0:
+                source = &pool->disabled;
+                dest = &gNoteFreeLists.disabled;
+                break;
+
+            case 1:
+                source = &pool->decaying;
+                dest = &gNoteFreeLists.decaying;
+                break;
+
+            case 2:
+                source = &pool->releasing;
+                dest = &gNoteFreeLists.releasing;
+                break;
+
+            case 3:
+                source = &pool->active;
+                dest = &gNoteFreeLists.active;
+                break;
+        }
+
+        for (;;) {
+            cur = source->next;
+            if (cur == source) {
+                break;
+            }
+            if (cur == NULL) {
+                // eu_stubbed_printf_0("Audio: C-Alloc : Dealloc voice is NULL\n");
+                break;
+            }
+            Audio_AudioListRemove(cur);
+            AudioSeq_AudioListPushBack(dest, cur);
+        }
+    }
+}
 
 // Original name: Nas_AllocVoices
 void Audio_NotePoolFill(NotePool* pool, s32 count) {

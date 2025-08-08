@@ -172,6 +172,7 @@ extern f32 gStereoPanVolume[128];
 extern f32 gDefaultPanVolume[128];
 extern NoteSubEu gZeroNoteSub;
 extern f32 gResampleRate;
+extern NotePool gNoteFreeLists;
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);

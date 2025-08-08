@@ -154,7 +154,6 @@ gCurrentLeftVolRamping = 0x8003E548;
 gVolume = 0x80038540;
 gUseReverb = 0x80038542;
 gResampleRate = 0x80045534;
-
 note_apply_headset_pan_effects = 0x800B6F18;
 
 gSynthesisReverbs = 0x80038110;
