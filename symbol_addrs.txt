@@ -256,7 +256,6 @@ D_80228058 = 0x80228058;
 
 
 //Names from n64decomp/mk64
-sequence_channel_process_sound = 0x800BBE30;
 audio_init = 0x800BA100;
 gSinTable = 0x80154350;
 gAudioThread = 0x80153D40;
