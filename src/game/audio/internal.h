@@ -190,7 +190,7 @@ typedef struct NoteAttributes {
     f32 freqScale;
     f32 velocity;
 } NoteAttributes;
-struct SequenceChannel {
+typedef struct SequenceChannel {
                    u8 enabled : 1;
                    u8 finished : 1;
                    u8 stopScript : 1;
@@ -241,7 +241,7 @@ struct SequenceChannel {
                    struct M64ScriptState scriptState;
                    struct AdsrSettings adsr;
                    struct NotePool notePool;
-};
+} SequenceChannel;
 typedef struct SequenceChannelLayer {
                    u8 enabled : 1;
                    u8 finished : 1;
