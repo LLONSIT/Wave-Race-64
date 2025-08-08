@@ -148,7 +148,7 @@ struct AdsrSettings {
     u8 sustain;
     struct AdsrEnvelope *envelope;
 };
-struct AdsrState {
+typedef struct AdsrState {
                    u8 action;
                    u8 state;
                    s16 envIndex;
@@ -160,7 +160,7 @@ struct AdsrState {
                    f32 target;
     s32 pad1C;
                    struct AdsrEnvelope *envelope;
-};
+} AdsrState;
 struct ReverbBitsData {
                u8 bit0 : 1;
                u8 bit1 : 1;
@@ -288,13 +288,13 @@ struct NoteSynthesisState {
              s16 curVolLeft;
              s16 curVolRight;
 };
-struct NotePlaybackState {
-                         u8 priority;
-                         u8 waveId;
-                         u8 sampleCountIndex;
-                         s16 adsrVolScale;
-                         f32 portamentoFreqScale;
-                         f32 vibratoFreqScale;
+typedef struct NotePlaybackState {
+                         u8 priority; /* 0 */
+                         u8 waveId; /* 1 */
+                         u8 sampleCountIndex; /* 2 */
+                         s16 adsrVolScale; /* 4 */
+                         f32 portamentoFreqScale; /* 8 */
+                         f32 vibratoFreqScale; /* C */
                          struct SequenceChannelLayer *prevParentLayer;
                          struct SequenceChannelLayer *parentLayer;
                          struct SequenceChannelLayer *wantedParentLayer;
@@ -302,7 +302,7 @@ struct NotePlaybackState {
                          struct AdsrState adsr;
                          struct Portamento portamento;
                          struct VibratoState vibratoState;
-};
+} NotePlaybackState;
 typedef struct NoteSubEu {
              volatile u8 enabled : 1;
              u8 needsInit : 1;

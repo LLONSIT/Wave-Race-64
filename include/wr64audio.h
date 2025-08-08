@@ -36,6 +36,10 @@
 #define DEFAULT_LEN_2CH 0x280
 #define DOUBLE_SIZE_ON_64_BIT(size) ((size) * (sizeof(void*) / 4))
 
+#define MUTE_BEHAVIOR_STOP_SCRIPT 0x80 // stop processing sequence/channel scripts
+#define MUTE_BEHAVIOR_STOP_NOTES 0x40  // prevent further notes from playing
+#define MUTE_BEHAVIOR_SOFTEN 0x20      // lower volume, by default to half
+
 #define NOTE_PRIORITY_DISABLED 0
 #define NOTE_PRIORITY_STOPPING 1
 #define NOTE_PRIORITY_MIN 2
@@ -167,6 +171,7 @@ extern f32 gHeadsetPanVolume[128];
 extern f32 gStereoPanVolume[128];
 extern f32 gDefaultPanVolume[128];
 extern NoteSubEu gZeroNoteSub;
+extern f32 gResampleRate;
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
@@ -176,4 +181,7 @@ void Audio_NoteInitAll(void);
 void Audio_AudioListRemove(Note* note);
 void Audio_InitNoteSub(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
 void Audio_AudioListPushFront(AudioListItem* list, AudioListItem* item);
+void Audio_SeqLayerNoteRelease(SequenceChannelLayer* layer);
+void Audio_NoteInitForLayer(Note *note, SequenceChannelLayer *seqLayer);
+f32 Audio_AdsrUpdate(AdsrState *adsr);
 #endif

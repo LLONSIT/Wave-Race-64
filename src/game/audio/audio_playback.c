@@ -202,7 +202,118 @@ void Audio_NoteDisable(Note* note) {
     note->noteSubEu.finished = false;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_playback/func_800BAB94.s")
+// Original name: Nas_UpdateChannel
+void Audio_ProcessNotes(void) {
+    f32 scale;
+    f32 frequency;
+    f32 velocity;
+    Note* note;
+    NotePlaybackState* playbackState;
+    NoteSubEu* noteSubEu;
+    UNUSED u8 pad[12];
+    u8 reverbVol;
+    UNUSED u8 pad3;
+    u8 pan;
+    u8 bookOffset;
+    NoteAttributes* attributes;
+    s32 i;
+
+    for (i = 0; i < gMaxSimultaneousNotes; i++) {
+        note = &gNotes[i];
+        playbackState = (struct NotePlaybackState*) &note->priority;
+        if (note->parentLayer != NO_LAYER) {
+#ifndef NO_SEGMENTED_MEMORY
+            if ((uintptr_t) playbackState->parentLayer < 0x7fffffffU) {
+                continue;
+            }
+#endif
+            if (!playbackState->parentLayer->enabled && playbackState->priority >= NOTE_PRIORITY_MIN) {
+                goto c;
+            } else if (playbackState->parentLayer->seqChannel->seqPlayer == NULL) {
+                // eu_stubbed_printf_0("CAUTION:SUB IS SEPARATED FROM GROUP");
+                AudioSeq_SequenceChannelDisable(playbackState->parentLayer->seqChannel);
+                playbackState->priority = NOTE_PRIORITY_STOPPING;
+                continue;
+            } else if (playbackState->parentLayer->seqChannel->seqPlayer->muted) {
+                if ((playbackState->parentLayer->seqChannel->muteBehavior &
+                     (MUTE_BEHAVIOR_STOP_SCRIPT | MUTE_BEHAVIOR_STOP_NOTES))) {
+                    goto c;
+                }
+            }
+            goto d;
+        c:
+            Audio_SeqLayerNoteRelease(playbackState->parentLayer);
+            Audio_AudioListRemove(&note->listItem);
+            Audio_AudioListPushFront(&note->listItem.pool->decaying, &note->listItem);
+            playbackState->priority = NOTE_PRIORITY_STOPPING;
+        } else if (playbackState->priority >= NOTE_PRIORITY_MIN) {
+            continue;
+        }
+    d:
+        if (playbackState->priority != NOTE_PRIORITY_DISABLED) {
+            noteSubEu = &note->noteSubEu;
+            if (playbackState->priority == NOTE_PRIORITY_STOPPING || noteSubEu->finished) {
+                if (playbackState->adsr.state == ADSR_STATE_DISABLED || noteSubEu->finished) {
+                    if (playbackState && playbackState) {}
+                    if (playbackState->wantedParentLayer != NO_LAYER) {
+                        Audio_NoteDisable(note);
+                        if (playbackState->wantedParentLayer->seqChannel != NULL) {
+                            Audio_NoteInitForLayer(note, playbackState->wantedParentLayer);
+                            Audio_NoteVibratoInit(note);
+                            Audio_AudioListRemove(&note->listItem);
+                            AudioSeq_AudioListPushBack(&note->listItem.pool->active, &note->listItem);
+                            playbackState->wantedParentLayer = NO_LAYER;
+                            // don't skip
+                        } else {
+                            // eu_stubbed_printf_0("Error:Wait Track disappear\n");
+                            Audio_NoteDisable(note);
+                            Audio_AudioListRemove(&note->listItem);
+                            AudioSeq_AudioListPushBack(&note->listItem.pool->disabled, &note->listItem);
+                            playbackState->wantedParentLayer = NO_LAYER;
+                            goto skip;
+                        }
+                    } else {
+                        Audio_NoteDisable(note);
+                        Audio_AudioListRemove(&note->listItem);
+                        AudioSeq_AudioListPushBack(&note->listItem.pool->disabled, &note->listItem);
+                        goto skip;
+                    }
+                }
+            } else if (playbackState->adsr.state == ADSR_STATE_DISABLED) {
+                Audio_NoteDisable(note);
+                Audio_AudioListRemove(&note->listItem);
+                AudioSeq_AudioListPushBack(&note->listItem.pool->disabled, &note->listItem);
+                goto skip;
+            }
+
+            scale = Audio_AdsrUpdate(&playbackState->adsr);
+            Audio_NoteVibratoUpdate(note);
+            attributes = &playbackState->attributes;
+            if (playbackState->priority == NOTE_PRIORITY_STOPPING) {
+                frequency = attributes->freqScale;
+                velocity = attributes->velocity;
+                pan = attributes->pan;
+                reverbVol = attributes->reverbVol;
+                if (1) {}
+                bookOffset = noteSubEu->bookOffset;
+            } else {
+                frequency = playbackState->parentLayer->noteFreqScale;
+                velocity = playbackState->parentLayer->noteVelocity;
+                pan = playbackState->parentLayer->notePan;
+                reverbVol = playbackState->parentLayer->seqChannel->reverbVol;
+                bookOffset = playbackState->parentLayer->seqChannel->bookOffset & 0x7;
+            }
+
+            frequency *= playbackState->vibratoFreqScale * playbackState->portamentoFreqScale;
+            frequency *= gResampleRate;
+            velocity = velocity * scale * scale; // scale is multiplied twice here, same as SM64, unlike MK64 and SF64.
+            Audio_NoteSetResamplingRate(note, frequency);
+            Audio_InitNoteSub(note, velocity, pan, reverbVol);
+            noteSubEu->bookOffset = bookOffset;
+        skip:;
+        }
+    }
+}
 
 // Original name: __Nas_Release_Channel_Main
 void Audio_SeqLayerDecayRelease(SequenceChannelLayer* seqLayer, s32 target) {

@@ -10,10 +10,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/func_800BC24C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/func_800BC444.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/Audio_NoteVibratoUpdate.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/func_800BC4B0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/Audio_NoteVibratoInit.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/Audio_AdsrInit.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/func_800BC5B8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/effects/Audio_AdsrUpdate.s")

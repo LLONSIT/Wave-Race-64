@@ -153,12 +153,17 @@ gCurrentRightVolRamping = 0x8003E54C;
 gCurrentLeftVolRamping = 0x8003E548;
 gVolume = 0x80038540;
 gUseReverb = 0x80038542;
+gResampleRate = 0x80045534;
 
 note_apply_headset_pan_effects = 0x800B6F18;
 
 gSynthesisReverbs = 0x80038110;
 
 // audio_playback.c
+Audio_ProcessNotes = 0x800BAB94;
+Audio_NoteVibratoInit = 0x800BC4B0;
+Audio_AdsrUpdate = 0x800BC5B8;
+Audio_NoteVibratoUpdate = 0x800BC444;
 Audio_NoteDisable = 0x800BAB18;
 Audio_AudioListRemove = 0x800BB6DC;
 Audio_InitNoteLists = 0x800BB300;
@@ -168,6 +173,7 @@ Audio_InitSyntheticWave = 0x800BB24C;
 Audio_SeqLayerNoteRelease = 0x800BB128;
 Audio_SeqLayerDecayRelease = 0x800BAF2C;
 Audio_SeqLayerNoteDecay = 0x800BB108;
+AudioSeq_SequenceChannelDisable = 0x800BCB34;
 Audio_AudioListPushFront = 0x800BB69C;
 Audio_AdsrInit = 0x800BC598;
 Audio_NoteInit = 0x800BAA84;
