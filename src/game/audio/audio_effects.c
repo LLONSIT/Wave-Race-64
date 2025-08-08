@@ -160,7 +160,14 @@ f32 Audio_GetVibratoFreqScale(VibratoState* vibrato) {
 }
 
 // Original name: Nas_ChannelModulation
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_NoteVibratoUpdate.s")
+void Audio_NoteVibratoUpdate(Note* note) {
+    if (note->portamento.mode != 0) {
+        note->portamentoFreqScale = Audio_GetPortamentoFreqScale(&note->portamento);
+    }
+    if (note->vibratoState.active && note->parentLayer != NO_LAYER) {
+        note->vibratoFreqScale = Audio_GetVibratoFreqScale(&note->vibratoState);
+    }
+}
 
 // Original name: Nas_ChannelModInit
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_NoteVibratoInit.s")
