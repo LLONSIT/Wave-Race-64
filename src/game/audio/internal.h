@@ -18,7 +18,7 @@ typedef struct NotePool {
     struct AudioListItem active;
 } NotePool;
 
-struct VibratoState {
+typedef struct VibratoState {
                    struct SequenceChannel *seqChannel;
                    u32 time;
                    s16 *curve;
@@ -28,21 +28,21 @@ struct VibratoState {
                    u16 rateChangeTimer;
                    u16 extentChangeTimer;
                    u16 delay;
-};
-struct Portamento {
+} VibratoState;
+typedef struct Portamento {
     u8 mode;
     f32 cur;
     f32 speed;
     f32 extent;
-};
+} Portamento;
 
-struct AdpcmLoop {
+typedef struct AdpcmLoop {
     u32 start;
     u32 end;
     u32 count;
     u32 pad;
     s16 state[16]; // only exists if count != 0. 8-byte aligned
-};
+} AdpcmLoop;
 
 struct AdpcmBook {
     s32 order;

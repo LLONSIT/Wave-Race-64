@@ -82,7 +82,7 @@ void Audio_SequencePlayerProcessSound(SequencePlayer* seqPlayer) {
 }
 
 // Original name: Nas_SweepCalculator
-f32 Audio_GetPortamentoFreqScale(struct Portamento* p) {
+f32 Audio_GetPortamentoFreqScale(Portamento* p) {
     u32 v0;
     f32 result;
 
@@ -98,7 +98,14 @@ f32 Audio_GetPortamentoFreqScale(struct Portamento* p) {
 }
 
 // Original name: Nas_ModTableRead
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_GetVibratoPitchChange.s")
+s16 Audio_GetVibratoPitchChange(VibratoState* vibrato) {
+    s32 index;
+
+    vibrato->time += (s32) vibrato->rate;
+    index = (vibrato->time >> 10) % 64;
+
+    return vibrato->curve[index] >> 8;
+}
 
 // Original name: Nas_Modulator
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_GetVibratoFreqScale.s")
