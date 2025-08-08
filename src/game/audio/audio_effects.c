@@ -108,7 +108,56 @@ s16 Audio_GetVibratoPitchChange(VibratoState* vibrato) {
 }
 
 // Original name: Nas_Modulator
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_GetVibratoFreqScale.s")
+f32 Audio_GetVibratoFreqScale(VibratoState* vibrato) {
+    s32 pitchChange;
+    f32 extent;
+    f32 result;
+
+    if (vibrato->delay != 0) {
+        vibrato->delay--;
+        return 1;
+    }
+
+    if (vibrato->extentChangeTimer) {
+        if (vibrato->extentChangeTimer == 1) {
+            vibrato->extent = (s32) vibrato->seqChannel->vibratoExtentTarget;
+        } else {
+            vibrato->extent +=
+                ((s32) vibrato->seqChannel->vibratoExtentTarget - vibrato->extent) / (s32) vibrato->extentChangeTimer;
+        }
+
+        vibrato->extentChangeTimer--;
+    } else if (vibrato->seqChannel->vibratoExtentTarget != (s32) vibrato->extent) {
+        if ((vibrato->extentChangeTimer = vibrato->seqChannel->vibratoExtentChangeDelay) == 0) {
+            vibrato->extent = (s32) vibrato->seqChannel->vibratoExtentTarget;
+        }
+    }
+
+    if (vibrato->rateChangeTimer) {
+        if (vibrato->rateChangeTimer == 1) {
+            vibrato->rate = (s32) vibrato->seqChannel->vibratoRateTarget;
+        } else {
+            vibrato->rate +=
+                ((s32) vibrato->seqChannel->vibratoRateTarget - vibrato->rate) / (s32) vibrato->rateChangeTimer;
+        }
+
+        vibrato->rateChangeTimer--;
+    } else if (vibrato->seqChannel->vibratoRateTarget != (s32) vibrato->rate) {
+        if ((vibrato->rateChangeTimer = vibrato->seqChannel->vibratoRateChangeDelay) == 0) {
+            vibrato->rate = (s32) vibrato->seqChannel->vibratoRateTarget;
+        }
+    }
+
+    if (vibrato->extent == 0) {
+        return 1.0f;
+    }
+
+    pitchChange = Audio_GetVibratoPitchChange(vibrato);
+    extent = (f32) vibrato->extent / 4096.0f;
+
+    result = 1.0f + extent * (gPitchBendFrequencyScale[pitchChange + 128] - 1.0f);
+    return result;
+}
 
 // Original name: Nas_ChannelModulation
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_NoteVibratoUpdate.s")
