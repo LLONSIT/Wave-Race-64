@@ -63,6 +63,8 @@
 
 #define NO_LAYER ((struct SequenceChannelLayer*) (-1))
 
+#define FLOAT_CAST(x) (f32)(s32)(x)
+
 typedef struct PoolSplit {
     u32 wantSeq;
     u32 wantBank;

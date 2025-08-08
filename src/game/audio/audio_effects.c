@@ -170,7 +170,35 @@ void Audio_NoteVibratoUpdate(Note* note) {
 }
 
 // Original name: Nas_ChannelModInit
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_NoteVibratoInit.s")
+void Audio_NoteVibratoInit(Note* note) {
+    VibratoState* vib;
+    NotePlaybackState* seqPlayerState = (NotePlaybackState*) &note->priority;
+
+    note->vibratoFreqScale = 1.0f;
+    note->portamentoFreqScale = 1.0f;
+
+    vib = &note->vibratoState;
+
+    vib->active = true;
+    vib->time = 0;
+
+    vib->curve = gWaveSamples[2];
+    vib->seqChannel = note->parentLayer->seqChannel;
+    if ((vib->extentChangeTimer = vib->seqChannel->vibratoExtentChangeDelay) == 0) {
+        vib->extent = FLOAT_CAST(vib->seqChannel->vibratoExtentTarget);
+    } else {
+        vib->extent = FLOAT_CAST(vib->seqChannel->vibratoExtentStart);
+    }
+
+    if ((vib->rateChangeTimer = vib->seqChannel->vibratoRateChangeDelay) == 0) {
+        vib->rate = FLOAT_CAST(vib->seqChannel->vibratoRateTarget);
+    } else {
+        vib->rate = FLOAT_CAST(vib->seqChannel->vibratoRateStart);
+    }
+    vib->delay = vib->seqChannel->vibratoDelay;
+
+    seqPlayerState->portamento = seqPlayerState->parentLayer->portamento;
+}
 
 // Original name: Nas_EnvInit
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_effects/Audio_AdsrInit.s")
