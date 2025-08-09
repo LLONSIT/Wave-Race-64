@@ -90,7 +90,7 @@ segments:
       - [0x68A10, c, game/code_68A10]
       - [0x6EF50, c, game/code_6EF50]
       - [0x6F530, hasm, Mio0_Decompress]
-      - [0x6F5D0, c, game/audio/synthesis]
+      - [0x6F5D0, c, game/audio/audio_synthesis]
       - [0x71AF0, c, game/audio/audio_heap]
       - [0x734B0, c, game/audio/audio_load]
       - [0x74D80, c, game/audio/audio_playback]

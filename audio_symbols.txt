@@ -149,15 +149,23 @@ init_sequence_players = 0x800BF1F4; //defined:true
 
 alSeqFileNew = 0x800CA908; //defined:true
 
-// synthesis.c
-prepare_reverb_ring_buffer = 0x800B4DD0;
+// audio_synthesis.c
+AudioSynth_InitNextReverbRingBuf = 0x800B4DD0;
+AudioSynth_ApplyHaasEffect = 0x800B6F18;
+AudioSynth_SaveReverbRingBufferPart = 0x800B5114;
+AudioSynth_SaveReverbSamples = 0x800B5858;
+AudioSynth_LoadReverbSamples = 0x800B5500;
+AudioSynth_LoadReverbRingBufferPart = 0x800B5064;
+AudioSynth_Update = 0x800B527C;
+AudioSeq_ProcessSequences = 0x800BF0C4;
+AudioSynth_SyncSampleStates = 0x800B51C4;
+AudioSynth_DoOneAudioUpdate = 0x800B59A8;
+
 gCurrentRightVolRamping = 0x8003E54C;
 gCurrentLeftVolRamping = 0x8003E548;
 gVolume = 0x80038540;
 gUseReverb = 0x80038542;
 gResampleRate = 0x80045534;
-note_apply_headset_pan_effects = 0x800B6F18;
-
 gSynthesisReverbs = 0x80038110;
 
 // audio_playback.c
@@ -203,9 +211,9 @@ Audio_GetVibratoPitchChange = 0x800BC208;
 Audio_GetVibratoFreqScale = 0x800BC24C;
 
 // Unsorted
-load_wave_samples = 0x800B67EC;
-process_envelope = 0x800B6900;
-final_resample = 0x800B68A4;
+AudioSynth_LoadWaveSamples = 0x800B67EC;
+AudioSynth_ProcessEnvelope = 0x800B6900;
+AudioSynth_FinalResample = 0x800B68A4;
 
 aspMainTextStart = 0x800D37B0; //name_end:aspMainTextEnd
 aspMainDataStart = 0x800EEB10; //name_end:aspMainDataEnd

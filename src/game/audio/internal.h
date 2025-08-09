@@ -277,7 +277,7 @@ typedef struct SequenceChannelLayer {
                    struct AudioListItem listItem;
     u8 pad2[4];
 } SequenceChannelLayer;
-struct NoteSynthesisState {
+typedef struct NoteSynthesisState {
              u8 restart;
              u8 sampleDmaIndex;
              u8 prevHeadsetPanRight;
@@ -287,7 +287,7 @@ struct NoteSynthesisState {
              struct NoteSynthesisBuffers *synthesisBuffers;
              s16 curVolLeft;
              s16 curVolRight;
-};
+} NoteSynthesisState;
 typedef struct NotePlaybackState {
                          u8 priority; /* 0 */
                          u8 waveId; /* 1 */

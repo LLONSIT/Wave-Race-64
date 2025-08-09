@@ -278,5 +278,6 @@ void port_init(void);
 s32 init_sequence_players(void);
 void AudioHeap_InitMainPools(s32 initPoolSize);
 void Audio_LoadSequenceInternal(u32 player, u32 seqId, s32 loadAsync);
+void AudioSeq_ProcessSequences(s32 iterationsRemaining);
 
 #endif
