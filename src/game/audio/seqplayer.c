@@ -43,9 +43,25 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/seq_channel_layer_process_script.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BDBEC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_GetInstrument.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/set_instrument.s")
+// Original name: Nas_SubVoiceSet
+void AudioSeq_SetInstrument(SequenceChannel* seqChannel, u8 instId) {
+    if (instId >= 0x80) {
+        seqChannel->instOrWave = instId;
+        seqChannel->instrument = NULL;
+    } else if (instId == 0x7f) {
+        seqChannel->instOrWave = 0;
+        seqChannel->instrument = (Instrument*) 1;
+    } else {
+        if ((seqChannel->instOrWave =
+                 AudioSeq_GetInstrument(seqChannel, instId, &seqChannel->instrument, &seqChannel->adsr)) == 0) {
+            seqChannel->hasInstrument = false;
+            return;
+        }
+    }
+    seqChannel->hasInstrument = true;
+}
 
 // Original name: Nas_SubVolumeSet
 void AudioSeq_SequenceChannelSetVolume(SequenceChannel* channel, u8 volume) {
@@ -200,7 +216,7 @@ void AudioSeq_SequenceChannelProcessScript(SequenceChannel* seqChannel) {
                         }
 
                     case 0xC1:
-                        set_instrument(seqChannel, m64_read_u8(state));
+                        AudioSeq_SetInstrument(seqChannel, m64_read_u8(state));
                         break;
 
                     case 0xC3:

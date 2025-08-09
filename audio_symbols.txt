@@ -159,7 +159,8 @@ seq_channel_layer_process_script = 0x800BD138;
 AudioSeq_SequenceChannelSetVolume = 0x800BDCF0;
 seq_channel_set_layer = 0x800BC9A0;
 seq_channel_layer_free = 0x800BCAE4;
-set_instrument = 0x800BDC5C;
+AudioSeq_SetInstrument = 0x800BDC5C;
+AudioSeq_GetInstrument = 0x800BDBEC;
 
 alSeqFileNew = 0x800CA908; //defined:true
 gDefaultShortNoteVelocityTable = 0x800ECFE4;

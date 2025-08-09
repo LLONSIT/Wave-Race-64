@@ -301,7 +301,8 @@ void sequence_player_init_channels(SequencePlayer* seqPlayer, u16 channelBits);
 void sequence_channel_enable(SequencePlayer* seqPlayer, u8 channelIndex, void* script);
 void AudioSeq_SequenceChannelProcessScript(SequenceChannel* seqChannel);
 void seq_channel_layer_process_script(SequenceChannelLayer* layer);
-void set_instrument(SequenceChannel* seqChannel, u8 instId);
-void AudioSeq_SequenceChannelSetVolume(SequenceChannel* seqChannel, u8 volume);
+void AudioSeq_SetInstrument(SequenceChannel* seqChannel, u8 instId);
+void AudioSeq_SequenceChannelSetVolume(SequenceChannel* channel, u8 volume);
 void* AudioHeap_SearchRegularCaches(struct SoundMultiPool* multiPool, s32 arg1, s32 id);
+u8 AudioSeq_GetInstrument(SequenceChannel* seqChannel, u8 instId, Instrument** instOut, AdsrSettings* adsr);
 #endif
