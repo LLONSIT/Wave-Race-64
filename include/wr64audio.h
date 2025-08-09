@@ -63,6 +63,10 @@
 #define NOTE_ALLOC_SEQ 4
 #define NOTE_ALLOC_GLOBAL_FREELIST 8
 
+#define SEQUENCE_PLAYERS 4
+#define SEQUENCE_CHANNELS 48
+#define SEQUENCE_LAYERS 64
+
 #define NO_LAYER ((struct SequenceChannelLayer*) (-1))
 
 #define FLOAT_CAST(x) (f32)(s32)(x)

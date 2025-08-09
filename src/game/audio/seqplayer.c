@@ -1,4 +1,13 @@
 #include "common.h"
+#include "macros.h"
+#include <PR/os.h>
+
+#include "load.h"
+#include "heap.h"
+#include "internal.h"
+#include "data.h"
+#include "port.h"
+#include "wr64audio.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BC880.s")
 
@@ -42,9 +51,18 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BDD14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BE858.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/sequence_player_process_sequence.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_ProcessSequences.s")
+void AudioSeq_ProcessSequences(UNUSED s32 iterationsRemaining) {
+    s32 i;
+    for (i = 0; i < SEQUENCE_PLAYERS; i++) {
+        if (gSequencePlayers[i].enabled == true) {
+            sequence_player_process_sequence(&gSequencePlayers[i]);
+            Audio_SequencePlayerProcessSound(&gSequencePlayers[i]);
+        }
+    }
+    Audio_ProcessNotes();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/init_sequence_player.s")
 

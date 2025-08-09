@@ -670,7 +670,7 @@ void AudioLoad_Init() {
 
     AudioHeap_InitMainPools(gAudioInitPoolSize);
 
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < ARRAY_COUNT(gAiBuffers); i++) {
         gAiBuffers[i] = AudioHeap_AllocZeroed(&gAudioInitPool, (0xa0 * 16));
         for (j = 0; j < (s32) ((0xa0 * 16) / sizeof(s16)); j++) {
             gAiBuffers[i][j] = 0;

@@ -146,7 +146,7 @@ AudioSeq_AudioListPushBack = 0x800BCFAC;
 init_sequence_player = 0x800BF13C; //defined:true
 AudioSeq_SequencePlayerDisable = 0x800BCEE0; //defined:true
 init_sequence_players = 0x800BF1F4; //defined:true
-
+sequence_player_process_sequence = 0x800BE858;
 alSeqFileNew = 0x800CA908; //defined:true
 
 // audio_synthesis.c
