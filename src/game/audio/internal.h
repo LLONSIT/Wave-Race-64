@@ -1,6 +1,39 @@
 #ifndef INTERNAL_H
 #define INTERNAL_H
 
+#define SEQUENCE_PLAYERS 4
+#define SEQUENCE_CHANNELS 48
+#define SEQUENCE_LAYERS 64
+
+#define LAYERS_MAX 4
+#define CHANNELS_MAX 16
+
+#define NO_LAYER ((struct SequenceChannelLayer*) (-1))
+
+#define MUTE_BEHAVIOR_STOP_SCRIPT 0x80 // stop processing sequence/channel scripts
+#define MUTE_BEHAVIOR_STOP_NOTES 0x40  // prevent further notes from playing
+#define MUTE_BEHAVIOR_SOFTEN 0x20      // lower volume, by default to half
+
+#define SEQUENCE_PLAYER_STATE_0 0
+#define SEQUENCE_PLAYER_STATE_FADE_OUT 1
+#define SEQUENCE_PLAYER_STATE_2 2
+#define SEQUENCE_PLAYER_STATE_3 3
+#define SEQUENCE_PLAYER_STATE_4 4
+
+#define NOTE_PRIORITY_DISABLED 0
+#define NOTE_PRIORITY_STOPPING 1
+#define NOTE_PRIORITY_MIN 2
+#define NOTE_PRIORITY_DEFAULT 3
+
+#define TATUMS_PER_BEAT 48
+
+// abi.h contains more details about the ADPCM and S8 codecs, "skip" skips codec processing
+#define CODEC_ADPCM 0
+#define CODEC_S8 1
+#define CODEC_SKIP 2
+
+#define TEMPO_SCALE TATUMS_PER_BEAT
+
 struct NotePool;
 typedef struct AudioListItem {
     struct AudioListItem *prev;

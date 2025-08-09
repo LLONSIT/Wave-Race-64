@@ -596,7 +596,7 @@ void Audio_LoadSequenceInternal(u32 player, u32 seqId, s32 loadAsync) {
         }
     }
 
-    init_sequence_player(player);
+    AudioSeq_ResetSequencePlayer(player);
     seqPlayer->scriptState.depth = 0;
     seqPlayer->delay = 0;
     seqPlayer->enabled = 1;

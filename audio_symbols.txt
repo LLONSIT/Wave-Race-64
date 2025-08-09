@@ -143,11 +143,13 @@ Audio_InitNoteFreeList = 0x800BB350;
 
 //seqplayer.c
 AudioSeq_AudioListPushBack = 0x800BCFAC;
-init_sequence_player = 0x800BF13C; //defined:true
+AudioSeq_ResetSequencePlayer = 0x800BF13C; //defined:true
 AudioSeq_SequencePlayerDisable = 0x800BCEE0; //defined:true
 init_sequence_players = 0x800BF1F4; //defined:true
 sequence_player_process_sequence = 0x800BE858;
 alSeqFileNew = 0x800CA908; //defined:true
+gDefaultShortNoteVelocityTable = 0x800ECFE4;
+gDefaultShortNoteDurationTable = 0x800ECFF4;
 
 // audio_synthesis.c
 AudioSynth_InitNextReverbRingBuf = 0x800B4DD0;

@@ -266,6 +266,8 @@ extern u8 gSoundDataADSR[];
 extern u8 gSoundDataRaw[];
 extern u8 gMusicData[];
 extern u8 gBankSetsData[];
+extern u8 gDefaultShortNoteVelocityTable[16];
+extern u8 gDefaultShortNoteDurationTable[16];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);

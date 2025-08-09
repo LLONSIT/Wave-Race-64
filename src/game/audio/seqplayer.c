@@ -64,6 +64,28 @@ void AudioSeq_ProcessSequences(UNUSED s32 iterationsRemaining) {
     Audio_ProcessNotes();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/init_sequence_player.s")
+// Original name: Nas_InitMySeq
+void AudioSeq_ResetSequencePlayer(u32 player) {
+    SequencePlayer* seqPlayer = &gSequencePlayers[player];
+    AudioSeq_SequencePlayerDisable(seqPlayer);
+
+    seqPlayer->muted = false;
+    seqPlayer->delay = 0;
+    seqPlayer->state = 1;
+    seqPlayer->fadeRemainingFrames = 0;
+    seqPlayer->fadeTimerUnkEu = 0;
+    seqPlayer->tempoAcc = 0;
+    seqPlayer->tempo = 120 * TEMPO_SCALE; // 120 BPM
+    seqPlayer->transposition = 0;
+    seqPlayer->muteBehavior = MUTE_BEHAVIOR_STOP_SCRIPT | MUTE_BEHAVIOR_STOP_NOTES | MUTE_BEHAVIOR_SOFTEN;
+    seqPlayer->noteAllocPolicy = 0;
+    seqPlayer->shortNoteVelocityTable = gDefaultShortNoteVelocityTable;
+    seqPlayer->shortNoteDurationTable = gDefaultShortNoteDurationTable;
+    seqPlayer->fadeVolume = 1.0f;
+    seqPlayer->fadeVolumeScale = 1.0f;
+    seqPlayer->fadeVelocity = 0.0f;
+    seqPlayer->volume = 0.0f;
+    seqPlayer->muteVolumeScale = 0.5f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/init_sequence_players.s")
