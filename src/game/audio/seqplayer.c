@@ -55,6 +55,7 @@ void Audio_InitNoteLists(NotePool* pool);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/sequence_player_process_sequence.s")
 
+// Original name: Nas_InitMySeq
 void AudioSeq_ProcessSequences(UNUSED s32 iterationsRemaining) {
     s32 i;
     for (i = 0; i < SEQUENCE_PLAYERS; i++) {
