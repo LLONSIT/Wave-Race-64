@@ -721,7 +721,7 @@ void AudioHeap_Init(void) {
         }
     }
 
-    init_sample_dma_buffers(gMaxSimultaneousNotes);
+    AudioLoad_InitSampleDmaBuffers(gMaxSimultaneousNotes);
     BuildVolRampingsTBL(0, gAudioBufferParameters.samplesPerUpdate);
     osWritebackDCacheAll();
 }

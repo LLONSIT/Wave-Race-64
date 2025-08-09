@@ -226,7 +226,7 @@ void func_80047B00(void) {
 #ifdef MIGRATE_BSS
 void audio_thread(void* entry) {
     static s32 D_800D4630;
-    audio_init();
+    AudioLoad_Init();
 
     while (true) {
         osRecvMesg(&D_801540E8, &D_801542D0, 1);

@@ -1,6 +1,39 @@
 #ifndef INTERNAL_H
 #define INTERNAL_H
 
+#define SEQUENCE_PLAYERS 4
+#define SEQUENCE_CHANNELS 48
+#define SEQUENCE_LAYERS 64
+
+#define LAYERS_MAX 4
+#define CHANNELS_MAX 16
+
+#define NO_LAYER ((struct SequenceChannelLayer*) (-1))
+
+#define MUTE_BEHAVIOR_STOP_SCRIPT 0x80 // stop processing sequence/channel scripts
+#define MUTE_BEHAVIOR_STOP_NOTES 0x40  // prevent further notes from playing
+#define MUTE_BEHAVIOR_SOFTEN 0x20      // lower volume, by default to half
+
+#define SEQUENCE_PLAYER_STATE_0 0
+#define SEQUENCE_PLAYER_STATE_FADE_OUT 1
+#define SEQUENCE_PLAYER_STATE_2 2
+#define SEQUENCE_PLAYER_STATE_3 3
+#define SEQUENCE_PLAYER_STATE_4 4
+
+#define NOTE_PRIORITY_DISABLED 0
+#define NOTE_PRIORITY_STOPPING 1
+#define NOTE_PRIORITY_MIN 2
+#define NOTE_PRIORITY_DEFAULT 3
+
+#define TATUMS_PER_BEAT 48
+
+// abi.h contains more details about the ADPCM and S8 codecs, "skip" skips codec processing
+#define CODEC_ADPCM 0
+#define CODEC_S8 1
+#define CODEC_SKIP 2
+
+#define TEMPO_SCALE TATUMS_PER_BEAT
+
 struct NotePool;
 typedef struct AudioListItem {
     struct AudioListItem *prev;
@@ -18,7 +51,7 @@ typedef struct NotePool {
     struct AudioListItem active;
 } NotePool;
 
-struct VibratoState {
+typedef struct VibratoState {
                    struct SequenceChannel *seqChannel;
                    u32 time;
                    s16 *curve;
@@ -28,42 +61,42 @@ struct VibratoState {
                    u16 rateChangeTimer;
                    u16 extentChangeTimer;
                    u16 delay;
-};
-struct Portamento {
+} VibratoState;
+typedef struct Portamento {
     u8 mode;
     f32 cur;
     f32 speed;
     f32 extent;
-};
+} Portamento;
 
-struct AdpcmLoop {
+typedef struct AdpcmLoop {
     u32 start;
     u32 end;
     u32 count;
     u32 pad;
     s16 state[16]; // only exists if count != 0. 8-byte aligned
-};
+} AdpcmLoop;
 
-struct AdpcmBook {
+typedef struct AdpcmBook {
     s32 order;
     s32 npredictors;
     s16 book[1]; // size 8 * order * npredictors. 8-byte aligned
-};
+} AdpcmBook;
     
-struct AdsrEnvelope {
+typedef struct AdsrEnvelope {
     s16 delay;
     s16 arg;
-}; // size = 0x4
+} AdsrEnvelope; // size = 0x4
 
 
-struct AudioBankSample {
+typedef struct AudioBankSample {
     u8 unused;
     u8 loaded;
     u8 *sampleAddr;
     struct AdpcmLoop *loop;
     struct AdpcmBook *book;
     u32 sampleSize; // never read. either 0 or 1 mod 9, depending on padding
-};
+} AudioBankSample;
 
 typedef struct AudioBankSound {
     struct AudioBankSample *sample;
@@ -90,17 +123,17 @@ typedef struct Drum {
     struct AdsrEnvelope *envelope;
 } Drum;
 
-struct AudioBank {
+typedef struct AudioBank {
     struct Drum **drums;
     struct Instrument *instruments[1];
-}; // dynamic size
+} AudioBank; // dynamic size
 
-struct M64ScriptState {
+typedef struct M64ScriptState {
     u8 *pc;
     u8 *stack[4];
     u8 remLoopIters[4];
     u8 depth;
-};
+} M64ScriptState;
 typedef struct SequencePlayer {
                             u8 enabled : 1;
                      u8 finished : 1;
@@ -148,7 +181,7 @@ struct AdsrSettings {
     u8 sustain;
     struct AdsrEnvelope *envelope;
 };
-struct AdsrState {
+typedef struct AdsrState {
                    u8 action;
                    u8 state;
                    s16 envIndex;
@@ -160,7 +193,7 @@ struct AdsrState {
                    f32 target;
     s32 pad1C;
                    struct AdsrEnvelope *envelope;
-};
+} AdsrState;
 struct ReverbBitsData {
                u8 bit0 : 1;
                u8 bit1 : 1;
@@ -190,7 +223,7 @@ typedef struct NoteAttributes {
     f32 freqScale;
     f32 velocity;
 } NoteAttributes;
-struct SequenceChannel {
+typedef struct SequenceChannel {
                    u8 enabled : 1;
                    u8 finished : 1;
                    u8 stopScript : 1;
@@ -241,7 +274,7 @@ struct SequenceChannel {
                    struct M64ScriptState scriptState;
                    struct AdsrSettings adsr;
                    struct NotePool notePool;
-};
+} SequenceChannel;
 typedef struct SequenceChannelLayer {
                    u8 enabled : 1;
                    u8 finished : 1;
@@ -277,7 +310,7 @@ typedef struct SequenceChannelLayer {
                    struct AudioListItem listItem;
     u8 pad2[4];
 } SequenceChannelLayer;
-struct NoteSynthesisState {
+typedef struct NoteSynthesisState {
              u8 restart;
              u8 sampleDmaIndex;
              u8 prevHeadsetPanRight;
@@ -287,14 +320,14 @@ struct NoteSynthesisState {
              struct NoteSynthesisBuffers *synthesisBuffers;
              s16 curVolLeft;
              s16 curVolRight;
-};
-struct NotePlaybackState {
-                         u8 priority;
-                         u8 waveId;
-                         u8 sampleCountIndex;
-                         s16 adsrVolScale;
-                         f32 portamentoFreqScale;
-                         f32 vibratoFreqScale;
+} NoteSynthesisState;
+typedef struct NotePlaybackState {
+                         u8 priority; /* 0 */
+                         u8 waveId; /* 1 */
+                         u8 sampleCountIndex; /* 2 */
+                         s16 adsrVolScale; /* 4 */
+                         f32 portamentoFreqScale; /* 8 */
+                         f32 vibratoFreqScale; /* C */
                          struct SequenceChannelLayer *prevParentLayer;
                          struct SequenceChannelLayer *parentLayer;
                          struct SequenceChannelLayer *wantedParentLayer;
@@ -302,7 +335,7 @@ struct NotePlaybackState {
                          struct AdsrState adsr;
                          struct Portamento portamento;
                          struct VibratoState vibratoState;
-};
+} NotePlaybackState;
 typedef struct NoteSubEu {
              volatile u8 enabled : 1;
              u8 needsInit : 1;

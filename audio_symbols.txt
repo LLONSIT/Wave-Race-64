@@ -79,12 +79,14 @@ gHeadsetPanVolume = 0x800EDCF0;
 gStereoPanVolume = 0x800EDEF0;
 gDefaultPanVolume = 0x800EE0F0;
 gZeroNoteSub = 0x800ED010;
+gSequenceChannelNone = 0x80044688;
+gPitchBendFrequencyScale = 0x800EC9E4;
 
 // Some linker symbols
-sound_data_ctl_ROM_START = 0x40B530; //defined:true
-sound_data_ROM_START = 0x428C30; //defined:true
-sound_sequences_ROM_START = 0x7AE8B0; //defined:true
-bank_sets_ROM_START = 0x7C4B70; //defined:true
+gSoundDataADSR = 0x40B530;
+gSoundDataRaw = 0x428C30;
+gMusicData = 0x7AE8B0;
+gBankSetsData = 0x7C4B70;
 
 //bank_sets_ROM_END = ????
 
@@ -95,23 +97,23 @@ gAudio_Unk80045610 = 0x80045610;
 // Functions
 
 //load.c
-audio_dma_copy_immediate = 0x800B8CB0; //defined:true
-audio_dma_copy_async = 0x800B8D28; // defined:true
-audio_dma_partial_copy_async = 0x800B8D88; //defined:true
-decrease_sample_dma_ttls = 0x800B8E34; //defined:true
-dma_sample_data = 0x800B8F3C; //defined:true
-init_sample_dma_buffers = 0x800B9244;
-patch_sound = 0x800B9518; //defined:true
-patch_audio_bank = 0x800B9618; //defined:true
-bank_load_immediate = 0x800B9774; //defined:true
-bank_load_async = 0x800B98C0; //defined:true
-sequence_dma_immediate = 0x800B9A24; //defined:true
-sequence_dma_async = 0x800B9AC4; //defined:true
-get_missing_bank = 0x800B9BEC; //defined:true
-load_banks_immediate = 0x800B9D24; //defined:true
-preload_sequence = 0x800B9E40; //defined:true
-load_sequence = 0x800B9F3C; //defined:true
-load_sequence_internal = 0x800B9F90; //defined:true
+Audio_DmaCopyImmediate = 0x800B8CB0; //defined:true
+Audio_DmaCopyAsync = 0x800B8D28; // defined:true
+Audio_DmaPartialCopyAsync = 0x800B8D88; //defined:true
+AudioLoad_DecreaseSampleDmaTtls = 0x800B8E34; //defined:true
+AudioLoad_DmaSampleData = 0x800B8F3C; //defined:true
+AudioLoad_InitSampleDmaBuffers = 0x800B9244;
+Audio_PatchSound = 0x800B9518; //defined:true
+Audio_PatchBank = 0x800B9618; //defined:true
+Audio_BankLoadImmediate = 0x800B9774; //defined:true
+Audio_BankLoadAsync = 0x800B98C0; //defined:true
+AudioLoad_SequenceDmaImmediate = 0x800B9A24; //defined:true
+AudioLoad_SequenceDmaAsync = 0x800B9AC4; //defined:true
+AudioLoad_GetMissingBank = 0x800B9BEC; //defined:true
+Audio_LoadBanksImmediate = 0x800B9D24; //defined:true
+Audio_PreLoadSequence = 0x800B9E40; //defined:true
+Audio_LoadSequence = 0x800B9F3C; //defined:true
+Audio_LoadSequenceInternal = 0x800B9F90; //defined:true
  
 //audio_heap.c
 AudioHeap_AllocZeroed = 0x800B7760; //defined:true
@@ -141,24 +143,50 @@ Audio_InitNoteFreeList = 0x800BB350;
 
 //seqplayer.c
 AudioSeq_AudioListPushBack = 0x800BCFAC;
-init_sequence_player = 0x800BF13C; //defined:true
+AudioSeq_ResetSequencePlayer = 0x800BF13C; //defined:true
 AudioSeq_SequencePlayerDisable = 0x800BCEE0; //defined:true
-init_sequence_players = 0x800BF1F4; //defined:true
+AudioSeq_InitSequencePlayers = 0x800BF1F4; //defined:true
+init_layer_freelist = 0x800BD02C;
+AudioSeq_SequencePlayerProcessSequence = 0x800BE858;
+m64_read_u8 = 0x800BD0B0;
+m64_read_s16 = 0x800BD0C4;
+m64_read_compressed_u16 = 0x800BD0F4;
+sequence_channel_process_script = 0x800BDD14;
+sequence_channel_enable = 0x800BCE18;
+sequence_player_init_channels = 0x800BCC1C;
+sequence_player_disable_channels = 0x800BCD48;
 
 alSeqFileNew = 0x800CA908; //defined:true
+gDefaultShortNoteVelocityTable = 0x800ECFE4;
+gDefaultShortNoteDurationTable = 0x800ECFF4;
+gSequenceChannels = 0x800401C8;
+gSequenceLayers = 0x80042688;
 
-// synthesis.c
-prepare_reverb_ring_buffer = 0x800B4DD0;
+// audio_synthesis.c
+AudioSynth_InitNextReverbRingBuf = 0x800B4DD0;
+AudioSynth_ApplyHaasEffect = 0x800B6F18;
+AudioSynth_SaveReverbRingBufferPart = 0x800B5114;
+AudioSynth_SaveReverbSamples = 0x800B5858;
+AudioSynth_LoadReverbSamples = 0x800B5500;
+AudioSynth_LoadReverbRingBufferPart = 0x800B5064;
+AudioSynth_Update = 0x800B527C;
+AudioSeq_ProcessSequences = 0x800BF0C4;
+AudioSynth_SyncSampleStates = 0x800B51C4;
+AudioSynth_DoOneAudioUpdate = 0x800B59A8;
+
 gCurrentRightVolRamping = 0x8003E54C;
 gCurrentLeftVolRamping = 0x8003E548;
 gVolume = 0x80038540;
 gUseReverb = 0x80038542;
-
-note_apply_headset_pan_effects = 0x800B6F18;
-
+gResampleRate = 0x80045534;
 gSynthesisReverbs = 0x80038110;
 
 // audio_playback.c
+Audio_AllocNote = 0x800BBA2C;
+Audio_ProcessNotes = 0x800BAB94;
+Audio_NoteVibratoInit = 0x800BC4B0;
+Audio_AdsrUpdate = 0x800BC5B8;
+Audio_NoteVibratoUpdate = 0x800BC444;
 Audio_NoteDisable = 0x800BAB18;
 Audio_AudioListRemove = 0x800BB6DC;
 Audio_InitNoteLists = 0x800BB300;
@@ -168,6 +196,7 @@ Audio_InitSyntheticWave = 0x800BB24C;
 Audio_SeqLayerNoteRelease = 0x800BB128;
 Audio_SeqLayerDecayRelease = 0x800BAF2C;
 Audio_SeqLayerNoteDecay = 0x800BB108;
+AudioSeq_SequenceChannelDisable = 0x800BCB34;
 Audio_AudioListPushFront = 0x800BB69C;
 Audio_AdsrInit = 0x800BC598;
 Audio_NoteInit = 0x800BAA84;
@@ -187,10 +216,17 @@ Audio_AllocNoteFromDisabled = 0x800BB938;
 Audio_NotePoolFill = 0x800BB560;
 Audio_NotePoolClear = 0x800BB400;
 
+// audio_effects.c
+Audio_SequenceChannelProcessSound = 0x800BBE30;
+Audio_SequencePlayerProcessSound = 0x800BBFD4;
+Audio_GetPortamentoFreqScale = 0x800BC134;
+Audio_GetVibratoPitchChange = 0x800BC208;
+Audio_GetVibratoFreqScale = 0x800BC24C;
+
 // Unsorted
-load_wave_samples = 0x800B67EC;
-process_envelope = 0x800B6900;
-final_resample = 0x800B68A4;
+AudioSynth_LoadWaveSamples = 0x800B67EC;
+AudioSynth_ProcessEnvelope = 0x800B6900;
+AudioSynth_FinalResample = 0x800B68A4;
 
 aspMainTextStart = 0x800D37B0; //name_end:aspMainTextEnd
 aspMainDataStart = 0x800EEB10; //name_end:aspMainDataEnd
