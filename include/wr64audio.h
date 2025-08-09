@@ -48,7 +48,8 @@
 #define LAYERS_MAX 4
 #define CHANNELS_MAX 16
 
-#define IS_SEQUENCE_CHANNEL_VALID(ptr) ((uintptr_t) (ptr) != (uintptr_t) & gSequenceChannelNone)
+#define IS_SEQUENCE_CHANNEL_VALID(ptr) ((uintptr_t) (ptr) != (uintptr_t) &gSequenceChannelNone)
+#define IS_SEQ_LOAD_COMPLETE(seqId) (gSeqLoadStatus[seqId] >= SOUND_LOAD_STATUS_COMPLETE)
 
 #define PATCH(x, base) (patched = (void*) ((uintptr_t) (x) + (uintptr_t) base))
 
@@ -277,16 +278,27 @@ void AudioLoad_InitSampleDmaBuffers(s32);
 void Audio_InitNoteFreeList(void);
 void Audio_NoteInitAll(void);
 void Audio_AudioListRemove(Note* note);
-void Audio_InitNoteSub(struct Note* note, f32 velocity, u8 pan, u8 reverbVol);
+void Audio_InitNoteSub(Note* note, f32 velocity, u8 pan, u8 reverbVol);
 void Audio_AudioListPushFront(AudioListItem* list, AudioListItem* item);
 void Audio_SeqLayerNoteRelease(SequenceChannelLayer* layer);
-void Audio_NoteInitForLayer(Note *note, SequenceChannelLayer *seqLayer);
-f32 Audio_AdsrUpdate(AdsrState *adsr);
+void Audio_NoteInitForLayer(Note* note, SequenceChannelLayer* seqLayer);
+f32 Audio_AdsrUpdate(AdsrState* adsr);
 void port_init(void);
 void AudioSeq_InitSequencePlayers(void);
 void init_layer_freelist(void);
 void AudioHeap_InitMainPools(s32 initPoolSize);
 void Audio_LoadSequenceInternal(u32 player, u32 seqId, s32 loadAsync);
 void AudioSeq_ProcessSequences(s32 iterationsRemaining);
+void Audio_NotePoolFill(NotePool* pool, s32 count);
+void Audio_NotePoolClear(NotePool* pool);
+void Audio_InitNoteLists(NotePool* pool);
+u8 m64_read_u8(M64ScriptState* state);
+s16 m64_read_s16(M64ScriptState* state);
+u16 m64_read_compressed_u16(M64ScriptState* state);
+void Audio_PatchBank(AudioBank* mem, u8* offset, u32 numInstruments, u32 numDrums);
+void init_layer_freelist(void);
+void sequence_player_init_channels(SequencePlayer* seqPlayer, u16 channelBits);
+void sequence_channel_enable(SequencePlayer* seqPlayer, u8 channelIndex, void* script);
+void sequence_channel_process_script(SequenceChannel* seqChannel);
 
 #endif
