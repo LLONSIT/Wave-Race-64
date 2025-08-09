@@ -47,7 +47,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/set_instrument.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/sequence_channel_set_volume.s")
+// Original name: Nas_SubVolumeSet
+void AudioSeq_SequenceChannelSetVolume(SequenceChannel* channel, u8 volume) {
+    channel->volume = (s32) volume / 127.0f;
+}
 
 // Original name: Nas_SubSeq
 void AudioSeq_SequenceChannelProcessScript(SequenceChannel* seqChannel) {
@@ -209,7 +212,7 @@ void AudioSeq_SequenceChannelProcessScript(SequenceChannel* seqChannel) {
                         break;
 
                     case 0xDF:
-                        sequence_channel_set_volume(seqChannel, m64_read_u8(state));
+                        AudioSeq_SequenceChannelSetVolume(seqChannel, m64_read_u8(state));
                         seqChannel->changes.as_bitfields.volume = 1;
                         break;
 
