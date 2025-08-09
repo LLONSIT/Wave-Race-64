@@ -299,6 +299,9 @@ void Audio_PatchBank(AudioBank* mem, u8* offset, u32 numInstruments, u32 numDrum
 void init_layer_freelist(void);
 void sequence_player_init_channels(SequencePlayer* seqPlayer, u16 channelBits);
 void sequence_channel_enable(SequencePlayer* seqPlayer, u8 channelIndex, void* script);
-void sequence_channel_process_script(SequenceChannel* seqChannel);
-
+void AudioSeq_SequenceChannelProcessScript(SequenceChannel* seqChannel);
+void seq_channel_layer_process_script(SequenceChannelLayer* layer);
+void set_instrument(SequenceChannel* seqChannel, u8 instId);
+void sequence_channel_set_volume(SequenceChannel* seqChannel, u8 volume);
+void* AudioHeap_SearchRegularCaches(struct SoundMultiPool* multiPool, s32 arg1, s32 id);
 #endif

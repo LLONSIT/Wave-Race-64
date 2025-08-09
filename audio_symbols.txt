@@ -151,10 +151,15 @@ AudioSeq_SequencePlayerProcessSequence = 0x800BE858;
 m64_read_u8 = 0x800BD0B0;
 m64_read_s16 = 0x800BD0C4;
 m64_read_compressed_u16 = 0x800BD0F4;
-sequence_channel_process_script = 0x800BDD14;
+AudioSeq_SequenceChannelProcessScript = 0x800BDD14;
 sequence_channel_enable = 0x800BCE18;
 sequence_player_init_channels = 0x800BCC1C;
 sequence_player_disable_channels = 0x800BCD48;
+seq_channel_layer_process_script = 0x800BD138;
+sequence_channel_set_volume = 0x800BDCF0;
+seq_channel_set_layer = 0x800BC9A0;
+seq_channel_layer_free = 0x800BCAE4;
+set_instrument = 0x800BDC5C;
 
 alSeqFileNew = 0x800CA908; //defined:true
 gDefaultShortNoteVelocityTable = 0x800ECFE4;

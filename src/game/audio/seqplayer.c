@@ -11,11 +11,11 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BC880.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BC9A0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/seq_channel_set_layer.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BCAA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BCAE4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/seq_channel_layer_free.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequenceChannelDisable.s")
 
@@ -41,15 +41,442 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/m64_read_compressed_u16.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BD138.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/seq_channel_layer_process_script.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BDBEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BDC5C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/set_instrument.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BDCF0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/sequence_channel_set_volume.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/sequence_channel_process_script.s")
+// Original name: Nas_SubSeq
+void AudioSeq_SequenceChannelProcessScript(SequenceChannel* seqChannel) {
+    M64ScriptState* state;
+    SequencePlayer* seqPlayer;
+    u8 cmd;
+    s8 temp;
+    u8 loBits;
+    u16 sp5A;
+    s32 sp38;
+    s8 value;
+    s32 i;
+    u8* seqData;
+
+    if (!seqChannel->enabled) {
+        return;
+    }
+    if (seqChannel->stopScript) {
+        for (i = 0; i < LAYERS_MAX; i++) {
+            if (seqChannel->layers[i] != NULL) {
+                seq_channel_layer_process_script(seqChannel->layers[i]);
+            }
+        }
+        return;
+    }
+    seqPlayer = seqChannel->seqPlayer;
+    if (seqPlayer->muted && ((seqChannel->muteBehavior & 0x80) != 0)) {
+        return;
+    }
+    if (seqChannel->delay != 0) {
+        seqChannel->delay--;
+    }
+    state = &seqChannel->scriptState;
+    if (seqChannel->delay == 0) {
+        for (;;) {
+            cmd = m64_read_u8(state);
+            if (cmd > 0xc0) {
+                switch (cmd) {
+                    case 0xFF:
+                        if (state->depth) {};
+                        if (1) {};
+                        if (1) {};
+                        if (1) {};
+                        if (state->depth == 0) {
+                            AudioSeq_SequenceChannelDisable(seqChannel);
+                            goto out;
+                        } else {
+                            state->pc = state->stack[--state->depth];
+                        }
+                        break;
+
+                    case 0xFE:
+                        goto out;
+
+                    case 0xFD:
+                        seqChannel->delay = m64_read_compressed_u16(state);
+                        goto out;
+
+                    case 0xEA:
+                        seqChannel->stopScript = 1;
+                        goto out;
+
+                    case 0xFC:
+                        sp5A = m64_read_s16(state);
+                        state->stack[state->depth++] = state->pc;
+                        state->pc = seqPlayer->seqData + sp5A;
+                        break;
+
+                    case 0xF8:
+                        state->remLoopIters[state->depth] = m64_read_u8(state);
+                        state->stack[state->depth] = state->pc;
+                        state->depth += 1;
+                        break;
+
+                    case 0xF7:
+                        state->remLoopIters[state->depth - 1]--;
+                        if (state->remLoopIters[state->depth - 1] != 0) {
+                            state->pc = state->stack[state->depth - 1];
+                        } else {
+                            state->depth--;
+                        }
+                        break;
+
+                    case 0xF6:
+                        state->depth -= 1;
+                        break;
+
+                    case 0xF5:
+                    case 0xF9:
+                    case 0xFA:
+                    case 0xFB:
+                        sp5A = m64_read_s16(state);
+                        if ((cmd == 0xFA) && (value != 0)) {
+                            break;
+                        }
+                        if ((cmd == 0xF9) && (value >= 0)) {
+                            break;
+                        }
+                        if ((cmd == 0xF5) && (value < 0)) {
+                            break;
+                        }
+                        state->pc = seqPlayer->seqData + sp5A;
+                        break;
+
+                    case 0xF2:
+                    case 0xF3:
+                    case 0xF4:
+                        temp = m64_read_u8(state);
+                        if ((cmd == 0xF3) && (value != 0)) {
+                            break;
+                        }
+                        if ((cmd == 0xF2) && (value >= 0)) {
+                            break;
+                        }
+                        state->pc += temp;
+                        break;
+
+                    case 0xF1:
+                        Audio_NotePoolClear(&seqChannel->notePool);
+                        Audio_NotePoolFill(&seqChannel->notePool, m64_read_u8(state));
+                        break;
+
+                    case 0xF0:
+                        Audio_NotePoolClear(&seqChannel->notePool);
+                        break;
+
+                    case 0xC2:
+                        sp5A = m64_read_s16(state);
+                        seqChannel->dynTable = (void*) (seqPlayer->seqData + sp5A);
+                        break;
+
+                    case 0xC5:
+                        if (value != (-1)) {
+                            seqData = (*seqChannel->dynTable)[value];
+                            sp38 = (u16) ((seqData[0] << 8) + seqData[1]);
+                            seqChannel->dynTable = (void*) (seqPlayer->seqData + sp38);
+                        }
+                        break;
+
+                    case 0xEB:
+                        cmd = m64_read_u8(state);
+                        sp38 = ((u16*) gAlBankSets)[seqPlayer->seqId];
+                        loBits = *(sp38 + gAlBankSets);
+                        cmd = gAlBankSets[(((s32) sp38) + loBits) - cmd];
+                        if (AudioHeap_SearchRegularCaches(&gBankLoadedPool, 2, cmd) != NULL) {
+                            seqChannel->bankId = cmd;
+                        }
+
+                    case 0xC1:
+                        set_instrument(seqChannel, m64_read_u8(state));
+                        break;
+
+                    case 0xC3:
+                        seqChannel->largeNotes = 0;
+                        break;
+
+                    case 0xC4:
+                        seqChannel->largeNotes = 1;
+                        break;
+
+                    case 0xDF:
+                        sequence_channel_set_volume(seqChannel, m64_read_u8(state));
+                        seqChannel->changes.as_bitfields.volume = 1;
+                        break;
+
+                    case 0xE0:
+                        seqChannel->volumeScale = ((f32) ((s32) m64_read_u8(state))) / 128.0f;
+                        seqChannel->changes.as_bitfields.volume = 1;
+                        break;
+
+                    case 0xDE:
+                        sp5A = m64_read_s16(state);
+                        seqChannel->freqScale = ((f32) ((s32) sp5A)) / 32768.0f;
+                        seqChannel->changes.as_bitfields.freqScale = 1;
+                        break;
+
+                    case 0xD3:
+                        cmd = m64_read_u8(state) + 127;
+                        seqChannel->freqScale = gPitchBendFrequencyScale[cmd];
+                        seqChannel->changes.as_bitfields.freqScale = 1;
+                        break;
+
+                    case 0xDD:
+                        seqChannel->newPan = m64_read_u8(state);
+                        seqChannel->changes.as_bitfields.pan = 1;
+                        break;
+
+                    case 0xDC:
+                        seqChannel->panChannelWeight = m64_read_u8(state);
+                        seqChannel->changes.as_bitfields.pan = 1;
+                        break;
+
+                    case 0xDB:
+                        temp = *(state->pc++);
+                        seqChannel->transposition = temp;
+                        break;
+
+                    case 0xDA:
+                        sp5A = m64_read_s16(state);
+                        seqChannel->adsr.envelope = (AdsrEnvelope*) (seqPlayer->seqData + sp5A);
+                        break;
+
+                    case 0xD9:
+                        seqChannel->adsr.releaseRate = m64_read_u8(state);
+                        break;
+
+                    case 0xD8:
+                        seqChannel->vibratoExtentTarget = m64_read_u8(state) * 8;
+                        seqChannel->vibratoExtentStart = 0;
+                        seqChannel->vibratoExtentChangeDelay = 0;
+                        break;
+
+                    case 0xD7:
+                        seqChannel->vibratoRateStart = seqChannel->vibratoRateTarget = m64_read_u8(state) * 32;
+                        seqChannel->vibratoRateChangeDelay = 0;
+                        break;
+
+                    case 0xE2:
+                        seqChannel->vibratoExtentStart = m64_read_u8(state) * 8;
+                        seqChannel->vibratoExtentTarget = m64_read_u8(state) * 8;
+                        seqChannel->vibratoExtentChangeDelay = m64_read_u8(state) * 0x10;
+                        break;
+
+                    case 0xE1:
+                        seqChannel->vibratoRateStart = m64_read_u8(state) << 5;
+                        seqChannel->vibratoRateTarget = m64_read_u8(state) << 5;
+                        seqChannel->vibratoRateChangeDelay = m64_read_u8(state) * 0x10;
+                        break;
+
+                    case 0xE3:
+                        seqChannel->vibratoDelay = m64_read_u8(state) * 0x10;
+                        break;
+
+                    case 0xD4:
+                        seqChannel->reverbVol = m64_read_u8(state);
+                        break;
+
+                    case 0xC6:
+                        cmd = m64_read_u8(state);
+                        sp5A = ((u16*) gAlBankSets)[seqPlayer->seqId];
+                        loBits = *(sp5A + gAlBankSets);
+                        cmd = gAlBankSets[(sp5A + loBits) - cmd];
+                        if (AudioHeap_SearchRegularCaches(&gBankLoadedPool, 2, cmd) != NULL) {
+                            seqChannel->bankId = cmd;
+                        }
+                        break;
+
+                    case 0xC7:
+                        cmd = m64_read_u8(state);
+                        sp5A = m64_read_s16(state);
+                        seqData = seqPlayer->seqData + sp5A;
+                        *seqData = ((u8) value) + cmd;
+                        break;
+
+                    case 0xC8:
+                    case 0xC9:
+                    case 0xCC:
+                        temp = m64_read_u8(state);
+                        if (cmd == 0xC8) {
+                            value -= temp;
+                        } else if (cmd == 0xCC) {
+                            value = temp;
+                        } else {
+                            value &= temp;
+                        }
+                        break;
+
+                    case 0xCA:
+                        seqChannel->muteBehavior = m64_read_u8(state);
+                        break;
+
+                    case 0xCB:
+                        sp38 = ((u16) m64_read_s16(state)) + value;
+                        value = seqPlayer->seqData[sp38];
+                        break;
+
+                    case 0xD0:
+                        seqChannel->stereoHeadsetEffects = m64_read_u8(state);
+                        break;
+
+                    case 0xD1:
+                        seqChannel->noteAllocPolicy = m64_read_u8(state);
+                        break;
+
+                    case 0xD2:
+                        seqChannel->adsr.sustain = m64_read_u8(state);
+                        break;
+
+                    case 0xE5:
+                        seqChannel->reverbIndex = m64_read_u8(state);
+                        break;
+
+                    case 0xE4:
+                        if (value != (-1)) {
+                            if (state->depth) {};
+                            seqData = (*seqChannel->dynTable)[value];
+                            state->stack[state->depth++] = state->pc;
+                            sp38 = (u16) ((seqData[0] << 8) + seqData[1]);
+                            state->pc = seqPlayer->seqData + sp38;
+                        }
+                        break;
+
+                    case 0xE6:
+                        seqChannel->bookOffset = m64_read_u8(state);
+                        break;
+
+                    case 0xE7:
+                        sp5A = m64_read_s16(state);
+                        seqData = seqPlayer->seqData + sp5A;
+                        seqChannel->muteBehavior = *(seqData++);
+                        seqChannel->noteAllocPolicy = *(seqData++);
+                        seqChannel->notePriority = *(seqData++);
+                        seqChannel->transposition = (s8) (*(seqData++));
+                        seqChannel->newPan = *(seqData++);
+                        seqChannel->panChannelWeight = *(seqData++);
+                        seqChannel->reverbVol = *(seqData++);
+                        seqChannel->reverbIndex = *(seqData++);
+                        seqChannel->changes.as_bitfields.pan = 1;
+                        break;
+
+                    case 0xE8:
+                        seqChannel->muteBehavior = m64_read_u8(state);
+                        seqChannel->noteAllocPolicy = m64_read_u8(state);
+                        seqChannel->notePriority = m64_read_u8(state);
+                        seqChannel->transposition = (s8) m64_read_u8(state);
+                        seqChannel->newPan = m64_read_u8(state);
+                        seqChannel->panChannelWeight = m64_read_u8(state);
+                        seqChannel->reverbVol = m64_read_u8(state);
+                        seqChannel->reverbIndex = m64_read_u8(state);
+                        seqChannel->changes.as_bitfields.pan = 1;
+                        break;
+
+                    case 0xEC:
+                        seqChannel->vibratoExtentTarget = 0;
+                        seqChannel->vibratoExtentStart = 0;
+                        seqChannel->vibratoExtentChangeDelay = 0;
+                        seqChannel->vibratoRateTarget = 0;
+                        seqChannel->vibratoRateStart = 0;
+                        seqChannel->vibratoRateChangeDelay = 0;
+                        seqChannel->freqScale = 1.0f;
+                        break;
+
+                    case 0xE9:
+                        seqChannel->notePriority = m64_read_u8(state);
+                        break;
+
+                    case 0xEF:
+                        m64_read_s16(state);
+                        m64_read_u8(state);
+                        break;
+                }
+            } else {
+                loBits = cmd & 0xf;
+                switch (cmd & 0xF0) {
+                    case 0x0:
+                        if (seqChannel->layers[loBits] != NULL) {
+                            value = seqChannel->layers[loBits]->finished;
+                        } else {
+                            value = -1;
+                        }
+                        break;
+
+                    case 0x70:
+                        seqChannel->soundScriptIO[loBits] = value;
+                        break;
+
+                    case 0x80:
+                        value = seqChannel->soundScriptIO[loBits];
+                        if (loBits < 4) {
+                            seqChannel->soundScriptIO[loBits] = -1;
+                        }
+                        break;
+
+                    case 0x50:
+                        value -= seqChannel->soundScriptIO[loBits];
+                        break;
+
+                    case 0x60:
+                        seqChannel->delay = loBits;
+                        goto out;
+
+                    case 0x90:
+                        sp5A = m64_read_s16(state);
+                        if (seq_channel_set_layer(seqChannel, loBits) == 0) {
+                            seqChannel->layers[loBits]->scriptState.pc = seqPlayer->seqData + sp5A;
+                        }
+                        break;
+
+                    case 0xA0:
+                        seq_channel_layer_free(seqChannel, loBits);
+                        break;
+
+                    case 0xB0:
+                        if ((value != (-1)) && (seq_channel_set_layer(seqChannel, loBits) != (-1))) {
+                            seqData = (*seqChannel->dynTable)[value];
+                            sp5A = (seqData[0] << 8) + seqData[1];
+                            seqChannel->layers[loBits]->scriptState.pc = seqPlayer->seqData + sp5A;
+                        }
+                        break;
+
+                    case 0x10:
+                        sp5A = m64_read_s16(state);
+                        sequence_channel_enable(seqPlayer, loBits, seqPlayer->seqData + sp5A);
+                        break;
+
+                    case 0x20:
+                        AudioSeq_SequenceChannelDisable(seqPlayer->channels[loBits]);
+                        break;
+
+                    case 0x30:
+                        cmd = m64_read_u8(state);
+                        seqPlayer->channels[loBits]->soundScriptIO[cmd] = value;
+                        break;
+
+                    case 0x40:
+                        cmd = m64_read_u8(state);
+                        value = seqPlayer->channels[loBits]->soundScriptIO[cmd];
+                        break;
+                }
+            }
+        }
+    }
+out:
+    for (i = 0; i < LAYERS_MAX; i++) {
+        if (seqChannel->layers[i] != 0) {
+            seq_channel_layer_process_script(seqChannel->layers[i]);
+        }
+    }
+}
 
 // Original name: Nas_GroupSeq
 void AudioSeq_SequencePlayerProcessSequence(SequencePlayer* seqPlayer) {
@@ -378,7 +805,7 @@ void AudioSeq_SequencePlayerProcessSequence(SequencePlayer* seqPlayer) {
 
     for (i = 0; i < CHANNELS_MAX; i++) {
         if (IS_SEQUENCE_CHANNEL_VALID(seqPlayer->channels[i]) == true) {
-            sequence_channel_process_script(seqPlayer->channels[i]);
+            AudioSeq_SequenceChannelProcessScript(seqPlayer->channels[i]);
         }
     }
 }
