@@ -9,6 +9,8 @@
 #include "port.h"
 #include "wr64audio.h"
 
+void Audio_InitNoteLists(NotePool* pool);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BC880.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BC9A0.s")
@@ -33,7 +35,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_AudioListPopBack.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BD02C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/init_layer_freelist.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/func_800BD0B0.s")
 
@@ -88,4 +90,44 @@ void AudioSeq_ResetSequencePlayer(u32 player) {
     seqPlayer->muteVolumeScale = 0.5f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/init_sequence_players.s")
+// Original name: Nas_InitPlayer
+void AudioSeq_InitSequencePlayers(void) {
+    // Initialization function, called from AudioLoad_Init
+    s32 i, j;
+
+    for (i = 0; i < 48; i++) {
+        gSequenceChannels[i].seqPlayer = NULL;
+        gSequenceChannels[i].enabled = false;
+        // @bug Size of wrong array. Zeroes out second half of gSequenceChannels[0],
+        // all of gSequenceChannels[1..31], and part of gSequenceLayers[0].
+        // However, this is only called at startup, so it's harmless.
+#ifdef AVOID_UB
+#define LAYERS_SIZE LAYERS_MAX
+#else
+#define LAYERS_SIZE ARRAY_COUNT(gSequenceLayers)
+#endif
+        for (j = 0; j < 64; j++) {
+            gSequenceChannels[i].layers[j] = NULL;
+        }
+    }
+
+    init_layer_freelist();
+
+    for (i = 0; i < 64; i++) {
+        gSequenceLayers[i].seqChannel = NULL;
+        gSequenceLayers[i].enabled = false;
+    }
+
+    for (i = 0; i < SEQUENCE_PLAYERS; i++) {
+        for (j = 0; j < CHANNELS_MAX; j++) {
+            gSequencePlayers[i].channels[j] = &gSequenceChannelNone;
+        }
+
+        gSequencePlayers[i].seqVariationEu[0] = -1;
+
+        gSequencePlayers[i].bankDmaInProgress = false;
+        gSequencePlayers[i].seqDmaInProgress = false;
+        Audio_InitNoteLists(&gSequencePlayers[i].notePool);
+        AudioSeq_ResetSequencePlayer(i);
+    }
+}

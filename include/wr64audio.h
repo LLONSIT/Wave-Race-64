@@ -268,6 +268,8 @@ extern u8 gMusicData[];
 extern u8 gBankSetsData[];
 extern u8 gDefaultShortNoteVelocityTable[16];
 extern u8 gDefaultShortNoteDurationTable[16];
+extern SequenceChannel gSequenceChannels[32];
+extern SequenceChannelLayer gSequenceLayers[52];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
@@ -281,7 +283,8 @@ void Audio_SeqLayerNoteRelease(SequenceChannelLayer* layer);
 void Audio_NoteInitForLayer(Note *note, SequenceChannelLayer *seqLayer);
 f32 Audio_AdsrUpdate(AdsrState *adsr);
 void port_init(void);
-s32 init_sequence_players(void);
+void AudioSeq_InitSequencePlayers(void);
+void init_layer_freelist(void);
 void AudioHeap_InitMainPools(s32 initPoolSize);
 void Audio_LoadSequenceInternal(u32 player, u32 seqId, s32 loadAsync);
 void AudioSeq_ProcessSequences(s32 iterationsRemaining);

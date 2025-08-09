@@ -715,7 +715,7 @@ void AudioLoad_Init() {
 
     gAlBankSets = AudioHeap_AllocZeroed(&gAudioInitPool, 0x100);
     Audio_DmaCopyImmediate((uintptr_t) gBankSetsData, gAlBankSets, 0x100);
-    init_sequence_players();
+    AudioSeq_InitSequencePlayers();
     gAudioLoadLock = 0x76557364;
     // PRINTF("---------- Init Completed. ------------\n");
     // PRINTF(" Syndrv    :[%6d]\n", 0);
