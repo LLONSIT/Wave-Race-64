@@ -9,6 +9,17 @@
 #include "port.h"
 #include "wr64audio.h"
 
+extern u8 gThreadCmdWritePos;
+extern u8 gThreadCmdReadPos;
+extern OSMesgQueue* gAudioTaskStartQueue;
+extern OSMesg sAudioTaskStartMsg[1];
+extern OSMesgQueue* gThreadCmdProcQueue;
+extern OSMesg sThreadCmdProcMsg[4];
+extern OSMesgQueue* gAudioSpecQueue;
+extern OSMesg sAudioSpecMsg[1];
+extern OSMesgQueue* gAudioResetQueue;
+extern OSMesg sAudioResetMsg[1];
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C4C40.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C5088.s")
@@ -17,7 +28,14 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C528C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/AudioThread_InitQueues.s")
+void AudioThread_InitQueues(void) {
+    gThreadCmdWritePos = 0;
+    gThreadCmdReadPos = 0;
+    osCreateMesgQueue(gAudioTaskStartQueue, sAudioTaskStartMsg, 1);
+    osCreateMesgQueue(gThreadCmdProcQueue, sThreadCmdProcMsg, 4);
+    osCreateMesgQueue(gAudioSpecQueue, sAudioSpecMsg, 1);
+    osCreateMesgQueue(gAudioResetQueue, sAudioResetMsg, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C5354.s")
 

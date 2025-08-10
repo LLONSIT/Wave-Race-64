@@ -238,6 +238,17 @@ Audio_GetVibratoFreqScale = 0x800BC24C;
 // audio_thread.c
 AudioThread_InitQueues = 0x800C52CC;
 
+gThreadCmdWritePos = 0x800E85F0;
+gThreadCmdReadPos = 0x800E85F4;
+gAudioTaskStartQueue = 0x800E85F8;
+sAudioTaskStartMsg = 0x801D8690;
+gThreadCmdProcQueue = 0x800E85FC;
+sThreadCmdProcMsg = 0x801D8698;
+gAudioSpecQueue = 0x800E8600;
+sAudioSpecMsg = 0x801D86A8;
+gAudioResetQueue = 0x800E8604;
+sAudioResetMsg = 0x801D86AC;
+
 // Unsorted
 AudioSynth_LoadWaveSamples = 0x800B67EC;
 AudioSynth_ProcessEnvelope = 0x800B6900;
