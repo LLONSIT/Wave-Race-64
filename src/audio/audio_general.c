@@ -19,7 +19,21 @@ void func_800BF6AC(f32 arg0, s8 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BF784.s")
+void func_800BF784(f32 arg0, s8 arg1) {
+    f32 var_f0;
+
+    if ((D_800E7C94 == 7) && !(arg0 >= 128.0f)) {
+        if (arg0 <= 12.0f) {
+            var_f0 = 1.0f;
+        } else {
+            var_f0 = (128.0f - arg0) / 116.0f;
+        }
+        AudioThread_QueueCmdF32(0x01000700U, var_f0);
+        AudioThread_QueueCmdS8(0x06000701U, 0x7F);
+        AudioThread_QueueCmdS8(0x06000702U, arg1);
+        AudioThread_QueueCmdS8(0x06000700U, 0x15);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BF844.s")
 
