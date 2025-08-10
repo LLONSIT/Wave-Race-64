@@ -82,7 +82,9 @@ void func_800BF964(void) {
     D_800E7CE0--;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFA38.s")
+void func_800BFA38(u32 arg0, u32 arg1, u32 arg2) {
+    AudioThread_QueueCmdS8((((arg0 & 0xFF) << 0x10) | 0x08000000) | ((arg1 & 0xFF) << 8), arg2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFA80.s")
 
