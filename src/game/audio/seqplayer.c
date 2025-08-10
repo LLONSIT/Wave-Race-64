@@ -27,9 +27,35 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequenceChannelEnable.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequencePlayerDisable.s")
+// Original name: Nas_ReleaseGroup
+void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer) {
+    AudioSeq_SequencePlayerDisableChannels(seqPlayer, 0xffff);
+    Audio_NotePoolClear(&seqPlayer->notePool);
+    seqPlayer->finished = true;
+    seqPlayer->enabled = false;
 
-// Original name: Nas_AddList
+    if (IS_SEQ_LOAD_COMPLETE(seqPlayer->seqId)) {
+        gSeqLoadStatus[seqPlayer->seqId] = SOUND_LOAD_STATUS_DISCARDABLE;
+    }
+
+    if (IS_BANK_LOAD_COMPLETE(seqPlayer->defaultBank[0])) {
+        gBankLoadStatus[seqPlayer->defaultBank[0]] = SOUND_LOAD_STATUS_4;
+    }
+
+    // (Note that if this is called from alloc_bank_or_seq, the side will get swapped
+    // later in that function. Thus, we signal that we want to load into the slot
+    // of the bank that we no longer need.)
+    if (seqPlayer->defaultBank[0] == gBankLoadedPool.temporary.entries[0].id) {
+        gBankLoadedPool.temporary.nextSide = 1;
+    } else if (seqPlayer->defaultBank[0] == gBankLoadedPool.temporary.entries[1].id) {
+        gBankLoadedPool.temporary.nextSide = 0;
+    }
+}
+
+/**
+ * Original name: Nas_AddList
+ * Add an item to the end of a list, if it's not already in any list.
+ */
 void AudioSeq_AudioListPushBack(AudioListItem* list, AudioListItem* item) {
     if (item->prev == NULL) {
         list->prev->next = item;
@@ -41,7 +67,10 @@ void AudioSeq_AudioListPushBack(AudioListItem* list, AudioListItem* item) {
     }
 }
 
-// Original name: Nas_GetList
+/**
+ * Original name: Nas_GetList
+ * Remove the last item from a list, and return it (or NULL if empty).
+ */
 void* AudioSeq_AudioListPopBack(AudioListItem* list) {
     AudioListItem* item = list->prev;
     if (item == list) {
