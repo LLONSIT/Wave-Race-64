@@ -234,7 +234,7 @@ void audio_thread(void* entry) {
             second_task = D_800D4630;
             osSendMesg(&D_80154130, (void*) 0x16, OS_MESG_NOBLOCK);
         }
-        D_800D4630 = func_800C4C40();
+        D_800D4630 = AudioThread_CreateTask();
     }
 }
 #else

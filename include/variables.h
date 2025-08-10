@@ -346,4 +346,7 @@ extern f32 D_801C43B0;
 extern f32 D_801C43C8;
 extern f32 D_801C43E0;
 
+// audio_general.c
+extern s8 D_800E7C94;
+
 #endif /* VARIABLES_H */
