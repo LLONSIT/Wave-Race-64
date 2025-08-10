@@ -39,8 +39,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_ScriptReadS16.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_ScriptReadCompressedU16.s")
+// Original name: Nas_ReadLengthData
+u16 AudioSeq_ScriptReadCompressedU16( M64ScriptState *state) {
+    u16 ret = *(state->pc++);
+    if (ret & 0x80) {
+        ret = (ret << 8) & 0x7f00;
+        ret = *(state->pc++) | ret;
+    }
+    return ret;
+}
 
+// Original name: Nas_NoteSeq
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SeqLayerProcessScript.s")
 
 // Original name: Nas_ProgramChanger
