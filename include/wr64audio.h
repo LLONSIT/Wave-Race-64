@@ -72,6 +72,14 @@
 
 #define FLOAT_CAST(x) (f32)(s32)(x)
 
+#define PORTAMENTO_IS_SPECIAL(x) ((x).mode & 0x80)
+#define PORTAMENTO_MODE(x) ((x).mode & ~0x80)
+#define PORTAMENTO_MODE_1 1
+#define PORTAMENTO_MODE_2 2
+#define PORTAMENTO_MODE_3 3
+#define PORTAMENTO_MODE_4 4
+#define PORTAMENTO_MODE_5 5
+
 typedef struct PoolSplit {
     u32 wantSeq;
     u32 wantBank;
@@ -269,8 +277,11 @@ extern u8 gMusicData[];
 extern u8 gBankSetsData[];
 extern u8 gDefaultShortNoteVelocityTable[16];
 extern u8 gDefaultShortNoteDurationTable[16];
-extern SequenceChannel gSequenceChannels[32];
-extern SequenceChannelLayer gSequenceLayers[52];
+extern SequenceChannel gSequenceChannels[48];
+extern SequenceChannelLayer gSequenceLayers[64];
+extern AudioListItem gLayerFreeList;
+extern AdsrEnvelope gDefaultEnvelope[3];
+extern f32 gNoteFrequencies[128];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
@@ -285,20 +296,43 @@ void Audio_NoteInitForLayer(Note* note, SequenceChannelLayer* seqLayer);
 f32 Audio_AdsrUpdate(AdsrState* adsr);
 void port_init(void);
 void AudioSeq_InitSequencePlayers(void);
-void init_layer_freelist(void);
+void AudioSeq_InitLayerFreelist(void);
 void AudioHeap_InitMainPools(s32 initPoolSize);
 void Audio_LoadSequenceInternal(u32 player, u32 seqId, s32 loadAsync);
 void AudioSeq_ProcessSequences(s32 iterationsRemaining);
 void Audio_NotePoolFill(NotePool* pool, s32 count);
 void Audio_NotePoolClear(NotePool* pool);
 void Audio_InitNoteLists(NotePool* pool);
-u8 m64_read_u8(M64ScriptState* state);
-s16 m64_read_s16(M64ScriptState* state);
-u16 m64_read_compressed_u16(M64ScriptState* state);
+u8 AudioSeq_ScriptReadU8(M64ScriptState* state);
+s16 AudioSeq_ScriptReadS16(M64ScriptState* state);
+u16 AudioSeq_ScriptReadCompressedU16(M64ScriptState* state);
 void Audio_PatchBank(AudioBank* mem, u8* offset, u32 numInstruments, u32 numDrums);
-void init_layer_freelist(void);
-void sequence_player_init_channels(SequencePlayer* seqPlayer, u16 channelBits);
-void sequence_channel_enable(SequencePlayer* seqPlayer, u8 channelIndex, void* script);
-void sequence_channel_process_script(SequenceChannel* seqChannel);
+void AudioSeq_InitLayerFreelist(void);
+void AudioSeq_SequencePlayerSetupChannels(SequencePlayer* seqPlayer, u16 channelBits);
+void AudioSeq_SequenceChannelEnable(SequencePlayer* seqPlayer, u8 channelIndex, void* script);
+void AudioSeq_SequenceChannelProcessScript(SequenceChannel* seqChannel);
+void AudioSeq_SeqLayerProcessScript(SequenceChannelLayer* layer);
+void AudioSeq_SetInstrument(SequenceChannel* seqChannel, u8 instId);
+void AudioSeq_SequenceChannelSetVolume(SequenceChannel* channel, u8 volume);
+void* AudioHeap_SearchRegularCaches(SoundMultiPool* multiPool, s32 arg1, s32 id);
+u8 AudioSeq_GetInstrument(SequenceChannel* seqChannel, u8 instId, Instrument** instOut, AdsrSettings* adsr);
+void AudioSeq_AudioListPushBack(AudioListItem* list, AudioListItem* item);
+void* AudioSeq_AudioListPopBack(AudioListItem* list);
+void AudioSeq_SequenceChannelDisable(SequenceChannel* seqChannel);
+
+void Audio_SequencePlayerProcessSound(SequencePlayer* seqPlayer);
+void Audio_ProcessNotes(void);
+void Audio_DmaPartialCopyAsync(uintptr_t* devAddr, u8** vAddr, ssize_t* remaining, OSMesgQueue* queue, OSIoMesg* mesg);
+void Audio_SeqLayerNoteDecay(SequenceChannelLayer* seqLayer);
+Instrument* Audio_GetInstrument(s32 fontId, s32 instId);
+void Audio_NoteDisable(Note* note);
+void AudioSeq_ResetSequencePlayer(u32 player);
+void Audio_NoteVibratoUpdate(Note* note);
+void Audio_NoteVibratoInit(Note* note);
+void Audio_AdsrInit(AdsrState* adsr, AdsrEnvelope* envelope, s16* volOut);
+void Audio_InitSyntheticWave(Note* note, SequenceChannelLayer* seqLayer);
+Drum* Audio_GetDrum(s32 bankId, s32 drumId);
+AudioBankSound* Audio_GetInstrumentTunedSample(Instrument* instrument, s32 semitone);
+Note* Audio_AllocNote(SequenceChannelLayer* seqLayer);
 
 #endif

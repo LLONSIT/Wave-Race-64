@@ -176,11 +176,11 @@ typedef struct SequencePlayer {
                      uintptr_t bankDmaCurrDevAddr;
                      ssize_t bankDmaRemaining;
 } SequencePlayer;
-struct AdsrSettings {
+typedef struct AdsrSettings {
     u8 releaseRate;
     u8 sustain;
     struct AdsrEnvelope *envelope;
-};
+} AdsrSettings;
 typedef struct AdsrState {
                    u8 action;
                    u8 state;

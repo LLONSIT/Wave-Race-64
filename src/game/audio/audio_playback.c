@@ -702,7 +702,7 @@ Note* Audio_AllocNoteFromActive(NotePool* pool, SequenceChannelLayer* seqLayer) 
 }
 
 // Original name: Nas_AllocationOnRequest
-Note* Audio_AllocNote(struct SequenceChannelLayer* seqLayer) {
+Note* Audio_AllocNote(SequenceChannelLayer* seqLayer) {
     Note* ret;
     u32 policy = seqLayer->seqChannel->noteAllocPolicy;
 
