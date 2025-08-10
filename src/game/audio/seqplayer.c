@@ -19,7 +19,16 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequenceChannelDisable.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_RequestFreeSeqChannel.s")
+SequenceChannel* AudioSeq_RequestFreeSeqChannel(void) {
+    s32 i;
+
+    for (i = 0; i < ARRAY_COUNT(gSequenceChannels); i++) {
+        if (gSequenceChannels[i].seqPlayer == NULL) {
+            return &gSequenceChannels[i];
+        }
+    }
+    return &gSequenceChannelNone;
+}
 
 // Original name: Nas_AllocSub
 void AudioSeq_SequencePlayerSetupChannels(SequencePlayer* seqPlayer, u16 channelBits) {
