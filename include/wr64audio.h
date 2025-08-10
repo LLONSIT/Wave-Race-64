@@ -269,8 +269,8 @@ extern u8 gMusicData[];
 extern u8 gBankSetsData[];
 extern u8 gDefaultShortNoteVelocityTable[16];
 extern u8 gDefaultShortNoteDurationTable[16];
-extern SequenceChannel gSequenceChannels[32];
-extern SequenceChannelLayer gSequenceLayers[52];
+extern SequenceChannel gSequenceChannels[48];
+extern SequenceChannelLayer gSequenceLayers[64];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
@@ -305,4 +305,5 @@ void AudioSeq_SetInstrument(SequenceChannel* seqChannel, u8 instId);
 void AudioSeq_SequenceChannelSetVolume(SequenceChannel* channel, u8 volume);
 void* AudioHeap_SearchRegularCaches(struct SoundMultiPool* multiPool, s32 arg1, s32 id);
 u8 AudioSeq_GetInstrument(SequenceChannel* seqChannel, u8 instId, Instrument** instOut, AdsrSettings* adsr);
+extern AudioListItem gLayerFreeList;
 #endif

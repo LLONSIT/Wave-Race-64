@@ -33,7 +33,21 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_AudioListPopBack.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_InitLayerFreelist.s")
+// Original name: Nas_InitNoteList
+void AudioSeq_InitLayerFreelist(void) {
+    s32 i;
+
+    gLayerFreeList.prev = &gLayerFreeList;
+    gLayerFreeList.next = &gLayerFreeList;
+    gLayerFreeList.u.count = 0;
+    gLayerFreeList.pool = NULL;
+
+    for (i = 0; i < ARRAY_COUNT(gSequenceLayers); i++) {
+        gSequenceLayers[i].listItem.u.value = &gSequenceLayers[i];
+        gSequenceLayers[i].listItem.prev = NULL;
+        AudioSeq_AudioListPushBack(&gLayerFreeList, &gSequenceLayers[i].listItem);
+    }
+}
 
 // Original name: Nas_ReadByteData
 u8 AudioSeq_ScriptReadU8(M64ScriptState* state) {
@@ -901,7 +915,7 @@ void AudioSeq_InitSequencePlayers(void) {
     // Initialization function, called from AudioLoad_Init
     s32 i, j;
 
-    for (i = 0; i < 48; i++) {
+    for (i = 0; i < ARRAY_COUNT(gSequenceChannels); i++) {
         gSequenceChannels[i].seqPlayer = NULL;
         gSequenceChannels[i].enabled = false;
         // @bug Size of wrong array. Zeroes out second half of gSequenceChannels[0],
@@ -912,14 +926,14 @@ void AudioSeq_InitSequencePlayers(void) {
 #else
 #define LAYERS_SIZE ARRAY_COUNT(gSequenceLayers)
 #endif
-        for (j = 0; j < 64; j++) {
+        for (j = 0; j < LAYERS_SIZE; j++) {
             gSequenceChannels[i].layers[j] = NULL;
         }
     }
 
     AudioSeq_InitLayerFreelist();
 
-    for (i = 0; i < 64; i++) {
+    for (i = 0; i < LAYERS_SIZE; i++) {
         gSequenceLayers[i].seqChannel = NULL;
         gSequenceLayers[i].enabled = false;
     }
