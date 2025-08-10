@@ -305,8 +305,20 @@ void AudioSeq_SequenceChannelProcessScript(SequenceChannel* seqChannel);
 void AudioSeq_SeqLayerProcessScript(SequenceChannelLayer* layer);
 void AudioSeq_SetInstrument(SequenceChannel* seqChannel, u8 instId);
 void AudioSeq_SequenceChannelSetVolume(SequenceChannel* channel, u8 volume);
-void* AudioHeap_SearchRegularCaches(struct SoundMultiPool* multiPool, s32 arg1, s32 id);
+void* AudioHeap_SearchRegularCaches(SoundMultiPool* multiPool, s32 arg1, s32 id);
 u8 AudioSeq_GetInstrument(SequenceChannel* seqChannel, u8 instId, Instrument** instOut, AdsrSettings* adsr);
 void AudioSeq_AudioListPushBack(AudioListItem* list, AudioListItem* item);
-void *AudioSeq_AudioListPopBack(AudioListItem *list);
+void* AudioSeq_AudioListPopBack(AudioListItem* list);
+void AudioSeq_SequenceChannelDisable(SequenceChannel* seqChannel);
+
+void Audio_SequencePlayerProcessSound(SequencePlayer* seqPlayer);
+void Audio_ProcessNotes(void);
+void Audio_DmaPartialCopyAsync(uintptr_t* devAddr, u8** vAddr, ssize_t* remaining, OSMesgQueue* queue, OSIoMesg* mesg);
+void Audio_SeqLayerNoteDecay(SequenceChannelLayer* seqLayer);
+Instrument* Audio_GetInstrument(s32 fontId, s32 instId);
+void Audio_NoteDisable(Note* note);
+void AudioSeq_ResetSequencePlayer(u32 player);
+void Audio_NoteVibratoUpdate(Note* note);
+void Audio_NoteVibratoInit(Note* note);
+void Audio_AdsrInit(AdsrState* adsr, AdsrEnvelope* envelope, s16* volOut);
 #endif

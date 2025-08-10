@@ -49,7 +49,7 @@ void AudioSeq_InitSequenceChannel(SequenceChannel* seqChannel) {
     seqChannel->volumeScale = 1.0f;
     seqChannel->freqScale = 1.0f;
 
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < ARRAY_COUNT(seqChannel->soundScriptIO); i++) {
         seqChannel->soundScriptIO[i] = -1;
     }
 
@@ -120,7 +120,7 @@ void AudioSeq_SeqLayerFree(SequenceChannel* seqChannel, s32 layerIndex) {
 }
 
 // Original name: Nas_ReleaseSubTrack
-void AudioSeq_SequenceChannelDisable(struct SequenceChannel* seqChannel) {
+void AudioSeq_SequenceChannelDisable(SequenceChannel* seqChannel) {
     s32 i;
 
     for (i = 0; i < LAYERS_MAX; i++) {
