@@ -23,7 +23,28 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequencePlayerSetupChannels.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequencePlayerDisableChannels.s")
+// Original name: Nas_DeAllocSub
+void AudioSeq_SequencePlayerDisableChannels(SequencePlayer* seqPlayer, u16 channelBits) {
+    SequenceChannel* seqChannel;
+    s32 i;
+
+    // eu_stubbed_printf_0("SUBTRACK DIM\n");
+    for (i = 0; i < CHANNELS_MAX; i++) {
+        if (channelBits & 1) {
+            seqChannel = seqPlayer->channels[i];
+            if (IS_SEQUENCE_CHANNEL_VALID(seqChannel) == true) {
+                if (seqChannel->seqPlayer == seqPlayer) {
+                    AudioSeq_SequenceChannelDisable(seqChannel);
+                    seqChannel->seqPlayer = NULL;
+                } else {
+                    // stubbed_printf("Audio:Track: Warning SUBTRACK PARENT CHANGED\n");
+                }
+                seqPlayer->channels[i] = &gSequenceChannelNone;
+            }
+        }
+        channelBits = channelBits >> 1;
+    }
+}
 
 // Original name: Nas_OpenSub
 void AudioSeq_SequenceChannelEnable(SequencePlayer* seqPlayer, u8 channelIndex, void* script) {
