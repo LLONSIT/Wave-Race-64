@@ -72,6 +72,14 @@
 
 #define FLOAT_CAST(x) (f32)(s32)(x)
 
+#define PORTAMENTO_IS_SPECIAL(x) ((x).mode & 0x80)
+#define PORTAMENTO_MODE(x) ((x).mode & ~0x80)
+#define PORTAMENTO_MODE_1 1
+#define PORTAMENTO_MODE_2 2
+#define PORTAMENTO_MODE_3 3
+#define PORTAMENTO_MODE_4 4
+#define PORTAMENTO_MODE_5 5
+
 typedef struct PoolSplit {
     u32 wantSeq;
     u32 wantBank;
@@ -273,6 +281,7 @@ extern SequenceChannel gSequenceChannels[48];
 extern SequenceChannelLayer gSequenceLayers[64];
 extern AudioListItem gLayerFreeList;
 extern AdsrEnvelope gDefaultEnvelope[3];
+extern f32 gNoteFrequencies[128];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
@@ -321,4 +330,9 @@ void AudioSeq_ResetSequencePlayer(u32 player);
 void Audio_NoteVibratoUpdate(Note* note);
 void Audio_NoteVibratoInit(Note* note);
 void Audio_AdsrInit(AdsrState* adsr, AdsrEnvelope* envelope, s16* volOut);
+void Audio_InitSyntheticWave(Note* note, SequenceChannelLayer* seqLayer);
+Drum* Audio_GetDrum(s32 bankId, s32 drumId);
+AudioBankSound* Audio_GetInstrumentTunedSample(Instrument* instrument, s32 semitone);
+Note* Audio_AllocNote(SequenceChannelLayer* seqLayer);
+
 #endif

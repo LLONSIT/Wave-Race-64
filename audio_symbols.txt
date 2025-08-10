@@ -172,6 +172,7 @@ gSequenceChannels = 0x800401C8;
 gSequenceLayers = 0x80042688;
 gLayerFreeList = 0x80044750;
 gDefaultEnvelope = 0x800ED004;
+gNoteFrequencies = 0x800ECDE4;
 
 // audio_synthesis.c
 AudioSynth_InitNextReverbRingBuf = 0x800B4DD0;

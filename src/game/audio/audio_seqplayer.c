@@ -322,7 +322,408 @@ u16 AudioSeq_ScriptReadCompressedU16(M64ScriptState* state) {
 }
 
 // Original name: Nas_NoteSeq
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_seqplayer/AudioSeq_SeqLayerProcessScript.s")
+void AudioSeq_SeqLayerProcessScript(SequenceChannelLayer* layer) {
+    SequencePlayer* seqPlayer;
+    SequenceChannel* seqChannel;
+    UNUSED u32 pad0;
+    M64ScriptState* state;
+    Portamento* portamento;
+    AudioBankSound* sound;
+    Instrument* instrument;
+    Drum* drum;
+    s32 temp_a0_5;
+    u16 sp3A;
+    s32 sameSound;
+    UNUSED u32 pad1;
+    u8 cmd;
+    UNUSED u8 cmdSemitone;
+    f32 tuning;
+    s32 vel;
+    UNUSED s32 usedSemitone;
+    f32 freqScale;
+    f32 temp_f12;
+    f32 temp_f2;
+
+    sameSound = true;
+    if (layer->enabled == false) {
+        return;
+    }
+
+    if (layer->delay > 1) {
+        layer->delay--;
+        if (!layer->stopSomething && layer->delay <= layer->duration) {
+            Audio_SeqLayerNoteDecay(layer);
+            layer->stopSomething = true;
+        }
+        return;
+    }
+
+    if (!layer->continuousNotes) {
+        Audio_SeqLayerNoteDecay(layer);
+    }
+
+    if (PORTAMENTO_MODE(layer->portamento) == PORTAMENTO_MODE_1 ||
+        PORTAMENTO_MODE(layer->portamento) == PORTAMENTO_MODE_2) {
+        layer->portamento.mode = 0;
+    }
+
+    seqChannel = layer->seqChannel;
+    seqPlayer = seqChannel->seqPlayer;
+    layer->notePropertiesNeedInit = true;
+
+    for (;;) {
+        state = &layer->scriptState;
+        cmd = AudioSeq_ScriptReadU8(state);
+
+        if (cmd <= 0xc0) {
+            break;
+        }
+
+        switch (cmd) {
+            case 0xff: // layer_end; function return or end of script
+                if (state->depth == 0) {
+                    // N.B. this function call is *not* inlined even though it's
+                    // within the same file, unlike in the rest of this function.
+                    AudioSeq_SeqLayerDisable(layer);
+                    return;
+                }
+                state->pc = state->stack[--state->depth];
+                break;
+
+            case 0xfc: // layer_call
+                if (0 && state->depth >= 4) {}
+                sp3A = AudioSeq_ScriptReadS16(state);
+                state->stack[state->depth++] = state->pc;
+                state->pc = seqPlayer->seqData + sp3A;
+                break;
+
+            case 0xf8: // layer_loop; loop start, N iterations (or 256 if N = 0)
+                if (0 && state->depth >= 4) {}
+                state->remLoopIters[state->depth] = AudioSeq_ScriptReadU8(state);
+                state->stack[state->depth++] = state->pc;
+                break;
+
+            case 0xf7: // layer_loopend
+                if (--state->remLoopIters[state->depth - 1] != 0) {
+                    state->pc = state->stack[state->depth - 1];
+                } else {
+                    state->depth--;
+                }
+                break;
+
+            case 0xfb: // layer_jump
+                sp3A = AudioSeq_ScriptReadS16(state);
+                state->pc = seqPlayer->seqData + sp3A;
+                break;
+
+            case 0xf4:
+                state->pc += (s8) AudioSeq_ScriptReadU8(state);
+                break;
+
+            case 0xc1: // layer_setshortnotevelocity
+            case 0xca: // layer_setpan
+                temp_a0_5 = *(state->pc++);
+                if (cmd == 0xc1) {
+                    layer->velocitySquare = (f32) (temp_a0_5 * temp_a0_5);
+                } else {
+                    layer->pan = temp_a0_5;
+                }
+                break;
+
+            case 0xc2: // layer_transpose; set transposition in semitones
+            case 0xc9: // layer_setshortnoteduration
+                temp_a0_5 = *(state->pc++);
+                if (cmd == 0xc9) {
+                    layer->noteDuration = temp_a0_5;
+                } else {
+                    layer->transposition = temp_a0_5;
+                }
+                break;
+
+            case 0xc4: // layer_somethingon
+            case 0xc5: // layer_somethingoff
+                if (cmd == 0xc4) {
+                    layer->continuousNotes = true;
+                } else {
+                    layer->continuousNotes = false;
+                }
+                Audio_SeqLayerNoteDecay(layer);
+                break;
+
+            case 0xc3: // layer_setshortnotedefaultplaypercentage
+                sp3A = AudioSeq_ScriptReadCompressedU16(state);
+                layer->shortNoteDefaultPlayPercentage = sp3A;
+                break;
+
+            case 0xc6: // layer_setinstr
+                cmd = AudioSeq_ScriptReadU8(state);
+                if (cmd >= 0x7f) {
+                    if (cmd == 0x7f) {
+                        layer->instOrWave = 0;
+                    } else {
+                        layer->instOrWave = cmd;
+                        layer->instrument = NULL;
+                    }
+
+                    if (1) {}
+
+                    if (cmd == 0xff) {
+                        layer->adsr.releaseRate = 0;
+                    }
+                    break;
+                }
+
+                if ((layer->instOrWave = AudioSeq_GetInstrument(seqChannel, cmd, &layer->instrument, &layer->adsr)) ==
+                    0) {
+                    layer->instOrWave = 0xff;
+                }
+                break;
+
+            case 0xc7: // layer_portamento
+                layer->portamento.mode = AudioSeq_ScriptReadU8(state);
+
+                // cmd is reused for the portamento's semitone
+                cmd = AudioSeq_ScriptReadU8(state) + seqChannel->transposition + layer->transposition +
+                      seqPlayer->transposition;
+
+                if (cmd >= 0x80) {
+                    cmd = 0;
+                }
+
+                layer->portamentoTargetNote = cmd;
+
+                // If special, the next param is u8 instead of var
+                if (PORTAMENTO_IS_SPECIAL(layer->portamento)) {
+                    layer->portamentoTime = *((state)->pc++);
+                    break;
+                }
+
+                sp3A = AudioSeq_ScriptReadCompressedU16(state);
+                layer->portamentoTime = sp3A;
+                break;
+
+            case 0xc8: // layer_disableportamento
+                layer->portamento.mode = 0;
+                break;
+
+            case 0xcb:
+                sp3A = AudioSeq_ScriptReadS16(state);
+                layer->adsr.envelope = (AdsrEnvelope*) (seqPlayer->seqData + sp3A);
+                layer->adsr.releaseRate = AudioSeq_ScriptReadU8(state);
+                break;
+
+            case 0xcc:
+                layer->ignoreDrumPan = true;
+                break;
+
+            default:
+                switch (cmd & 0xf0) {
+                    case 0xd0: // layer_setshortnotevelocityfromtable
+                        sp3A = seqPlayer->shortNoteVelocityTable[cmd & 0xf];
+                        layer->velocitySquare = (f32) (sp3A * sp3A);
+                        break;
+                    case 0xe0: // layer_setshortnotedurationfromtable
+                        layer->noteDuration = seqPlayer->shortNoteDurationTable[cmd & 0xf];
+                        break;
+                    default:
+                        break;
+                }
+        }
+    }
+
+    if (cmd == 0xc0) { // layer_delay
+        layer->delay = AudioSeq_ScriptReadCompressedU16(state);
+        layer->stopSomething = true;
+    } else {
+        layer->stopSomething = false;
+
+        if (seqChannel->largeNotes == true) {
+            switch (cmd & 0xc0) {
+                case 0x00: // layer_note0 (play percentage, velocity, duration)
+                    sp3A = AudioSeq_ScriptReadCompressedU16(state);
+                    vel = *(state->pc++);
+                    layer->noteDuration = *(state->pc++);
+                    layer->playPercentage = sp3A;
+                    break;
+
+                case 0x40: // layer_note1 (play percentage, velocity)
+                    sp3A = AudioSeq_ScriptReadCompressedU16(state);
+                    vel = *(state->pc++);
+                    layer->noteDuration = 0;
+                    layer->playPercentage = sp3A;
+                    break;
+
+                case 0x80: // layer_note2 (velocity, duration; uses last play percentage)
+                    sp3A = layer->playPercentage;
+                    vel = *(state->pc++);
+                    layer->noteDuration = *(state->pc++);
+                    break;
+            }
+            if ((vel >= 0x80) || (vel < 0)) {
+                vel = 0x0000007F;
+            }
+            // the remaining bits are used for the semitone
+            cmd -= (cmd & 0xc0);
+            layer->velocitySquare = ((f32) (vel) * (f32) vel);
+        } else {
+            switch (cmd & 0xc0) {
+                case 0x00: // play note, type 0 (play percentage)
+                    sp3A = AudioSeq_ScriptReadCompressedU16(state);
+                    layer->playPercentage = sp3A;
+                    break;
+
+                case 0x40: // play note, type 1 (uses default play percentage)
+                    sp3A = layer->shortNoteDefaultPlayPercentage;
+                    break;
+
+                case 0x80: // play note, type 2 (uses last play percentage)
+                    sp3A = layer->playPercentage;
+                    break;
+            }
+
+            // the remaining bits are used for the semitone
+            cmd -= cmd & 0xc0;
+        }
+
+        layer->delay = sp3A;
+        layer->duration = layer->noteDuration * sp3A >> 8;
+        if ((seqPlayer->muted && (seqChannel->muteBehavior & MUTE_BEHAVIOR_STOP_NOTES) != 0) ||
+            seqChannel->stopSomething2) {
+            layer->stopSomething = true;
+
+        } else {
+            s32 temp = layer->instOrWave;
+            if (temp == 0xff) {
+                if (!seqChannel->hasInstrument) {
+                    return;
+                }
+                temp = seqChannel->instOrWave;
+            }
+            if (temp == 0) { // drum
+                // cmd is reused for the drum semitone
+                cmd += seqChannel->transposition + layer->transposition;
+
+                drum = Audio_GetDrum(seqChannel->bankId, cmd);
+                if (drum == NULL) {
+                    layer->stopSomething = true;
+                    layer->delayUnused = layer->delay;
+                    return;
+                } else {
+                    layer->adsr.envelope = drum->envelope;
+                    layer->adsr.releaseRate = drum->releaseRate;
+                    if (!layer->ignoreDrumPan) {
+                        layer->pan = drum->pan;
+                    }
+                    layer->sound = &drum->sound;
+                    layer->freqScale = layer->sound->tuning;
+                }
+            } else { // instrument
+                // cmd is reused for the instrument semitone
+                cmd += seqPlayer->transposition + seqChannel->transposition + layer->transposition;
+
+                if (cmd >= 0x80) {
+                    layer->stopSomething = true;
+                } else {
+                    if (layer->instOrWave == 0xffu) {
+                        instrument = seqChannel->instrument;
+                    } else {
+                        instrument = layer->instrument;
+                    }
+
+                    if (layer->portamento.mode != 0) {
+                        if (layer->portamentoTargetNote < cmd) {
+                            vel = cmd;
+                        } else {
+                            vel = layer->portamentoTargetNote;
+                        }
+
+                        if (instrument != NULL) {
+                            sound = Audio_GetInstrumentTunedSample(instrument, vel);
+                            sameSound = (sound == layer->sound);
+                            layer->sound = sound;
+                            tuning = sound->tuning;
+                        } else {
+                            layer->sound = NULL;
+                            tuning = 1.0f;
+                        }
+
+                        temp_f2 = gNoteFrequencies[cmd] * tuning;
+                        temp_f12 = gNoteFrequencies[layer->portamentoTargetNote] * tuning;
+
+                        portamento = &layer->portamento;
+                        switch (PORTAMENTO_MODE(layer->portamento)) {
+                            case PORTAMENTO_MODE_1:
+                            case PORTAMENTO_MODE_3:
+                            case PORTAMENTO_MODE_5:
+                                freqScale = temp_f12;
+                                break;
+
+                            case PORTAMENTO_MODE_2:
+                            case PORTAMENTO_MODE_4:
+                            default:
+                                freqScale = temp_f2;
+                                break;
+                        }
+
+                        portamento->extent = temp_f2 / freqScale - 1.0f;
+
+                        if (PORTAMENTO_IS_SPECIAL(layer->portamento)) {
+                            portamento->speed = 32512.0f * FLOAT_CAST(seqPlayer->tempo) /
+                                                ((f32) layer->delay * (f32) gTempoInternalToExternal *
+                                                 FLOAT_CAST(layer->portamentoTime));
+                        } else {
+                            portamento->speed = 127.0f / FLOAT_CAST(layer->portamentoTime);
+                        }
+                        portamento->cur = 0.0f;
+                        layer->freqScale = freqScale;
+                        if (PORTAMENTO_MODE(layer->portamento) == PORTAMENTO_MODE_5) {
+                            layer->portamentoTargetNote = cmd;
+                        }
+                    } else if (instrument != NULL) {
+                        sound = Audio_GetInstrumentTunedSample(instrument, cmd);
+                        sameSound = (sound == layer->sound);
+                        layer->sound = sound;
+                        layer->freqScale = gNoteFrequencies[cmd] * sound->tuning;
+                    } else {
+                        layer->sound = NULL;
+                        layer->freqScale = gNoteFrequencies[cmd];
+                    }
+                }
+            }
+            layer->delayUnused = layer->delay;
+        }
+    }
+
+    if (layer->stopSomething == true) {
+        if (layer->note != NULL || layer->continuousNotes) {
+            Audio_SeqLayerNoteDecay(layer);
+        }
+        return;
+    }
+
+    cmd = false;
+    if (!layer->continuousNotes) {
+        cmd = true;
+    } else if (layer->note == NULL || layer->status == SOUND_LOAD_STATUS_NOT_LOADED) {
+        cmd = true;
+    } else if (sameSound == false) {
+        Audio_SeqLayerNoteDecay(layer);
+        cmd = true;
+    } else if (layer != layer->note->parentLayer) {
+        cmd = true;
+    } else if (layer->sound == NULL) {
+        Audio_InitSyntheticWave(layer->note, layer);
+    }
+
+    if (cmd != false) {
+        layer->note = Audio_AllocNote(layer);
+    }
+
+    if (layer->note != NULL && layer->note->parentLayer == layer) {
+        Audio_NoteVibratoInit(layer->note);
+    }
+    if (seqChannel) {}
+}
 
 // Original name: Nas_ProgramChanger
 u8 AudioSeq_GetInstrument(SequenceChannel* seqChannel, u8 instId, Instrument** instOut, AdsrSettings* adsr) {
