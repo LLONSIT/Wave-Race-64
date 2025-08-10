@@ -43,7 +43,20 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SeqLayerProcessScript.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_GetInstrument.s")
+// Original name: Nas_ProgramChanger
+u8 AudioSeq_GetInstrument(SequenceChannel* seqChannel, u8 instId, Instrument** instOut, AdsrSettings* adsr) {
+    Instrument* inst = Audio_GetInstrument(seqChannel->bankId, instId);
+
+    if (inst == NULL) {
+        *instOut = NULL;
+        return 0;
+    }
+    adsr->envelope = inst->envelope;
+    adsr->releaseRate = inst->releaseRate;
+    *instOut = inst;
+    instId++;
+    return instId;
+}
 
 // Original name: Nas_SubVoiceSet
 void AudioSeq_SetInstrument(SequenceChannel* seqChannel, u8 instId) {
