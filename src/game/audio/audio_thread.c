@@ -146,8 +146,81 @@ void AudioThread_ScheduleProcessCmds(void) {
 }
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/AudioThread_ProcessCmds.s")
 // Original name: Nap_AudioPortProcess
+void AudioThread_ProcessCmds(u32 msg) {
+    EuAudioCmd* cmd;
+    SequencePlayer* seqPlayer;
+    SequenceChannel* chan;
+    u8 end = msg & 0xFF;
+    u8 curCmdReadPos = (msg >> 8) & 0xFF;
+
+    for (;;) {
+        if (curCmdReadPos == end) {
+            break;
+}
+        cmd = &sAudioCmd[curCmdReadPos++ & 0xff];
+
+        if (cmd->u.s.bankId < SEQUENCE_PLAYERS) {
+            seqPlayer = &gSequencePlayers[cmd->u.s.bankId];
+            if ((cmd->u.s.op & 0x80) != 0) {
+                AudioThread_ProcessGlobalCmd(cmd);
+            } else if ((cmd->u.s.op & 0x40) != 0) {
+                switch (cmd->u.s.op) {
+                    case 0x41:
+                        seqPlayer->fadeVolumeScale = cmd->u2.as_f32;
+                        seqPlayer->recalculateVolume = true;
+                        break;
+
+                    case 0x47:
+                        seqPlayer->tempo = cmd->u2.as_s32 * TATUMS_PER_BEAT;
+                        break;
+
+                    case 0x48:
+                        seqPlayer->transposition = cmd->u2.as_s8;
+                        break;
+
+                    case 0x46:
+                        seqPlayer->seqVariationEu[cmd->u.s.arg3] = cmd->u2.as_s8;
+                        break;
+                }
+            } else if (seqPlayer->enabled != false && cmd->u.s.arg2 < 0x10) {
+                chan = seqPlayer->channels[cmd->u.s.arg2];
+                if (IS_SEQUENCE_CHANNEL_VALID(chan)) {
+                    switch (cmd->u.s.op) {
+                        case 1: // AUDIOCMD_OP_CHANNEL_SET_VOL_SCALE
+                            chan->volumeScale = cmd->u2.as_f32;
+                            chan->changes.as_bitfields.volume = true;
+                            break;
+                        case 2: // AUDIOCMD_OP_CHANNEL_SET_VOL
+                            chan->volume = cmd->u2.as_f32;
+                            chan->changes.as_bitfields.volume = true;
+                            break;
+                        case 3: // AUDIOCMD_OP_CHANNEL_SET_PAN
+                            chan->newPan = cmd->u2.as_s8;
+                            chan->changes.as_bitfields.pan = true;
+                            break;
+                        case 4: // AUDIOCMD_OP_CHANNEL_SET_FREQ_SCALE
+                            chan->freqScale = cmd->u2.as_f32;
+                            chan->changes.as_bitfields.freqScale = true;
+                            break;
+                        case 5: // AUDIOCMD_OP_CHANNEL_SET_REVERB_VOLUME
+                            chan->reverbVol = cmd->u2.as_s8;
+                            break;
+                        case 6: // AUDIOCMD_OP_CHANNEL_SET_IO
+                            if (cmd->u.s.arg3 < 8) {
+                                chan->soundScriptIO[cmd->u.s.arg3] = cmd->u2.as_s8;
+                            }
+                            break;
+                        case 8: // AUDIOCMD_OP_CHANNEL_SET_MUTE
+                            chan->stopSomething2 = cmd->u2.as_s8;
+                    }
+                }
+            }
+        }
+
+        cmd->u.s.op = 0;
+    }
+}
 
 // Original name: Nas_InitGAudio
 void AudioThread_Init(void) {
