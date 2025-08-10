@@ -26,8 +26,21 @@ extern OSMesg sAudioResetMsg[1];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C5244.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C528C.s")
+// Original name: Nas_GroupFadeIn
+void AudioThread_SetFadeInTimer(s32 playerIndex, s32 fadeInTime) {
+    SequencePlayer* player;
 
+    if (fadeInTime != 0) {
+        player = &gSequencePlayers[playerIndex];
+        player->state = 1;
+        player->fadeTimerUnkEu = fadeInTime;
+        player->fadeRemainingFrames = fadeInTime;
+        player->fadeVolume = 0.0f;
+        player->fadeVelocity = 0.0f;
+    }
+}
+
+// Original name: Nap_AudioPortInit
 void AudioThread_InitQueues(void) {
     gThreadCmdWritePos = 0;
     gThreadCmdReadPos = 0;
