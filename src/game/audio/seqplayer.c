@@ -25,7 +25,36 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequencePlayerDisableChannels.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequenceChannelEnable.s")
+// Original name: Nas_OpenSub
+void AudioSeq_SequenceChannelEnable(SequencePlayer* seqPlayer, u8 channelIndex, void* script) {
+    SequenceChannel* seqChannel = seqPlayer->channels[channelIndex];
+    s32 i;
+    if (IS_SEQUENCE_CHANNEL_VALID(seqChannel) == false) {
+        SequencePlayer* bgMusic = &gSequencePlayers[0];
+        SequencePlayer* miscMusic = &gSequencePlayers[1];
+
+        if (seqPlayer == bgMusic) {
+            // stubbed_printf("GROUP 0:");
+        } else if (seqPlayer == miscMusic) {
+            // stubbed_printf("GROUP 1:");
+        } else {
+            // stubbed_printf("SEQID %d,BANKID %d\n",
+            //         seqPlayer->seqId, seqPlayer->defaultBank[0]);
+        }
+        // stubbed_printf("ERR:SUBTRACK %d NOT ALLOCATED\n", channelIndex);
+    } else {
+        seqChannel->enabled = true;
+        seqChannel->finished = false;
+        seqChannel->scriptState.depth = 0;
+        seqChannel->scriptState.pc = script;
+        seqChannel->delay = 0;
+        for (i = 0; i < LAYERS_MAX; i++) {
+            if (seqChannel->layers[i] != NULL) {
+                AudioSeq_SeqLayerFree(seqChannel, i);
+            }
+        }
+    }
+}
 
 // Original name: Nas_ReleaseGroup
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer) {
