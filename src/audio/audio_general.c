@@ -115,7 +115,18 @@ void func_800BFA80(s32 arg0, u32 arg1, u8 arg2) {
     seqPlayer->fadeVelocity = (fadeVol - seqPlayer->fadeVolume) / ((f32) temp2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFAF8.s")
+void func_800BFAF8(s32 seqPlayerIdx, s32 arg1) {
+    SequencePlayer* seqPlayer = &gSequencePlayers[seqPlayerIdx];
+
+    seqPlayer->fadeRemainingFrames = 0;
+    if (arg1 == 0) {
+        seqPlayer->fadeVolume = seqPlayer->volume;
+        return;
+    }
+    seqPlayer->state = 0;
+    seqPlayer->fadeRemainingFrames = arg1;
+    seqPlayer->fadeVelocity = (seqPlayer->volume - seqPlayer->fadeVolume) / (f32) arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFB50.s")
 
