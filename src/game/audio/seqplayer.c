@@ -29,7 +29,17 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequencePlayerDisable.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_AudioListPushBack.s")
+// Original name: Nas_AddList
+void AudioSeq_AudioListPushBack(AudioListItem* list, AudioListItem* item) {
+    if (item->prev == NULL) {
+        list->prev->next = item;
+        item->prev = list->prev;
+        item->next = list;
+        list->prev = item;
+        list->u.count++;
+        item->pool = list->pool;
+    }
+}
 
 // Original name: Nas_GetList
 void* AudioSeq_AudioListPopBack(AudioListItem* list) {
