@@ -31,7 +31,18 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_AudioListPushBack.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_AudioListPopBack.s")
+// Original name: Nas_GetList
+void* AudioSeq_AudioListPopBack(AudioListItem* list) {
+    AudioListItem* item = list->prev;
+    if (item == list) {
+        return NULL;
+    }
+    item->prev->next = list;
+    list->prev = item->prev;
+    item->prev = NULL;
+    list->u.count--;
+    return item->u.value;
+}
 
 // Original name: Nas_InitNoteList
 void AudioSeq_InitLayerFreelist(void) {
