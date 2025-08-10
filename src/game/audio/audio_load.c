@@ -642,7 +642,7 @@ void AudioLoad_Init() {
             break;
     }
 
-    port_init();
+    AudioThread_Init();
 
     if (k) {}
 

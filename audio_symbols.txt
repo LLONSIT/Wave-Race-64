@@ -96,7 +96,7 @@ gAudio_Unk80045610 = 0x80045610;
 
 // Functions
 
-//load.c
+// audio_load.c
 Audio_DmaCopyImmediate = 0x800B8CB0; //defined:true
 Audio_DmaCopyAsync = 0x800B8D28; // defined:true
 Audio_DmaPartialCopyAsync = 0x800B8D88; //defined:true
@@ -115,12 +115,12 @@ Audio_PreLoadSequence = 0x800B9E40; //defined:true
 Audio_LoadSequence = 0x800B9F3C; //defined:true
 Audio_LoadSequenceInternal = 0x800B9F90; //defined:true
  
-//audio_heap.c
+// audio_heap.c
 AudioHeap_AllocZeroed = 0x800B7760; //defined:true
 AudioHeap_AllocCached = 0x800B7B14; //defined:true
 AudioHeap_SearchRegularCaches = 0x800B811C; //defined:true
 AudioHeap_ResetStep = 0x800B8480; //defined:true
-port_init = 0x800C56F4; //defined:true
+AudioThread_Init = 0x800C56F4; //defined:true
 AudioHeap_InitMainPools = 0x800B7848; //defined:true
 RootNewtonStep = 0x800B72F0;
 KTHRoot = 0x800B7378;
@@ -141,7 +141,7 @@ AudioHeap_Init = 0x800B86C4;
 Audio_NoteInitAll = 0x800BBD1C;
 Audio_InitNoteFreeList = 0x800BB350;
 
-//seqplayer.c
+// audio_seqplayer.c
 AudioSeq_AudioListPushBack = 0x800BCFAC;
 AudioSeq_ResetSequencePlayer = 0x800BF13C; //defined:true
 AudioSeq_SequencePlayerDisable = 0x800BCEE0; //defined:true
@@ -234,6 +234,9 @@ Audio_SequencePlayerProcessSound = 0x800BBFD4;
 Audio_GetPortamentoFreqScale = 0x800BC134;
 Audio_GetVibratoPitchChange = 0x800BC208;
 Audio_GetVibratoFreqScale = 0x800BC24C;
+
+// audio_thread.c
+AudioThread_InitQueues = 0x800C52CC;
 
 // Unsorted
 AudioSynth_LoadWaveSamples = 0x800B67EC;

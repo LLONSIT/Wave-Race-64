@@ -294,7 +294,7 @@ void Audio_AudioListPushFront(AudioListItem* list, AudioListItem* item);
 void Audio_SeqLayerNoteRelease(SequenceChannelLayer* layer);
 void Audio_NoteInitForLayer(Note* note, SequenceChannelLayer* seqLayer);
 f32 Audio_AdsrUpdate(AdsrState* adsr);
-void port_init(void);
+void AudioThread_Init(void);
 void AudioSeq_InitSequencePlayers(void);
 void AudioSeq_InitLayerFreelist(void);
 void AudioHeap_InitMainPools(s32 initPoolSize);

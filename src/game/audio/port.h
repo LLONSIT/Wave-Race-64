@@ -1,5 +1,5 @@
 #ifndef PORT_H
 #define PORT_H
 
-void port_init(void);
+void AudioThread_Init(void);
 #endif /* PORT_H */
