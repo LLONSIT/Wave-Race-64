@@ -18,8 +18,16 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SeqLayerDisable.s")
 // Original name: Nas_ReleaseNoteTrack
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SeqLayerFree.s")
 // Original name: Nas_CloseNoteTrack
+void AudioSeq_SeqLayerFree(SequenceChannel* seqChannel, s32 layerIndex) {
+    SequenceChannelLayer* layer = seqChannel->layers[layerIndex];
+
+    if (layer != NULL) {
+        AudioSeq_AudioListPushBack(&gLayerFreeList, &layer->listItem);
+        AudioSeq_SeqLayerDisable(layer);
+        seqChannel->layers[layerIndex] = NULL;
+    }
+}
 
 // Original name: Nas_ReleaseSubTrack
 void AudioSeq_SequenceChannelDisable(struct SequenceChannel* seqChannel) {
