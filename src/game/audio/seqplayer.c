@@ -21,7 +21,35 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_RequestFreeSeqChannel.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequencePlayerSetupChannels.s")
+// Original name: Nas_AllocSub
+void AudioSeq_SequencePlayerSetupChannels(SequencePlayer* seqPlayer, u16 channelBits) {
+    SequenceChannel* seqChannel;
+    s32 i;
+
+    for (i = 0; i < CHANNELS_MAX; i++) {
+        if (channelBits & 1) {
+            seqChannel = seqPlayer->channels[i];
+            if ((IS_SEQUENCE_CHANNEL_VALID(seqChannel) == true) && (seqChannel->seqPlayer == seqPlayer)) {
+                AudioSeq_SequenceChannelDisable(seqChannel);
+                seqChannel->seqPlayer = NULL;
+            }
+            seqChannel = AudioSeq_RequestFreeSeqChannel();
+            if (IS_SEQUENCE_CHANNEL_VALID(seqChannel) == false) {
+                // eu_stubbed_printf_0("Audio:Track:Warning: No Free Notetrack\n");
+                gAudioErrorFlags = i + 0x10000;
+                seqPlayer->channels[i] = seqChannel;
+            } else {
+                AudioSeq_InitSequenceChannel(seqChannel);
+                seqPlayer->channels[i] = seqChannel;
+                seqChannel->seqPlayer = seqPlayer;
+                seqChannel->bankId = seqPlayer->defaultBank[0];
+                seqChannel->muteBehavior = seqPlayer->muteBehavior;
+                seqChannel->noteAllocPolicy = seqPlayer->noteAllocPolicy;
+            }
+        }
+        channelBits = channelBits >> 1;
+    }
+}
 
 // Original name: Nas_DeAllocSub
 void AudioSeq_SequencePlayerDisableChannels(SequencePlayer* seqPlayer, u16 channelBits) {
