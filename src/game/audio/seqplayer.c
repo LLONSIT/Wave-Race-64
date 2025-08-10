@@ -12,8 +12,47 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_InitSequenceChannel.s")
 // Original name: Nas_InitSubTrack
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SeqChannelSetLayer.s")
 // Original name: Nas_EntryNoteTrack
+s32 AudioSeq_SeqChannelSetLayer(SequenceChannel* seqChannel, s32 layerIndex) {
+    SequenceChannelLayer* layer;
+
+    if (seqChannel->layers[layerIndex] == NULL) {
+        SequenceChannelLayer* layer;
+        layer = AudioSeq_AudioListPopBack(&gLayerFreeList);
+        seqChannel->layers[layerIndex] = layer;
+        if (layer == NULL) {
+            seqChannel->layers[layerIndex] = NULL;
+            return -1;
+        }
+    } else {
+        Audio_SeqLayerNoteDecay(seqChannel->layers[layerIndex]);
+    }
+
+    layer = seqChannel->layers[layerIndex];
+    layer->seqChannel = seqChannel;
+    layer->adsr = seqChannel->adsr;
+    layer->adsr.releaseRate = 0;
+    layer->enabled = true;
+    layer->stopSomething = false;
+    layer->continuousNotes = false;
+    layer->finished = false;
+    layer->ignoreDrumPan = false;
+    layer->portamento.mode = 0;
+    layer->scriptState.depth = 0;
+    layer->status = SOUND_LOAD_STATUS_NOT_LOADED;
+    layer->noteDuration = 0x80;
+    layer->pan = 0x40;
+    layer->transposition = 0;
+    layer->delay = 0;
+    layer->duration = 0;
+    layer->delayUnused = 0;
+    layer->note = NULL;
+    layer->instrument = NULL;
+    layer->freqScale = 1.0f;
+    layer->velocitySquare = 0.0f;
+    layer->instOrWave = 0xff;
+    return 0;
+}
 
 // Original name: Nas_ReleaseNoteTrack
 void AudioSeq_SeqLayerDisable(SequenceChannelLayer* layer) {

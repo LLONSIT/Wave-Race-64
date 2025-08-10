@@ -307,5 +307,5 @@ void AudioSeq_SequenceChannelSetVolume(SequenceChannel* channel, u8 volume);
 void* AudioHeap_SearchRegularCaches(struct SoundMultiPool* multiPool, s32 arg1, s32 id);
 u8 AudioSeq_GetInstrument(SequenceChannel* seqChannel, u8 instId, Instrument** instOut, AdsrSettings* adsr);
 void AudioSeq_AudioListPushBack(AudioListItem* list, AudioListItem* item);
-
+void *AudioSeq_AudioListPopBack(AudioListItem *list);
 #endif
