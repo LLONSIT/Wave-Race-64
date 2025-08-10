@@ -22,7 +22,50 @@ extern OSMesg sAudioResetMsg[1];
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C4C40.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C5088.s")
+// Original name: Nap_AudioSysProcess
+void AudioThread_ProcessGlobalCmd(EuAudioCmd* cmd) {
+    s32 i;
+
+    switch (cmd->u.s.op) {
+        case 0x81:
+            Audio_PreLoadSequence(cmd->u.s.arg2, 3);
+            break;
+
+        case 0x82:
+        case 0x88:
+            Audio_LoadSequence(cmd->u.s.bankId, cmd->u.s.arg2, cmd->u.s.arg3);
+            AudioThread_SetFadeInTimer(cmd->u.s.bankId, cmd->u2.as_s32);
+            break;
+
+        case 0x83:
+            if (gSequencePlayers[cmd->u.s.bankId].enabled != false) {
+                if (cmd->u2.as_s32 == 0) {
+                    AudioSeq_SequencePlayerDisable(&gSequencePlayers[cmd->u.s.bankId]);
+                } else {
+                    AudioThread_SetFadeOutTimer(cmd->u.s.bankId, cmd->u2.as_s32);
+                }
+            }
+            break;
+
+        case 0xF0:
+            gSoundMode = cmd->u2.as_s32;
+            break;
+
+        case 0xF1:
+            for (i = 0; i < ARRAY_COUNT(gSequencePlayers); i++) {
+                gSequencePlayers[i].muted = true;
+                gSequencePlayers[i].recalculateVolume = true;
+            }
+            break;
+
+        case 0xF2:
+            for (i = 0; i < ARRAY_COUNT(gSequencePlayers); i++) {
+                gSequencePlayers[i].muted = false;
+                gSequencePlayers[i].recalculateVolume = true;
+            }
+            break;
+    }
+}
 
 // Original name: __Nas_GroupFadeOut
 void AudioThread_SetFadeOutTimer(s32 arg0, s32 fadeOutTime) {

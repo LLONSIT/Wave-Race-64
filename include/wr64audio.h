@@ -334,5 +334,9 @@ void Audio_InitSyntheticWave(Note* note, SequenceChannelLayer* seqLayer);
 Drum* Audio_GetDrum(s32 bankId, s32 drumId);
 AudioBankSound* Audio_GetInstrumentTunedSample(Instrument* instrument, s32 semitone);
 Note* Audio_AllocNote(SequenceChannelLayer* seqLayer);
+void Audio_PreLoadSequence(u32 seqId, u8 preloadMask);
+void Audio_LoadSequence(u32 player, u32 seqId, s32 loadAsync);
+void AudioThread_SetFadeInTimer(s32 playerIndex, s32 fadeInTime);
+void AudioThread_SetFadeOutTimer(s32 arg0, s32 fadeOutTime);
 
 #endif

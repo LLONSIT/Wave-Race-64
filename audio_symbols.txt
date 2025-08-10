@@ -239,6 +239,7 @@ Audio_GetVibratoFreqScale = 0x800BC24C;
 AudioThread_InitQueues = 0x800C52CC;
 AudioThread_SetFadeInTimer = 0x800C528C;
 AudioThread_SetFadeOutTimer = 0x800C5244;
+AudioThread_ProcessGlobalCmd = 0x800C5088;
 
 gThreadCmdWritePos = 0x800E85F0;
 gThreadCmdReadPos = 0x800E85F4;

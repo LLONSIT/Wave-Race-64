@@ -436,11 +436,11 @@ typedef struct AudioBufferParametersEU {
              f32 updatesPerFrameInv;
              f32 unkUpdatesPerFrameScaled;
 } AudioBufferParametersEU;
-struct EuAudioCmd {
+typedef struct EuAudioCmd {
     union {
         struct {
             u8 op;
-            u8 arg1;
+            u8 bankId;
             u8 arg2;
             u8 arg3;
         } s;
@@ -453,6 +453,6 @@ struct EuAudioCmd {
         u8 as_u8;
         s8 as_s8;
     } u2;
-};
+} EuAudioCmd;
 
 #endif /* INTERNAL_H */
