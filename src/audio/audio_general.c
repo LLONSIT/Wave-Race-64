@@ -44,7 +44,25 @@ void func_800BF844(s8 arg0, s8 arg1) {
     AudioThread_QueueCmdS8(0x06000700, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BF8C8.s")
+void func_800BF8C8(void) {
+    s32 sp24;
+    u32 sp20;
+    u32 sp1C;
+    s32 temp_v1;
+
+    sp24 = temp_v1 = gAudioRandom & 0xF;
+
+    if (temp_v1 == 0) {
+        sp24 = (sp24 * 4) + 0x3C;
+        sp20 = ((u32) (gAudioRandom & 0x7F0)) >> 4;
+        sp1C = ((u32) (gAudioRandom & 0x7000)) >> 0xC;
+        AudioThread_QueueCmdS8(0x06000700U, -1);
+        AudioThread_QueueCmdS8(0x06000701U, sp24);
+        AudioThread_QueueCmdS8(0x06000702U, sp20);
+        AudioThread_QueueCmdS8(0x06000703U, sp1C);
+        AudioThread_QueueCmdS8(0x06000700U, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BF964.s")
 
