@@ -9,8 +9,53 @@
 #include "port.h"
 #include "wr64audio.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_InitSequenceChannel.s")
-// Original name: Nas_InitSubTrack
+//  Original name: Nas_InitSubTrack
+void AudioSeq_InitSequenceChannel(SequenceChannel* seqChannel) {
+    s32 i;
+
+    seqChannel->enabled = false;
+    seqChannel->finished = false;
+    seqChannel->stopScript = false;
+    seqChannel->stopSomething2 = false;
+    seqChannel->hasInstrument = false;
+    seqChannel->stereoHeadsetEffects = false;
+    seqChannel->transposition = 0;
+    seqChannel->largeNotes = false;
+
+    seqChannel->bookOffset = 0;
+    seqChannel->changes.as_u8 = 0xff;
+    seqChannel->scriptState.depth = 0;
+    seqChannel->newPan = 0x40;
+    seqChannel->panChannelWeight = 0x80;
+    seqChannel->noteUnused = NULL;
+    seqChannel->reverbIndex = 0;
+
+    seqChannel->reverbVol = 0;
+    seqChannel->notePriority = NOTE_PRIORITY_DEFAULT;
+    seqChannel->delay = 0;
+    seqChannel->adsr.envelope = gDefaultEnvelope;
+    seqChannel->adsr.releaseRate = 0x20;
+    seqChannel->adsr.sustain = 0;
+
+    seqChannel->vibratoRateTarget = 0x800;
+    seqChannel->vibratoRateStart = 0x800;
+    seqChannel->vibratoExtentTarget = 0;
+    seqChannel->vibratoExtentStart = 0;
+    seqChannel->vibratoRateChangeDelay = 0;
+    seqChannel->vibratoExtentChangeDelay = 0;
+    seqChannel->vibratoDelay = 0;
+
+    seqChannel->volume = 1.0f;
+    seqChannel->volumeScale = 1.0f;
+    seqChannel->freqScale = 1.0f;
+
+    for (i = 0; i < 8; i++) {
+        seqChannel->soundScriptIO[i] = -1;
+    }
+
+    seqChannel->unused = false;
+    Audio_InitNoteLists(&seqChannel->notePool);
+}
 
 // Original name: Nas_EntryNoteTrack
 s32 AudioSeq_SeqChannelSetLayer(SequenceChannel* seqChannel, s32 layerIndex) {

@@ -272,6 +272,7 @@ extern u8 gDefaultShortNoteDurationTable[16];
 extern SequenceChannel gSequenceChannels[48];
 extern SequenceChannelLayer gSequenceLayers[64];
 extern AudioListItem gLayerFreeList;
+extern AdsrEnvelope gDefaultEnvelope[3];
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
