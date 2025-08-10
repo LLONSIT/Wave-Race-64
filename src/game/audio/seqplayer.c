@@ -35,7 +35,10 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_InitLayerFreelist.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_ScriptReadU8.s")
+// Original name: Nas_ReadByteData
+u8 AudioSeq_ScriptReadU8(M64ScriptState* state) {
+    return *(state->pc++);
+}
 
 // Original name: Nas_ReadWordData
 s16 AudioSeq_ScriptReadS16(M64ScriptState* state) {
