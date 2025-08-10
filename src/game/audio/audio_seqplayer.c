@@ -322,7 +322,7 @@ u16 AudioSeq_ScriptReadCompressedU16(M64ScriptState* state) {
 }
 
 // Original name: Nas_NoteSeq
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SeqLayerProcessScript.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_seqplayer/AudioSeq_SeqLayerProcessScript.s")
 
 // Original name: Nas_ProgramChanger
 u8 AudioSeq_GetInstrument(SequenceChannel* seqChannel, u8 instId, Instrument** instOut, AdsrSettings* adsr) {
