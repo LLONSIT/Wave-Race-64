@@ -236,6 +236,7 @@ Audio_GetVibratoPitchChange = 0x800BC208;
 Audio_GetVibratoFreqScale = 0x800BC24C;
 
 // audio_thread.c
+AudioThread_CreateTask = 0x800C4C40;
 AudioThread_InitQueues = 0x800C52CC;
 AudioThread_SetFadeInTimer = 0x800C528C;
 AudioThread_SetFadeOutTimer = 0x800C5244;
@@ -247,11 +248,14 @@ AudioThread_ScheduleProcessCmds = 0x800C5404;
 AudioThread_ProcessCmds = 0x800C547C;
 
 sAudioCmd = 0x801D7E90;
+gAudioCmd = 0x80045568;
+gAudioRandom = 0x8004562C;
+gMaxAbiCmdCnt = 0x800E8690;
 gThreadCmdWritePos = 0x800E85F0;
 gThreadCmdReadPos = 0x800E85F4;
 gAudioTaskStartQueue = 0x800E85F8;
-sAudioTaskStartMsg = 0x801D8690;
 gThreadCmdProcQueue = 0x800E85FC;
+sAudioTaskStartMsg = 0x801D8690;
 sThreadCmdProcMsg = 0x801D8698;
 gAudioSpecQueue = 0x800E8600;
 sAudioSpecMsg = 0x801D86A8;

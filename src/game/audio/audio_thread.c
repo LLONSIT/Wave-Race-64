@@ -20,7 +20,102 @@ extern OSMesg sAudioSpecMsg[1];
 extern OSMesgQueue* gAudioResetQueue;
 extern OSMesg sAudioResetMsg[1];
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C4C40.s")
+SPTask* AudioThread_CreateTask(void) {
+    u32 samplesRemainingInAI;
+    s32 writtenCmds;
+    s32 index;
+    OSTask_t* task;
+    s32 oldDmaCount;
+    s16* currAiBuffer;
+    s32 writtenCmdsCopy;
+    OSMesg sp58;
+    OSMesg sp54;
+
+    gAudioFrameCount++;
+    if ((gAudioFrameCount % gAudioBufferParameters.presetUnk4) != 0) {
+        return NULL;
+    }
+    osSendMesg(gAudioTaskStartQueue, (OSMesg) gAudioFrameCount, OS_MESG_NOBLOCK);
+
+    gAudioTaskIndex ^= 1;
+    gCurrAiBufferIndex++;
+    gCurrAiBufferIndex %= NUMAIBUFFERS;
+    index = (gCurrAiBufferIndex + 1) % NUMAIBUFFERS;
+    samplesRemainingInAI = osAiGetLength() / 4;
+
+    if (gAiBufferLengths[index] != 0) {
+        osAiSetNextBuffer(gAiBuffers[index], gAiBufferLengths[index] * 4);
+    }
+
+    if (gCurrAudioFrameDmaCount && gCurrAudioFrameDmaCount) {} //! FAKE
+
+    gCurrAudioFrameDmaCount = 0;
+    AudioLoad_DecreaseSampleDmaTtls();
+    if (osRecvMesg(gAudioSpecQueue, &sp58, 0) != -1) {
+        gAudioResetPresetIdToLoad = (u8) (u32) sp58;
+        gAudioResetStatus = 5;
+    }
+    if (gAudioResetStatus != 0) {
+        if (AudioHeap_ResetStep() == 0) {
+            if (gAudioResetStatus == 0) {
+                osSendMesg(gAudioResetQueue, (OSMesg) (u32) gAudioResetPresetIdToLoad, OS_MESG_NOBLOCK);
+            }
+            return NULL;
+        }
+    }
+
+    gAudioTask = &gAudioTasks[gAudioTaskIndex];
+    gAudioCmd = gAudioCmdBuffers[gAudioTaskIndex];
+    index = gCurrAiBufferIndex;
+    currAiBuffer = gAiBuffers[index];
+    gAiBufferLengths[index] =
+        ((gAudioBufferParameters.samplesPerFrameTarget - samplesRemainingInAI + EXTRA_BUFFERED_AI_SAMPLES_TARGET) &
+         ~0xF) +
+        SAMPLES_TO_OVERPRODUCE;
+    if (gAiBufferLengths[index] < gAudioBufferParameters.minAiBufferLength) {
+        gAiBufferLengths[index] = gAudioBufferParameters.minAiBufferLength;
+    }
+    if (gAiBufferLengths[index] > gAudioBufferParameters.maxAiBufferLength) {
+        gAiBufferLengths[index] = gAudioBufferParameters.maxAiBufferLength;
+    }
+    if (osRecvMesg(gThreadCmdProcQueue, &sp54, 0) != -1) {
+        AudioThread_ProcessCmds((u32) sp54);
+    }
+    gAudioCmd = AudioSynth_Update((Acmd*) gAudioCmd, &writtenCmds, currAiBuffer, gAiBufferLengths[index]);
+    gAudioRandom = (gAudioRandom + gAudioFrameCount) * gAudioFrameCount;
+    gAudioRandom = gAudioRandom + gAiBuffers[index][gAudioFrameCount & 0xFF];
+
+    index = gAudioTaskIndex;
+    gAudioTask->msgqueue = NULL;
+
+    writtenCmdsCopy += 0; //! FAKE ?
+    gAudioTask->msg = NULL;
+
+    task = &gAudioTask->task.t;
+    task->type = M_AUDTASK;
+    task->flags = 0;
+    task->ucode_boot = rspbootTextStart;
+    task->ucode_boot_size = (u8*) gspF3DEX_fifoTextStart - (u8*) rspbootTextStart;
+    task->ucode = aspMainTextStart;
+    task->ucode_data = (u64*) aspMainDataStart;
+    task->ucode_size = 0x800; // (This size is ignored (according to sm64))
+    task->ucode_data_size = ((u64*) aspMainDataEnd - (u64*) aspMainDataStart) * sizeof(u64);
+    task->dram_stack = NULL;
+    task->dram_stack_size = 0;
+    task->output_buff = NULL;
+    task->output_buff_size = NULL;
+    task->data_ptr = (u64*) gAudioCmdBuffers[index];
+    task->data_size = writtenCmds * sizeof(u64);
+    task->yield_data_ptr = NULL;
+    task->yield_data_size = 0;
+    writtenCmdsCopy = writtenCmds;
+
+    if (gMaxAbiCmdCnt < writtenCmds) {
+        gMaxAbiCmdCnt = writtenCmdsCopy;
+    }
+
+    return gAudioTask;
+}
 
 // Original name: Nap_AudioSysProcess
 void AudioThread_ProcessGlobalCmd(EuAudioCmd* cmd) {
@@ -157,7 +252,7 @@ void AudioThread_ProcessCmds(u32 msg) {
     for (;;) {
         if (curCmdReadPos == end) {
             break;
-}
+        }
         cmd = &sAudioCmd[curCmdReadPos++ & 0xff];
 
         if (cmd->u.s.bankId < SEQUENCE_PLAYERS) {

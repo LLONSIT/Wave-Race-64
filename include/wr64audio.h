@@ -26,7 +26,12 @@
 #define ADSR_GOTO -2
 #define ADSR_RESTART -3
 
+#define NUMAIBUFFERS 3
+#define AUDIO_FRAME_DMA_QUEUE_SIZE 0x40
 #define AIBUFFER_LEN (0xa0 * 16)
+
+#define SAMPLES_TO_OVERPRODUCE 0x10
+#define EXTRA_BUFFERED_AI_SAMPLES_TARGET 0x40
 
 #define AUDIO_LOCK_UNINITIALIZED 0
 #define AUDIO_LOCK_NOT_LOADING 0x76557364
@@ -241,7 +246,7 @@ extern s32 gMaxSimultaneousNotes;
 extern u32 sDmaBufSize;
 extern u8 sSampleDmaReuseQueueTail1;
 extern u8 sSampleDmaReuseQueueTail2;
-extern s32 gCurrAudioFrameDmaCount; // volatile?
+extern s32 gCurrAudioFrameDmaCount;
 extern OSIoMesg gCurrAudioFrameDmaIoMesgBufs[200];
 extern OSMesgQueue gCurrAudioFrameDmaQueue;
 
@@ -283,6 +288,8 @@ extern AudioListItem gLayerFreeList;
 extern AdsrEnvelope gDefaultEnvelope[3];
 extern f32 gNoteFrequencies[128];
 extern EuAudioCmd sAudioCmd[256];
+extern s32 gMaxAbiCmdCnt;
+extern u32 gAudioRandom;
 
 void AudioSeq_SequencePlayerDisable(SequencePlayer* seqPlayer);
 void AudioHeap_Init(void);
@@ -339,5 +346,7 @@ void Audio_PreLoadSequence(u32 seqId, u8 preloadMask);
 void Audio_LoadSequence(u32 player, u32 seqId, s32 loadAsync);
 void AudioThread_SetFadeInTimer(s32 playerIndex, s32 fadeInTime);
 void AudioThread_SetFadeOutTimer(s32 arg0, s32 fadeOutTime);
-
+void AudioThread_ProcessCmds(u32 msg);
+u64* AudioSynth_Update(u64* cmdBuf, s32* writtenCmds, s16* aiBuf, s32 bufLen);
+void AudioLoad_DecreaseSampleDmaTtls(void);
 #endif
