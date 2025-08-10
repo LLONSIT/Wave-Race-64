@@ -10,14 +10,29 @@
 #include "wr64audio.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_InitSequenceChannel.s")
+// Original name: Nas_InitSubTrack
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SeqChannelSetLayer.s")
+// Original name: Nas_EntryNoteTrack
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SeqLayerDisable.s")
+// Original name: Nas_ReleaseNoteTrack
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SeqLayerFree.s")
+// Original name: Nas_CloseNoteTrack
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/seqplayer/AudioSeq_SequenceChannelDisable.s")
+// Original name: Nas_ReleaseSubTrack
+void AudioSeq_SequenceChannelDisable(struct SequenceChannel* seqChannel) {
+    s32 i;
+
+    for (i = 0; i < LAYERS_MAX; i++) {
+        AudioSeq_SeqLayerFree(seqChannel, i);
+    }
+
+    Audio_NotePoolClear(&seqChannel->notePool);
+    seqChannel->enabled = false;
+    seqChannel->finished = true;
+}
 
 SequenceChannel* AudioSeq_RequestFreeSeqChannel(void) {
     s32 i;
