@@ -2,11 +2,6 @@
 #include "macros.h"
 #include <PR/os.h>
 
-#include "load.h"
-#include "heap.h"
-#include "internal.h"
-#include "data.h"
-#include "port.h"
 #include "wr64audio.h"
 
 void Audio_DmaCopyImmediate(uintptr_t devAddr, void* vAddr, size_t nbytes) {

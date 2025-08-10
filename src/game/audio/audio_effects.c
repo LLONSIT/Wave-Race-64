@@ -1,6 +1,4 @@
 #include "global.h"
-#include "internal.h"
-#include "heap.h"
 #include "wr64audio.h"
 
 // Original name: __Nas_CallWaveProcess_Sub

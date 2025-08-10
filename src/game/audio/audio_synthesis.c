@@ -2,11 +2,6 @@
 #include "macros.h"
 #include <PR/os.h>
 
-#include "load.h"
-#include "heap.h"
-#include "internal.h"
-#include "data.h"
-#include "port.h"
 #include "wr64audio.h"
 
 // Synthesis.c variables
