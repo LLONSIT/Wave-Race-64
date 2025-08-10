@@ -129,9 +129,25 @@ void AudioThread_QueueCmdS8(u32 opArgs, s8 val) {
     AudioThread_QueueCmd(opArgs, (void**) &data);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C5404.s")
+// Original name: Nap_SendStart
+#ifndef NEEDS_DATA_MIGRATED
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/AudioThread_ScheduleProcessCmds.s")
+#else
+void AudioThread_ScheduleProcessCmds(void) {
+    static s32 sMaxPendingAudioCmds = 0; // 0x800E86B0
+    s32 msg;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C547C.s")
+    if (sMaxPendingAudioCmds < (u8) (gThreadCmdWritePos - gThreadCmdReadPos + 0x100)) {
+        sMaxPendingAudioCmds = (u8) (gThreadCmdWritePos - gThreadCmdReadPos + 0x100);
+    }
+    msg = (((gThreadCmdReadPos & 0xFF) << 8) | (gThreadCmdWritePos & 0xFF));
+    osSendMesg(gThreadCmdProcQueue, (OSMesg) msg, OS_MESG_NOBLOCK);
+    gThreadCmdReadPos = gThreadCmdWritePos;
+}
+#endif
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/AudioThread_ProcessCmds.s")
+// Original name: Nap_AudioPortProcess
 
 // Original name: Nas_InitGAudio
 void AudioThread_Init(void) {

@@ -243,6 +243,8 @@ AudioThread_ProcessGlobalCmd = 0x800C5088;
 AudioThread_QueueCmd = 0x800C5354;
 AudioThread_QueueCmdF32 = 0x800C538C;
 AudioThread_QueueCmdS32 = 0x800C53B0;
+AudioThread_ScheduleProcessCmds = 0x800C5404;
+AudioThread_ProcessCmds = 0x800C547C;
 
 sAudioCmd = 0x801D7E90;
 gThreadCmdWritePos = 0x800E85F0;
