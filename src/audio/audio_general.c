@@ -64,7 +64,23 @@ void func_800BF8C8(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BF964.s")
+void func_800BF964(void) {
+    SequenceChannel* channel;
+    s32 i;
+
+    if ((D_8003FF48 >> 0x1F) == 0) {
+        D_800E7CE0 = 0;
+        return;
+    }
+
+    for (i = 0; i < 16; i++) {
+        channel = gSequencePlayers[2].channels[i];
+        if (channel != &gSequenceChannelNone) {
+            AudioThread_QueueCmdF32(((i & 0xFF) << 8) | 0x04020000, channel->freqScale * 0.99f);
+        }
+    }
+    D_800E7CE0--;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFA38.s")
 

@@ -830,6 +830,8 @@ extern u8 gAudioResetPresetIdToLoad;
 extern volatile u8 gAudioResetStatus;
 extern s8 gSoundMode;
 extern s16* gAiBuffers[3];
+extern u32 D_8003FF48;
+extern s32 D_800E7CE0;
 
 void* AudioHeap_AllocCached(struct SoundMultiPool* arg0, s32 arg1, s32 size, s32 arg3, s32 id);
 void* AudioHeap_AllocZeroed(struct SoundAllocPool* pool, u32 size);
