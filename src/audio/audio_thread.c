@@ -221,7 +221,7 @@ void AudioThread_QueueCmdS8(u32 opArgs, s8 val) {
 
 // Original name: Nap_SendStart
 #ifndef NEEDS_DATA_MIGRATED
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/AudioThread_ScheduleProcessCmds.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_thread/AudioThread_ScheduleProcessCmds.s")
 #else
 void AudioThread_ScheduleProcessCmds(void) {
     static s32 sMaxPendingAudioCmds = 0; // 0x800E86B0
