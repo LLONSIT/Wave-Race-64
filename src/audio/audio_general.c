@@ -1,8 +1,23 @@
-#include "common.h"
+#include "wr64audio.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BF370.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BF6AC.s")
+void func_800BF6AC(f32 arg0, s8 arg1) {
+    s32 var_v0;
+
+    if ((D_800E7C94 == 7) && !(arg0 >= 127.0f)) {
+        if (arg0 <= 16.0f) {
+            var_v0 = 0x7F;
+        } else {
+            var_v0 = 0x7F - (s32) arg0;
+        }
+        AudioThread_QueueCmdF32(0x01000700U, 1.0f);
+        AudioThread_QueueCmdS8(0x06000700U, -1);
+        AudioThread_QueueCmdS8(0x06000701U, (s8) var_v0);
+        AudioThread_QueueCmdS8(0x06000702U, arg1);
+        AudioThread_QueueCmdS8(0x06000700U, 0x14);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BF784.s")
 
