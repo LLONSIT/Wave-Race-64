@@ -104,13 +104,30 @@ void AudioThread_InitQueues(void) {
     osCreateMesgQueue(gAudioResetQueue, sAudioResetMsg, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C5354.s")
+// Original name: Nap_PortSet
+void AudioThread_QueueCmd(s32 arg0, s32* arg1) {
+    EuAudioCmd* cmd = &sAudioCmd[gThreadCmdWritePos & 0xff];
+    cmd->u.first = arg0;
+    cmd->u2.as_u32 = *arg1;
+    gThreadCmdWritePos++;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C538C.s")
+// Original name: Nap_SetF32
+void AudioThread_QueueCmdF32(u32 opArgs, f32 val) {
+    AudioThread_QueueCmd(opArgs, (void**) &val);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C53B0.s")
+// Original name: Nap_SetS32
+void AudioThread_QueueCmdS32(u32 opArgs, u32 val) {
+    AudioThread_QueueCmd(opArgs, (void**) &val);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/play_sound.s")
+// Original name: Nap_SetS8
+void AudioThread_QueueCmdS8(u32 opArgs, s8 val) {
+    s32 data = val << 0x18;
+
+    AudioThread_QueueCmd(opArgs, (void**) &data);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/audio/audio_thread/func_800C5404.s")
 

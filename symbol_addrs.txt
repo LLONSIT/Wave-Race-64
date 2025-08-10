@@ -229,7 +229,7 @@ gColorAlpha = 0x800D47F4;
 //not a very good name
 configSignalRectangle = 0x8006E024;
 // fast3d_800D22B0 = 0x800D22B0;
-play_sound = 0x800C53D4;
+AudioThread_QueueCmdS8 = 0x800C53D4;
 gCourseID = 0x800D8170;
 menu_buffer_1 = 0x80228930;
 short_RGB = 0x800DAA58;

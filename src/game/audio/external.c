@@ -34,10 +34,10 @@ void func_800BFDD0(void* arg0) {
     D_800E7CAC = 0;
     D_801D7DD8 = 0;
 
-    func_800C538C(0x01000000, 1.0f);
-    func_800C538C(0x01000200, 1.0f);
-    func_800C538C(0x04000000, 0.1f);
-    play_sound(0x06000000, 1);
+    AudioThread_QueueCmdF32(0x01000000, 1.0f);
+    AudioThread_QueueCmdF32(0x01000200, 1.0f);
+    AudioThread_QueueCmdF32(0x04000000, 0.1f);
+    AudioThread_QueueCmdS8(0x06000000, 1);
     func_800BFD9C(arg0);
 
     D_800E7CC8 = 0.0f;
