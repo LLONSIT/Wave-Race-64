@@ -747,7 +747,10 @@ void func_800C3240(s8 arg0) {
     AudioThread_QueueCmdS8(0x06000A01U, arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3270.s")
+void func_800C3270(s8 arg0) {
+    func_800C312C();
+    AudioThread_QueueCmdS8(0x06000A02U, arg0);
+}
 
 u8 func_800C32A0(u32 arg0, s32 arg1, s32 arg2) {
     if ((D_801D7DF0[2] != 0) && (arg1 < (s32) D_801D7DF0[1])) {
