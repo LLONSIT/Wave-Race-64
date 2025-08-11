@@ -1,5 +1,6 @@
 #include "wr64audio.h"
 
+// https://decomp.me/scratch/Q4ZCD
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BF370.s")
 
 void func_800BF6AC(f32 arg0, s8 arg1) {
@@ -974,4 +975,6 @@ void func_800C489C(void) {
     }
 }
 
+// https://decomp.me/scratch/tMZbd
+// need more info about symbol types
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C4998.s")
