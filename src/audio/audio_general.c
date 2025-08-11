@@ -527,7 +527,15 @@ void func_800C1E0C(f32 arg0) {
     func_800C1DEC();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1EB8.s")
+void func_800C1EB8(s32 arg0) {
+    if (D_801D7E05 != 0xFF) {
+        if ((arg0 == 0) || (arg0 == 1) || (arg0 == 2)) {
+            AudioThread_QueueCmdS8(0x06000B00U, (s8) (D_801D7E05 + arg0));
+        } else {
+            AudioThread_QueueCmdS8(0x06000B00U, arg0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1F30.s")
 
