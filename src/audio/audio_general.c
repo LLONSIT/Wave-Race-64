@@ -668,9 +668,14 @@ void func_800C2FB4(void) {
     AudioThread_QueueCmdS8(0x06000004U, -1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C2FDC.s")
+void func_800C2FDC(s32 arg0) {
+    AudioThread_QueueCmdS32(0xF0000000, (u32) arg0);
+    func_800C377C(arg0 + 0x1A);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3010.s")
+void func_800C3010(u32 arg0) {
+    AudioThread_QueueCmdS32(0xF0000000, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3034.s")
 

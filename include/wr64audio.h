@@ -869,6 +869,7 @@ extern u8 D_801D7DF4[];
 extern u8 D_801D7DF0[];
 extern s32 D_801D7E1C;
 
+void func_800C377C(s32 arg0);
 void AudioThread_QueueCmdS32(u32 opArgs, u32 val);
 void AudioThread_ScheduleProcessCmds(void);
 void func_800BFFEC(u8 arg0, u8 arg1, u8 arg2);
