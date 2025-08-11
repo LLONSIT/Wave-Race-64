@@ -6,6 +6,7 @@
 
 // 0x800B
 
+void func_800C010C(u32, u32);
 void func_i4_802C6BAC(void);
 void func_8009345C(void);
 void func_801EBD28(void);
@@ -16,7 +17,7 @@ void func_i12_802C5F6C(void);
 void func_801EC304(void);
 void func_i1_802C9380(s32);
 void func_800BFDD0(void*);
-void func_800BFEF8(void*);
+void func_800BFEF8(u8*);
 s32 func_80093104(void);
 Gfx* func_8009328C(Gfx*);
 Gfx* func_80093C44(Gfx*);
@@ -168,7 +169,7 @@ void func_800BFD68(void);
 int func_8007C50C(void);
 void func_i10_802C5A10(void);
 void func_800C1F60(s32);
-void func_800BFD9C(s32);
+void func_800BFD9C(u8*);
 void func_8009B57C(Vec3f*);
 void func_i4_802C5800(void);
 void func_i4_802C58F8(void);
