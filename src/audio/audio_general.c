@@ -135,9 +135,13 @@ void func_800BFB50(void) {
     D_801D7E29 = 0x10;
 }
 
+// https://decomp.me/scratch/MANXu 98,51%
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFB84.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFD34.s")
+void func_800BFD34(void) {
+    D_800E7CBC = 1;
+    AudioThread_QueueCmdS8(0x06000004U, -1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFD68.s")
 
