@@ -143,7 +143,10 @@ void func_800BFD34(void) {
     AudioThread_QueueCmdS8(0x06000004U, -1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFD68.s")
+void func_800BFD68(void) {
+    D_800E7CC0 = 1;
+    AudioThread_QueueCmdS8(0x06000304U, -1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFD9C.s")
 
