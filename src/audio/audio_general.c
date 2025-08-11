@@ -489,7 +489,11 @@ void func_800C1B64(void) {
     AudioThread_QueueCmdS8(0x06000700U, 0x11);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1B98.s")
+void func_800C1B98(void) {
+    D_800E7C9C = 0;
+    AudioThread_QueueCmdS8(0x06000700U, -1);
+    AudioThread_QueueCmdS8(0x06000704U, -1);
+}
 
 // https://decomp.me/scratch/io8AQ
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1BD8.s")
