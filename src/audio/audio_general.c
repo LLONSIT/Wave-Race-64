@@ -885,7 +885,9 @@ void func_800C37C0(s32 arg0, s32 arg1) {
     D_801D7E1C = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C37D4.s")
+void func_800C37D4(s32 arg0) {
+    func_800C377C(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C37F4.s")
 
