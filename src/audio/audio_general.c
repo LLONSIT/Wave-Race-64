@@ -233,9 +233,14 @@ void func_800C00B0(s8 arg0, f32 arg1) {
     AudioThread_QueueCmdF32(0x01000300U, (f32) arg0 / 127.0f);
 }
 
+// chonker
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C010C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C118C.s")
+void func_800C118C(s32 arg0) {
+    if ((D_800E7CBC == 0) || (D_800E7C94 == 4)) {
+        func_800C010C(arg0, 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C11CC.s")
 
