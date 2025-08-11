@@ -850,6 +850,7 @@ extern s8 D_800E7C94;
 extern s32 D_801D7DC0;
 extern s32 D_801D7DC4;
 extern s8 D_8003FCCF;
+extern s8 D_8003FF4F;
 
 void AudioThread_QueueCmdS32(u32 opArgs, u32 val);
 void AudioThread_ScheduleProcessCmds(void);
