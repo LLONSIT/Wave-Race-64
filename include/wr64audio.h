@@ -831,6 +831,8 @@ extern volatile u8 gAudioResetStatus;
 extern s8 gSoundMode;
 extern s16* gAiBuffers[3];
 extern OSMesgQueue* gAudioTaskStartQueue;
+extern OSMesgQueue* gAudioResetQueue;
+extern OSMesgQueue* gAudioSpecQueue;
 
 // audio_general.c
 extern u32 D_8003FF48;

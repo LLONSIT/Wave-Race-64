@@ -368,7 +368,17 @@ void func_800C16F0(void) {
     AudioThread_QueueCmdS32(0xF2000000U, 0U);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1714.s")
+void func_800C1714(OSMesg incMsg) {
+    OSMesg msg;
+
+    osRecvMesg(gAudioResetQueue, &msg, 0);
+    osSendMesg(gAudioSpecQueue, incMsg, 0);
+    osRecvMesg(gAudioResetQueue, &msg, 1);
+
+    if (msg != incMsg) {
+        osRecvMesg(gAudioResetQueue, &msg, 1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C178C.s")
 
