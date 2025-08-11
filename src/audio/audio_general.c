@@ -734,7 +734,10 @@ void func_800C3524(s32 arg0, u32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C36F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C377C.s")
+void func_800C377C(s32 arg0) {
+    AudioThread_QueueCmdS8(0x06000C01U, arg0);
+    AudioThread_QueueCmdS8(0x06000C00U, 0x7F);
+}
 
 void func_800C37C0(s32 arg0, s32 arg1) {
     D_800E7CE4 = arg1;
