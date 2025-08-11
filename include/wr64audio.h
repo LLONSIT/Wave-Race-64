@@ -3,6 +3,8 @@
 
 #include "global.h"
 
+#define MAX_CHANNELS 16
+
 #define SOUND_MODE_STEREO 0
 #define SOUND_MODE_MONO 3
 #define SOUND_MODE_HEADSET 1

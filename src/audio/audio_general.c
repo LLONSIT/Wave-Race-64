@@ -380,7 +380,19 @@ void func_800C1714(OSMesg incMsg) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C178C.s")
+void func_800C178C(f32 arg0) {
+    SequenceChannel* seqPlayer;
+    int i;
+
+    if ((D_8003FF48 >> 0x1F) != 0) {
+        for (i = 0; i < MAX_CHANNELS; i++) {
+            seqPlayer = gSequencePlayers[2].channels[i];
+            if (seqPlayer != &gSequenceChannelNone) {
+                seqPlayer->freqScale = arg0;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1808.s")
 
