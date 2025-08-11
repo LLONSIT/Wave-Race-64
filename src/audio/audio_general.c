@@ -509,7 +509,23 @@ void func_800C1DEC(void) {
     func_800C1B98();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1E0C.s")
+void func_800C1E0C(f32 arg0) {
+    f32 var_f0;
+
+    if (D_800E7C9C != 0) {
+        if (arg0 >= 50.0f) {
+            var_f0 = 0.0f;
+        } else if (arg0 <= 2.0f) {
+            var_f0 = 1.0f;
+        } else {
+            var_f0 = (50.0f - arg0) / 48.0f;
+        }
+        AudioThread_QueueCmdF32(0x01000700U, var_f0);
+        D_800E7C9C = 5;
+        return;
+    }
+    func_800C1DEC();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1EB8.s")
 
