@@ -421,7 +421,36 @@ void func_800C1884(u32 bookOffset) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1904.s")
+void func_800C1904(s32 arg0) {
+    if (D_801D7DE8 == 0) {
+        D_801D7DE6 = gSynthesisReverbs[1].reverbGain;
+        if (D_801D7DC4 == 3) {
+            gSynthesisReverbs[1].reverbGain = 0x61FF;
+        } else {
+            gSynthesisReverbs[1].reverbGain = 0x5FFF;
+        }
+        D_801D7DE8 = 1;
+    }
+
+    if (D_801D7DC0 != 1) {
+        AudioThread_QueueCmdS8(0x05000000U, 0x66);
+        AudioThread_QueueCmdS8(0x05000200U, 0x66);
+        AudioThread_QueueCmdS8(0x05000300U, 0x66);
+        AudioThread_QueueCmdS8(0x05000500U, 0x66);
+        return;
+    }
+
+    if (arg0 == 0) {
+        AudioThread_QueueCmdS8(0x05000000U, 0x66);
+        AudioThread_QueueCmdS8(0x05000200U, 0x66);
+        D_801D7DEC = 1;
+        return;
+    }
+
+    AudioThread_QueueCmdS8(0x05000300U, 0x66);
+    AudioThread_QueueCmdS8(0x05000500U, 0x66);
+    D_801D7DEE = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1A20.s")
 
