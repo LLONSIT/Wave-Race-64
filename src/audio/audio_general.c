@@ -831,7 +831,19 @@ void func_800C3524(s32 arg0, u32 arg1) {
     func_800C338C(arg0, arg1, 0x7D, 0xA);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3548.s")
+void func_800C3548(void) {
+    s32 rnd;
+
+    if (D_801D7DD0 == 0) {
+        rnd = gAudioRandom & 3;
+        func_800C3408(rnd + 0x6C, 0x20, 0x1E);
+        if (gAudioRandom & 1) {
+            func_800C1EB8(1);
+        } else {
+            func_800C1EB8(0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C35B4.s")
 
