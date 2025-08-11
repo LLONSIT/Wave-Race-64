@@ -763,7 +763,16 @@ u8 func_800C32A0(u32 arg0, s32 arg1, s32 arg2) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3320.s")
+void func_800C3320(u32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_v0;
+
+    if ((D_801D7DC4 != 0) && (D_800E7C94 == 7)) {
+        temp_v0 = func_800C32A0(arg0, arg1, arg2);
+        if ((temp_v0 != 0) && (temp_v0 < 5)) {
+            func_800C33C8(arg0, temp_v0, arg1, arg2);
+        }
+    }
+}
 
 void func_800C338C(s32 arg0, u32 arg1, s32 arg2, u32 arg3) {
     if ((D_801D7DF4[2] == 0) || (arg2 >= (s32) D_801D7DF4[1])) {
