@@ -543,7 +543,105 @@ void func_800C1F30(void) {
     func_800BFD68();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1F60.s")
+void func_800C1F60(s32 arg0) {
+    D_800E7CD8 = 0;
+    D_800E7CDC = 0;
+    D_800E7CEC = 0;
+
+    if (D_800E7C94 == 7) {
+        func_800C1F30();
+        AudioThread_QueueCmdF32(0x01000200U, 0.0f);
+        AudioThread_QueueCmdF32(0x01000500U, 0.0f);
+        AudioThread_QueueCmdF32(0x01000700U, 0.0f);
+
+        if ((arg0 != 4) && (arg0 != 6)) {
+            AudioThread_QueueCmdF32(0x01000C00U, 0.0f);
+        }
+
+        func_800C1A20(0);
+
+        if (D_801D7DC0 == 1) {
+            func_800C1A20(1);
+        }
+    }
+
+    if ((arg0 != D_800E7C94) || ((arg0 != 1) && (arg0 != 0xA))) {
+        D_800E7CE4 = 0;
+        D_801D7DF2 = 0;
+        D_801D7DF4[2] = 0;
+        D_801D7DF4[3] = 0;
+
+        switch (arg0) {
+            case 0:
+                D_800E7CB8 = 0;
+                func_800C1650(0xA0U);
+                func_800C1674(0xA0U);
+                func_800C1608(0xA0U);
+                break;
+
+            case 9:
+                if (D_800E7C94 == 0) {
+                    func_800C1650(0xA0U);
+                }
+                if (D_801D7DCC != 0x18) {
+                    func_800C1674(0xA0U);
+                }
+                break;
+
+            case 1:
+                if (D_800E7C94 != 0xA) {
+                    func_800C1650(0xA0U);
+                    func_800C1674(0xA0U);
+                    func_800C1608(0xA0U);
+                }
+                break;
+
+            case 2:
+                func_800C1674(0xA0U);
+                func_800C1608(0xA0U);
+                break;
+            case 3:
+                if (D_801D7DC8 == 4) {
+                    func_800C1674(0x140U);
+                }
+                break;
+
+            case 5:
+                func_800C1608(0x46U);
+                func_800C1674(0xAU);
+                break;
+
+            case 7:
+                func_800C162C(0x8CU);
+                func_800C1650(0x8CU);
+                break;
+
+            case 10:
+                if (D_800E7C94 != 1) {
+                    func_800C1650(0xA0U);
+                    func_800C1674(0xA0U);
+                    func_800C1608(0xA0U);
+                }
+                break;
+
+            case 11:
+                func_800C162C(0x258U);
+                func_800C1650(0x258U);
+                func_800C1674(0x258U);
+                func_800C1608(0x258U);
+                break;
+
+            case 12:
+                if (D_800E7C94 == 5) {
+                    func_800C162C(0x12CU);
+                    func_800C1650(0x12CU);
+                    func_800C1674(0x12CU);
+                    func_800C1608(0x12CU);
+                }
+                break;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C21F4.s")
 
