@@ -774,7 +774,11 @@ void func_800C338C(s32 arg0, u32 arg1, s32 arg2, u32 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C33C8.s")
+void func_800C33C8(s32 arg0, u32 arg1, s32 arg2, u32 arg3) {
+    if ((D_801D7DC4 != 0) && (D_800E7C94 == 7)) {
+        func_800C338C(arg0, arg1, arg2, arg3);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3408.s")
 
