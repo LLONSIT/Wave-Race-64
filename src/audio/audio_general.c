@@ -703,7 +703,11 @@ void func_800C30BC(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C30F8.s")
+void func_800C30F8(void) {
+    if (D_800E7C94 == 4) {
+        func_800C1500(22, 40);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C312C.s")
 
