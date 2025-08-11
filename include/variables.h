@@ -145,7 +145,7 @@ extern UnkStruct_8009A04C D_801CEAB0[];
 extern s32 D_80228AA4;
 extern s32 D_800E7CAC;
 extern s32 D_800E7CBC;
-extern f32 D_800E7CC8;
+extern f32 D_800E7CC8[];
 extern s32 D_800E7CE8;
 extern s32 D_801D7DD8;
 extern s8 D_801D7DF8[];

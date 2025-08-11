@@ -174,7 +174,7 @@ void func_800BFDD0(void* arg0) {
     AudioThread_QueueCmdS8(0x06000000, 1);
     func_800BFD9C(arg0);
 
-    D_800E7CC8 = 0.0f;
+    D_800E7CC8[0] = 0.0f;
     D_801D7DF8[0] = 0;
     D_801D7DF8[1] = 0;
     D_801D7DF8[3] = -1;
@@ -189,12 +189,27 @@ void func_800BFE70(u8* arg0) {
     D_800E7CAC = 1;
     AudioThread_QueueCmdF32(0x01000200U, 1.0f);
     func_800BFD9C(arg0);
-    D_800E7CC8 = 0.0f;
+    D_800E7CC8[0] = 0.0f;
     D_801D7DF8[0] = 0;
     D_801D7DF8[3] = -1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFEF8.s")
+void func_800BFEF8(u8* arg0) {
+    if (D_801D7DC0 != 2) {
+        D_800E7CC0 = 0;
+        D_801D7DDC = 0;
+        AudioThread_QueueCmdF32(0x01000300U, 1.0f);
+        AudioThread_QueueCmdF32(0x04000300U, 0.1f);
+        AudioThread_QueueCmdS8(0x06000300U, 1);
+        AudioThread_QueueCmdF32(0x01000200U, 1.0f);
+        func_800BFD9C(arg0);
+        D_801D7E00[0] = 0;
+        D_801D7E00[3] = -1;
+        D_801D7E00[1] = 0;
+        D_800E7CC8[1] = 0.0f;
+        D_800E7CC8[2] = 0.0f;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFFAC.s")
 

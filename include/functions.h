@@ -16,7 +16,7 @@ void func_i12_802C5F6C(void);
 void func_801EC304(void);
 void func_i1_802C9380(s32);
 void func_800BFDD0(void*);
-void func_800BFEF8(void*);
+void func_800BFEF8(u8*);
 s32 func_80093104(void);
 Gfx* func_8009328C(Gfx*);
 Gfx* func_80093C44(Gfx*);

@@ -840,6 +840,10 @@ extern s8 D_801D7E28;
 extern s8 D_801D7E29;
 extern s32 D_800E7CC0;
 extern s32 D_801D7DC4;
+extern s32 D_800E7CC0;
+extern s32 D_801D7DC0;
+extern s32 D_801D7DDC;
+extern s8 D_801D7E00[];
 
 void* AudioHeap_AllocCached(struct SoundMultiPool* arg0, s32 arg1, s32 size, s32 arg3, s32 id);
 void* AudioHeap_AllocZeroed(struct SoundAllocPool* pool, u32 size);
