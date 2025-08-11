@@ -505,7 +505,9 @@ void func_800C1DA8(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1DEC.s")
+void func_800C1DEC(void) {
+    func_800C1B98();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1E0C.s")
 
