@@ -491,6 +491,7 @@ void func_800C1B64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1B98.s")
 
+// https://decomp.me/scratch/io8AQ
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1BD8.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1DA8.s")
@@ -507,7 +508,16 @@ void func_800C1B64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C21F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C2EEC.s")
+void func_800C2EEC(void) {
+    OSMesg msg;
+
+    func_800C1488();
+    AudioThread_QueueCmdS32(0x82000100U, 0);
+    AudioThread_ScheduleProcessCmds();
+    osRecvMesg(gAudioTaskStartQueue, &msg, 1);
+    osRecvMesg(gAudioTaskStartQueue, &msg, 1);
+    osRecvMesg(gAudioTaskStartQueue, &msg, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C2F60.s")
 
