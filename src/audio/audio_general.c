@@ -855,7 +855,23 @@ void func_800C35B4(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3628.s")
+void func_800C3628(s32 arg0) {
+    AudioThread_QueueCmdS8(0x06000F01U, arg0);
+    AudioThread_QueueCmdS8(0x06000F00U, 0x25);
+
+    if (arg0 == 4) {
+        func_800C3464(0x64, 0x14, 0x10, 0xA);
+    }
+    if (arg0 == 8) {
+        func_800C3464(0x69, 0x14, 0x12, 0xA);
+    }
+    if (arg0 == 0xC) {
+        func_800C3464(0x6A, 0x14, 0x14, 0x14);
+    }
+    if (arg0 == D_800E8430[D_801D7DC4]) {
+        func_800C3464(0x6B, 0x14, 0x20, 0x1E);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C36F8.s")
 
