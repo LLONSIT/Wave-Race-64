@@ -537,7 +537,11 @@ void func_800C1EB8(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1F30.s")
+void func_800C1F30(void) {
+    func_800C1B98();
+    func_800BFD34();
+    func_800BFD68();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1F60.s")
 
