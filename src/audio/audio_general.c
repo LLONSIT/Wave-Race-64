@@ -717,7 +717,7 @@ void func_800C312C(void) {
     }
 }
 
-void func_800C317C(s32 arg0, s8 arg1) {
+void func_800C317C(s32 arg0, s32 arg1) {
     s32 var_v0;
 
     switch (arg0) {
@@ -908,7 +908,22 @@ void func_800C3E4C(void) {
     func_800C3500(92);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3E6C.s")
+void func_800C3E6C(s32 arg0) {
+    switch (arg0) {
+        case 0:
+            func_800C3500(0x18);
+            return;
+        case 1:
+            func_800C3500(0x65);
+            return;
+        case 2:
+            func_800C317C(0, (gAudioRandom & 3) + 8);
+            return;
+        case 3:
+            func_800C377C(0xB);
+            return;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3EF4.s")
 
