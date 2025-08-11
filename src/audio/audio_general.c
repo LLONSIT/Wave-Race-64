@@ -709,7 +709,13 @@ void func_800C30F8(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C312C.s")
+void func_800C312C(void) {
+    if (D_801D7DEC[0] == 1) {
+        AudioThread_QueueCmdS8(0x05000A00U, 0x66);
+    } else {
+        AudioThread_QueueCmdS8(0x05000A00U, 0x20);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C317C.s")
 
