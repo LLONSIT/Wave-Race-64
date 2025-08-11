@@ -856,6 +856,7 @@ extern u16 D_801D7DE6;
 extern u16 D_801D7DE8;
 extern u16 D_801D7DEC[];
 extern u16 D_80038220;
+extern s32 D_800E7C9C;
 
 void AudioThread_QueueCmdS32(u32 opArgs, u32 val);
 void AudioThread_ScheduleProcessCmds(void);
