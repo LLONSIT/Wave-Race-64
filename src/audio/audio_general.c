@@ -211,7 +211,9 @@ void func_800BFEF8(u8* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFFAC.s")
+void func_800BFFAC(u8* arg0) {
+    func_800BFEF8(arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFFCC.s")
 
