@@ -380,23 +380,46 @@ void func_800C1714(OSMesg incMsg) {
     }
 }
 
-void func_800C178C(f32 arg0) {
+void func_800C178C(f32 freqScale) {
     SequenceChannel* seqPlayer;
-    int i;
+    s32 i;
 
     if ((D_8003FF48 >> 0x1F) != 0) {
         for (i = 0; i < MAX_CHANNELS; i++) {
             seqPlayer = gSequencePlayers[2].channels[i];
             if (seqPlayer != &gSequenceChannelNone) {
-                seqPlayer->freqScale = arg0;
+                seqPlayer->freqScale = freqScale;
             }
         }
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1808.s")
+void func_800C1808(f32 volumeScale) {
+    SequenceChannel* seqPlayer;
+    s32 i;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1884.s")
+    if ((D_8003FF48 >> 0x1F) != 0) {
+        for (i = 0; i < MAX_CHANNELS; i++) {
+            seqPlayer = gSequencePlayers[2].channels[i];
+            if (seqPlayer != &gSequenceChannelNone) {
+                seqPlayer->volumeScale = volumeScale;
+            }
+        }
+    }
+}
+
+void func_800C1884(u32 bookOffset) {
+    SequenceChannel* seqPlayer;
+    s32 i;
+
+    for (i = 0; i < MAX_CHANNELS; i++) {
+        seqPlayer = gSequencePlayers[2].channels[i];
+        if (seqPlayer != &gSequenceChannelNone) {
+            seqPlayer->bookOffset = bookOffset;
+        }
+        seqPlayer->volumeScale = 0.5f;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1904.s")
 
