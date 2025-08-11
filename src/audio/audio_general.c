@@ -251,10 +251,37 @@ void func_800C123C(u8* arg0) {
     arg0[6] = 0;
     arg0[7] = 0x3F;
     arg0[8] = 0;
-    *(f32*)&arg0[0] = 1.0f; //! FAKE: This must be a struct
+    *(f32*) &arg0[0] = 1.0f; //! FAKE: This must be a struct
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1268.s")
+void func_800C1268(unkStruct_func_800C1268* arg0) {
+    s32 var_v0;
+
+    if ((7 == D_800E7C94) && (D_801D7DC4 == 0)) {
+        if (arg0->unk_4 != (*arg0).unk_5) {
+            if (arg0->unk_5 == 1) {
+                func_800BFFEC(5, 9, 127);
+            } else {
+                func_800BFFEC(5, 8, 127);
+            }
+            arg0->unk_4 = arg0->unk_5;
+        }
+
+        if ((arg0->unk_8 != 0) && (D_801D7DC0 == 0)) {
+            func_800BFFEC(5, arg0->unk_8, 127);
+            arg0->unk_8 = 0;
+        }
+
+        if (arg0->unk_0 > 4.0f) {
+            var_v0 = (s32) (508.0f / arg0->unk_0);
+        } else {
+            var_v0 = 127;
+        }
+
+        AudioThread_QueueCmdF32(0x01000500U, ((f32) var_v0) / 127.0f);
+        AudioThread_QueueCmdS8(0x03000500U, arg0->unk_7);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C13AC.s")
 
