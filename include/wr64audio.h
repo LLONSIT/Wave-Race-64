@@ -873,6 +873,7 @@ extern u16 D_801D7DEE;
 extern s32 D_801D7DD0;
 extern s8 D_800E8430[];
 extern s32 D_800E7CC4;
+extern s32 D_801D7DD4;
 
 void func_800C33C8(s32 arg0, u32 arg1, s32 arg2, u32 arg3);
 void func_800C377C(s32 arg0);

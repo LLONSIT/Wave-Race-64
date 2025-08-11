@@ -934,8 +934,44 @@ void func_800C4078(void) {
     AudioThread_QueueCmdS8(0x06000A00U, 0);
 }
 
+// chonker
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C40B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C489C.s")
+void func_800C489C(void) {
+    switch (D_801D7DD4) {
+        case 0:
+            switch (D_801D7DC8) {
+                case 0:
+                    func_800C3500(5);
+                    break;
+                case 1:
+                    func_800C3500(6);
+                    break;
+                case 2:
+                    func_800C3500(7);
+                    break;
+            }
+            break;
+
+        case 1:
+            switch (D_801D7DC8) {
+                case 0:
+                    func_800C3500(4);
+                    break;
+                case 1:
+                    func_800C3500(6);
+                    break;
+                case 2:
+                    func_800C3500(7);
+                    break;
+            }
+            break;
+
+        case 2:
+        default:
+            func_800C3500(7);
+            break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C4998.s")
