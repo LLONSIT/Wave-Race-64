@@ -307,7 +307,9 @@ void func_800C141C(void) {
     osRecvMesg(gAudioTaskStartQueue, &msg, 1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1488.s")
+void func_800C1488(void) {
+    AudioThread_QueueCmdS32(0x83000000, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C14AC.s")
 
