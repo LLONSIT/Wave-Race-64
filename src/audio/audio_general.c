@@ -443,16 +443,40 @@ void func_800C1904(s32 arg0) {
     if (arg0 == 0) {
         AudioThread_QueueCmdS8(0x05000000U, 0x66);
         AudioThread_QueueCmdS8(0x05000200U, 0x66);
-        D_801D7DEC = 1;
+        D_801D7DEC[0] = 1;
         return;
     }
 
     AudioThread_QueueCmdS8(0x05000300U, 0x66);
     AudioThread_QueueCmdS8(0x05000500U, 0x66);
-    D_801D7DEE = 1;
+    D_801D7DEC[1] = 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1A20.s")
+void func_800C1A20(s32 arg0) {
+    if (D_801D7DE8 != 0) {
+        if (D_801D7DC0 != 1) {
+            AudioThread_QueueCmdS8(0x05000000U, 0x10);
+            AudioThread_QueueCmdS8(0x05000200U, 0x10);
+            AudioThread_QueueCmdS8(0x05000300U, 0x10);
+            AudioThread_QueueCmdS8(0x05000500U, 0x10);
+            D_801D7DE8 = 0;
+        } else {
+            if (arg0 == 0) {
+                AudioThread_QueueCmdS8(0x05000000U, 0x10);
+                AudioThread_QueueCmdS8(0x05000200U, 0x10);
+                D_801D7DEC[0] = 0U;
+            } else {
+                AudioThread_QueueCmdS8(0x05000300U, 0x10);
+                AudioThread_QueueCmdS8(0x05000500U, 0x10);
+                D_801D7DEC[1] = 0U;
+            }
+            D_801D7DE8 = D_801D7DEC[0] + D_801D7DEC[1];
+        }
+        if (D_801D7DE8 == 0) {
+            D_80038220 = D_801D7DE6;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1B30.s")
 
