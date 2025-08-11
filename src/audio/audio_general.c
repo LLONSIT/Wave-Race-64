@@ -285,7 +285,17 @@ void func_800C1268(unkStruct_func_800C1268* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C13AC.s")
+void func_800C13AC(s32 arg0) {
+    s32 pad;
+    OSMesg msg;
+
+    D_8003FCCF = arg0;
+    AudioThread_QueueCmdS32(0x82000000, 0);
+    AudioThread_ScheduleProcessCmds();
+    osRecvMesg(gAudioTaskStartQueue, &msg, 1);
+    osRecvMesg(gAudioTaskStartQueue, &msg, 1);
+    osRecvMesg(gAudioTaskStartQueue, &msg, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C141C.s")
 

@@ -830,6 +830,7 @@ extern u8 gAudioResetPresetIdToLoad;
 extern volatile u8 gAudioResetStatus;
 extern s8 gSoundMode;
 extern s16* gAiBuffers[3];
+extern OSMesgQueue* gAudioTaskStartQueue;
 
 // audio_general.c
 extern u32 D_8003FF48;
@@ -848,7 +849,10 @@ extern s8 D_800E7C94;
 extern s8 D_800E7C94;
 extern s32 D_801D7DC0;
 extern s32 D_801D7DC4;
+extern s8 D_8003FCCF;
 
+void AudioThread_QueueCmdS32(u32 opArgs, u32 val);
+void AudioThread_ScheduleProcessCmds(void);
 void func_800BFFEC(u8 arg0, u8 arg1, u8 arg2);
 void* AudioHeap_AllocCached(struct SoundMultiPool* arg0, s32 arg1, s32 size, s32 arg3, s32 id);
 void* AudioHeap_AllocZeroed(struct SoundAllocPool* pool, u32 size);
