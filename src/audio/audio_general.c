@@ -664,7 +664,9 @@ void func_800C2F60(s32 arg0, s32 arg1, s8 arg2) {
     AudioThread_QueueCmdS8(0x06000000U, arg2);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C2FB4.s")
+void func_800C2FB4(void) {
+    AudioThread_QueueCmdS8(0x06000004U, -1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C2FDC.s")
 
