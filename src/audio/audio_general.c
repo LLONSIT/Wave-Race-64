@@ -800,11 +800,32 @@ void func_800C3408(u32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3464.s")
+void func_800C3464(s32 arg0, u32 arg1, s32 arg2, u32 arg3) {
+    if (D_801D7DC0 == 3) {
+        func_800C338C(arg0, arg1, arg2, arg3);
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3494.s")
+// All sorts of fakes
+void func_800C3494(void) {
+    s32 temp_t6 = (D_801D7DF4[3] - 1) & 0xFFFFFFFFFFFFFFFF;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3500.s")
+    if (D_801D7DF4[3] != 0) {
+        D_801D7DF4[3] = temp_t6;
+        if (!(temp_t6 & 0xFF)) {
+            D_801D7DF4[2] =
+                func_800C32A0(((((((((u32) D_801D7DF4[0]) & 0xFFu) & 0xFFu) & 0xFFu) & 0xFFu) & 0xFFu) & 0xFFu) & 0xFFu,
+                              (s32) D_801D7DF4[1], (s32) D_801D7DF4[2]);
+        }
+    }
+    if (D_801D7DF0[2] != 0) {
+        D_801D7DF0[2] = (u8) (D_801D7DF0[2] - 1);
+    }
+}
+
+void func_800C3500(s32 arg0) {
+    func_800C32A0(arg0, 0x7D, 0xA);
+}
 
 void func_800C3524(s32 arg0, u32 arg1) {
     func_800C338C(arg0, arg1, 0x7D, 0xA);
