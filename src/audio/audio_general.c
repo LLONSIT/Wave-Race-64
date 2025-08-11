@@ -498,7 +498,12 @@ void func_800C1B98(void) {
 // https://decomp.me/scratch/io8AQ
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1BD8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1DA8.s")
+void func_800C1DA8(void) {
+    if (D_800E7C94 == 7) {
+        D_800E7C9C = 5;
+        AudioThread_QueueCmdS8(0x06000700U, 0x12);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1DEC.s")
 
