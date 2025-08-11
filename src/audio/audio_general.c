@@ -789,7 +789,16 @@ void func_800C33C8(s32 arg0, u32 arg1, s32 arg2, u32 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3408.s")
+void func_800C3408(u32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_v0;
+
+    if (D_801D7DC0 == 3) {
+        temp_v0 = func_800C32A0(arg0, arg1, arg2);
+        if ((temp_v0 != 0) && (temp_v0 < 5)) {
+            func_800C33C8(arg0, temp_v0, arg1, arg2);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3464.s")
 
