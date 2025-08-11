@@ -242,9 +242,17 @@ void func_800C118C(s32 arg0) {
     }
 }
 
+// https://decomp.me/scratch/cOjnQ
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C11CC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C123C.s")
+void func_800C123C(u8* arg0) {
+    arg0[4] = 1;
+    arg0[5] = 1;
+    arg0[6] = 0;
+    arg0[7] = 0x3F;
+    arg0[8] = 0;
+    *(f32*)&arg0[0] = 1.0f; //! FAKE: This must be a struct
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1268.s")
 
