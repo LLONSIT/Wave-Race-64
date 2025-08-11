@@ -472,13 +472,17 @@ void func_800C1A20(s32 arg0) {
             }
             D_801D7DE8 = D_801D7DEC[0] + D_801D7DEC[1];
         }
+
         if (D_801D7DE8 == 0) {
             D_80038220 = D_801D7DE6;
         }
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1B30.s")
+void func_800C1B30(void) {
+    AudioThread_QueueCmdS8(0x06000700U, 0x10);
+    func_800C37F4(0x10, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1B64.s")
 
