@@ -180,7 +180,19 @@ void func_800BFDD0(void* arg0) {
     D_801D7DF8[3] = -1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFE70.s")
+void func_800BFE70(u8* arg0) {
+    if (D_801D7DC4 != 0) {
+        func_800BFEF8(arg0);
+        return;
+    }
+    D_800E7CBC = 0;
+    D_800E7CAC = 1;
+    AudioThread_QueueCmdF32(0x01000200U, 1.0f);
+    func_800BFD9C(arg0);
+    D_800E7CC8 = 0.0f;
+    D_801D7DF8[0] = 0;
+    D_801D7DF8[3] = -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFEF8.s")
 
