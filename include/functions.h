@@ -168,7 +168,7 @@ void func_800BFD68(void);
 int func_8007C50C(void);
 void func_i10_802C5A10(void);
 void func_800C1F60(s32);
-void func_800BFD9C(s32);
+void func_800BFD9C(u8*);
 void func_8009B57C(Vec3f*);
 void func_i4_802C5800(void);
 void func_i4_802C58F8(void);
