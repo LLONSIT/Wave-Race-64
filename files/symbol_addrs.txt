@@ -6,7 +6,7 @@ __dummy 		=    0x8004B680;
 osSyncPrintf 		=    0x8004B690;
 n_alSynFreeFX 		=    0x8006E01C;
 n_alSynRemovePlayer 	=    0x800BF370;
-alSynFreeFX 		=    0x800C00A4;
+
 leoInitUnit_atten	=    0x800C3034;
 myfree			=    0x800C3044;
 osVirtualToPhysical	=    0x800C5720;

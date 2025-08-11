@@ -219,11 +219,14 @@ void func_800BFFCC(s32 arg0) {
     func_800BFD68();
 }
 
+// https://decomp.me/scratch/qHsP1 STACK only
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFFEC.s")
 
+// https://decomp.me/scratch/acgxg same issue as previous
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C0044.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/alSynFreeFX.s")
+void func_800C00A4(s32 arg0, s32 arg1) {
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C00B0.s")
 
