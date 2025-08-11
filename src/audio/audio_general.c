@@ -222,8 +222,10 @@ void func_800BFFCC(s32 arg0) {
 // https://decomp.me/scratch/qHsP1 STACK only
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFFEC.s")
 
-// https://decomp.me/scratch/acgxg same issue as previous
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C0044.s")
+void func_800C0044(u8 arg0, s8 arg1, u8 arg2) {
+    AudioThread_QueueCmdS8(((arg0 & 0xFF) << 8) | 0x06000000 | 6, arg2);
+    AudioThread_QueueCmdS8(((arg0 & 0xFF) << 8) | 0x06000000 | 1, arg1);
+}
 
 void func_800C00A4(s32 arg0, s32 arg1) {
 }
