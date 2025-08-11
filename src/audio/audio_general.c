@@ -925,9 +925,14 @@ void func_800C3E6C(s32 arg0) {
     }
 }
 
+// https://decomp.me/scratch/ymeGg
+// problematic switch
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3EF4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C4078.s")
+void func_800C4078(void) {
+    AudioThread_QueueCmdS8(0x06000B00U, 0);
+    AudioThread_QueueCmdS8(0x06000A00U, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C40B0.s")
 
