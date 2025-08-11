@@ -682,10 +682,8 @@ void func_800C2EEC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3270.s")
 
-extern u8 D_801D7DF0[];
-
 u8 func_800C32A0(u32 arg0, s32 arg1, s32 arg2) {
-    if ((D_801D7DF0[2] != 0) && (arg1 < (s32)D_801D7DF0[1])) {
+    if ((D_801D7DF0[2] != 0) && (arg1 < (s32) D_801D7DF0[1])) {
         return D_801D7DF0[2];
     }
     AudioThread_QueueCmdS8(0x06000C00U, arg0);
@@ -697,7 +695,14 @@ u8 func_800C32A0(u32 arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3320.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C338C.s")
+void func_800C338C(s32 arg0, u32 arg1, s32 arg2, u32 arg3) {
+    if ((D_801D7DF4[2] == 0) || (arg2 >= (s32) D_801D7DF4[1])) {
+        D_801D7DF4[0] = arg0;
+        D_801D7DF4[1] = arg2;
+        D_801D7DF4[3] = arg1;
+        D_801D7DF4[2] = arg3;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C33C8.s")
 
