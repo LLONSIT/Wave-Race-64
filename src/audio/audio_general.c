@@ -717,7 +717,30 @@ void func_800C312C(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C317C.s")
+void func_800C317C(s32 arg0, s8 arg1) {
+    s32 var_v0;
+
+    switch (arg0) {
+        case 0:
+            if (D_801D7DC0 == 1) {
+                var_v0 = 1;
+            } else {
+                var_v0 = 0;
+            }
+            func_800C312C();
+            AudioThread_QueueCmdS8((var_v0 & 0xFF) | 0x06000A00, arg1);
+            break;
+
+        case 1:
+            if (D_801D7DEE == 1) {
+                AudioThread_QueueCmdS8(0x05000A00U, 0x66);
+            } else {
+                AudioThread_QueueCmdS8(0x05000A00U, 0x20);
+            }
+            AudioThread_QueueCmdS8(0x06000A02U, arg1);
+            break;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3240.s")
 
