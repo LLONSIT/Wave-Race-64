@@ -136,8 +136,57 @@ void func_800BFB50(void) {
     D_801D7E29 = 0x10;
 }
 
-// https://decomp.me/scratch/MANXu 98,51%
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFB84.s")
+void func_800BFB84(f32* arg0, f32* arg1, f32* arg2, f32* arg3, u8 arg4) {
+    f32 temp_f2;
+    f32 sp30;
+    f32 sp2C;
+    f32 sp28;
+    f32 sp24;
+    f32 temp_f14;
+    f32 temp_f16;
+    f32 sp18;
+    f32 var_f0;
+    f32 var_f12;
+
+    sp30 = arg3[0] - arg2[0];
+    sp2C = arg3[2] - arg2[2];
+    sp28 = arg1[0] - arg0[0];
+    sp24 = arg1[2] - arg0[2];
+
+    var_f12 = sp28;
+    temp_f2 = var_f12 + sp30;
+    temp_f14 = sp24 + sp2C;
+
+    sp18 = sqrtf((var_f12 * var_f12) + (sp24 * sp24));
+
+    var_f12 = sp18 - sqrtf((temp_f2 * temp_f2) + (temp_f14 * temp_f14));
+    if (var_f12 > 300.0f) {
+        var_f12 = 300.0f;
+    }
+
+    if (sp18 <= 360.0f) {
+        // clang-format off
+        D_801D7E29 = 0x10; var_f0 = 127.0f;
+        // clang-format on
+    } else {
+        D_801D7E29 = 127.0f - (39960.0f / sp18);
+        sp18 -= 360.0f;
+        if (var_f12 > 0.0f) {
+            var_f0 = 127.0f - (sp18 / 18.0f);
+        } else {
+            var_f0 = 127.0f - (sp18 * 0.0625f);
+        }
+    }
+    var_f0 = var_f0 / 127.0f;
+
+    if (var_f0 < 0.0f) {
+        var_f0 = 0.0f;
+    }
+
+    D_801D7E20 = 1.0f / (1.0f - (var_f12 / 400.0f)) + 0.1f;
+    D_801D7E24 = var_f0;
+    D_801D7E28 = arg4;
+}
 
 void func_800BFD34(void) {
     D_800E7CBC = 1;
