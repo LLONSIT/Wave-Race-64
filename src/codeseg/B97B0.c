@@ -510,7 +510,26 @@ void _MtxF_to_Mtx(MtxF* src, Mtx* dest) {
     FRACPART(0, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDF9C.s")
+void func_801EDF9C(Matrix arg0, f32 x, f32 y, f32 z) {
+    arg0[3][3] = 1.0f;
+    arg0[2][2] = 1.0f;
+    arg0[1][1] = 1.0f;
+    arg0[0][0] = 1.0f;
+
+    arg0[2][3] = 0.0f;
+    arg0[1][3] = 0.0f;
+    arg0[0][3] = 0.0f;
+    arg0[1][2] = 0.0f;
+    arg0[0][2] = 0.0f;
+    arg0[2][1] = 0.0f;
+    arg0[0][1] = 0.0f;
+    arg0[2][0] = 0.0f;
+    arg0[1][0] = 0.0f;
+
+    arg0[3][0] = x;
+    arg0[3][1] = y;
+    arg0[3][2] = z;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDFFC.s")
 
