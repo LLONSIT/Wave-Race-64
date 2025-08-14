@@ -2,6 +2,7 @@
 #include "variables.h"
 #include "rider.h"
 #include "camera.h"
+#include "math.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EB180.s")
 
@@ -379,9 +380,22 @@ s32 func_801ED944(f32 arg0, f32 arg1) {
     return SIGNUM(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801ED9B4.s")
+f32 func_801ED9B4(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
+    f32 sp1C = sqrtf(SQ(arg0) + SQ(arg1) + SQ(arg2));
+    f32 temp_f0 = sqrtf(SQ(arg3) + SQ(arg4) + SQ(arg5));
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDA80.s")
+    if ((sp1C > 0.0f) && (temp_f0 > 0.0f)) {
+        return (((arg0 * arg3) + (arg1 * arg4) + (arg2 * arg5)) / sp1C) / temp_f0;
+    } else {
+        return 0.0f;
+    }
+}
+
+void func_801EDA80(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32* arg6, f32* arg7, f32* arg8) {
+    *arg6 = (arg1 * arg5) - (arg2 * arg4);
+    *arg7 = (arg2 * arg3) - (arg0 * arg5);
+    *arg8 = (arg0 * arg4) - (arg1 * arg3);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDAE0.s")
 
