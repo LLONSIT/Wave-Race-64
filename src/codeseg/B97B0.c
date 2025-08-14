@@ -2,7 +2,7 @@
 #include "variables.h"
 #include "rider.h"
 #include "camera.h"
-#include "math.h"
+#include "libc/math.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EB180.s")
 
@@ -532,7 +532,7 @@ void func_801EDF9C(Matrix arg0, f32 x, f32 y, f32 z) {
 }
 
 void func_801EDFFC(Matrix* arg0, f32 arg1, f32 arg2, f32 arg3) {
-    MtxF mtx;
+    Matrix mtx;
 
     func_801EDF9C(&mtx, arg1, arg2, arg3);
 
