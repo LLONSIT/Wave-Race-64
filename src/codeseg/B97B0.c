@@ -531,7 +531,13 @@ void func_801EDF9C(Matrix arg0, f32 x, f32 y, f32 z) {
     arg0[3][2] = z;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDFFC.s")
+void func_801EDFFC(Matrix* arg0, f32 arg1, f32 arg2, f32 arg3) {
+    MtxF mtx;
+
+    func_801EDF9C(&mtx, arg1, arg2, arg3);
+
+    _MtxF_to_Mtx(&mtx, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE040.s")
 
