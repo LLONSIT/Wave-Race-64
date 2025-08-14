@@ -397,7 +397,25 @@ void func_801EDA80(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f
     *arg8 = (arg0 * arg4) - (arg1 * arg3);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDAE0.s")
+void func_801EDAE0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32* arg6, f32* arg7, f32* arg8) {
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f16;
+    f32 temp_f2;
+
+    *arg6 = (arg1 * arg5) - (arg2 * arg4);
+    *arg7 = (arg2 * arg3) - (arg0 * arg5);
+    *arg8 = temp_f0 = (arg0 * arg4) - (arg1 * arg3);
+    temp_f2 = *arg6;
+    temp_f16 = *arg7;
+    temp_f0_2 = sqrtf(SQ(temp_f0) + (SQ(temp_f2) + SQ(temp_f16)));
+
+    if (temp_f0_2 > 0.0f) {
+        *arg6 /= temp_f0_2;
+        *arg7 /= temp_f0_2;
+        *arg8 /= temp_f0_2;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDBD4.s")
 
