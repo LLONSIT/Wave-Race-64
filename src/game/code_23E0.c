@@ -379,7 +379,7 @@ void func_80048854(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     arg1->ww = 1;
 
     // Note: this should be: func_80047EE0(arg0, arg1)
-    func_80047EE0(arg1, arg0);
+    func_80047EE0((float(*)[4]) arg1, (MF*) arg0);
 }
 
 #define FTO32(x) (long) (65536.0f * (x))
@@ -676,7 +676,7 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     arg1->wx = arg1->wy = arg1->wz = 0.0f;
     arg1->ww = 1;
 
-    func_80047EE0(arg1, arg0);
+    func_80047EE0((float(*)[4]) arg1, (MF*) arg0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_800498A4.s")
@@ -700,10 +700,10 @@ void func_8004A2B4(void) {
 
     for (i = 0; i < 4; i++) {
         if (D_80154340 & mask) {
-            struct Controller_info* ctrl;
+            Controller_info* ctrl;
             OSContPad* new_var3;
-            unsigned short new_var;
-            int new_var2;
+            u16 new_var;
+            s32 new_var2;
 
             ctrl = &gControllerOne[i];
             new_var3 = &gControllers[i];

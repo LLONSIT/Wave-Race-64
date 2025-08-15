@@ -2,6 +2,7 @@
 #include "variables.h"
 #include "rider.h"
 #include "camera.h"
+#include "libc/math.h"
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EB180.s")
 
@@ -379,17 +380,64 @@ s32 func_801ED944(f32 arg0, f32 arg1) {
     return SIGNUM(arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801ED9B4.s")
+f32 func_801ED9B4(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
+    f32 sp1C = sqrtf(SQ(arg0) + SQ(arg1) + SQ(arg2));
+    f32 temp_f0 = sqrtf(SQ(arg3) + SQ(arg4) + SQ(arg5));
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDA80.s")
+    if ((sp1C > 0.0f) && (temp_f0 > 0.0f)) {
+        return (((arg0 * arg3) + (arg1 * arg4) + (arg2 * arg5)) / sp1C) / temp_f0;
+    } else {
+        return 0.0f;
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDAE0.s")
+void func_801EDA80(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32* arg6, f32* arg7, f32* arg8) {
+    *arg6 = (arg1 * arg5) - (arg2 * arg4);
+    *arg7 = (arg2 * arg3) - (arg0 * arg5);
+    *arg8 = (arg0 * arg4) - (arg1 * arg3);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDBD4.s")
+void func_801EDAE0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32* arg6, f32* arg7, f32* arg8) {
+    f32 temp_f0;
+    f32 temp_f0_2;
+    f32 temp_f16;
+    f32 temp_f2;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDC60.s")
+    *arg6 = (arg1 * arg5) - (arg2 * arg4);
+    *arg7 = (arg2 * arg3) - (arg0 * arg5);
+    *arg8 = temp_f0 = (arg0 * arg4) - (arg1 * arg3);
+    temp_f2 = *arg6;
+    temp_f16 = *arg7;
+    temp_f0_2 = sqrtf(SQ(temp_f0) + (SQ(temp_f2) + SQ(temp_f16)));
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDD04.s")
+    if (temp_f0_2 > 0.0f) {
+        *arg6 /= temp_f0_2;
+        *arg7 /= temp_f0_2;
+        *arg8 /= temp_f0_2;
+    }
+}
+
+void func_801EDBD4(f32 arg0, f32 arg1, f32 arg2, f32* arg3, f32* arg4, f32* arg5) {
+    f32 temp_f0 = sqrtf((arg0 * arg0) + (arg1 * arg1) + (arg2 * arg2));
+
+    if (temp_f0 > 0.0f) {
+        *arg3 = arg0 / temp_f0;
+        *arg4 = arg1 / temp_f0;
+        *arg5 = arg2 / temp_f0;
+    }
+}
+
+void func_801EDC60(Matrix arg0, f32 arg1, f32 arg2, f32 arg3, f32* arg4, f32* arg5, f32* arg6) {
+    *arg4 = (arg0[0][0] * arg1) + arg0[1][0] * arg2 + (arg0[2][0] * arg3) + arg0[3][0];
+    *arg5 = (arg0[0][1] * arg1) + arg0[1][1] * arg2 + (arg0[2][1] * arg3) + arg0[3][1];
+    *arg6 = (arg0[0][2] * arg1) + arg0[1][2] * arg2 + (arg0[2][2] * arg3) + arg0[3][2];
+}
+
+void func_801EDD04(Matrix arg0, f32 arg1, f32 arg2, f32 arg3, f32* arg4, f32* arg5, f32* arg6) {
+    *arg4 = (arg0[0][0] * arg1) + (arg0[1][0] * arg2) + (arg0[2][0] * arg3);
+    *arg5 = (arg0[0][1] * arg1) + (arg0[1][1] * arg2) + (arg0[2][1] * arg3);
+    *arg6 = (arg0[0][2] * arg1) + (arg0[1][2] * arg2) + (arg0[2][2] * arg3);
+}
 
 #define INTPART(x, y) dest->mu.intPart[x][y] = ((u32) fixedPoint >> 0x10)
 #define FRACPART(x, y) dest->mu.fracPart[x][y] = fixedPoint & 0xFFFF
@@ -462,9 +510,34 @@ void _MtxF_to_Mtx(MtxF* src, Mtx* dest) {
     FRACPART(0, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDF9C.s")
+void func_801EDF9C(Matrix arg0, f32 x, f32 y, f32 z) {
+    arg0[3][3] = 1.0f;
+    arg0[2][2] = 1.0f;
+    arg0[1][1] = 1.0f;
+    arg0[0][0] = 1.0f;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EDFFC.s")
+    arg0[2][3] = 0.0f;
+    arg0[1][3] = 0.0f;
+    arg0[0][3] = 0.0f;
+    arg0[1][2] = 0.0f;
+    arg0[0][2] = 0.0f;
+    arg0[2][1] = 0.0f;
+    arg0[0][1] = 0.0f;
+    arg0[2][0] = 0.0f;
+    arg0[1][0] = 0.0f;
+
+    arg0[3][0] = x;
+    arg0[3][1] = y;
+    arg0[3][2] = z;
+}
+
+void func_801EDFFC(Matrix* arg0, f32 arg1, f32 arg2, f32 arg3) {
+    Matrix mtx;
+
+    func_801EDF9C(&mtx, arg1, arg2, arg3);
+
+    _MtxF_to_Mtx(&mtx, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE040.s")
 
