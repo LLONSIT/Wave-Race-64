@@ -1,5 +1,6 @@
 #include "global.h"
 #include "macros.h"
+#include "camera.h"
 
 typedef struct UnkStruct_801CEBE0 {
     /* 0x00 */ Vec3f unk0;
@@ -974,7 +975,9 @@ f32 Math_Normalize_Angle(f32 x) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A5D70.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A6628.s")
+f32 func_800A6628(s32 arg0, f32 arg1, f32 arg2) {
+    return func_8009D4A8(D_801CF060[arg0].unkC - arg1, D_801CF060[arg0].unk14 - arg2);
+}
 
 s32 func_800A6684(s32 arg0) {
     s32 var_v0;
@@ -1055,7 +1058,14 @@ void func_800AB890(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AB92C.s")
+void func_8009D5C0();
+extern s32 D_800E62C8;
+extern s32 D_800E62CC;
+
+void func_800AB92C(void) {
+    D_800E62C8 = D_800E62CC = 0;
+    func_8009D5C0();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AB95C.s")
 
@@ -1082,6 +1092,35 @@ void func_800AD3C4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADD14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADE14.s")
+f32 func_8009D3AC(f32, f32); /* extern */
+f32 func_8009D564(f32);      /* extern */
+extern s32 D_80223930;
+
+s32 func_800ADE14(s32 arg0) {
+    camera_unk_1* temp_v0;
+    f32 angle;
+
+    if (D_801CF060[arg0].unkB8 != 0) {
+        return 1;
+    }
+    if (D_801CF060[arg0].unk0 != 0) {
+        temp_v0 = &gCameraPerspective[D_80223930];
+        D_801D0754 = func_8009D564(-func_8009D3AC(temp_v0->unkF0, temp_v0->unkF4));
+
+        D_801D0758 = func_8009D564(
+            func_8009D3AC(D_801CF060[arg0].unkC - temp_v0->unk4C, -(D_801CF060[arg0].unk14 - temp_v0->unk54)));
+
+        if (D_801CF060[arg0].unk0 == 6) {
+            return 1;
+        }
+
+        angle = FABS(Math_Normalize_Angle(D_801D0758 - D_801D0754));
+
+        if (angle < 100.0f) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADF90.s")

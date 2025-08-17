@@ -383,14 +383,15 @@ typedef struct UnkStruct_func_8007AF78_2 {
     s32 unkC;
 } UnkStruct_func_8007AF78_2;
 typedef struct StructVarS0 {
-    s32 unk0; // 0x00
-    s32 unk4;
-    s32 unk8;
-    f32 unkC;    // 0x0C
-    u8 pad10[4]; // 0x10 – 0x17
-    f32 unk14;   // 0x18
-    char pad[0xA2];
-} StructVarS0; // size = 0xBC
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ u8 pad10[4];
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ char pad18[0xA0]; /* maybe part of unk14[0x29]? */
+    /* 0xB8 */ s32 unkB8;        /* inferred */
+} StructVarS0;                   /* size = 0xBC */
 
 typedef struct UnkStruct_801CF060 {
     /* 0x000 */ s32 unk0;
