@@ -1024,6 +1024,67 @@ void func_800C489C(void) {
     }
 }
 
-// https://decomp.me/scratch/tMZbd
-// need more info about symbol types
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C4998.s")
+void func_800C4998(s32 arg0, s32 arg1) {
+    s32 var_a0;
+
+    D_800E7C94 = 7;
+    D_800E7CB8 = 1;
+    D_801D7E08 = D_800E7CF8[arg1];
+    D_801D7E0C = D_800E7D04[arg1];
+    D_801D7E10 = D_800E7D10[arg1];
+    D_801D7DC0 = arg0;
+    D_801D7DC4 = arg1;
+    func_800C1650(0xF0U);
+    func_800C1488();
+    func_800C13AC(0);
+    switch (D_801D7DC0) {                           /* irregular */
+    case 0:
+        D_800E7C90 = 0;
+        D_801D7E05 = 8;
+        AudioThread_QueueCmdS8(0x03000000U, 0x40);
+        AudioThread_QueueCmdS8(0x03000100U, 0x40);
+        AudioThread_QueueCmdS8(0x03000200U, 0x40);
+        AudioThread_QueueCmdS8(0x03000300U, 0x40);
+        AudioThread_QueueCmdS8(0x03000400U, 0x40);
+        AudioThread_QueueCmdS8(0x03000500U, 0x40);
+        if (arg1 == 0) {
+            AudioThread_QueueCmdF32(0x02000300U, 0.0f);
+            AudioThread_QueueCmdF32(0x02000500U, 0.78740156f);
+            D_801D7E05 = 0;
+            return;
+        }
+        func_800C1EB8(0x10);
+        func_800BFB50();
+        if (arg1 == 7) {
+            var_a0 = 9;
+        } else {
+            var_a0 = arg1;
+        }
+        func_800C3524(var_a0, 0xFU);
+        return;
+    case 1:
+        D_800E7C90 = 1;
+        D_801D7E05 = 4;
+        AudioThread_QueueCmdS8(0x03000000U, 0);
+        AudioThread_QueueCmdS8(0x03000100U, 0);
+        AudioThread_QueueCmdS8(0x03000200U, 0);
+        AudioThread_QueueCmdS8(0x03000300U, 0x7F);
+        AudioThread_QueueCmdS8(0x03000400U, 0x7F);
+        AudioThread_QueueCmdS8(0x03000500U, 0x7F);
+        AudioThread_QueueCmdF32(0x02000300U, 0.47244096f);
+        func_800C1EB8(2);
+        return;
+    case 3:
+        D_800E7C90 = 0;
+        D_801D7E05 = 4;
+        AudioThread_QueueCmdF32(0x02000300U, 0.0f);
+        if (D_800E7D10 == &D_800E7D10[arg1]) {
+            AudioThread_QueueCmdF32(0x02000500U, 0.78740156f);
+        } else {
+            AudioThread_QueueCmdF32(0x02000500U, 0.0f);
+        }
+        func_800C1EB8(2);
+        return;
+    }
+}
+
