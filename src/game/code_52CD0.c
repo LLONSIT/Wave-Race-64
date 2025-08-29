@@ -62,14 +62,30 @@ extern s32 D_800E56AC;
 extern s32 D_800E56E0;
 extern struct UnkStruct_801CF008 D_801CF008[];
 extern struct UnkStruct_801CF058* D_801CF058[];
+extern s32 D_801D06B8;
 
 f32 func_801ED154(f32, f32);
-
 void func_8009A4DC(Vec3f* arg0);
 void func_8009A9FC(Vec3f* arg0);
 void func_8009B130(Vec3f* arg0);
-f32 func_8009D3AC(f32, f32); /* extern */
-f32 func_8009D564(f32);      /* extern */
+f32 func_8009D3AC(f32, f32);
+f32 func_8009D564(f32);
+void func_8009D5C0(void);
+Gfx* func_800916B4(Gfx*);
+Gfx* func_8009DB90(Gfx*, s32);
+Gfx* func_8009DC10(Gfx*, s32);
+Gfx* func_8009E794(Gfx*, s32);
+Gfx* func_8009E814(Gfx*, s32);
+Gfx* func_8009F398(Gfx*, s32);
+Gfx* func_8009FCB0(Gfx*, s32);
+Gfx* func_800A063C(Gfx*, s32);
+Gfx* func_800A10E4(Gfx*, s32);
+Gfx* func_800A16F0(Gfx*, s32);
+Gfx* func_800A1CFC(Gfx*, s32);
+Gfx* func_800A2308(Gfx*, s32);
+Gfx* func_800A28F4(Gfx*, s32);
+s32 func_800ADC8C(s32);
+void func_800ADD14(void);
 
 f32 Math_Fabs(f32 x) {
     if (x < 0.0f) {
@@ -108,18 +124,20 @@ UNUSED void func_80098564(void) {
 UNUSED void stub(void) {
 }
 
+// Math_Vec3f_RotateXZ
 void func_80098574(Vec3f* dest, Vec3f* src, s32 arg2) {
-    Vec3f sp1C;
+    Vec3f vec;
     s32 theta;
 
-    Math_Vec3f_Copy(&sp1C, src);
+    Math_Vec3f_Copy(&vec, src);
     theta = ((arg2 / 360.0f) * 4096.0f);
 
-    dest->x = ((sp1C.z * SIN(theta)) + (COS(theta) * sp1C.x));
-    dest->y = sp1C.y;
-    dest->z = ((sp1C.z * COS(theta)) - (SIN(theta) * sp1C.x));
+    dest->x = ((vec.z * SIN(theta)) + (COS(theta) * vec.x));
+    dest->y = vec.y;
+    dest->z = ((vec.z * COS(theta)) - (SIN(theta) * vec.x));
 }
 
+// Math_Vec3f_RotateZY
 void func_80098644(Vec3f* dest, Vec3f* src, s32 arg2) {
     Vec3f sp1C;
     s32 theta;
@@ -1124,7 +1142,7 @@ void func_800A9494(s32 arg0) {
             }
             D_801CF060[arg0].unk18 = func_8009D564(D_801CF060[arg0].unk18);
             D_801CF060[arg0].unk10 += D_800EB968 * (D_801D0758 - D_801CF060[arg0].unk10);
-            D_801D0764 = (((180 -  FABS(D_801D0760))) / 180.0f) * 30.0f;
+            D_801D0764 = (((180 - FABS(D_801D0760))) / 180.0f) * 30.0f;
             D_801CF060[arg0].unk1C =
                 Math_Normalize_Angle(((f64) D_801CF060[arg0].unk1C) +
                                      (Math_Normalize_Angle(D_801D0760 - D_801CF060[arg0].unk1C) * D_800EB970));
@@ -1232,7 +1250,6 @@ void func_800AB890(s32 arg0) {
     }
 }
 
-void func_8009D5C0();
 extern s32 D_800E62C8;
 extern s32 D_800E62CC;
 
@@ -1262,9 +1279,79 @@ void func_800AD3C4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AD418.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADC8C.s")
+#ifdef NEEDS_RODATA
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADD14.s")
+s32 func_800ADC8C(s32 arg0) {
+    s32 ret;
+
+    ret = D_801D06B8;
+    switch (arg0) {
+        case 1:
+            ret += 8;
+            break;
+        case 2:
+            ret++;
+            break;
+        case 3:
+            ret += 8;
+            break;
+        case 4:
+            ret++;
+            break;
+        case 5:
+            ret += 6;
+            break;
+        case 6:
+            ret += 6;
+            break;
+        case 7:
+            ret += 4;
+            break;
+        case 8:
+            ret += 4;
+            break;
+        case 9:
+            ret += 4;
+            break;
+        case 10:
+            ret += 4;
+            break;
+        case 12:
+            ret += 1;
+    }
+    return ret;
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADC8C.s")
+#endif
+
+// TO CHECK
+void func_800ADD14(void) {
+    s32 i;
+
+    for (i = 0; i < 30; i++) {
+        if ((D_801CF060[i].unkB8 == 0) && (D_801CF060[i].unk0 != 0)) {
+            if (D_801CF060[i].unkC > 8000) {
+                D_801CF060[i].unkC = 8000.0f;
+            }
+            if (D_801CF060[i].unkC < -8000.0f) {
+                D_801CF060[i].unkC = -8000.0f;
+            }
+            if (D_801CF060[i].unk14 > 8000) {
+                D_801CF060[i].unk14 = 8000.0f;
+            }
+            if (D_801CF060[i].unk14 < -8000.0f) {
+                D_801CF060[i].unk14 = -8000.0f;
+            }
+            if (D_801CF060[i].unk10 > 4000) {
+                D_801CF060[i].unk14 = 4000.0f;
+            }
+            if (D_801CF060[i].unk10 < -4000.0f) {
+                D_801CF060[i].unk14 = -4000.0f;
+            }
+        }
+    }
+}
 
 extern s32 D_80223930;
 
@@ -1295,4 +1382,89 @@ s32 func_800ADE14(s32 arg0) {
     return 0;
 }
 
+#ifdef NEEDS_RODATA
+extern s32 D_800E62C0;
+extern s32 D_801D06B8;
+
+Gfx* func_800ADF90(Gfx* arg0) {
+    Gfx* var_v0;
+    s32 var_s1;
+
+    if (D_800E62C0 == 1) {
+        D_800E62C0 = 0;
+    } else {
+        D_800E62C0 = 1;
+    }
+    arg0 = func_800916B4(arg0);
+    func_800ADD14();
+    D_801D06B8 = 0;
+
+    for (var_s1 = 0; var_s1 < 0x1E; var_s1++) {
+        if ((func_800ADC8C(D_801CF060[var_s1].unk0 + D_801CF060[var_s1].unk4)) > 0xBF) {
+            break;
+        }
+
+        if (func_800ADE14(var_s1) == 1) {
+            switch (D_801CF060[var_s1].unk0 + D_801CF060[var_s1].unk4) {
+                case 1:
+                    var_v0 = func_8009DC10(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 2:
+                    var_v0 = func_8009DB90(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 3:
+                    var_v0 = func_8009E814(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 4:
+                    var_v0 = func_8009E794(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 5:
+                    var_v0 = func_8009F398(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 6:
+                    var_v0 = func_8009FCB0(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 7:
+                    var_v0 = func_800A10E4(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 8:
+                    var_v0 = func_800A16F0(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 9:
+                    var_v0 = func_800A1CFC(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 10:
+                    var_v0 = func_800A2308(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 12:
+                    var_v0 = func_800A28F4(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 13:
+                    var_v0 = func_800A063C(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+            }
+        }
+    }
+    D_800E62CC = D_800E62C8;
+
+    for (var_s1 = D_800E62C8; var_s1 < 0x1E; var_s1++) {
+        D_801CF060[var_s1].unk0 = 0;
+    }
+
+    return arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADF90.s")
+#endif
