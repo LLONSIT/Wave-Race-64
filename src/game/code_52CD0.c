@@ -47,6 +47,24 @@ typedef struct UnkStruct_8009BB98 {
     f32 unk10;
 } UnkStruct_8009BB98;
 
+typedef struct UnkStruct_80099D94 {
+    /* 0x00 */ char pad0[0x4C];
+    /* 0x4C */ f32 unk4C; /* inferred */
+    /* 0x50 */ f32 unk50; /* inferred */
+    /* 0x54 */ f32 unk54; /* inferred */
+    /* 0x58 */ f32 unk58;
+    /* 0x5C */ char pad5C[8]; /* maybe part of unk58[3]? */
+    /* 0x64 */ s32 unk64;     /* inferred */
+    /* 0x68 */ s32 unk68;
+    /* 0x6C */ char pad6C[4];
+    /* 0x70 */ f32 unk70; /* inferred */
+    /* 0x74 */ f32 unk74; /* inferred */
+    f32 unk78;
+    f32 unk7C;
+    f32 unk80;
+    f32 unk84;
+} UnkStruct_80099D94;
+
 extern u8 D_801CEAA6[];
 extern struct UnkStruct_801CEBE0 D_801CEBE0[];
 
@@ -86,6 +104,7 @@ Gfx* func_800A2308(Gfx*, s32);
 Gfx* func_800A28F4(Gfx*, s32);
 s32 func_800ADC8C(s32);
 void func_800ADD14(void);
+void func_80099B20(void*, s32);
 
 f32 Math_Fabs(f32 x) {
     if (x < 0.0f) {
@@ -420,7 +439,52 @@ void func_80099858(struct UnkStruct_80099858* arg0, s8 arg1, s8 arg2, u16 arg3, 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80099BBC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80099D94.s")
+void func_80099D94(UnkStruct_80099D94* arg0, UnkStruct_80099D94* arg1) {
+    f32 temp_f0;
+    f32 sp80;
+    f32 sp7C;
+    f32 sp78;
+    f32 sp74;
+    f32 sp70;
+    f32 sp6C;
+    f32 sp68;
+    f32 sp64;
+    s32 temp_f16;
+    f32 sp5C;
+    s32 temp_f8;
+    s32 pad[5];
+    Vec3f sp38;
+    Vec3f sp2C;
+
+    Math_Vec3f_Initialize(&sp38);
+    Math_Vec3f_Set(&sp2C, arg1->unk70, arg1->unk74, arg1->unk78);
+    if (arg0->unk4C != 0.0f) {
+        sp74 = arg1->unk7C - arg1->unk4C;
+        sp70 = arg1->unk80 - arg1->unk50;
+        sp6C = arg1->unk84 - arg1->unk54;
+        sp80 = func_801ED154(sp70, sqrtf(SQ(sp74) + SQ(sp6C)));
+        sp7C = func_801ED154(sp74, sp6C);
+        if ((Math_Fabs(sp80 - 90.0f) > 10.0f) && (Math_Fabs(sp80 - 270.0f) > 10.0f)) {
+            func_80098FF8(&sp38, &sp2C, &sp5C, &sp68, &sp64);
+            func_800990A8(&sp38, &sp2C, sp5C, sp68, sp64 - sp7C);
+            sp78 = func_801ED154(-sp2C.x, sp2C.y);
+            if (arg1->unk74 == 7.0f) {
+                sp78 = 0.0f;
+            }
+            func_80099B20(&arg0->unk58, arg0->unk64);
+            sp78 += arg0->unk4C * SIN(ANGLE_TO_CUSTOM_UNITS(arg0->unk58));
+            if (func_80098820(&arg0->unk4C, 0.0f, arg0->unk70) == 0) {
+                arg0->unk58 = 0;
+            }
+            temp_f16 = (s32) ((sp7C / 360.0f) * 4096.0f);
+            temp_f8 = (s32) ((sp78 / 360.0f) * 4096.0f);
+
+            arg1->unk78 = SIN(temp_f8) * SIN(temp_f16);
+            arg1->unk74 = COS(temp_f8);
+            arg1->unk70 = -SIN(temp_f8) * COS(temp_f16);
+        }
+    }
+}
 
 void func_8009A04C(s32 arg0, s16 arg1) {
     void* temp_a1 = &D_801CEAB0[arg0 & 1].unk_0;
