@@ -9,11 +9,11 @@ extern int Seed;
 // .rodata
 extern double D_800E9220;
 
-s32 func_80047BE0(f32 arg0) {
-    if (arg0 < 0.0f) {
-        return (s32) (arg0 - 0.5f);
+s32 Math_Round(f32 x) {
+    if (x < 0.0f) {
+        return (s32) (x - 0.5f);
     }
-    return (s32) (arg0 + 0.5f);
+    return (s32) (x + 0.5f);
 }
 
 // Same as func_8006A6E4 of fzero x
@@ -177,9 +177,9 @@ void func_800481E0(MF* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
     s32 sp44;
     s32 pad[2];
 
-    temp_v0 = func_80047BE0((arg2 / 720.0f) * 4096.0f);
+    temp_v0 = Math_Round((arg2 / 720.0f) * 4096.0f);
 
-    temp_f0 = gSinTable[temp_v0 & 0xFFF] / gSinTable[(temp_v0 + 0x400) & 0xFFF] * arg4;
+    temp_f0 = SIN(temp_v0) / COS(temp_v0) * arg4;
 
     sp4C = arg7 + temp_f0;
     sp48 = arg7 - temp_f0;
@@ -191,33 +191,33 @@ void func_800481E0(MF* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
 
     temp_f0 *= arg3; // some unused storing on temp_f0
 
-    temp_v0 = func_80047BE0((131072.0f * arg4) / (sp50 - sp54));
+    temp_v0 = Math_Round((131072.0f * arg4) / (sp50 - sp54));
 
     arg0->xx = temp_v0 & 0xFFFF0000;
 
     arg0->xz = temp_v0 << 0x10;
 
-    temp_v0 = func_80047BE0((131072.0f * arg4) / (sp4C - sp48));
+    temp_v0 = Math_Round((131072.0f * arg4) / (sp4C - sp48));
 
     arg0->zx = temp_v0 >> 0x10;
 
     arg0->zz = temp_v0 & 0xFFFF;
 
-    sp44 = func_80047BE0(((sp50 + sp54) * 65536.0f) / (sp50 - sp54));
+    sp44 = Math_Round(((sp50 + sp54) * 65536.0f) / (sp50 - sp54));
 
-    temp_v0 = func_80047BE0(((sp4C + sp48) * 65536.0f) / (sp4C - sp48));
+    temp_v0 = Math_Round(((sp4C + sp48) * 65536.0f) / (sp4C - sp48));
 
     arg0->xy = (sp44 & 0xFFFF0000) | (temp_v0 >> 0x10);
 
     arg0->xw = (sp44 << 0x10) | (temp_v0 & 0xFFFF);
 
-    temp_v0 = func_80047BE0(((arg5 + arg4) * 65536.0f) / (arg4 - arg5));
+    temp_v0 = Math_Round(((arg5 + arg4) * 65536.0f) / (arg4 - arg5));
 
     arg0->yy = (temp_v0 & 0xFFFF0000) | 0xFFFF;
 
     arg0->yw = temp_v0 << 0x10;
 
-    temp_v0 = func_80047BE0(((131072.0f * arg4) * arg5) / (arg4 - arg5));
+    temp_v0 = Math_Round(((131072.0f * arg4) * arg5) / (arg4 - arg5));
 
     arg0->wy = temp_v0 & 0xFFFF0000;
 

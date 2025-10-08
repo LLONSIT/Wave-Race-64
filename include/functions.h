@@ -11,7 +11,7 @@ void func_i4_802C6BAC(void);
 void func_8009345C(void);
 void func_801EBD28(void);
 void func_i1_802C59E8(s32);
-void Set_FadeTransition(s32, u32, s32);
+void FadeTransition_SetProps(s32 type, u32 fadeTime, s32 duration);
 Gfx* func_i12_802C58A0(Gfx*);
 void func_i12_802C5F6C(void);
 void func_801EC304(void);

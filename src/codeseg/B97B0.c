@@ -34,7 +34,7 @@ void func_801EC500(void) {
     D_800D461C = 2;
     gPlayers = ONE_PLAYER;
     func_80096960(2, 0, 1, 2, 3);
-    Set_FadeTransition(2, 4, 0);
+    FadeTransition_SetProps(2, 4, 0);
     func_801E6A4C(0, 0);
 }
 
@@ -49,7 +49,7 @@ void func_801EC5B4(void) {
     D_800DAB1C = 0;
     D_800D461C = 2;
     gPlayers = ONE_PLAYER;
-    Set_FadeTransition(2, 4, 0);
+    FadeTransition_SetProps(2, 4, 0);
     func_801E6A4C(0, 0);
 }
 
@@ -64,7 +64,7 @@ void func_801EC650(void) {
     D_800DAB1C = 0;
     D_800D461C = 2;
     gPlayers = ONE_PLAYER;
-    Set_FadeTransition(2, 4, 0);
+    FadeTransition_SetProps(2, 4, 0);
     func_801E6A4C(0, 0);
 }
 
@@ -78,7 +78,7 @@ void func_801EC6EC(void) {
     D_801CE644 = 0;
     D_800DAB1C = 0;
     D_800D461C = 2;
-    Set_FadeTransition(2, 4, 0);
+    FadeTransition_SetProps(2, 4, 0);
     func_801E6A4C(0, 0);
 }
 
@@ -93,7 +93,7 @@ void func_801EC780(void) {
     D_800DAB1C = 0;
     D_800D461C = 2;
     func_80096960(2, 0, 1, 2, 3);
-    Set_FadeTransition(2, 4, 0);
+    FadeTransition_SetProps(2, 4, 0);
     func_801E6A4C(0, 0);
 }
 
@@ -124,7 +124,7 @@ void func_801EC830(void) {
         var_v1 = true;
     }
     if (var_v1) {
-        Set_FadeTransition(4, 1, 0);
+        FadeTransition_SetProps(4, 1, 0);
         osViBlack(true);
     }
     func_801E6A4C(0, 0);
@@ -162,9 +162,9 @@ void func_801EC9C8(void) {
         func_80096960(2, 0, 1, 2, 3);
     }
     if (D_801CE634 == 0x67) {
-        Set_FadeTransition(7, 0x14, 0);
+        FadeTransition_SetProps(7, 0x14, 0);
     } else if (D_801CE634 == 0x2A) {
-        Set_FadeTransition(4, 1, 0);
+        FadeTransition_SetProps(4, 1, 0);
     }
     func_801E6A4C(0, 0);
     gCameraPerspective->unk0 = 1;
@@ -181,7 +181,7 @@ void func_801ECAF4(void) {
     D_801CE644 = 0;
     D_800DAB1C = 3;
     D_800D461C = 2;
-    Set_FadeTransition(0, 0, 0);
+    FadeTransition_SetProps(0, 0, 0);
     func_801E6A4C(0, 0);
     func_800C21F4(8, 0);
 }

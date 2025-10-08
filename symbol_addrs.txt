@@ -285,3 +285,5 @@ func_i3_802C5800 = 0x802C5800; //size:0x2E8 segment:ovl_i3
 
 sFadeTransitionDefaultProps = 0x80226CC0;
 sCurrentFadeTransitionProps = 0x80228A10;
+gCurrentOptionsMenuItem = 0x800DA9D4;
+Math_Round = 0x80047BE0;

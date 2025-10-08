@@ -12,18 +12,18 @@ FadeTransition sCurrentFadeTransitionProps;
 extern s16 D_80228A30;
 extern s16 D_80228A32;
 
-void Set_FadeTransition(s32 arg0, u32 arg1, s32 arg2) {
+void FadeTransition_SetProps(s32 type, u32 fadeTime, s32 duration) {
     s32 fade_color = 255;
     FadeTransition* transition = &sCurrentFadeTransitionProps;
 
     sCurrentFadeTransitionProps = sFadeTransitionDefaultProps;
 
-    switch (arg0) {
+    switch (type) {
         case 1:
             transition->state = 1;
             transition->unk_2 = 0;
-            transition->waitDuration = arg2;
-            transition->fadeInTime = arg1;
+            transition->waitDuration = duration;
+            transition->fadeInTime = fadeTime;
             transition->holdTime = 0;
             transition->r = 0;
             transition->g = 0;
@@ -34,8 +34,8 @@ void Set_FadeTransition(s32 arg0, u32 arg1, s32 arg2) {
         case 2:
             transition->state = 2;
             transition->unk_2 = 0;
-            transition->waitDuration = arg2;
-            transition->fadeInTime = arg1;
+            transition->waitDuration = duration;
+            transition->fadeInTime = fadeTime;
             transition->holdTime = 0;
             transition->r = 0;
             transition->g = 0;
@@ -46,8 +46,8 @@ void Set_FadeTransition(s32 arg0, u32 arg1, s32 arg2) {
         case 7:
             transition->state = 7;
             transition->unk_2 = 0;
-            transition->waitDuration = arg2;
-            transition->fadeInTime = arg1;
+            transition->waitDuration = duration;
+            transition->fadeInTime = fadeTime;
             transition->holdTime = 0;
             transition->b = transition->g = transition->r = fade_color;
             transition->alpha = 255;
@@ -56,8 +56,8 @@ void Set_FadeTransition(s32 arg0, u32 arg1, s32 arg2) {
         case 3:
             transition->state = 3;
             transition->unk_2 = 0;
-            transition->waitDuration = arg2;
-            transition->fadeInTime = arg1;
+            transition->waitDuration = duration;
+            transition->fadeInTime = fadeTime;
             transition->holdTime = 0;
             transition->b = transition->g = transition->r = fade_color;
             transition->alpha = 0;
@@ -69,8 +69,8 @@ void Set_FadeTransition(s32 arg0, u32 arg1, s32 arg2) {
         case 4:
             transition->state = 4;
             transition->unk_2 = 0;
-            transition->waitDuration = arg2;
-            transition->fadeInTime = arg1;
+            transition->waitDuration = duration;
+            transition->fadeInTime = fadeTime;
             transition->holdTime = 1;
             transition->unk_18 = 0x46;
             transition->unk_1A = 0x41;
@@ -80,8 +80,8 @@ void Set_FadeTransition(s32 arg0, u32 arg1, s32 arg2) {
         case 5:
             transition->state = 5;
             transition->unk_2 = 0;
-            transition->waitDuration = arg2;
-            transition->fadeInTime = arg1;
+            transition->waitDuration = duration;
+            transition->fadeInTime = fadeTime;
             transition->holdTime = 1;
             transition->unk_18 = -0x109;
             transition->unk_1A = 0x41;
