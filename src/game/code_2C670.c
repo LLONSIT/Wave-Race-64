@@ -27,7 +27,7 @@ s32 func_80074264(f32 arg0, f32 arg1) {
     s32 ret;
 
     ret = true;
-    if (gCourseID == 0) {
+    if (gCourseID == DOLPHIN_PARK) {
         if (sqrtf(SQ(arg0) + SQ(arg1)) <= 7700.0f) {
             ret = false;
         }

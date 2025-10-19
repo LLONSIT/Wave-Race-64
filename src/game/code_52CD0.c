@@ -1104,16 +1104,13 @@ s32 func_800A6684(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A9130.s")
 
 void func_800A93C8(s32 arg0) {
-
-    // This is a an array access:
-    // temp_v0 = (StructVarS0*)((arg0 * 0xBC) + D_801CF060); where 0xBC is the type size and arg0 is the index
     D_801D0754 = func_8009D4A8(D_801CF060[arg0].unkC - D_801D06BC, D_801CF060[arg0].unk14 - D_801D06C4) / 40.0f;
     D_801D0758 = 0.0f;
 
     func_800C1BD8(D_801D0754, D_801D0758);
 
     if ((D_801CE624 == -1) && (D_801CF060[arg0].unk8 == 1)) {
-        func_800A52D8(arg0, 400.0f); // 400.0f
+        func_800A52D8(arg0, 400.0f);
     }
 }
 
@@ -1234,9 +1231,9 @@ void func_800A9494(s32 arg0) {
                 D_801CF060[arg0].unk9C = (D_801CF060[arg0].unk9C + 1) % 2;
                 D_801CF060[arg0].unk8 = 7;
                 D_801CF060[arg0].unkA4 = 0;
-                D_801CF060[arg0].unkA8 = (rand() & 0xF) + 0xA;
+                D_801CF060[arg0].unkA8 = (rand() & 15) + 10;
             }
-            if (D_801CF060[arg0].unk78 == 0xF) {
+            if (D_801CF060[arg0].unk78 == 15) {
                 D_801CF060[arg0].unk78 = 0;
             }
         } else if (D_801CF060[arg0].unk8 == 7) {
@@ -1532,3 +1529,5 @@ Gfx* func_800ADF90(Gfx* arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADF90.s")
 #endif
+
+

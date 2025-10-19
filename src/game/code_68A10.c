@@ -8,7 +8,7 @@ extern s32 D_801D7B10;
 extern s32 D_801D7AD8;
 UnkStruct_801D7A18 D_801D7A18[];
 
-f32 func_801ED338(f32);
+f32 Math_FloatRand(f32);
 
 // Already matched but neeeds struct migration
 // https://decomp.me/scratch/MKa6P
@@ -58,22 +58,22 @@ void func_800AF51C(void) {
 
     if (D_801D7ADC > 0) {
         D_801D7ADC -= 1;
-        temp_f24 = func_801ED338(32.0f);
-        temp_f20 = func_801ED338(4.0f);
+        temp_f24 = Math_FloatRand(32.0f);
+        temp_f20 = Math_FloatRand(4.0f);
 
         func_800AF4A0((0, temp_f24) + (D_801D7AE0 - 16.0f), (0, temp_f20) + (D_801D7AE4 - 2.0f),
-                      func_801ED338(32.0f) + (D_801D7AE8 - 16.0f), ((f32) D_801D7ADC * 0.2f) + 1.2f);
+                      Math_FloatRand(32.0f) + (D_801D7AE8 - 16.0f), ((f32) D_801D7ADC * 0.2f) + 1.2f);
     }
 
     for (i = 0; i < 2; i++) {
         if (D_801D7AF0[i].unk0 > 0) {
             D_801D7AF0[i].unk0--;
-            temp_f22 = func_801ED338(32.0f);
-            temp_f24 = func_801ED338(4.0f);
-            temp_f20 = func_801ED338(32.0f);
+            temp_f22 = Math_FloatRand(32.0f);
+            temp_f24 = Math_FloatRand(4.0f);
+            temp_f20 = Math_FloatRand(32.0f);
             func_800AF4A0((D_801D7AF0[i].unk4 - 16.0f) + (0, temp_f22), // FAKE
                           (D_801D7AF0[i].unk8 - 2.0f) + (0, temp_f24), (D_801D7AF0[i].unkC - 16.0f) + (0, temp_f20),
-                          func_801ED338(2.0f) + 2);
+                          Math_FloatRand(2.0f) + 2);
         }
     }
 

@@ -317,7 +317,7 @@ extern s32 D_801CB618[];
 extern u8 D_801CB658[];
 extern u8 D_801CB6C0[];
 extern struct Controller_info gControllerOne[];
-extern u16 D_80226F00;
+extern u16 sRandSeed;
 extern f32 D_80226F08[];
 extern UnkStruct_80192690 D_801926D8[];
 extern Vec3f D_801CECB8[];

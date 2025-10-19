@@ -1,4 +1,5 @@
 
+
 //Libultra Symbols
 osRomBase		= 0x80000308;
 __osPfsPifRam = 0x801DABF0;
@@ -287,3 +288,7 @@ sFadeTransitionDefaultProps = 0x80226CC0;
 sCurrentFadeTransitionProps = 0x80228A10;
 gCurrentOptionsMenuItem = 0x800DA9D4;
 Math_Round = 0x80047BE0;
+sRandSeed = 0x80226F00;
+Math_srand = 0x801ED2E0;
+Math_Rand = 0x801ED304;
+SysMain_CreateGfxTask = 0x80046C30;

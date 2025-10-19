@@ -242,20 +242,20 @@ f32 func_801ED154(f32 arg0, f32 arg1) {
     return temp_f0;
 }
 
-void func_801ED2E0(void) {
-    D_80226F00 = osGetTime();
+void Math_srand(void) {
+    sRandSeed = osGetTime();
 }
 
-s32 func_801ED304(s32 arg0) {
-    D_80226F00 = (D_80226F00 << 2) + D_80226F00 + 1;
+s32 Math_Rand(s32 arg0) {
+    sRandSeed = (sRandSeed << 2) + sRandSeed + 1;
 
-    return (D_80226F00 * arg0) >> 16;
+    return (sRandSeed * arg0) >> 16;
 }
 
-f32 func_801ED338(f32 arg0) {
-    D_80226F00 = (D_80226F00 << 2) + D_80226F00 + 1;
+f32 Math_FloatRand(f32 arg0) {
+    sRandSeed = (sRandSeed << 2) + sRandSeed + 1;
 
-    return (arg0 * D_80226F00 / 0x10000);
+    return (arg0 * sRandSeed / 65536.0f);
 }
 
 s32 func_801ED388(s32 arg0, s32 arg1) {
