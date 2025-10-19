@@ -1529,5 +1529,3 @@ Gfx* func_800ADF90(Gfx* arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADF90.s")
 #endif
-
-

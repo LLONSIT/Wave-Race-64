@@ -295,7 +295,8 @@ void func_80081048(void) {
     switch (gDifficulty) { /* irregular */
         case DIFFICULTY_NORMAL:
             if ((D_801C3C58->unkA4 != 0) ||
-                ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) && (D_801C3C58->unkB0 == 0))) {
+                ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) &&
+                 (D_801C3C58->unkB0 == 0))) {
 
                 switch (D_801C3C58->unk5C) { /* switch 4; irregular */
                     default:                 /* switch 4 */
@@ -354,7 +355,8 @@ void func_80081048(void) {
             break;
         case DIFFICULTY_HARD:
             if ((D_801C3C58->unkA4 != 0) ||
-                ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) && (D_801C3C58->unkB0 == 0))) {
+                ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) &&
+                 (D_801C3C58->unkB0 == 0))) {
                 switch (D_801C3C58->unk4) { /* switch 7; irregular */
                     default:                /* switch 7 */
                         break;
@@ -397,7 +399,8 @@ void func_80081048(void) {
             break;
         case DIFFICULTY_EXPERT:
             if ((D_801C3C58->unkA4 != 0) ||
-                ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) && (D_801C3C58->unkB0 == 0))) {
+                ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) &&
+                 (D_801C3C58->unkB0 == 0))) {
 
                 D_801C3C50->unk1578 = 0.95f;
             } else if (D_801C2938[D_801C3C58->unk0].racePosition < D_801C2938->racePosition) {
@@ -2172,13 +2175,15 @@ void func_80087AE8(void) {
         case SUNNY_BEACH:
             if (gGameModes == GMODE_STUNT) {
 
-                if ((D_801C2948[D_801C3C58->unk0].lapCount == 7) && (D_800D9874 != D_801C2948[D_801C3C58->unk0].lapCount)) {
+                if ((D_801C2948[D_801C3C58->unk0].lapCount == 7) &&
+                    (D_800D9874 != D_801C2948[D_801C3C58->unk0].lapCount)) {
                     u32 temp = -0x46;
                     D_801C3C50->unk16F4 = 2;
                     D_801C3C50->unkB53 = temp;
                 }
 
-                if ((D_801C2948[D_801C3C58->unk0].lapCount == 13) && (D_800D9874 != D_801C2948[D_801C3C58->unk0].lapCount)) {
+                if ((D_801C2948[D_801C3C58->unk0].lapCount == 13) &&
+                    (D_800D9874 != D_801C2948[D_801C3C58->unk0].lapCount)) {
 
                     D_801C3C50->unk16F4 = 1;
 

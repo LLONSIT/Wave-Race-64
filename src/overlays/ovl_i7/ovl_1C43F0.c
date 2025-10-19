@@ -1,13 +1,13 @@
 #include "global.h"
 
-void func_801EC3AC();                                  
-void func_801EC500();                                  
-void func_801EC5B4();                                  
-void func_801EC650();                                  
-void func_801EC6EC();                                  
-void func_801EC780();                                  
-Gfx* func_i7_802C5A18();                            
-void func_i7_802C5C94(s32);                            
+void func_801EC3AC();
+void func_801EC500();
+void func_801EC5B4();
+void func_801EC650();
+void func_801EC6EC();
+void func_801EC780();
+Gfx* func_i7_802C5A18();
+void func_i7_802C5C94(s32);
 extern s32 gCurrentOptionsMenuItem;
 extern s32 D_i7_802C5D20[];
 
@@ -43,27 +43,27 @@ Gfx* func_i7_802C5800(Gfx* arg0) {
         }
     } else if (D_80228A16 == 1) {
         switch (D_801CE630) {
-        case 0x3E:
-            func_801EC3AC();
-            break;
-        case 0x42:
-            func_801EC500();
-            break;
-        case 0x44:
-            func_801EC5B4();
-            break;
-        case 0x46:
-            func_801EC6EC();
-            break;
-        case 0x40:
-            func_801EC780();
-            break;
-        case 0x48:
-            func_801EC650();
-            break;
-        default:
-            func_801EB180();
-            break;
+            case 0x3E:
+                func_801EC3AC();
+                break;
+            case 0x42:
+                func_801EC500();
+                break;
+            case 0x44:
+                func_801EC5B4();
+                break;
+            case 0x46:
+                func_801EC6EC();
+                break;
+            case 0x40:
+                func_801EC780();
+                break;
+            case 0x48:
+                func_801EC650();
+                break;
+            default:
+                func_801EB180();
+                break;
         }
     }
     return arg0;

@@ -179,7 +179,7 @@ void* func_80046DA0(void* entry) {
     func_80046850();
     func_800468E0();
     func_80046BF4();
-    
+
     SysMain_CreateGfxTask(D_80151940);
     func_80046CF8(D_80151940);
 
