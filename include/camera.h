@@ -7,10 +7,10 @@ typedef enum {
     NON_HANDLED2,
     CAMERA_PERSPECTIVE_FRONT, /* The normal camera perspective in a race */
     CAMERA_PERSPECTIVE_UNKNOWN
-}CAMERA_VIEW_MODES;
+} CAMERA_VIEW_MODES;
 
 typedef struct camera_unk_1 {
-    /* 0x000 */ s32 unk0;
+    /* 0x000 */ CAMERA_VIEW_MODES viewMode; // See CAMERA_VIEW_MODES
     /* 0x004 */ f32 unk4;
     /* 0x008 */ s32 unk8;
     /* 0x00C */ f32 unkC;
@@ -34,7 +34,7 @@ typedef struct camera_unk_1 {
     /* 0x0F0 */ f32 unkF0;                          /* inferred */
     /* 0x0F4 */ f32 unkF4;                          /* inferred */
     /* 0x0F8 */ char padF8[4];
-    /* 0x0FC */ f32 unkFC;
+    /* 0x0FC */ f32 camViewY;
     /* 0x100 */ char pad100[0xC];                   /* maybe part of unkFC[4]? */
 } camera_unk_1;                                     /* size = 0x10C */
 

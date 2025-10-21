@@ -190,13 +190,13 @@ void func_801EAF78(void);
 void func_80098514(Vec3f* arg0);
 void func_8009CD50(void);
 void func_8009BE40(Vec3f*, void*, void*, f32);
-void func_80099A00(Vec3f*, void*, void*, s32);
+//void func_80099A00(Vec3f*, void*, void*, s32);
 void func_8009BDE4(Vec3f*);
 void func_800984F4(void*, f32, f32, f32);
 void func_80098AC4(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4);
 // void func_80098AC4(s32, s32, s32, s32, s32);
 void func_8009B650(Vec3f* arg0, f32 arg1, f32 arg2);
-void func_8009AA24(Vec3f* arg0); // Unk pointer type
+//void func_8009AA24(Vec3f* arg0); // Unk pointer type
 void func_8009AD3C(Vec3f * arg0);
 void func_8009AD74(Vec3f *);
 // void func_8007AE8C(void*, void*, void*, void*);
