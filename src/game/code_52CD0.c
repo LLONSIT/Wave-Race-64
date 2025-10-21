@@ -91,9 +91,9 @@ extern s32 D_800E56E0;
 extern struct UnkStruct_801CF008 D_801CF008[];
 extern struct UnkStruct_801CF058* D_801CF058[];
 extern s32 D_801D06B8;
-extern UNK_TYPE D_801CED60;
-extern UNK_TYPE D_801CEEA0;
-
+extern s8 D_801CED60[];
+extern s8 D_801CEEA0[];
+extern UnkStruct_801CF060 D_801CEC70[];
 
 
 //.data
@@ -103,9 +103,7 @@ extern s32 D_800E62C8;
 extern s32 D_800E62CC;
 
 f32 func_801ED154(f32, f32);
-void func_8009A4DC(Vec3f* arg0);
-void func_8009A9FC(Vec3f* arg0);
-void func_8009B130(Vec3f* arg0);
+
 f32 func_8009D3AC(f32, f32);
 f32 func_8009D564(f32);
 void func_8009D5C0(void);
@@ -124,9 +122,18 @@ Gfx* func_800A2308(Gfx*, s32);
 Gfx* func_800A28F4(Gfx*, s32);
 s32 func_800ADC8C(s32);
 void func_800ADD14(void);
+
+// File declarations
+void func_8009A97C(UnkStruct_801CF060* arg0);
+void func_8009A4DC(UnkStruct_801CF060* arg0);
+void func_8009A9FC(UnkStruct_801CF060* arg0);
+void func_8009B130(UnkStruct_801CF060* arg0);
 void func_80099B20(f32*, f32);
 s32 func_80099514(s32 arg0, s32 arg1, s8 *arg2, s16 *arg3, f32 *arg4);
 void func_800998B0(s32 arg0, void *arg1, void *arg2);
+void func_8009B650(UnkStruct_801CF060* arg0, f32 arg1, f32 arg2);
+void func_8009AD74(UnkStruct_801CF060 *);
+
 
 f32 Math_Fabs(f32 x) {
     if (x < 0.0f) {
@@ -453,13 +460,13 @@ void func_80099858(struct UnkStruct_80099858* arg0, s8 arg1, s8 arg2, u16 arg3, 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800998B0.s")
 
-s32 func_80099A00(UnkStruct_8009BCA4* arg0, void* arg1, void* arg2, s32 arg3) {
+s32 func_80099A00(UnkStruct_801CF060* arg0, void* arg1, void* arg2, s32 arg3) {
     s32 sp28;
 
     func_800998B0(&D_801CED60, arg1, arg3);
     func_800998B0(&D_801CEEA0, arg2, arg3);
-    sp28 = func_80099514(&arg0->unkC, &arg0->unk18, &D_801CED60, &D_801CEFE8[D_800E5138], &D_801CEFE0[D_800E5138]) |
-           func_80099514(&arg0->unk0, &arg0->unk18, &D_801CEEA0, &D_801CEFE8[D_800E5138], &D_801CEFE0[D_800E5138]);
+    sp28 = func_80099514(&arg0->unkC, &arg0->unk18, D_801CED60, &D_801CEFE8[D_800E5138], &D_801CEFE0[D_800E5138]) |
+           func_80099514(&arg0->unk0, &arg0->unk18, D_801CEEA0, &D_801CEFE8[D_800E5138], &D_801CEFE0[D_800E5138]);
     return sp28;
 }
 
@@ -494,7 +501,7 @@ void func_80099BBC(s32 arg0, UnkStruct_801CF060* arg1, UnkStruct_801CF060* arg2)
     if ((arg0 == 0) || (arg0 == 1)) {
         if ((arg1->unk44 != 0.0f) || (arg1->unk48 != 0.0f)) {
             func_80098FF8(&sp40, &sp34, &sp5C, &sp4C, &sp50);
-            temp_s0 = (s32*)arg1 + arg0;
+            temp_s0 = (UnkStruct_801CF060*)((s32*)arg1 + arg0);
             temp_v1 = &(&sp4C)[arg0];
             
             *temp_v1 += temp_s0->unk44 * SIN(ANGLE_TO_CUSTOM_UNITS(temp_s0->unk50));
@@ -590,7 +597,7 @@ void func_8009A404(char arg0, s16 arg1) {
     func_800988D8(D_800E5138);
 }
 
-s32 func_8009A460(void (*arg0)(Vec3f*), Vec3f* arg1, s16 arg2, s16 arg3) {
+s32 func_8009A460(void (*arg0)(UnkStruct_801CF060*), UnkStruct_801CF060* arg1, s16 arg2, s16 arg3) {
     s16 temp_v0 = D_801CEA98[D_800E5138];
 
     if (temp_v0 >= arg2) {
@@ -601,12 +608,12 @@ s32 func_8009A460(void (*arg0)(Vec3f*), Vec3f* arg1, s16 arg2, s16 arg3) {
     return 0;
 }
 
-void func_8009A4DC(Vec3f* arg0) {
+void func_8009A4DC(UnkStruct_801CF060* arg0) {
     func_800988D8(D_800E5138);
     func_80098AC4(1, 1, 1, 1, 1);
 }
 
-void func_8009A520(Vec3f* arg0) {
+void func_8009A520(UnkStruct_801CF060* arg0) {
     int new_var;
     if (!D_800E5138) {}
     D_801CEAA6[D_800E5138] = 1;
@@ -625,29 +632,29 @@ extern UNK_TYPE D_800E52B4;
 extern UNK_TYPE D_800E52E8;
 extern UnkStruct_801C2C24 D_801C293C[];
 
-void func_8009A554(Vec3f* arg0) {
+void func_8009A554(UnkStruct_801CF060* arg0) {
     func_8009A460(func_8009A4DC, arg0, 0, 0);
     func_80098AC4(true, true, true, false, false);
     if (gGameModes == GMODE_CHAMPIONSHIP) {
         switch (D_801C293C[D_800D48DC].lapCount) {                          /* irregular */
         case 0:
-            func_80099A00((UnkStruct_8009BCA4* ) arg0, &D_800E52B4, &D_800E52E8, D_801C1F90);
+            func_80099A00(arg0, &D_800E52B4, &D_800E52E8, D_801C1F90);
             break;
         case 1:
-            func_80099A00((UnkStruct_8009BCA4* ) arg0, &D_800E5264, &D_800E528C, D_801C1F90);
+            func_80099A00(arg0, &D_800E5264, &D_800E528C, D_801C1F90);
             break;
         case 2:
-            func_80099A00((UnkStruct_8009BCA4* ) arg0, &D_800E51EC, &D_800E5228, D_801C1F90);
+            func_80099A00(arg0, &D_800E51EC, &D_800E5228, D_801C1F90);
             break;
         default:
-            func_80099A00((UnkStruct_8009BCA4* ) arg0, &D_800E515C, &D_800E51A4, D_801C1F90);
+            func_80099A00(arg0, &D_800E515C, &D_800E51A4, D_801C1F90);
             break;
         }
         func_8009A460(func_8009A520, arg0, 0x59, 0x59);
     }
 }
 
-void func_8009A6AC(Vec3f* arg0) {
+void func_8009A6AC(UnkStruct_801CF060* arg0) {
     func_8009A460(func_8009A4DC, arg0, 0, 0);
     func_80098AC4(1, 1, 1, 0, 0);
     if (D_800E5138 == 0) {
@@ -658,40 +665,40 @@ void func_8009A6AC(Vec3f* arg0) {
     func_8009A460(func_8009A520, arg0, 0x43, 0x43);
 }
 
-void func_8009A764(Vec3f* arg0) {
+void func_8009A764(UnkStruct_801CF060* arg0) {
     func_800988D8(D_800E5138);
     func_80098AC4(1, 1, 1, 0, 1);
 }
 
-void func_8009A7A8(s32 arg0) {
+void func_8009A7A8(UnkStruct_801CF060* arg0) {
     func_80098AC4(1, 1, 1, 0, 1);
     func_8009A460(func_8009A764, arg0, 0, 0);
     func_80099A00(arg0, &D_800E53BC, &D_800E53DC, D_801C1F90);
 }
 
-void func_8009A818(Vec3f* arg0) {
+void func_8009A818(UnkStruct_801CF060* arg0) {
     func_8009A04C(D_800E5138, 5);
 }
 
-void func_8009A844(Vec3f* arg0) {
+void func_8009A844(UnkStruct_801CF060* arg0) {
     func_80098AC4(1, 1, 1, 0, 0);
     func_8009A460(func_8009A764, arg0, 0, 0);
     func_8009A460(func_8009A818, arg0, 0xD, 0xD);
     func_80099A00(arg0, &D_800E53FC, &D_800E5424, D_801C1F90);
 }
 
-void func_8009A8C8(Vec3f* arg0) {
+void func_8009A8C8(UnkStruct_801CF060* arg0) {
     func_8009A04C(D_800E5138, 4);
 }
 
-void func_8009A8F4(Vec3f* arg0) {
+void func_8009A8F4(UnkStruct_801CF060* arg0) {
     func_80098AC4(1, 1, 1, 0, 1);
     func_8009A460(func_8009A764, arg0, 0, 0);
     func_8009A460(func_8009A8C8, arg0, 0x1D, 0x1D);
     func_80099A00(arg0, &D_800E544C, &D_800E5474, D_801C1F90);
 }
 
-void func_8009A97C(Vec3f* arg0) {
+void func_8009A97C(UnkStruct_801CF060* arg0) {
     s32 temp_v0;
 
     if ((D_801CE638 == 0) && ((temp_v0 = D_801932E4[D_800D48DC].unk0, (temp_v0 == 0x18)) || (temp_v0 == 0x17))) {
@@ -699,7 +706,7 @@ void func_8009A97C(Vec3f* arg0) {
     }
 }
 
-void func_8009A9FC(Vec3f* arg0) {
+void func_8009A9FC(UnkStruct_801CF060* arg0) {
     func_8009A404(137, 10);
 }
 
@@ -723,60 +730,63 @@ void func_8009AA24(UnkStruct_801CF060* arg0) {
     }
 }
 
+f32 func_8009AC50(UnkStruct_801CF060 *, f32 *, f32, f32, f32);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009AB20.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009AC50.s")
 
-void func_8009AD14(Vec3f* arg0) {
+void func_8009AD14(UnkStruct_801CF060* arg0) {
     func_800988D8(D_800E5138);
 }
 
-void func_8009AD3C(Vec3f* arg0) {
+void func_8009AD3C(UnkStruct_801CF060* arg0) {
     func_8009AC50(arg0, &D_800E549C, -150.0f, 0.0f, 100.0f);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009AD74.s")
 
-void func_8009ADA8(Vec3f* arg0) {
+void func_8009ADA8(UnkStruct_801CF060* arg0) {
     func_80098AC4(1, 1, 1, 0, 1);
     func_8009A460(func_8009AD14, arg0, 0, 0);
     func_80099A00(arg0, &D_800E54B0, &D_800E54D0, 0);
 
-    arg0->y = ((D_801926D8[D_800D48DC].unk0 - arg0->y) * 0.5f) + arg0->y;
+    arg0->unk0.y = ((D_801926D8[D_800D48DC].unk0 - arg0->unk0.y) * 0.5f) + arg0->unk0.y;
 }
 
-void func_8009AE6C(Vec3f* arg0) {
+void func_8009AE6C(UnkStruct_801CF060* arg0) {
     func_8009A404(0x89, 6);
 }
 
-void func_8009AE94(s32 arg0) {
+void func_8009AE94(UnkStruct_801CF060* arg0) {
     func_80098AC4(1, 1, 1, 1, 1);
     func_8009A460(func_8009AD14, arg0, 0, 0);
     func_8009A460(func_8009AD3C, arg0, 0, 0);
     func_8009A460(func_8009AD74, arg0, 0, -1);
 }
 
-void func_8009AF14(s32 arg0) {
+void func_8009AF14(UnkStruct_801CF060* arg0) {
     func_8009ADA8(arg0);
     func_8009A460(func_8009AA24, arg0, 30, -1);
     func_8009A460(func_8009AE6C, arg0, 80, 80);
 }
 
-void func_8009AF64(Vec3f* arg0) {
+void func_8009AF64(UnkStruct_801CF060* arg0) {
     func_8009AC50(arg0, &D_800E5518, 0.0f, 0.0f, -50.0f);
 }
 
+void func_8009AFA0(UnkStruct_801CF060* arg0);
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009AFA0.s")
 
-void func_8009B030(Vec3f* arg0) {
+void func_8009B030(UnkStruct_801CF060* arg0) {
     func_80098AC4(1, 1, 1, 1, 1);
     func_8009A460(func_8009AD14, arg0, 0, 0);
     func_8009A460(func_8009AF64, arg0, 0, 0);
     func_8009A460(func_8009AFA0, arg0, 0, -1);
-    D_801CEC70[2].x -= 20.0f;
+    D_801CEC70->unk18 -= 20.0f;
 }
 
-void func_8009B0C8(Vec3f* arg0) {
+void func_8009B0C8(UnkStruct_801CF060* arg0) {
     func_8009ADA8(arg0);
     func_8009A460(func_8009AE6C, arg0, 60, 60);
 }
@@ -784,11 +794,11 @@ void func_8009B0C8(Vec3f* arg0) {
 void func_8009B100(void) {
 }
 
-void func_8009B108(Vec3f* arg0) {
+void func_8009B108(UnkStruct_801CF060* arg0) {
     func_8009A404(0x89, 6);
 }
 
-void func_8009B130(Vec3f* arg0) {
+void func_8009B130(UnkStruct_801CF060* arg0) {
     func_800988D8(D_800E5138);
     func_80098AC4(1, 1, 1, 1, 1);
     D_800E5148 = 0;
@@ -814,20 +824,20 @@ void func_8009B19C(s32 arg0) {
     func_8009A460(func_8009A97C, arg0, 0xA0, -1);
 }
 
-void func_8009B250(s32 arg0) {
+void func_8009B250(UnkStruct_801CF060*  arg0) {
     func_8009A460(func_8009B130, arg0, 0, 0);
     func_80099A00(arg0, &D_800E55CC, &D_800E55EC, 0);
     func_8009A460(func_8009A97C, arg0, 0, -1);
 }
 
-void func_8009B2B8(s32 arg0) {
+void func_8009B2B8(UnkStruct_801CF060*  arg0) {
     func_80098AC4(1, 1, 1, 0, 1);
     func_8009A460(func_8009B130, arg0, 0, 0);
     func_80099A00(arg0, &D_800E560C, &D_800E5620, 0);
     func_8009A460(func_8009A97C, arg0, 0, -1);
 }
 
-void func_8009B33C(s32 arg0) {
+void func_8009B33C(UnkStruct_801CF060*  arg0) {
     func_80098AC4(0, 1, 0, 0, 0);
     func_8009A460(&func_8009B130, arg0, 0, 0);
     func_80099A00(arg0, &D_800E5634, &D_800E5648, 0);
@@ -835,7 +845,7 @@ void func_8009B33C(s32 arg0) {
     func_8009A460(&func_8009A97C, arg0, 0, -1);
 }
 
-void func_8009B3F4(s32 arg0) {
+void func_8009B3F4(UnkStruct_801CF060*  arg0) {
     func_80098AC4(0, 1, 0, 0, 0);
     func_8009A460(&func_8009B130, arg0, 0, 0);
     func_80099A00(arg0, &D_800E565C, &D_800E5670, 0);
@@ -843,28 +853,28 @@ void func_8009B3F4(s32 arg0) {
     func_8009A460(&func_8009A97C, arg0, 0, -1);
 }
 
-void func_8009B4AC(s32 arg0) {
+void func_8009B4AC(UnkStruct_801CF060* arg0) {
     func_80098AC4(1, 1, 1, 0, 1);
     func_8009A460(func_8009B130, arg0, 0, 0);
     func_80099A00(arg0, &D_800E5684, &D_800E5698, 0);
     func_8009A460(func_8009A97C, arg0, 0, -1);
 }
 
-void func_8009B530(Vec3f* arg0) {
-    Math_Vec3f_Set(D_801CEC70, 56.0f, 50.0f, -238.0f);
+void func_8009B530(UnkStruct_801CF060* arg0) {
+    Math_Vec3f_Set(&D_801CEC70->unk0, 56.0f, 50.0f, -238.0f);
     Math_Vec3f_Set(&D_801CEC88, -100.0f, -80.0f, -50.0f);
 }
 
-void func_8009B57C(Vec3f* arg0) {
+void func_8009B57C(UnkStruct_801CF060* arg0) {
     func_80098AC4(1, 1, 1, 0, 1);
     func_800988D8(D_800E5138);
-    func_8009917C(&D_801CECA0.vec1, &D_801CEFF8[D_800D48DC].vec1, D_801CEC70, &D_801CEFF8[D_800D48DC].vec2);
+    func_8009917C(&D_801CECA0.vec1, &D_801CEFF8[D_800D48DC].vec1, &D_801CEC70->unk0, &D_801CEFF8[D_800D48DC].vec2);
     func_8009917C(D_801CECB8, &D_801CEFF8[D_800D48DC].vec1, &D_801CEC88, &D_801CEFF8[D_800D48DC].vec2);
 
-    D_801CEC70[4].y = D_801CEC70[0].y + (f32) D_80192458; // Weird
+    D_801CEC70->unk34 = D_801CEC70->unk0.y + (f32) D_80192458; // Weird
 }
 
-void func_8009B650(Vec3f* arg0, f32 arg1, f32 arg2) {
+void func_8009B650(UnkStruct_801CF060* arg0, f32 arg1, f32 arg2) {
     UNUSED s32 pad[3];
     f32 sp40;
     UNUSED s32 pad44;
@@ -873,9 +883,9 @@ void func_8009B650(Vec3f* arg0, f32 arg1, f32 arg2) {
     f32 sp30; // Might be Vec3f
     f32 sp2C;
 
-    Math_Vec3f_Copy(&arg0[1], &D_801CECA0.vec1);
-    Math_Vec3f_Copy(arg0, D_801CECB8);
-    func_80098FF8(&arg0[1], arg0, &sp2C, &sp34, &sp30);
+    Math_Vec3f_Copy(&arg0->unkC, &D_801CECA0.vec1);
+    Math_Vec3f_Copy(&arg0->unk0, D_801CECB8);
+    func_80098FF8(&arg0->unkC, &arg0->unk0, &sp2C, &sp34, &sp30);
 
     if ((sp34 >= 0.0f) && (sp34 <= 90.0f)) {
         sp34 = 342.0f;
@@ -886,7 +896,7 @@ void func_8009B650(Vec3f* arg0, f32 arg1, f32 arg2) {
 
     sp34 = (sp34 - 342.0f) * 0.75f + 342.0f;
 
-    func_800990A8(&arg0[1], arg0, sp2C, sp34, sp30);
+    func_800990A8(&arg0->unkC, &arg0->unk0, sp2C, sp34, sp30);
     func_80098AC4(1, 0, 1, 0, 0);
 
     func_8009917C((Vec3f*) &sp38, &D_801CEFF8[D_800D48DC].vec1, &D_801CEC88, &D_801CEFF8[D_800D48DC].vec2);
@@ -898,21 +908,21 @@ void func_8009B650(Vec3f* arg0, f32 arg1, f32 arg2) {
     func_8009A460(func_8009AA24, arg0, 10, -1);
 }
 
-void func_8009B824(Vec3f* arg0) {
+void func_8009B824(UnkStruct_801CF060* arg0) {
     func_8009A460(func_8009B530, arg0, 0, 0);
     func_8009A460(func_8009B57C, arg0, 0, 0);
     func_8009B650(arg0, D_800EB4E4, D_800EB4E4);
-    arg0[2].x = 3.0f;
+    arg0->unk18 = 3.0f;
 }
 
-void func_8009B89C(Vec3f* arg0) {
+void func_8009B89C(UnkStruct_801CF060* arg0) {
     func_8009A460(func_8009B530, arg0, 0, 0);
     func_8009A460(func_8009B57C, arg0, 0, 0);
     func_8009B650(arg0, 0.3f, 0.7f);
-    arg0[2].x = -4.0f;
+    arg0->unk18 = -4.0f;
 }
 
-void func_8009B910(s32 arg0) {
+void func_8009B910(UnkStruct_801CF060* arg0) {
     if (D_801CF058[D_800E5138] != 0) {
         D_801CF058[D_800E5138]->unk88 = 45.0f;
     }
@@ -936,7 +946,7 @@ extern UNK_TYPE D_800E5714;
 extern UNK_TYPE D_800E573C;
 extern f32 D_800EB4E8;
 
-void func_8009BA14(Vec3f* arg0) {
+void func_8009BA14(UnkStruct_801CF060* arg0) {
     UnkStruct_801CF058* temp_v0;
 
     temp_v0 = D_801CF058[D_800E5138];
@@ -952,7 +962,7 @@ void func_8009BA14(Vec3f* arg0) {
 extern UNK_TYPE D_800E5764;
 extern UNK_TYPE D_800E5798;
 
-void func_8009BAE0(Vec3f* arg0) {
+void func_8009BAE0(UnkStruct_801CF060* arg0) {
     UnkStruct_801CF058* temp_v0;
 
     temp_v0 = D_801CF058[D_800E5138];
@@ -971,7 +981,7 @@ extern UNK_TYPE D_800E57F4;
 extern f32 D_800EB4EC;
 extern UnkStruct_801CF008 D_801CEFFC[];
 
-void func_8009BB98(struct UnkStruct_8009BB98* arg0) {
+void func_8009BB98(struct UnkStruct_801CF060* arg0) {
     UnkStruct_801CF058* temp_v0;
     f32 temp_f0;
 
@@ -983,12 +993,12 @@ void func_8009BB98(struct UnkStruct_8009BB98* arg0) {
     func_80098AC4(1U, 1U, 1U, 0U, 0U);
     func_80099A00(arg0, &D_800E57CC, &D_800E57F4, 0);
     temp_f0 = (D_801CEFFC[D_800D48DC].unk0 - (f32) D_80192458) * D_800EB4EC;
-    arg0->unk10 = (f32) (arg0->unk10 + temp_f0);
-    arg0->y += temp_f0;
+    arg0->unkC.y = (f32) (arg0->unkC.y + temp_f0);
+    arg0->unk0.y += temp_f0;
     func_8009A460(func_8009AA24, arg0, 0xA, -1);
 }
 
-void func_8009BCA4(UnkStruct_8009BCA4* arg0) {
+void func_8009BCA4(UnkStruct_801CF060* arg0) {
     UnkStruct_801CF058* temp_v0;
     f32 temp_f0;
 
@@ -996,23 +1006,23 @@ void func_8009BCA4(UnkStruct_8009BCA4* arg0) {
     if (temp_v0 != NULL) {
         temp_v0->unk88 = 45.0f;
     }
-    func_8009A460(func_8009B130, (Vec3f*) arg0, 0, 0);
+    func_8009A460(func_8009B130, arg0, 0, 0);
     func_80098AC4(1U, 1U, 1U, 0U, 1U);
-    func_80099A00((Vec3f*) arg0, &D_800E581C, &D_800E58B4, 0);
+    func_80099A00(arg0, &D_800E581C, &D_800E58B4, 0);
     temp_f0 = (D_801CEFFC[D_800D48DC].unk0 - (f32) D_80192458) * 0.75f;
-    arg0->unk10 += temp_f0;
-    arg0->unk4 += temp_f0;
-    func_8009A460(func_8009AA24, (Vec3f*) arg0, 0, -1);
-    func_8009A460(func_8009B108, (Vec3f*) arg0, 0x118, 0x118);
-    func_8009A460(func_8009A97C, (Vec3f*) arg0, 0x14, -1);
+    arg0->unkC.y += temp_f0;
+    arg0->unk0.y += temp_f0;
+    func_8009A460(func_8009AA24, arg0, 0, -1);
+    func_8009A460(func_8009B108, arg0, 0x118, 0x118);
+    func_8009A460(func_8009A97C, arg0, 0x14, -1);
 }
 
-void func_8009BDE4(UNUSED Vec3f* arg0) {
+void func_8009BDE4(UNUSED UnkStruct_801CF060* arg0) {
     func_800988D8(D_800E5138);
     Math_Vec3f_Set(&D_801CEFF8[D_800D48DC].vec1, 0.0f, 0.0f, 0.0f);
 }
 
-void func_8009BE40(Vec3f* arg0, void* arg1, void* arg2, f32 arg3) {
+void func_8009BE40(UnkStruct_801CF060* arg0, void* arg1, void* arg2, f32 arg3) {
     UnkStruct_801CF058* temp_v0;
 
     temp_v0 = D_801CF058[D_800E5138];
@@ -1026,74 +1036,74 @@ void func_8009BE40(Vec3f* arg0, void* arg1, void* arg2, f32 arg3) {
 void stub_8009BEB8() {
 }
 
-void func_8009BEBC(Vec3f* arg0) {
+void func_8009BEBC(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, (s32) &D_800E5A3C, (s32) &D_800E5A84, 45.0f);
 }
 
-void func_8009BEEC(Vec3f* arg0) {
+void func_8009BEEC(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, (s32) &D_800E5ACC, (s32) &D_800E5B1C, 45.0f);
 }
 
-void func_8009BF1C(Vec3f* arg0) {
+void func_8009BF1C(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E594C, &D_800E5974, 45.0f);
 }
 
-void func_8009BF4C(Vec3f* arg0) {
+void func_8009BF4C(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E599C, &D_800E59C4, 45.0f);
 }
 
-void func_8009BF7C(Vec3f* arg0) {
+void func_8009BF7C(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E59EC, &D_800E5A14, 45.0f);
 }
 
-void func_8009BFAC(Vec3f* arg0) {
+void func_8009BFAC(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5B6C, &D_800E5B8C, 45.0f);
 }
 
-void func_8009BFDC(Vec3f* arg0) {
+void func_8009BFDC(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5BAC, &D_800E5BCC, 45.0f);
 }
 
-void func_8009C00C(Vec3f* arg0) {
+void func_8009C00C(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5BEC, &D_800E5C0C, 45.0f);
 }
 
 void func_8009C00C_padding(void) {
 }
 
-void func_8009C044(Vec3f* arg0) {
+void func_8009C044(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5C6C, &D_800E5C8C, 45.0f);
 }
 
-void func_8009C074(Vec3f* arg0) {
+void func_8009C074(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5CAC, &D_800E5CC0, 45.0f);
 }
 
-void func_8009C0A4(Vec3f* arg0) {
+void func_8009C0A4(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5CD4, &D_800E5D4C, 45.0f);
 }
 
-void func_8009C0D4(Vec3f* arg0) {
+void func_8009C0D4(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5DC4, &D_800E5E0C, 45.0f);
 }
 
-void func_8009C104(Vec3f* arg0) {
+void func_8009C104(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5E54, &D_800E5E74, 45.0f);
 }
 
-void func_8009C134(Vec3f* arg0) {
+void func_8009C134(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5E94, &D_800E5EC8, 45.0f);
 }
 
-void func_8009C164(Vec3f* arg0) {
+void func_8009C164(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5EFC, &D_800E5F30, 45.0f);
 }
 
-void func_8009C194(Vec3f* arg0) {
+void func_8009C194(UnkStruct_801CF060* arg0) {
     func_8009BE40(arg0, &D_800E5F64, &D_800E5FA0, 45.0f);
 }
 
-void func_8009C1C4(Vec3f* arg0) {
+void func_8009C1C4(UnkStruct_801CF060* arg0) {
 
     if (D_801CF058[D_800E5138] != 0) {
         D_801CF058[D_800E5138]->unk88 = 45.0f;

@@ -413,12 +413,8 @@ typedef struct StructVarS0 {
 } StructVarS0;                                      /* size = 0xBC */
 
 typedef struct UnkStruct_801CF060 {
-    /* 0x000 */ s32 unk0;
-    /* 0x004 */ f32 unk4;
-    /* 0x008 */ s32 unk8;
-    /* 0x00C */ f32 unkC;
-    /* 0x010 */ f32 unk10;
-    /* 0x014 */ f32 unk14;
+    /* 0x000 */ Vec3f unk0;
+    /* 0x00C */ Vec3f unkC;
     /* 0x018 */ f32 unk18;
     /* 0x01C */ f32 unk1C;
     /* 0x020 */ f32 unk20;
