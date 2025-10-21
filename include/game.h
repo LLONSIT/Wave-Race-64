@@ -30,4 +30,7 @@ extern GameMode gGameModes;
 
 extern Difficulty gDifficulty;
 
+#define MAX_CHAMPIONSHIP_LAPS 3
+#define MAX_DIFFICULTY 3
+
 #endif /* GAME_H */

@@ -326,7 +326,18 @@ typedef struct UnkStruct_8009A04C {
 } UnkStruct_8009A04C; // size = 0x98
 
 typedef struct {
-    u8 padE8[0xE8];
+    char pad0[0x4C];
+    f32 unk4C;
+    f32 unk50;
+    f32 unk54;
+    char pad58[0x18];
+    f32 unk70;
+    f32 unk74;
+    f32 unk78;
+    f32 unk7C;
+    f32 unk80;
+    f32 unk84;
+    char pad88[0x60];
     s32 unkE8;
 } UnkStruct_func_8009CCE8;
 
@@ -417,15 +428,9 @@ typedef struct UnkStruct_801CF060 {
     /* 0x00C */ Vec3f unkC;
     /* 0x018 */ f32 unk18;
     /* 0x01C */ f32 unk1C;
-    /* 0x020 */ f32 unk20;
-    /* 0x024 */ f32 unk24;
-    /* 0x028 */ f32 unk28;
-    f32 unk2C;
-    f32 unk30;
-    f32 unk34;
-    f32 unk38;
-    f32 unk3C;
-    f32 unk40;
+    /* 0x020 */ Vec3f unk20;
+    /* 0x02C */ Vec3f unk2C;
+    /* 0x038 */ Vec3f unk38;
     f32 unk44;
     f32 unk48;
     f32 unk4C;

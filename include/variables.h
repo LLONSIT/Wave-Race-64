@@ -60,7 +60,7 @@ extern s32 D_800DA9D0;
 extern s32 D_801542CC;
 extern s32 D_801CB328; // Selected course id??
 extern s32 D_801CE608;
-extern s8 D_800E5134;
+extern u8 D_800E5134;
 extern OSContPad gControllers[];
 extern Vp* D_106F008;
 extern struct UnkStruct_801C3C50* D_801C3C50;
