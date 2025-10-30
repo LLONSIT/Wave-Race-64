@@ -1432,19 +1432,61 @@ f32 Math_Normalize_Angle(f32 x) {
     return x;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009D564.s")
+f32 func_8009D564(f32 arg0) {
+    while (arg0 >= 360.0f) {
+        arg0 -= 360.0f;
+    }
 
+    while (arg0 < 0.0f) {
+        arg0 += 360.0f;
+    }
+    return arg0;
+}
+
+// Initializes D_801CF060
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009D5C0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009D6B0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009D96C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009DB90.s")
+Gfx* func_8009D96C(Gfx*, s32, f32);                        /* extern */
+
+extern s32 D_800E6CA0;
+extern s16 D_801CE774;
+extern s16 D_801CE76E;
+
+typedef struct UnkStruct_801CE798 {
+    s32 unk0;
+    char pad[0x28];
+} UnkStruct_801CE798;
+extern UnkStruct_801CE798 D_801CE798[];
+
+
+Gfx* func_8009DB90(Gfx* dl, s32 arg1) {
+    UNUSED s32 pad;
+    s32 sp18;
+
+    sp18 = D_801CE774;
+    gSPDisplayList(dl++, &D_800E6CA0);
+    dl = func_8009D96C(dl++, arg1, 0.1f);
+    gSPDisplayList(dl++, D_801CE798[sp18].unk0);
+    return dl;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009DC10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009E794.s")
+
+Gfx* func_8009E794(Gfx* dl, s32 arg1) {
+    UNUSED s32 pad;
+    s32 sp18;
+
+    sp18 = D_801CE76E;
+    gSPDisplayList(dl++, &D_800E6CA0);
+    dl = func_8009D96C(dl++, arg1, 0.2f);
+    gSPDisplayList(dl++, D_801CE798[sp18].unk0);
+    return dl;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009E814.s")
 
@@ -1468,7 +1510,33 @@ f32 Math_Normalize_Angle(f32 x) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A52D8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A5C74.s")
+void func_800C1E0C(f32);                               /* extern */
+extern f32 D_800EB7F8;
+extern s32 D_80223930;
+void func_800A5C74(void) {
+    camera_unk_1* temp_s1;
+    f32 temp_f0;
+    f32 temp_f20;
+    f32 var_f20;
+    s32 i;
+
+    var_f20 = D_800EB7F8;
+    temp_s1 = &gCameraPerspective[D_80223930];
+    for (i = 0; i < 30; i++) {
+        if (D_801CF060[i].unk0 == 1) {
+            temp_f0 = func_8009D4A8(temp_s1->unk4C - D_801CF060[i].unkC, temp_s1->unk54 - D_801CF060[i].unk14);
+            if (temp_f0 < var_f20) {
+                var_f20 = temp_f0;
+            }
+        }
+    }
+    var_f20 = var_f20 / 40.0f;
+    if (var_f20 > 50.0f) {
+        func_800C1DEC();
+    }
+    func_800C1E0C(var_f20);
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A5D70.s")
 
