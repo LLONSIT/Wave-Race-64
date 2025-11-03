@@ -405,17 +405,39 @@ typedef struct StructVarS0 {
                f32 unk14;
                f32 unk18;
                f32 unk1C;
-               char pad20[4];
+               f32 unk20;
                f32 unk24;
                f32 unk28;
                f32 unk2C;
-               char pad30[0x40];
+               f32 unk30;
+               f32 unk34;
+               f32 unk38;
+               f32 unk3C;
+               f32 unk40;
+               f32 unk44;
+               s32 unk48;
+               f32 unk4C;
+               s32 unk50;
+               s32 unk54;
+               f32 unk58;
+               f32 unk5C;
+               f32 unk60;
+               f32 unk64;
+              f32 unk68;
+              f32 unk6C;
                f32 unk70;
                s32 unk74;
                s32 unk78;
-               char pad7C[0x20];
+               s32 unk7C;
+               f32 unk80;
+               f32 unk84;
+               f32 unk88;
+               f32 unk8C;
+               f32 unk90;
+               f32 unk94;
+               s32 unk98;
                s32 unk9C;
-               char padA0[4];
+               s32 unkA0;
                s32 unkA4;
                s32 unkA8;
                s32 unkAC;
@@ -508,7 +530,7 @@ typedef struct Controller_info {
 } Controller_info;
 typedef struct UnkStruct_func_i8_802C6E00 {
     s16 unk0;
-    char pad[11]; // <------------------- :'(
+    char pad[0xB];
 } UnkStruct_func_i8_802C6E00;
 
 struct UnkStruct_8004B0F8_1 {

@@ -17,6 +17,7 @@ options:
   - symbol_addrs.txt
   - ovl_symbols.txt
   - audio_symbols.txt
+  - libultra_symbols.txt
   asm_path: asm
   src_path: src
   asset_path: bin

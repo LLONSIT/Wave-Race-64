@@ -3,8 +3,8 @@
 #include "camera.h"
 
 typedef struct UnkStruct_800E60DC_s {
-    void *(*unk0)(void*);
-    s16 unk4;  
+    void* (*unk0)(void*);
+    s16 unk4;
 } UnkStruct_800E60DC;
 
 typedef struct UnkStruct_8009BCA4_s {
@@ -32,7 +32,7 @@ typedef struct UnkStruct_801CEBE0 {
     /* 0x24 */ Vec3f unk24;
     /* 0x30 */ Vec3f unk30;
     /* 0x3C */ Vec3f unk3C;
-} UnkStruct_801CEBE0;      /* size = 0x48 */
+} UnkStruct_801CEBE0; /* size = 0x48 */
 
 typedef struct UnkStruct_80099858 {
     char unk0;
@@ -132,6 +132,8 @@ extern UnkStruct_801CEFF8 D_801CEC70[10];
 extern UnkStruct_801CEFF8 D_801CEC7C[10];
 extern UnkStruct_801C2C24 D_801C2C70[];
 extern UnkStruct_8009A04C D_801CEB48;
+extern s32 D_801CE728[];
+extern s32 D_801D0738;
 
 //.data
 extern s32 D_800D48E0;
@@ -141,6 +143,8 @@ extern UNK_TYPE D_800E58B4;
 extern s32 D_800E62C8;
 extern s32 D_800E62CC;
 extern u8 D_800E5150[MAX_DIFFICULTY][MAX_CHAMPIONSHIP_LAPS + 1];
+extern f32 D_800EB950;
+
 
 f32 func_801ED154(f32, f32);
 
@@ -162,7 +166,7 @@ Gfx* func_800A2308(Gfx*, s32);
 Gfx* func_800A28F4(Gfx*, s32);
 s32 func_800ADC8C(s32);
 void func_800ADD14(void);
-
+void func_800A2B24(s32);
 // File declarations
 void func_8009A97C(UnkStruct_801CF060* arg0);
 void func_8009A4DC(UnkStruct_801CF060* arg0);
@@ -174,6 +178,7 @@ void func_800998B0(s32 arg0, void* arg1, void* arg2);
 void func_8009B650(UnkStruct_801CF060* arg0, f32 arg1, f32 arg2);
 void func_8009AD74(UnkStruct_801CF060*);
 void func_8009C814(UnkStruct_8009A04C*, s32);
+
 
 f32 Math_Fabs(f32 x) {
     if (x < 0.0f) {
@@ -372,7 +377,7 @@ void func_80098BFC(void) {
 }
 
 extern f32 D_800EB4C0;
-extern s32 D_80192458;
+extern s32 gWaterLevel;
 
 void func_80098C04(Vec3f* arg0, s32 arg1, s8 arg2) {
     struct UnkStruct_801CEFF8* temp_s1;
@@ -382,7 +387,7 @@ void func_80098C04(Vec3f* arg0, s32 arg1, s8 arg2) {
             temp_s1 = &D_801CEFF8[arg1];
             func_80098574(arg0, arg0, (s32) temp_s1->vec2.y);
             arg0->x += temp_s1->vec1.x;
-            arg0->y = (((arg0->y + temp_s1->vec1.y) - D_80192458) * D_800EB4C0) + D_80192458;
+            arg0->y = (((arg0->y + temp_s1->vec1.y) - gWaterLevel) * D_800EB4C0) + gWaterLevel;
             arg0->z += temp_s1->vec1.z;
             break;
 
@@ -390,7 +395,7 @@ void func_80098C04(Vec3f* arg0, s32 arg1, s8 arg2) {
             temp_s1 = &D_801CEFF8[arg1];
             func_80098574(arg0, arg0, (s32) temp_s1->vec2.y);
             arg0->x += temp_s1->vec1.x;
-            arg0->y += (f32) D_80192458;
+            arg0->y += (f32) gWaterLevel;
             arg0->z += temp_s1->vec1.z;
             break;
 
@@ -757,7 +762,7 @@ void func_8009AA24(UnkStruct_801CF060* arg0) {
         }
         if (arg0->unk94 > 0) {
             arg0->unk94--;
-            if ((D_80192690[D_800D48DC].unk44.y - (f32) D_80192458) > 100.0f) {
+            if ((D_80192690[D_800D48DC].unk44.y - (f32) gWaterLevel) > 100.0f) {
                 if (*D_801CEAA4 == 0x86) {
                     func_8009A404(0x87, 0);
                 } else {
@@ -774,14 +779,15 @@ void func_8009AB20(UnkStruct_801CF060* arg0, f32 arg1, f32 arg2, f32 arg3) {
     UNUSED char pad[0x14];
 
     func_800989E0(&D_801CEC70->vec1, D_800D48DC, arg1, arg2, arg3);
-    Math_Vec3f_Set(&sp3C, D_80192690[D_800D48DC].unk44.x, D_80192690[D_800D48DC].unk44.y, D_80192690[D_800D48DC].unk44.z);
+    Math_Vec3f_Set(&sp3C, D_80192690[D_800D48DC].unk44.x, D_80192690[D_800D48DC].unk44.y,
+                   D_80192690[D_800D48DC].unk44.z);
     func_8009917C(&D_801CEC88, &sp3C, &D_801CECA0.vec1, &D_801CEC7C->vec1);
     D_801CEC70[1].vec1.y = (f32) (((D_801926D8[D_800D48DC].unk0 - arg0->unk0.y) * D_800EB4CC) + arg0->unk0.y);
     Math_Vec3f_Copy(&arg0->unkC, &D_801CEC70->vec1);
     Math_Vec3f_Copy(&arg0->unk0, &D_801CEC88);
 }
 
-void func_8009AC50(UnkStruct_801CF060 *arg0, f32 *arg1, f32 arg2, f32 arg3, f32 arg4) {
+void func_8009AC50(UnkStruct_801CF060* arg0, f32* arg1, f32 arg2, f32 arg3, f32 arg4) {
     Math_Vec3f_Set(&D_801CECA0.vec1, arg2, arg3, arg4);
     Math_Vec3f_Set(&D_801CEC7C->vec1, 0.0f, func_8009898C(D_800D48DC), 0.0f);
     func_800998B0((s32) D_801CED60, arg1, NULL);
@@ -796,7 +802,7 @@ void func_8009AD3C(UnkStruct_801CF060* arg0) {
     func_8009AC50(arg0, &D_800E549C, -150.0f, 0.0f, 100.0f);
 }
 
-void func_8009AD74(UnkStruct_801CF060 *arg0) {
+void func_8009AD74(UnkStruct_801CF060* arg0) {
     func_8009AB20(arg0, D_800EB4D0, 0.47f, D_800EB4D0);
 }
 
@@ -829,14 +835,13 @@ void func_8009AF64(UnkStruct_801CF060* arg0) {
     func_8009AC50(arg0, &D_800E5518, 0.0f, 0.0f, -50.0f);
 }
 
-void func_8009AFA0(UnkStruct_801CF060 *arg0) {
+void func_8009AFA0(UnkStruct_801CF060* arg0) {
     f32 y;
 
     func_8009AB20(arg0, D_800EB4D4, 0.47f, D_800EB4D4);
     y = arg0->unkC.y;
     arg0->unk0.y = ((D_801926D8[D_800D48DC].unk0 - y) * D_800EB4D8) + y;
 }
-
 
 void func_8009B030(UnkStruct_801CF060* arg0) {
     func_80098AC4(1, 1, 1, 1, 1);
@@ -931,7 +936,7 @@ void func_8009B57C(UnkStruct_801CF060* arg0) {
     func_8009917C(&D_801CECA0.vec1, &D_801CEFF8[D_800D48DC].vec1, &D_801CEC70->vec1, &D_801CEFF8[D_800D48DC].vec2);
     func_8009917C(D_801CECB8, &D_801CEFF8[D_800D48DC].vec1, &D_801CEC88, &D_801CEFF8[D_800D48DC].vec2);
 
-    D_801CEC70[2].vec1.y = D_801CEC70->vec1.y + (f32) D_80192458; // Weird
+    D_801CEC70[2].vec1.y = D_801CEC70->vec1.y + (f32) gWaterLevel; // Weird
 }
 
 void func_8009B650(UnkStruct_801CF060* arg0, f32 arg1, f32 arg2) {
@@ -1052,7 +1057,7 @@ void func_8009BB98(struct UnkStruct_801CF060* arg0) {
     func_8009A460(func_8009B130, arg0, 0, 0);
     func_80098AC4(1U, 1U, 1U, 0U, 0U);
     func_80099A00(arg0, &D_800E57CC, &D_800E57F4, 0);
-    temp_f0 = (D_801CEFFC[D_800D48DC].unk0 - (f32) D_80192458) * D_800EB4EC;
+    temp_f0 = (D_801CEFFC[D_800D48DC].unk0 - (f32) gWaterLevel) * D_800EB4EC;
     arg0->unkC.y = (f32) (arg0->unkC.y + temp_f0);
     arg0->unk0.y += temp_f0;
     func_8009A460(func_8009AA24, arg0, 0xA, -1);
@@ -1069,7 +1074,7 @@ void func_8009BCA4(UnkStruct_801CF060* arg0) {
     func_8009A460(func_8009B130, arg0, 0, 0);
     func_80098AC4(1U, 1U, 1U, 0U, 1U);
     func_80099A00(arg0, &D_800E581C, &D_800E58B4, 0);
-    temp_f0 = (D_801CEFFC[D_800D48DC].unk0 - (f32) D_80192458) * 0.75f;
+    temp_f0 = (D_801CEFFC[D_800D48DC].unk0 - (f32) gWaterLevel) * 0.75f;
     arg0->unkC.y += temp_f0;
     arg0->unk0.y += temp_f0;
     func_8009A460(func_8009AA24, arg0, 0, -1);
@@ -1191,9 +1196,8 @@ void func_8009C240(UnkStruct_801CEBE0* arg0) {
     D_800E5130 = -1.0f;
 }
 
-
 extern UnkStruct_800E60DC D_800E60DC[10];
-// TODO These are fake syms! 
+// TODO These are fake syms!
 extern UnkStruct_800E60DC D_800E60E4[];
 extern UnkStruct_800E60DC D_800E60EC[];
 extern UnkStruct_800E60DC D_800E60F4[];
@@ -1215,69 +1219,69 @@ void func_8009C2CC(UnkStruct_801CEBE0* arg0) {
     s16 sp22;
 
     switch (arg0->unk1C) {
-    case 0x80:
-        sp22 = D_800E60DC[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E60DC[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x82:
-        sp22 = D_800E60E4[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E60E4[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x83:
-        sp22 = D_800E60EC[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E60EC[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x84:
-        sp22 = D_800E60F4[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E60F4[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x85:
-        sp22 = D_800E60FC[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E60FC[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x86:
-        sp22 = D_800E6104[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E6104[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x87:
-        sp22 = D_800E6114[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E6114[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x89:
-        if (D_801CF058[D_800E5138] != NULL) {
-            D_801CF058[D_800E5138]->unk88 = 75.0f;
-        }
-        sp22 = D_800E6124[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E6124[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x8F:
-        sp22 = D_800E618C[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E618C[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x90:
-        sp22 = D_800E61CC[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E61CC[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x91:
-        sp22 = D_800E61FC[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E61FC[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x92:
-        sp22 = D_800E622C[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E622C[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x93:
-        sp22 = D_800E61A4[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E61A4[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x94:
-        sp22 = D_800E61E4[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E61E4[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
-    case 0x95:
-        sp22 = D_800E6214[(s16) D_801CEA94[D_800E5138]].unk4;
-        D_800E6214[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
-        break;
+        case 0x80:
+            sp22 = D_800E60DC[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E60DC[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x82:
+            sp22 = D_800E60E4[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E60E4[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x83:
+            sp22 = D_800E60EC[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E60EC[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x84:
+            sp22 = D_800E60F4[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E60F4[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x85:
+            sp22 = D_800E60FC[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E60FC[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x86:
+            sp22 = D_800E6104[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E6104[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x87:
+            sp22 = D_800E6114[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E6114[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x89:
+            if (D_801CF058[D_800E5138] != NULL) {
+                D_801CF058[D_800E5138]->unk88 = 75.0f;
+            }
+            sp22 = D_800E6124[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E6124[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x8F:
+            sp22 = D_800E618C[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E618C[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x90:
+            sp22 = D_800E61CC[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E61CC[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x91:
+            sp22 = D_800E61FC[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E61FC[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x92:
+            sp22 = D_800E622C[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E622C[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x93:
+            sp22 = D_800E61A4[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E61A4[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x94:
+            sp22 = D_800E61E4[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E61E4[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
+        case 0x95:
+            sp22 = D_800E6214[(s16) D_801CEA94[D_800E5138]].unk4;
+            D_800E6214[(s16) D_801CEA94[D_800E5138]].unk0(arg0);
+            break;
     }
     if ((sp22 != 0) && (!(D_801CEA98[D_800E5138] & 0xC000))) {
         if (D_801CEA98[D_800E5138] < 0x3FFF) {
@@ -1290,7 +1294,7 @@ void func_8009C2CC(UnkStruct_801CEBE0* arg0) {
         }
     } else {
         if (D_801CEA98[D_800E5138] & 0x4000) {
-            D_801CEA98[D_800E5138]= 0;
+            D_801CEA98[D_800E5138] = 0;
             func_800988D8(D_800E5138);
         } else {
             D_801CEAA4[D_800E5138] = 0;
@@ -1306,7 +1310,6 @@ void func_8009C2CC(UnkStruct_801CEBE0* arg0) {
 #endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009C814.s")
-
 
 void func_8009C968(void) {
     s32 i;
@@ -1353,11 +1356,9 @@ void func_8009C968(void) {
     }
 }
 
-
 s32 func_8009CB68(void) {
     return 0;
 }
-
 
 u8 func_8009CB70(UnkStruct_801CF060* arg0, UnkStruct_func_8009CCE8* arg1) {
     s32 temp_v0;
@@ -1443,14 +1444,29 @@ f32 func_8009D564(f32 arg0) {
     return arg0;
 }
 
-// Initializes D_801CF060
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009D5C0.s")
+void func_8009D5C0(void) {
+    s32 i;
+
+    for (i = 0; i < 30; i++) {
+        D_801CF060[i].unkC = D_801CF060[i].unk10 = D_801CF060[i].unk14 = D_801CF060[i].unk80 = D_801CF060[i].unk84 =
+            D_801CF060[i].unk88 = D_801CF060[i].unk24 = D_801CF060[i].unk28 = D_801CF060[i].unk2C =
+                D_801CF060[i].unk30 = D_801CF060[i].unk34 = D_801CF060[i].unk38 = D_801CF060[i].unk3C =
+                    D_801CF060[i].unk40 = D_801CF060[i].unk44 = D_801CF060[i].unk58 = D_801CF060[i].unk5C =
+                        D_801CF060[i].unk60 = D_801CF060[i].unk74 = D_801CF060[i].unk78 = D_801CF060[i].unk50 =
+                            D_801CF060[i].unk54 = D_801CF060[i].unk18 = D_801CF060[i].unk1C = D_801CF060[i].unk20 =
+                                D_801CF060[i].unk8C = D_801CF060[i].unk90 = D_801CF060[i].unk94 = D_801CF060[i].unk98 =
+                                    D_801CF060[i].unk9C = D_801CF060[i].unkA0 = D_801CF060[i].unk70 =
+                                        D_801CF060[i].unkA4 = D_801CF060[i].unkA8 = D_801CF060[i].unkAC =
+                                            D_801CF060[i].unk0 = D_801CF060[i].unk4 = 0;
+        D_801CF060[i].unkB8 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009D6B0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009D96C.s")
 
-Gfx* func_8009D96C(Gfx*, s32, f32);                        /* extern */
+Gfx* func_8009D96C(Gfx*, s32, f32); /* extern */
 
 extern s32 D_800E6CA0;
 extern s16 D_801CE774;
@@ -1461,7 +1477,6 @@ typedef struct UnkStruct_801CE798 {
     char pad[0x28];
 } UnkStruct_801CE798;
 extern UnkStruct_801CE798 D_801CE798[];
-
 
 Gfx* func_8009DB90(Gfx* dl, s32 arg1) {
     UNUSED s32 pad;
@@ -1475,7 +1490,6 @@ Gfx* func_8009DB90(Gfx* dl, s32 arg1) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_8009DC10.s")
-
 
 Gfx* func_8009E794(Gfx* dl, s32 arg1) {
     UNUSED s32 pad;
@@ -1510,7 +1524,7 @@ Gfx* func_8009E794(Gfx* dl, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A52D8.s")
 
-void func_800C1E0C(f32);                               /* extern */
+void func_800C1E0C(f32); /* extern */
 extern f32 D_800EB7F8;
 extern s32 D_80223930;
 void func_800A5C74(void) {
@@ -1536,7 +1550,6 @@ void func_800A5C74(void) {
     }
     func_800C1E0C(var_f20);
 }
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A5D70.s")
 
@@ -1582,7 +1595,69 @@ s32 func_800A6684(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A68A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A9130.s")
+// TODO: Migrate rodata
+extern f32 D_800EB950; // 6000.0f
+
+void func_800A9130(s32 arg0) {
+    char pad[0x8];
+
+    if ((gGameModeState == 3) && (gCurrentPauseMenuOption == -1)) {
+        if (D_801CF060[arg0].unk8 == 1) {
+            func_800A52D8(arg0, 200.0f);
+            if ((D_801D0738 + 1) == D_801CE728[0]) {
+                if (arg0 == 0) {
+                    D_801CF060->unkC = D_800EB950;
+                    D_801CF060->unk18 = 90.0f;
+                    D_801CF060->unk4C = 25.0f;
+                    D_801CF060->unk9C = 0;
+                    D_801CF060->unk8 = 0xB;
+                    D_801CF060->unk0 = 6;
+                    D_801CF060->unk14 = 4000.0f;
+                }
+                if (arg0 == 1) {
+                    D_801CF060[1].unk8 = 0xC;
+                    D_801CF060[1].unk0 = 6;
+                    D_801CF060[1].unk7C = 0;
+                }
+                if (arg0 == 2) {
+                    D_801CF060[2].unk7C = 0;
+                    D_801CF060[2].unk14 = 4000.0f;
+                    D_801CF060[2].unkC = 4800.0f;
+                    D_801CF060[2].unk18 = 180.0f;
+                    D_801CF060[2].unk0 = 6,
+                    D_801CF060[2].unk8 = 2;
+                }
+            }
+        } else {
+            if (D_801CF060[arg0].unk8 == 0xB) {
+                func_800A52D8(arg0, 100.0f);
+            } else if (D_801CF060[arg0].unk8 == 0xC) {
+                D_801CF060[arg0].unkC = D_801CF060[D_801CF060[arg0].unk7C].unkC + 50.0f;
+                D_801CF060[arg0].unk10 = D_801CF060[D_801CF060[arg0].unk7C].unk10;
+                D_801CF060[arg0].unk14 = 4000.0f - (D_801CF060[D_801CF060[arg0].unk7C].unk14 - 4000.0f);
+                D_801CF060[arg0].unk18 = -D_801CF060[D_801CF060[arg0].unk7C].unk18;
+                D_801CF060[arg0].unk1C = D_801CF060[D_801CF060[arg0].unk7C].unk1C;
+                D_801CF060[arg0].unk20 = D_801CF060[D_801CF060[arg0].unk7C].unk20;
+            } else if (D_801CF060[arg0].unk8 == 2) {
+                if (((D_801CF060[D_801CF060[arg0].unk7C].unk9C == 0) || (D_801CF060[D_801CF060[arg0].unk7C].unk9C == 5)) && (D_801CF060[D_801CF060[arg0].unk7C].unk54 == 1)) {
+                    D_801CF060[arg0].unk50 = 0xE;
+                    D_801CF060[arg0].unk54 = 0;
+                    D_801CF060[arg0].unk74 = D_801CF060[arg0].unk78 = 0;
+                    
+                }
+                if ((D_801CF060[D_801CF060[arg0].unk7C].unk9C == 1) || (D_801CF060[D_801CF060[arg0].unk7C].unk9C == 6)) {
+                    D_801CF060[arg0].unk50 = 0;
+                    D_801CF060[arg0].unk54 = 0;
+                    D_801CF060[arg0].unk74 = 6;
+                    D_801CF060[arg0].unk78 = 0xA;
+                }
+                func_800A2B24(arg0);
+            } else if (D_801CF060[arg0].unk8 == 5) {
+                func_800A52D8(arg0, 200.0f);
+            }
+        }
+    }
+}
 
 void func_800A93C8(s32 arg0) {
     D_801D0754 = func_8009D4A8(D_801CF060[arg0].unkC - D_801D06BC, D_801CF060[arg0].unk14 - D_801D06C4) / 40.0f;
@@ -1590,13 +1665,13 @@ void func_800A93C8(s32 arg0) {
 
     func_800C1BD8(D_801D0754, D_801D0758);
 
-    if ((D_801CE624 == -1) && (D_801CF060[arg0].unk8 == 1)) {
+    if ((gCurrentPauseMenuOption == -1) && (D_801CF060[arg0].unk8 == 1)) {
         func_800A52D8(arg0, 400.0f);
     }
 }
 
 void func_800A9494(s32 arg0) {
-    if (D_801CE624 == -1) {
+    if (gCurrentPauseMenuOption == -1) {
         if (D_801CF060[arg0].unk8 == 1) {
             D_801CF060[arg0].unk74 = 0;
             switch (gCourseID) {
@@ -1761,7 +1836,7 @@ void func_800AB890(s32 arg0) {
     s32 temp_v1;
     StructAB90* temp_v0;
 
-    if ((D_801CE650 == 3) && (D_801CE624 == -1)) {
+    if ((gGameModeState == 3) && (gCurrentPauseMenuOption == -1)) {
         temp_v0 = (StructAB90*) ((arg0 * 0xBC) + (u32) &D_801CF060);
 
         if (temp_v0->unk8 == 2) {
