@@ -109,7 +109,7 @@ void* func_80046DA0(void* entry) {
     u32* temp_v1;
     u32* temp_v0;
 
-    D_80151964 = osVirtualToPhysical(D_80046850);
+    D_80151964 = osVirtualToPhysical(main_segment_TEXT_START);
     D_80151968 = osVirtualToPhysical(D_801DAFA0);
 
     D_8015196C = D_80151968;
@@ -120,7 +120,7 @@ void* func_80046DA0(void* entry) {
     D_8015197C = osVirtualToPhysical(D_8038F800);
     D_80151980 = osVirtualToPhysical(D_80400000);
     D_801519A4 = osVirtualToPhysical(gAudioHeap);
-    D_801519A8 = osVirtualToPhysical(D_80045650);
+    D_801519A8 = osVirtualToPhysical(main_segment_TEXT_START);
 
     D_80151984 = ALIGN16(D_80151970);
     D_80151988 = D_80151984 + ALIGN16(D_1008290 - D_1000000);
@@ -154,8 +154,8 @@ void* func_80046DA0(void* entry) {
 
     Load_Codeseg();
 
-    game_dma_copy((u8*) codeseg_ROM_END, (u8*) D_80151984, ALIGN16(D_FE320 - codeseg_ROM_END));
-    game_dma_copy((u8*) D_FE320, (u8*) D_8015198C, ALIGN16(D_165C00 - D_FE320));
+    game_dma_copy((codeseg_ROM_END,  D_80151984, ALIGN16(D_FE320 - codeseg_ROM_END));
+    game_dma_copy(D_FE320, D_8015198C, ALIGN16(D_165C00 - D_FE320));
 
     D_8011F8E0 = 0;
 

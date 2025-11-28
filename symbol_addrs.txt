@@ -90,3 +90,14 @@ gWaterLevel = 0x80192458;
 SegmentedToVirtual = 0x80094088;
 gCurrentPauseMenuOption = 0x801CE624;
 gGameModeState = 0x801CE650;
+
+Save_PfsFindFile = 0x8007D1B8;
+Save_PfsCheckFree = 0x8007D24C;
+Save_GenCheckSum = 0x8007BBF8;
+
+D_80198350 = 0x80198350;
+D_801CE61C = 0x801CE61C;
+D_801CE65A = 0x801CE65A;
+D_801C3A10 = 0x801C3A10;
+D_80198310 = 0x80198310;
+D_801CE692 = 0x801CE692;

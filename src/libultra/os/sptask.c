@@ -8,7 +8,7 @@
         ptr = (void*) osVirtualToPhysical(ptr); \
     }
 
-OSTask tmpTask;
+extern OSTask tmpTask;
 
 OSTask* _VirtualToPhysicalTask(OSTask* task) {
     OSTask* physicalTask;
