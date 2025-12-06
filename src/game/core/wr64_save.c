@@ -21,6 +21,29 @@ typedef struct UnkStruct_8007AEFC {
     s8 unk13;
 } UnkStruct_8007AEFC;
 
+// Output struct for func_8007B110/func_8007AFF4 - has s32 members at 0,4,8,C
+typedef struct UnkStruct_func_8007B110_arg1 {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ u8 unk10;  // Start of 3-byte color struct
+    /* 0x11 */ u8 unk11;
+    /* 0x12 */ u8 unk12;
+    /* 0x13 */ s8 unk13;
+} UnkStruct_func_8007B110_arg1;
+
+// Output struct for func_8007B220 - same pattern, different offsets
+typedef struct UnkStruct_func_8007B220_arg1 {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ u8 unkC;   // Start of 3-byte color struct
+    /* 0x0D */ u8 unkD;
+    /* 0x0E */ u8 unkE;
+    /* 0x0F */ s8 unkF;
+} UnkStruct_func_8007B220_arg1;
+
 extern s32 D_800D8260;
 
 struct {
@@ -35,6 +58,22 @@ extern s32 D_801CB308[1][3];
 extern s32 D_801CB32C;
 extern u8 D_800D8268[1];
 extern s32 D_800D826A;
+
+// Globals for func_8007B31C
+extern s8 D_801CB280;
+extern s32 D_801CB288;
+extern s32 D_801CB28C;
+extern s32 D_801CB290;
+extern s32 D_801CB294;
+extern s8 D_801AEA24;
+extern s8 D_801AEA20;
+extern s8 D_801AEA21;
+extern s8 D_801AEA22;
+extern s8 D_801AEA23;
+
+// Globals for func_8007DB40
+extern OSPfs D_801C3AD0;
+
 #define EEPROM_SUCCESS 0
 
 static const char devstr1[] = "EEPROM read error 1 (%d)\n";
@@ -143,11 +182,76 @@ void func_8007AF78(UnkStruct_func_8007AF78_1* arg0, UnkStruct_func_8007AF78_2* a
     arg1->unk5 = arg0->unkC;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007AFF4.s")
+// Different register pattern: t1,a3,t0 for bytes, s0 for arg1, a2 for arg0
+void func_8007AFF4(UnkStruct_func_8007AF78_2* arg0, UnkStruct_func_8007B110_arg1* arg1) {
+    u8 t1_var;
+    u8 a3_var;
+    u8 t0_var;
+    s32 v1;
+    
+    t1_var = arg0->unk0;
+    a3_var = arg0->unk1;
+    t0_var = arg0->unk2;
+    v1 = ((t1_var & 0x1F) << 16) + (a3_var << 8) + t0_var;
+    
+    if (v1 < 0) {
+        v1 = 0;
+    }
+    if (v1 >= 0x927C0) {
+        v1 = 0x927BF;
+    }
+    
+    arg1->unk0 = v1;
+    arg1->unk4 = (u32)t1_var >> 5 & 7;
+    
+    func_8007AEFC((UnkStruct_8007AEFC*) &arg1->unk10, (UnkStruct_8007AEFC*) &arg0->unk3);
+    
+    arg1->unk13 = 0;
+    arg1->unk8 = (arg0->unk3 >> 7) & 1;
+    arg1->unkC = arg0->unk5;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B09C.s")
+// Matched by copying func_8007AF78 pattern exactly (2 vars, XOR 0 trick)
+void func_8007B09C(UnkStruct_func_8007AF78_1* arg0, UnkStruct_func_8007AF78_2* arg1) {
+    s32 temp_t3;
+    unsigned char new_var;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B110.s")
+    temp_t3 = arg0->unk0;
+    arg1->unk0 = (s8) (((temp_t3 >> 0x10) & 0xFFFF) + (arg0->unk7 << 5));
+    new_var = temp_t3 >> 8;
+    arg1->unk1 = (s8) new_var;
+    new_var = temp_t3;
+    arg1->unk2 = new_var ^ 0;
+    func_8007AE8C((UnkStruct_func_8007AE8C*) &arg1->unk3, (UnkStruct_func_8007AE8C*) &arg0->unk10);
+    arg1->unk3 = (arg1->unk3 ^ (arg0->unkB << 7));
+}
+
+void func_8007B110(UnkStruct_func_8007AF78_2* arg0, UnkStruct_func_8007B110_arg1* arg1) {
+    u8 t0;
+    u8 a2_var;
+    u8 a3_var;
+    s32 v1;
+    
+    t0 = arg0->unk0;
+    a2_var = arg0->unk1;
+    a3_var = arg0->unk2;
+    v1 = ((t0 & 0x1F) << 16) + (a2_var << 8) + a3_var;
+    
+    if (v1 < 0) {
+        v1 = 0;
+    }
+    if (v1 >= 0x927C0) {
+        v1 = 0x927BF;
+    }
+    
+    arg1->unk0 = v1;
+    arg1->unk4 = (u32)t0 >> 5 & 7;
+    
+    func_8007AEFC((UnkStruct_8007AEFC*) &arg1->unk10, (UnkStruct_8007AEFC*) &arg0->unk3);
+    
+    arg1->unk13 = 0;
+    arg1->unk8 = (arg0->unk3 >> 7) & 1;
+}
 
 void func_8007B1AC(Unkstruct_8007B1AC_arg0* arg0, Unkstruct_8007B1AC_arg1* arg1) {
     s32 new_var2;
@@ -167,7 +271,33 @@ void func_8007B1AC(Unkstruct_8007B1AC_arg0* arg0, Unkstruct_8007B1AC_arg1* arg1)
     arg1->unk3 = (u8) (arg1->unk3 ^ (arg0->unkB << 7));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B220.s")
+// Matched using same technique as func_8007B110 (a2/a3 vars force s0/s1)
+void func_8007B220(UnkStruct_func_8007AF78_2* arg0, UnkStruct_func_8007B220_arg1* arg1) {
+    u8 t0;
+    u8 a2_var;
+    u8 a3_var;
+    s32 v1;
+    
+    t0 = arg0->unk0;
+    a2_var = arg0->unk1;
+    a3_var = arg0->unk2;
+    v1 = ((t0 & 0x1F) << 16) + (a2_var << 8) + a3_var;
+    
+    if (v1 < 0) {
+        v1 = 0;
+    }
+    if (v1 >= 0x186A0) {
+        v1 = 0x1869F;
+    }
+    
+    arg1->unk0 = v1;
+    arg1->unk4 = (u32)t0 >> 5 & 7;
+    
+    func_8007AEFC((UnkStruct_8007AEFC*) &arg1->unkC, (UnkStruct_8007AEFC*) &arg0->unk3);
+    
+    arg1->unkF = 0;
+    arg1->unk8 = (arg0->unk3 >> 7) & 1;
+}
 
 void func_8007B2BC(s32 arg0, UnkStruct_8007B2BC* arg1) {
     if (arg0 < 0) {
@@ -179,9 +309,31 @@ void func_8007B2BC(s32 arg0, UnkStruct_8007B2BC* arg1) {
     arg1->unk2 = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B2E4.s")
+s32 func_8007B2E4(UnkStruct_8007B2BC* arg0) {
+    u8 v0;
+    u8 v1;
+    u8 a1_var;
+    s32 a2_var;
+    
+    v0 = arg0->unk0;
+    v1 = arg0->unk1;
+    a1_var = arg0->unk2;
+    a2_var = (v0 << 16) + (v1 << 8) + a1_var;
+    
+    if (a2_var == 0xFFFFFF) {
+        a2_var = -1;
+    }
+    
+    return a2_var;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B31C.s")
+void func_8007B31C(void) {
+    D_801AEA24 = D_801CB280;
+    D_801AEA20 = D_801CB288;
+    D_801AEA21 = D_801CB28C;
+    D_801AEA22 = D_801CB290;
+    D_801AEA23 = D_801CB294;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B370.s")
 
@@ -302,7 +454,19 @@ s32 func_8007BE64(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C31C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C494.s")
+s32 func_8007C494(void) {
+    if (D_800D8260 == 0) {
+        return 1;
+    }
+    
+    func_8007B31C();
+    D_801AEA18.unk2 = func_8007BBF8(&D_801AEA18);
+    
+    if (osEepromLongWrite(&D_801540D0, 0, &D_801AEA18, 0x10) != 0) {
+        return 3;
+    }
+    return 0;
+}
 
 int func_8007C50C(void) {
     int i;
@@ -340,9 +504,9 @@ int func_8007C50C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D110.s")
 
 s32 func_8007D110();
-extern u8 D_800D82D8;
-extern u8 D_800D82E8;
 extern OSPfs D_801C3AD0;
+extern u8 D_800D82D8[];
+extern u8 D_800D82E8[];
 
 s32 func_8007D1B8(void) {
     s32 temp_v0;
@@ -425,4 +589,22 @@ static const char devstr53[] = "PFS delete error %d\n";
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D614.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007DB40.s")
+s32 func_8007DB40(void) {
+    s32 result;
+    
+    result = func_8007D110();
+    if (result != 0) {
+        return result;
+    }
+    
+    result = osPfsDeleteFile(&D_801C3AD0, 1, 0x4E57524A, &D_800D82E8, &D_800D82D8);
+    
+    switch (result) {
+        case 0:
+            return 0;
+        case 5:
+            return 4;
+        default:
+            return 2;
+    }
+}
