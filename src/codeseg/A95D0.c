@@ -42,6 +42,27 @@ typedef struct UnkStruct_801DBF68 {
 } UnkStruct_801DBF68;
 extern struct UnkStruct_801DBF68 D_80225CF4;
 
+// Struct types for func_801DF578 (struct copy pattern)
+typedef struct Copy58 {
+    s32 data[22];  // 0x58 bytes (88 bytes)
+} Copy58;
+
+typedef struct Copy84 {
+    s32 data[33];  // 0x84 bytes (132 bytes)
+} Copy84;
+
+typedef struct DestStruct578 {
+    s32 unk0;      // 0x0
+    Copy58 unk4;   // 0x4
+    Copy84 unk5C;  // 0x5C
+} DestStruct578;
+
+// Source struct for func_801DF5F0 (contains both Copy58 and Copy84)
+typedef struct SourceStruct5F0 {
+    Copy58 unk0;   // 0x0
+    Copy84 unk58;  // 0x58
+} SourceStruct5F0;
+
 void func_800AB92C(void); /* extern */
 
 #define ANG_NORMALIZE_1(x) (x < 0.0f ? 360.0f : 0.0f)
@@ -282,13 +303,29 @@ void func_801DBF68(struct UnkStruct_801DB0E4_arg0* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DEC00.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DED44.s")
+void func_801DED44(s32* arg0, s32* arg1, s32* arg2) {
+    func_801DEC00(arg0, arg1, arg2);
+    func_801DEC00(arg0 + 3, arg1 + 2, arg2 + 5);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DED88.s")
+void func_801DED88(s32* arg0, s32* arg1, s32* arg2) {
+    func_801DEC00(arg0, arg1, arg2);
+    func_801DEC00(arg0 + 3, arg1 + 2, arg2 + 5);
+    func_801DEC00(arg0 + 6, arg1 + 4, arg2 + 10);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DEDE8.s")
+void func_801DEDE8(s32* arg0, s32* arg1, s32* arg2) {
+    func_801DEC00(arg0, arg1, arg2);
+    func_801DEC00(arg0 + 3, arg1 + 2, arg2 + 5);
+    func_801DEB08(arg0 + 6, arg1 + 4, arg2 + 10);
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DEE48.s")
+void func_801DEE48(s32* arg0, s32* arg1, s32* arg2) {
+    func_801DEC00(arg0, arg1, arg2);
+    func_801DEC00(arg0 + 3, arg1 + 2, arg2 + 5);
+    func_801DEC00(arg0 + 6, arg1 + 4, arg2 + 10);
+    func_801DEB08(arg0 + 9, arg1 + 6, arg2 + 15);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DEEC4.s")
 
@@ -308,9 +345,17 @@ void func_801DBF68(struct UnkStruct_801DB0E4_arg0* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DF38C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DF578.s")
+void func_801DF578(DestStruct578* arg0, Copy58* arg1, Copy84* arg2) {
+    arg0->unk0 = 5;
+    arg0->unk4 = *arg1;
+    arg0->unk5C = *arg2;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DF5F0.s")
+void func_801DF5F0(DestStruct578* arg0, SourceStruct5F0* arg1) {
+    arg0->unk0 = 5;
+    arg0->unk4 = arg1->unk0;
+    arg0->unk5C = arg1->unk58;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801DF668.s")
 
@@ -378,7 +423,20 @@ void func_801DBF68(struct UnkStruct_801DB0E4_arg0* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801E0DB8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801E0F8C.s")
+void func_801E0F8C(f32* dst, f32* src) {
+    dst[19] = src[4];
+    dst[20] = src[5];
+    dst[21] = src[6];
+    dst[31] = src[1];
+    dst[32] = src[2];
+    dst[33] = src[3];
+    dst[28] = src[7];
+    dst[29] = src[8];
+    dst[30] = src[9];
+    dst[34] = src[14];
+    dst[37] = src[17];
+    dst[38] = src[18];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/A95D0/func_801E0FF0.s")
 
