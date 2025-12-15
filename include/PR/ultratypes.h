@@ -5,8 +5,8 @@
 #define NULL    (void *)0
 #endif
 
-#define TRUE 1
-#define FALSE 0
+#define true 1
+#define false 0
 
 typedef signed char            s8;
 typedef unsigned char          u8;

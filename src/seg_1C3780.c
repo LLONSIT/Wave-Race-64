@@ -14,7 +14,7 @@ Gfx* func_1C3780_802C583C(Gfx* gDisplayListHead) {
     if (D_801CE63C != 0) {
         D_801CE63C = 0;
         if (D_800DAB24 == 0x38) {
-            osViBlack(FALSE);
+            osViBlack(false);
             return func_80093C44(gDisplayListHead);
         }
     }
@@ -65,7 +65,7 @@ Gfx* func_1C3780_802C58F4(Gfx* gDisplayListHead) {
 }
 
 void func_1C3780_802C5BD8(void) {
-    s32 flag = FALSE;
+    s32 flag = false;
 
     switch (D_802C5D80) {
         case 0:
@@ -83,7 +83,7 @@ void func_1C3780_802C5BD8(void) {
         case 2:
             if (D_801CE65A[0].unk0 & (A_BUTTON | Z_TRIG | START_BUTTON)) {
                 D_802C5D80 = 3;
-                flag = TRUE;
+                flag = true;
             }
             break;
 

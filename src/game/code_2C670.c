@@ -26,16 +26,16 @@ s32 func_80074264(f32 arg0, f32 arg1) {
     s32 i;
     s32 ret;
 
-    ret = TRUE;
-    if (gCourseID == 0) {
+    ret = true;
+    if (gCourseID == DOLPHIN_PARK) {
         if (sqrtf(SQ(arg0) + SQ(arg1)) <= 7700.0f) {
-            ret = FALSE;
+            ret = false;
         }
     } else {
         for (i = 0; D_801C1F80[i].unk0 != D_801C1F80[i].unk4; i++) {
             if ((D_801C1F80[i].unk0 <= arg0) && (D_801C1F80[i].unk4 >= arg0) && (D_801C1F80[i].unk8 <= arg1) &&
                 (D_801C1F80[i].unkC >= arg1)) {
-                ret = FALSE;
+                ret = false;
                 break;
             }
         }
@@ -49,13 +49,13 @@ void func_80074368(f32 arg0, f32 arg1, s32* firstMatchIndex, s32* lastMatchIndex
 
     *lastMatchIndex = -1; // Default to -1, which means no match found
     *firstMatchIndex = -1;
-    firstMatchFound = FALSE;
+    firstMatchFound = false;
     for (i = 0; (D_801C1F84[i].unk0 != D_801C1F84[i].unk4); i++) {
         if ((D_801C1F84[i].unk0 <= arg0) && (D_801C1F84[i].unk4 >= arg0) && (D_801C1F84[i].unk8 <= arg1) &&
             (D_801C1F84[i].unkC >= arg1)) {
-            if (firstMatchFound == FALSE) {
+            if (firstMatchFound == false) {
                 *firstMatchIndex = i;
-                firstMatchFound = TRUE;
+                firstMatchFound = true;
             } else {
                 *lastMatchIndex = i;
             }
@@ -67,11 +67,11 @@ s32 func_80074448(f32 arg0, f32 arg1) {
     s32 matchFound;
     s32 i;
 
-    matchFound = FALSE;
+    matchFound = false;
     for (i = 0; D_801C1F88[i].unk0 != D_801C1F88[i].unk4; i++) {
         if ((D_801C1F88[i].unk0 <= arg0) && (D_801C1F88[i].unk4 >= arg0) && (D_801C1F88[i].unk8 <= arg1) &&
             (D_801C1F88[i].unkC >= arg1)) {
-            matchFound = TRUE;
+            matchFound = true;
             break;
         }
     }

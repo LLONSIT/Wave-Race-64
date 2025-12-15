@@ -90,14 +90,14 @@ segments:
       - [0x68A10, c, game/code_68A10]
       - [0x6EF50, c, game/code_6EF50]
       - [0x6F530, hasm, Mio0_Decompress]
-      - [0x6F5D0, c, game/audio/synthesis]
-      - [0x71AF0, c, game/audio/heap]
-      - [0x734B0, c, game/audio/load]
-      - [0x74D80, c, game/audio/playback]
-      - [0x76630, c, game/audio/effects]
-      - [0x77080, c, game/audio/seqplayer]
-      - [0x79B70, c, game/audio/external]
-      - [0x7F440, c, game/audio/port] 
+      - [0x6F5D0, c, audio/audio_synthesis]
+      - [0x71AF0, c, audio/audio_heap]
+      - [0x734B0, c, audio/audio_load]
+      - [0x74D80, c, audio/audio_playback]
+      - [0x76630, c, audio/audio_effects]
+      - [0x77080, c, audio/audio_seqplayer]
+      - [0x79B70, c, audio/audio_general]
+      - [0x7F440, c, audio/audio_thread] 
 
       # LIBULTRA CODE
       - [0x7FF20, c, libultra/os/virtualtophysical]
@@ -262,13 +262,13 @@ segments:
       - [0xA6350, .rodata, game/code_68A10]
 
       # AUDIO RODATA
-      - [0xA6420, .rodata, game/audio/heap]
-      - [0xA6450, .rodata, game/audio/load]
-      - [0xA6460, .rodata, game/audio/playback]
-      - [0xA6490, .rodata, game/audio/effects]
-      - [0xA64C0, .rodata, game/audio/seqplayer]
-      - [0xA6B60, .rodata, game/audio/external]
-      - [0xA6DB0, .rodata, game/audio/port]
+      - [0xA6420, .rodata, audio/audio_heap]
+      - [0xA6450, .rodata, audio/audio_load]
+      - [0xA6460, .rodata, audio/audio_playback]
+      - [0xA6490, .rodata, audio/audio_effects]
+      - [0xA64C0, .rodata, audio/audio_seqplayer]
+      - [0xA6B60, .rodata, audio/audio_general]
+      - [0xA6DB0, .rodata, audio/audio_thread]
 
       # LIBULTRA RODATA
       - [0xA6DD0, .rodata, libultra/gu/lookatref]
@@ -283,7 +283,7 @@ segments:
       - [0xA9310, data, aspMain]
 
       # Main bss
-      # - { start: 0xA95D0, type: bss, vram: 0x800EEDD0 }
+      #- { type: bss, vram: 0x800EEDD0 }
 
   - name: codeseg # This segment is loaded into memory on func_80098190
     type: code

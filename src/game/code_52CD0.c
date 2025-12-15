@@ -1,5 +1,6 @@
 #include "global.h"
 #include "macros.h"
+#include "camera.h"
 
 typedef struct UnkStruct_801CEBE0 {
     /* 0x00 */ Vec3f unk0;
@@ -46,6 +47,24 @@ typedef struct UnkStruct_8009BB98 {
     f32 unk10;
 } UnkStruct_8009BB98;
 
+typedef struct UnkStruct_80099D94 {
+    /* 0x00 */ char pad0[0x4C];
+    /* 0x4C */ f32 unk4C; /* inferred */
+    /* 0x50 */ f32 unk50; /* inferred */
+    /* 0x54 */ f32 unk54; /* inferred */
+    /* 0x58 */ f32 unk58;
+    /* 0x5C */ char pad5C[8]; /* maybe part of unk58[3]? */
+    /* 0x64 */ s32 unk64;     /* inferred */
+    /* 0x68 */ s32 unk68;
+    /* 0x6C */ char pad6C[4];
+    /* 0x70 */ f32 unk70; /* inferred */
+    /* 0x74 */ f32 unk74; /* inferred */
+    f32 unk78;
+    f32 unk7C;
+    f32 unk80;
+    f32 unk84;
+} UnkStruct_80099D94;
+
 extern u8 D_801CEAA6[];
 extern struct UnkStruct_801CEBE0 D_801CEBE0[];
 
@@ -61,12 +80,31 @@ extern s32 D_800E56AC;
 extern s32 D_800E56E0;
 extern struct UnkStruct_801CF008 D_801CF008[];
 extern struct UnkStruct_801CF058* D_801CF058[];
+extern s32 D_801D06B8;
 
 f32 func_801ED154(f32, f32);
-
 void func_8009A4DC(Vec3f* arg0);
 void func_8009A9FC(Vec3f* arg0);
 void func_8009B130(Vec3f* arg0);
+f32 func_8009D3AC(f32, f32);
+f32 func_8009D564(f32);
+void func_8009D5C0(void);
+Gfx* func_800916B4(Gfx*);
+Gfx* func_8009DB90(Gfx*, s32);
+Gfx* func_8009DC10(Gfx*, s32);
+Gfx* func_8009E794(Gfx*, s32);
+Gfx* func_8009E814(Gfx*, s32);
+Gfx* func_8009F398(Gfx*, s32);
+Gfx* func_8009FCB0(Gfx*, s32);
+Gfx* func_800A063C(Gfx*, s32);
+Gfx* func_800A10E4(Gfx*, s32);
+Gfx* func_800A16F0(Gfx*, s32);
+Gfx* func_800A1CFC(Gfx*, s32);
+Gfx* func_800A2308(Gfx*, s32);
+Gfx* func_800A28F4(Gfx*, s32);
+s32 func_800ADC8C(s32);
+void func_800ADD14(void);
+void func_80099B20(void*, s32);
 
 f32 Math_Fabs(f32 x) {
     if (x < 0.0f) {
@@ -105,18 +143,20 @@ UNUSED void func_80098564(void) {
 UNUSED void stub(void) {
 }
 
+// Math_Vec3f_RotateXZ
 void func_80098574(Vec3f* dest, Vec3f* src, s32 arg2) {
-    Vec3f sp1C;
+    Vec3f vec;
     s32 theta;
 
-    Math_Vec3f_Copy(&sp1C, src);
+    Math_Vec3f_Copy(&vec, src);
     theta = ((arg2 / 360.0f) * 4096.0f);
 
-    dest->x = ((sp1C.z * SIN(theta)) + (COS(theta) * sp1C.x));
-    dest->y = sp1C.y;
-    dest->z = ((sp1C.z * COS(theta)) - (SIN(theta) * sp1C.x));
+    dest->x = ((vec.z * SIN(theta)) + (COS(theta) * vec.x));
+    dest->y = vec.y;
+    dest->z = ((vec.z * COS(theta)) - (SIN(theta) * vec.x));
 }
 
+// Math_Vec3f_RotateZY
 void func_80098644(Vec3f* dest, Vec3f* src, s32 arg2) {
     Vec3f sp1C;
     s32 theta;
@@ -137,9 +177,9 @@ s32 func_80098714(f32* arg0, f32 arg1, f32 arg2) {
 
     *arg0 = *arg0 + ((arg1 - *arg0) * arg2);
     if (arg1 == *arg0) {
-        return FALSE;
+        return false;
     }
-    return TRUE;
+    return true;
 }
 
 s32 func_80098774(s16* arg0, s16 arg1, s16 arg2) {
@@ -399,7 +439,52 @@ void func_80099858(struct UnkStruct_80099858* arg0, s8 arg1, s8 arg2, u16 arg3, 
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80099BBC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_80099D94.s")
+void func_80099D94(UnkStruct_80099D94* arg0, UnkStruct_80099D94* arg1) {
+    f32 temp_f0;
+    f32 sp80;
+    f32 sp7C;
+    f32 sp78;
+    f32 sp74;
+    f32 sp70;
+    f32 sp6C;
+    f32 sp68;
+    f32 sp64;
+    s32 temp_f16;
+    f32 sp5C;
+    s32 temp_f8;
+    s32 pad[5];
+    Vec3f sp38;
+    Vec3f sp2C;
+
+    Math_Vec3f_Initialize(&sp38);
+    Math_Vec3f_Set(&sp2C, arg1->unk70, arg1->unk74, arg1->unk78);
+    if (arg0->unk4C != 0.0f) {
+        sp74 = arg1->unk7C - arg1->unk4C;
+        sp70 = arg1->unk80 - arg1->unk50;
+        sp6C = arg1->unk84 - arg1->unk54;
+        sp80 = func_801ED154(sp70, sqrtf(SQ(sp74) + SQ(sp6C)));
+        sp7C = func_801ED154(sp74, sp6C);
+        if ((Math_Fabs(sp80 - 90.0f) > 10.0f) && (Math_Fabs(sp80 - 270.0f) > 10.0f)) {
+            func_80098FF8(&sp38, &sp2C, &sp5C, &sp68, &sp64);
+            func_800990A8(&sp38, &sp2C, sp5C, sp68, sp64 - sp7C);
+            sp78 = func_801ED154(-sp2C.x, sp2C.y);
+            if (arg1->unk74 == 7.0f) {
+                sp78 = 0.0f;
+            }
+            func_80099B20(&arg0->unk58, arg0->unk64);
+            sp78 += arg0->unk4C * SIN(ANGLE_TO_CUSTOM_UNITS(arg0->unk58));
+            if (func_80098820(&arg0->unk4C, 0.0f, arg0->unk70) == 0) {
+                arg0->unk58 = 0;
+            }
+            temp_f16 = (s32) ((sp7C / 360.0f) * 4096.0f);
+            temp_f8 = (s32) ((sp78 / 360.0f) * 4096.0f);
+
+            arg1->unk78 = SIN(temp_f8) * SIN(temp_f16);
+            arg1->unk74 = COS(temp_f8);
+            arg1->unk70 = -SIN(temp_f8) * COS(temp_f16);
+        }
+    }
+}
 
 void func_8009A04C(s32 arg0, s16 arg1) {
     void* temp_a1 = &D_801CEAB0[arg0 & 1].unk_0;
@@ -974,7 +1059,9 @@ f32 Math_Normalize_Angle(f32 x) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A5D70.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A6628.s")
+f32 func_800A6628(s32 arg0, f32 arg1, f32 arg2) {
+    return func_8009D4A8(D_801CF060[arg0].unkC - arg1, D_801CF060[arg0].unk14 - arg2);
+}
 
 s32 func_800A6684(s32 arg0) {
     s32 var_v0;
@@ -1017,20 +1104,189 @@ s32 func_800A6684(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A9130.s")
 
 void func_800A93C8(s32 arg0) {
-
-    // This is a an array access:
-    // temp_v0 = (StructVarS0*)((arg0 * 0xBC) + D_801CF060); where 0xBC is the type size and arg0 is the index
     D_801D0754 = func_8009D4A8(D_801CF060[arg0].unkC - D_801D06BC, D_801CF060[arg0].unk14 - D_801D06C4) / 40.0f;
     D_801D0758 = 0.0f;
 
     func_800C1BD8(D_801D0754, D_801D0758);
 
     if ((D_801CE624 == -1) && (D_801CF060[arg0].unk8 == 1)) {
-        func_800A52D8(arg0, 400.0f); // 400.0f
+        func_800A52D8(arg0, 400.0f);
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A9494.s")
+extern f32 D_800EB954;
+extern f32 D_800EB958;
+extern f32 D_800EB95C;
+extern f32 D_800EB960;
+extern f32 D_800EB964;
+extern f64 D_800EB968;
+extern f64 D_800EB970;
+extern f64 D_800EB978;
+extern f32 D_800EB980;
+extern f32 D_800EB984;
+extern f32 D_800EB988;
+extern f32 D_800EB98C;
+extern f32 D_800EB990;
+extern f32 D_800EB994;
+extern f32 D_801D075C;
+extern f32 D_801D0760;
+extern f32 D_801D0764;
+
+void func_800A9494(s32 arg0) {
+    if (D_801CE624 == -1) {
+        if (D_801CF060[arg0].unk8 == 1) {
+            D_801CF060[arg0].unk74 = 0;
+            switch (gCourseID) {
+                case SUNNY_BEACH:
+                    if (D_801CF060[arg0].unk9C == 0) {
+                        D_801D0754 = D_800EB954;
+                        D_801D0758 = D_801CF060[arg0].unk10;
+                        D_801D075C = D_800EB958;
+                    } else {
+                        D_801D0754 = D_800EB95C;
+                        D_801D0758 = D_801CF060[arg0].unk10;
+                        D_801D075C = D_800EB960;
+                    }
+                    break;
+
+                case GLACIER_COAST:
+                    if (D_801CF060[arg0].unk9C == 0) {
+                        D_801D0754 = 4000.0f;
+                        D_801D0758 = D_801CF060[arg0].unk10;
+                        D_801D075C = D_800EB964;
+                    } else {
+                        D_801D0754 = -290.0f;
+                        D_801D0758 = D_801CF060[arg0].unk10;
+                        D_801D075C = 4800.0f;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            D_801D0760 = Math_Normalize_Angle(
+                func_8009D3AC(D_801D0754 - D_801CF060[arg0].unkC, -(D_801D075C - D_801CF060[arg0].unk14)) -
+                D_801CF060[arg0].unk18);
+            if (FABS(D_801D0760) > 170) {
+                if (arg0 % 2 == 0) {
+                    D_801D0760 = 170.0f;
+                } else {
+                    D_801D0760 = -170.0f;
+                }
+            }
+            if (arg0 % 2 == 0) {
+                if (D_801D0760 > 0.0f) {
+                    D_801CF060[arg0].unk18 += 2.0f;
+                    if (D_801D0760 > 45.0f) {
+                        D_801CF060[arg0].unk18 += 3.0f;
+                    }
+                }
+                if (D_801D0760 < 0.0f) {
+                    D_801CF060[arg0].unk18 -= 2.0f;
+                    if (D_801D0760 < (-45.0f)) {
+                        D_801CF060[arg0].unk18 -= 3.0f;
+                    }
+                }
+            } else {
+                if (D_801D0760 < 0.0f) {
+                    D_801CF060[arg0].unk18 -= 2.0f;
+                    if (D_801D0760 < (-45.0f)) {
+                        D_801CF060[arg0].unk18 -= 3.0f;
+                    }
+                }
+                if (D_801D0760 > 0.0f) {
+                    D_801CF060[arg0].unk18 += 2.0f;
+                    if (D_801D0760 > 45.0f) {
+                        D_801CF060[arg0].unk18 += 3.0f;
+                    }
+                }
+            }
+            D_801CF060[arg0].unk18 = func_8009D564(D_801CF060[arg0].unk18);
+            D_801CF060[arg0].unk10 += D_800EB968 * (D_801D0758 - D_801CF060[arg0].unk10);
+            D_801D0764 = (((180 - FABS(D_801D0760))) / 180.0f) * 30.0f;
+            D_801CF060[arg0].unk1C =
+                Math_Normalize_Angle(((f64) D_801CF060[arg0].unk1C) +
+                                     (Math_Normalize_Angle(D_801D0760 - D_801CF060[arg0].unk1C) * D_800EB970));
+            if (D_801CF060[arg0].unk1C > 45.0f) {
+                D_801CF060[arg0].unk1C = 45.0f;
+            }
+            if (D_801CF060[arg0].unk1C < (-45.0f)) {
+                D_801CF060[arg0].unk1C = -45.0f;
+            }
+            D_801CF060[arg0].unk1C = func_8009D564(D_801CF060[arg0].unk1C);
+            D_801D0760 = func_8009D4A8(D_801CF060[arg0].unk24, D_801CF060[arg0].unk2C);
+            D_801D0764 = D_801D0760 + ((D_801D0764 - D_801D0760) * D_800EB978);
+            D_801CF060[arg0].unkC +=
+                (D_801CF060[arg0].unk24 = COS((s32) ((D_801CF060[arg0].unk18 * 4096.0f) / 360.0f)) * D_801D0764);
+            D_801CF060[arg0].unk14 +=
+                (D_801CF060[arg0].unk2C = SIN((s32) ((D_801CF060[arg0].unk18 * 4096.0f) / 360.0f)) * D_801D0764);
+            if (func_8009D4A8(D_801D0754 - D_801CF060[arg0].unkC, D_801D075C - D_801CF060[arg0].unk14) <
+                D_801CF060[arg0].unk70) {
+                D_801CF060[arg0].unk8 = 7;
+                D_801CF060[arg0].unkA4 = 0;
+                D_801CF060[arg0].unkA8 = (rand() & 15) + 10;
+                D_801CF060[arg0].unk70 = ((rand() & 15) * 10.0f) + 200.0f;
+            }
+            if (func_8009D4A8(D_801D06BC - D_801D0754, D_801D06C4 - D_801D075C) < 1000.0f) {
+                D_801CF060[arg0].unk9C = (D_801CF060[arg0].unk9C + 1) % 2;
+                D_801CF060[arg0].unk8 = 7;
+                D_801CF060[arg0].unkA4 = 0;
+                D_801CF060[arg0].unkA8 = (rand() & 15) + 10;
+            }
+            if (D_801CF060[arg0].unk78 == 15) {
+                D_801CF060[arg0].unk78 = 0;
+            }
+        } else if (D_801CF060[arg0].unk8 == 7) {
+            switch (gCourseID) {
+                case SUNNY_BEACH:
+                    if (D_801CF060[arg0].unk9C == 0) {
+                        D_801D0754 = D_800EB980;
+                        D_801D0758 = D_801CF060[arg0].unk10;
+                        D_801D075C = D_800EB984;
+                    } else {
+                        D_801D0754 = D_800EB988;
+                        D_801D0758 = D_801CF060[arg0].unk10;
+                        D_801D075C = D_800EB98C;
+                    }
+                    break;
+
+                case GLACIER_COAST:
+                    if (D_801CF060[arg0].unk9C == 0) {
+                        D_801D0754 = 4000.0f;
+                        D_801D0758 = D_801CF060[arg0].unk10;
+                        D_801D075C = D_800EB990;
+                    } else {
+                        D_801D0754 = -290.0f;
+                        D_801D0758 = D_801CF060[arg0].unk10;
+                        D_801D075C = 4800.0f;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (func_8009D4DC(D_801CF060[arg0].unk2C, D_801CF060[arg0].unk2C) < 1600.0f) {
+                D_801CF060[arg0].unk24 =
+                    D_801CF060[arg0].unk24 + (COS((s32) ((D_801CF060[arg0].unk18 * 4096.0f) / 360.0f)) * 2);
+                D_801CF060[arg0].unk2C =
+                    D_801CF060[arg0].unk2C + (SIN((s32) ((D_801CF060[arg0].unk18 * 4096.0f) / 360.0f)) * 2);
+            }
+            D_801CF060[arg0].unkC += D_801CF060[arg0].unk24;
+            D_801CF060[arg0].unk10 += D_801CF060[arg0].unk28;
+            D_801CF060[arg0].unk14 += D_801CF060[arg0].unk2C;
+            D_801CF060[arg0].unkA4++;
+            if (D_801CF060[arg0].unkA4 >= D_801CF060[arg0].unkA8) {
+                D_801CF060[arg0].unkAC = 0;
+                D_801CF060[arg0].unkA8 = 0;
+                D_801CF060[arg0].unkA4 = 0;
+                D_801CF060[arg0].unk8 = 1;
+            }
+            if (func_8009D4DC(D_801D06BC - D_801D0754, D_801D06C4 - D_801D075C) < D_800EB994) {
+                D_801CF060[arg0].unk9C = (D_801CF060[arg0].unk9C + 1) % 2;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800A9D48.s")
 
@@ -1055,7 +1311,13 @@ void func_800AB890(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AB92C.s")
+extern s32 D_800E62C8;
+extern s32 D_800E62CC;
+
+void func_800AB92C(void) {
+    D_800E62C8 = D_800E62CC = 0;
+    func_8009D5C0();
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AB95C.s")
 
@@ -1078,10 +1340,192 @@ void func_800AD3C4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800AD418.s")
 
+#ifdef NEEDS_RODATA
+
+s32 func_800ADC8C(s32 arg0) {
+    s32 ret;
+
+    ret = D_801D06B8;
+    switch (arg0) {
+        case 1:
+            ret += 8;
+            break;
+        case 2:
+            ret++;
+            break;
+        case 3:
+            ret += 8;
+            break;
+        case 4:
+            ret++;
+            break;
+        case 5:
+            ret += 6;
+            break;
+        case 6:
+            ret += 6;
+            break;
+        case 7:
+            ret += 4;
+            break;
+        case 8:
+            ret += 4;
+            break;
+        case 9:
+            ret += 4;
+            break;
+        case 10:
+            ret += 4;
+            break;
+        case 12:
+            ret += 1;
+    }
+    return ret;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADC8C.s")
+#endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADD14.s")
+// TO CHECK
+void func_800ADD14(void) {
+    s32 i;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADE14.s")
+    for (i = 0; i < 30; i++) {
+        if ((D_801CF060[i].unkB8 == 0) && (D_801CF060[i].unk0 != 0)) {
+            if (D_801CF060[i].unkC > 8000) {
+                D_801CF060[i].unkC = 8000.0f;
+            }
+            if (D_801CF060[i].unkC < -8000.0f) {
+                D_801CF060[i].unkC = -8000.0f;
+            }
+            if (D_801CF060[i].unk14 > 8000) {
+                D_801CF060[i].unk14 = 8000.0f;
+            }
+            if (D_801CF060[i].unk14 < -8000.0f) {
+                D_801CF060[i].unk14 = -8000.0f;
+            }
+            if (D_801CF060[i].unk10 > 4000) {
+                D_801CF060[i].unk14 = 4000.0f;
+            }
+            if (D_801CF060[i].unk10 < -4000.0f) {
+                D_801CF060[i].unk14 = -4000.0f;
+            }
+        }
+    }
+}
 
+extern s32 D_80223930;
+
+s32 func_800ADE14(s32 arg0) {
+    camera_unk_1* temp_v0;
+    f32 angle;
+
+    if (D_801CF060[arg0].unkB8 != 0) {
+        return 1;
+    }
+    if (D_801CF060[arg0].unk0 != 0) {
+        temp_v0 = &gCameraPerspective[D_80223930];
+        D_801D0754 = func_8009D564(-func_8009D3AC(temp_v0->unkF0, temp_v0->unkF4));
+
+        D_801D0758 = func_8009D564(
+            func_8009D3AC(D_801CF060[arg0].unkC - temp_v0->unk4C, -(D_801CF060[arg0].unk14 - temp_v0->unk54)));
+
+        if (D_801CF060[arg0].unk0 == 6) {
+            return 1;
+        }
+
+        angle = FABS(Math_Normalize_Angle(D_801D0758 - D_801D0754));
+
+        if (angle < 100.0f) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+#ifdef NEEDS_RODATA
+extern s32 D_800E62C0;
+extern s32 D_801D06B8;
+
+Gfx* func_800ADF90(Gfx* arg0) {
+    Gfx* var_v0;
+    s32 var_s1;
+
+    if (D_800E62C0 == 1) {
+        D_800E62C0 = 0;
+    } else {
+        D_800E62C0 = 1;
+    }
+    arg0 = func_800916B4(arg0);
+    func_800ADD14();
+    D_801D06B8 = 0;
+
+    for (var_s1 = 0; var_s1 < 0x1E; var_s1++) {
+        if ((func_800ADC8C(D_801CF060[var_s1].unk0 + D_801CF060[var_s1].unk4)) > 0xBF) {
+            break;
+        }
+
+        if (func_800ADE14(var_s1) == 1) {
+            switch (D_801CF060[var_s1].unk0 + D_801CF060[var_s1].unk4) {
+                case 1:
+                    var_v0 = func_8009DC10(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 2:
+                    var_v0 = func_8009DB90(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 3:
+                    var_v0 = func_8009E814(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 4:
+                    var_v0 = func_8009E794(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 5:
+                    var_v0 = func_8009F398(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 6:
+                    var_v0 = func_8009FCB0(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 7:
+                    var_v0 = func_800A10E4(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 8:
+                    var_v0 = func_800A16F0(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 9:
+                    var_v0 = func_800A1CFC(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 10:
+                    var_v0 = func_800A2308(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 12:
+                    var_v0 = func_800A28F4(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+                case 13:
+                    var_v0 = func_800A063C(arg0, var_s1);
+                    arg0 = var_v0;
+                    break;
+            }
+        }
+    }
+    D_800E62CC = D_800E62C8;
+
+    for (var_s1 = D_800E62C8; var_s1 < 0x1E; var_s1++) {
+        D_801CF060[var_s1].unk0 = 0;
+    }
+
+    return arg0;
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_52CD0/func_800ADF90.s")
+#endif

@@ -90,7 +90,7 @@ void func_801E2B8C(s32 arg0) {
     D_801CE644 = 0;
     D_800DAB1C = 0;
     D_800D461C = 2;
-    Set_FadeTransition(1, 0xE, 0x14);
+    FadeTransition_SetProps(1, 0xE, 0x14);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/AF8C0/func_801E2C14.s")

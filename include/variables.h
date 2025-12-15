@@ -145,7 +145,7 @@ extern UnkStruct_8009A04C D_801CEAB0[];
 extern s32 D_80228AA4;
 extern s32 D_800E7CAC;
 extern s32 D_800E7CBC;
-extern f32 D_800E7CC8;
+extern f32 D_800E7CC8[];
 extern s32 D_800E7CE8;
 extern s32 D_801D7DD8;
 extern s8 D_801D7DF8[];
@@ -306,6 +306,7 @@ extern u8 D_801C43F8;
 extern s32 D_80154330;
 extern s32 D_801CB410;
 extern u8 D_80154340;
+extern OSMesg D_80154348;
 extern s32 D_801CB404;
 extern u8 D_801542E2[][4];
 extern u8 D_801CB408[];
@@ -316,7 +317,7 @@ extern s32 D_801CB618[];
 extern u8 D_801CB658[];
 extern u8 D_801CB6C0[];
 extern struct Controller_info gControllerOne[];
-extern u16 D_80226F00;
+extern u16 sRandSeed;
 extern f32 D_80226F08[];
 extern UnkStruct_80192690 D_801926D8[];
 extern Vec3f D_801CECB8[];
@@ -344,5 +345,8 @@ extern f32 D_801C4398;
 extern f32 D_801C43B0;
 extern f32 D_801C43C8;
 extern f32 D_801C43E0;
+
+// audio_general.c
+extern s8 D_800E7C94;
 
 #endif /* VARIABLES_H */

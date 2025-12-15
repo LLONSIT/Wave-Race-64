@@ -23,10 +23,10 @@ Gfx* func_801E34F8(Gfx* arg0) {
 void func_801E355C(void) {
     s32 var_a1;
 
-    var_a1 = FALSE;
+    var_a1 = false;
     switch (D_802288F0) {
         case 0:
-            var_a1 = TRUE;
+            var_a1 = true;
             D_802288F0 = 1;
             break;
         case 1:
@@ -39,7 +39,7 @@ void func_801E355C(void) {
         case 2:
             if (D_801CE65A->unk0 & 0xB000) {
                 D_802288F0 = 3;
-                var_a1 = TRUE;
+                var_a1 = true;
             }
             break;
         case 3:
@@ -54,7 +54,7 @@ void func_801E355C(void) {
             D_802288F4 = D_802288F4 + 1;
             if (D_802288F4 >= 3) {
                 func_801EC830(&D_802288F4);
-                var_a1 = FALSE;
+                var_a1 = false;
             }
             break;
     }

@@ -65,7 +65,7 @@ void func_80046BF4(void) {
     gSPEndDisplayList(gDisplayListHead++);
 }
 
-void func_80046C30(OSTask* task) {
+void SysMain_CreateGfxTask(OSTask* task) {
     task->t.type = M_GFXTASK;
     task->t.flags = 0;
     task->t.ucode_boot = (u64*) rspbootTextStart;
@@ -173,11 +173,14 @@ void* func_80046DA0(void* entry) {
     osViSwapBuffer(D_801542C0[D_80151948]);
 
     func_8004A130();
+
     func_80046D2C();
+
     func_80046850();
     func_800468E0();
     func_80046BF4();
-    func_80046C30(D_80151940);
+
+    SysMain_CreateGfxTask(D_80151940);
     func_80046CF8(D_80151940);
 
     func_80091F50();
@@ -212,7 +215,7 @@ void* func_80046DA0(void* entry) {
 
         func_80097E68();
 
-        func_80046C30(D_80151940);
+        SysMain_CreateGfxTask(D_80151940);
 
         if (D_800DAB1C == 2) {
             temp_v1 = (u32*) D_801542C0[D_8015194C] + 38399;

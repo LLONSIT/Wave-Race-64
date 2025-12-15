@@ -292,5 +292,5 @@ baserom.$(VERSION).z64:
 
 ### Settings
 .SECONDARY:
-.PHONY: all clean default assets
+.PHONY: all clean default assets expected
 SHELL = /bin/bash -e -o pipefail
