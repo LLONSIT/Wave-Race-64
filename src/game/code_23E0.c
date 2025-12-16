@@ -379,7 +379,7 @@ void func_80048854(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     arg1->ww = 1;
 
     // Note: this should be: func_80047EE0(arg0, arg1)
-    func_80047EE0((float(*)[4]) arg1, (MF*) arg0);
+    func_80047EE0((float (*)[4]) arg1, (MF*) arg0);
 }
 
 #define FTO32(x) (long) (65536.0f * (x))
@@ -527,7 +527,7 @@ typedef union {
     long long int force_structure_alignment;
 } _Mtx;
 
-#define FTO32(x) (long) ((x) *65536.0f)
+#define FTO32(x) (long) ((x) * 65536.0f)
 #define MTXTOMTXF(mtx, i1, i2) ((((s16) mtx->u.i[(i1)][(i2)] << 0x10) | mtx->u.f[(i1)][(i2)]) / 65536.0f)
 
 // Similar to func_8006B33C from fzerox
@@ -676,7 +676,7 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     arg1->wx = arg1->wy = arg1->wz = 0.0f;
     arg1->ww = 1;
 
-    func_80047EE0((float(*)[4]) arg1, (MF*) arg0);
+    func_80047EE0((float (*)[4]) arg1, (MF*) arg0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_800498A4.s")
@@ -691,7 +691,35 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A208.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A2B4.s")
+void func_8004A2B4(void) {
+    s32 i;
+    u8 mask = 1;
+
+    osRecvMesg(&D_801540D0, &D_80154348, 1);
+    osContGetReadData(gControllers);
+
+    for (i = 0; i < 4; i++) {
+        if (D_80154340 & mask) {
+            Controller_info* ctrl;
+            OSContPad* new_var3;
+            u16 new_var;
+            s32 new_var2;
+
+            ctrl = &gControllerOne[i];
+            new_var3 = &gControllers[i];
+            ctrl->unk6 = ctrl->unk0;
+            ctrl->unk0 = new_var3->button;
+            new_var = ctrl->unk0 ^ ctrl->unk6;
+            new_var2 = new_var;
+            ctrl->unk2 = ctrl->unk0 & new_var2;
+            ctrl->unk4 = ctrl->unk6 & new_var;
+            new_var2 = new_var & 0xFFFF;
+            ctrl->unk8 = new_var3->stick_x;
+            ctrl->unk9 = new_var3->stick_y;
+        }
+        mask <<= 1;
+    }
+}
 
 void func_8004A394(void) {
     osContStartReadData(&D_801540D0);
