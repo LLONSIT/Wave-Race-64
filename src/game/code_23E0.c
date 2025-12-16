@@ -691,36 +691,7 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A208.s")
 
-void func_8004A2B4(void) {
-    s32 i;
-    u8 mask = 1;
-
-    osRecvMesg(&D_801540D0, &D_80154348, 1);
-    osContGetReadData(gControllers);
-
-    for (i = 0; i < 4; i++) {
-        if (D_80154340 & mask) {
-            Controller_info* ctrl;
-            OSContPad* new_var3;
-            u16 new_var;
-            s32 new_var2;
-
-            ctrl = &gControllerOne[i];
-            new_var3 = &gControllers[i];
-
-            ctrl->unk6 = ctrl->unk0;
-            ctrl->unk0 = new_var3->button;
-            new_var = ctrl->unk0 ^ ctrl->unk6;
-            new_var2 = new_var;
-            ctrl->unk2 = ctrl->unk0 & new_var2;
-            ctrl->unk4 = ctrl->unk6 & new_var;
-            new_var2 = new_var & 0xFFFF;
-            ctrl->unk8 = new_var3->stick_x;
-            ctrl->unk9 = new_var3->stick_y;
-        }
-        mask <<= 1;
-    }
-}
+#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A2B4.s")
 
 void func_8004A394(void) {
     osContStartReadData(&D_801540D0);
