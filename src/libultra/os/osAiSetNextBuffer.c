@@ -15,9 +15,9 @@
  * because it is now patched by osAiSetNextBuffer.
  */
 
-s32 osAiSetNextBuffer(void *buff, u32 len) {
+s32 osAiSetNextBuffer(void* buff, u32 len) {
     static u8 hdwrBugFlag = 0;
-    char *bptr;
+    char* bptr;
 
 #ifdef VERSION_CN
     if (__osAiDeviceBusy()) {

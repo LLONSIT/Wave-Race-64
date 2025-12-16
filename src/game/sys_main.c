@@ -96,7 +96,6 @@ void SysMain_GfxInitBuffers(void) {
     gDisplayListHead = gGfxPool->dList;
 }
 
-
 // https://decomp.me/scratch/pXE01
 // These need to be separate symbols for this function to compile
 // D_801DAFA0 & D_801DAFA0_2

@@ -79,7 +79,6 @@ void func_8007B370(void*);
 void func_8007B630(void);
 s32 func_8007BE64(void);
 
-
 // Encode?
 s32 func_8007ADD0(s32 arg0) {
     if ((arg0 >= 'A') && (arg0 < '[')) {
