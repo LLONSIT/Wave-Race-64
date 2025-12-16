@@ -527,7 +527,7 @@ typedef union {
     long long int force_structure_alignment;
 } _Mtx;
 
-#define FTO32(x) (long) ((x) * 65536.0f)
+#define FTO32(x) (long) ((x) *65536.0f)
 #define MTXTOMTXF(mtx, i1, i2) ((((s16) mtx->u.i[(i1)][(i2)] << 0x10) | mtx->u.f[(i1)][(i2)]) / 65536.0f)
 
 // Similar to func_8006B33C from fzerox

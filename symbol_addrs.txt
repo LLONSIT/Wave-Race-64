@@ -25,6 +25,7 @@ gColorAlpha = 0x800D47F4;
 configSignalRectangle = 0x8006E024;
 // fast3d_800D22B0 = 0x800D22B0;
 AudioThread_QueueCmdS8 = 0x800C53D4;
+AudioThread_QueueCmdS8 = 0x800C53D4;
 gCourseID = 0x800D8170;
 menu_buffer_1 = 0x80228930;
 short_RGB = 0x800DAA58;
@@ -52,6 +53,7 @@ D_80228058 = 0x80228058;
 
 //Names from n64decomp/mk64
 AudioLoad_Init = 0x800BA100;
+AudioLoad_Init = 0x800BA100;
 gSinTable = 0x80154350;
 gAudioThread = 0x80153D40;
 jtbl_800E9B70 = 0x800E9B70; //size:128 type:jtbl
@@ -66,6 +68,7 @@ Libc_strcmp = 0x8006A188;
 Libc_strncmp = 0x8006A1CC;
 Load_Codeseg = 0x80098190;
 Init_SinTable = 0x80047C38;
+AudioSynth_ProcessNote = 0x800B5E70;
 AudioSynth_ProcessNote = 0x800B5E70;
 Math_Normalize_VectorComponents = 0x80088B84;
 Math_Fabs = 0x800984D0;
