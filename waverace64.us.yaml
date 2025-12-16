@@ -218,6 +218,8 @@ segments:
 
       - [0x8EDD0, data]
       - [0x8EDF0, data]
+      - [0x8EE30, .data, game/main]
+      - [0x8EE40, data]
       - [0x8EFE0, .data, game/code_BD30]
       - [0x8F000, data]
       - [0x9F6D0, .data, ovl_table]

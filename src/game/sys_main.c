@@ -60,7 +60,7 @@ void func_800468E0(void) {
     }
 }
 
-void func_80046BF4(void) {
+void SysMain_GfxFullSync(void) {
     gDPFullSync(gDisplayListHead++);
     gSPEndDisplayList(gDisplayListHead++);
 }
@@ -89,12 +89,13 @@ void func_80046CF8(OSTask* task) {
     osSendMesg(&D_80154130, (OSMesg) 0x15, OS_MESG_NOBLOCK);
 }
 
-void func_80046D2C(void) {
+void SysMain_GfxInitBuffers(void) {
     D_8011F8E0 ^= 1;
     D_80151940 = &D_801518C0[D_8011F8E0];
     gGfxPool = &D_8011F8E8[D_8011F8E0];
     gDisplayListHead = gGfxPool->dList;
 }
+
 
 // https://decomp.me/scratch/pXE01
 // These need to be separate symbols for this function to compile
@@ -174,11 +175,11 @@ void* func_80046DA0(void* entry) {
 
     func_8004A130();
 
-    func_80046D2C();
+    SysMain_GfxInitBuffers();
 
     func_80046850();
     func_800468E0();
-    func_80046BF4();
+    SysMain_GfxFullSync();
 
     SysMain_CreateGfxTask(D_80151940);
     func_80046CF8(D_80151940);
@@ -189,14 +190,14 @@ void* func_80046DA0(void* entry) {
         osContStartReadData(&D_801540D0);
         osRecvMesg(&D_80154100, D_80151958, OS_MESG_BLOCK);
         func_80047B00();
-        func_80046D2C();
+        SysMain_GfxInitBuffers();
         func_800922E4();
         func_80046850();
         func_800468E0();
 
         gDisplayListHead = func_80092CF0(gDisplayListHead);
 
-        func_80046BF4();
+        SysMain_GfxFullSync();
 
         osRecvMesg(&D_80154118, D_8015195C, OS_MESG_BLOCK);
 

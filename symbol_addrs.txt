@@ -39,11 +39,12 @@ gDifficulty = 0x801CB338;
 gGameModes = 0x801CE620;
 Mio0_Decompress = 0x800B4D30;
 osTvType = 0x80000300;
-audio_thread = 0x80047B20;
-idle_thread = 0x8004791C;
+Main_AudioThread = 0x80047B20;
+Main_IdleThread = 0x8004791C;
 gIdleThread = 0x801539E0;
 game_dma_copy = 0x80097EC8; //defined:true
-
+SysMain_GfxFullSync = 0x80046BF4;
+SysMain_GfxInitBuffers = 0x80046D2C;
 //Fix build
 D_80228A78 = 0x80228A78;
 D_80227E98 = 0x80227E98;

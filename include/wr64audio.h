@@ -928,7 +928,7 @@ u8 AudioSeq_GetInstrument(SequenceChannel* seqChannel, u8 instId, Instrument** i
 void AudioSeq_AudioListPushBack(AudioListItem* list, AudioListItem* item);
 void* AudioSeq_AudioListPopBack(AudioListItem* list);
 void AudioSeq_SequenceChannelDisable(SequenceChannel* seqChannel);
-
+SPTask* AudioThread_CreateTask(void);
 void Audio_SequencePlayerProcessSound(SequencePlayer* seqPlayer);
 void Audio_ProcessNotes(void);
 void Audio_DmaPartialCopyAsync(uintptr_t* devAddr, u8** vAddr, ssize_t* remaining, OSMesgQueue* queue, OSIoMesg* mesg);
@@ -955,4 +955,5 @@ void Audio_DmaCopyAsync(uintptr_t devAddr, void* vAddr, size_t nbytes, OSMesgQue
 void AudioLoad_InitSampleDmaBuffers(UNUSED s32 arg0);
 s32 AudioHeap_ResetStep(void);
 void AudioSeq_SequencePlayerDisableChannels(SequencePlayer* seqPlayer, u16 channelBits);
+void AudioLoad_Init(void);
 #endif
