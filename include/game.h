@@ -3,11 +3,19 @@
 
 #include "global.h"
 
+
 typedef enum Difficulty {
     /* 0 */ DIFFICULTY_NORMAL,
     /* 1 */ DIFFICULTY_HARD,
     /* 2 */ DIFFICULTY_EXPERT
 } Difficulty;
+
+typedef enum {
+    /* 0 */ GMODE_STATE_0,
+    /* 1 */ GMODE_STATE_1,
+    /* 2 */ GMODE_STATE_2,
+    /* 3 */ GMODE_STATE_STARTED
+} GameModeState;
 
 typedef enum {
     /* 0 */ GMODE_TIME_TRIALS,
@@ -26,8 +34,13 @@ typedef struct {
     /* 0x14 */ s32 unk_14;
 } game_801CE608;
 
+extern GameModeState gGameModeState; // Current state of the game mode
+
 extern GameMode gGameModes;
 
 extern Difficulty gDifficulty;
+
+#define MAX_CHAMPIONSHIP_LAPS 3
+#define MAX_DIFFICULTY 3
 
 #endif /* GAME_H */

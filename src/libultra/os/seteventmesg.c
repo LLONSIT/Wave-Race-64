@@ -1,6 +1,6 @@
 #include "osint.h"
 
-__OSEventState __osEventStateTab[OS_NUM_EVENTS];
+extern __OSEventState __osEventStateTab[OS_NUM_EVENTS];
 
 void osSetEventMesg(OSEvent e, OSMesgQueue* mq, OSMesg msg) {
     register u32 int_disabled;

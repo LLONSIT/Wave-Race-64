@@ -307,7 +307,7 @@ Gfx* func_i1_802C913C(Gfx* dList) {
             flag = 1;
         }
         if (flag != 0) {
-            D_801CE650 = 1;
+            gGameModeState = 1;
             D_i1_802C9440 = -1;
         }
     }

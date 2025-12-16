@@ -112,7 +112,7 @@ void func_801EC830(void) {
     gPlayers = ONE_PLAYER;
     gRiderGameModes = 1;
     D_801CE64C = 1;
-    D_801CE650 = 0;
+    gGameModeState = 0;
 
     var_v1 = false;
 
@@ -128,7 +128,7 @@ void func_801EC830(void) {
         osViBlack(true);
     }
     func_801E6A4C(0, 0);
-    gCameraPerspective->unk0 = 1;
+    gCameraPerspective->viewMode = 1;
 }
 
 void func_801EC944(void) {
@@ -157,7 +157,7 @@ void func_801EC9C8(void) {
     gPlayers = 1;
     gRiderGameModes = 1;
     D_801CE64C = 1;
-    D_801CE650 = 0;
+    gGameModeState = 0;
     if ((D_801CE608 == 0) || (D_801CE608 == 0xB)) {
         func_80096960(2, 0, 1, 2, 3);
     }
@@ -167,7 +167,7 @@ void func_801EC9C8(void) {
         FadeTransition_SetProps(4, 1, 0);
     }
     func_801E6A4C(0, 0);
-    gCameraPerspective->unk0 = 1;
+    gCameraPerspective->viewMode = 1;
     func_800C21F4(0xC, 0);
 }
 

@@ -94,22 +94,22 @@ void func_801FC4D4(Gfx** arg0) {
             *arg0 = sp2C;
             return;
         }
-        if (((gGameModes == GMODE_CHAMPIONSHIP) || (gGameModes == GMODE_2P_VS)) && (D_801CE650 == 3) &&
+        if (((gGameModes == GMODE_CHAMPIONSHIP) || (gGameModes == GMODE_2P_VS)) && (gGameModeState == 3) &&
             (gCourseID != DOLPHIN_PARK) && (D_801C1FD8 == 0)) {
             func_801FA3C0(&sp2C);
         }
-        if (((D_801CE650 != 3) || (D_80228D08 == 2)) && (D_801C2938[D_800D48DC].unk2EC == 0) &&
+        if (((gGameModeState != 3) || (D_80228D08 == 2)) && (D_801C2938[D_800D48DC].unk2EC == 0) &&
             ((gPlayers != TWO_PLAYERS) || (D_801C2938[D_800D48E0].unk2EC == 0))) {
             func_801F06A0(&sp2C);
         }
-        if ((D_801CE638 == 1) && (D_801CE624 == -1) && (D_801CE650 == 3) &&
+        if ((D_801CE638 == 1) && (gCurrentPauseMenuOption == -1) && (gGameModeState == 3) &&
             ((gPlayers != TWO_PLAYERS) || (D_801CE6F0 == 0))) {
             func_801EFFD8(&sp2C);
         }
         if ((gGameModes != GMODE_STUNT) && (gCourseID != DOLPHIN_PARK)) {
             func_801F14B4(&sp2C);
         }
-        if (D_801CE624 == -1) {
+        if (gCurrentPauseMenuOption == -1) {
             func_801F2060(&sp2C);
             func_801FAEB8(&sp2C);
             if (gGameModes == GMODE_STUNT) {
