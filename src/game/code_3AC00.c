@@ -8,7 +8,7 @@ typedef struct UnkStruct_800D9854 {
     s32 unk4;
     s32 unk8;
     s32 unkC;
-    char pad[16];
+    char pad[0x10];
 } UnkStruct_800D9854;
 
 struct UnkStruct_801C4000 {

@@ -112,7 +112,7 @@ void func_801EC830(void) {
     gPlayers = ONE_PLAYER;
     gRiderGameModes = 1;
     D_801CE64C = 1;
-    gGameModeState = 0;
+    gGameModeState = GMODE_STATE_0;
 
     var_v1 = false;
 

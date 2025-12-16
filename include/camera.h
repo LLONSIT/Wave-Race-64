@@ -1,16 +1,16 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 typedef enum {
-    NON_HANDLED,
-    NON_HANDLED1,
-    CAMERA_PERSPECTIVE_LEFT, /* Should have a better name; This one is the camera perspective that you see in the rider selection menu state */
-    NON_HANDLED2,
-    CAMERA_PERSPECTIVE_FRONT, /* The normal camera perspective in a race */
-    CAMERA_PERSPECTIVE_UNKNOWN
-} CAMERA_VIEW_MODES;
+    VIEW_MODE_0,
+    VIEW_MODE_1,
+    VIEW_MODE_CAMERA_PERSPECTIVE_LEFT, /* Should have a better name; This one is the camera perspective that you see in the rider selection menu state */
+    VIEW_MODE_2,
+    VIEW_MODE_CAMERA_PERSPECTIVE_FRONT, /* The normal camera perspective in a race */
+    VIEW_MODE_3
+} CameraViewModes;
 
 typedef struct camera_unk_1 {
-    /* 0x000 */ CAMERA_VIEW_MODES viewMode; // See CAMERA_VIEW_MODES
+    /* 0x000 */ CameraViewModes viewMode; // See CameraViewModes
     /* 0x004 */ f32 unk4;
     /* 0x008 */ s32 unk8;
     /* 0x00C */ f32 unkC;
