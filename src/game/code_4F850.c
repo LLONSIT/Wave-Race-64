@@ -272,17 +272,17 @@ u32* func_800962F0(s32 arg0) {
     u32* temp_ptr;
     s32 i;
 
-    sp34 = var_s2 = func_80094088((u32) &D_80030EC) + arg0;
+    sp34 = var_s2 = SegmentedToVirtual((u32) &D_80030EC) + arg0;
 
     for (i = 0; i != 0xC; i += 4, var_s2++) {
-        *var_s2 = func_80094088(*var_s2) + arg0;
+        *var_s2 = SegmentedToVirtual(*var_s2) + arg0;
         temp_ptr = (u32*) *var_s2;
-        temp_ptr[1] = func_80094088(temp_ptr[1]) + arg0;
-        temp_ptr[2] = func_80094088(temp_ptr[2]) + arg0;
-        temp_ptr[3] = func_80094088(temp_ptr[3]) + arg0;
-        temp_ptr[4] = func_80094088(temp_ptr[4]) + arg0;
-        temp_ptr[5] = func_80094088(temp_ptr[5]) + arg0;
-        temp_ptr[6] = func_80094088(temp_ptr[6]) + arg0;
+        temp_ptr[1] = SegmentedToVirtual(temp_ptr[1]) + arg0;
+        temp_ptr[2] = SegmentedToVirtual(temp_ptr[2]) + arg0;
+        temp_ptr[3] = SegmentedToVirtual(temp_ptr[3]) + arg0;
+        temp_ptr[4] = SegmentedToVirtual(temp_ptr[4]) + arg0;
+        temp_ptr[5] = SegmentedToVirtual(temp_ptr[5]) + arg0;
+        temp_ptr[6] = SegmentedToVirtual(temp_ptr[6]) + arg0;
     }
 
     return sp34;
@@ -301,21 +301,21 @@ u32* func_800964CC(s32 arg0) {
     u32* temp_ptr;
     s32 i;
 
-    var_s2 = func_80094088((u32) &D_8001C58) + arg0;
+    var_s2 = SegmentedToVirtual((u32) &D_8001C58) + arg0;
     sp34 = var_s2;
 
     for (i = 0; i != 8; i += 4, var_s2++) {
-        temp_s0 = func_80094088(*var_s2) + arg0;
+        temp_s0 = SegmentedToVirtual(*var_s2) + arg0;
         *var_s2 = temp_s0;
         temp_ptr = (u32*) temp_s0;
 
-        temp_ptr[1] = func_80094088(temp_ptr[1]) + arg0;
-        temp_ptr[2] = func_80094088(temp_ptr[2]) + arg0;
-        temp_ptr[3] = func_80094088(temp_ptr[3]) + arg0;
-        temp_ptr[4] = func_80094088(temp_ptr[4]) + arg0;
-        temp_ptr[5] = func_80094088(temp_ptr[5]) + arg0;
-        temp_ptr[6] = func_80094088(temp_ptr[6]) + arg0;
-        temp_ptr[7] = func_80094088(temp_ptr[7]) + arg0;
+        temp_ptr[1] = SegmentedToVirtual(temp_ptr[1]) + arg0;
+        temp_ptr[2] = SegmentedToVirtual(temp_ptr[2]) + arg0;
+        temp_ptr[3] = SegmentedToVirtual(temp_ptr[3]) + arg0;
+        temp_ptr[4] = SegmentedToVirtual(temp_ptr[4]) + arg0;
+        temp_ptr[5] = SegmentedToVirtual(temp_ptr[5]) + arg0;
+        temp_ptr[6] = SegmentedToVirtual(temp_ptr[6]) + arg0;
+        temp_ptr[7] = SegmentedToVirtual(temp_ptr[7]) + arg0;
     }
 
     return sp34;

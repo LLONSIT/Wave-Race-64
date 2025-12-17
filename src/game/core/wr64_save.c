@@ -23,12 +23,15 @@ typedef struct UnkStruct_8007AEFC {
 
 extern s32 D_800D8260;
 
-struct {
+typedef struct UnkStruct_801AEA18_s {
     s16 unk0;
     u16 unk2;
     u8 pad[0x4C];
     u8 unk50[1][3];
-} D_801AEA18;
+    char pad54[0x1AC];
+} UnkStruct_801AEA18;
+
+extern UnkStruct_801AEA18 D_801AEA18;
 
 extern u8 D_801AEA68;
 extern s32 D_801CB308[1][3];
@@ -68,7 +71,7 @@ static const char devstr28[] = "no PFS in controller 1 !\n";
 static const char devstr29[] = "bad PFS %d\n";
 static const char devstr30[] = "PFS find file\n";
 
-s32 func_8007BBF8(u8*);
+s32 Save_GenCheckSum(u8*);
 void func_8007BBF0(void);
 s32 func_8007BDB8(void);
 s32 func_8007D110(void);
@@ -76,6 +79,7 @@ void func_8007B370(void*);
 void func_8007B630(void);
 s32 func_8007BE64(void);
 
+// Encode?
 s32 func_8007ADD0(s32 arg0) {
     if ((arg0 >= 'A') && (arg0 < '[')) {
         return arg0 - 0x40;
@@ -195,7 +199,7 @@ void func_8007BBE8() {
 void func_8007BBF0() {
 }
 
-s32 func_8007BBF8(u8* arg0) {
+s32 Save_GenCheckSum(u8* arg0) {
     u16 chksum;
     s32 i;
     u8* temp;
@@ -210,12 +214,12 @@ s32 func_8007BBF8(u8* arg0) {
     return chksum;
 }
 
-s32 func_8007BC44(void) {
+s32 Save_EepromRead(void) {
     s32 temp_v0;
     s32 var_a1;
     s32 i;
 
-    if (osEepromLongRead(&D_801540D0, 0U, &D_801AEA18, 0x200) != 0) {
+    if (osEepromLongRead(&D_801540D0, 0x0, &D_801AEA18, 0x200) != 0) {
         return 2;
     }
 
@@ -227,7 +231,7 @@ s32 func_8007BC44(void) {
     }
 
     if (var_a1 == 0) {
-        temp_v0 = func_8007BBF8(&D_801AEA18);
+        temp_v0 = Save_GenCheckSum(&D_801AEA18);
         if (temp_v0 != D_801AEA18.unk2) {
             var_a1 = 1;
             func_8007BBF0();
@@ -243,7 +247,7 @@ s32 func_8007BC44(void) {
 }
 
 s32 func_8007BD20(void) {
-    D_801AEA18.unk2 = func_8007BBF8(&D_801AEA18);
+    D_801AEA18.unk2 = Save_GenCheckSum(&D_801AEA18);
     if (osEepromLongWrite(&D_801540D0, 0U, &D_801AEA18, 0x200) != 0) {
         return 3;
     }
@@ -278,7 +282,7 @@ s32 func_8007BE00(void) {
         func_8007B630();
         return 1;
     }
-    temp_v0 = func_8007BC44();
+    temp_v0 = Save_EepromRead();
     if (temp_v0 != 0) {
         return temp_v0;
     }
@@ -319,7 +323,7 @@ int func_8007C50C(void) {
     }
 
     func_8007B31C();
-    D_801AEA18.unk2 = func_8007BBF8(&D_801AEA18);
+    D_801AEA18.unk2 = Save_GenCheckSum(&D_801AEA18);
     if (osEepromLongWrite(&D_801540D0, 0U, &D_801AEA18, 16) != 0) {
         return 3;
     }
@@ -344,7 +348,7 @@ extern u8 D_800D82D8;
 extern u8 D_800D82E8;
 extern OSPfs D_801C3AD0;
 
-s32 func_8007D1B8(void) {
+s32 Save_PfsFindFile(void) {
     s32 temp_v0;
     s32 sp20;
 
@@ -371,9 +375,8 @@ s32 func_8007D1B8(void) {
 }
 
 s32 func_8007D110();
-extern OSPfs D_801C3AD0;
 
-s32 func_8007D24C(void) {
+s32 Save_PfsCheckFree(void) {
     s32 temp_v0;
     s32 sp18;
 

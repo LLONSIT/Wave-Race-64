@@ -54,12 +54,12 @@ void func_80047470(void);
 void func_800474A0(void);
 void func_800474E4(void);
 void* main_thread(void* entry);
-void* idle_thread(void* entry);
+void* Main_IdleThread(void* entry);
 void main(void);
 void func_80047B00(void);
 void func_800980C8(void);
 void func_800980D0(void*);
-void* audio_thread(void* entry);
+void* Main_AudioThread(void* entry);
 
 void func_80047470(void) {
     osSpTaskYield();
@@ -97,7 +97,7 @@ void* main_thread(void* entry) {
     osViSetEvent(&D_80154130, (void*) 0x19, 1U);
     func_800980C8(); // stub
 
-    osCreateThread(&gAudioThread, 4, audio_thread, NULL, &gIdleThread, 0x14);
+    osCreateThread(&gAudioThread, 4, Main_AudioThread, NULL, &gIdleThread, 0x14);
     if (D_800D4628 != 0) {
         osStartThread(&gAudioThread);
     }
@@ -176,7 +176,7 @@ void* main_thread(void* entry) {
     }
 }
 
-void* idle_thread(void* entry) {
+void* Main_IdleThread(void* entry) {
     D_801542C0[0] = (s32) &D_8038F800;
     D_801542C0[1] = &D_803B5000;
     D_801542C0[2] = &D_803DA800;
@@ -215,7 +215,7 @@ void* idle_thread(void* entry) {
 
 void bootproc(void) {
     osInitialize();
-    osCreateThread(&gIdleThread, 1, &idle_thread, 0, &D_80151DE0, 0x64);
+    osCreateThread(&gIdleThread, 1, &Main_IdleThread, 0, &D_80151DE0, 0x64);
     osStartThread(&gIdleThread);
 }
 
@@ -223,20 +223,26 @@ void func_80047B00(void) {
     func_800BF370();
 }
 
-#ifdef MIGRATE_BSS
-void audio_thread(void* entry) {
-    static s32 D_800D4630;
-    AudioLoad_Init();
+// Extra nops at the end?
+#ifdef NON_MATCHING
+extern OSMesg D_801542D0;
 
+void Main_AudioThread(void* entry) {
+    static OSTask* sAudioTask = NULL;
+    AudioLoad_Init();
     while (true) {
         osRecvMesg(&D_801540E8, &D_801542D0, 1);
-        if (D_800D4630 != 0) {
-            second_task = D_800D4630;
+        if (sAudioTask != 0) {
+            second_task = sAudioTask;
             osSendMesg(&D_80154130, (void*) 0x16, OS_MESG_NOBLOCK);
         }
-        D_800D4630 = AudioThread_CreateTask();
+
+        sAudioTask = AudioThread_CreateTask();
+        continue;
     }
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/main/audio_thread.s")
+// .data
+OSTask* D_800D4630 = NULL; // sAudioTask
+#pragma GLOBAL_ASM("asm/nonmatchings/game/main/Main_AudioThread.s")
 #endif

@@ -33,10 +33,9 @@ extern s16 D_800DAB78;
 extern s32 D_801AE948;
 extern s32 D_801CE5FC;
 extern s32 D_801CE608;
-extern s16 D_801CE624;
+extern s16 gCurrentPauseMenuOption;
 extern s16 D_801CE62A;
 extern s16 D_801CE62E;
-extern s32 D_801CE650;
 extern u16 D_801CE690;
 extern s16 D_80228A36;
 extern s32 D_80228A40;
@@ -89,7 +88,7 @@ void func_80091F50(void) {
 
     D_801CE5F8 = &D_801CB6C8[D_8011F8E0];
     D_801CE5FC = 0;
-    D_801CE624 = -1;
+    gCurrentPauseMenuOption = -1;
     D_801CE628 = 0;
     D_801CE62C = 0;
     D_802C6EE4 = 0;
@@ -208,7 +207,7 @@ Gfx* func_80092CF0(Gfx* dList) {
             break;
 
         case 0x28:
-            if (((D_801CE608 == 4) || (D_801CE608 == 1)) && (D_801CE650 != 3)) {
+            if (((D_801CE608 == 4) || (D_801CE608 == 1)) && (gGameModeState != 3)) {
                 D_801CE62A = 0;
             }
             dList = func_802C5AE4(dList);
@@ -340,7 +339,7 @@ Gfx* func_80092CF0(Gfx* dList) {
             break;
     }
 
-    if ((((D_801CE690 & 0xF000) != 0xF000) || (D_801CE624 != -1)) && (D_800DAB78 == 0)) {
+    if ((((D_801CE690 & 0xF000) != 0xF000) || (gCurrentPauseMenuOption != -1)) && (D_800DAB78 == 0)) {
         dList = func_801E4440(dList);
     } else {
         // necessary to match
@@ -560,16 +559,16 @@ Gfx* func_80093F78(Gfx* gfxPtr) {
     return gfxPtr;
 }
 
-s32 func_80094088(u32 arg0) {
-    s32 var_v1;
+s32 SegmentedToVirtual(u32 addr) {
+    s32 segment;
     s32 var;
 
-    var_v1 = arg0 >> 0x18;
-    if (var_v1 >= 0x10) {
-        var_v1 = 0;
+    segment = addr >> 0x18;
+    if (segment >= 16) {
+        segment = 0;
     }
 
-    var = D_801CE6B0[var_v1] + (arg0 & 0xFFFFFF) + 0x80000000;
+    var = D_801CE6B0[segment] + (addr & 0xFFFFFF) + 0x80000000;
 
     return var;
 }

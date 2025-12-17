@@ -1,4 +1,5 @@
 #include "libultra_internal.h"
+
 void guTranslateF(float m[4][4], float x, float y, float z) {
     guMtxIdentF(m);
     m[3][0] = x;

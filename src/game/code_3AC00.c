@@ -28,7 +28,7 @@ extern f32 D_800EA410;
 extern f32 D_800EA414;
 extern f32 D_800EA418;
 extern f32 D_800EA41C;
-extern s32 D_80192458;
+extern s32 gWaterLevel;
 extern struct UnkStruct_801C2C24 D_801C2C24[];
 extern struct UnkStruct_801C2C24 D_801C2938[];
 extern s32 D_800D98C8;
@@ -36,12 +36,12 @@ extern s16 D_800DAB68;
 extern struct UnkStruct_801C3C54 D_801AEE20;
 extern struct UnkStruct_801C3C54 D_801B2F20;
 extern struct UnkStruct_801C2C24 D_801C2C2C[];
-struct UnkStruct_801C4000 D_801C4000;
+extern struct UnkStruct_801C4000 D_801C4000;
 extern struct UnkStruct_801C3C60 D_801C3C60[];
 extern s32 D_800D9914;
 extern s32 D_800D48DC;
 extern s32 D_800D9680[2][3];
-struct UnkStruct_801C4000 D_80192420;
+extern struct UnkStruct_801C4000 D_80192420;
 extern f32 D_801C4060[];
 extern f32 D_801C4080[];
 extern f32 D_801C40A0[];
@@ -57,7 +57,7 @@ f32 func_80088D94(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5);
 
 void func_80080400(s32 arg0) {
     func_80085EEC(arg0);
-    if (D_801CE650 == 3) {
+    if (gGameModeState == 3) {
         func_8008044C();
         return;
     }
@@ -175,14 +175,14 @@ void func_80080864(void) {
 
     sp28 = D_800D9854;
 
-    D_801C3C58->unk48 = (func_8004D30C(D_801C3C50->unk44, D_801C3C50->unk4C) - (f32) D_80192458);
+    D_801C3C58->unk48 = (func_8004D30C(D_801C3C50->unk44, D_801C3C50->unk4C) - (f32) gWaterLevel);
 
     D_801C3C58->unk4C = (func_8004D30C(D_801C3C50->unk44 + (512.0f * D_801C3C50->unk6C),
                                        D_801C3C50->unk4C + (512.0f * D_801C3C50->unk74)) -
-                         D_80192458);
+                         gWaterLevel);
 
     if ((D_801CE638 == 0) || (D_801CE638 == 8)) {
-        if ((0.2f < D_801C3C50->unk70) && (D_801C3C50->unkC7C[0] == 0) && ((f32) D_80192458 < D_801C3C50->unk48)) {
+        if ((0.2f < D_801C3C50->unk70) && (D_801C3C50->unkC7C[0] == 0) && ((f32) gWaterLevel < D_801C3C50->unk48)) {
             D_801C3C50->unkB53 = 0x23;
         }
     } else if ((gGameModes != GMODE_CHAMPIONSHIP) && (gGameModes != GMODE_TIME_TRIALS)) {
@@ -190,7 +190,7 @@ void func_80080864(void) {
             D_801C3C50->unkB53 = 0x46;
             return;
         }
-        if ((D_801C3C50->unk70 > -0.0f) && (D_801C3C50->unkC7C[0] == 0) && ((f32) D_80192458 < D_801C3C50->unk48)) {
+        if ((D_801C3C50->unk70 > -0.0f) && (D_801C3C50->unkC7C[0] == 0) && ((f32) gWaterLevel < D_801C3C50->unk48)) {
             D_801C3C50->unkB53 = 0x34;
         }
     } else {
@@ -201,7 +201,7 @@ void func_80080864(void) {
                     return;
                 }
                 if ((D_801C3C50->unk70 > -0.0f) && (D_801C3C50->unkC7C[0] == 0) &&
-                    ((f32) D_80192458 < D_801C3C50->unk48)) {
+                    ((f32) gWaterLevel < D_801C3C50->unk48)) {
                     if (D_801C3C58->unk94 == 0) {
                         D_801C3C50->unkB53 = 0x34;
                     }
@@ -212,7 +212,7 @@ void func_80080864(void) {
                 if (((D_801C3C58->unk48 > 20.0f) || (D_801C3C58->unk4C > 20.0f)) && (D_801C3C50->unkC7C[0] == 1)) {
                     D_801C3C50->unkB53 = 0x46;
                 } else if ((D_801C3C50->unk70 > -0.0f) && (D_801C3C50->unkC7C[0] == 0) &&
-                           ((f32) D_80192458 < D_801C3C50->unk48) && (D_801C3C58->unk94 == 0)) {
+                           ((f32) gWaterLevel < D_801C3C50->unk48) && (D_801C3C58->unk94 == 0)) {
                     D_801C3C50->unkB53 = 0x34;
                 }
                 if (gCourseID == TWILIGHT_CITY) {
