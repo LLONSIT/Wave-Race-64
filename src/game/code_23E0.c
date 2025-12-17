@@ -379,7 +379,7 @@ void func_80048854(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     arg1->ww = 1;
 
     // Note: this should be: func_80047EE0(arg0, arg1)
-    func_80047EE0((float (*)[4]) arg1, (MF*) arg0);
+    func_80047EE0((float(*)[4]) arg1, (MF*) arg0);
 }
 
 #define FTO32(x) (long) (65536.0f * (x))
@@ -527,7 +527,7 @@ typedef union {
     long long int force_structure_alignment;
 } _Mtx;
 
-#define FTO32(x) (long) ((x) * 65536.0f)
+#define FTO32(x) (long) ((x) *65536.0f)
 #define MTXTOMTXF(mtx, i1, i2) ((((s16) mtx->u.i[(i1)][(i2)] << 0x10) | mtx->u.f[(i1)][(i2)]) / 65536.0f)
 
 // Similar to func_8006B33C from fzerox
@@ -676,7 +676,7 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     arg1->wx = arg1->wy = arg1->wz = 0.0f;
     arg1->ww = 1;
 
-    func_80047EE0((float (*)[4]) arg1, (MF*) arg0);
+    func_80047EE0((float(*)[4]) arg1, (MF*) arg0);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_800498A4.s")
