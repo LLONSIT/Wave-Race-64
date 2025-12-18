@@ -53,13 +53,13 @@ extern s32 D_803DA800;
 void func_80047470(void);
 void func_800474A0(void);
 void func_800474E4(void);
-void* main_thread(void* entry);
-void* Main_IdleThread(void* entry);
+void main_thread(void* entry);
+void Main_IdleThread(void* entry);
 void main(void);
 void func_80047B00(void);
 void func_800980C8(void);
 void func_800980D0(void*);
-void* Main_AudioThread(void* entry);
+void Main_AudioThread(void* entry);
 
 void func_80047470(void) {
     osSpTaskYield();
@@ -82,7 +82,7 @@ void func_800474E4(void) {
     D_800D4604 = 1;
 }
 
-void* main_thread(void* entry) {
+void main_thread(void* entry) {
     void* sp4C;
 
     osCreateMesgQueue(&D_801540B8, &D_80154248, 1);
@@ -176,7 +176,7 @@ void* main_thread(void* entry) {
     }
 }
 
-void* Main_IdleThread(void* entry) {
+void Main_IdleThread(void* entry) {
     D_801542C0[0] = (s32) &D_8038F800;
     D_801542C0[1] = &D_803B5000;
     D_801542C0[2] = &D_803DA800;
