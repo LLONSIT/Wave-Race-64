@@ -21,6 +21,12 @@ typedef struct UnkStruct_8007AEFC {
     s8 unk13;
 } UnkStruct_8007AEFC;
 
+typedef struct UnkStruct_8007B2E4 {
+    /* 0x0 */ u8 unk_0;
+    /* 0x1 */ u8 unk_1;
+    /* 0x2 */ u8 unk_2;
+} UnkStruct_8007B2E4;
+
 extern s32 D_800D8260;
 
 typedef struct UnkStruct_801AEA18_s {
@@ -183,9 +189,34 @@ void func_8007B2BC(s32 arg0, UnkStruct_8007B2BC* arg1) {
     arg1->unk2 = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B2E4.s")
+s32 func_8007B2E4(UnkStruct_8007B2E4* arg0) {
+    u8 new_var1 = arg0->unk_0;
+    u8 new_var2 = arg0->unk_1;
+    u8 new_var3 = arg0->unk_2;
+    u32 var_a2 = ((new_var1 << 0x10) + (new_var2 << 8)) + new_var3;
+    if (var_a2 == 0xFFFFFF) {
+        var_a2 = -1;
+    }
+    return var_a2;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B31C.s")
+extern s8 D_801AEA20;
+extern s8 D_801AEA21;
+extern s8 D_801AEA22;
+extern s8 D_801AEA23;
+extern s8 D_801AEA24;
+extern s32 D_801CB288;
+extern s32 D_801CB28C;
+extern s32 D_801CB290;
+extern s32 D_801CB294;
+
+void func_8007B31C(void) {
+    D_801AEA24 = D_801CB280;
+    D_801AEA20 = (s8) D_801CB288;
+    D_801AEA21 = (s8) D_801CB28C;
+    D_801AEA22 = (s8) D_801CB290;
+    D_801AEA23 = (s8) D_801CB294;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B370.s")
 
