@@ -22,9 +22,9 @@ typedef struct UnkStruct_8007AEFC {
 } UnkStruct_8007AEFC;
 
 typedef struct UnkStruct_8007B2E4 {
-/* 0x0 */ u8 unk_0;
-/* 0x1 */ u8 unk_1;
-/* 0x2 */ u8 unk_2;
+    /* 0x0 */ u8 unk_0;
+    /* 0x1 */ u8 unk_1;
+    /* 0x2 */ u8 unk_2;
 } UnkStruct_8007B2E4;
 
 extern s32 D_800D8260;
@@ -189,10 +189,10 @@ void func_8007B2BC(s32 arg0, UnkStruct_8007B2BC* arg1) {
     arg1->unk2 = arg0;
 }
 
-s32 func_8007B2E4(UnkStruct_8007B2E4 *arg0) {
-    u8 new_var1 = arg0->unk0;
-    u8 new_var2 = arg0->unk1;
-    u8 new_var3 = arg0->unk2;
+s32 func_8007B2E4(UnkStruct_8007B2E4* arg0) {
+    u8 new_var1 = arg0->unk_0;
+    u8 new_var2 = arg0->unk_1;
+    u8 new_var3 = arg0->unk_2;
     u32 var_a2 = ((new_var1 << 0x10) + (new_var2 << 8)) + new_var3;
     if (var_a2 == 0xFFFFFF) {
         var_a2 = -1;
