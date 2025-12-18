@@ -200,7 +200,23 @@ s32 func_8007B2E4(UnkStruct_8007B2E4 *arg0) {
     return var_a2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B31C.s")
+extern s8 D_801AEA20;
+extern s8 D_801AEA21;
+extern s8 D_801AEA22;
+extern s8 D_801AEA23;
+extern s8 D_801AEA24;
+extern s32 D_801CB288;
+extern s32 D_801CB28C;
+extern s32 D_801CB290;
+extern s32 D_801CB294;
+
+void func_8007B31C(void) {
+    D_801AEA24 = D_801CB280;
+    D_801AEA20 = (s8) D_801CB288;
+    D_801AEA21 = (s8) D_801CB28C;
+    D_801AEA22 = (s8) D_801CB290;
+    D_801AEA23 = (s8) D_801CB294;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B370.s")
 
