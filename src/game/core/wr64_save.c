@@ -22,9 +22,9 @@ typedef struct UnkStruct_8007AEFC {
 } UnkStruct_8007AEFC;
 
 typedef struct UnkStruct_8007B2E4 {
-    u8 unk0;
-    u8 unk1;
-    u8 unk2;
+/* 0x0 */ u8 unk_0;
+/* 0x1 */ u8 unk_1;
+/* 0x2 */ u8 unk_2;
 } UnkStruct_8007B2E4;
 
 extern s32 D_800D8260;
