@@ -53,7 +53,7 @@ extern s32 D_803DA800;
 void func_80047470(void);
 void func_800474A0(void);
 void func_800474E4(void);
-void* main_thread(void* entry);
+void* Main_Thread(void* entry);
 void* Main_IdleThread(void* entry);
 void main(void);
 void func_80047B00(void);
@@ -82,7 +82,7 @@ void func_800474E4(void) {
     D_800D4604 = 1;
 }
 
-void* main_thread(void* entry) {
+void* Main_Thread(void* entry) {
     void* sp4C;
 
     osCreateMesgQueue(&D_801540B8, &D_80154248, 1);
@@ -102,7 +102,7 @@ void* main_thread(void* entry) {
         osStartThread(&gAudioThread);
     }
 
-    osCreateThread(&D_80153EF0, 5, func_80046DA0, NULL, &D_801531E0, 0xA);
+    osCreateThread(&D_80153EF0, 5, SysMain_Thread, NULL, &D_801531E0, 0xA);
     if (D_800D4624 != 0) {
         osStartThread(&D_80153EF0);
     }
@@ -203,7 +203,7 @@ void* Main_IdleThread(void* entry) {
     osViBlack(false);
     osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON | OS_VI_DIVOT_OFF | OS_VI_GAMMA_DITHER_ON | OS_VI_GAMMA_OFF);
     osCreatePiManager(0x96, &D_801540A0, &D_80154148, 0x40);
-    osCreateThread(&D_80153B90, 3, &main_thread, NULL, &D_801521E0, 0x64);
+    osCreateThread(&D_80153B90, 3, &Main_Thread, NULL, &D_801521E0, 0x64);
     if (D_800D4620) {
         osStartThread(&D_80153B90);
     }

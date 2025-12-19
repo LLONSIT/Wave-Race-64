@@ -23,7 +23,7 @@ void func_i8_802C6E00(void) {
 
 void func_i8_802C6E68(void* arg0) {
     func_i8_802C6FD4(arg0, &D_802C7548, 0xB);
-    D_802C7564 = func_800941D0(&D_802C7548);
+    D_802C7564 = Strlen2(&D_802C7548);
     if (D_802C7564 >= 9) {
         D_802C7564 = 9;
     }
@@ -32,9 +32,9 @@ void func_i8_802C6E68(void* arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6EB8.s")
 
 void func_i8_802C6F4C(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 0x3F;
+    gGameState = 0x3F;
     D_801CE638 = 0xA;
     D_801CE63C = 1;
     D_801CE640 = 0;

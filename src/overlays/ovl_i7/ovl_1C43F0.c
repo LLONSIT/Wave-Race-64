@@ -14,7 +14,7 @@ extern s32 D_i7_802C5D20[];
 Gfx* func_i7_802C5800(Gfx* arg0) {
     if (D_801CE63C != 0) {
         D_801CE63C = 0;
-        if (D_800DAB24 == 0x3C) {
+        if (gGameState == 0x3C) {
             if (D_801CE634 == 4) {
                 gCurrentOptionsMenuItem = 0;
             }
@@ -23,7 +23,7 @@ Gfx* func_i7_802C5800(Gfx* arg0) {
     }
     D_800DAB2C = 0;
     arg0 = func_i7_802C5A18();
-    if (D_800DAB24 == 0x3C) {
+    if (gGameState == 0x3C) {
         if (D_801CE65A->unk0 & (CONT_A | CONT_G | CONT_START)) {
             func_i7_802C5C94(D_i7_802C5D20[gCurrentOptionsMenuItem]);
             func_800C37F4(0x11, 0);
@@ -72,9 +72,9 @@ Gfx* func_i7_802C5800(Gfx* arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i7/ovl_1C43F0/func_i7_802C5A18.s")
 
 void func_i7_802C5C94(s32 arg0) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = arg0;
-    D_800DAB24 = 0x3D;
+    gGameState = 0x3D;
     D_801CE638 = 7;
     D_801CE63C = 1;
     D_801CE640 = 0;

@@ -13,14 +13,14 @@ void func_1C3780_802C5800(void) {
 Gfx* func_1C3780_802C583C(Gfx* gDisplayListHead) {
     if (D_801CE63C != 0) {
         D_801CE63C = 0;
-        if (D_800DAB24 == 0x38) {
+        if (gGameState == 0x38) {
             osViBlack(false);
             return func_80093C44(gDisplayListHead);
         }
     }
     D_800DAB2C = 0;
-    gDisplayListHead = func_1C3780_802C58F4(func_80090F58(func_800949B8(func_8008FB74(gDisplayListHead), gCourseID)));
-    if (D_800DAB24 == 0x38) {
+    gDisplayListHead = func_1C3780_802C58F4(Draw_WaterEffects(func_800949B8(func_8008FB74(gDisplayListHead), gCourseID)));
+    if (gGameState == 0x38) {
         func_1C3780_802C5BD8();
     }
 

@@ -3,7 +3,7 @@
 void func_i14_802C5840(void);
 
 void func_i14_802C5800(void) {
-    if ((D_801CE63C != 0) && (D_800DAB24 == 0x50)) {
+    if ((D_801CE63C != 0) && (gGameState == 0x50)) {
         func_i14_802C5840();
     }
 }
@@ -43,9 +43,9 @@ void func_i14_802C5840(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i14/ovl_1CF180/func_i14_802C5B70.s")
 
 void func_i14_802C5E5C(s32 arg0) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = arg0;
-    D_800DAB24 = 0x51;
+    gGameState = 0x51;
     D_801CE638 = 0xD;
     D_801CE63C = 1;
     D_801CE640 = 0;

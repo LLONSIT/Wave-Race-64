@@ -23,9 +23,9 @@
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC3AC.s")
 
 void func_801EC500(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 0x42;
+    gGameState = 0x42;
     D_801CE638 = 0xC;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -39,9 +39,9 @@ void func_801EC500(void) {
 }
 
 void func_801EC5B4(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 0x44;
+    gGameState = 0x44;
     D_801CE638 = 0xE;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -54,9 +54,9 @@ void func_801EC5B4(void) {
 }
 
 void func_801EC650(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 0x48;
+    gGameState = 0x48;
     D_801CE638 = 0x14;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -69,9 +69,9 @@ void func_801EC650(void) {
 }
 
 void func_801EC6EC(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 0x46;
+    gGameState = 0x46;
     D_801CE638 = 0x10;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -83,9 +83,9 @@ void func_801EC6EC(void) {
 }
 
 void func_801EC780(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 0x40;
+    gGameState = 0x40;
     D_801CE638 = 0xB;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -100,9 +100,9 @@ void func_801EC780(void) {
 void func_801EC830(void) {
     s32 var_v1;
 
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 0x50;
+    gGameState = 0x50;
     D_801CE638 = 0xD;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -132,9 +132,9 @@ void func_801EC830(void) {
 }
 
 void func_801EC944(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 0x5A;
+    gGameState = 0x5A;
     D_801CE638 = 0xF;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -145,9 +145,9 @@ void func_801EC944(void) {
 }
 
 void func_801EC9C8(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 0x64;
+    gGameState = 0x64;
     D_801CE638 = 6;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -172,9 +172,9 @@ void func_801EC9C8(void) {
 }
 
 void func_801ECAF4(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 5;
+    gGameState = 5;
     D_801CE638 = 0x13;
     D_801CE63C = 1;
     D_801CE640 = 0;

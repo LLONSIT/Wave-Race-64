@@ -46,9 +46,9 @@ void func_i15_802C6C1C(void) {
 }
 
 void func_i15_802C6CAC(s32 arg0) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = arg0;
-    D_800DAB24 = 0x67;
+    gGameState = 0x67;
     D_801CE638 = 0x15;
     D_801CE63C = 1;
     D_801CE640 = 0;

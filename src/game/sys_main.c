@@ -1,6 +1,8 @@
 #include "global.h"
 #include "PR/ucode.h"
 
+extern void game_dma_copy(uintptr_t devAddr, void *vAddr, u32 nbytes);
+
 void func_80046850(void) {
     s32 temp_t7 = D_8015194C;
 
@@ -101,9 +103,9 @@ void SysMain_GfxInitBuffers(void) {
 // D_801DAFA0 & D_801DAFA0_2
 // D_1008290 & D_1008290_2
 #if 1
-#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_main/func_80046DA0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_main/SysMain_Thread.s")
 #else
-void* func_80046DA0(void* entry) {
+void* SysMain_Thread(void* entry) {
     s32 pad;
     Matrix mtx; // Guess
     u32* temp_v1;
@@ -152,7 +154,7 @@ void* func_80046DA0(void* entry) {
     D_801519D4 = (u32) (osVirtualToPhysical((void*) 0x8029A200) -
                         (D_80151970 + ALIGN16(D_1008290 - D_1000000) + ALIGN16(D_106FB70 - D_1008290_2)));
 
-    Load_Codeseg();
+    GameLoad_LoadCodeseg();
 
     game_dma_copy((codeseg_ROM_END,  D_80151984, ALIGN16(D_FE320 - codeseg_ROM_END));
     game_dma_copy(D_FE320, D_8015198C, ALIGN16(D_165C00 - D_FE320));
@@ -210,7 +212,7 @@ void* func_80046DA0(void* entry) {
             unk_game_load();
         }
         if (D_801CE63C != 0) {
-            Overlay_Load();
+            GameLoad_LoadOverlay();
         }
 
         func_80097E68();
@@ -232,7 +234,7 @@ void* func_80046DA0(void* entry) {
         //! osViSetMode arrays are likely just one array, so this is likely fake.
 
         if (D_800DAB1C == 3) {
-            if ((D_800DAB24 == 5) && (D_801CE63C != 0)) {
+            if ((gGameState == 5) && (D_801CE63C != 0)) {
                 if (osTvType == 1) {
                     osViSetMode(D_800E89A0);
                 } else {

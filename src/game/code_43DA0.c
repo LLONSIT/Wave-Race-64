@@ -1,4 +1,5 @@
 #include "global.h"
+#include "camera.h"
 
 void func_800895A0(f64* arg0, f64* arg1, f32 arg2, f32 arg3) {
     f64 sp0;
@@ -42,7 +43,25 @@ void func_80089DEC(void) {
     func_8008962C(2000.0f, 315.0f, 90.0f, &D_801C4188);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_80089E24.s")
+extern s32 D_800D9924[];
+extern f32 D_801C4170;
+
+void func_80089E24(void) {
+    switch (gCourseID) {                            /* irregular */
+    case DOLPHIN_PARK:
+        func_8008962C(2000.0f, 5.0f, D_800D9924[gCourseID], &D_801C4170);
+        break;
+    case SUNSET_BAY:
+        func_8008962C(2000.0f, 315.0f, D_800D9924[gCourseID], &D_801C4170);
+        break;
+    case GLACIER_COAST:
+        func_8008962C(2000.0f, 196.0f, D_800D9924[gCourseID], &D_801C4170);
+        break;
+    default:
+        break;
+    }
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_80089F28.s")
 
@@ -64,7 +83,7 @@ void func_80089DEC(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008FB74.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_80090F58.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/Draw_WaterEffects.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_800916B4.s")
 

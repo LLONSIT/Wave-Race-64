@@ -1,7 +1,7 @@
 #include "global.h"
 
 struct unaligned_struct {
-    u16 b[5];
+    u16 pad[5];
 };
 struct UnkStruct_800DAB10 {
     struct unaligned_struct unk0;
@@ -141,10 +141,193 @@ void func_80091F50(void) {
 }
 #endif
 
+#ifdef NEEDS_RODATA_IMPORTED
+void func_80051238(void);                                  /* extern */
+void func_800665B0(void);                                  /* extern */
+void func_8006A264(void);                                  /* extern */
+void func_8006E3A8(void);                                  /* extern */
+void func_8008E794(void);                                  /* extern */
+void func_800926F4(void);                                 /* extern */
+void func_80092938(void);                                  /* extern */
+void func_800AD418(void);                                  /* extern */
+void func_800B2ABC(void);                                  /* extern */
+void func_801DDE48(void);                                  /* extern */
+void func_801E1290(void);                                  /* extern */
+void func_801E3250(void);                                  /* extern */
+void func_801E71A8(void);                                  /* extern */
+void func_801EAFB4(void);                                  /* extern */
+void func_802C7090(void);                                  /* extern */
+void func_802C7608(void);                                  /* extern */
+void func_i3_802C5800(void);                               /* extern */
+extern s32 D_800D47E0;
+extern s8 D_801CB400;
+extern s8 D_801CB401;
+
+void func_800922E4(void) {
+    func_8004A2B4();
+    func_8006A264();
+    D_801CE5F8 = (u8* ) &D_801CB6C8[D_8011F8E0];
+    if (D_801CE63C != 0) {
+        D_800D47E0 = 0;
+        D_801CB400 = 0x23;
+        D_801CB401 = 0x23;
+        if (gGameState == 0x64) {
+            D_801CB400 = 0x32;
+        } else if (gGameState == 0xA) {
+            D_801CB400 = 0x3C;
+        }
+        func_800926F4();
+    }
+    func_80092938();
+    switch (gGameState) {
+    case 0x2:
+    case 0x3:
+    case 0x4:
+    case 0x7:
+    case 0x8:
+    case 0x1E:
+    case 0x1F:
+    case 0x28:
+    case 0x29:
+    case 0x2A:
+    case 0x2B:
+    case 0x2C:
+    case 0x2D:
+    case 0x66:
+    case 0x67:
+        func_80086148();
+        func_800665B0();
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        if (D_801CE638 != 0x15) {
+            func_8006E3A8();
+        }
+        func_800B2ABC();
+        func_800AD418();
+        if (D_801CE638 == 1) {
+            if (gGameState == 0x2D) {
+                func_802C7608();
+            } else {
+                func_i3_802C5800();
+            }
+        } else if (D_801CE638 == 8) {
+            func_i3_802C5800();
+        } else if (D_801CE638 == 0x15) {
+            func_i3_802C5800();
+        }
+        break;
+    case 0x32:
+    case 0x33:
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        func_i3_802C5800();
+        break;
+    case 0x50:
+    case 0x51:
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        func_i3_802C5800();
+        break;
+    case 0xA:
+    case 0xB:
+        func_80086148();
+        func_800665B0();
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        func_8006E3A8();
+        func_800B2ABC();
+        func_i3_802C5800();
+        break;
+    case 0x14:
+    case 0x15:
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        func_i3_802C5800();
+        break;
+    case 0x34:
+    case 0x35:
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        func_i3_802C5800();
+        break;
+    case 0x3E:
+    case 0x3F:
+        func_80086148();
+        func_800665B0();
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        func_8006E3A8();
+        func_800B2ABC();
+        func_i3_802C5800();
+        break;
+    case 0x42:
+    case 0x43:
+        func_i3_802C5800();
+        break;
+    case 0x44:
+    case 0x45:
+        func_i3_802C5800();
+        break;
+    case 0x40:
+    case 0x41:
+        func_i3_802C5800();
+        break;
+    case 0x5A:
+    case 0x5B:
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        func_802C7090();
+        break;
+    case 0x64:
+    case 0x65:
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        func_801E1290();
+        break;
+    case 0x5:
+    case 0x6:
+        func_i3_802C5800();
+        break;
+    case 0x36:
+    case 0x37:
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        break;
+    case 0x38:
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        func_i3_802C5800();
+        break;
+    case 0x39:
+        func_801DDE48();
+        func_80051238();
+        func_8008E794();
+        func_801E3250();
+        break;
+    }
+    func_801E5470();
+    func_801EAFB4();
+    func_801E71A8();
+}
+#else
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800922E4.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800926F4.s")
 
+// Matched but needs struct migration
+// https://decomp.me/scratch/2lS51
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80092938.s")
 
 #ifndef NEEDS_RODATA_IMPORTED
@@ -159,14 +342,14 @@ Gfx* func_80092CF0(Gfx* dList) {
     D_80228A40 = 0;
 
     //! FAKE:
-    switch (D_800DAB24) {
+    switch (gGameState) {
         case 1:
             break;
     }
 
     gSPSegment(dList++, 0x05, osVirtualToPhysical(D_801AE948));
 
-    switch (D_800DAB24) {
+    switch (gGameState) {
         case 0x0:
             D_801CE62A = 0;
 
@@ -433,7 +616,7 @@ Gfx* func_8009328C(Gfx* arg0) {
         if ((D_801CE638 != 4) && (D_801CE638 != 0xA)) {
             arg0 = func_800ADF90(arg0);
         }
-        arg0 = func_80090F58(arg0);
+        arg0 = Draw_WaterEffects(arg0);
         arg0 = func_80069594(arg0);
         arg0 = func_80068538(arg0);
         configSignalRectangle(&arg0);
@@ -447,7 +630,7 @@ Gfx* func_8009328C(Gfx* arg0) {
         D_800DAB2C = 0;
     }
     arg0 = func_80051538(arg0);
-    if ((D_800DAB24 != 0x2D) || (D_80228AA4 != 2)) {
+    if ((gGameState != 0x2D) || (D_80228AA4 != 2)) {
         func_801FC4D4(&arg0);
     }
     return arg0;
@@ -463,7 +646,7 @@ Gfx* func_800933C4(Gfx* arg0) {
     if ((D_801CE638 != 4) && (D_801CE638 != 10)) {
         arg0 = func_800ADF90(arg0);
     }
-    arg0 = func_80090F58(arg0);
+    arg0 = Draw_WaterEffects(arg0);
     arg0 = func_80069594(arg0);
     arg0 = func_80068538(arg0);
     configSignalRectangle(&arg0);
@@ -518,7 +701,7 @@ Gfx* func_80093C44(Gfx* gdl) {
     return gdl;
 }
 
-Gfx* func_80093DBC(Gfx* gfxPtr, u16 arg1, u16 arg2, u16 arg3) {
+Gfx* func_80093DBC(Gfx* gfxPtr, u16 red, u16 green, u16 blue) {
     s32 i;
 
     gSPClearGeometryMode(gfxPtr++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
@@ -532,10 +715,9 @@ Gfx* func_80093DBC(Gfx* gfxPtr, u16 arg1, u16 arg2, u16 arg3) {
     gDPSetScissor(gfxPtr++, G_SC_NON_INTERLACE, 8, 20, 310, 218);
 
     for (i = 0; i < 3; i++) {
-
         gDPPipeSync(gfxPtr++);
         gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(D_801542C0[i]));
-        gDPSetFillColor(gfxPtr++, (GPACK_RGBA5551(arg1, arg2, arg3, 1) << 0x10) | GPACK_RGBA5551(arg1, arg2, arg3, 1));
+        gDPSetFillColor(gfxPtr++, (GPACK_RGBA5551(red, green, blue, 1) << 0x10) | GPACK_RGBA5551(red, green, blue, 1));
         gDPFillRectangle(gfxPtr++, 8, 20, 310, 219);
     }
 
@@ -613,29 +795,54 @@ void func_800940C4(s32 arg0, s32 arg1) {
     }
 }
 
-s32 func_800941D0(s8* arg0) {
+s32 Strlen2(s8* str) {
     s32 len;
 
     len = 0;
 
-    while (*arg0++) {
+    while (*str++) {
         len++;
     }
 
     return len;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094200.s")
+Gfx* func_801E9858(Gfx*, s32, s8*, s32, s32);       /* extern */
+
+// Rodata
+extern char D_800EAC74; // "%d"
+
+Gfx* func_80094200(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 var_s0;    
+    s32 var_s1;
+    s32 var_s2;
+    u8 buf[4];
+    s32 var_v0;
+
+    
+    var_v0 = 0xC;
+    if (arg1 == 0) {
+        var_v0 = 0x12;
+    }
+    var_s0 = arg2;
+    
+    for (var_s1 = 0, var_s2 = arg3 + var_v0 * 4; var_s1 < 5; var_s1++, var_s2 += -var_v0, var_s0 /= 10) {
+        sprintf(buf, &D_800EAC74, var_s0 % 10);
+        arg0 = func_801E9858(arg0, arg1, buf, var_s2, arg4);
+    } 
+    
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094338.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800948DC.s")
 
-Gfx* func_800949B8(Gfx* gdl, s32 arg1) {
-    RGB* temp = &short_RGB[arg1];
+Gfx* func_800949B8(Gfx* gdl, s32 courseId) {
+    RGB* temp = &short_RGB[courseId];
 
     gSPDisplayList(gdl++, D_106F8A0);
-    gDPSetPrimColor(gdl++, 0, 0, temp->r, temp->g, temp->b, 0xFF);
+    gDPSetPrimColor(gdl++, 0, 0, temp->r, temp->g, temp->b, 255);
     gDPFillRectangle(gdl++, 8, 20, 311, 219);
 
     return gdl;
@@ -644,12 +851,12 @@ Gfx* func_800949B8(Gfx* gdl, s32 arg1) {
 extern Gfx D_106F8E8[];
 extern Vtx* D_800DAA90[];
 
-Gfx* func_80094A44(Gfx* gDisplayList, s32 arg1) {
-    if ((arg1 < 0) || (arg1 >= 9)) {
-        arg1 = 0;
+Gfx* func_80094A44(Gfx* gDisplayList, s32 courseId) {
+    if ((courseId < 0) || (courseId >= 9)) {
+        courseId = 0;
     }
     gSPDisplayList(gDisplayList++, D_106F8E8);
-    gSPVertex(gDisplayList++, D_800DAA90[arg1], 4, 0);
+    gSPVertex(gDisplayList++, D_800DAA90[courseId], 4, 0);
     gSP1Triangle(gDisplayList++, 0, 3, 1, 0);
     gSP1Triangle(gDisplayList++, 0, 2, 3, 0);
     return gDisplayList;
@@ -662,9 +869,9 @@ void func_80094ABC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094ACC.s")
 
 void func_80094FE8(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 0;
+    gGameState = 0;
     D_801CE638 = 0x11;
     D_801CE63C = 1;
     D_801CE640 = 0;

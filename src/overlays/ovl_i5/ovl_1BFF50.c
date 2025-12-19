@@ -1,7 +1,7 @@
 #include "common.h"
 
 void func_i5_802C5800(void) {
-    if ((D_801CE63C != 0) && (D_800DAB24 == 52)) {
+    if ((D_801CE63C != 0) && (gGameState == 52)) {
         func_80094ACC();
         func_i5_802C5A98();
     }
