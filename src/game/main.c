@@ -59,7 +59,7 @@ void main(void);
 void func_80047B00(void);
 void func_800980C8(void);
 void func_800980D0(void*);
-void* Main_AudioThread(void* entry);
+void Main_AudioThread(void* entry);
 
 void func_80047470(void) {
     osSpTaskYield();
@@ -176,7 +176,7 @@ void* Main_Thread(void* entry) {
     }
 }
 
-void* Main_IdleThread(void* entry) {
+void Main_IdleThread(void* entry) {
     D_801542C0[0] = (s32) &D_8038F800;
     D_801542C0[1] = &D_803B5000;
     D_801542C0[2] = &D_803DA800;
