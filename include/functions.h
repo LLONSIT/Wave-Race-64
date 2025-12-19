@@ -98,7 +98,7 @@ void AudioThread_QueueCmdF32(u32 opArgs, f32 val);
 Gfx* func_8008FB74(Gfx* arg0);
 Gfx* Draw_WaterEffects(Gfx*);
 Gfx* func_i4_802C5CDC(Gfx*);
-Gfx* func_800949B8(Gfx*, int arg1);
+Gfx* func_800949B8(Gfx*, int courseId);
 void func_801E355C(void);
 Gfx* func_801E3698(Gfx*);
 Gfx* func_801E34F8(Gfx* arg0);

@@ -12,7 +12,7 @@ f32 func_801E31A0(void) {
     f32 var_f2;
     s32 var_v0;
     var_v0 = gControllerOne[D_80154330].unk8;
-    
+
     if (var_v0 < 0) {
         var_v0 = -var_v0;
     }
@@ -22,7 +22,7 @@ f32 func_801E31A0(void) {
     } else if (var_v0 < 0xC) {
         var_v0 = 0xC;
     }
-    
+
     var_v0 -= 0xC;
     var_f2 = (2.0f * var_v0) / temp;
     if (var_f2 > 2.0f) {

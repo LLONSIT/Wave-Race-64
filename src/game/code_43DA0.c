@@ -32,8 +32,7 @@ extern s16 D_800D9890;
 extern s32 D_800D9894;
 extern f32 D_801CB160;
 
-
-void *func_80091DBC(Gfx *arg0);
+void* func_80091DBC(Gfx* arg0);
 
 void func_800895A0(f64* arg0, f64* arg1, f32 arg2, f32 arg3) {
     f64 sp0;
@@ -209,7 +208,7 @@ Gfx* Draw_WaterEffects(Gfx* gdl) {
 
 #ifdef NEEDS_DATA
 void* func_80091DBC(Gfx* gdl) {
-    static s32 D_800DA914 = {0};
+    static s32 D_800DA914 = { 0 };
 
     D_800DA914 = (D_800DA914 % 32) + 1;
     if ((D_800DA914 == 0x1C) || (D_800DA914 == 0x1F)) {

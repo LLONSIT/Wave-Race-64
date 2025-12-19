@@ -1,7 +1,7 @@
 #include "common.h"
 #include "segment.h"
 
-extern void *D_8015196C;
+extern void* D_8015196C;
 extern u8 D_80227A60[];
 extern u8 D_80228E10[];
 extern u8 D_80227A60[];

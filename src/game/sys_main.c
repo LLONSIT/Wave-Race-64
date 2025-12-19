@@ -1,7 +1,7 @@
 #include "global.h"
 #include "PR/ucode.h"
 
-extern void game_dma_copy(uintptr_t devAddr, void *vAddr, u32 nbytes);
+extern void game_dma_copy(uintptr_t devAddr, void* vAddr, u32 nbytes);
 
 void func_80046850(void) {
     s32 temp_t7 = D_8015194C;

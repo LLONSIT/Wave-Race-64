@@ -19,7 +19,8 @@ Gfx* func_1C3780_802C583C(Gfx* gDisplayListHead) {
         }
     }
     D_800DAB2C = 0;
-    gDisplayListHead = func_1C3780_802C58F4(Draw_WaterEffects(func_800949B8(func_8008FB74(gDisplayListHead), gCourseID)));
+    gDisplayListHead =
+        func_1C3780_802C58F4(Draw_WaterEffects(func_800949B8(func_8008FB74(gDisplayListHead), gCourseID)));
     if (gGameState == 0x38) {
         func_1C3780_802C5BD8();
     }

@@ -142,23 +142,23 @@ void func_80091F50(void) {
 #endif
 
 #ifdef NEEDS_RODATA_IMPORTED
-void func_80051238(void);                                  /* extern */
-void func_800665B0(void);                                  /* extern */
-void func_8006A264(void);                                  /* extern */
-void func_8006E3A8(void);                                  /* extern */
-void func_8008E794(void);                                  /* extern */
-void func_800926F4(void);                                 /* extern */
-void func_80092938(void);                                  /* extern */
-void func_800AD418(void);                                  /* extern */
-void func_800B2ABC(void);                                  /* extern */
-void func_801DDE48(void);                                  /* extern */
-void func_801E1290(void);                                  /* extern */
-void func_801E3250(void);                                  /* extern */
-void func_801E71A8(void);                                  /* extern */
-void func_801EAFB4(void);                                  /* extern */
-void func_802C7090(void);                                  /* extern */
-void func_802C7608(void);                                  /* extern */
-void func_i3_802C5800(void);                               /* extern */
+void func_80051238(void);    /* extern */
+void func_800665B0(void);    /* extern */
+void func_8006A264(void);    /* extern */
+void func_8006E3A8(void);    /* extern */
+void func_8008E794(void);    /* extern */
+void func_800926F4(void);    /* extern */
+void func_80092938(void);    /* extern */
+void func_800AD418(void);    /* extern */
+void func_800B2ABC(void);    /* extern */
+void func_801DDE48(void);    /* extern */
+void func_801E1290(void);    /* extern */
+void func_801E3250(void);    /* extern */
+void func_801E71A8(void);    /* extern */
+void func_801EAFB4(void);    /* extern */
+void func_802C7090(void);    /* extern */
+void func_802C7608(void);    /* extern */
+void func_i3_802C5800(void); /* extern */
 extern s32 D_800D47E0;
 extern s8 D_801CB400;
 extern s8 D_801CB401;
@@ -166,7 +166,7 @@ extern s8 D_801CB401;
 void func_800922E4(void) {
     func_8004A2B4();
     func_8006A264();
-    D_801CE5F8 = (u8* ) &D_801CB6C8[D_8011F8E0];
+    D_801CE5F8 = (u8*) &D_801CB6C8[D_8011F8E0];
     if (D_801CE63C != 0) {
         D_800D47E0 = 0;
         D_801CB400 = 0x23;
@@ -180,141 +180,141 @@ void func_800922E4(void) {
     }
     func_80092938();
     switch (gGameState) {
-    case 0x2:
-    case 0x3:
-    case 0x4:
-    case 0x7:
-    case 0x8:
-    case 0x1E:
-    case 0x1F:
-    case 0x28:
-    case 0x29:
-    case 0x2A:
-    case 0x2B:
-    case 0x2C:
-    case 0x2D:
-    case 0x66:
-    case 0x67:
-        func_80086148();
-        func_800665B0();
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        if (D_801CE638 != 0x15) {
-            func_8006E3A8();
-        }
-        func_800B2ABC();
-        func_800AD418();
-        if (D_801CE638 == 1) {
-            if (gGameState == 0x2D) {
-                func_802C7608();
-            } else {
+        case 0x2:
+        case 0x3:
+        case 0x4:
+        case 0x7:
+        case 0x8:
+        case 0x1E:
+        case 0x1F:
+        case 0x28:
+        case 0x29:
+        case 0x2A:
+        case 0x2B:
+        case 0x2C:
+        case 0x2D:
+        case 0x66:
+        case 0x67:
+            func_80086148();
+            func_800665B0();
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
+            if (D_801CE638 != 0x15) {
+                func_8006E3A8();
+            }
+            func_800B2ABC();
+            func_800AD418();
+            if (D_801CE638 == 1) {
+                if (gGameState == 0x2D) {
+                    func_802C7608();
+                } else {
+                    func_i3_802C5800();
+                }
+            } else if (D_801CE638 == 8) {
+                func_i3_802C5800();
+            } else if (D_801CE638 == 0x15) {
                 func_i3_802C5800();
             }
-        } else if (D_801CE638 == 8) {
+            break;
+        case 0x32:
+        case 0x33:
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
             func_i3_802C5800();
-        } else if (D_801CE638 == 0x15) {
+            break;
+        case 0x50:
+        case 0x51:
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
             func_i3_802C5800();
-        }
-        break;
-    case 0x32:
-    case 0x33:
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        func_i3_802C5800();
-        break;
-    case 0x50:
-    case 0x51:
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        func_i3_802C5800();
-        break;
-    case 0xA:
-    case 0xB:
-        func_80086148();
-        func_800665B0();
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        func_8006E3A8();
-        func_800B2ABC();
-        func_i3_802C5800();
-        break;
-    case 0x14:
-    case 0x15:
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        func_i3_802C5800();
-        break;
-    case 0x34:
-    case 0x35:
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        func_i3_802C5800();
-        break;
-    case 0x3E:
-    case 0x3F:
-        func_80086148();
-        func_800665B0();
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        func_8006E3A8();
-        func_800B2ABC();
-        func_i3_802C5800();
-        break;
-    case 0x42:
-    case 0x43:
-        func_i3_802C5800();
-        break;
-    case 0x44:
-    case 0x45:
-        func_i3_802C5800();
-        break;
-    case 0x40:
-    case 0x41:
-        func_i3_802C5800();
-        break;
-    case 0x5A:
-    case 0x5B:
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        func_802C7090();
-        break;
-    case 0x64:
-    case 0x65:
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        func_801E1290();
-        break;
-    case 0x5:
-    case 0x6:
-        func_i3_802C5800();
-        break;
-    case 0x36:
-    case 0x37:
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        break;
-    case 0x38:
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        func_i3_802C5800();
-        break;
-    case 0x39:
-        func_801DDE48();
-        func_80051238();
-        func_8008E794();
-        func_801E3250();
-        break;
+            break;
+        case 0xA:
+        case 0xB:
+            func_80086148();
+            func_800665B0();
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
+            func_8006E3A8();
+            func_800B2ABC();
+            func_i3_802C5800();
+            break;
+        case 0x14:
+        case 0x15:
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
+            func_i3_802C5800();
+            break;
+        case 0x34:
+        case 0x35:
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
+            func_i3_802C5800();
+            break;
+        case 0x3E:
+        case 0x3F:
+            func_80086148();
+            func_800665B0();
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
+            func_8006E3A8();
+            func_800B2ABC();
+            func_i3_802C5800();
+            break;
+        case 0x42:
+        case 0x43:
+            func_i3_802C5800();
+            break;
+        case 0x44:
+        case 0x45:
+            func_i3_802C5800();
+            break;
+        case 0x40:
+        case 0x41:
+            func_i3_802C5800();
+            break;
+        case 0x5A:
+        case 0x5B:
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
+            func_802C7090();
+            break;
+        case 0x64:
+        case 0x65:
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
+            func_801E1290();
+            break;
+        case 0x5:
+        case 0x6:
+            func_i3_802C5800();
+            break;
+        case 0x36:
+        case 0x37:
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
+            break;
+        case 0x38:
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
+            func_i3_802C5800();
+            break;
+        case 0x39:
+            func_801DDE48();
+            func_80051238();
+            func_8008E794();
+            func_801E3250();
+            break;
     }
     func_801E5470();
     func_801EAFB4();
@@ -807,30 +807,29 @@ s32 Strlen2(s8* str) {
     return len;
 }
 
-Gfx* func_801E9858(Gfx*, s32, s8*, s32, s32);       /* extern */
+Gfx* func_801E9858(Gfx*, s32, s8*, s32, s32); /* extern */
 
 // Rodata
 extern char D_800EAC74; // "%d"
 
 Gfx* func_80094200(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    s32 var_s0;    
+    s32 var_s0;
     s32 var_s1;
     s32 var_s2;
     u8 buf[4];
     s32 var_v0;
 
-    
     var_v0 = 0xC;
     if (arg1 == 0) {
         var_v0 = 0x12;
     }
     var_s0 = arg2;
-    
+
     for (var_s1 = 0, var_s2 = arg3 + var_v0 * 4; var_s1 < 5; var_s1++, var_s2 += -var_v0, var_s0 /= 10) {
         sprintf(buf, &D_800EAC74, var_s0 % 10);
         arg0 = func_801E9858(arg0, arg1, buf, var_s2, arg4);
-    } 
-    
+    }
+
     return arg0;
 }
 
