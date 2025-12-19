@@ -1,20 +1,31 @@
 #include "common.h"
 #include "segment.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_52990/Load_Codeseg.s")
-
-extern s32 D_800DAB24;
+extern void* D_8015196C;
+extern u8 D_80227A60[];
+extern u8 D_80228E10[];
+extern u8 D_80227A60[];
+extern u8 D_801FC840[];
+extern s32 gGameState;
 extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
 extern OSIoMesg D_801542A0;
 
-void Overlay_Load(void) {
+extern void game_dma_copy();
+
+void GameLoad_LoadCodeseg(void) {
+    osInvalICache(codeseg_VRAM, D_801FC840 - codeseg_VRAM);
+    game_dma_copy(codeseg_ROM_START, D_8015196C, ALIGN16(codeseg_ROM_END - codeseg_ROM_START));
+    bzero(D_80227A60, D_80228E10 - D_80227A60);
+}
+
+void GameLoad_LoadOverlay(void) {
     s32 flag = 0;
     s32 pad;
     s32 size;
     Overlay* ovl;
 
-    switch (D_800DAB24) {
+    switch (gGameState) {
         case 0x5:
             ovl = &gOverlayTable[0];
             flag = 1;

@@ -12,15 +12,16 @@ extern s32 D_802C5EF0;
 Gfx* func_1C3D00_802C5800(Gfx* gDisplayListHead) {
     if (D_801CE63C != 0) {
         D_801CE63C = 0;
-        if (D_800DAB24 == 0x36) {
+        if (gGameState == 0x36) {
             D_802C5EF0 = 0;
             osViBlack(false);
             return func_80093C44(gDisplayListHead);
         }
     }
     D_800DAB2C = 0;
-    gDisplayListHead = func_1C3D00_802C58DC(func_80090F58(func_800949B8(func_8008FB74(gDisplayListHead), gCourseID)));
-    if (D_800DAB24 == 0x36) {
+    gDisplayListHead =
+        func_1C3D00_802C58DC(Draw_WaterEffects(func_800949B8(func_8008FB74(gDisplayListHead), gCourseID)));
+    if (gGameState == 0x36) {
         if (D_80228A16 == 1) {
             func_800C30F8();
         }
@@ -34,9 +35,9 @@ Gfx* func_1C3D00_802C5800(Gfx* gDisplayListHead) {
 #pragma GLOBAL_ASM("asm/nonmatchings/seg_1C3D00/func_1C3D00_802C58DC.s")
 
 void func_1C3D00_802C5C4C(s32 arg0) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = arg0;
-    D_800DAB24 = 0x37;
+    gGameState = 0x37;
     D_801CE638 = 0x12;
     D_801CE63C = 1;
     D_801CE640 = 0;

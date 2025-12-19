@@ -41,6 +41,8 @@ extern s32 D_801CE738;
 void func_80095CE8(u8* arg0, s32 arg1);
 void func_800967EC(u32* arg0, s32 arg1);
 
+extern void game_dma_copy(uintptr_t devAddr, void* vAddr, u32 nbytes);
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/unk_game_load.s")
 
 void func_80095A28(DmaEntry* entry) {
@@ -59,7 +61,7 @@ void func_80095A28(DmaEntry* entry) {
         if (flag == 6) {
             func_80097F74(entry->segRomStart, D_800D45EC, size);
         } else {
-            if (D_800DAB24 == 1) {
+            if (gGameState == 1) {
                 func_80097F74(entry->segRomStart, 0x80360000, size);
             } else {
                 func_80097F74(entry->segRomStart, 0x802A0000, size);
@@ -83,7 +85,7 @@ void func_80095A28(DmaEntry* entry) {
 
             data += entry->offset;
 
-            if (D_800DAB24 == 1) {
+            if (gGameState == 1) {
                 Mio0_Decompress((u8*) 0x80360000, data);
             } else {
                 Mio0_Decompress((u8*) 0x802A0000, data);

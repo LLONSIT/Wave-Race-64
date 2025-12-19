@@ -1,7 +1,7 @@
 #include "global.h"
 
 void func_i1_802C5800(void) {
-    if ((D_801CE63C != 0) && (D_800DAB24 == 0x28)) {
+    if ((D_801CE63C != 0) && (gGameState == 0x28)) {
         func_i1_802C587C();
     }
     if ((gCourseID == 0) && (D_801CE608 == 4) && (D_800DAB64 == 0)) {
@@ -75,9 +75,9 @@ void func_i1_802C6B00(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6FE0.s")
 
 void func_i1_802C7394(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 44;
+    gGameState = 44;
     D_801CE638 = 1;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -97,9 +97,9 @@ void func_i1_802C7394(void) {
 }
 
 void func_i1_802C744C(s32 arg0) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = arg0;
-    D_800DAB24 = 43;
+    gGameState = 43;
     D_801CE638 = 1;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -140,9 +140,9 @@ void func_i1_802C744C(s32 arg0) {
 }
 
 void func_i1_802C7570(s32 arg0) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = arg0;
-    D_800DAB24 = 0x2D;
+    gGameState = 0x2D;
     D_801CE638 = 1;
     D_801CE63C = 1;
     D_801CE640 = 0;
@@ -280,13 +280,13 @@ Gfx* func_i1_802C913C(Gfx* dList) {
     if (D_801CE63C != 0) {
         D_801CE63C = 0;
 
-        if (D_800DAB24 == 7) {
+        if (gGameState == 7) {
             D_i1_802C9440 = 0;
             return func_80093C44(gfxPtr);
         }
     }
 
-    if ((D_80228A16 == 1) && (D_800DAB24 == 7)) {
+    if ((D_80228A16 == 1) && (gGameState == 7)) {
         func_800BFDD0(&D_80192610);
         func_800BFEF8(&D_80192630);
     }
@@ -324,7 +324,7 @@ Gfx* func_i1_802C913C(Gfx* dList) {
         gDPSetScissor(dList++, G_SC_NON_INTERLACE, 8, 12, 311, 229);
     }
 
-    if (D_800DAB24 == 7) {
+    if (gGameState == 7) {
         D_i1_802C9570++;
         if (gGameModes == GMODE_STUNT) {
             var_v0 = 600;
@@ -342,9 +342,9 @@ Gfx* func_i1_802C913C(Gfx* dList) {
 }
 
 void func_i1_802C9380(s32 arg0) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = arg0;
-    D_800DAB24 = 8;
+    gGameState = 8;
     D_801CE638 = 0;
     D_801CE63C = 1;
     D_801CE640 = 0;

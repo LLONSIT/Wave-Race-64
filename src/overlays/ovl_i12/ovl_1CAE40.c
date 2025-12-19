@@ -3,7 +3,7 @@
 Gfx* func_i12_802C5800(Gfx* dList) {
     if (D_801CE63C != 0) {
         D_801CE63C = 0;
-        if (D_800DAB24 == 0x46) {
+        if (gGameState == 0x46) {
             return func_80093C44(dList);
         }
     }
@@ -12,7 +12,7 @@ Gfx* func_i12_802C5800(Gfx* dList) {
 
     dList = func_i12_802C58A0(dList);
 
-    if (D_800DAB24 == 0x46) {
+    if (gGameState == 0x46) {
         func_i12_802C5F6C();
     } else if (D_80228A16 == 1) {
         func_801EC304();
@@ -24,9 +24,9 @@ Gfx* func_i12_802C5800(Gfx* dList) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i12/ovl_1CAE40/func_i12_802C58A0.s")
 
 void func_i12_802C5EE4(s32 arg0) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = arg0;
-    D_800DAB24 = 0x47;
+    gGameState = 0x47;
     D_801CE638 = 0x10;
     D_801CE63C = 1;
     D_801CE640 = 0;

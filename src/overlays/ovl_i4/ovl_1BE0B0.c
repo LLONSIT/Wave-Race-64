@@ -3,7 +3,7 @@
 void func_i4_802C7344(void);
 
 void func_i4_802C5800(void) {
-    if ((D_801CE63C != 0) && (D_800DAB24 == 20)) {
+    if ((D_801CE63C != 0) && (gGameState == 20)) {
         func_i4_802C58F8();
     }
 
@@ -23,20 +23,20 @@ Gfx* func_i4_802C5B78(Gfx* dList) {
 
     if (D_801CE63C != 0) {
         D_801CE63C = 0;
-        if (D_800DAB24 == 0x14) {
+        if (gGameState == 0x14) {
             osViBlack(0);
             return func_80093C44(dList);
         }
     }
     D_802C76A8 = D_800DA9D0;
     D_800DAB2C = 0;
-    temp_v0 = func_i4_802C5CDC(func_80090F58(func_800949B8(func_8008FB74(dList), gCourseID)));
+    temp_v0 = func_i4_802C5CDC(Draw_WaterEffects(func_800949B8(func_8008FB74(dList), gCourseID)));
 
     dList = temp_v0 + 1;
 
     gSPDisplayList(temp_v0++, &D_106F168);
 
-    if (D_800DAB24 == 20) {
+    if (gGameState == 20) {
         func_i4_802C6BAC();
     } else if (D_80228A16 == 1) {
         switch (D_801CE630) {
@@ -125,9 +125,9 @@ void func_i4_802C7344(void) {
 }
 
 void func_i4_802C7474(s32 arg0) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = arg0;
-    D_800DAB24 = 21;
+    gGameState = 21;
     D_801CE638 = 5;
     D_801CE63C = 1;
     D_801CE640 = 0;

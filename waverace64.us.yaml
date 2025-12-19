@@ -86,7 +86,7 @@ segments:
       - [0x43DA0, c, game/code_43DA0]
       - [0x4C750, c, game/code_4C750]
       - [0x4F850, c, game/code_4F850]
-      - [0x52990, c, game/code_52990]
+      - [0x52990, c, game/wr64_game_load]
       - [0x52CD0, c, game/code_52CD0]
       - [0x68A10, c, game/code_68A10]
       - [0x6EF50, c, game/code_6EF50]
@@ -262,7 +262,7 @@ segments:
       - [0xA53B0, data] # could be rodata from code_4C750 but it's weird, i can't make it compile
       - [0xA5630, data] # rodata from code_4C750 too?
       - [0xA5950, .rodata, game/code_4F850]
-      - [0xA5B20, .rodata, game/code_52990]
+      - [0xA5B20, .rodata, game/wr64_game_load]
       - [0xA5CC0, data] # rodata from code_52CD0, introduces a gap if .rodata'd
       - [0xA6350, .rodata, game/code_68A10]
 

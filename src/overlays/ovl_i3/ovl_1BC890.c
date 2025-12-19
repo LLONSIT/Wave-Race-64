@@ -16,9 +16,9 @@ void func_i3_802C5AF0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i3/ovl_1BC890/func_i3_802C6344.s")
 
 void func_i3_802C6E9C(void) {
-    D_801CE634 = D_800DAB24;
+    D_801CE634 = gGameState;
     D_801CE630 = 0;
-    D_800DAB24 = 31;
+    gGameState = 31;
     D_801CE638 = 8;
     D_801CE63C = 1;
     D_801CE640 = 0;
