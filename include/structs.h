@@ -354,10 +354,13 @@ typedef struct UnkStruct_802C96A8 {
     /* 0x04 */ char pad_4[0x20];
 } UnkStruct_802C96A8; // size = 0x24;
 
-typedef struct GfxPool {
-    /* 0x00000 */ Gfx dList[0xC00];
-    /* 0x00C00*/ char pad_0C00[0x12FE8];
-} GfxPool; // size = 0x18FE8
+typedef struct GfxPool_s {
+    /* 0x0 */ Gfx dList[0xC00];
+    /* 0xC00 */ char pad[0x8008];
+    /* 0xE008 */ MtxF unkE008[2];
+    /* 0xE088 */ MtxF unkE088[1];
+    /* 0xE0C8 */ char pad_0C00[0xAF20];
+} GfxPool;
 
 typedef struct UnkStruct_801CEFF8 {
     /* 0x00 */ Vec3f vec1;

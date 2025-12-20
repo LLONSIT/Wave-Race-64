@@ -1,6 +1,15 @@
 #include "global.h"
 #include "camera.h"
 
+typedef struct UnkStruct_8008962C_s {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+} UnkStruct_8008962C; // Might be the same as UnkStruct_801CEFF8
+
 typedef struct UnkStruct_801CB058_s {
     /* 0x000 */ char pad0[0x88];
     /* 0x088 */ s32 unk88;        /* inferred */
@@ -11,6 +20,27 @@ typedef struct UnkStruct_801CB058_s {
     /* 0x09C */ s32 unk9C;        /* inferred */
     /* 0x0A0 */ char padA0[0x70]; /* maybe part of unk9C[0x1D]? */
 } UnkStruct_801CB058;             /* size = 0x110 */
+
+typedef struct UnkStruct_801C41A0_s {
+    f32 fwork[0xD0];
+} UnkStruct_801C41A0;
+
+extern UnkStruct_8008962C D_801C4278;
+extern UnkStruct_8008962C D_801C4290;
+extern UnkStruct_8008962C D_801C42A8;
+extern UnkStruct_8008962C D_801C42C0;
+extern UnkStruct_8008962C D_801C42D8;
+extern UnkStruct_8008962C D_801C42F0;
+extern UnkStruct_8008962C D_801C4308;
+extern UnkStruct_8008962C D_801C4320;
+extern UnkStruct_8008962C D_801C4338;
+extern UnkStruct_8008962C D_801C4350;
+extern UnkStruct_8008962C D_801C4368;
+extern UnkStruct_8008962C D_801C4380;
+extern UnkStruct_8008962C D_801C4398;
+extern UnkStruct_8008962C D_801C43B0;
+extern UnkStruct_8008962C D_801C43C8;
+extern UnkStruct_8008962C D_801C43E0;
 
 extern UnkStruct_801CB058 D_801CB058[];
 extern s32 D_800DA914;
@@ -31,6 +61,10 @@ extern u16 D_8000400[];
 extern s16 D_800D9890;
 extern s32 D_800D9894;
 extern f32 D_801CB160;
+extern s32 D_800D9924[];
+extern f32 D_801C4170;
+
+extern UnkStruct_801C41A0 D_801C41A0;
 
 void* func_80091DBC(Gfx* arg0);
 
@@ -51,7 +85,90 @@ void func_800895A0(f64* arg0, f64* arg1, f32 arg2, f32 arg3) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008962C.s")
+f32 func_8008962C(f32 arg0, f32 arg1, f32 arg2, UnkStruct_8008962C* arg3) {
+    Matrix spD0;
+    Matrix sp90;
+    camera_unk_1* cam;
+    f64 sp80;
+    f64 sp78;
+    f64 sp70;
+    f64 temp_fv1;
+    f64 temp_fa0;
+    f64 temp_fv0;
+    f64 var_ft4 = 0;
+    f32 temp_fv1_1;
+    f32 temp_ft4;
+    UNUSED s32 pad;
+
+    cam = &gCameraPerspective[D_80223930];
+    temp_fv1_1 = cam->unkF0;
+    temp_ft4 = cam->unkF4;
+    arg3->unk14 = (temp_fv1_1 * COS(ANGLE_TO_CUSTOM_UNITS(arg1))) + (SIN(ANGLE_TO_CUSTOM_UNITS(arg1)) * temp_ft4);
+    if (arg3->unk14 < 0.5f) {
+        arg3->unk0 = 0.0f;
+        arg3->unk4 = 0.0f;
+        arg3->unk8 = 0.0f;
+        arg3->unkC = 0.0f;
+        arg3->unk10 = 0.0f;
+        arg3->unk14 = -1.0f;
+    } else {
+        func_80047E78(&gGfxPool->unkE008[D_80223930], spD0);
+        func_80047E78(&gGfxPool->unkE088[D_80223930], sp90);
+        temp_fv0 = arg0;
+        sp80 = COS(ANGLE_TO_CUSTOM_UNITS(arg1)) * temp_fv0;
+        sp70 = SIN(ANGLE_TO_CUSTOM_UNITS(arg1)) * temp_fv0;
+
+        if (gCourseID != DOLPHIN_PARK) {
+            func_800895A0(&sp80, &sp70, temp_fv1_1, temp_ft4);
+        }
+        sp80 += cam->unk4C;
+        sp70 += cam->unk54;
+
+        temp_fv0 = ((sp90[0][0] * sp80) + var_ft4 + (sp90[2][0] * sp70)) + sp90[3][0];
+        temp_fv1 = ((sp90[0][1] * sp80) + var_ft4 + (sp90[2][1] * sp70)) + sp90[3][1];
+        temp_fa0 = ((sp90[0][2] * sp80) + var_ft4 + (sp90[2][2] * sp70)) + sp90[3][2];
+        sp80 = ((spD0[0][0] * temp_fv0) + (spD0[1][0] * temp_fv1) + (spD0[2][0] * temp_fa0)) + spD0[3][0];
+        sp78 = ((spD0[0][1] * temp_fv0) + (spD0[1][1] * temp_fv1) + (spD0[2][1] * temp_fa0)) + spD0[3][1];
+        sp70 = ((spD0[0][2] * temp_fv0) + (spD0[1][2] * temp_fv1) + (spD0[2][2] * temp_fa0)) + spD0[3][2];
+        var_ft4 = ((spD0[0][3] * temp_fv0) + (spD0[1][3] * temp_fv1) + (spD0[2][3] * temp_fa0)) + spD0[3][3];
+        if ((var_ft4 < 0.01) && (var_ft4 > -0.01)) {
+            if (var_ft4 >= 0.0) {
+                var_ft4 = 0.01;
+            }
+            if (var_ft4 < 0.0) {
+                var_ft4 = -0.01;
+            }
+        }
+        if ((sp80 > 1000000000.0) || (sp80 < -1000000000.0)) {
+            sp80 = 511.0;
+        }
+        if ((sp78 > 1000000000.0) || (sp78 < -1000000000.0)) {
+            sp78 = 511.0;
+        }
+        if ((sp70 > 1000000000.0) || (sp70 < -1000000000.0)) {
+            sp70 = 511.0;
+        }
+        arg3->unkC = sp90[1][0] * arg2;
+        arg3->unk10 = sp90[1][1] * arg2;
+        arg3->unk0 = ((sp80 * 320.0 * 0.5) / var_ft4) + 160.0;
+        arg3->unk4 = 239.0 - (((sp78 * 240.0 * 0.5) / var_ft4) + 120.0);
+        arg3->unk8 = sp70 / var_ft4;
+        if ((var_ft4 < 1e-08) && (var_ft4 > -1e-08)) {
+            arg3->unk0 = 1e8f;
+            arg3->unk4 = 1e8f;
+            arg3->unk8 = 1e8f;
+        }
+
+        if (((arg3->unkC + arg3->unk0) < -511.0f) || ((arg3->unkC + arg3->unk0) > 511.0f) ||
+            (((arg3->unk10 + arg3->unk4) < -511.0f)) || ((arg3->unk10 + arg3->unk4) > 511.0f)) {
+            arg3->unk0 = -64.0f;
+            arg3->unk4 = -64.0f;
+            arg3->unkC = 0.0f;
+            arg3->unk10 = 0.0f;
+            arg3->unk14 = -1.0f;
+        }
+    }
+}
 
 void func_80089C08(void) {
     func_8008962C(2000.0f, 0.0f, 80.0f, &D_801C4278);
@@ -76,9 +193,6 @@ void func_80089DEC(void) {
     func_8008962C(2000.0f, 315.0f, 90.0f, &D_801C4188);
 }
 
-extern s32 D_800D9924[];
-extern f32 D_801C4170;
-
 void func_80089E24(void) {
     switch (gCourseID) { /* irregular */
         case DOLPHIN_PARK:
@@ -95,7 +209,32 @@ void func_80089E24(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_80089F28.s")
+void func_80089F28(void) {
+    Matrix sp80;
+    Matrix sp40;
+    char pad[0x20];
+    func_80047E78((MF*) &gGfxPool->unkE008[D_80223930], sp80);
+    func_80047E78((MF*) &gGfxPool->unkE088[D_80223930], sp40);
+
+    D_801C41A0.fwork[3] = sp40[1][0] * (D_800D9924[gCourseID] + 0x3C);
+    D_801C41A0.fwork[4] = sp40[1][1] * (D_800D9924[gCourseID] + 0x3C);
+    D_801C41A0.fwork[9] = sp40[1][0] * (D_800D9924[gCourseID] + 0x1E);
+    D_801C41A0.fwork[0xA] = sp40[1][1] * (D_800D9924[gCourseID] + 0x1E);
+    D_801C41A0.fwork[0xF] = sp40[1][0] * (D_800D9924[gCourseID] - 0xA);
+    D_801C41A0.fwork[0x10] = sp40[1][1] * (D_800D9924[gCourseID] - 0xA);
+    D_801C41A0.fwork[0x15] = sp40[1][0] * (D_800D9924[gCourseID] - 0x14);
+    D_801C41A0.fwork[0x16] = sp40[1][1] * (D_800D9924[gCourseID] - 0x14);
+    D_801C41A0.fwork[0x1B] = sp40[1][0] * (D_800D9924[gCourseID] - 0x28);
+    D_801C41A0.fwork[0x1C] = sp40[1][1] * (D_800D9924[gCourseID] - 0x28);
+    D_801C41A0.fwork[0x21] = sp40[1][0] * (D_800D9924[gCourseID] - 0x32);
+    D_801C41A0.fwork[0x22] = sp40[1][1] * (D_800D9924[gCourseID] - 0x32);
+    D_801C41A0.fwork[0x27] = sp40[1][0] * (D_800D9924[gCourseID] - 0x3C);
+    D_801C41A0.fwork[0x28] = sp40[1][1] * (D_800D9924[gCourseID] - 0x3C);
+    D_801C41A0.fwork[0x2D] = sp40[1][0] * (D_800D9924[gCourseID] - 0xF);
+    D_801C41A0.fwork[0x2E] = sp40[1][1] * (D_800D9924[gCourseID] - 0xF);
+    D_801C41A0.fwork[0x33] = sp40[1][0] * (D_800D9924[gCourseID] - 0x1E);
+    D_801C41A0.fwork[0x34] = sp40[1][1] * (D_800D9924[gCourseID] - 0x1E);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008A0E0.s")
 
