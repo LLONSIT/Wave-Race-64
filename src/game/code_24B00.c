@@ -13,7 +13,6 @@ extern f32 D_801C0C84;
 extern f32 D_801C0C88;
 extern f32 D_801C0C8C;
 
-
 void func_8006AA58(void) {
     camera_unk_1* camera;
 

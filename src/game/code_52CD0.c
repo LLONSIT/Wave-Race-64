@@ -2082,8 +2082,6 @@ void func_800ADD14(void) {
     }
 }
 
-
-
 s32 func_800ADE14(s32 arg0) {
     camera_unk_1* temp_v0;
     f32 angle;

@@ -28,7 +28,7 @@ extern s32 D_800D4B00;
 extern s32 D_800D4B04;
 extern s32 D_800D4B08;
 extern s32 D_800D4B0C;
-extern struct UnkStruct_80198368  D_80198368[];
+extern struct UnkStruct_80198368 D_80198368[];
 extern void* D_801AE948;
 extern void* D_801AE94C;
 extern s32 D_801AE950;
@@ -64,7 +64,7 @@ void func_80069A70(s32 arg0, s32 arg1, f32* stickX, f32* stickY) {
 
     var_t0 = arg0;
     var_t1 = arg1;
-    
+
     if (var_t0 > 0xC) {
         var_t1 = (var_t1 * 0xC) / var_t0;
         var_t0 = 0xC;
@@ -81,7 +81,7 @@ void func_80069A70(s32 arg0, s32 arg1, f32* stickX, f32* stickY) {
         var_t0 = (var_t0 * 0xC) / (-var_t1);
         var_t1 = -0xC;
     }
-    
+
     if ((((arg0 >= (-0xC)) && (arg0 <= 0xC)) && (arg1 >= (-0xC))) && (arg1 <= 0xC)) {
         x = 0;
         y = 0;
@@ -89,7 +89,7 @@ void func_80069A70(s32 arg0, s32 arg1, f32* stickX, f32* stickY) {
         x = arg0 - var_t0;
         y = arg1 - var_t1;
     }
-    
+
     if (x > 0x31) {
         y = (y * 0x31) / x;
         x = 0x31;
@@ -230,12 +230,12 @@ int Libc_strcmp(s8* s, s8* t) {
 
 s32 Libc_strncmp(s8* str1, s8* str2, s32 n) {
     s32 charDifferenece;
- 
+
     while (n != 0 && *str1 != '\0' && *str2 != '\0') {
         charDifferenece = *str1 - *str2;
         if (charDifferenece != 0) {
             return charDifferenece;
-        }        
+        }
         *str1++;
         *str2++;
         n--;
@@ -257,7 +257,6 @@ s32 Libc_strncmp(s8* str1, s8* str2, s32 n) {
     return 0;
 }
 
-
 void func_8006A264(void) {
 
     if (D_800D4B08 != 0) {
@@ -266,13 +265,12 @@ void func_8006A264(void) {
     if (gCurrentPauseMenuOption == -1) {
         D_800D4B00++;
     }
-    
+
     D_800D4B04++;
 
     D_801AE948 = &D_80198368[D_800D4B0C];
     D_800D4B0C ^= 1;
     D_801AE94C = D_801AE948;
-    
+
     D_801AE950 = 0;
 }
-
