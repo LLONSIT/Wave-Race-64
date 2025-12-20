@@ -3,6 +3,7 @@ pylibyaml
 tqdm
 intervaltree
 colorama
+sortedcontainers
 # This value should be keep in sync with the version listed on disassembler/spimdisasm_disassembler.py and pyproject.toml
 spimdisasm==1.25.1
 rabbitizer==1.10.0
