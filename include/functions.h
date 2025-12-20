@@ -192,7 +192,6 @@ void func_8009CD50(void);
 void func_800984F4(void*, f32, f32, f32);
 void func_80098AC4(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4);
 void func_8007AE8C(UnkStruct_func_8007AE8C* arg0, UnkStruct_func_8007AE8C* arg1);
-s32 func_8008962C(f32, f32, f32, f32*);
 f32 func_8009D4A8(f32, f32);
 void func_800A52D8(s32, f32);
 void func_800C1BD8(f32, f32);

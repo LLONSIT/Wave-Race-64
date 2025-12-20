@@ -7,16 +7,6 @@ typedef struct UnkStruct_800E60DC_s {
     s16 unk4;
 } UnkStruct_800E60DC;
 
-typedef struct UnkStruct_8009BCA4_s {
-    f32 unk0;
-    f32 unk4;
-    f32 unk8;
-    f32 unkC;
-    f32 unk10;
-    f32 unk14;
-    f32 unk18;
-} UnkStruct_8009BCA4;
-
 typedef struct UnkStruct_801CED60_s {
     s8 unk0;
     s8 unk1;
@@ -1545,7 +1535,7 @@ Gfx* func_8009E794(Gfx* dl, s32 arg1) {
 
 void func_800C1E0C(f32); /* extern */
 extern f32 D_800EB7F8;
-extern s32 D_80223930;
+
 void func_800A5C74(void) {
     camera_unk_1* temp_s1;
     f32 temp_f0;
@@ -2092,7 +2082,7 @@ void func_800ADD14(void) {
     }
 }
 
-extern s32 D_80223930;
+
 
 s32 func_800ADE14(s32 arg0) {
     camera_unk_1* temp_v0;

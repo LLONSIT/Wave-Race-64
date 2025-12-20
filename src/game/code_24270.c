@@ -19,6 +19,19 @@ struct UnkStruct_801AE958 {
     s32 unk10;
 };
 
+struct UnkStruct_80198368 {
+    s32 unk0;
+    char pad[0xB2EC];
+};
+
+extern s32 D_800D4B00;
+extern s32 D_800D4B04;
+extern s32 D_800D4B08;
+extern s32 D_800D4B0C;
+extern struct UnkStruct_80198368  D_80198368[];
+extern void* D_801AE948;
+extern void* D_801AE94C;
+extern s32 D_801AE950;
 extern s32 D_801AE9D8;
 extern s32 D_801AE9DC;
 extern s32 D_801AE9E0;
@@ -34,15 +47,68 @@ extern s32 D_801AEA0C;
 extern s32 D_801AEA10;
 extern s32 D_801AEA00;
 extern s32 D_801AE9FC;
-
 extern struct UnkStruct_801AE958 D_801AE958;
 extern f32 D_801AE96C;
 extern f32 D_801AE970;
 extern f32 D_801AE974;
 extern struct Controller_info gControllerOne[];
 
-// Unused function
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24270/func_80069A70.s")
+void func_80069A70(s32 arg0, s32 arg1, f32* stickX, f32* stickY) {
+    s32 var_t0;
+    s32 var_t1;
+    s32 x;
+    s32 y;
+
+    x = *stickX;
+    y = *stickY;
+
+    var_t0 = arg0;
+    var_t1 = arg1;
+    
+    if (var_t0 > 0xC) {
+        var_t1 = (var_t1 * 0xC) / var_t0;
+        var_t0 = 0xC;
+    }
+    if (var_t0 < (-0xC)) {
+        var_t1 = (var_t1 * 0xC) / (-var_t0);
+        var_t0 = -0xC;
+    }
+    if (var_t1 > 0xC) {
+        var_t0 = (var_t0 * 0xC) / var_t1;
+        var_t1 = 0xC;
+    }
+    if (var_t1 < (-0xC)) {
+        var_t0 = (var_t0 * 0xC) / (-var_t1);
+        var_t1 = -0xC;
+    }
+    
+    if ((((arg0 >= (-0xC)) && (arg0 <= 0xC)) && (arg1 >= (-0xC))) && (arg1 <= 0xC)) {
+        x = 0;
+        y = 0;
+    } else {
+        x = arg0 - var_t0;
+        y = arg1 - var_t1;
+    }
+    
+    if (x > 0x31) {
+        y = (y * 0x31) / x;
+        x = 0x31;
+    }
+    if (x < (-0x31)) {
+        y = (y * 0x31) / (-x);
+        x = -0x31;
+    }
+    if (y > 0x31) {
+        x = (x * 0x31) / y;
+        y = 0x31;
+    }
+    if (y < (-0x31)) {
+        x = (x * 0x31) / (-y);
+        y = -0x31;
+    }
+    *stickX = x / 49.0f;
+    *stickY = y / 49.0f;
+}
 
 UNUSED void func_80069D48(s32 arg0) {
     struct Controller_info* temp_v0;
@@ -162,6 +228,51 @@ int Libc_strcmp(s8* s, s8* t) {
     return *s - *t;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24270/Libc_strncmp.s")
+s32 Libc_strncmp(s8* str1, s8* str2, s32 n) {
+    s32 charDifferenece;
+ 
+    while (n != 0 && *str1 != '\0' && *str2 != '\0') {
+        charDifferenece = *str1 - *str2;
+        if (charDifferenece != 0) {
+            return charDifferenece;
+        }        
+        *str1++;
+        *str2++;
+        n--;
+    }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24270/func_8006A264.s")
+    if (n == 0) {
+        return 0;
+    }
+
+    if (*str1 != 0) {
+        return 1;
+    }
+
+    if (*str2 != 0) {
+        return -1;
+    }
+
+    // Dead code if the string is equal!
+    return 0;
+}
+
+
+void func_8006A264(void) {
+
+    if (D_800D4B08 != 0) {
+        D_800D4B08 = 0;
+    }
+    if (gCurrentPauseMenuOption == -1) {
+        D_800D4B00++;
+    }
+    
+    D_800D4B04++;
+
+    D_801AE948 = &D_80198368[D_800D4B0C];
+    D_800D4B0C ^= 1;
+    D_801AE94C = D_801AE948;
+    
+    D_801AE950 = 0;
+}
+
