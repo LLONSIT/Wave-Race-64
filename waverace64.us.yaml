@@ -339,6 +339,10 @@ segments:
     type: bin
     start: 0xF6090
 
+  - name: assets_seg
+    type: bin
+    start: 0xF7440
+
   - name: MIO0_chunk
     type: bin
     start: 0x1AE660

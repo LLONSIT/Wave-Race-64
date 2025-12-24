@@ -65,24 +65,24 @@ void func_80069A70(s32 arg0, s32 arg1, f32* stickX, f32* stickY) {
     var_t0 = arg0;
     var_t1 = arg1;
 
-    if (var_t0 > 0xC) {
-        var_t1 = (var_t1 * 0xC) / var_t0;
-        var_t0 = 0xC;
+    if (var_t0 > 12) {
+        var_t1 = (var_t1 * 12) / var_t0;
+        var_t0 = 12;
     }
-    if (var_t0 < (-0xC)) {
-        var_t1 = (var_t1 * 0xC) / (-var_t0);
-        var_t0 = -0xC;
+    if (var_t0 < -12) {
+        var_t1 = (var_t1 * 12) / (-var_t0);
+        var_t0 = -12;
     }
-    if (var_t1 > 0xC) {
-        var_t0 = (var_t0 * 0xC) / var_t1;
-        var_t1 = 0xC;
+    if (var_t1 > 12) {
+        var_t0 = (var_t0 * 12) / var_t1;
+        var_t1 = 12;
     }
-    if (var_t1 < (-0xC)) {
-        var_t0 = (var_t0 * 0xC) / (-var_t1);
-        var_t1 = -0xC;
+    if (var_t1 < -12) {
+        var_t0 = (var_t0 * 12) / (-var_t1);
+        var_t1 = -12;
     }
 
-    if ((((arg0 >= (-0xC)) && (arg0 <= 0xC)) && (arg1 >= (-0xC))) && (arg1 <= 0xC)) {
+    if ((((arg0 >= -12) && (arg0 <= 12)) && (arg1 >= -12)) && (arg1 <= 12)) {
         x = 0;
         y = 0;
     } else {
@@ -90,21 +90,21 @@ void func_80069A70(s32 arg0, s32 arg1, f32* stickX, f32* stickY) {
         y = arg1 - var_t1;
     }
 
-    if (x > 0x31) {
-        y = (y * 0x31) / x;
-        x = 0x31;
+    if (x > 49) {
+        y = (y * 49) / x;
+        x = 49;
     }
-    if (x < (-0x31)) {
-        y = (y * 0x31) / (-x);
-        x = -0x31;
+    if (x < -49) {
+        y = (y * 49) / (-x);
+        x = -49;
     }
-    if (y > 0x31) {
-        x = (x * 0x31) / y;
-        y = 0x31;
+    if (y > 49) {
+        x = (x * 49) / y;
+        y = 49;
     }
-    if (y < (-0x31)) {
-        x = (x * 0x31) / (-y);
-        y = -0x31;
+    if (y < -0x31) {
+        x = (x * 49) / (-y);
+        y = -49;
     }
     *stickX = x / 49.0f;
     *stickY = y / 49.0f;
@@ -258,7 +258,6 @@ s32 Libc_strncmp(s8* str1, s8* str2, s32 n) {
 }
 
 void func_8006A264(void) {
-
     if (D_800D4B08 != 0) {
         D_800D4B08 = 0;
     }

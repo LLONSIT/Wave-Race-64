@@ -1,5 +1,15 @@
 #include "common.h"
 
+typedef struct UnkStruct_80228AE0_s {
+    /* 0x00 */ s32 unk0;  /* inferred */
+    /* 0x04 */ s32 unk4;  /* inferred */
+    /* 0x08 */ s32 unk8;  /* inferred */
+    /* 0x0C */ s32 unkC;  /* inferred */
+    /* 0x10 */ s32 unk10; /* inferred */
+    /* 0x14 */ s32 unk14; /* inferred */
+    /* 0x18 */ s32 unk18; /* inferred */
+} UnkStruct_80228AE0;     /* size = 0x1C */
+
 extern Vp D_1014450;
 extern s32 D_800D48E0;
 extern s32 D_801C1FD8;
@@ -12,6 +22,9 @@ extern s32 D_80228B50;
 extern s32 D_80228B54;
 extern s32 D_80228E00[];
 extern s32 D_80228E08[];
+extern UnkStruct_80228AE0 D_80228AE0[];
+extern s32 D_80228D14;
+extern s32 D_80228D18;
 
 void func_801EE9C0(void);  /* extern */
 void func_801EF3C4(void);  /* extern */
@@ -31,7 +44,33 @@ void func_801FAEB0(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/C94E0/func_801FAEB8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/C94E0/func_801FB488.s")
+void func_801FB488(s32 arg0, s32 arg1, s32 arg2) {
+    UnkStruct_80228AE0* var_v1;
+    s32 i;
+
+    for (i = 0; i < 4; i++) {
+        if (D_80228AE0[i].unk0 == 0) {
+            break;
+        }
+    }
+
+    if (i >= 4) {
+        i = 0;
+    }
+
+    D_80228AE0[i].unk0 = arg0;
+    D_80228AE0[i].unk4 = arg1;
+    D_80228AE0[i].unk10 = 0;
+    D_80228AE0[i].unkC = 0;
+    D_80228AE0[i].unk8 = 0;
+    D_80228AE0[i].unk14 = -8;
+    if (arg2 == 0) {
+        D_80228AE0[i].unk18 = 0;
+    } else {
+        D_80228AE0[i].unk18 = -0x20;
+    }
+    D_80228D14 = D_80228D18 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/codeseg/C94E0/func_801FB514.s")
 
