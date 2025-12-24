@@ -1,6 +1,13 @@
 #include "global.h"
 #include "camera.h"
 
+typedef struct RgbaColors_s {
+    s32 red;
+    s32 green;
+    s32 blue;
+    s32 alpha;
+} RgbaColors;
+
 typedef struct UnkStruct_8008962C_s {
     f32 unk0;
     f32 unk4;
@@ -25,7 +32,7 @@ typedef struct UnkStruct_801C41A0_s {
     f32 fwork[0xD0];
 } UnkStruct_801C41A0;
 
-extern UnkStruct_8008962C D_801C4278;
+extern UnkStruct_8008962C D_801C4278[];
 extern UnkStruct_8008962C D_801C4290;
 extern UnkStruct_8008962C D_801C42A8;
 extern UnkStruct_8008962C D_801C42C0;
@@ -63,6 +70,10 @@ extern s32 D_800D9894;
 extern f32 D_801CB160;
 extern s32 D_800D9924[];
 extern f32 D_801C4170;
+extern u16 D_10102B0[];
+extern s32 D_800DA628[];
+extern RgbaColors D_800DA6A8[];
+extern UnkStruct_8008962C D_801C4278[];
 
 extern UnkStruct_801C41A0 D_801C41A0;
 
@@ -171,7 +182,7 @@ f32 func_8008962C(f32 arg0, f32 arg1, f32 arg2, UnkStruct_8008962C* arg3) {
 }
 
 void func_80089C08(void) {
-    func_8008962C(2000.0f, 0.0f, 80.0f, &D_801C4278);
+    func_8008962C(2000.0f, 0.0f, 80.0f, D_801C4278);
     func_8008962C(2000.0f, 22.5f, 40.0f, &D_801C4290);
     func_8008962C(2000.0f, 45.0f, 50.0f, &D_801C42A8);
     func_8008962C(2000.0f, 67.5f, 30.0f, &D_801C42C0);
@@ -240,7 +251,49 @@ void func_80089F28(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008BD2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008CFEC.s")
+Gfx* func_8008CFEC(Gfx* gdl) {
+    UnkStruct_8008962C* var_t1;
+    s32 var_t2;
+    s32 temp_a2;
+    s32 temp_a1;
+    s32 temp;
+
+    gDPPipeSync(gdl++);
+    gDPSetRenderMode(gdl++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+    gDPSetCycleType(gdl++, G_CYC_1CYCLE);
+    gDPSetCombineLERP(gdl++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
+    gDPSetTexturePersp(gdl++, G_TP_NONE);
+    gDPSetPrimColor(gdl++, 0, 0, 0xF0, 0xD3, 0xF8, 0xFF);
+    gDPLoadTextureBlock(gdl++, &D_10102B0, G_IM_FMT_IA, G_IM_SIZ_16b, 4, 4, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+                        G_TX_NOMIRROR | G_TX_CLAMP, 2, 2, G_TX_NOLOD, G_TX_NOLOD);
+
+    // var_t1 = &D_801C4278;
+    // var_t2 = 0;
+    var_t1 = D_801C4278;
+    var_t2 = 0;
+    for (; var_t2 < 0x10; var_t2++, var_t1++) {
+        if (var_t1->unk14 >= 0.0f) {
+            temp_a1 = var_t1->unkC + var_t1->unk0;
+            temp_a2 = var_t1->unk4 - var_t1->unk10;
+            if ((temp_a1 >= -2) && (temp_a1 < SCREEN_WIDTH) && (temp_a2 >= 0) && (temp_a2 < SCREEN_HEIGHT)) {
+                gDPSetPrimColor(gdl++, 0, 0, D_800DA6A8[var_t2].red, D_800DA6A8[var_t2].green, D_800DA6A8[var_t2].blue,
+                                D_800DA6A8[var_t2].alpha);
+                if (D_800DA628[var_t2] != 0) {
+                    gSPTextureRectangle(gdl++, MAX((temp_a1 - 2) << 2, 0), MAX((temp_a2 - 2) << 2, 0),
+                                        MAX((temp_a1 + 2) << 2, 0), MAX((temp_a2 + 2) << 2, 0), 0,
+                                        0 - MIN(((((temp_a1 - 2) << 2) * (1 << 10)) >> 7), 0),
+                                        0 - MIN(((((temp_a2 - 2) << 2) * (1 << 10)) >> 7), 0), 1 << 10, 1 << 10);
+                } else {
+                    gSPTextureRectangle(gdl++, MAX((temp_a1 - 1) << 2, 0), MAX((temp_a2 - 1) << 2, 0),
+                                        MAX((temp_a1 + 1) << 2, 0), MAX((temp_a2 + 1) << 2, 0), 0,
+                                        0 - MIN(((((temp_a1 - 1) << 3) * (0x800)) >> 7), 0),
+                                        0 - MIN(((((temp_a2 - 1) << 3) * (0x800)) >> 7), 0), 0x800, 0x800);
+                }
+            }
+        }
+    }
+    return gdl;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008D454.s")
 

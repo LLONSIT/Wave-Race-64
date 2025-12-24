@@ -1864,7 +1864,7 @@ typedef union {
 #define gSPVertex(pkt,v,n,v0) gDma1p(pkt, G_VTX, v, ((n)<<9)|((n)*sizeof(Vtx)-1),(v0)*5)
 
 # define	gsSPVertex(v, n, v0) \
-                gsDma1p(G_VTX, v, sizeof(Vtx)*(n), ((n)-1)<<4|(v0))
+                gsDma1p(G_VTX, v, ((n) << 9)|((n) * sizeof(Vtx) - 1),(v0) * 5)
 #endif
 
 	

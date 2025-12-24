@@ -1,10 +1,14 @@
 #include "common.h"
 #include "camera.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006A300.s")
-
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006A748.s")
-
+extern s32 D_800D92B0;
+extern s32 D_800D92B4;
+extern UnkStruct_801BC940 D_801BC940[];
+extern s32 D_801BFA40;
+extern s32 D_801C0CB0;
+extern s32 D_801C0CB4;
+extern s32 D_801C292C;
+extern UnkStruct_801C2C24 D_801C2938[];
 extern s32 D_801C058C;
 extern s32 D_801C059C;
 extern s32 D_801C05AC;
@@ -12,6 +16,75 @@ extern s32 D_801C05BC;
 extern f32 D_801C0C84;
 extern f32 D_801C0C88;
 extern f32 D_801C0C8C;
+
+void func_800C3628(s32);           /* extern */
+void func_801FB488(s32, s32, s32); /* extern */
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006A300.s")
+
+void func_8006A748(void) {
+    UnkStruct_80192690* temp_a0;
+    UnkStruct_801BC940* var_v0;
+    UnkStruct_801C2C24* temp_v1;
+    f32 temp_f0;
+    f32 temp_f14;
+    f32 temp_f16;
+    f32 temp_f26;
+    f32 temp_f28;
+    f32 temp_f2;
+    f32 temp_f30;
+    f32 var_f0;
+    s32 temp_v0;
+    s32 i;
+    s32* temp;
+
+    temp_a0 = &D_80192690[D_800D48DC];
+    temp_v1 = &D_801C2938[D_800D48DC];
+    if ((temp_v1->unk2F4 == 0) && (temp_v1->unk2EC == 0)) {
+        temp_f26 = temp_a0->unk44.x;
+        temp_f28 = temp_a0->unk44.y + 8.0f;
+        temp_f30 = temp_a0->unk44.z;
+
+        for (i = 0; i < D_801BFA40; i++) {
+            if (D_801BC940[i].unk4C != 8) {
+                continue;
+            }
+            if (D_801BC940[i].unkBC != 0) {
+                if (D_801BC940[i].unk6C < 0xFF) {
+                    D_801BC940[i].unk6C++;
+                }
+            } else {
+                temp_f2 = temp_f26 - D_801BC940[i].unk0;
+                temp_f14 = temp_f28 - D_801BC940[i].unk4;
+                temp_f16 = temp_f30 - D_801BC940[i].unk8;
+                temp_f0 = (temp_f16 * D_801BC940[i].unk34) + (D_801BC940[i].unk30 * temp_f2);
+                if (temp_f0 >= 0.0f) {
+                    temp_f0 = temp_f0;
+                } else {
+                    temp_f0 = -temp_f0;
+                }
+                if (temp_f0 > 32.0f) {
+                    continue;
+                }
+                temp = &D_801BC940[i].unkC0;
+                temp_f0 = (temp_f16 * D_801BC940[i].unk3C) + (D_801BC940[i].unk38 * temp_f2);
+                if (sqrtf(SQ(temp_f0) + SQ(temp_f14)) < 112.0f) {
+                    D_801BC940[i].unkBC = 1;
+                    if (D_801C0CB0 == *temp) {
+                        D_801C0CB0++;
+                        D_801C0CB4++;
+                    } else {
+                        D_801C0CB0 = *temp + 1;
+                        D_801C0CB4 = 1;
+                    }
+                    D_801C292C++;
+                    func_801FB488(3, D_800D92B0 + ((D_801C0CB4 - 1) * D_800D92B4), 0);
+                    func_800C3628(D_801C0CB4);
+                }
+            }
+        }
+    }
+}
 
 void func_8006AA58(void) {
     camera_unk_1* camera;

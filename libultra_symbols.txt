@@ -3,7 +3,6 @@
 osRomBase		= 0x80000308;
 __osPfsPifRam = 0x801DABF0;
 __osMaxControllers = 0x801DABA1;
-osSyncPrintf 		= 0x8004B690; //defined:true
 alSynFreeFX             = 0x800C00A4; //defined:true
 osViSwapBuffer          = 0x800C59B0; //defined:true
 osViSetSpecialFeatures  = 0x800C5E60; //defined:true

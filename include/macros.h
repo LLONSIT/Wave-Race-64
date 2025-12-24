@@ -80,6 +80,9 @@
 
 #define UNK_TYPE int
 
+#define SCREEN_WIDTH 320
+#define SCREEN_HEIGHT 240
+
 #if defined(__sgi)
 #define PRINTF
 #else

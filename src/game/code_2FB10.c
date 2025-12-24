@@ -1,5 +1,21 @@
 #include "common.h"
 
+extern s32 D_800D48E0;
+
+typedef struct UnkStruct_801AEE20_s {
+    /* 0x000 */ char pad0[0x88];
+    /* 0x088 */ f32 unk88;       /* inferred */
+    /* 0x08C */ char pad8C[0xC]; /* maybe part of unk88[4]? */
+    /* 0x098 */ s32 unk98;       /* inferred */
+    /* 0x09C */ char pad9C[4];
+    /* 0x0A0 */ s32 unkA0;        /* inferred */
+    /* 0x0A4 */ char padA4[0x60]; /* maybe part of unkA0[0x19]? */
+} UnkStruct_801AEE20;             /* size = 0x104 */
+
+extern UnkStruct_801AEE20 D_801AEE20[];
+extern s32 D_801BB120;
+extern UnkStruct_801C2C24 D_801C2938[];
+
 static const char devstr1[] = "dolphin condition full at goal\n";
 static const char devstr2[] = "dolphin condition full\n";
 static const char devstr3[] = "rank value adjust\n";
@@ -46,7 +62,62 @@ void func_800762D0(struct_800762D0* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_80077F5C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_80078264.s")
+void func_80078264(void) {
+    UnkStruct_801C2C24* temp_a0;
+    UnkStruct_801C2C24* temp_v1;
+    s32 var_v0;
+    f32 var_fv0;
+    s32 lapCount;
+    s32 lapCount2;
+    s32 var_a3;
+    s32 var_t0;
+
+    var_v0 = D_801BB120;
+    var_fv0 = 0.0f;
+    temp_v1 = &D_801C2938[D_800D48DC];
+    temp_a0 = &D_801C2938[D_800D48E0];
+    lapCount = temp_v1->lapCount;
+    lapCount2 = temp_a0->lapCount;
+    var_a3 = temp_v1->unkC;
+    var_t0 = temp_a0->unkC;
+
+    if (temp_a0->racePosition >= temp_v1->racePosition) {
+        if ((lapCount != lapCount2) || (var_a3 != var_t0)) {
+            while (var_v0-- > 0) {
+                var_fv0 += D_801AEE20[var_t0].unk88;
+                if (D_801AEE20[var_t0].unk98 == 3) {
+                    lapCount2++;
+                }
+                var_t0 = D_801AEE20[var_t0].unkA0;
+                if ((lapCount != lapCount2) || (var_a3 != var_t0)) {
+                    continue;
+                } else {
+                    break;
+                }
+            }
+        }
+        temp_v1->unk330 = -var_fv0;
+        temp_a0->unk330 = var_fv0;
+    } else {
+        if ((lapCount != lapCount2) || (var_a3 != var_t0)) {
+            while (var_v0-- > 0) {
+                var_fv0 += D_801AEE20[var_a3].unk88;
+                if (D_801AEE20[var_a3].unk98 == 3) {
+                    lapCount++;
+                }
+                var_a3 = D_801AEE20[var_a3].unkA0;
+                if ((lapCount != lapCount2) || (var_a3 != var_t0)) {
+                    continue;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        temp_v1->unk330 = var_fv0;
+        temp_a0->unk330 = -var_fv0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_800783AC.s")
 
