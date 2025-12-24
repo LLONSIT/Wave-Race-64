@@ -53,7 +53,7 @@ extern s32 D_803DA800;
 void func_80047470(void);
 void func_800474A0(void);
 void func_800474E4(void);
-void *Main_Thread(void* entry);
+void* Main_Thread(void* entry);
 void Main_IdleThread(void* entry);
 void main(void);
 void func_80047B00(void);

@@ -17,8 +17,8 @@ extern f32 D_801C0C84;
 extern f32 D_801C0C88;
 extern f32 D_801C0C8C;
 
-void func_800C3628(s32);                               /* extern */
-void func_801FB488(s32, s32, s32);                         /* extern */
+void func_800C3628(s32);           /* extern */
+void func_801FB488(s32, s32, s32); /* extern */
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006A300.s")
 
@@ -69,7 +69,7 @@ void func_8006A748(void) {
                 temp = &D_801BC940[i].unkC0;
                 temp_f0 = (temp_f16 * D_801BC940[i].unk3C) + (D_801BC940[i].unk38 * temp_f2);
                 if (sqrtf(SQ(temp_f0) + SQ(temp_f14)) < 112.0f) {
-                    D_801BC940[i].unkBC = 1;                
+                    D_801BC940[i].unkBC = 1;
                     if (D_801C0CB0 == *temp) {
                         D_801C0CB0++;
                         D_801C0CB4++;

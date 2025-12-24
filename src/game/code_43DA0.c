@@ -75,7 +75,6 @@ extern s32 D_800DA628[];
 extern RgbaColors D_800DA6A8[];
 extern UnkStruct_8008962C D_801C4278[];
 
-
 extern UnkStruct_801C41A0 D_801C41A0;
 
 void* func_80091DBC(Gfx* arg0);
@@ -252,8 +251,8 @@ void func_80089F28(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008BD2C.s")
 
-Gfx *func_8008CFEC(Gfx *gdl) {
-    UnkStruct_8008962C *var_t1;
+Gfx* func_8008CFEC(Gfx* gdl) {
+    UnkStruct_8008962C* var_t1;
     s32 var_t2;
     s32 temp_a2;
     s32 temp_a1;
@@ -265,10 +264,11 @@ Gfx *func_8008CFEC(Gfx *gdl) {
     gDPSetCombineLERP(gdl++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
     gDPSetTexturePersp(gdl++, G_TP_NONE);
     gDPSetPrimColor(gdl++, 0, 0, 0xF0, 0xD3, 0xF8, 0xFF);
-    gDPLoadTextureBlock(gdl++, &D_10102B0, G_IM_FMT_IA, G_IM_SIZ_16b, 4, 4, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 2, 2, G_TX_NOLOD, G_TX_NOLOD);
+    gDPLoadTextureBlock(gdl++, &D_10102B0, G_IM_FMT_IA, G_IM_SIZ_16b, 4, 4, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+                        G_TX_NOMIRROR | G_TX_CLAMP, 2, 2, G_TX_NOLOD, G_TX_NOLOD);
 
-    //var_t1 = &D_801C4278;
-    //var_t2 = 0;
+    // var_t1 = &D_801C4278;
+    // var_t2 = 0;
     var_t1 = D_801C4278;
     var_t2 = 0;
     for (; var_t2 < 0x10; var_t2++, var_t1++) {
@@ -276,34 +276,24 @@ Gfx *func_8008CFEC(Gfx *gdl) {
             temp_a1 = var_t1->unkC + var_t1->unk0;
             temp_a2 = var_t1->unk4 - var_t1->unk10;
             if ((temp_a1 >= -2) && (temp_a1 < SCREEN_WIDTH) && (temp_a2 >= 0) && (temp_a2 < SCREEN_HEIGHT)) {
-                gDPSetPrimColor(gdl++, 0, 0, D_800DA6A8[var_t2].red, D_800DA6A8[var_t2].green, D_800DA6A8[var_t2].blue, D_800DA6A8[var_t2].alpha);
+                gDPSetPrimColor(gdl++, 0, 0, D_800DA6A8[var_t2].red, D_800DA6A8[var_t2].green, D_800DA6A8[var_t2].blue,
+                                D_800DA6A8[var_t2].alpha);
                 if (D_800DA628[var_t2] != 0) {
-                    gSPTextureRectangle(gdl++, 
-                                        MAX((temp_a1 - 2) << 2, 0), 
-                                        MAX((temp_a2 - 2) << 2, 0), 
-                                        MAX((temp_a1 + 2) << 2, 0), 
-                                        MAX((temp_a2 + 2) << 2, 0),
-                                        0,
-                                        0 - MIN(((((temp_a1 - 2)<<2)*(1<<10))>>7),0),
-                                        0 - MIN(((((temp_a2 - 2)<<2)*(1<<10))>>7),0),
-                                        1 << 10, 1 << 10);
+                    gSPTextureRectangle(gdl++, MAX((temp_a1 - 2) << 2, 0), MAX((temp_a2 - 2) << 2, 0),
+                                        MAX((temp_a1 + 2) << 2, 0), MAX((temp_a2 + 2) << 2, 0), 0,
+                                        0 - MIN(((((temp_a1 - 2) << 2) * (1 << 10)) >> 7), 0),
+                                        0 - MIN(((((temp_a2 - 2) << 2) * (1 << 10)) >> 7), 0), 1 << 10, 1 << 10);
                 } else {
-                    gSPTextureRectangle(gdl++, 
-                                        MAX((temp_a1 - 1) << 2, 0), 
-                                        MAX((temp_a2 - 1) << 2, 0), 
-                                        MAX((temp_a1 + 1) << 2, 0), 
-                                        MAX((temp_a2 + 1) << 2, 0),
-                                        0,
-                                        0 - MIN(((((temp_a1 - 1)<<3)*(0x800))>>7),0),
-                                        0 - MIN(((((temp_a2 - 1)<<3)*(0x800))>>7),0),
-                                        0x800, 0x800);
+                    gSPTextureRectangle(gdl++, MAX((temp_a1 - 1) << 2, 0), MAX((temp_a2 - 1) << 2, 0),
+                                        MAX((temp_a1 + 1) << 2, 0), MAX((temp_a2 + 1) << 2, 0), 0,
+                                        0 - MIN(((((temp_a1 - 1) << 3) * (0x800)) >> 7), 0),
+                                        0 - MIN(((((temp_a2 - 1) << 3) * (0x800)) >> 7), 0), 0x800, 0x800);
                 }
             }
         }
     }
     return gdl;
 }
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008D454.s")
 
