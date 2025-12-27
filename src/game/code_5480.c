@@ -1,5 +1,20 @@
 #include "global.h"
 
+typedef struct UnkStruct_801603E0_s {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s32 unk14;
+    /* 0x18 */ s32 unk18; /* inferred */
+    /* 0x1C */ s32 unk1C;
+} UnkStruct_801603E0; /* size = 0x20 */
+
+extern UnkStruct_801603E0 D_80160400[];
+extern UnkStruct_801603E0 D_801603E0[];
+extern UnkStruct_801603E0 D_80158520[];
+
 extern s32 D_1000140;
 extern s32 D_10001E0;
 extern s32 D_800D4650;
@@ -119,18 +134,70 @@ void func_8004B0F8(struct UnkStruct_8004B0F8* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004B1B4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004B680.s")
+void func_8004B680(void) {
+}
+
+void func_8004B684(void) {
+}
 
 UNUSED void stub_5480(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004B6A4.s")
+UNUSED void stub_5484(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004B6B8.s")
+UNUSED void stub_5488(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004B6CC.s")
+UNUSED void stub_548C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004B6E0.s")
+void func_8004B6E0(void) {
+    s32 temp_s1;
+    s32 temp_s2;
+    s32 var_v0;
+
+    if (D_800DAB1C == 1) {
+        D_801603E0->unk0 = ((u32) ((rand() >> 0x10) * 0x260) >> 0x10) - 0x90;
+        D_80160400->unk0 = ((u32) ((rand() >> 0x10) * 0x260) >> 0x10) - 0x90;
+        D_801603E0->unk4 = ((u32) ((rand() >> 0x10) * 0x190) >> 0x10) - 0x50;
+        D_80160400->unk4 = ((u32) ((rand() >> 0x10) * 0x190) >> 0x10) - 0x50;
+    } else {
+        D_801603E0->unk0 = ((u32) ((rand() & 0x3FFF) * 0x130) >> 0xE) + 8;
+        D_801603E0->unk4 = ((u32) ((rand() & 0x3FFF) * 0xC8) >> 0xE) + 0x14;
+        do {
+            D_80160400->unk0 = ((u32) ((rand() & 0x3FFF) * 0x130) >> 0xD) - 0x90;
+            D_80160400->unk4 = ((u32) ((rand() & 0x3FFF) * 0xC8) >> 0xD) - 0x50;
+        } while ((D_80160400->unk0 >= 8) && (D_80160400->unk0 < 0x138) && (D_80160400->unk4 >= 0x14) &&
+                 (D_80160400->unk4 < 0xDC));
+    }
+
+    for (var_v0 = 0; var_v0 < 0x3F6; var_v0++) {
+        D_80158520[var_v0].unk0 = (s32) (((var_v0 % 39) * 8) + 8);
+        D_80158520[var_v0].unk4 = (s32) (((var_v0 / 39) * 8) + 0x14);
+    }
+    for (var_v0 = 0; var_v0 < 0x3F6; var_v0++) {
+        D_80158520[var_v0].unk10 = 0;
+        D_80158520[var_v0].unk14 = 0;
+        D_80158520[var_v0].unk8 = D_80158520[var_v0].unk0;
+        D_80158520[var_v0].unkC = D_80158520[var_v0].unk4;
+    }
+    D_801603E0->unk8 = D_801603E0->unk0;
+    D_801603E0->unkC = D_801603E0->unk4;
+    D_801603E0->unk10 = D_801603E0->unk14 = 0;
+    D_80160400->unk8 = D_80160400->unk0;
+    D_80160400->unkC = D_80160400->unk4;
+    D_80160400->unk10 = D_80160400->unk14 = 0;
+
+    for (var_v0 = 0; var_v0 < 0x3F6; var_v0++) {
+        temp_s1 = D_80158520[var_v0].unk8 - D_801603E0->unk8;
+        temp_s2 = D_80158520[var_v0].unkC - D_801603E0->unkC;
+        D_80158520[var_v0].unk18 = (sqrtf((SQ(temp_s1) + SQ(temp_s2))) + 0.5);
+        temp_s1 = D_80158520[var_v0].unk8 - D_80160400->unk8;
+        temp_s2 = D_80158520[var_v0].unkC - D_80160400->unkC;
+        D_80158520[var_v0].unk1C = (sqrtf((SQ(temp_s1) + SQ(temp_s2))) + 0.5);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004BA18.s")
 
