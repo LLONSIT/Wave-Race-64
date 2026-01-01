@@ -229,12 +229,12 @@ int Libc_strcmp(s8* s, s8* t) {
 }
 
 s32 Libc_strncmp(s8* str1, s8* str2, s32 n) {
-    s32 charDifferenece;
+    s32 charDifference;
 
     while (n != 0 && *str1 != '\0' && *str2 != '\0') {
-        charDifferenece = *str1 - *str2;
-        if (charDifferenece != 0) {
-            return charDifferenece;
+        charDifference = *str1 - *str2;
+        if (charDifference != 0) {
+            return charDifference;
         }
         *str1++;
         *str2++;

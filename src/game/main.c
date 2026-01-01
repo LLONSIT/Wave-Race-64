@@ -28,7 +28,7 @@ extern void* D_80154148;
 extern s32 D_801521E0;
 extern OSThread D_80153B90;
 extern OSMesgQueue D_801540A0;
-extern OSThread* gIdleThread;
+extern OSThread gIdleThread;
 extern void* D_80151DE0;
 extern s32 D_801531E0;
 extern OSThread gAudioThread;
@@ -53,7 +53,7 @@ extern s32 D_803DA800;
 void func_80047470(void);
 void func_800474A0(void);
 void func_800474E4(void);
-void* Main_Thread(void* entry);
+void Main_Thread(void* entry);
 void Main_IdleThread(void* entry);
 void main(void);
 void func_80047B00(void);
@@ -82,7 +82,7 @@ void func_800474E4(void) {
     D_800D4604 = 1;
 }
 
-void* Main_Thread(void* entry) {
+void Main_Thread(void* entry) {
     void* sp4C;
 
     osCreateMesgQueue(&D_801540B8, &D_80154248, 1);

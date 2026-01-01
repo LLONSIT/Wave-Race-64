@@ -27,8 +27,6 @@ typedef struct UnkStruct_8007B2E4 {
     /* 0x2 */ u8 unk_2;
 } UnkStruct_8007B2E4;
 
-extern s32 D_800D8260;
-
 typedef struct UnkStruct_801AEA18_s {
     s16 unk0;
     u16 unk2;
@@ -37,13 +35,25 @@ typedef struct UnkStruct_801AEA18_s {
     char pad54[0x1AC];
 } UnkStruct_801AEA18;
 
-extern UnkStruct_801AEA18 D_801AEA18;
+typedef struct UnkStruct_8007D110_s {
+    u8 pad[0x16];
+    u8 bitpattern;
+    u8 pad33[10];
+} UnkStruct_8007D110;
 
+extern UnkStruct_801AEA18 D_801AEA18;
+extern s32 D_800D8264;
+extern OSPfs D_801C3AD0;
+extern s32 D_800D8260;
 extern u8 D_801AEA68;
 extern s32 D_801CB308[1][3];
 extern s32 D_801CB32C;
 extern u8 D_800D8268[1];
 extern s32 D_800D826A;
+extern u8 D_800D82D8;
+extern u8 D_800D82E8;
+extern OSPfs D_801C3AD0;
+
 #define EEPROM_SUCCESS 0
 
 static const char devstr1[] = "EEPROM read error 1 (%d)\n";
@@ -70,12 +80,6 @@ static const char devstr21[] = "EEPROM write error\n";
 static const char devstr22[] = "EEPROM write error\n";
 static const char devstr23[] = "EEPROM write error\n";
 static const char devstr24[] = "EEPROM write error\n";
-static const char devstr25[] = "PfsisPlug: %02x %d\n";
-static const char devstr26[] = "no PFS in controller 1\n";
-static const char devstr27[] = "PFS corrupted\n";
-static const char devstr28[] = "no PFS in controller 1 !\n";
-static const char devstr29[] = "bad PFS %d\n";
-static const char devstr30[] = "PFS find file\n";
 
 s32 Save_GenCheckSum(u8*);
 void func_8007BBF0(void);
@@ -153,6 +157,7 @@ void func_8007AF78(UnkStruct_func_8007AF78_1* arg0, UnkStruct_func_8007AF78_2* a
     arg1->unk5 = arg0->unkC;
 }
 
+// Matched but needs struct migration
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007AFF4.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B09C.s")
@@ -372,9 +377,42 @@ int func_8007C50C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007CB68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D110.s")
+s32 func_8007D110(void) {
+    UnkStruct_8007D110 wtf;
 
-s32 func_8007D110();
+    PRINTF("PfsisPlug: %02x %d\n", 0, 0);
+    osPfsIsPlug(&D_801540D0, &wtf.bitpattern);
+    if (!((1 << D_80154330) & (wtf.bitpattern))) {
+        D_800D8264 = 0;
+        return 1;
+    }
+    D_800D8264 = 1;
+    switch (osPfsInit(&D_801540D0, &D_801C3AD0, D_80154330)) {
+        case 0:
+            return 0;
+        case 1:
+        case 11:
+            return 1;
+        default:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+            return 2;
+    }
+}
+
+static const char devstr26[] = "no PFS in controller 1\n";
+static const char devstr27[] = "PFS corrupted\n";
+static const char devstr28[] = "no PFS in controller 1 !\n";
+static const char devstr29[] = "bad PFS %d\n";
+static const char devstr30[] = "PFS find file\n";
+
 extern u8 D_800D82D8;
 extern u8 D_800D82E8;
 extern OSPfs D_801C3AD0;
@@ -404,8 +442,6 @@ s32 Save_PfsFindFile(void) {
             return 2;
     }
 }
-
-s32 func_8007D110();
 
 s32 Save_PfsCheckFree(void) {
     s32 temp_v0;
@@ -459,4 +495,20 @@ static const char devstr53[] = "PFS delete error %d\n";
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D614.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007DB40.s")
+s32 func_8007DB40(void) {
+    s32 temp_v0;
+
+    temp_v0 = func_8007D110();
+    if (temp_v0 != 0) {
+        return temp_v0;
+    }
+    temp_v0 = osPfsDeleteFile(&D_801C3AD0, 1U, 0x4E57524AU, &D_800D82E8, &D_800D82D8);
+    switch (temp_v0) { /* irregular */
+        case 0:
+            return 0;
+        case 5:
+            return 4;
+        default:
+            return 2;
+    }
+}

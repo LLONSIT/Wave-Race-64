@@ -126,7 +126,7 @@ void func_800B9F90(s32 arg0, s32 arg1, s32 arg2);
 void func_800B9F3C(s32 arg0, s32 arg1, s32 arg2);
 void func_800C3500(s32);
 void func_80098190(void);
-void* SysMain_Thread(void* entry);
+void SysMain_Thread(void* entry);
 void func_80047FFC(s32 arg0, s32 arg1, s32 arg2, s32* arg3, s32* arg4, s32* arg5);
 s32 func_80086C40(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5);
 void func_800AF43C(f32, f32, f32);

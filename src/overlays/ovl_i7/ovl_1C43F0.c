@@ -1,12 +1,12 @@
 #include "global.h"
 
-void func_801EC3AC();
-void func_801EC500();
-void func_801EC5B4();
-void func_801EC650();
-void func_801EC6EC();
-void func_801EC780();
-Gfx* func_i7_802C5A18();
+void func_801EC3AC(void);
+void func_801EC500(void);
+void func_801EC5B4(void);
+void func_801EC650(void);
+void func_801EC6EC(void);
+void func_801EC780(void);
+Gfx* func_i7_802C5A18(void);
 void func_i7_802C5C94(s32);
 extern s32 gCurrentOptionsMenuItem;
 extern s32 D_i7_802C5D20[];

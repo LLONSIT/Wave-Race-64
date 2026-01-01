@@ -19,6 +19,12 @@ struct UnkStruct_800DACD0 {
     /* 0x3C */ s32 unk3C; /* inferred */
     /* 0x40 */ s32 unk40; /* inferred */
 };
+
+typedef struct UnkStruct_800980D0_s {
+    char pad[0xC0];
+    u16 unkC0[20];
+} UnkStruct_800980D0;
+
 extern s32 D_800DAB90[];
 extern s32 D_800DABA0[];
 extern s32 D_800DABC0[];
@@ -37,6 +43,7 @@ extern u32 D_801CE6E8;
 extern s32 D_801CE730;
 extern s32 D_801CE734;
 extern s32 D_801CE738;
+extern u16 D_800DCEC8[];
 
 void func_80095CE8(u8* arg0, s32 arg1);
 void func_800967EC(u32* arg0, s32 arg1);
@@ -323,7 +330,27 @@ u32* func_800964CC(s32 arg0) {
     return sp34;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_800965B8.s")
+u32* func_800965B8(s32 arg0) {
+    s32 pad[2];
+    u32* sp34;
+    s32 var_s3;
+    u32* temp_s0;
+    u32* var_s2;
+
+    var_s2 = SegmentedToVirtual((u32) &D_800C1FC) + arg0;
+    sp34 = var_s2;
+    for (var_s3 = 0; var_s3 < 0x20; var_s3 += 4, var_s2 += 1) {
+        temp_s0 = SegmentedToVirtual(*var_s2) + arg0;
+        *var_s2 = temp_s0;
+        temp_s0[1] = (u32) (SegmentedToVirtual(temp_s0[1]) + arg0);
+        temp_s0[2] = (u32) (SegmentedToVirtual(temp_s0[2]) + arg0);
+        temp_s0[3] = (u32) (SegmentedToVirtual(temp_s0[3]) + arg0);
+        temp_s0[4] = (u32) (SegmentedToVirtual(temp_s0[4]) + arg0);
+        temp_s0[5] = (u32) (SegmentedToVirtual(temp_s0[5]) + arg0);
+        temp_s0[6] = (u32) (SegmentedToVirtual(temp_s0[6]) + arg0);
+    }
+    return sp34;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80096694.s")
 
@@ -435,4 +462,26 @@ void func_80098048(s32 arg0, s32 arg1) {
 void func_800980C8(void) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_800980D0.s")
+void func_800980D0(UnkStruct_800980D0* arg0) {
+    s32 i;
+    s32 j;
+    s32 k;
+    s32 l;
+    u16* v1;
+
+    for (i = 0; i < 3; i++) {
+        s32* var = D_801542C0[i];
+        /* clang-format off */
+        for (j = 0; j < 0x9600; j++) { *var++ = 0;
+}
+        /* clang-format on */
+    }
+
+    v1 = D_800DCEC8;
+    for (i = 56; i < 184; i++) {
+        u16* v0 = (i * 320) + arg0->unkC0;
+        for (j = 0; j < 0x80; j++) {
+            *v0++ = *v1++;
+        }
+    }
+}
