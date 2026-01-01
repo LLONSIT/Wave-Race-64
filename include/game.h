@@ -25,12 +25,12 @@ typedef enum GameMode {
 } GameMode;
 
 typedef struct Game_801CE608_s {
-    /* 0x0 */ GameMode GameMode;
-    /* 0x4 */ s16 Player;
-    /* 0x6 */ s16 Rider;
-    /* 0x8 */ s32 WaveLevel;
-    /* 0xC */ s32 Power_Misses;
-    /* 0x10 */ s32 Laps; // Race lap count
+    /* 0x0 */ GameMode gameMode;
+    /* 0x4 */ s16 player;
+    /* 0x6 */ s16 rider;
+    /* 0x8 */ s32 waveLevel;
+    /* 0xC */ s32 powerMisses;
+    /* 0x10 */ s32 laps; // Race lap count
     /* 0x14 */ s32 unk_14;
 } Game_801CE608;
 
@@ -42,5 +42,6 @@ extern Difficulty gDifficulty;
 
 #define MAX_CHAMPIONSHIP_LAPS 3
 #define MAX_DIFFICULTY 3
+#define GAME_NOT_PAUSED gCurrentPauseMenuOption == -1
 
 #endif /* GAME_H */

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "rider.h"
 #include "camera.h"
 
 extern s32 D_800D92B0;
@@ -16,6 +17,10 @@ extern s32 D_801C05BC;
 extern f32 D_801C0C84;
 extern f32 D_801C0C88;
 extern f32 D_801C0C8C;
+extern u16 D_101F170[];
+extern LookAt D_500B2C0[];
+extern LookAt D_500B2D0[];
+extern s32 D_801AE948;
 
 void func_800C3628(s32);           /* extern */
 void func_801FB488(s32, s32, s32); /* extern */
@@ -117,7 +122,27 @@ void func_8006AA58(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006D494.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_24B00/func_8006DE24.s")
+void func_8006DE24(Gfx** gdl) {
+    Gfx* gdlh;
+    camera_unk_1* temp_v1;
+
+    gdlh = *gdl;
+    temp_v1 = &gCameraPerspective[D_80223930];
+
+    guLookAtReflect(D_801AE948 + 0x4100, D_801AE948 + 0xB2C0, temp_v1->unk4C, temp_v1->unk50, temp_v1->unk54,
+                    temp_v1->unk7C, temp_v1->unk80, temp_v1->unk84, -1.0f, 0.0f, 0.0f);
+    gSPClearGeometryMode(gdlh++, G_ZBUFFER | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR);
+    gSPSetGeometryMode(gdlh++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH);
+    gDPPipeSync(gdlh++);
+    /* clang-format off */
+    gSPLookAtX(gdlh++, D_500B2C0); gSPLookAtY(gdlh++, D_500B2D0); // This needs to be in a single line to match
+    /* clang-format on */
+    gSPTexture(gdlh++, 0x0F80, 0x26C0, 0, G_TX_RENDERTILE, G_ON);
+    gDPLoadTextureBlock(gdlh++, D_101F170, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP,
+                        G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD);
+    gDPSetCombineMode(gdlh++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+    *gdl = gdlh;
+}
 
 void func_8006E01C(s32 arg0) {
 }

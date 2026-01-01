@@ -479,6 +479,9 @@ void func_80081048(void) {
     }
 }
 
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wswitch"
+#endif
 /* clang-format off */
 void func_80081CC8(void) {
     f32 low;
