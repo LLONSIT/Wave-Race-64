@@ -592,17 +592,20 @@ typedef struct UnkStruct_8004B0F8_unk34  {
     /* 0x8 */ f32 unk8; 
 } UnkStruct_8004B0F8_unk34;
 struct UnkStruct_8004B0F8 {
-    /* 0x00 */ char pad0[0x18];
+    /* 0x00 */ char pad0[4];
+    /* 0x04 */ f32 unk4;                            /* inferred */
+    /* 0x08 */ f32 unk8;                            /* inferred */
+    /* 0x0C */ char padC[0xC];                      /* maybe part of unk8[4]? */
     /* 0x18 */ f32 unk18;
     /* 0x1C */ f32 unk1C;
     /* 0x20 */ f32 unk20;
     /* 0x24 */ char pad24[4];
     /* 0x28 */ u32 unk28;
     /* 0x2C */ s32 unk2C;
-    /* 0x30 */ struct UnkStruct_8004B0F8_1* unk30;
+    /* 0x30 */ UnkStruct_8004B0F8_1* unk30;
     /* 0x34 */ UnkStruct_8004B0F8_unk34* unk34;
     /* 0x38 */ f32* unk38;
-    /* 0x3C */ f32 unk3C;                           /* inferred */
+    /* 0x3C */ f32 unk3C;
     /* 0x40 */ f32 unk40;
     /* 0x44 */ f32 unk44;
     /* 0x48 */ f32 unk48;
@@ -614,7 +617,7 @@ struct UnkStruct_8004B0F8 {
     /* 0x60 */ f32 unk60;
     /* 0x64 */ f32 unk64;
     /* 0x68 */ f32 unk68;
-};                                                  /* size = 0x6C */
+};              
 typedef struct UnkStruct_801BC940 {
     /* 0x00 */ f32 unk0;
     /* 0x04 */ f32 unk4;
