@@ -23,7 +23,30 @@ extern s32 D_800D4658[];
 void func_8004AC80(struct UnkStruct_8004B0F8* arg0, f32 arg1, f32 arg2, f32 arg3);
 void func_8004AE88(struct UnkStruct_8004B0F8* arg0);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004AC80.s")
+void func_8004AC80(struct UnkStruct_8004B0F8* arg0, f32 arg1, f32 arg2, f32 arg3) {
+    f32 sp6C[15];
+    f32 temp_f0_3;
+    f32 var_f20;
+    s32 i;
+
+    var_f20 = 0.0f;
+
+    for (i = arg0->unk28; i >= 0; i--) {
+        f32 temp_f0 = arg0->unk30[i].unk0 - arg1;
+        f32 temp_f2 = arg0->unk30[i].unk4 - arg2;
+        f32 temp_f14 = arg0->unk30[i].unk8 - arg3;
+        temp_f0 = sqrtf(SQ(temp_f0) + SQ(temp_f2) + SQ(temp_f14));
+        sp6C[i] = temp_f0;
+        if (var_f20 < temp_f0) {
+            var_f20 = sp6C[i];
+        }
+    }
+
+    temp_f0_3 = ((arg0->unk8 - arg0->unk4) / var_f20);
+    for (i = arg0->unk28; i >= 0; i--) {
+        arg0->unk30[i].unk18 = (sp6C[i] * temp_f0_3) + arg0->unk4;
+    }
+}
 
 void func_8004ADEC(struct UnkStruct_8004B0F8* arg0) {
     f32* var_a2;
