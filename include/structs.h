@@ -670,4 +670,24 @@ typedef struct unkStruct_func_800C1268 {
     /* 0x8 */ s8 unk_8;
 } unkStruct_func_800C1268;
 
+typedef struct SEGA {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 pad4;
+    u8 unk5;
+} func_8007AFF4_arg0;
+
+typedef struct SEGA2 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    u8 unk10;
+    u8 pad11;
+    u8 pad12;
+    s8 unk13;
+} func_8007AFF4_arg1;
+
 #endif /* STRUCTS_H */
