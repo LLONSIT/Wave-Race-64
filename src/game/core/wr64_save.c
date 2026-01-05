@@ -87,6 +87,7 @@ s32 func_8007BDB8(void);
 s32 func_8007D110(void);
 void func_8007B370(void*);
 void func_8007B630(void);
+void func_8007B930(void);
 s32 func_8007BE64(void);
 
 // Encode?
@@ -157,8 +158,34 @@ void func_8007AF78(UnkStruct_func_8007AF78_1* arg0, UnkStruct_func_8007AF78_2* a
     arg1->unk5 = arg0->unkC;
 }
 
-// Matched but needs struct migration
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007AFF4.s")
+void func_8007AFF4(func_8007AFF4_arg0* arg0, func_8007AFF4_arg1* arg1) {
+    s32 var_v1;
+    u8 temp_t1;
+    s32 a3;
+
+    temp_t1 = arg0->unk0;
+    a3 = arg0->unk1;
+    var_v1 = (((temp_t1 & 0x1F) << 0x10) + (a3 << 8)) + arg0->unk2;
+
+    if (var_v1 < 0) {
+        if (temp_t1 && temp_t1) {}
+        var_v1 = arg0->unk2 * 0;
+    }
+
+    if (var_v1 > 0x927BF) {
+        var_v1 = 0x927BF;
+    }
+
+    arg1->unk0 = var_v1;
+    temp_t1 >>= 5;
+    arg1->unk4 = temp_t1 & 7;
+
+    func_8007AEFC(&arg1->unk10, &arg0->unk3);
+
+    arg1->unk13 = 0;
+    arg1->unk8 = (arg0->unk3 >> 7) & 1;
+    arg1->unkC = arg0->unk5;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B09C.s")
 
@@ -359,8 +386,8 @@ int func_8007C50C(void) {
     }
 
     func_8007B31C();
-    D_801AEA18.unk2 = Save_GenCheckSum(&D_801AEA18);
-    if (osEepromLongWrite(&D_801540D0, 0U, &D_801AEA18, 16) != 0) {
+    D_801AEA18.unk2 = Save_GenCheckSum((u8*) &D_801AEA18);
+    if (osEepromLongWrite(&D_801540D0, 0U, (u8*) &D_801AEA18, 16) != 0) {
         return 3;
     }
 
