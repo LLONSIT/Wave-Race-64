@@ -515,7 +515,7 @@ u64* AudioSynth_ProcessNote(Note* note, NoteSubEu* noteSubEu, NoteSynthesisState
                                    DMEM_ADDR_UNCOMPRESSED_NOTE + s5Aligned, s0 * 2);
                         aADPCMdec(cmd++, flags, VIRTUAL_TO_PHYSICAL2(synthesisState->synthesisBuffers->adpcmdecState));
                         aDMEMMove(cmd++, DMEM_ADDR_UNCOMPRESSED_NOTE + s5Aligned + (s2 * 2),
-                                  DMEM_ADDR_UNCOMPRESSED_NOTE + s5, (nSamplesInThisIteration) * 2);
+                                  DMEM_ADDR_UNCOMPRESSED_NOTE + s5, (nSamplesInThisIteration) *2);
                     }
                     nAdpcmSamplesProcessed += nSamplesInThisIteration;
                     switch (flags) {
