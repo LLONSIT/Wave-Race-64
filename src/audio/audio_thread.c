@@ -90,7 +90,7 @@ SPTask* AudioThread_CreateTask(void) {
     task->type = M_AUDTASK;
     task->flags = 0;
     task->ucode_boot = rspbootTextStart;
-    task->ucode_boot_size = (u8*) gspF3DEX_fifoTextStart - (u8*) rspbootTextStart;
+    task->ucode_boot_size = (u8*) gspFast3DTextStart - (u8*) rspbootTextStart;
     task->ucode = aspMainTextStart;
     task->ucode_data = (u64*) aspMainDataStart;
     task->ucode_size = 0x800; // (This size is ignored (according to sm64))
@@ -220,9 +220,6 @@ void AudioThread_QueueCmdS8(u32 opArgs, s8 val) {
 }
 
 // Original name: Nap_SendStart
-#ifndef NEEDS_DATA_MIGRATED
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_thread/AudioThread_ScheduleProcessCmds.s")
-#else
 void AudioThread_ScheduleProcessCmds(void) {
     static s32 sMaxPendingAudioCmds = 0; // 0x800E86B0
     s32 msg;
@@ -234,7 +231,6 @@ void AudioThread_ScheduleProcessCmds(void) {
     osSendMesg(gThreadCmdProcQueue, (OSMesg) msg, OS_MESG_NOBLOCK);
     gThreadCmdReadPos = gThreadCmdWritePos;
 }
-#endif
 
 // Original name: Nap_AudioPortProcess
 void AudioThread_ProcessCmds(u32 msg) {
@@ -316,3 +312,55 @@ void AudioThread_ProcessCmds(u32 msg) {
 void AudioThread_Init(void) {
     AudioThread_InitQueues();
 }
+
+// Unused data
+s32 D_800E86B4[0x2F] = {
+    0x556E6465,
+    0x66696E65,
+    0x6420506F,
+    0x72742043,
+    0x6F6D6D61,
+    0x6E642025,
+    0x640A0000,
+    0,
+    0x320E,
+    0x140,
+    0x03E52239,
+    0x20D,
+    0xC15,
+    0x0C150C15,
+    0x6C02EC,
+    0x200,
+    0,
+    0x280,
+    0x400,
+    0x2501FF,
+    0xE0204,
+    2,
+    0x280,
+    0x400,
+    0x2501FF,
+    0xE0204,
+    2,
+    0x01000000,
+    0x324E,
+    0x140,
+    0x03E52239,
+    0x20C,
+    0xC15,
+    0x0C150C15,
+    0x6C02EC,
+    0x200,
+    0,
+    0x280,
+    0x01000400,
+    0x2301FD,
+    0xE0204,
+    2,
+    0x280,
+    0x03000400,
+    0x2501FF,
+    0xE0204,
+    2,
+};
+

@@ -72,9 +72,9 @@ void SysMain_CreateGfxTask(OSTask* task) {
     task->t.flags = 0;
     task->t.ucode_boot = (u64*) rspbootTextStart;
     task->t.ucode_boot_size = (u32) rspbootTextEnd - (u32) rspbootTextStart;
-    task->t.ucode = (u64*) gspF3DEX_fifoTextStart;
+    task->t.ucode = (u64*) gspFast3DTextStart;
     task->t.ucode_size = SP_UCODE_SIZE;
-    task->t.ucode_data = (u64*) gspF3DEX_fifoDataStart;
+    task->t.ucode_data = (u64*) gspFast3DDataStart;
     task->t.ucode_data_size = SP_UCODE_DATA_SIZE;
     task->t.dram_stack = (u64*) gDramStack;
     task->t.dram_stack_size = SP_DRAM_STACK_SIZE8;

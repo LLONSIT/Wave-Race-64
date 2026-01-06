@@ -224,6 +224,8 @@ segments:
       - [0x8F000, data]
       - [0x9F6D0, .data, ovl_table]
       - [0x9F930, data]
+      - [0xA2EB0, .data, audio/audio_thread]
+      - [0xA2F70, data]
       - [0xA37F0, .data, libultra/os/osAiSetNextBuffer]
       - [0xA3800, data]
       - [0xA3850, .data, libultra/io/vi]
