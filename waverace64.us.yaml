@@ -105,28 +105,28 @@ segments:
       - [0x7FFA0, c, libultra/os/sendmesg] # OK
       - [0x800F0, c, libultra/os/gettime] # Needs bss
       - [0x80180, c, libultra/os/settime]  # OK
-      - [0x801B0, c, libultra/io/viswapbuf]
-      - [0x80200, c, libultra/os/contreaddata] # pending
-      - [0x80460, c, libultra/os/recvmesg]
+      - [0x801B0, c, libultra/io/viswapbuf] # OK
+      - [0x80200, c, libultra/os/contreaddata] # OK
+      - [0x80460, c, libultra/os/recvmesg] # OK
       - [0x805A0, hasm, libultra/os/dpgetstat] # might be C according to ultralib, but i don't see a way to generate those nops at the end
-      - [0x805F0, c, libultra/io/visetmode]
-      - [0x80660, c, libultra/io/visetspecial]
-      - [0x80820, c, libultra/os/sptaskyield]
-      - [0x80840, c, libultra/os/sptask]
-      - [0x80B00, c, libultra/os/dpsetstat]
-      - [0x80B10, c, libultra/os/createmesgqueue]
-      - [0x80B40, c, libultra/os/seteventmesg]
-      - [0x80BB0, c, libultra/io/visetevent]
-      - [0x80C20, c, libultra/os/createthread]
-      - [0x80D70, c, libultra/os/startthread]
-      - [0x80EC0, c, libultra/os/sptaskyielded]
+      - [0x805F0, c, libultra/io/visetmode] # OK
+      - [0x80660, c, libultra/io/visetspecial] # OK
+      - [0x80820, c, libultra/os/sptaskyield] # OK
+      - [0x80840, c, libultra/os/sptask] # OK
+      - [0x80B00, c, libultra/os/dpsetstat] # OK
+      - [0x80B10, c, libultra/os/createmesgqueue] # OK
+      - [0x80B40, c, libultra/os/seteventmesg] # OK
+      - [0x80BB0, c, libultra/io/visetevent] # OK
+      - [0x80C20, c, libultra/os/createthread] # OK
+      - [0x80D70, c, libultra/os/startthread] # OK
+      - [0x80EC0, c, libultra/os/sptaskyielded] # OK
       - [0x80F40, hasm, libultra/writebackdcacheall]
-      - [0x80F70, c, libultra/os/osCreateViManager]
-      - [0x812D0, c, libultra/os/osViBlack]
-      - [0x81340, c, libultra/os/osViGetCurrentFramebuffer]
-      - [0x81380, c, libultra/os/osCreatePiManager]
-      - [0x81500, c, libultra/os/osSetThreadPri]
-      - [0x815E0, c, libultra/osInitialize]
+      - [0x80F70, c, libultra/io/vimgr] # OK
+      - [0x812D0, c, libultra/io/viblack] # OK
+      - [0x81340, c, libultra/io/vigetcurrframebuf]  # OK
+      - [0x81380, c, libultra/io/pimgr]
+      - [0x81500, c, libultra/os/setthreadpri]
+      - [0x815E0, c, libultra/os/initialize]
       - [0x81810, hasm, libultra/sqrtf]
       - [0x81820, c, libultra/controller]
       - [0x81B80, c, libultra/gu/ortho] # OK
@@ -226,6 +226,8 @@ segments:
       - [0x9F930, data]
       - [0xA2EB0, .data, audio/audio_thread]
       - [0xA2F70, data]
+      - [0xA3790, .data, libultra/io/vimgr]
+      - [0xA37B0, data]
       - [0xA37F0, .data, libultra/os/osAiSetNextBuffer]
       - [0xA3800, data]
       - [0xA3850, .data, libultra/io/vi]
@@ -292,7 +294,9 @@ segments:
       # Main bss
       - { type: bss, start: 0xA95D0, vram: 0x800EEDD0, name: bss1 }
       - { type: .bss, start: 0xA95D0, vram: 0x801D86B0, name: libultra/os/sptask }
-      - { type: bss, start: 0xA95D0, vram: 0x801D86F0, name: bss2}
+      - { type: .bss, start: 0xA95D0, vram: 0x801D86F0, name: libultra/os/seteventmesg}
+      - { type: .bss, start: 0xA95D0, vram: 0x801D8770, name: libultra/io/vimgr}
+      - { type: bss, start: 0xA95D0, vram: 0x801D9980, name: bss2}
       
 
   - name: codeseg # This segment is loaded into memory on func_80098190
