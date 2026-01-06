@@ -1,7 +1,7 @@
 #include "global.h"
 #include "camera.h"
 
-Gfx *func_800687A4(Gfx *arg0);
+Gfx* func_800687A4(Gfx* arg0);
 Gfx* func_800916B4(Gfx* arg0);
 typedef struct UnkStruct_80052C6C_1_s {
     /* 0x0 */ s16 unk0; /* inferred */

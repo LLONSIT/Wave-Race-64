@@ -3,46 +3,6 @@
 #include "assert.h"
 #include "PRinternal/viint.h"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // TODO: this comes from a header
 #ident "$Revision: 1.17 $"
 

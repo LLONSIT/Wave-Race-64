@@ -15,6 +15,3 @@ void osViBlack(u8 active) {
 
     __osRestoreInt(saveMask);
 }
-
-
-

@@ -18,5 +18,3 @@ void* osViGetCurrentFramebuffer(void) {
     __osRestoreInt(saveMask);
     return framep;
 }
-
-

@@ -4,14 +4,14 @@
 #include "PRinternal/siint.h"
 
 void __osPackReadData(void);
-s32 osContStartReadData(OSMesgQueue *mesg) {
+s32 osContStartReadData(OSMesgQueue* mesg) {
     s32 ret = 0;
     s32 i;
     __osSiGetAccess();
     if (__osContLastCmd != 1) {
         __osPackReadData();
         ret = __osSiRawStartDma(1, __osContPifRam.ramarray);
-        osRecvMesg(mesg, (void *)0, 1);
+        osRecvMesg(mesg, (void*) 0, 1);
     }
     for (i = 0; i < 15 + 1; i++) {
         __osContPifRam.ramarray[i] = 0xff;
@@ -23,13 +23,13 @@ s32 osContStartReadData(OSMesgQueue *mesg) {
     return ret;
 }
 
-void osContGetReadData(OSContPad *pad) {
-    u8 *cmdBufPtr;
+void osContGetReadData(OSContPad* pad) {
+    u8* cmdBufPtr;
     __OSContReadFormat response;
     s32 i;
-    cmdBufPtr = (u8 *) __osContPifRam.ramarray;
+    cmdBufPtr = (u8*) __osContPifRam.ramarray;
     for (i = 0; i < __osMaxControllers; i++, cmdBufPtr += sizeof(__OSContReadFormat), pad++) {
-        response = * (__OSContReadFormat *) cmdBufPtr;
+        response = *(__OSContReadFormat*) cmdBufPtr;
         pad->errno = (response.rxsize & 0xc0) >> 4;
         if (pad->errno == 0) {
             pad->button = response.button;
@@ -40,11 +40,10 @@ void osContGetReadData(OSContPad *pad) {
 }
 
 void __osPackReadData() {
-    u8 *cmdBufPtr;
+    u8* cmdBufPtr;
     __OSContReadFormat request;
     s32 i;
-    cmdBufPtr = (u8 *) __osContPifRam.ramarray;
-
+    cmdBufPtr = (u8*) __osContPifRam.ramarray;
 
     for (i = 0; i < 16; i++) {
         __osContPifRam.ramarray[i] = 0;
@@ -59,7 +58,7 @@ void __osPackReadData() {
     request.stick_x = -1;
     request.stick_y = -1;
     for (i = 0; i < __osMaxControllers; i++) {
-        * (__OSContReadFormat *) cmdBufPtr = request;
+        *(__OSContReadFormat*) cmdBufPtr = request;
         cmdBufPtr += sizeof(__OSContReadFormat);
     }
     *cmdBufPtr = 254;

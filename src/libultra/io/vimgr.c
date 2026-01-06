@@ -6,15 +6,15 @@
 #include "PRinternal/osint.h"
 
 OSDevMgr __osViDevMgr = { 0 };
-//#if BUILD_VERSION >= VERSION_J
-//u32 __additional_scanline = 0;
-//#endif
+// #if BUILD_VERSION >= VERSION_J
+// u32 __additional_scanline = 0;
+// #endif
 OSThread viThread;
- STACK(viThreadStack, OS_VIM_STACKSIZE) ALIGNED(0x10);
- OSMesgQueue viEventQueue ALIGNED(0x8);
- OSMesg viEventBuf[5] ALIGNED(0x8);
- OSIoMesg viRetraceMsg ALIGNED(0x8);  
- OSIoMesg viCounterMsg ALIGNED(0x8);
+STACK(viThreadStack, OS_VIM_STACKSIZE) ALIGNED(0x10);
+OSMesgQueue viEventQueue ALIGNED(0x8);
+OSMesg viEventBuf[5] ALIGNED(0x8);
+OSIoMesg viRetraceMsg ALIGNED(0x8);
+OSIoMesg viCounterMsg ALIGNED(0x8);
 
 void viMgrMain(void* arg);
 void osCreateViManager(OSPri pri) {
@@ -84,10 +84,10 @@ void viMgrMain(void* arg) {
     if (retrace == 0) {
         retrace = 1;
     }
-    dm = (OSDevMgr*)arg;
+    dm = (OSDevMgr*) arg;
 
     while (true) {
-        osRecvMesg(dm->evtQueue, (OSMesg)&mb, OS_MESG_BLOCK);
+        osRecvMesg(dm->evtQueue, (OSMesg) &mb, OS_MESG_BLOCK);
         switch (mb->hdr.type) {
             case OS_MESG_TYPE_VRETRACE:
                 __osViSwapContext();
