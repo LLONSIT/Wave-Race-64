@@ -80,12 +80,11 @@ typedef struct {
 } OSViContext;
 
 void osCreateViManager(OSPri pri);
-void osViSetMode(OSViMode *mode);
-void osViSetEvent(OSMesgQueue *mq, OSMesg msg, u32 retraceCount);
+void osViSetMode(OSViMode* modep);
+void osViSetEvent(OSMesgQueue* mq, OSMesg m, u32 retraceCount);
 void osViBlack(u8 active);
 void osViSetSpecialFeatures(u32 func);
-void osViSwapBuffer(void *vaddr);
-
+void osViSwapBuffer(void* frameBufPtr);
 
 #define OS_VI_NTSC_LPN1		0	/* NTSC */
 #define OS_VI_NTSC_LPF1		1

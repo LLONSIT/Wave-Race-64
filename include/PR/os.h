@@ -448,6 +448,13 @@ typedef struct {
 #define PFS_ERR_ID_FATAL    10    /* dead ram pack */
 #define PFS_ERR_DEVICE        11    /* wrong device type*/
 
+#define PFS_BANK_LAPPED_BY  8   /* => u8 */
+#define PFS_SECTOR_PER_BANK 32
+#define PFS_INODE_DIST_MAP  (PFS_BANK_LAPPED_BY * PFS_SECTOR_PER_BANK)
+#define PFS_SECTOR_SIZE     (PFS_INODE_SIZE_PER_PAGE/PFS_SECTOR_PER_BANK)
+
+
+
 /* definition for EEPROM */
 
 #define EEPROM_MAXBLOCKS    64
