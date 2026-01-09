@@ -28,7 +28,7 @@ s32 osPfsFileState(OSPfs* pfs, s32 file_no, OSPfsState* state) {
 #endif
     SET_ACTIVEBANK_TO_ZERO();
 
-    ERRCK(__osContRamRead(pfs->queue, pfs->channel, pfs->dir_table + file_no, (u8*)&dir));
+    ERRCK(__osContRamRead(pfs->queue, pfs->channel, pfs->dir_table + file_no, (u8*) &dir));
 
     if (dir.company_code == 0 || dir.game_code == 0) {
         return PFS_ERR_INVALID;
@@ -91,7 +91,7 @@ s32 osPfsFileState(OSPfs* pfs, s32 file_no, OSPfsState* state) {
             break;
         }
     }
-    
+
     if (next_page.ipage != 1) {
         return PFS_ERR_INCONSISTENT;
     }

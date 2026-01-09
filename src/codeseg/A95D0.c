@@ -181,7 +181,8 @@ void func_801DB430(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0
         func_801DB024(arg0);
         vec[0] = COS((s32) ((arg2[i][0] * 4096.0f) / 360.0f));
         vec[2] = SIN((s32) ((arg2[i][0] * 4096.0f) / 360.0f));
-        vec[1] = (SIN((s32) ((arg2[i][1] * 4096.0f) / 360.0f)) * arg1->unk30) * (1.0f - ((SysUtils_Rand() & 3) / 20.0f));
+        vec[1] =
+            (SIN((s32) ((arg2[i][1] * 4096.0f) / 360.0f)) * arg1->unk30) * (1.0f - ((SysUtils_Rand() & 3) / 20.0f));
 
         if (vec[1] * ((arg1->unk0[1] - arg0->unkC[1])) > 0) {
             vec[1] *= 1.2f;

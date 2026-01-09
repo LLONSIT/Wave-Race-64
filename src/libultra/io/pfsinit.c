@@ -15,7 +15,7 @@ s32 osPfsInit(OSMesgQueue* arg0, OSPfs* arg1, s32 arg2) {
     arg1->queue = arg0;
     arg1->channel = arg2;
     arg1->status = 0;
-    
+
     sp24 = __osGetId(arg1);
     if (sp24 != 0) {
         return sp24;
@@ -25,7 +25,7 @@ s32 osPfsInit(OSMesgQueue* arg0, OSPfs* arg1, s32 arg2) {
     return sp24;
 }
 
-s32 __osPfsGetStatus(OSMesgQueue *queue, s32 channel) {
+s32 __osPfsGetStatus(OSMesgQueue* queue, s32 channel) {
     s32 ret = 0;
     OSMesg dummy;
     u8 pattern;
@@ -48,4 +48,3 @@ s32 __osPfsGetStatus(OSMesgQueue *queue, s32 channel) {
     }
     return ret;
 }
-

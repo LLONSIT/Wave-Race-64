@@ -1,7 +1,7 @@
 #include "PRinternal/controller.h"
 #include "PRinternal/siint.h"
 
-s32 osEepromProbe(UNUSED OSMesgQueue *mq) {
+s32 osEepromProbe(UNUSED OSMesgQueue* mq) {
     s32 ret = 0;
     OSContStatus status;
 
@@ -11,4 +11,3 @@ s32 osEepromProbe(UNUSED OSMesgQueue *mq) {
     __osSiRelAccess();
     return ret;
 }
-

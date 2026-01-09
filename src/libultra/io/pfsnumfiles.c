@@ -12,7 +12,7 @@ s32 osPfsNumFiles(OSPfs* pfs, s32* max_files, s32* files_used) {
     SET_ACTIVEBANK_TO_ZERO();
 
     for (j = 0; j < pfs->dir_size; j++) {
-        ERRCK(__osContRamRead(pfs->queue, pfs->channel, pfs->dir_table + j, (u8*)&dir));
+        ERRCK(__osContRamRead(pfs->queue, pfs->channel, pfs->dir_table + j, (u8*) &dir));
 
         if (dir.company_code != 0 && dir.game_code != 0) {
             files++;
