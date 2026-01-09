@@ -9,18 +9,17 @@ extern int Seed;
 // .rodata
 extern double D_800E9220;
 
-s32 Math_Round(f32 x) {
+s32 SysUtils_Round(f32 x) {
     if (x < 0.0f) {
-        return (s32) (x - 0.5f);
+        return x - 0.5f;
     }
-    return (s32) (x + 0.5f);
+    return x + 0.5f;
 }
 
-// Same as func_8006A6E4 of fzero x
-// Props to inspectrdc for matching this...
-
-// Initialize the sin table
-void Init_SinTable(void) {
+/*
+ * Initializes the sin table
+ */
+void SysUtils_TaylorSeries(void) {
     f64 denominator;
     f64 minusSquareX;
     f64 x;
@@ -44,77 +43,67 @@ void Init_SinTable(void) {
     }
 }
 
-void srand(int seed) {
+void SysUtils_Srand(int seed) {
     Seed = seed;
 }
 
-u32 rand(void) {
+u32 SysUtils_Rand(void) {
     Seed = (Seed * 0x41C64E6D) + 0x3039;
     return Seed;
 }
 
-void func_80047E78(MF* arg0, Matrix out) {
-    struct Mtx* mtx = &arg0->m;
+void SysUtils_MtxToMtxF(Mtx* src, MtxF* dest) {
     s32 i;
     s32 j;
+    Mtx* mtxSrc = src;
+
     for (i = 3; i >= 0; i--) {
         for (j = 3; j >= 0; j--) {
-            out[i][j] = ((mtx->intarr[i][j] << 16) | (mtx->fracarr[i][j])) / 65536.0f;
+            dest->mf[i][j] = ((mtxSrc->mu.intPart[i][j] << 16) | (mtxSrc->mu.fracPart[i][j])) / 65536.0f;
         }
     }
 }
 
-void func_80047EE0(Matrix arg0, MF* arg1) {
-    struct Mtx* mtx = &arg1->m;
+void SysUtils_MtxFToMtx(MtxF* src, Mtx* dest) {
     int i;
     int j;
+    Mtx* mtx = dest;
 
     for (i = 3; i >= 0; i--) {
         for (j = 3; j >= 0; j--) {
-            s32 temp = (arg0[i][j] * 65536.0f);
-            mtx->intarr[i][j] = temp >> 16;
-            mtx->intarr[i][j + 16] = temp & 0xffff;
+            s32 temp = (src->mf[i][j] * 65536.0f);
+            mtx->mu.intPart[i][j] = temp >> 16;
+            mtx->mu.intPart[i][j + 16] = temp & 0xffff;
         }
     }
 }
 
-void func_80047F48(chr_struct* arg0, s32 arg1, s32 arg2, s32 arg3) {
-    arg0->unk4 = arg1;
-    arg0->unk0 = arg1;
-    arg0->unk5 = arg2;
-    arg0->unk1 = arg2;
-    arg0->unk6 = arg3;
-    arg0->unk2 = arg3;
+void SysUtils_LightsSetAmbient(Ambient* ambient, s32 r, s32 g, s32 b) {
+    ambient->l.col[0] = ambient->l.colc[0] = r;
+    ambient->l.col[1] = ambient->l.colc[1] = g;
+    ambient->l.col[2] = ambient->l.colc[2] = b;
 }
 
-void func_80047F64(chr_struct* arg0, s32 arg1, s32 arg2, s32 arg3) {
-    arg0->unk4 = arg1;
-    arg0->unk0 = arg1;
-    arg0->unk5 = arg2;
-    arg0->unk1 = arg2;
-    arg0->unk6 = arg3;
-    arg0->unk2 = arg3;
+void SysUtils_LightsSetColor(Light* light, s32 r, s32 g, s32 b) {
+    light->l.col[0] = light->l.colc[0] = r;
+    light->l.col[1] = light->l.colc[1] = g;
+    light->l.col[2] = light->l.colc[2] = b;
 }
 
-void func_80047F80(chr_struct* arg0, s32 arg1, s32 arg2, s32 arg3) {
-    arg0->unk8 = arg1;
-    arg0->unk9 = arg2;
-    arg0->unkA = arg3;
+void SysUtils_LightsSetDirection(Light* light, s32 x, s32 y, s32 z) {
+    light->l.dir[0] = x;
+    light->l.dir[1] = y;
+    light->l.dir[2] = z;
 }
 
-void func_80047F90(chr_struct* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8,
-                   s32 arg9) {
-    s8* temp_a0;
+void SysUtils_LightsSetSource(Lights1* lights, s32 ambientRed, s32 ambientGreen, s32 ambientBlue, s32 colorRed,
+                              s32 colorGreen, s32 colorBlue, s32 dirX, s32 dirY, s32 dirZ) {
 
-    arg0->unk13 = 0;
-    arg0->unkF = arg0->unk13;
-    arg0->unkB = arg0->unk13;
-    arg0->unk7 = arg0->unk13;
-    arg0->unk3 = arg0->unk13;
-    func_80047F48(arg0, arg1, arg2, arg3);
-    temp_a0 = &arg0->unk8; // TODO: What?
-    func_80047F64((chr_struct*) temp_a0, arg4, arg5, arg6);
-    func_80047F80((chr_struct*) temp_a0, arg7, arg8, arg9);
+    ((s8*) lights)[3] = ((s8*) lights)[7] = ((s8*) lights)[11] = ((s8*) lights)[15] = ((s8*) lights)[19] =
+        0; // FAKE match
+    SysUtils_LightsSetAmbient(&lights->a, ambientRed, ambientGreen, ambientBlue);
+    SysUtils_LightsSetColor(&lights->l[0], colorRed, colorGreen, colorBlue);
+    SysUtils_LightsSetDirection(&lights->l[0], dirX, dirY, dirZ);
 }
 
 void func_80047FFC(s32 arg0, s32 arg1, s32 arg2, s32* arg3, s32* arg4, s32* arg5) {
@@ -167,7 +156,7 @@ void func_80047FFC(s32 arg0, s32 arg1, s32 arg2, s32* arg3, s32* arg4, s32* arg5
     *arg5 = (s32) ((*arg5 * temp_lo) + temp_t0) / 65025;
 }
 
-void func_800481E0(MF* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7) {
+void func_800481E0(Mtx* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7) {
     f32 temp_f0;
     u32 temp_v0;
     f32 sp54;
@@ -177,7 +166,7 @@ void func_800481E0(MF* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
     s32 sp44;
     s32 pad[2];
 
-    temp_v0 = Math_Round((arg2 / 720.0f) * 4096.0f);
+    temp_v0 = SysUtils_Round((arg2 / 720.0f) * 4096.0f);
 
     temp_f0 = SIN(temp_v0) / COS(temp_v0) * arg4;
 
@@ -191,39 +180,39 @@ void func_800481E0(MF* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
 
     temp_f0 *= arg3; // some unused storing on temp_f0
 
-    temp_v0 = Math_Round((131072.0f * arg4) / (sp50 - sp54));
+    temp_v0 = SysUtils_Round((131072.0f * arg4) / (sp50 - sp54));
 
-    arg0->xx = temp_v0 & 0xFFFF0000;
+    arg0->m[0][0] = temp_v0 & 0xFFFF0000;
 
-    arg0->xz = temp_v0 << 0x10;
+    arg0->m[2][0] = temp_v0 << 0x10;
 
-    temp_v0 = Math_Round((131072.0f * arg4) / (sp4C - sp48));
+    temp_v0 = SysUtils_Round((131072.0f * arg4) / (sp4C - sp48));
 
-    arg0->zx = temp_v0 >> 0x10;
+    arg0->m[0][2] = temp_v0 >> 0x10;
 
-    arg0->zz = temp_v0 & 0xFFFF;
+    arg0->m[2][2] = temp_v0 & 0xFFFF;
 
-    sp44 = Math_Round(((sp50 + sp54) * 65536.0f) / (sp50 - sp54));
+    sp44 = SysUtils_Round(((sp50 + sp54) * 65536.0f) / (sp50 - sp54));
 
-    temp_v0 = Math_Round(((sp4C + sp48) * 65536.0f) / (sp4C - sp48));
+    temp_v0 = SysUtils_Round(((sp4C + sp48) * 65536.0f) / (sp4C - sp48));
 
-    arg0->xy = (sp44 & 0xFFFF0000) | (temp_v0 >> 0x10);
+    arg0->m[1][0] = (sp44 & 0xFFFF0000) | (temp_v0 >> 0x10);
 
-    arg0->xw = (sp44 << 0x10) | (temp_v0 & 0xFFFF);
+    arg0->m[3][0] = (sp44 << 0x10) | (temp_v0 & 0xFFFF);
 
-    temp_v0 = Math_Round(((arg5 + arg4) * 65536.0f) / (arg4 - arg5));
+    temp_v0 = SysUtils_Round(((arg5 + arg4) * 65536.0f) / (arg4 - arg5));
 
-    arg0->yy = (temp_v0 & 0xFFFF0000) | 0xFFFF;
+    arg0->m[1][1] = (temp_v0 & 0xFFFF0000) | 0xFFFF;
 
-    arg0->yw = temp_v0 << 0x10;
+    arg0->m[3][1] = temp_v0 << 0x10;
 
-    temp_v0 = Math_Round(((131072.0f * arg4) * arg5) / (arg4 - arg5));
+    temp_v0 = SysUtils_Round(((131072.0f * arg4) * arg5) / (arg4 - arg5));
 
-    arg0->wy = temp_v0 & 0xFFFF0000;
+    arg0->m[1][3] = temp_v0 & 0xFFFF0000;
 
-    arg0->ww = temp_v0 << 0x10;
+    arg0->m[3][3] = temp_v0 << 0x10;
 
-    arg0->yx = (arg0->yz = (arg0->wx = (arg0->wz = (arg0->zy = (arg0->zw = 0.0f)))));
+    arg0->m[0][1] = (arg0->m[2][1] = (arg0->m[0][3] = (arg0->m[2][3] = (arg0->m[1][2] = (arg0->m[3][2] = 0.0f)))));
 
     if ((arg4 + arg5) > 2.0f) {
         temp_v0 = (u32) (131072.0f / (arg4 + arg5));
@@ -313,7 +302,7 @@ void func_800484C8(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     arg1->wy = 0.0f;
     arg1->wz = 0.0f;
     arg1->ww = 1.0f;
-    func_80047EE0(arg1, arg0);
+    SysUtils_MtxFToMtx(arg1, arg0);
 }
 
 void func_80048854(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8,
@@ -378,8 +367,7 @@ void func_80048854(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     arg1->wx = arg1->wy = arg1->wz = 0.0f;
     arg1->ww = 1;
 
-    // Note: this should be: func_80047EE0(arg0, arg1)
-    func_80047EE0((float(*)[4]) arg1, (MF*) arg0);
+    SysUtils_MtxFToMtx(arg1, arg0);
 }
 
 #define FTO32(x) (long) (65536.0f * (x))
@@ -464,7 +452,6 @@ void func_80048A88(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
     }
 }
 
-// Similar to func_8006A3AC from fzerox
 void func_80048E0C(Vtx* vtx, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 var20;
     s32 var22;
@@ -513,25 +500,11 @@ void func_80048E0C(Vtx* vtx, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     vtx2->v.cn[1] = sp44 * sp3C;
     vtx2->v.cn[2] = sp40 * sp3C;
 }
-#undef FTO32
 
-// TODO: Move this from here...
-typedef struct {
-    u16 i[4][4];
-    u16 f[4][4];
-} Mtx_u;
-
-typedef union {
-    Mtx_u u;
-    Mtx_t m;
-    long long int force_structure_alignment;
-} _Mtx;
-
-#define FTO32(x) (long) ((x) *65536.0f)
-#define MTXTOMTXF(mtx, i1, i2) ((((s16) mtx->u.i[(i1)][(i2)] << 0x10) | mtx->u.f[(i1)][(i2)]) / 65536.0f)
+#define MTXTOMTXF(mtx, i1, i2) ((((s16) mtx->mu.intPart[(i1)][(i2)] << 0x10) | mtx->mu.fracPart[(i1)][(i2)]) / 65536.0f)
 
 // Similar to func_8006B33C from fzerox
-void func_80049144(_Mtx* arg0, _Mtx* arg1, _Mtx* dest, f32 arg3) {
+void func_80049144(Mtx* arg0, Mtx* arg1, Mtx* dest, f32 arg3) {
     f32 temp_fa0;
     f32 temp_fv1;
     s32 x2;
@@ -676,28 +649,103 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
     arg1->wx = arg1->wy = arg1->wz = 0.0f;
     arg1->ww = 1;
 
-    func_80047EE0((float(*)[4]) arg1, (MF*) arg0);
+    SysUtils_MtxFToMtx(arg1, arg0);
+}
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_800498A4.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_80049A94.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_80049C9C.s")
+
+void SysUtils_MatrixAffineMultiply(MtxF* dest, MtxF* mtxFA, MtxF* mtxFB) {
+    mtxFB->mf[0][0] =
+        dest->mf[0][0] * mtxFA->mf[0][0] + dest->mf[1][0] * mtxFA->mf[0][1] + dest->mf[2][0] * mtxFA->mf[0][2];
+    mtxFB->mf[0][1] =
+        dest->mf[0][1] * mtxFA->mf[0][0] + dest->mf[1][1] * mtxFA->mf[0][1] + dest->mf[2][1] * mtxFA->mf[0][2];
+    mtxFB->mf[0][2] =
+        dest->mf[0][2] * mtxFA->mf[0][0] + dest->mf[1][2] * mtxFA->mf[0][1] + dest->mf[2][2] * mtxFA->mf[0][2];
+
+    mtxFB->mf[1][0] =
+        dest->mf[0][0] * mtxFA->mf[1][0] + dest->mf[1][0] * mtxFA->mf[1][1] + dest->mf[2][0] * mtxFA->mf[1][2];
+    mtxFB->mf[1][1] =
+        dest->mf[0][1] * mtxFA->mf[1][0] + dest->mf[1][1] * mtxFA->mf[1][1] + dest->mf[2][1] * mtxFA->mf[1][2];
+    mtxFB->mf[1][2] =
+        dest->mf[0][2] * mtxFA->mf[1][0] + dest->mf[1][2] * mtxFA->mf[1][1] + dest->mf[2][2] * mtxFA->mf[1][2];
+
+    mtxFB->mf[2][0] =
+        dest->mf[0][0] * mtxFA->mf[2][0] + dest->mf[1][0] * mtxFA->mf[2][1] + dest->mf[2][0] * mtxFA->mf[2][2];
+    mtxFB->mf[2][1] =
+        dest->mf[0][1] * mtxFA->mf[2][0] + dest->mf[1][1] * mtxFA->mf[2][1] + dest->mf[2][1] * mtxFA->mf[2][2];
+    mtxFB->mf[2][2] =
+        dest->mf[0][2] * mtxFA->mf[2][0] + dest->mf[1][2] * mtxFA->mf[2][1] + dest->mf[2][2] * mtxFA->mf[2][2];
+
+    mtxFB->mf[3][0] = dest->mf[0][0] * mtxFA->mf[3][0] + dest->mf[1][0] * mtxFA->mf[3][1] +
+                      dest->mf[2][0] * mtxFA->mf[3][2] + dest->mf[3][0];
+    mtxFB->mf[3][1] = dest->mf[0][1] * mtxFA->mf[3][0] + dest->mf[1][1] * mtxFA->mf[3][1] +
+                      dest->mf[2][1] * mtxFA->mf[3][2] + dest->mf[3][1];
+    mtxFB->mf[3][2] = dest->mf[0][2] * mtxFA->mf[3][0] + dest->mf[1][2] * mtxFA->mf[3][1] +
+                      dest->mf[2][2] * mtxFA->mf[3][2] + dest->mf[3][2];
+
+    mtxFB->mf[0][3] = 0.0f;
+    mtxFB->mf[1][3] = 0.0f;
+    mtxFB->mf[2][3] = 0.0f;
+    mtxFB->mf[3][3] = 1.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_800498A4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_8004A130.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80049A94.s")
+void func_8004A208(void) {
+    Controller_info* temp_v0;
+    u8 var_v0;
+    s32 var_v1;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80049C9C.s")
+    var_v0 = 1;
+    for (var_v1 = 0; var_v1 < 4; var_v1++) {
+        if (D_80154340 & var_v0) {
+            temp_v0 = &gControllerOne[var_v1];
+            temp_v0->unk9 = temp_v0->unk4 = temp_v0->unk6 = 0;
+            temp_v0->unk2 = 0;
+            temp_v0->unk0 = 0;
+            temp_v0->unk8 = temp_v0->unk9;
+        }
+        var_v0 <<= 1;
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80049EB8.s")
+void SysUtils_UpdateControllers(void) {
+    s32 i;
+    u8 mask = 1;
+    osRecvMesg(&D_801540D0, &D_80154348, 1);
+    osContGetReadData(gControllers);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A130.s")
+    for (i = 0; i < 4; i++) {
+        if (D_80154340 & mask) {
+            Controller_info* ctrl;
+            OSContPad* new_var3;
+            u16 new_var;
+            s32 new_var2;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A208.s")
+            ctrl = &gControllerOne[i];
+            new_var3 = &gControllers[i];
+            ctrl->unk6 = ctrl->unk0;
+            ctrl->unk0 = new_var3->button;
+            new_var = ctrl->unk0 ^ ctrl->unk6;
+            new_var2 = new_var;
+            ctrl->unk2 = ctrl->unk0 & new_var2;
+            ctrl->unk4 = ctrl->unk6 & new_var;
+            new_var2 = new_var & 0xFFFF;
+            ctrl->unk8 = new_var3->stick_x;
+            ctrl->unk9 = new_var3->stick_y;
+        }
+        mask <<= 1;
+    }
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A2B4.s")
-
-void func_8004A394(void) {
+UNUSED void SysUtils_ReadContData(void) {
     osContStartReadData(&D_801540D0);
-    func_8004A2B4();
+    SysUtils_UpdateControllers();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A3C0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_8004A3C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A8B0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_8004A8B0.s")

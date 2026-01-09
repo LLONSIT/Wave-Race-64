@@ -55,7 +55,7 @@ void func_80073E6C(void);
 void func_800744EC(void);
 void func_80075310(void);
 void func_801FAEA8(void);
-void func_8004A2B4(void);
+void SysUtils_UpdateControllers(void);
 void func_8006C5D8(Gfx**);
 void func_8006BE74(Gfx**);
 void func_8006B334(Gfx**);
@@ -140,7 +140,7 @@ void Mio0_Decompress(u8*, u8*);
 s32 func_8007AE30(s32);
 //void func_8007AE8C(void*, void*, void*, void*);
 void func_800C37F4(s32, s32);
-void func_800481E0(MF* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
+void func_800481E0(Mtx* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
 void func_80048A88(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9,
                    f32 argA);
 Gfx* func_801E7C58(Gfx* dList, u32 ulx, u32 uly, u32 lrx, u32 lry, u32 r, u32 g, u32 b, u32 a);

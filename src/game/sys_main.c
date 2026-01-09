@@ -165,11 +165,11 @@ void* SysMain_Thread(void* entry) {
     D_80151948 = 0;
     D_80151950 = 1;
 
-    Init_SinTable();
+    SysUtils_TaylorSeries();
 
     func_80048854(&D_8011F820.unk_A40, &mtx, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
-    srand(osGetTime());
+    SysUtils_Srand(osGetTime());
     osSetTime(0);
 
     osViSwapBuffer(D_801542C0[D_80151948]);

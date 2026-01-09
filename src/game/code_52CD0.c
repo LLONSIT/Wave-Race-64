@@ -1676,10 +1676,10 @@ void func_800A5D70(s32 arg0) {
             D_801D0754 = D_80192420[2] - D_801CF060[arg0].unkC;
             D_801D0758 = D_80192420[3] - D_801CF060[arg0].unk14;
             if (((f64) D_80192420[4] * D_800EB818 * D_800EB818) < func_8009D4DC(D_801D0754, D_801D0758)) {
-                rand_num = rand() % 4095U;
+                rand_num = SysUtils_Rand() % 4095U;
                 D_801CF060[arg0].unkC = (D_80192420[2] + (SIN(rand_num) * (D_800D4720 * D_800EB820)));
                 D_801CF060[arg0].unk14 = (D_80192420[3] + (COS(rand_num) * (D_800D4720 * D_800EB820)));
-                D_801CF060[arg0].unk18 = (s32) (rand() & 255);
+                D_801CF060[arg0].unk18 = (s32) (SysUtils_Rand() & 255);
             }
         }
     }
@@ -1895,14 +1895,14 @@ void func_800A9494(s32 arg0) {
                 D_801CF060[arg0].unk70) {
                 D_801CF060[arg0].unk8 = 7;
                 D_801CF060[arg0].unkA4 = 0;
-                D_801CF060[arg0].unkA8 = (rand() & 15) + 10;
-                D_801CF060[arg0].unk70 = ((rand() & 15) * 10.0f) + 200.0f;
+                D_801CF060[arg0].unkA8 = (SysUtils_Rand() & 15) + 10;
+                D_801CF060[arg0].unk70 = ((SysUtils_Rand() & 15) * 10.0f) + 200.0f;
             }
             if (func_8009D4A8(D_801D06BC - D_801D0754, D_801D06C4 - D_801D075C) < 1000.0f) {
                 D_801CF060[arg0].unk9C = (D_801CF060[arg0].unk9C + 1) % 2;
                 D_801CF060[arg0].unk8 = 7;
                 D_801CF060[arg0].unkA4 = 0;
-                D_801CF060[arg0].unkA8 = (rand() & 15) + 10;
+                D_801CF060[arg0].unkA8 = (SysUtils_Rand() & 15) + 10;
             }
             if (D_801CF060[arg0].unk78 == 15) {
                 D_801CF060[arg0].unk78 = 0;

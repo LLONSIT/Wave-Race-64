@@ -11,5 +11,5 @@ extern float gSinTable[0x1000];
 
 void Math_Normalize_VectorComponents(f32* componentX, f32* componentY);
 void _MtxF_to_Mtx(MtxF* src, Mtx* dest);
-u32 rand(void);
+u32 SysUtils_Rand(void);
 #endif /* MATH_H */

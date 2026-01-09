@@ -40,4 +40,6 @@ void guLookAt(Mtx *,
 void guLookAtReflect (Mtx *m, LookAt *l, float xEye, float yEye, float zEye,
                     float xAt,  float yAt,  float zAt,
                     float xUp,  float yUp,  float zUp);
+
+float sqrtf(float value);
 #endif

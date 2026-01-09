@@ -123,8 +123,8 @@ f32 func_8008962C(f32 arg0, f32 arg1, f32 arg2, UnkStruct_8008962C* arg3) {
         arg3->unk10 = 0.0f;
         arg3->unk14 = -1.0f;
     } else {
-        func_80047E78(&gGfxPool->unkE008[D_80223930], spD0);
-        func_80047E78(&gGfxPool->unkE088[D_80223930], sp90);
+        SysUtils_MtxToMtxF(&gGfxPool->unkE008[D_80223930], spD0);
+        SysUtils_MtxToMtxF(&gGfxPool->unkE088[D_80223930], sp90);
         temp_fv0 = arg0;
         sp80 = COS(ANGLE_TO_CUSTOM_UNITS(arg1)) * temp_fv0;
         sp70 = SIN(ANGLE_TO_CUSTOM_UNITS(arg1)) * temp_fv0;
@@ -224,8 +224,8 @@ void func_80089F28(void) {
     Matrix sp80;
     Matrix sp40;
     char pad[0x20];
-    func_80047E78((MF*) &gGfxPool->unkE008[D_80223930], sp80);
-    func_80047E78((MF*) &gGfxPool->unkE088[D_80223930], sp40);
+    SysUtils_MtxToMtxF((MF*) &gGfxPool->unkE008[D_80223930], sp80);
+    SysUtils_MtxToMtxF((MF*) &gGfxPool->unkE088[D_80223930], sp40);
 
     D_801C41A0.fwork[3] = sp40[1][0] * (D_800D9924[gCourseID] + 0x3C);
     D_801C41A0.fwork[4] = sp40[1][1] * (D_800D9924[gCourseID] + 0x3C);

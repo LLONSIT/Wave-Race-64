@@ -13,8 +13,16 @@ gOSYieldData = 0x80045800;
 SysMain_Thread = 0x80046DA0;
 
 //game_23E0
-srand = 0x80047E44;
-rand = 0x80047E50;
+SysUtils_Srand = 0x80047E44;
+SysUtils_Rand = 0x80047E50;
+SysUtils_MtxToMtxF = 0x80047E78;
+SysUtils_MtxFToMtx = 0x80047EE0;
+SysUtils_LightsSetAmbient = 0x80047F48;
+SysUtils_LightsSetColor = 0x80047F64;
+SysUtils_LightsSetDirection = 0x80047F80;
+SysUtils_LightsSetSource = 0x80047F90;
+SysUtils_MatrixAffineMultiply = 0x80049EB8;
+SysUtils_UpdateControllers = 0x8004A2B4;
 
 //R_G_B_A
 gColorRed   = 0x800D47E8;
@@ -69,7 +77,7 @@ Libc_strncpy = 0x8006A140;
 Libc_strcmp = 0x8006A188;
 Libc_strncmp = 0x8006A1CC;
 GameLoad_LoadCodeseg = 0x80098190;
-Init_SinTable = 0x80047C38;
+SysUtils_TaylorSeries = 0x80047C38;
 AudioSynth_ProcessNote = 0x800B5E70;
 Math_Normalize_VectorComponents = 0x80088B84;
 Math_Fabs = 0x800984D0;
@@ -85,7 +93,7 @@ func_i3_802C5800 = 0x802C5800; //size:0x2E8 segment:ovl_i3
 sFadeTransitionDefaultProps = 0x80226CC0;
 sCurrentFadeTransitionProps = 0x80228A10;
 gCurrentOptionsMenuItem = 0x800DA9D4;
-Math_Round = 0x80047BE0;
+SysUtils_Round = 0x80047BE0;
 sRandSeed = 0x80226F00;
 Math_srand = 0x801ED2E0;
 Math_Rand = 0x801ED304;

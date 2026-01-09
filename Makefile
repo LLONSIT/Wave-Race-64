@@ -163,6 +163,36 @@ $(BUILD_DIR)/src/libultra/gu/lookathil.c.o: OPT_FLAGS := -O2
 $(BUILD_DIR)/src/libultra/os/osVirtualtoPhysical.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/src/libultra/io/%.c.o: OPT_FLAGS := -O1
 
+# File exceptions
+$(BUILD_DIR)/src/libultra/libc/sprintf.c.o: OPT_FLAGS := -O1
+$(BUILD_DIR)/src/libultra/libc/sprintf.c.o: MIPSISET := -mips2
+
+$(BUILD_DIR)/src/libultra/io/pfsinit.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsinit.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/pfsisplug.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsisplug.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/pfssearchfile.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfssearchfile.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/pfsfreeblocks.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsfreeblocks.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/pfsreadwritefile.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsreadwritefile.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/pfsallocatefile.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsallocatefile.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/pfsdeletefile.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsdeletefile.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/pfsnumfiles.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsnumfiles.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/pfsfilestate.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsfilestate.c.o: MIPSISET := -mips1
 ### Targets
 
 default: all

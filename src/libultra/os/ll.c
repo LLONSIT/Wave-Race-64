@@ -4,7 +4,7 @@
 
 #pragma GLOBAL_ASM("asm/nonmatchings/libultra/os/ll/func_800CC78C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/libultra/os/ll/func_800CC7C8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/libultra/os/ll/__ull_div.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/libultra/os/ll/func_800CC804.s")
 
