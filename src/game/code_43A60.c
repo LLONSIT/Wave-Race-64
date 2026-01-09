@@ -57,7 +57,7 @@ void func_80088EA8(void) {
         D_801C3C58->unk5C = -1;
     }
     for (var_s6 = var_s4 = 0; var_s4 < (gRiders - 1); var_s6++, var_s4++) {
-        rand_seed = (rand(), rand() / 256) % 4; // What?
+        rand_seed = (SysUtils_Rand(), SysUtils_Rand() / 256) % 4; // What?
 
         while (D_801C3C58 = &D_801C3C60[rand_seed], D_801C3C58->unk5C != -1 || rand_seed == D_800D48DC) {
             rand_seed = (rand_seed % gRiders) + 1;

@@ -181,16 +181,16 @@ void func_8004B6E0(void) {
     s32 var_v0;
 
     if (D_800DAB1C == 1) {
-        D_801603E0->unk0 = ((u32) ((rand() >> 0x10) * 0x260) >> 0x10) - 0x90;
-        D_80160400->unk0 = ((u32) ((rand() >> 0x10) * 0x260) >> 0x10) - 0x90;
-        D_801603E0->unk4 = ((u32) ((rand() >> 0x10) * 0x190) >> 0x10) - 0x50;
-        D_80160400->unk4 = ((u32) ((rand() >> 0x10) * 0x190) >> 0x10) - 0x50;
+        D_801603E0->unk0 = ((u32) ((SysUtils_Rand() >> 0x10) * 0x260) >> 0x10) - 0x90;
+        D_80160400->unk0 = ((u32) ((SysUtils_Rand() >> 0x10) * 0x260) >> 0x10) - 0x90;
+        D_801603E0->unk4 = ((u32) ((SysUtils_Rand() >> 0x10) * 0x190) >> 0x10) - 0x50;
+        D_80160400->unk4 = ((u32) ((SysUtils_Rand() >> 0x10) * 0x190) >> 0x10) - 0x50;
     } else {
-        D_801603E0->unk0 = ((u32) ((rand() & 0x3FFF) * 0x130) >> 0xE) + 8;
-        D_801603E0->unk4 = ((u32) ((rand() & 0x3FFF) * 0xC8) >> 0xE) + 0x14;
+        D_801603E0->unk0 = ((u32) ((SysUtils_Rand() & 0x3FFF) * 0x130) >> 0xE) + 8;
+        D_801603E0->unk4 = ((u32) ((SysUtils_Rand() & 0x3FFF) * 0xC8) >> 0xE) + 0x14;
         do {
-            D_80160400->unk0 = ((u32) ((rand() & 0x3FFF) * 0x130) >> 0xD) - 0x90;
-            D_80160400->unk4 = ((u32) ((rand() & 0x3FFF) * 0xC8) >> 0xD) - 0x50;
+            D_80160400->unk0 = ((u32) ((SysUtils_Rand() & 0x3FFF) * 0x130) >> 0xD) - 0x90;
+            D_80160400->unk4 = ((u32) ((SysUtils_Rand() & 0x3FFF) * 0xC8) >> 0xD) - 0x50;
         } while ((D_80160400->unk0 >= 8) && (D_80160400->unk0 < 0x138) && (D_80160400->unk4 >= 0x14) &&
                  (D_80160400->unk4 < 0xDC));
     }

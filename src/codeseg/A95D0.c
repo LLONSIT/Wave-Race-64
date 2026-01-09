@@ -64,14 +64,14 @@ void func_801DAFB8(void* arg0) {
     u32 result;
     void* savedArg0 = arg0;
 
-    randVal = rand();
+    randVal = SysUtils_Rand();
     if ((randVal & 7) != 0) {
-        result = rand();
+        result = SysUtils_Rand();
         *(u32*) ((u8*) savedArg0 + 8) = result % 15;
         return;
     }
 
-    result = rand();
+    result = SysUtils_Rand();
     *(u32*) ((u8*) savedArg0 + 8) = (result % 19) + 0x19;
 }
 
@@ -79,7 +79,7 @@ void func_801DB024(struct UnkStruct_801DB0E4_arg0* arg0) {
     if ((arg0->unk8 >= 0) && (((arg0->unk8 < 0x10)))) {
         arg0->unk8 += 2;
         if (arg0->unk8 >= 0x10) {
-            if (rand() & 7) {
+            if (SysUtils_Rand() & 7) {
                 arg0->unk8 = 0;
             } else {
                 arg0->unk8 = 0x10;
@@ -89,7 +89,7 @@ void func_801DB024(struct UnkStruct_801DB0E4_arg0* arg0) {
         if ((arg0->unk8 >= 0x19) && (((arg0->unk8 < 0x2D)))) {
             arg0->unk8++;
             if (arg0->unk8 >= 0x2D) {
-                if (rand() & 0xF) {
+                if (SysUtils_Rand() & 0xF) {
                     arg0->unk8 = 0x2D;
                     return;
                 }
@@ -161,12 +161,12 @@ void func_801DB284(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0
 
         for (var_s1 = 0; var_s1 < 3; var_s1++) {
             arg0->unkC[var_s1] = ((arg1->unk0[var_s1] + arg1->unk4[var_s1]) - (arg1->unk4[var_s1 + 3] * 0.5f)) +
-                                 (((f32) (rand() % 256) / 256) * arg1->unk4[var_s1 + 3]);
+                                 (((f32) (SysUtils_Rand() % 256) / 256) * arg1->unk4[var_s1 + 3]);
         }
 
         arg0->unk30 = 0.1f;
-        arg2[var_s6][0] = rand() % 360;
-        arg2[var_s6][1] = rand() % 360;
+        arg2[var_s6][0] = SysUtils_Rand() % 360;
+        arg2[var_s6][1] = SysUtils_Rand() % 360;
     }
 }
 
@@ -181,7 +181,7 @@ void func_801DB430(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0
         func_801DB024(arg0);
         vec[0] = COS((s32) ((arg2[i][0] * 4096.0f) / 360.0f));
         vec[2] = SIN((s32) ((arg2[i][0] * 4096.0f) / 360.0f));
-        vec[1] = (SIN((s32) ((arg2[i][1] * 4096.0f) / 360.0f)) * arg1->unk30) * (1.0f - ((rand() & 3) / 20.0f));
+        vec[1] = (SIN((s32) ((arg2[i][1] * 4096.0f) / 360.0f)) * arg1->unk30) * (1.0f - ((SysUtils_Rand() & 3) / 20.0f));
 
         if (vec[1] * ((arg1->unk0[1] - arg0->unkC[1])) > 0) {
             vec[1] *= 1.2f;
@@ -191,7 +191,7 @@ void func_801DB430(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0
 
         for (j = 0; j < 3; j++) {
             arg0->unk14[j] = vec[j] / magnitude;
-            arg0->unkC[j] += arg0->unk14[j] * (arg1->unk24 + (f32) (rand() & 1));
+            arg0->unkC[j] += arg0->unk14[j] * (arg1->unk24 + (f32) (SysUtils_Rand() & 1));
         }
 
         vec[0] = arg1->unk0[0] - arg0->unkC[0];
@@ -216,9 +216,9 @@ void func_801DB430(struct UnkStruct_801DB0E4_arg0* arg0, struct UnkStruct_801DB0
 
         magnitude = (arg0->unk14[0] * vec[2]) - (arg0->unk14[2] * vec[0]);
 
-        arg2[i][0] += (SIGNF(magnitude) * (arg1->unk28 + (rand() % 31U * 0.125f)));
+        arg2[i][0] += (SIGNF(magnitude) * (arg1->unk28 + (SysUtils_Rand() % 31U * 0.125f)));
         arg2[i][0] += ANG_NORMALIZE_2(arg2[i][0]) + ANG_NORMALIZE_1(arg2[i][0]);
-        arg2[i][1] += ((arg1->unk2C * (0.9f + ((f32) (rand() & 3) / 20.0f))));
+        arg2[i][1] += ((arg1->unk2C * (0.9f + ((f32) (SysUtils_Rand() & 3) / 20.0f))));
         arg2[i][1] += ANG_NORMALIZE_2(arg2[i][1]);
     }
 }

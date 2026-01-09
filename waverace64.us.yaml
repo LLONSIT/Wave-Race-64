@@ -133,25 +133,25 @@ segments:
       - [0x81D40, c, libultra/gu/translate] # OK
       - [0x81DE0, c, libultra/gu/lookatref] # OK
       - [0x822A0, c, libultra/gu/lookathil] # OK
-      - [0x82AD0, c, libultra/os/osEepromLongRead]
-      - [0x82C10, c, libultra/conteeplongwrite]
-      - [0x82D50, c, libultra/conteepprobe]
-      - [0x82DC0, c, libultra/io/pfsisplug]
-      - [0x830F0, c, libultra/io/pfsinit]
-      - [0x83270, c, libultra/io/pfssearchfile]
-      - [0x83410, c, libultra/io/pfsfreeblocks]
-      - [0x835C0, c, libultra/io/pfsreadwritefile]
-      - [0x83A10, c, libultra/io/pfsallocatefile]
-      - [0x840B0, c, libultra/io/pfsdeletefile]
-      - [0x84620, c, libultra/os/osPhysicalToVirtual]
-      - [0x84630, c, libultra/io/pfsnumfiles]
-      - [0x84760, c, libultra/UnkLibultraSeg_84760]
-      - [0x84A10, c, libultra/os/sprintf]
+      - [0x82AD0, c, libultra/os/osEepromLongRead] # OK 
+      - [0x82C10, c, libultra/io/conteeplongwrite] # OK
+      - [0x82D50, c, libultra/io/conteepprobe] # OK
+      - [0x82DC0, c, libultra/io/pfsisplug] # OK
+      - [0x830F0, c, libultra/io/pfsinit] # OK
+      - [0x83270, c, libultra/io/pfssearchfile] # OK
+      - [0x83410, c, libultra/io/pfsfreeblocks] # OK
+      - [0x835C0, c, libultra/io/pfsreadwritefile] # OK
+      - [0x83A10, c, libultra/io/pfsallocatefile] # OK
+      - [0x840B0, c, libultra/io/pfsdeletefile] # OK
+      - [0x84620, c, libultra/os/osPhysicalToVirtual] # OK
+      - [0x84630, c, libultra/io/pfsnumfiles] # OK
+      - [0x84760, c, libultra/io/pfsfilestate] # OK 
+      - [0x84A10, c, libultra/libc/sprintf] # OK
       - [0x84AC0, hasm, libultra/invaldcache]
-      - [0x84B70, c, libultra/io/pidma]
+      - [0x84B70, c, libultra/io/pidma] # OK
       - [0x84C80, hasm, libultra/invalicache]
       - [0x84D00, hasm, libultra/bzero]
-      - [0x84DA0, c, libultra/os/osAiSetFrequency]
+      - [0x84DA0, c, libultra/os/osAiSetFrequency] # OK 
       - [0x84F00, c, libultra/os/audio/bnkf]
       - [0x85150, c, libultra/os/osAiGetLength] # OK
       - [0x85160, c, libultra/os/osAiSetNextBuffer] # OK

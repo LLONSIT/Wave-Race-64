@@ -1,3 +1,6 @@
-#include "common.h"
+#include "PR/os_internal.h"
+#include "PR/R4300.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/libultra/os/osPhysicalToVirtual/osPhysicalToVirtual.s")
+void* osPhysicalToVirtual(u32 addr) {
+    return (void*)PHYS_TO_K0(addr);
+}

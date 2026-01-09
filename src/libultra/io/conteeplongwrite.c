@@ -5,7 +5,7 @@
 
 extern u64 D_800E8FD0;
 
-s32 osEepromLongRead(OSMesgQueue *mq, u8 address, u8 *buffer, int length) {
+s32 osEepromLongWrite(OSMesgQueue *mq, u8 address, u8 *buffer, int length) {
     s32 ret = 0;
 
     if ((u8)address > 0x40) {
@@ -13,7 +13,7 @@ s32 osEepromLongRead(OSMesgQueue *mq, u8 address, u8 *buffer, int length) {
     }
     
     while (length > 0) {
-        ERRCK(osEepromRead(mq, address, buffer));
+        ERRCK(osEepromWrite(mq, address, buffer));
         length -= EEPROM_BLOCK_SIZE;
         address++;
         buffer += EEPROM_BLOCK_SIZE;

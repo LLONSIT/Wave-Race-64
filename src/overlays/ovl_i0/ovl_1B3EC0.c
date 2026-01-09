@@ -53,7 +53,7 @@ Gfx* func_i0_802C5800(Gfx* arg0) {
         D_800DAB0C = 0;
         func_i0_802C6878();
     }
-    rand();
+    SysUtils_Rand();
     return arg0;
 }
 
