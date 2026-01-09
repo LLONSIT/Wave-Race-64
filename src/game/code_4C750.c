@@ -164,7 +164,7 @@ extern s8 D_801CB400;
 extern s8 D_801CB401;
 
 void func_800922E4(void) {
-    func_8004A2B4();
+    SysUtils_UpdateControllers();
     func_8006A264();
     D_801CE5F8 = (u8*) &D_801CB6C8[D_8011F8E0];
     if (D_801CE63C != 0) {

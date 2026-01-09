@@ -651,11 +651,11 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
 
     SysUtils_MtxFToMtx(arg1, arg0);
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_800498A4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_800498A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80049A94.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_80049A94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_80049C9C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_80049C9C.s")
 
 void SysUtils_MatrixAffineMultiply(MtxF* dest, MtxF* mtxFA, MtxF* mtxFB) {
     mtxFB->mf[0][0] =
@@ -692,7 +692,7 @@ void SysUtils_MatrixAffineMultiply(MtxF* dest, MtxF* mtxFA, MtxF* mtxFB) {
     mtxFB->mf[3][3] = 1.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A130.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_8004A130.s")
 
 void func_8004A208(void) {
     Controller_info* temp_v0;
@@ -712,7 +712,7 @@ void func_8004A208(void) {
     }
 }
 
-void func_8004A2B4(void) {
+void SysUtils_UpdateControllers(void) {
     s32 i;
     u8 mask = 1;
     osRecvMesg(&D_801540D0, &D_80154348, 1);
@@ -741,11 +741,11 @@ void func_8004A2B4(void) {
     }
 }
 
-void func_8004A394(void) {
+UNUSED void SysUtils_ReadContData(void) {
     osContStartReadData(&D_801540D0);
-    func_8004A2B4();
+    SysUtils_UpdateControllers();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A3C0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_8004A3C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_23E0/func_8004A8B0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_8004A8B0.s")
