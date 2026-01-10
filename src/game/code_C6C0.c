@@ -85,25 +85,25 @@ typedef struct UnkStruct_802238DC_s {
 } UnkStruct_802238DC;                      /* size = 0x50 */
 
 typedef struct UnkStruct_80052E90_arg1_s {
-    /* 0x000 */ UnkStruct_80052C6C_2 unk0;          /* inferred */
-    /* 0x024 */ UnkStruct_80052C6C_2 unk24;         /* inferred */
-    /* 0x048 */ UnkStruct_80052C6C_2 unk48;         /* inferred */
-    /* 0x06C */ UnkStruct_80052C6C_2 unk6C;         /* inferred */
-    /* 0x090 */ UnkStruct_80052C6C_2 unk90;         /* inferred */
-    /* 0x0B4 */ UnkStruct_80052C6C_2 unkB4;         /* inferred */
-    /* 0x0D8 */ UnkStruct_80052C6C_2 unkD8;         /* inferred */
-    /* 0x0FC */ UnkStruct_80052C6C_2 unkFC;         /* inferred */
-    /* 0x120 */ UnkStruct_80052C6C_2 unk120;        /* inferred */
-    /* 0x144 */ UnkStruct_80052C6C_2 unk144;        /* inferred */
-    /* 0x168 */ UnkStruct_80052C6C_2 unk168;        /* inferred */
-    /* 0x18C */ UnkStruct_80052C6C_2 unk18C;        /* inferred */
-    /* 0x1B0 */ UnkStruct_80052C6C_2 unk1B0;        /* inferred */
-    /* 0x1D4 */ UnkStruct_80052C6C_2 unk1D4;        /* inferred */
-    /* 0x1F8 */ UnkStruct_80052C6C_2 unk1F8;        /* inferred */
-    /* 0x21C */ UnkStruct_80052C6C_2 unk21C;        /* inferred */
-    /* 0x240 */ UnkStruct_80052C6C_2 unk240;        /* inferred */
+    /* 0x000 */ UnkStruct_80052C6C_2 unk0;   /* inferred */
+    /* 0x024 */ UnkStruct_80052C6C_2 unk24;  /* inferred */
+    /* 0x048 */ UnkStruct_80052C6C_2 unk48;  /* inferred */
+    /* 0x06C */ UnkStruct_80052C6C_2 unk6C;  /* inferred */
+    /* 0x090 */ UnkStruct_80052C6C_2 unk90;  /* inferred */
+    /* 0x0B4 */ UnkStruct_80052C6C_2 unkB4;  /* inferred */
+    /* 0x0D8 */ UnkStruct_80052C6C_2 unkD8;  /* inferred */
+    /* 0x0FC */ UnkStruct_80052C6C_2 unkFC;  /* inferred */
+    /* 0x120 */ UnkStruct_80052C6C_2 unk120; /* inferred */
+    /* 0x144 */ UnkStruct_80052C6C_2 unk144; /* inferred */
+    /* 0x168 */ UnkStruct_80052C6C_2 unk168; /* inferred */
+    /* 0x18C */ UnkStruct_80052C6C_2 unk18C; /* inferred */
+    /* 0x1B0 */ UnkStruct_80052C6C_2 unk1B0; /* inferred */
+    /* 0x1D4 */ UnkStruct_80052C6C_2 unk1D4; /* inferred */
+    /* 0x1F8 */ UnkStruct_80052C6C_2 unk1F8; /* inferred */
+    /* 0x21C */ UnkStruct_80052C6C_2 unk21C; /* inferred */
+    /* 0x240 */ UnkStruct_80052C6C_2 unk240; /* inferred */
     /* 0x264 */ UnkStruct_80052C6C_2 unk264;
-} UnkStruct_80052E90_arg1_s;                        /* size = 0x284 */
+} UnkStruct_80052E90_arg1_s; /* size = 0x284 */
 
 extern UnkStruct_80192690 D_80192690[];
 extern struct UnkStruct_801C2938 D_801C2938[];
@@ -126,15 +126,16 @@ extern UnkStruct_80052C6C_1 D_801CEA54;
 extern UnkStruct_80052C6C_1 D_801CEA60;
 extern UnkStruct_80052C6C_1 D_801CEA6C;
 
-void func_80098048(s32, s32);                          /* extern */
+void func_80098048(s32, s32); /* extern */
 f32 func_8004D30C(f32, f32);
 void func_80052C6C(UnkStruct_80192690* arg0, UnkStruct_80052C6C_1* arg1, UnkStruct_80052C6C_2* arg2);
 s32 func_80052E90(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
-s32 func_80053268(s32 arg0, UnkStruct_80052E90_arg1_s *arg1, s32 arg2, s32 arg3);
+s32 func_80053268(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
 Gfx* func_800687A4(Gfx* arg0);
 Gfx* func_800916B4(Gfx* arg0);
-void func_8005374C(UnkStruct_80052C6C_2 *arg0, f32 arg1, UnkStruct_80052C6C_2 *arg2, UnkStruct_80052C6C_2 *arg3);
-void func_80053A5C(UnkStruct_80052E90_arg1_s *arg0, f32 arg1, UnkStruct_80052E90_arg1_s *arg2, UnkStruct_80052E90_arg1_s *arg3);
+void func_8005374C(UnkStruct_80052C6C_2* arg0, f32 arg1, UnkStruct_80052C6C_2* arg2, UnkStruct_80052C6C_2* arg3);
+void func_80053A5C(UnkStruct_80052E90_arg1_s* arg0, f32 arg1, UnkStruct_80052E90_arg1_s* arg2,
+                   UnkStruct_80052E90_arg1_s* arg3);
 void func_80053FBC(UnkStruct_80192690* arg0, UnkStruct_80052C6C_1* arg1, UnkStruct_80052C6C_2* arg2);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80051EC0.s")
@@ -365,7 +366,7 @@ s32 func_80053268(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
     }
     func_80098048(temp_s0, arg3);
     func_80052C6C(&D_80192690[arg0], &D_801CE9C4, &arg1->unk264);
-    func_80052C6C(&D_80192690[arg0], (UnkStruct_80052C6C_1* ) D_801CE9B8, &arg1->unk240);
+    func_80052C6C(&D_80192690[arg0], (UnkStruct_80052C6C_1*) D_801CE9B8, &arg1->unk240);
     func_80052C6C(&D_80192690[arg0], &D_801CEA6C, &arg1->unk21C);
     func_80052C6C(&D_80192690[arg0], &D_801CEA0C, &arg1->unkFC);
     func_80052C6C(&D_80192690[arg0], &D_801CEA60, &arg1->unk1F8);
@@ -380,7 +381,7 @@ s32 func_80053268(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
     func_80052C6C(&D_80192690[arg0], &D_801CE9F4, &arg1->unkB4);
     func_80052C6C(&D_80192690[arg0], &D_801CE9C4, &arg1->unk24);
     func_80052C6C(&D_80192690[arg0], &D_801CE9E8, &arg1->unk90);
-    func_80052C6C(&D_80192690[arg0], (UnkStruct_80052C6C_1* ) D_801CE9B8, &arg1->unk0);
+    func_80052C6C(&D_80192690[arg0], (UnkStruct_80052C6C_1*) D_801CE9B8, &arg1->unk0);
     func_80052C6C(&D_80192690[arg0], &D_801CE9DC, &arg1->unk6C);
     arg3 = arg3 + 1;
     if (arg3 >= D_800DA930[temp_s0]) {
@@ -391,7 +392,8 @@ s32 func_80053268(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
 
 // Fun float functions
 #ifdef NON_EQUIVALENT
-void func_800534AC(f32* arg0, f32* arg1, f32* arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9, f32 arg10, f32 arg11, f32 arg12, f32 arg13) {
+void func_800534AC(f32* arg0, f32* arg1, f32* arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8,
+                   f32 arg9, f32 arg10, f32 arg11, f32 arg12, f32 arg13) {
     f32 temp_fv0;
     f32 temp_ft3;
     f32 temp_fa0;
@@ -409,27 +411,27 @@ void func_800534AC(f32* arg0, f32* arg1, f32* arg2, f32 arg3, f32 arg4, f32 arg5
     temp_fa1 = arg8 - arg5;
     temp_ft4 = SQ(temp_fv1) + SQ(temp_fa0) + SQ(temp_fa1);
     if (!(temp_ft4 < 9.99)) {
-        temp_fv0 =  ((0.5 / temp_ft4) * ((arg9 - arg10) + temp_ft4));
+        temp_fv0 = ((0.5 / temp_ft4) * ((arg9 - arg10) + temp_ft4));
         temp_ft4 = (temp_fv0 * temp_fv1) + arg3;
         temp_fv1 = (temp_ft4 - arg3);
         temp_ft5 = (temp_fv0 * temp_fa0) + arg4;
         temp_fa0 = temp_ft5 - arg4;
         temp_ft1 = (temp_fv0 * temp_fa1) + arg5;
         temp_fa1 = temp_ft1 - arg5;
-        
+
         temp_ft4 = ((arg9 - SQ(temp_fv1)) - SQ(temp_fa0)) - SQ(temp_fa1);
         if (!(temp_ft4 <= 0.0f)) {
             return;
         }
-            
+
         temp_ft4 = (arg12 * temp_fa1) - (arg13 * temp_fa0);
         temp_ft5 = (arg13 * temp_fv1) - (arg11 * temp_fa1);
         temp_ft3 = (arg11 * temp_fa0) - (arg12 * temp_fv1);
-        
+
         temp_fs0 = (temp_fa1 * temp_ft4) - (temp_fv1 * temp_ft3);
         temp_fs1 = (temp_fv1 * temp_ft5) - (temp_fa0 * temp_ft4);
         temp_fs2 = (temp_fa0 * temp_ft3) - (temp_fa1 * temp_ft5);
-        
+
         temp_fv1 = SQ(temp_fs2) + SQ(temp_fs0) + SQ(temp_fs1);
         if (temp_fv1 != 0.0f) {
             temp_fv0 = sqrtf(temp_ft4 / temp_fv1);
@@ -451,7 +453,8 @@ void func_800534AC(f32* arg0, f32* arg1, f32* arg2, f32 arg3, f32 arg4, f32 arg5
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_8005374C.s")
 
-void func_80053A5C(UnkStruct_80052E90_arg1_s *arg0, f32 arg1, UnkStruct_80052E90_arg1_s *arg2, UnkStruct_80052E90_arg1_s *arg3) {
+void func_80053A5C(UnkStruct_80052E90_arg1_s* arg0, f32 arg1, UnkStruct_80052E90_arg1_s* arg2,
+                   UnkStruct_80052E90_arg1_s* arg3) {
     func_8005374C(&arg0->unk264, arg1, &arg2->unk264, &arg3->unk264);
     func_8005374C(&arg0->unk240, arg1, &arg2->unk240, &arg3->unk240);
     func_8005374C(&arg0->unk21C, arg1, &arg2->unk21C, &arg3->unk21C);
@@ -474,12 +477,11 @@ void func_80053A5C(UnkStruct_80052E90_arg1_s *arg0, f32 arg1, UnkStruct_80052E90
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80053C08.s")
 
-
-void func_80053C08(f32, s32);                     /* extern */
+void func_80053C08(f32, s32); /* extern */
 
 s32 func_80053EAC(s32 arg0, s32 arg1, s32 arg2, f32 arg3, u16 arg4) {
     UnkStruct_80192690* temp_v0;
-    
+
     temp_v0 = &D_80192690[arg0];
 
     if (arg3 == 1.0f) {
@@ -494,7 +496,7 @@ s32 func_80053EAC(s32 arg0, s32 arg1, s32 arg2, f32 arg3, u16 arg4) {
         func_80053C08(arg3, arg1);
         return 0;
     }
-   
+
     if (arg1 == temp_v0->unkC5C) {
         return -1;
     }
@@ -507,7 +509,6 @@ s32 func_80053EAC(s32 arg0, s32 arg1, s32 arg2, f32 arg3, u16 arg4) {
     func_80053C08(arg3, -1);
     return 0;
 }
-
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80053FBC.s")
 

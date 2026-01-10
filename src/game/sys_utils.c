@@ -707,8 +707,7 @@ void SysUtils_ContInitialize(void) {
         contMask <<= 1;
     }
 
-     D_80154344 = var_a3;
-    
+    D_80154344 = var_a3;
 }
 
 void func_8004A208(void) {

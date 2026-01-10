@@ -1,7 +1,7 @@
 #include "libultra_internal.h"
 
 OSTimer __osBaseTimer;
-OSTimer *__osTimerList = &__osBaseTimer;
+OSTimer* __osTimerList = &__osBaseTimer;
 OSTime __osCurrentTime;
 u32 __osBaseCounter;
 u32 __osViIntrCount;
@@ -18,7 +18,7 @@ void __osTimerServicesInit(void) {
 }
 
 void __osTimerInterrupt(void) {
-    OSTimer *t;
+    OSTimer* t;
     u32 count;
     u32 elapsedCycles;
 
@@ -66,8 +66,8 @@ void __osSetTimerIntr(OSTime time) {
     __osRestoreInt(savedMask);
 }
 
-OSTime __osInsertTimer(OSTimer *t) {
-    OSTimer *timep;
+OSTime __osInsertTimer(OSTimer* t) {
+    OSTimer* timep;
     OSTime time;
     s32 savedMask;
 
