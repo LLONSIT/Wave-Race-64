@@ -209,3 +209,6 @@ viThread = 0x801D8770;
 __osViIntrCount = 0x801DAC5C;
 __ull_div = 0x800CC7C8;
 osPfsFileState = 0x800C9F60;
+osCurrentTime = 0x801DAC54; //type:u64
+__osTimerList = 0x800E9040;
+__osBaseTimer = 0x801DAC30;

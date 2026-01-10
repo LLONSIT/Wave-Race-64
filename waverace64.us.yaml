@@ -160,13 +160,13 @@ segments:
       - [0x85310, c, libultra/thread]
       - [0x85350, hasm, libultra/exceptasm] # OK 
       - [0x85BC0, asm, libultra/osGetCount] # OK
-      - [0x85BD0, c, libultra/osTimer]
-      - [0x85FD0, c, libultra/io/vi]
-      - [0x86100, c, libultra/os/siacs]
+      - [0x85BD0, c, libultra/os/timerintr] # OK
+      - [0x85FD0, c, libultra/io/vi] # OK
+      - [0x86100, c, libultra/io/siacs]
       - [0x861C0, c, libultra/io/sirawdma]
       - [0x86270, c, libultra/spsetstat]
       - [0x86280, hasm, libultra/bcopy]
-      - [0x86590, asm, libultra/writebackdcache]
+      - [0x86590, hasm, libultra/writebackdcache]
       - [0x86610, c, libultra/spsetpc]
       - [0x86650, c, libultra/sprawdma]
       - [0x866E0, c, libultra/os/__osSpDeviceBusy]
@@ -230,8 +230,10 @@ segments:
       - [0xA37B0, data]
       - [0xA37F0, .data, libultra/os/osAiSetNextBuffer]
       - [0xA3800, data]
+      - [0xA3840, .data, libultra/os/timerintr]
       - [0xA3850, .data, libultra/io/vi]
-      - [0xA38C0, data]
+      - [0xA38C0, .data, libultra/io/siacs]
+      - [0xA38D0, data]
 
       # GAME RODATA
       - [0xA39F0, rodata] # Rodata from Libultra or some library?
@@ -296,7 +298,10 @@ segments:
       - { type: .bss, start: 0xA95D0, vram: 0x801D86B0, name: libultra/os/sptask }
       - { type: .bss, start: 0xA95D0, vram: 0x801D86F0, name: libultra/os/seteventmesg}
       - { type: .bss, start: 0xA95D0, vram: 0x801D8770, name: libultra/io/vimgr}
-      - { type: bss, start: 0xA95D0, vram: 0x801D9980, name: bss2}
+      - { type: bss, start: 0xA95D0, vram: 0x801D9980, name: bss2 }
+      - { type: .bss, start: 0xA95D0, vram: 0x801DAC30, name: libultra/os/timerintr }
+      - { type: .bss, start: 0xA95D0, vram: 0x801DAC70, name: libultra/io/siacs }
+      - { type: bss, start: 0xA95D0, vram: 0x801DAC90, name: bss3 }
       
 
   - name: codeseg # This segment is loaded into memory on func_80098190

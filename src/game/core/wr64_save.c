@@ -409,12 +409,12 @@ s32 func_8007D110(void) {
 
     PRINTF("PfsisPlug: %02x %d\n", 0, 0);
     osPfsIsPlug(&D_801540D0, &wtf.bitpattern);
-    if (!((1 << D_80154330) & (wtf.bitpattern))) {
+    if (!((1 << D_80154330[0]) & (wtf.bitpattern))) {
         D_800D8264 = 0;
         return 1;
     }
     D_800D8264 = 1;
-    switch (osPfsInit(&D_801540D0, &D_801C3AD0, D_80154330)) {
+    switch (osPfsInit(&D_801540D0, &D_801C3AD0, D_80154330[0])) {
         case 0:
             return 0;
         case 1:
