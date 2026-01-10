@@ -300,7 +300,7 @@ extern void* D_800E5CAC;
 extern void* D_800E5CC0;
 extern s32 D_8011F8E0;
 extern u8 D_801C43F8;
-extern s32 D_80154330;
+extern s32 D_80154330[];
 extern s32 D_801CB410;
 extern u8 D_80154340;
 extern OSMesg D_80154348;

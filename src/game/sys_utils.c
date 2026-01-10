@@ -1,13 +1,14 @@
 #include "global.h"
 
+extern OSContStatus D_801542E0[];
+extern u8 D_80154340;
+extern s32 D_80154344;
+
 //.bss
 extern float gSinTable[0x1000];
 
 // .data
 extern int Seed;
-
-// .rodata
-extern double D_800E9220;
 
 s32 SysUtils_Round(f32 x) {
     if (x < 0.0f) {
@@ -99,8 +100,7 @@ void SysUtils_LightsSetDirection(Light* light, s32 x, s32 y, s32 z) {
 void SysUtils_LightsSetSource(Lights1* lights, s32 ambientRed, s32 ambientGreen, s32 ambientBlue, s32 colorRed,
                               s32 colorGreen, s32 colorBlue, s32 dirX, s32 dirY, s32 dirZ) {
 
-    ((s8*) lights)[3] = ((s8*) lights)[7] = ((s8*) lights)[11] = ((s8*) lights)[15] = ((s8*) lights)[19] =
-        0; // FAKE match
+    lights->a.l.pad1 = lights->a.l.pad2 = lights->l[0].l.pad1 = lights->l[0].l.pad2 = lights->l[0].l.pad3 = 0;
     SysUtils_LightsSetAmbient(&lights->a, ambientRed, ambientGreen, ambientBlue);
     SysUtils_LightsSetColor(&lights->l[0], colorRed, colorGreen, colorBlue);
     SysUtils_LightsSetDirection(&lights->l[0], dirX, dirY, dirZ);
@@ -692,7 +692,23 @@ void SysUtils_MatrixAffineMultiply(MtxF* dest, MtxF* mtxFA, MtxF* mtxFB) {
     mtxFB->mf[3][3] = 1.0f;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_8004A130.s")
+void SysUtils_ContInitialize(void) {
+    s32 i;
+    s32 var_a3 = 0;
+    u8 contMask;
+
+    osContInit(&D_801540D0, &D_80154340, D_801542E0);
+
+    for (i = 0, contMask = 1; i < MAXCONTROLLERS; i++) {
+        if (D_80154340 & contMask) {
+            D_80154330[var_a3] = i;
+            var_a3++;
+        }
+        contMask <<= 1;
+    }
+
+    D_80154344 = var_a3;
+}
 
 void func_8004A208(void) {
     Controller_info* temp_v0;

@@ -174,7 +174,7 @@ void* SysMain_Thread(void* entry) {
 
     osViSwapBuffer(D_801542C0[D_80151948]);
 
-    func_8004A130();
+    SysUtils_ContInitialize();
 
     SysMain_GfxInitBuffers();
 
