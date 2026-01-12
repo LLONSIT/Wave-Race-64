@@ -708,7 +708,7 @@ typedef struct SEGA2 {
     u8 unk10;
     u8 pad11;
     u8 pad12;
-    s8 unk13;
+    s8 unk13; 
 } func_8007AFF4_arg1;
 
 #endif /* STRUCTS_H */
