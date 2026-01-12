@@ -193,6 +193,25 @@ $(BUILD_DIR)/src/libultra/io/pfsnumfiles.c.o: MIPSISET := -mips1
 
 $(BUILD_DIR)/src/libultra/io/pfsfilestate.c.o: OPT_FLAGS := -O2
 $(BUILD_DIR)/src/libultra/io/pfsfilestate.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/pfs.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfs.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/pfschecker.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfschecker.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/contramread.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/contramread.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/contramwrite.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/contramwrite.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll.o: MIPSISET := -mips3 -o32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll%.o: MIPSISET := -mips3 -o32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll.o: OPT_FLAGS := -O1
+$(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll%.o: OPT_FLAGS := -O1
+
+
 ### Targets
 
 default: all
@@ -283,10 +302,14 @@ $(BUILD_DIR)/%.c.o: %.c
 	@$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $<
 	@printf "[$(GREEN) IRIS Development Option 5.3 $(NO_COL)]  $<\n"
 
+## Patch ll.o
+build/src/libultra/libc/ll.c.o: src/libultra/libc/ll.c
+	@printf "[$(YELLOW) Patching and compiling libultra - ll.o $(NO_COL)] $<\n"
+	@$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $<
+	@tools/set_o32abi_bit.py $@
 
-
-$(BUILD_DIR)/$(LIBULTRA): $(LIBULTRA)
-	@mkdir -p $$(dirname $@)
+#$(BUILD_DIR)/src/libultra: src/libultra
+#	@mkdir -p $$(dirname $@)
 #	@cp $< $@
 #	@$(PYTHON) $(TOOLS_DIR)/set_o32abi_bit.py $@
 

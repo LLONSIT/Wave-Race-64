@@ -162,36 +162,37 @@ segments:
       - [0x85BC0, asm, libultra/osGetCount] # OK
       - [0x85BD0, c, libultra/os/timerintr] # OK
       - [0x85FD0, c, libultra/io/vi] # OK
-      - [0x86100, c, libultra/io/siacs]
-      - [0x861C0, c, libultra/io/sirawdma]
-      - [0x86270, c, libultra/spsetstat]
+      - [0x86100, c, libultra/io/siacs] # OK
+      - [0x861C0, c, libultra/io/sirawdma] # OK
+      - [0x86270, c, libultra/io/spsetstat] # OK
       - [0x86280, hasm, libultra/bcopy]
       - [0x86590, hasm, libultra/writebackdcache]
-      - [0x86610, c, libultra/spsetpc]
-      - [0x86650, c, libultra/sprawdma]
-      - [0x866E0, c, libultra/os/__osSpDeviceBusy]
-      - [0x86710, c, libultra/spgetstat]
-      - [0x86720, c, libultra/getthreadpri]
-      - [0x86740, c, libultra/os/osPiGetDeviceType]
-      - [0x86750, c, libultra/viswapcontext]
-      - [0x86AB0, c, libultra/piacs]
-      - [0x86B70, c, libultra/os/osPiRawStartDma]
-      - [0x86C50, c, libultra/os/osDevMgrMain]
-      - [0x86DD0, asm, libultra/__osSetSR]
-      - [0x86DE0, asm, libultra/__osGetSR]
-      - [0x86DF0, asm, libultra/setfpccsr]
-      - [0x86E00, c, libultra/sirawread]
-      - [0x86E50, c, libultra/sirawwrite]
-      - [0x86EA0, asm, libultra/osMapTLBRdb]
-      - [0x86F00, c, libultra/pirawread]
-      - [0x86F60, c, libultra/os/ll]
-      - [0x87300, c, libultra/gu/mtxutil]
-      - [0x87570, c, libultra/conteepread]
-      - [0x87870, c, libultra/conteepwrite]
-      - [0x87D50, c, libultra/contio/pfs]
-      - [0x889A0, c, libultra/io/pfschecker]
-      - [0x89410, c, libultra/contramread]
-      - [0x897A0, asm, contramwrite]
+      - [0x86610, c, libultra/io/spsetpc] # OK
+      - [0x86650, c, libultra/io/sprawdma] # OK
+      - [0x866E0, c, libultra/os/__osSpDeviceBusy] # OK
+      - [0x86710, c, libultra/io/spgetstat] # OK
+      - [0x86720, c, libultra/os/getthreadpri] # OK
+      - [0x86740, c, libultra/io/vigetcurrcontext] # OK
+      - [0x86750, c, libultra/io/viswapcontext] # OK
+      - [0x86AB0, c, libultra/io/piacs] # OK
+      - [0x86B70, c, libultra/os/osPiRawStartDma] # OK - should go in io
+      - [0x86C50, c, libultra/os/osDevMgrMain] # OK - should go in io
+      - [0x86DD0, hasm, libultra/__osSetSR]
+      - [0x86DE0, hasm, libultra/__osGetSR]
+      - [0x86DF0, hasm, libultra/setfpccsr]
+      - [0x86E00, c, libultra/io/sirawread] # OK
+      - [0x86E50, c, libultra/io/sirawwrite] # OK
+      - [0x86EA0, hasm, libultra/osMapTLBRdb]
+      - [0x86F00, c, libultra/io/pirawread] # OK
+      - [0x86F60, c, libultra/libc/ll] # OK
+      - [0x87220, c, libultra/os/settimer] # OK
+      - [0x87300, c, libultra/gu/mtxutil] # OK
+      - [0x87570, c, libultra/io/conteepread] # OK
+      - [0x87870, c, libultra/io/conteepwrite] # OK
+      - [0x87D50, c, libultra/io/pfs] # Almost ok
+      - [0x889A0, c, libultra/io/pfschecker] # OK
+      - [0x89410, c, libultra/io/contramread] # OK
+      - [0x897A0, c, libultra/io/contramwrite]
       - [0x89B30, asm, xprintf]
       - [0x8ACC0, asm, strchr]
       - [0x8AD60, c, libultra/os/osJamMesg]
@@ -233,7 +234,8 @@ segments:
       - [0xA3840, .data, libultra/os/timerintr]
       - [0xA3850, .data, libultra/io/vi]
       - [0xA38C0, .data, libultra/io/siacs]
-      - [0xA38D0, data]
+      - [0xA38D0, .data, libultra/io/piacs]
+      - [0xA38E0, data]
 
       # GAME RODATA
       - [0xA39F0, rodata] # Rodata from Libultra or some library?
@@ -301,7 +303,9 @@ segments:
       - { type: bss, start: 0xA95D0, vram: 0x801D9980, name: bss2 }
       - { type: .bss, start: 0xA95D0, vram: 0x801DAC30, name: libultra/os/timerintr }
       - { type: .bss, start: 0xA95D0, vram: 0x801DAC70, name: libultra/io/siacs }
-      - { type: bss, start: 0xA95D0, vram: 0x801DAC90, name: bss3 }
+      - { type: .bss, start: 0xA95D0, vram: 0x801DAC90, name: libultra/io/piacs }
+      - { type: .bss, start: 0xA95D0, vram: 0x801DACB0, name: libultra/io/conteepread }
+      - { type: bss, start: 0xA95D0, vram: 0x801DACF0, name: bss3 }
       
 
   - name: codeseg # This segment is loaded into memory on func_80098190

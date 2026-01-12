@@ -18,7 +18,30 @@ void func_8007A550(Gfx** dListP) {
     *dListP = gfxPtr;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/wr64_print/func_8007A5D4.s")
+void func_8007A5D4(Gfx** gfxP, s32 topR, s32 topG, s32 topB, s32 bottomR, s32 bottomG, s32 bottomB) {
+    Gfx* gfx = *gfxP;
+    s32 color;
+    s32 i;
+    s32 r;
+    s32 g;
+    s32 b;
+
+    gDPPipeSync(gfx++);
+    gDPSetCycleType(gfx++, G_CYC_FILL);
+
+    for (i = 0; i < 240; i++) {
+        gDPPipeSync(gfx++);
+        r = ((topR * (239 - i)) / 239) + ((bottomR * i) / 239);
+        g = ((topG * (239 - i)) / 239) + ((bottomG * i) / 239);
+        b = ((topB * (239 - i)) / 239) + ((bottomB * i) / 239);
+        gDPSetFillColor(gfx++, GPACK_RGBA5551(r, g, b, 1) << 16 | GPACK_RGBA5551(r, g, b, 1));
+        gDPFillRectangle(gfx++, 0, i, 319, i);
+    }
+    gDPPipeSync(gfx++);
+    gDPSetCycleType(gfx++, G_CYC_1CYCLE);
+
+    *gfxP = gfx;
+}
 
 /*
  * Formats an integer to a string
@@ -98,13 +121,82 @@ void Str_Itoaw(char* str, s32 num, s32 width) {
     str[i] = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/wr64_print/func_8007AAAC.s")
+// Regalloc
+#ifdef NON_MATCHING
+extern Gfx D_10144F8[];
 
-void func_8007AD40(Gfx** gdl, s32 arg1, s32 arg2, s32 arg3) {
+void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, char* arg3) {
+    char pad[0x4];
+    s32 var_a0;
+    s32 var_a1;
+    Gfx* gdlh;
+    s32 dontDraw;
+    s32 var_t0;
+    s8 var_v0;
+    s8* var_a2;
+
+    gdlh = *gdl;
+
+    gSPDisplayList(gdlh++, D_10144F8);
+
+    var_v0 = *arg3;
+    var_t0 = 1;
+    if (var_v0 != 0) {
+        var_a2 = arg3 + 1;
+        do {
+            dontDraw = false;
+
+            if ((var_v0 >= 0x30) && (var_v0 < 0x3A)) {
+                var_a1 = 0;
+                var_a0 = (var_v0 * 6) - 0x120;
+            } else if ((var_v0 >= 0x41) && (((var_v0 < 0x5B) != 0))) {
+                var_a0 = ((var_v0 - 0x41) % 10) * 6;
+                var_a1 = (((var_v0 - 0x41) / 10) * 8) + 8;
+            } else {
+                switch (var_v0) { /* irregular */
+                    default:
+                        dontDraw = true;
+                        break;
+                    case ':':
+                        var_a0 = '$';
+                        var_a1 = 0x18;
+                        break;
+                    case '-':
+                        var_a0 = '*';
+
+                        var_a1 = 0x18;
+                        break;
+                    case '(':
+                        var_a0 = '0';
+                        var_a1 = 0x18;
+                        break;
+                    case ')':
+                        var_a0 = '6';
+                        var_a1 = 0x18;
+                        break;
+                }
+            }
+            if (!dontDraw) {
+                gSPTextureRectangle(gdlh++, (((var_t0 * 6) + arg1) - 6) << 2, arg2 << 2,
+                                    (((var_t0 * 6) + arg1) - 1) << 2, (arg2 + 7) << 2, 0, var_a0 << 5, var_a1 << 5,
+                                    0x400, 0x400);
+            }
+            var_v0 = *var_a2;
+            var_t0++;
+            var_a2++;
+        } while (var_v0 != 0);
+    }
+    *gdl = gdlh;
+}
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/game/wr64_print/func_8007AAAC.s")
+#endif
+
+void func_8007AD40(Gfx** gdl, s32 arg1, s32 arg2, s32 number) {
     s32 pad;
     char buf[60];
 
-    Str_Itoa(buf, arg3);
+    Str_Itoa(buf, number);
     func_8007AAAC(gdl, arg1, arg2, buf);
 }
 
