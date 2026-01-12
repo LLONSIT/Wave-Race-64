@@ -136,15 +136,16 @@ s32 func_80052E90(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
 s32 func_80053268(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
 Gfx* func_800687A4(Gfx* arg0);
 Gfx* func_800916B4(Gfx* arg0);
-void func_8005374C(UnkStruct_80052C6C_2* arg0, f32 arg1, UnkStruct_80052C6C_2* arg2, UnkStruct_80052C6C_2* arg3);
+void func_8005374C(UnkStruct_80052C6C_2* arg0, f32 t, UnkStruct_80052C6C_2* arg2, UnkStruct_80052C6C_2* arg3);
 void func_80053A5C(UnkStruct_80052E90_arg1_s* arg0, f32 arg1, UnkStruct_80052E90_arg1_s* arg2,
                    UnkStruct_80052E90_arg1_s* arg3);
 void func_80053FBC(UnkStruct_80192690* arg0, UnkStruct_80052C6C_1* arg1, UnkStruct_80052C6C_2* arg2);
 s32 func_80054130(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 s32 func_80054E14(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
 s32 func_80055270(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
-s32 func_80055C6C(s32 arg0, UnkStruct_80052E90_arg1_s *arg1, s32 arg2, s32 arg3);
-void func_800534AC(UnkStruct_80052C6C_2*, f32*, f32*, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32); /* extern */
+s32 func_80055C6C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
+void func_800534AC(UnkStruct_80052C6C_2*, f32*, f32*, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32,
+                   f32); /* extern */
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80051EC0.s")
 
@@ -608,7 +609,6 @@ void func_80053FBC(UnkStruct_80192690* arg0, UnkStruct_80052C6C_1* arg1, UnkStru
     arg2->unk14.z = (arg0->unk1440 * temp_f0) + (arg0->unk1438 * temp_f12);
 }
 
-
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80054130.s")
 
 s32 func_80054E14(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3) {
@@ -662,7 +662,8 @@ s32 func_800551EC(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3,
 
 // More float fun!
 #ifdef NON_EQUIVALENT
-void func_800534AC(UnkStruct_80052C6C_2*, f32*, f32*, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32); /* extern */
+void func_800534AC(UnkStruct_80052C6C_2*, f32*, f32*, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32,
+                   f32); /* extern */
 extern f32 D_800D4960;
 
 s32 func_80055270(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3) {
@@ -743,7 +744,7 @@ s32 func_80055270(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
     func_80052C6C(temp_s2, &temp_s1->unk4[temp_s1->unk38[arg3]], &arg1->unk1B0);
     func_80053FBC(temp_s2, &temp_s1->unk4[temp_s1->unk40[arg3]], &arg1->unk1F8);
     arg1->unk1F8.unk0.x += (arg1->unkD8.unk0.x - arg1->unk1F8.unk0.x);
-    arg1->unk1F8.unk0.y +=  (arg1->unkD8.unk0.y - arg1->unk1F8.unk0.y);
+    arg1->unk1F8.unk0.y += (arg1->unkD8.unk0.y - arg1->unk1F8.unk0.y);
     arg1->unk1F8.unk0.z += (arg1->unkD8.unk0.z - arg1->unk1F8.unk0.z);
     func_80053FBC(temp_s2, &temp_s1->unk4[temp_s1->unk24[arg3]], &arg1->unkFC);
     arg1->unkFC.unk0.x += arg1->unk1F8.unk0.x;
@@ -790,7 +791,6 @@ s32 func_80055270(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80055270.s")
 #endif
 
-
 s32 func_80055C6C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3) {
     UnkStruct_80192690* temp_s2;
     UnkStruct_802238DC* temp_s1;
@@ -798,7 +798,6 @@ s32 func_80055C6C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
     f32 temp_fv1;
     f32 temp_fa0;
     f32 temp_fa1;
-    
 
     temp_s1 = D_802238DC[arg2];
     if (arg3 >= temp_s1->unk0) {
@@ -848,8 +847,12 @@ s32 func_80055C6C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
     }
     func_80052C6C(temp_s2, &temp_s1->unk4[temp_s1->unkC[arg3]], &arg1->unk24);
     func_80052C6C(temp_s2, &temp_s1->unk4[temp_s1->unk18[arg3]], &arg1->unk90);
-    func_800534AC(&arg1->unk24, &arg1->unk24.unk0.y, &arg1->unk24.unk0.z, arg1->unk48.unk0.x, arg1->unk48.unk0.y, arg1->unk48.unk0.z, arg1->unk0.unk0.x, arg1->unk0.unk0.y, arg1->unk0.unk0.z, 298.01123f, 355.76913f, arg1->unk48.unk14.x, arg1->unk48.unk14.y, arg1->unk48.unk14.z);
-    func_800534AC(&arg1->unk90, &arg1->unk90.unk0.y, &arg1->unk90.unk0.z, arg1->unkB4.unk0.x, arg1->unkB4.unk0.y, arg1->unkB4.unk0.z, arg1->unk6C.unk0.x, arg1->unk6C.unk0.y, arg1->unk6C.unk0.z, 298.01123f, 355.76913f, arg1->unkB4.unk14.x, arg1->unkB4.unk14.y, arg1->unkB4.unk14.z);
+    func_800534AC(&arg1->unk24, &arg1->unk24.unk0.y, &arg1->unk24.unk0.z, arg1->unk48.unk0.x, arg1->unk48.unk0.y,
+                  arg1->unk48.unk0.z, arg1->unk0.unk0.x, arg1->unk0.unk0.y, arg1->unk0.unk0.z, 298.01123f, 355.76913f,
+                  arg1->unk48.unk14.x, arg1->unk48.unk14.y, arg1->unk48.unk14.z);
+    func_800534AC(&arg1->unk90, &arg1->unk90.unk0.y, &arg1->unk90.unk0.z, arg1->unkB4.unk0.x, arg1->unkB4.unk0.y,
+                  arg1->unkB4.unk0.z, arg1->unk6C.unk0.x, arg1->unk6C.unk0.y, arg1->unk6C.unk0.z, 298.01123f,
+                  355.76913f, arg1->unkB4.unk14.x, arg1->unkB4.unk14.y, arg1->unkB4.unk14.z);
     arg1->unk48.unkC.x = arg1->unk24.unk0.x - arg1->unk48.unk0.x;
     arg1->unk48.unkC.y = arg1->unk24.unk0.y - arg1->unk48.unk0.y;
     arg1->unk48.unkC.z = arg1->unk24.unk0.z - arg1->unk48.unk0.z;
@@ -887,8 +890,12 @@ s32 func_80055C6C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
     arg1->unk1D4.unk0.x += temp_fv1;
     arg1->unk1D4.unk0.y += temp_fa0;
     arg1->unk1D4.unk0.z += temp_fa1;
-    func_800534AC(&arg1->unk144, &arg1->unk144.unk0.y, &arg1->unk144.unk0.z, arg1->unk168.unk0.x, arg1->unk168.unk0.y, arg1->unk168.unk0.z, arg1->unk120.unk0.x, arg1->unk120.unk0.y, arg1->unk120.unk0.z, 72.98288f, 109.34885f, -arg1->unk168.unk14.x, -arg1->unk168.unk14.y, -arg1->unk168.unk14.z);
-    func_800534AC(&arg1->unk1B0, &arg1->unk1B0.unk0.y, &arg1->unk1B0.unk0.z, arg1->unk1D4.unk0.x, arg1->unk1D4.unk0.y, arg1->unk1D4.unk0.z, arg1->unk18C.unk0.x, arg1->unk18C.unk0.y, arg1->unk18C.unk0.z, 72.98288f, 109.34885f, -arg1->unk1D4.unk14.x, -arg1->unk1D4.unk14.y, -arg1->unk1D4.unk14.z);
+    func_800534AC(&arg1->unk144, &arg1->unk144.unk0.y, &arg1->unk144.unk0.z, arg1->unk168.unk0.x, arg1->unk168.unk0.y,
+                  arg1->unk168.unk0.z, arg1->unk120.unk0.x, arg1->unk120.unk0.y, arg1->unk120.unk0.z, 72.98288f,
+                  109.34885f, -arg1->unk168.unk14.x, -arg1->unk168.unk14.y, -arg1->unk168.unk14.z);
+    func_800534AC(&arg1->unk1B0, &arg1->unk1B0.unk0.y, &arg1->unk1B0.unk0.z, arg1->unk1D4.unk0.x, arg1->unk1D4.unk0.y,
+                  arg1->unk1D4.unk0.z, arg1->unk18C.unk0.x, arg1->unk18C.unk0.y, arg1->unk18C.unk0.z, 72.98288f,
+                  109.34885f, -arg1->unk1D4.unk14.x, -arg1->unk1D4.unk14.y, -arg1->unk1D4.unk14.z);
     arg1->unk168.unkC.x = arg1->unk144.unk0.x - arg1->unk168.unk0.x;
     arg1->unk168.unkC.y = arg1->unk144.unk0.y - arg1->unk168.unk0.y;
     arg1->unk168.unkC.z = arg1->unk144.unk0.z - arg1->unk168.unk0.z;

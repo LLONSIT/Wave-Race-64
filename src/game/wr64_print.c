@@ -136,7 +136,7 @@ void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, char* arg3) {
     s8* var_a2;
 
     gdlh = *gdl;
-    
+
     gSPDisplayList(gdlh++, D_10144F8);
 
     var_v0 = *arg3;
@@ -145,7 +145,7 @@ void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, char* arg3) {
         var_a2 = arg3 + 1;
         do {
             dontDraw = false;
-            
+
             if ((var_v0 >= 0x30) && (var_v0 < 0x3A)) {
                 var_a1 = 0;
                 var_a0 = (var_v0 * 6) - 0x120;
@@ -153,33 +153,33 @@ void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, char* arg3) {
                 var_a0 = ((var_v0 - 0x41) % 10) * 6;
                 var_a1 = (((var_v0 - 0x41) / 10) * 8) + 8;
             } else {
-                switch (var_v0) {                   /* irregular */
-                default:
-                    dontDraw = true;
-                    break;
-                case ':':
-                    var_a0 = '$';
-                    var_a1 = 0x18;
-                    break;
-                case '-':
-                    var_a0 = '*';
+                switch (var_v0) { /* irregular */
+                    default:
+                        dontDraw = true;
+                        break;
+                    case ':':
+                        var_a0 = '$';
+                        var_a1 = 0x18;
+                        break;
+                    case '-':
+                        var_a0 = '*';
 
-                    var_a1 = 0x18;
-                    break;
-                case '(':
-                    var_a0 = '0';
-                    var_a1 = 0x18;
-                    break;
-                case ')':
-                    var_a0 = '6';
-                    var_a1 = 0x18;
-                    break;
+                        var_a1 = 0x18;
+                        break;
+                    case '(':
+                        var_a0 = '0';
+                        var_a1 = 0x18;
+                        break;
+                    case ')':
+                        var_a0 = '6';
+                        var_a1 = 0x18;
+                        break;
                 }
             }
             if (!dontDraw) {
-                gSPTextureRectangle(gdlh++, (((var_t0 * 6) + arg1) - 6) << 2, 
-                                arg2 << 2, (((var_t0 * 6) + arg1) - 1) << 2, (arg2 + 7) << 2, 0, 
-                                var_a0 << 5, var_a1 << 5, 0x400, 0x400);
+                gSPTextureRectangle(gdlh++, (((var_t0 * 6) + arg1) - 6) << 2, arg2 << 2,
+                                    (((var_t0 * 6) + arg1) - 1) << 2, (arg2 + 7) << 2, 0, var_a0 << 5, var_a1 << 5,
+                                    0x400, 0x400);
             }
             var_v0 = *var_a2;
             var_t0++;
