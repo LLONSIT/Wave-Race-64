@@ -4,6 +4,8 @@
  */
 #include "common.h"
 
+extern Gfx D_10144F8[];
+
 void func_8007A550(Gfx** dListP) {
     Gfx* gfxPtr = *dListP;
 
@@ -121,76 +123,66 @@ void Str_Itoaw(char* str, s32 num, s32 width) {
     str[i] = 0;
 }
 
-// Regalloc
-#ifdef NON_MATCHING
-extern Gfx D_10144F8[];
-
-void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, char* arg3) {
+void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, s8* arg3) {
     char pad[0x4];
-    s32 var_a0;
-    s32 var_a1;
+    s32 x;
+    s32 t;
+    s32 s;
     Gfx* gdlh;
     s32 dontDraw;
     s32 var_t0;
-    s8 var_v0;
-    s8* var_a2;
+    s32 c;
+    s32 i;
 
     gdlh = *gdl;
-
+    
     gSPDisplayList(gdlh++, D_10144F8);
 
-    var_v0 = *arg3;
     var_t0 = 1;
-    if (var_v0 != 0) {
-        var_a2 = arg3 + 1;
-        do {
-            dontDraw = false;
-
-            if ((var_v0 >= 0x30) && (var_v0 < 0x3A)) {
-                var_a1 = 0;
-                var_a0 = (var_v0 * 6) - 0x120;
-            } else if ((var_v0 >= 0x41) && (((var_v0 < 0x5B) != 0))) {
-                var_a0 = ((var_v0 - 0x41) % 10) * 6;
-                var_a1 = (((var_v0 - 0x41) / 10) * 8) + 8;
-            } else {
-                switch (var_v0) { /* irregular */
-                    default:
-                        dontDraw = true;
-                        break;
-                    case ':':
-                        var_a0 = '$';
-                        var_a1 = 0x18;
-                        break;
-                    case '-':
-                        var_a0 = '*';
-
-                        var_a1 = 0x18;
-                        break;
-                    case '(':
-                        var_a0 = '0';
-                        var_a1 = 0x18;
-                        break;
-                    case ')':
-                        var_a0 = '6';
-                        var_a1 = 0x18;
-                        break;
-                }
+    i = 0;
+    while (c = arg3[i++]) {
+        dontDraw = false;
+        
+        if ((c >= '0') && (c < ':')) {
+            s = (c * 6) - 0x120;
+            t = 0;
+        } else if ((c >= 'A') && ((c < '['))) {
+            s = ((c - 'A') % 10) * 6;
+            t = (((c - 'A') / 10) * 8) + 8;
+        } else {
+            // Special characters
+            switch (c) {                   /* irregular */
+            default:
+                dontDraw = true;
+                break;
+            case ':':
+                s = 0x24;
+                t = 0x18;
+                break;
+            case '-':
+                s = 0x2A;
+                t = 0x18;
+                break;
+            case '(':
+                s = 0x30;
+                t = 0x18;
+                break;
+            case ')':
+                s = 0x36;
+                t = 0x18;
+                break;
             }
-            if (!dontDraw) {
-                gSPTextureRectangle(gdlh++, (((var_t0 * 6) + arg1) - 6) << 2, arg2 << 2,
-                                    (((var_t0 * 6) + arg1) - 1) << 2, (arg2 + 7) << 2, 0, var_a0 << 5, var_a1 << 5,
-                                    0x400, 0x400);
-            }
-            var_v0 = *var_a2;
-            var_t0++;
-            var_a2++;
-        } while (var_v0 != 0);
+        }
+        if (!dontDraw) {
+            x = ((var_t0 * 6) + arg1) - 6;
+            gSPTextureRectangle(gdlh++, x << 2, 
+                            arg2 << 2, (x + 5) << 2, (arg2 + 7) << 2, 0, 
+                            s << 5, t << 5, 0x400, 0x400);
+        }
+        var_t0++;
     }
     *gdl = gdlh;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/wr64_print/func_8007AAAC.s")
-#endif
 
 void func_8007AD40(Gfx** gdl, s32 arg1, s32 arg2, s32 number) {
     s32 pad;

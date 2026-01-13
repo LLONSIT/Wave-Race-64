@@ -144,7 +144,52 @@ s32 __osCheckPackId(OSPfs* pfs, __OSPackId* temp) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/libultra/io/pfs/__osGetId.s")
+s32 __osGetId(OSPfs* pfs) {
+    int k;
+    u16 sum;
+    u16 isum;
+    u8 temp[32];
+    __OSPackId newid;
+    s32 ret;
+    __OSPackId* id;
+    u8* var_a1;
+
+    SET_ACTIVEBANK_TO_ZERO();
+    ERRCK(__osContRamRead(pfs->queue, pfs->channel, 1, (u8*) temp));
+    __osIdCheckSum((u16*) temp, &sum, &isum);
+    id = (__OSPackId*) temp;
+    if (id->checksum != sum || id->inverted_checksum != isum) {
+        ret = __osCheckPackId(pfs, id);
+        if (ret == PFS_ERR_ID_FATAL) {
+            ERRCK(__osRepairPackId(pfs, id, &newid));
+            id = &newid;
+        } else if (ret != 0) {
+            return ret;
+        }
+    }
+    //! @todo remove magic constant
+    if ((id->deviceid & 1) == 0) {
+        ERRCK(__osRepairPackId(pfs, id, &newid));
+        id = &newid;
+        if ((id->deviceid & 1) == 0) {
+            return PFS_ERR_DEVICE;
+        }
+    }
+    for (k = 0; k < ARRLEN(pfs->id); k++) { 
+        pfs->id[k] = *(u8 *)((u32)id + k);
+    } 
+    
+    pfs->version = id->version;
+    pfs->banks = id->banks;
+    //! @todo loads of magic constants..
+    pfs->inode_start_page = pfs->banks * 2 + 3;
+    pfs->dir_size = 16;
+    pfs->inode_table = 8;
+    pfs->minode_table = pfs->banks * PFS_ONE_PAGE + 8;
+    pfs->dir_table = pfs->minode_table + pfs->banks * PFS_ONE_PAGE;
+    ERRCK(__osContRamRead(pfs->queue, pfs->channel, 7, pfs->label));
+    return 0;
+}
 
 s32 __osCheckId(OSPfs* pfs) {
     int k;
