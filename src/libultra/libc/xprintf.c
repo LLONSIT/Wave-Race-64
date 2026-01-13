@@ -3,46 +3,46 @@
 #include <string.h>
 #include "printf.h"
 
-#define ATOI(i, a)                                                                                     \
-    for (i = 0; *a >= '0' && *a <= '9'; a++)                                                           \
-        if (i < 999)                                                                                   \
+#define ATOI(i, a)                           \
+    for (i = 0; *a >= '0' && *a <= '9'; a++) \
+        if (i < 999)                         \
             i = i * 10 + *a - '0';
-#define _PROUT(dst, fmt, _size)                                                                        \
-    if (_size > 0) {                                                                                   \
-        dst = prout(dst, fmt, _size);                                                                  \
-        if (dst != 0)                                                                                  \
-            sp78.size += _size;                                                                        \
-        else                                                                                           \
-            return sp78.size;                                                                          \
+#define _PROUT(dst, fmt, _size)       \
+    if (_size > 0) {                  \
+        dst = prout(dst, fmt, _size); \
+        if (dst != 0)                 \
+            sp78.size += _size;       \
+        else                          \
+            return sp78.size;         \
     }
-#define _PAD(i, m, c, src, extracond)                                                                  \
-    if (extracond && m > 0)                                                                            \
-        for (i = m; i > 0; i -= c) {                                                                   \
-            if ((u32) i > 32)                                                                          \
-                c = 32;                                                                                \
-            else                                                                                       \
-                c = i;                                                                                 \
-            _PROUT(dst, src, c);                                                                       \
+#define _PAD(i, m, c, src, extracond) \
+    if (extracond && m > 0)           \
+        for (i = m; i > 0; i -= c) {  \
+            if ((u32) i > 32)         \
+                c = 32;               \
+            else                      \
+                c = i;                \
+            _PROUT(dst, src, c);      \
         }
 
 char spaces[] = "                                ";
 char zeroes[] = "00000000000000000000000000000000";
 
-static void _Putfld(printf_struct *, va_list *, fmt_type, fmt_type *);
+static void _Putfld(printf_struct*, va_list*, fmt_type, fmt_type*);
 
-s32 _Printf(char *(*prout)(char *, const char *, size_t), char *dst, const char *fmt, va_list args) {
+s32 _Printf(char* (*prout)(char*, const char*, size_t), char* dst, const char* fmt, va_list args) {
     static const char flags_str[] = " +-#0";
     static const u32 flags_arr[] = { FLAGS_SPACE, FLAGS_PLUS, FLAGS_MINUS, FLAGS_HASH, FLAGS_ZERO, 0 };
 
     printf_struct sp78;
-    const fmt_type *fmt_ptr;
+    const fmt_type* fmt_ptr;
     fmt_type c;
-    const char *flag_index;
+    const char* flag_index;
     fmt_type sp4c[0x20]; // probably a buffer?
     s32 sp48, sp44, sp40, sp3c, sp38, sp34, sp30, sp2c, sp28, sp24;
     sp78.size = 0;
     while (true) {
-        fmt_ptr = (fmt_type *) fmt;
+        fmt_ptr = (fmt_type*) fmt;
 #if defined(VERSION_SH) || defined(VERSION_CN)
         // new version: don't point fmt_ptr beyond NUL character
         while ((c = *fmt_ptr) != 0 && c != '%') {
@@ -56,11 +56,11 @@ s32 _Printf(char *(*prout)(char *, const char *, size_t), char *dst, const char 
             }
         }
 #endif
-        _PROUT(dst, fmt, fmt_ptr - (fmt_type *) fmt);
+        _PROUT(dst, fmt, fmt_ptr - (fmt_type*) fmt);
         if (c == 0) {
             return sp78.size;
         }
-        fmt = (char *) ++fmt_ptr;
+        fmt = (char*) ++fmt_ptr;
         sp78.flags = 0;
         for (; (flag_index = strchr(flags_str, *fmt_ptr)) != NULL; fmt_ptr++) {
             sp78.flags |= flags_arr[flag_index - flags_str];
@@ -93,23 +93,23 @@ s32 _Printf(char *(*prout)(char *, const char *, size_t), char *dst, const char 
             fmt_ptr++;
         }
         _Putfld(&sp78, &args, *fmt_ptr, sp4c);
-        sp78.width -= sp78.part1_len + sp78.num_leading_zeros + sp78.part2_len + sp78.num_mid_zeros
-                      + sp78.part3_len + sp78.num_trailing_zeros;
+        sp78.width -= sp78.part1_len + sp78.num_leading_zeros + sp78.part2_len + sp78.num_mid_zeros + sp78.part3_len +
+                      sp78.num_trailing_zeros;
         _PAD(sp44, sp78.width, sp48, spaces, !(sp78.flags & FLAGS_MINUS));
-        _PROUT(dst, (char *) sp4c, sp78.part1_len);
+        _PROUT(dst, (char*) sp4c, sp78.part1_len);
         _PAD(sp3c, sp78.num_leading_zeros, sp40, zeroes, 1);
         _PROUT(dst, sp78.buff, sp78.part2_len);
         _PAD(sp34, sp78.num_mid_zeros, sp38, zeroes, 1);
-        _PROUT(dst, (char *) (&sp78.buff[sp78.part2_len]), sp78.part3_len)
+        _PROUT(dst, (char*) (&sp78.buff[sp78.part2_len]), sp78.part3_len)
         _PAD(sp2c, sp78.num_trailing_zeros, sp30, zeroes, 1);
         _PAD(sp24, sp78.width, sp28, spaces, sp78.flags & FLAGS_MINUS);
-        fmt = (char *) fmt_ptr + 1;
+        fmt = (char*) fmt_ptr + 1;
     }
 }
 
-static void _Putfld(printf_struct *a0, va_list *args, fmt_type type, fmt_type *buff) {
-    a0->part1_len = a0->num_leading_zeros = a0->part2_len = a0->num_mid_zeros = a0->part3_len =
-        a0->num_trailing_zeros = 0;
+static void _Putfld(printf_struct* a0, va_list* args, fmt_type type, fmt_type* buff) {
+    a0->part1_len = a0->num_leading_zeros = a0->part2_len = a0->num_mid_zeros = a0->part3_len = a0->num_trailing_zeros =
+        0;
 
     switch (type) {
 
@@ -139,7 +139,7 @@ static void _Putfld(printf_struct *a0, va_list *args, fmt_type type, fmt_type *b
                 buff[a0->part1_len++] = ' ';
             }
 
-            a0->buff = (char *) &buff[a0->part1_len];
+            a0->buff = (char*) &buff[a0->part1_len];
 
             _Litob(a0, type);
             break;
@@ -169,7 +169,7 @@ static void _Putfld(printf_struct *a0, va_list *args, fmt_type type, fmt_type *b
                     buff[a0->part1_len++] = type;
                 }
             }
-            a0->buff = (char *) &buff[a0->part1_len];
+            a0->buff = (char*) &buff[a0->part1_len];
             _Litob(a0, type);
             break;
 
@@ -191,30 +191,30 @@ static void _Putfld(printf_struct *a0, va_list *args, fmt_type type, fmt_type *b
                 }
             }
 
-            a0->buff = (char *) &buff[a0->part1_len];
+            a0->buff = (char*) &buff[a0->part1_len];
             _Ldtob(a0, type);
             break;
 
         case 'n':
             if (a0->length == 'h') {
-                *(va_arg(*args, u16 *)) = a0->size;
+                *(va_arg(*args, u16*)) = a0->size;
             } else if (a0->length == 'l') {
-                *va_arg(*args, u32 *) = a0->size;
+                *va_arg(*args, u32*) = a0->size;
             } else if (a0->length == 'L') {
-                *va_arg(*args, u64 *) = a0->size;
+                *va_arg(*args, u64*) = a0->size;
             } else {
-                *va_arg(*args, u32 *) = a0->size;
+                *va_arg(*args, u32*) = a0->size;
             }
             break;
 
         case 'p':
-            a0->value.s64 = (intptr_t) va_arg(*args, void *);
-            a0->buff = (char *) &buff[a0->part1_len];
+            a0->value.s64 = (intptr_t) va_arg(*args, void*);
+            a0->buff = (char*) &buff[a0->part1_len];
             _Litob(a0, 'x');
             break;
 
         case 's':
-            a0->buff = va_arg(*args, char *);
+            a0->buff = va_arg(*args, char*);
             a0->part2_len = strlen(a0->buff);
             if (a0->precision >= 0 && a0->part2_len > a0->precision) {
                 a0->part2_len = a0->precision;

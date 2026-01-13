@@ -1,7 +1,7 @@
 #include "libultra_internal.h"
 #include "PRinternal/piint.h"
 
-OSMesgQueue *osPiGetCmdQueue(void) {
+OSMesgQueue* osPiGetCmdQueue(void) {
     if (!__osPiDevMgr.active) {
         return NULL;
     }

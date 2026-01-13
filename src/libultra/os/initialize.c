@@ -3,7 +3,6 @@
 #include "PR/os_version.h"
 #include "PRinternal/piint.h"
 
-
 typedef struct {
     /* 0x0 */ unsigned int inst1;
     /* 0x4 */ unsigned int inst2;

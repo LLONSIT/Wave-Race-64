@@ -4,7 +4,7 @@
 #include "PRinternal/controller.h"
 #include "PRinternal/siint.h"
 
-void __osPackRamWriteData(s32 channel, u16 address, u8 *buffer);
+void __osPackRamWriteData(s32 channel, u16 address, u8* buffer);
 
 s32 __osContRamWrite(OSMesgQueue* mq, int channel, u16 address, u8* buffer, int force) {
     s32 ret;
@@ -16,32 +16,32 @@ s32 __osContRamWrite(OSMesgQueue* mq, int channel, u16 address, u8* buffer, int 
     ret = 0;
     ptr = (u8*) &__osPfsPifRam;
     retry = 2;
-    
-    if ((force != 1) &&( address < 7) && (address != 0)) {
+
+    if ((force != 1) && (address < 7) && (address != 0)) {
         return 0;
     }
-    
+
     __osSiGetAccess();
-    
+
     __osContLastCmd = CONT_CMD_WRITE_PAK;
-    
+
     __osPackRamWriteData(channel, address, buffer);
     ret = __osSiRawStartDma(OS_WRITE, &__osPfsPifRam);
     osRecvMesg(mq, NULL, OS_MESG_BLOCK);
-    
+
     do {
         for (i = 0; i < 16; i++) {
             __osPfsPifRam.ramarray[i] = 0xFF;
         }
         __osPfsPifRam.pifstatus = 0;
         ret = __osSiRawStartDma(OS_READ, &__osPfsPifRam);
-        
+
         osRecvMesg(mq, NULL, OS_MESG_BLOCK);
         ptr = (u8*) &__osPfsPifRam;
         if (channel != 0) {
             for (i = 0; i < channel; i++) {
-                ptr++;                
-            }            
+                ptr++;
+            }
         }
         ramreadformat = *(__OSContRamReadFormat*) ptr;
 
@@ -57,12 +57,11 @@ s32 __osContRamWrite(OSMesgQueue* mq, int channel, u16 address, u8* buffer, int 
                 ret = PFS_ERR_CONTRFAIL;
             }
         }
-    
+
     } while ((ret == PFS_ERR_CONTRFAIL) && (retry-- >= 0));
     __osSiRelAccess();
     return ret;
 }
-
 
 void __osPackRamWriteData(int channel, u16 address, u8* buffer) {
     u8* ptr;

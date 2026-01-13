@@ -175,10 +175,10 @@ s32 __osGetId(OSPfs* pfs) {
             return PFS_ERR_DEVICE;
         }
     }
-    for (k = 0; k < ARRLEN(pfs->id); k++) { 
-        pfs->id[k] = *(u8 *)((u32)id + k);
-    } 
-    
+    for (k = 0; k < ARRLEN(pfs->id); k++) {
+        pfs->id[k] = *(u8*) ((u32) id + k);
+    }
+
     pfs->version = id->version;
     pfs->banks = id->banks;
     //! @todo loads of magic constants..

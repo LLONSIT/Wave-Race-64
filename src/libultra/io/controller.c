@@ -5,12 +5,11 @@
 
 extern u64 D_800E8FD0;
 void __osPackRequestData(u8);
-void __osContGetInitData(u8 *, OSContStatus *);
+void __osContGetInitData(u8*, OSContStatus*);
 
 #define CLOCK_RATE D_800E8FD0
 
 #define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
-
 
 u32 _osContInitialized = 0; // probably initialized
 u8 __osContLastCmd;
@@ -19,8 +18,7 @@ OSTimer __osEepromTimer;
 OSMesgQueue __osEepromTimerQ;
 OSMesg __osEepromTimerMsg[4];
 
-
-s32 osContInit(OSMesgQueue *mq, u8 *bitpattern, OSContStatus *status) {
+s32 osContInit(OSMesgQueue* mq, u8* bitpattern, OSContStatus* status) {
     OSMesg mesg;
     u32 ret = 0;
     OSTime currentTime;
@@ -50,14 +48,14 @@ s32 osContInit(OSMesgQueue *mq, u8 *bitpattern, OSContStatus *status) {
     return ret;
 }
 
-void __osContGetInitData(u8 *bitpattern, OSContStatus *status) {
-    u8 *cmdBufPtr;
+void __osContGetInitData(u8* bitpattern, OSContStatus* status) {
+    u8* cmdBufPtr;
     __OSContRequesFormat response;
     s32 i;
     u8 bits = 0;
-    cmdBufPtr = (u8 *) __osContPifRam.ramarray;
+    cmdBufPtr = (u8*) __osContPifRam.ramarray;
     for (i = 0; i < __osMaxControllers; i++, cmdBufPtr += sizeof(__OSContRequesFormat), status++) {
-        response = *(__OSContRequesFormat *) cmdBufPtr;
+        response = *(__OSContRequesFormat*) cmdBufPtr;
         status->errno = (response.rxsize & 0xc0) >> 4;
         if (status->errno == 0) {
             status->type = response.typel << 8 | response.typeh;
@@ -71,7 +69,7 @@ void __osContGetInitData(u8 *bitpattern, OSContStatus *status) {
 }
 
 void __osPackRequestData(u8 command) {
-    u8 *cmdBufPtr;
+    u8* cmdBufPtr;
     __OSContRequesFormat request;
     s32 i;
 
@@ -80,7 +78,7 @@ void __osPackRequestData(u8 command) {
     }
 
     __osContPifRam.pifstatus = 1;
-    cmdBufPtr = (u8 *) __osContPifRam.ramarray;
+    cmdBufPtr = (u8*) __osContPifRam.ramarray;
     request.dummy = CONT_CMD_NOP;
     request.txsize = CONT_CMD_RESET_TX;
     request.rxsize = CONT_CMD_RESET_RX;
@@ -90,11 +88,9 @@ void __osPackRequestData(u8 command) {
     request.status = CONT_CMD_NOP;
     request.dummy1 = CONT_CMD_NOP;
 
-
     for (i = 0; i < __osMaxControllers; i++) {
-        *(__OSContRequesFormat *) cmdBufPtr = request;
+        *(__OSContRequesFormat*) cmdBufPtr = request;
         cmdBufPtr += sizeof(__OSContRequesFormat);
     }
     *cmdBufPtr = 254;
 }
-

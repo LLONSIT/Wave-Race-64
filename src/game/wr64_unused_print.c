@@ -135,14 +135,14 @@ void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, s8* arg3) {
     s32 i;
 
     gdlh = *gdl;
-    
+
     gSPDisplayList(gdlh++, D_10144F8);
 
     var_t0 = 1;
     i = 0;
     while (c = arg3[i++]) {
         dontDraw = false;
-        
+
         if ((c >= '0') && (c < ':')) {
             s = (c * 6) - 0x120;
             t = 0;
@@ -151,33 +151,32 @@ void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, s8* arg3) {
             t = (((c - 'A') / 10) * 8) + 8;
         } else {
             // Special characters
-            switch (c) {                   /* irregular */
-            default:
-                dontDraw = true;
-                break;
-            case ':':
-                s = 0x24;
-                t = 0x18;
-                break;
-            case '-':
-                s = 0x2A;
-                t = 0x18;
-                break;
-            case '(':
-                s = 0x30;
-                t = 0x18;
-                break;
-            case ')':
-                s = 0x36;
-                t = 0x18;
-                break;
+            switch (c) { /* irregular */
+                default:
+                    dontDraw = true;
+                    break;
+                case ':':
+                    s = 0x24;
+                    t = 0x18;
+                    break;
+                case '-':
+                    s = 0x2A;
+                    t = 0x18;
+                    break;
+                case '(':
+                    s = 0x30;
+                    t = 0x18;
+                    break;
+                case ')':
+                    s = 0x36;
+                    t = 0x18;
+                    break;
             }
         }
         if (!dontDraw) {
             x = ((var_t0 * 6) + arg1) - 6;
-            gSPTextureRectangle(gdlh++, x << 2, 
-                            arg2 << 2, (x + 5) << 2, (arg2 + 7) << 2, 0, 
-                            s << 5, t << 5, 0x400, 0x400);
+            gSPTextureRectangle(gdlh++, x << 2, arg2 << 2, (x + 5) << 2, (arg2 + 7) << 2, 0, s << 5, t << 5, 0x400,
+                                0x400);
         }
         var_t0++;
     }

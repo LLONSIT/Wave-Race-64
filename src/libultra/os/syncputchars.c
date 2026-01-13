@@ -5,7 +5,7 @@
 u32 __osRdbSendMessage = 0;
 u32 __osRdbWriteOK = 1;
 
-void __osSyncPutChars(s32 type, s32 length, const char *buf) {
+void __osSyncPutChars(s32 type, s32 length, const char* buf) {
     rdbPacket packet;
     s32 i;
     u32 mask;
@@ -22,11 +22,11 @@ void __osSyncPutChars(s32 type, s32 length, const char *buf) {
 
     mask = __osDisableInt();
 
-    *(u32 *) RDB_BASE_REG = *(u32 *) &packet;
+    *(u32*) RDB_BASE_REG = *(u32*) &packet;
     while (!(__osGetCause() & CAUSE_IP6)) {
         ;
     }
-    *(u32 *) RDB_READ_INTR_REG = 0;
+    *(u32*) RDB_READ_INTR_REG = 0;
     __osRdbWriteOK++;
 
     __osRestoreInt(mask);

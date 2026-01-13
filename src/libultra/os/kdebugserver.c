@@ -8,14 +8,14 @@ static s32 numCharsToReceive = 0;
 u8 debugBuffer[0x100];
 OSThread __osThreadSave;
 
-void u32_to_string(u32 i, u8 *str) {
+void u32_to_string(u32 i, u8* str) {
     str[0] = (i >> 0x18) & 0xff;
     str[1] = (i >> 0x10) & 0xff;
     str[2] = (i >> 0x8) & 0xff;
     str[3] = i & 0xff;
 }
 
-u32 string_to_u32(u8 *str) {
+u32 string_to_u32(u8* str) {
     u32 i;
     i = (str[0] & 0xff) << 0x18;
     i |= (str[1] & 0xff) << 0x10;
@@ -24,21 +24,21 @@ u32 string_to_u32(u8 *str) {
     return i;
 }
 
-void send_packet(u8 *a0, s32 a1) {
+void send_packet(u8* a0, s32 a1) {
     rdbPacket pkt;
     s32 i;
     pkt.type = 2;
     for (pkt.length = a1, i = 0; i < a1; i++) {
         pkt.buf[i] = a0[i];
     }
-    *(volatile u32 *) RDB_BASE_REG = *(u32 *) &pkt;
+    *(volatile u32*) RDB_BASE_REG = *(u32*) &pkt;
     while (!(__osGetCause() & 0x2000)) {
         ;
     }
-    *(volatile u32 *) RDB_READ_INTR_REG = 0;
+    *(volatile u32*) RDB_READ_INTR_REG = 0;
 }
 
-void send(u8 *buff, s32 len) {
+void send(u8* buff, s32 len) {
     s32 i;
     s32 end;
     s32 rem;
@@ -46,7 +46,7 @@ void send(u8 *buff, s32 len) {
         while (!(__osGetCause() & 0x2000)) {
             ;
         }
-        *(volatile u32 *) RDB_READ_INTR_REG = 0;
+        *(volatile u32*) RDB_READ_INTR_REG = 0;
         __osRdbWriteOK = 1;
     }
     i = 0;
@@ -65,17 +65,17 @@ void process_command_memory(void) {
     u32 sp18;
     sp1c = string_to_u32(&debugBuffer[1]);
     sp18 = string_to_u32(&debugBuffer[5]);
-    send((u8 *) (uintptr_t) sp1c, sp18);
+    send((u8*) (uintptr_t) sp1c, sp18);
 }
 
 void process_command_register(void) {
-    send((u8 *) &__osThreadSave.context, sizeof(__OSThreadContext));
+    send((u8*) &__osThreadSave.context, sizeof(__OSThreadContext));
 }
 
 void kdebugserver(u32 a0) {
     u32 sp2c;
     rdbPacket pkt;
-    *(u32 *) &pkt = a0;
+    *(u32*) &pkt = a0;
     for (sp2c = 0; sp2c < pkt.length; sp2c++) {
         debugBuffer[numChars] = pkt.buf[sp2c];
         numChars++;
