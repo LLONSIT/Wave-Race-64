@@ -242,7 +242,7 @@ segments:
       - [0xA38E0, .data, libultra/libc/xprintf]
       - [0xA3930, .data, libultra/os/kdebugserver]
       - [0xA3940, .data, libultra/os/syncputchars]
-      - [0xA3950, data, vimodes]
+      - [0xA3950, .data, libultra/vimodes]
 
       # GAME RODATA
       - [0xA39F0, .data, libultra/libc/xlitob] 
