@@ -20,7 +20,7 @@ void func_8007A550(Gfx** dListP) {
     *dListP = gfxPtr;
 }
 
-void func_8007A5D4(Gfx** gfxP, s32 topR, s32 topG, s32 topB, s32 bottomR, s32 bottomG, s32 bottomB) {
+void UnusedPrint_DrawBackground(Gfx** gfxP, s32 topR, s32 topG, s32 topB, s32 bottomR, s32 bottomG, s32 bottomB) {
     Gfx* gfx = *gfxP;
     s32 color;
     s32 i;
@@ -123,7 +123,7 @@ void Str_Itoaw(char* str, s32 num, s32 width) {
     str[i] = 0;
 }
 
-void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, s8* arg3) {
+void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, s8* buf) {
     char pad[0x4];
     s32 x;
     s32 t;
@@ -140,7 +140,7 @@ void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, s8* arg3) {
 
     var_t0 = 1;
     i = 0;
-    while (c = arg3[i++]) {
+    while (c = buf[i++]) {
         dontDraw = false;
 
         if ((c >= '0') && (c < ':')) {

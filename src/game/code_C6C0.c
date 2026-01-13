@@ -127,7 +127,9 @@ extern UnkStruct_80052C6C_1 D_801CEA48;
 extern UnkStruct_80052C6C_1 D_801CEA54;
 extern UnkStruct_80052C6C_1 D_801CEA60;
 extern UnkStruct_80052C6C_1 D_801CEA6C;
+extern f32 D_800D4958;
 extern f32 D_800D495C;
+extern f32 D_800D49E8;
 
 void func_80098048(s32, s32); /* extern */
 f32 func_8004D30C(f32, f32);
@@ -146,7 +148,7 @@ s32 func_80055270(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
 s32 func_80055C6C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
 void func_800534AC(UnkStruct_80052C6C_2*, f32*, f32*, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32,
                    f32); /* extern */
-
+void func_80052BB8(UnkStruct_80052E90_arg1_s* arg0);
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80051EC0.s")
 
 void func_80052480(s32 arg0, struct UnkStruct_80052480* arg1) {
@@ -298,7 +300,27 @@ void func_80052A20(UnkStruct_80052C6C_2* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80052BB8.s")
+void func_80052BB8(UnkStruct_80052E90_arg1_s* arg0) {
+    func_80052A20(&arg0->unk264);
+    func_80052A20(&arg0->unk240);
+    func_80052A20(&arg0->unk21C);
+    func_80052A20(&arg0->unkFC);
+    func_80052A20(&arg0->unk1F8);
+    func_80052A20(&arg0->unkD8);
+    func_80052A20(&arg0->unk168);
+    func_80052A20(&arg0->unk1D4);
+    func_80052A20(&arg0->unk144);
+    func_80052A20(&arg0->unk1B0);
+    func_80052A20(&arg0->unk120);
+    func_80052A20(&arg0->unk18C);
+    func_80052A20(&arg0->unk48);
+    func_80052A20(&arg0->unkB4);
+    func_80052A20(&arg0->unk24);
+    func_80052A20(&arg0->unk90);
+    func_80052A20(&arg0->unk0);
+    func_80052A20(&arg0->unk6C);
+}
+
 void func_80052C6C(UnkStruct_80192690* arg0, UnkStruct_80052C6C_1* arg1, UnkStruct_80052C6C_2* arg2) {
     f32 temp_fv0;
     f32 temp_fa0;
@@ -919,11 +941,231 @@ s32 func_80055C6C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
     return arg3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80056670.s")
+s32 func_80056670(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3) {
+    UnkStruct_80192690* temp_s1;
+    UnkStruct_802238DC* temp_s2;
+    f32 temp_fv1;
+    f32 diffX;
+    f32 diffY;
+    f32 diffZ;
+    f32 sp31C;
+    f32 sp318;
+    f32 sp314;
+    UnkStruct_80052E90_arg1_s sp8C;
+
+    if ((arg3 < 0xE) || (arg3 >= 0x2F)) {
+        return func_80052E90(arg0, arg1, arg2, arg3);
+    }
+    temp_s2 = D_802238DC[arg2];
+    if (arg3 >= temp_s2->unk0) {
+        arg3 = temp_s2->unk0 - 1;
+    }
+    temp_s1 = &D_80192690[arg0];
+    func_80052C6C(temp_s1, &temp_s2->unk4[temp_s2->unk4C[arg3]], &arg1->unk264);
+    func_80052C6C(temp_s1, &temp_s2->unk4[temp_s2->unk48[arg3]], &arg1->unk240);
+    func_80052C6C(temp_s1, &temp_s2->unk4[temp_s2->unk44[arg3]], &arg1->unk21C);
+    func_80052C6C(temp_s1, &temp_s2->unk4[temp_s2->unk28[arg3]], &arg1->unk120);
+    func_80052C6C(temp_s1, &temp_s2->unk4[temp_s2->unk34[arg3]], &arg1->unk18C);
+    func_80052C6C(temp_s1, &temp_s2->unk4[temp_s2->unk30[arg3]], &arg1->unk168);
+    func_80052C6C(temp_s1, &temp_s2->unk4[temp_s2->unk3C[arg3]], &arg1->unk1D4);
+    temp_fv1 = temp_s1->unk16B8 * D_800D4958;
+    sp31C = temp_s1->unk84 * temp_fv1;
+    sp318 = temp_s1->unk88 * temp_fv1;
+    sp314 = temp_s1->unk8C * temp_fv1;
+    diffX = arg1->unk168.unk0.x - temp_s1->unk44.x;
+    diffY = arg1->unk168.unk0.y - temp_s1->unk44.y;
+    diffZ = arg1->unk168.unk0.z - temp_s1->unk44.z;
+
+    temp_fv1 =
+        (temp_s1->unk16BC - 1.0f) * ((diffX * temp_s1->unk78) + (diffY * temp_s1->unk7C) + (diffZ * temp_s1->unk80));
+
+    diffX =
+        (arg1->unk144.unk0.x = temp_s1->unk44.x + diffX + (temp_fv1 * temp_s1->unk78) + sp31C) - arg1->unk120.unk0.x;
+    diffY =
+        (arg1->unk144.unk0.y = temp_s1->unk44.y + diffY + (temp_fv1 * temp_s1->unk7C) + sp318) - arg1->unk120.unk0.y;
+    diffZ =
+        (arg1->unk144.unk0.z = temp_s1->unk44.z + diffZ + (temp_fv1 * temp_s1->unk80) + sp314) - arg1->unk120.unk0.z;
+
+    temp_fv1 = SQ(diffX) + SQ(diffY) + SQ(diffZ);
+    if (temp_fv1 > 361.00007600000407) {
+        temp_fv1 = 19.000002000000002 / sqrtf(temp_fv1);
+        arg1->unk144.unk0.x = arg1->unk120.unk0.x + (temp_fv1 * diffX);
+        arg1->unk144.unk0.y = arg1->unk120.unk0.y + (temp_fv1 * diffY);
+        arg1->unk144.unk0.z = arg1->unk120.unk0.z + (temp_fv1 * diffZ);
+    }
+    diffX = arg1->unk1D4.unk0.x - temp_s1->unk44.x;
+    diffY = arg1->unk1D4.unk0.y - temp_s1->unk44.y;
+    diffZ = arg1->unk1D4.unk0.z - temp_s1->unk44.z;
+    temp_fv1 =
+        (temp_s1->unk16BC - 1.0f) * ((diffX * temp_s1->unk78) + (diffY * temp_s1->unk7C) + (diffZ * temp_s1->unk80));
+    diffX =
+        (arg1->unk1B0.unk0.x = temp_s1->unk44.x + diffX + (temp_fv1 * temp_s1->unk78) + sp31C) - arg1->unk18C.unk0.x;
+    diffY =
+        (arg1->unk1B0.unk0.y = temp_s1->unk44.y + diffY + (temp_fv1 * temp_s1->unk7C) + sp318) - arg1->unk18C.unk0.y;
+    diffZ =
+        (arg1->unk1B0.unk0.z = temp_s1->unk44.z + diffZ + (temp_fv1 * temp_s1->unk80) + sp314) - arg1->unk18C.unk0.z;
+
+    temp_fv1 = SQ(diffX) + SQ(diffY) + SQ(diffZ);
+    if ((f64) temp_fv1 > 361.00007600000407) {
+        temp_fv1 = (f32) (19.000002000000002 / (f64) sqrtf(temp_fv1));
+        arg1->unk1B0.unk0.x = arg1->unk18C.unk0.x + (temp_fv1 * diffX);
+        arg1->unk1B0.unk0.y = arg1->unk18C.unk0.y + (temp_fv1 * diffY);
+        arg1->unk1B0.unk0.z = arg1->unk18C.unk0.z + (temp_fv1 * diffZ);
+    }
+    sp31C = (((arg1->unk144.unk0.x - arg1->unk168.unk0.x) + arg1->unk1B0.unk0.x) - arg1->unk1D4.unk0.x) * 0.5f;
+    sp318 = (((arg1->unk144.unk0.y - arg1->unk168.unk0.y) + arg1->unk1B0.unk0.y) - arg1->unk1D4.unk0.y) * 0.5f;
+    sp314 = (((arg1->unk144.unk0.z - arg1->unk168.unk0.z) + arg1->unk1B0.unk0.z) - arg1->unk1D4.unk0.z) * 0.5f;
+    arg1->unk168.unk0.x = arg1->unk168.unk0.x + sp31C;
+    arg1->unk168.unk0.y = arg1->unk168.unk0.y + sp318;
+    arg1->unk168.unk0.z = arg1->unk168.unk0.z + sp314;
+    arg1->unk1D4.unk0.x = arg1->unk1D4.unk0.x + sp31C;
+    arg1->unk1D4.unk0.y = arg1->unk1D4.unk0.y + sp318;
+    arg1->unk1D4.unk0.z = arg1->unk1D4.unk0.z + sp314;
+    func_80052C6C(temp_s1, &temp_s2->unk4[temp_s2->unk2C[arg3]], &arg1->unk144);
+    func_80052C6C(temp_s1, &temp_s2->unk4[temp_s2->unk38[arg3]], &arg1->unk1B0);
+    func_800534AC(&arg1->unk144, &arg1->unk144.unk0.y, &arg1->unk144.unk0.z, arg1->unk168.unk0.x, arg1->unk168.unk0.y,
+                  arg1->unk168.unk0.z, arg1->unk120.unk0.x, arg1->unk120.unk0.y, arg1->unk120.unk0.z, 72.98288f,
+                  109.34885f, -arg1->unk168.unk14.x, -arg1->unk168.unk14.y, -arg1->unk168.unk14.z);
+    func_800534AC(&arg1->unk1B0, &arg1->unk1B0.unk0.y, &arg1->unk1B0.unk0.z, arg1->unk1D4.unk0.x, arg1->unk1D4.unk0.y,
+                  arg1->unk1D4.unk0.z, arg1->unk18C.unk0.x, arg1->unk18C.unk0.y, arg1->unk18C.unk0.z, 72.98288f,
+                  109.34885f, -arg1->unk1D4.unk14.x, -arg1->unk1D4.unk14.y, -arg1->unk1D4.unk14.z);
+    arg1->unk168.unkC.x = arg1->unk144.unk0.x - arg1->unk168.unk0.x;
+    arg1->unk168.unkC.y = arg1->unk144.unk0.y - arg1->unk168.unk0.y;
+    arg1->unk168.unkC.z = arg1->unk144.unk0.z - arg1->unk168.unk0.z;
+    arg1->unk144.unkC.x = arg1->unk120.unk0.x - arg1->unk144.unk0.x;
+    arg1->unk144.unkC.y = arg1->unk120.unk0.y - arg1->unk144.unk0.y;
+    arg1->unk144.unkC.z = arg1->unk120.unk0.z - arg1->unk144.unk0.z;
+    arg1->unk1D4.unkC.x = arg1->unk1B0.unk0.x - arg1->unk1D4.unk0.x;
+    arg1->unk1D4.unkC.y = arg1->unk1B0.unk0.y - arg1->unk1D4.unk0.y;
+    arg1->unk1D4.unkC.z = arg1->unk1B0.unk0.z - arg1->unk1D4.unk0.z;
+    arg1->unk1B0.unkC.x = arg1->unk18C.unk0.x - arg1->unk1B0.unk0.x;
+    arg1->unk1B0.unkC.y = arg1->unk18C.unk0.y - arg1->unk1B0.unk0.y;
+    arg1->unk1B0.unkC.z = arg1->unk18C.unk0.z - arg1->unk1B0.unk0.z;
+    func_80052A20(&arg1->unk168);
+    func_80052A20(&arg1->unk144);
+    func_80052A20(&arg1->unk1D4);
+    func_80052A20(&arg1->unk1B0);
+    func_80052C6C(temp_s1, &temp_s2->unk4[temp_s2->unk40[arg3]], &arg1->unk1F8);
+    arg1->unk1F8.unk0.x += sp31C;
+    arg1->unk1F8.unk0.y += sp318;
+    arg1->unk1F8.unk0.z += sp314;
+    func_80053FBC(temp_s1, &temp_s2->unk4[temp_s2->unk24[arg3]], &arg1->unkFC);
+    arg1->unkFC.unk0.x = (f32) ((f64) arg1->unk1F8.unk0.x + (14.483002 * (f64) arg1->unk1F8.unkC.x));
+    arg1->unkFC.unk0.y = (f32) ((f64) arg1->unk1F8.unk0.y + (14.483002 * (f64) arg1->unk1F8.unkC.y));
+    arg1->unkFC.unk0.z = (f32) ((f64) arg1->unk1F8.unk0.z + (14.483002 * (f64) arg1->unk1F8.unkC.z));
+    func_80053FBC(temp_s1, &temp_s2->unk4[temp_s2->unk20[arg3]], &arg1->unkD8);
+    sp31C = arg1->unk1F8.unk0.x - arg1->unkD8.unk0.x;
+    sp318 = arg1->unk1F8.unk0.y - arg1->unkD8.unk0.y;
+    sp314 = arg1->unk1F8.unk0.z - arg1->unkD8.unk0.z;
+    arg1->unkD8.unk0.x = arg1->unk1F8.unk0.x;
+    arg1->unkD8.unk0.y = arg1->unk1F8.unk0.y;
+    arg1->unkD8.unk0.z = arg1->unk1F8.unk0.z;
+    func_80053FBC(temp_s1, &temp_s2->unk4[temp_s2->unk10[arg3]], &arg1->unk48);
+    arg1->unk48.unk0.x += sp31C;
+    arg1->unk48.unk0.y += sp318;
+    arg1->unk48.unk0.z += sp314;
+    func_80053FBC(temp_s1, &temp_s2->unk4[temp_s2->unk1C[arg3]], &arg1->unkB4);
+    arg1->unkB4.unk0.x += sp31C;
+    arg1->unkB4.unk0.y += sp318;
+    arg1->unkB4.unk0.z += sp314;
+    func_80053FBC(temp_s1, &temp_s2->unk4[temp_s2->unk8[arg3]], &arg1->unk0);
+    diffX = (arg1->unk0.unk0.x + sp31C) - temp_s1->unk44.x;
+    diffY = (arg1->unk0.unk0.y + sp318) - temp_s1->unk44.y;
+    diffZ = (arg1->unk0.unk0.z + sp314) - temp_s1->unk44.z;
+    temp_fv1 = ((temp_s1->unk16BC * 0.9f) - 0.9f) *
+               ((diffX * temp_s1->unk78) + (diffY * temp_s1->unk7C) + (diffZ * temp_s1->unk80));
+    arg1->unk0.unk0.x = temp_s1->unk44.x + diffX + (temp_fv1 * temp_s1->unk78);
+    arg1->unk0.unk0.y = temp_s1->unk44.y + diffY + (temp_fv1 * temp_s1->unk7C);
+    arg1->unk0.unk0.z = temp_s1->unk44.z + diffZ + (temp_fv1 * temp_s1->unk80);
+    func_80053FBC(temp_s1, &temp_s2->unk4[temp_s2->unk14[arg3]], &arg1->unk6C);
+    diffX = (arg1->unk6C.unk0.x + sp31C) - temp_s1->unk44.x;
+    diffY = (arg1->unk6C.unk0.y + sp318) - temp_s1->unk44.y;
+    diffZ = (arg1->unk6C.unk0.z + sp314) - temp_s1->unk44.z;
+    temp_fv1 = ((temp_s1->unk16BC * 0.9f) - 0.9f) *
+               ((diffX * temp_s1->unk78) + (diffY * temp_s1->unk7C) + (diffZ * temp_s1->unk80));
+    arg1->unk6C.unk0.x = temp_s1->unk44.x + diffX + (temp_fv1 * temp_s1->unk78);
+    arg1->unk6C.unk0.y = temp_s1->unk44.y + diffY + (temp_fv1 * temp_s1->unk7C);
+    arg1->unk6C.unk0.z = temp_s1->unk44.z + diffZ + (temp_fv1 * temp_s1->unk80);
+    func_80053FBC(temp_s1, &temp_s2->unk4[temp_s2->unkC[arg3]], &arg1->unk24);
+    func_80053FBC(temp_s1, &temp_s2->unk4[temp_s2->unk18[arg3]], &arg1->unk90);
+    func_800534AC(&arg1->unk24, &arg1->unk24.unk0.y, &arg1->unk24.unk0.z, arg1->unk48.unk0.x, arg1->unk48.unk0.y,
+                  arg1->unk48.unk0.z, arg1->unk0.unk0.x, arg1->unk0.unk0.y, arg1->unk0.unk0.z, 298.01123f, 355.76913f,
+                  arg1->unk48.unk14.x, arg1->unk48.unk14.y, arg1->unk48.unk14.z);
+    func_800534AC(&arg1->unk90, &arg1->unk90.unk0.y, &arg1->unk90.unk0.z, arg1->unkB4.unk0.x, arg1->unkB4.unk0.y,
+                  arg1->unkB4.unk0.z, arg1->unk6C.unk0.x, arg1->unk6C.unk0.y, arg1->unk6C.unk0.z, 298.01123f,
+                  355.76913f, arg1->unkB4.unk14.x, arg1->unkB4.unk14.y, arg1->unkB4.unk14.z);
+    arg1->unk48.unkC.x = arg1->unk24.unk0.x - arg1->unk48.unk0.x;
+    arg1->unk48.unkC.y = arg1->unk24.unk0.y - arg1->unk48.unk0.y;
+    arg1->unk48.unkC.z = arg1->unk24.unk0.z - arg1->unk48.unk0.z;
+    arg1->unkB4.unkC.x = arg1->unk90.unk0.x - arg1->unkB4.unk0.x;
+    arg1->unkB4.unkC.y = arg1->unk90.unk0.y - arg1->unkB4.unk0.y;
+    arg1->unkB4.unkC.z = arg1->unk90.unk0.z - arg1->unkB4.unk0.z;
+    arg1->unk24.unkC.x = arg1->unk0.unk0.x - arg1->unk24.unk0.x;
+    arg1->unk24.unkC.y = arg1->unk0.unk0.y - arg1->unk24.unk0.y;
+    arg1->unk24.unkC.z = arg1->unk0.unk0.z - arg1->unk24.unk0.z;
+    arg1->unk90.unkC.x = arg1->unk6C.unk0.x - arg1->unk90.unk0.x;
+    arg1->unk90.unkC.y = arg1->unk6C.unk0.y - arg1->unk90.unk0.y;
+    arg1->unk90.unkC.z = arg1->unk6C.unk0.z - arg1->unk90.unk0.z;
+    func_80052A20(&arg1->unk48);
+    func_80052A20(&arg1->unkB4);
+    func_80052A20(&arg1->unk24);
+    func_80052A20(&arg1->unk90);
+    if (arg3 < 0x17) {
+        arg3 = func_80052E90(arg0, &sp8C, arg2, arg3);
+        func_80053A5C(arg1, (f32) (arg3 - 0xD) / 10.0f, &sp8C, arg1);
+    } else if (arg3 >= 0x26) {
+        arg3 = func_80052E90(arg0, &sp8C, arg2, arg3);
+        func_80053A5C(arg1, (f32) (arg3 - 0x25) / 10.0f, arg1, &sp8C);
+    } else {
+        arg3++;
+        if (arg3 >= temp_s2->unk0) {
+            arg3 = -1;
+        }
+    }
+    return arg3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_800574E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_8005790C.s")
+
+void func_8005790C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
+    UnkStruct_80192690* temp_s0;
+    f32 temp_f14;
+    f32 temp_f20;
+    s32 sp2C0;
+    s32 sp2BC;
+    f32 temp_f2;
+    UnkStruct_80052E90_arg1_s sp30;
+
+    temp_s0 = &D_80192690[arg0];
+    if (temp_s0->unk16B8 < 0) {
+        sp2C0 = 7;
+        temp_f20 = temp_s0->unk16B8 * -1.5f;
+    } else {
+        sp2C0 = 6;
+        temp_f20 = temp_s0->unk16B8 * 1.5f;
+    }
+    if (temp_f20 > 1.0f) {
+        temp_f20 = 1.0f;
+    }
+    func_80052E90(arg0, arg1, 0, 5);
+    func_80052E90(arg0, &sp30, 0, sp2C0);
+    func_80053A5C(arg1, temp_f20, arg1, &sp30);
+    sp2BC = SysUtils_Round((f32) temp_s0->unkB60 * D_800D49E8) + 0x400;
+    temp_f14 = SQ(temp_s0->unk6C) + SQ(temp_s0->unk74);
+    temp_f20 = SQ(temp_s0->unk84) + SQ(temp_s0->unk8C);
+    if ((temp_f14 != 0.0f) && (temp_f20 != 0.0f)) {
+        temp_f14 = (SIN(sp2BC) / sqrtf(temp_f14));
+        temp_f20 = COS(sp2BC) / sqrtf(temp_f20);
+        arg1->unkFC.unkC.x = (temp_s0->unk6C * temp_f14) + (temp_f20 * temp_s0->unk84);
+        arg1->unkFC.unkC.y = 0;
+        arg1->unkFC.unkC.z = (temp_s0->unk74 * temp_f14) + (temp_f20 * temp_s0->unk8C);
+        arg1->unkFC.unk14.x = 0;
+        arg1->unkFC.unk14.y = 1.0f;
+        arg1->unkFC.unk14.z = 0;
+        
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80057B24.s")
 

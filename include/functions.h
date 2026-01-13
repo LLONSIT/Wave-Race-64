@@ -225,4 +225,5 @@ Gfx* func_800933C4(Gfx*);
 void func_801FC4D4(Gfx**);        
 void func_801EBFE4(void);
 void func_8004DAF0(void*);
+s32 SysUtils_Round(f32 x);
 #endif /*FUNCTIONS_H*/
