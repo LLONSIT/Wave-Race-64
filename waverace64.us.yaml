@@ -75,7 +75,7 @@ segments:
       - [0x24B00, c, game/code_24B00]
       - [0x2C670, c, game/code_2C670]
       - [0x2FB10, c, game/code_2FB10]
-      - [0x34D50, c, game/wr64_print]
+      - [0x34D50, c, game/wr64_unused_print]
       - [0x355D0, c, game/core/wr64_save]
       - [0x383C0, c, game/code_383C0]
       - [0x39F00, c, game/code_39F00]
@@ -124,11 +124,11 @@ segments:
       - [0x80F70, c, libultra/io/vimgr] # OK
       - [0x812D0, c, libultra/io/viblack] # OK
       - [0x81340, c, libultra/io/vigetcurrframebuf]  # OK
-      - [0x81380, c, libultra/io/pimgr]
-      - [0x81500, c, libultra/os/setthreadpri]
-      - [0x815E0, c, libultra/os/initialize]
+      - [0x81380, c, libultra/io/pimgr] # OK
+      - [0x81500, c, libultra/os/setthreadpri] # OK
+      - [0x815E0, c, libultra/os/initialize] # OK
       - [0x81810, hasm, libultra/sqrtf]
-      - [0x81820, c, libultra/controller]
+      - [0x81820, c, libultra/io/controller] # OK
       - [0x81B80, c, libultra/gu/ortho] # OK
       - [0x81D40, c, libultra/gu/translate] # OK
       - [0x81DE0, c, libultra/gu/lookatref] # OK
@@ -152,12 +152,12 @@ segments:
       - [0x84C80, hasm, libultra/invalicache]
       - [0x84D00, hasm, libultra/bzero]
       - [0x84DA0, c, libultra/os/osAiSetFrequency] # OK 
-      - [0x84F00, c, libultra/os/audio/bnkf]
+      - [0x84F00, c, libultra/audio/bnkf] # OK
       - [0x85150, c, libultra/os/osAiGetLength] # OK
       - [0x85160, c, libultra/os/osAiSetNextBuffer] # OK
       - [0x85210, hasm, libultra/probetlb] # OK
       - [0x852D0, hasm, libultra/interrupt] # OK
-      - [0x85310, c, libultra/thread]
+      - [0x85310, c, libultra/os/thread]
       - [0x85350, hasm, libultra/exceptasm] # OK 
       - [0x85BC0, asm, libultra/osGetCount] # OK
       - [0x85BD0, c, libultra/os/timerintr] # OK
@@ -189,26 +189,27 @@ segments:
       - [0x87300, c, libultra/gu/mtxutil] # OK
       - [0x87570, c, libultra/io/conteepread] # OK
       - [0x87870, c, libultra/io/conteepwrite] # OK
-      - [0x87D50, c, libultra/io/pfs] # Almost ok
+      - [0x87D50, c, libultra/io/pfs] # OK
       - [0x889A0, c, libultra/io/pfschecker] # OK
       - [0x89410, c, libultra/io/contramread] # OK
-      - [0x897A0, c, libultra/io/contramwrite]
-      - [0x89B30, asm, xprintf]
-      - [0x8ACC0, asm, strchr]
-      - [0x8AD60, c, libultra/os/osJamMesg]
-      - [0x8AEB0, c, libultra/os/osPiGetCmdQueue]
-      - [0x8AEE0, asm, osAiSetNextBuffer]
-      - [0x8AF10, c, libultra/unkSeg_8AF10]
-      - [0x8B390, c, libultra/syncputchars]
-      - [0x8B4C0, c, libultra/unkLibultraSeg_8B4C0]
-      - [0x8B520, c, libultra/os/osDestroyThread]
+      - [0x897A0, c, libultra/io/contramwrite] # OK
+      - [0x89B30, c, libultra/libc/xprintf] # OK
+      - [0x8ACC0, c, libultra/strchr] # OK
+      - [0x8AD60, c, libultra/os/osJamMesg] # OK
+      - [0x8AEB0, c, libultra/os/osPiGetCmdQueue] # OK
+      - [0x8AEE0, c, libultra/io/ai] # OK
+      - [0x8AF10, c, libultra/os/kdebugserver] # OK
+      - [0x8B390, c, libultra/os/syncputchars] # OK
+      - [0x8B4C0, hasm, libultra/setinmask]
+      - [0x8B520, c, libultra/os/osDestroyThread] # OK
       - [0x8B620, hasm, libultra/setcompare]
-      - [0x8B630, c, libultra/io/si]
-      - [0x8B660, c, libultra/crc]
-      - [0x8B7E0, c, libultra/os/libultra_Segment] # mix Litob and Ltob
+      - [0x8B630, c, libultra/io/si] # OK
+      - [0x8B660, c, libultra/io/crc] # OK
+      - [0x8B7E0, c, libultra/libc/xlitob] # OK
+      - [0x8BAE0, c, libultra/libc/xldtob]
       - [0x8C8B0, hasm, libultra/getcause]
-      - [0x8C8C0, c, libultra/os/atomic]
-      - [0x8C920, c, libultra/os/libc/ldiv]
+      - [0x8C8C0, c, libultra/os/atomic] # OK
+      - [0x8C920, c, libultra/ldiv] # OK
       
       # GFX MICROCODE
       - [0x8CAB0, textbin, rspboot] # TODO: Put these on a separated segment
@@ -228,17 +229,23 @@ segments:
       - [0xA2EB0, .data, audio/audio_thread]
       - [0xA2F70, data]
       - [0xA3790, .data, libultra/io/vimgr]
-      - [0xA37B0, data]
+      - [0xA37B0, .data, libultra/io/pimgr]
+      - [0xA37D0, .data, libultra/os/initialize]
+      - [0xA37E0, .data, libultra/io/controller]
       - [0xA37F0, .data, libultra/os/osAiSetNextBuffer]
-      - [0xA3800, data]
+      - [0xA3800, .data, libultra/os/thread]
+      - [0xA3820, data]
       - [0xA3840, .data, libultra/os/timerintr]
       - [0xA3850, .data, libultra/io/vi]
       - [0xA38C0, .data, libultra/io/siacs]
       - [0xA38D0, .data, libultra/io/piacs]
-      - [0xA38E0, data]
+      - [0xA38E0, .data, libultra/libc/xprintf]
+      - [0xA3930, .data, libultra/os/kdebugserver]
+      - [0xA3940, .data, libultra/os/syncputchars]
+      - [0xA3950, .data, libultra/vimodes]
 
       # GAME RODATA
-      - [0xA39F0, rodata] # Rodata from Libultra or some library?
+      - [0xA39F0, .data, libultra/libc/xlitob] 
       - [0xA3A20, .rodata, game/sys_utils]
       - [0xA3A70, .rodata, game/code_5480]
       - [0xA3A80, .rodata, game/water_69D0]
@@ -287,8 +294,9 @@ segments:
       - [0xA6DD0, .rodata, libultra/gu/lookatref]
       - [0xA6DE0, .rodata, libultra/gu/lookathil]
       - [0xA6E00, rodata]
-      - [0xA6E50, rodata]
+      - [0xA6E50, .rodata, libultra/libc/xprintf]
       - [0xA6F50, rodata]
+      - [0xA6FD0, .rodata, libultra/libc/xldtob]
 
       - [0xA7030, data] # looks like audio data
 
@@ -297,15 +305,21 @@ segments:
 
       # Main bss
       - { type: bss, start: 0xA95D0, vram: 0x800EEDD0, name: bss1 }
+
+      # Libultra bss
       - { type: .bss, start: 0xA95D0, vram: 0x801D86B0, name: libultra/os/sptask }
       - { type: .bss, start: 0xA95D0, vram: 0x801D86F0, name: libultra/os/seteventmesg}
       - { type: .bss, start: 0xA95D0, vram: 0x801D8770, name: libultra/io/vimgr}
-      - { type: bss, start: 0xA95D0, vram: 0x801D9980, name: bss2 }
+      - { type: .bss, start: 0xA95D0, vram: 0x801D9980, name: libultra/io/pimgr }
+      - { type: .bss, start: 0xA95D0, vram: 0x801DAB50, name: libultra/os/initialize }
+      - { type: .bss, start: 0xA95D0, vram: 0x801DAB60, name: libultra/libultra_bss }
+      - { type: .bss, start: 0xA95D0, vram: 0x801DABA0, name: libultra/io/controller }
+      - { type: .bss, start: 0xA95D0, vram: 0x801DABF0, name: libultra/io/pfsisplug }
       - { type: .bss, start: 0xA95D0, vram: 0x801DAC30, name: libultra/os/timerintr }
       - { type: .bss, start: 0xA95D0, vram: 0x801DAC70, name: libultra/io/siacs }
       - { type: .bss, start: 0xA95D0, vram: 0x801DAC90, name: libultra/io/piacs }
       - { type: .bss, start: 0xA95D0, vram: 0x801DACB0, name: libultra/io/conteepread }
-      - { type: bss, start: 0xA95D0, vram: 0x801DACF0, name: bss3 }
+      - { type: .bss, start: 0xA95D0, vram: 0x801DACF0, name: libultra/os/kdebugserver }
       
 
   - name: codeseg # This segment is loaded into memory on func_80098190

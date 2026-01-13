@@ -1,3 +1,16 @@
-#include "common.h"
+#include "PR/os_internal.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/libultra/os/atomic/__osAtomicDec.s")
+int __osAtomicDec(unsigned int* p) {
+    u32 mask;
+    int result;
+
+    mask = __osDisableInt();
+    if (*p) {
+        (*p)--;
+        result = 1;
+    } else {
+        result = 0;
+    }
+    __osRestoreInt(mask);
+    return result;
+}

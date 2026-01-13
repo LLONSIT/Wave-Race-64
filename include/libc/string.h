@@ -6,7 +6,7 @@
 
 #ifndef _SIZE_T_DEF
 #define _SIZE_T_DEF
-typedef unsigned size_t;
+//typedef unsigned size_t;
 #endif
 
 #include "memory.h"

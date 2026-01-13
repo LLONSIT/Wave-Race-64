@@ -156,16 +156,18 @@ ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
 
 ### Optimisation Overrides
 $(BUILD_DIR)/src/libultra/os/%.c.o: OPT_FLAGS := -O1
-$(BUILD_DIR)/src/libultra/os/audio/%.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/os/libc/%.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/audio/%.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/gu/%.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/src/libultra/gu/lookathil.c.o: OPT_FLAGS := -O2
 $(BUILD_DIR)/src/libultra/os/osVirtualtoPhysical.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/src/libultra/io/%.c.o: OPT_FLAGS := -O1
-
+$(BUILD_DIR)/src/libultra/libc/%.c.o: OPT_FLAGS := -O1
 # File exceptions
 $(BUILD_DIR)/src/libultra/libc/sprintf.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/src/libultra/libc/sprintf.c.o: MIPSISET := -mips2
+
+$(BUILD_DIR)/libultra/libc/xprintf.c.o: OPTFLAGS := -O1
+$(BUILD_DIR)/libultra/libc/xprintf.c.o: MIPSISET := -mips2
 
 $(BUILD_DIR)/src/libultra/io/pfsinit.c.o: OPT_FLAGS := -O2
 $(BUILD_DIR)/src/libultra/io/pfsinit.c.o: MIPSISET := -mips1
@@ -205,6 +207,10 @@ $(BUILD_DIR)/src/libultra/io/contramread.c.o: MIPSISET := -mips1
 
 $(BUILD_DIR)/src/libultra/io/contramwrite.c.o: OPT_FLAGS := -O2
 $(BUILD_DIR)/src/libultra/io/contramwrite.c.o: MIPSISET := -mips1
+
+$(BUILD_DIR)/src/libultra/io/controller.c.o: OPT_FLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/controller.c.o: MIPSISET := -mips1
+
 
 $(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll.o: MIPSISET := -mips3 -o32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll%.o: MIPSISET := -mips3 -o32
