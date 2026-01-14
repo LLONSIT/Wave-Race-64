@@ -31,9 +31,6 @@ void __osViSwapContext() {
         s1->unk2c = viMode->fldRegs[field].yScale;
     }
 
-#ifdef VERSION_CN
-    vStart = viMode->fldRegs[field].vStart - (__additional_scanline << 0x10) + __additional_scanline;
-#endif
     hStart = viMode->comRegs.hStart;
 
     if (s1->unk00 & 0x20) {
@@ -54,11 +51,7 @@ void __osViSwapContext() {
     IO_WRITE(VI_H_SYNC_REG, viMode->comRegs.hSync);
     IO_WRITE(VI_LEAP_REG, viMode->comRegs.leap);
     IO_WRITE(VI_H_START_REG, hStart);
-#ifdef VERSION_CN
-    IO_WRITE(VI_V_START_REG, vStart);
-#else
     IO_WRITE(VI_V_START_REG, viMode->fldRegs[field].vStart);
-#endif
     IO_WRITE(VI_V_BURST_REG, viMode->fldRegs[field].vBurst);
     IO_WRITE(VI_INTR_REG, viMode->fldRegs[field].vIntr);
     IO_WRITE(VI_X_SCALE_REG, s1->unk20);

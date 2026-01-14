@@ -1125,8 +1125,58 @@ s32 func_80056670(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
     return arg3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_800574E4.s")
+void func_800574E4(UnkStruct_80052E90_arg1_s* arg0, UnkStruct_80052C6C_2* arg1, UnkStruct_80052C6C_1* arg2,
+                   UnkStruct_80052C6C_1* arg3, f32 arg4) {
+    UnkStruct_80052C6C_2 sp4C;
+    UnkStruct_80052C6C_2 sp28;
+    f32 temp_f0;
+    f32 temp_f12;
+    f32 temp_f2;
 
+    temp_f0 = arg2->unk0 * 0.1f;
+    temp_f2 = arg2->unk2 * 0.1f;
+    temp_f12 = arg2->unk4 * 0.1f;
+    sp4C.unk0.x = arg0->unk24.unk14.z + (arg0->unk6C.unk14.x * temp_f0) + (arg0->unk6C.unkC.x * temp_f2) +
+                  (arg0->unk6C.unk0.x * temp_f12);
+    sp4C.unk0.y = arg0->unk48.unk0.x + (arg0->unk6C.unk14.y * temp_f0) + (arg0->unk6C.unkC.y * temp_f2) +
+                  (arg0->unk6C.unk0.y * temp_f12);
+    sp4C.unk0.z = arg0->unk48.unk0.y + (arg0->unk6C.unk14.z * temp_f0) + (arg0->unk6C.unkC.z * temp_f2) +
+                  (arg0->unk6C.unk0.z * temp_f12);
+    temp_f0 = (f32) arg2->unk6 * 0.00787402f;
+    temp_f2 = (f32) arg2->unk7 * 0.00787402f;
+    temp_f12 = (f32) arg2->unk8 * 0.00787402f;
+    sp4C.unkC.x = (arg0->unk6C.unk14.x * temp_f0) + (arg0->unk6C.unkC.x * temp_f2) + (arg0->unk6C.unk0.x * temp_f12);
+    sp4C.unkC.y = (arg0->unk6C.unk14.y * temp_f0) + (arg0->unk6C.unkC.y * temp_f2) + (arg0->unk6C.unk0.y * temp_f12);
+    sp4C.unkC.z = (arg0->unk6C.unk14.z * temp_f0) + (arg0->unk6C.unkC.z * temp_f2) + (arg0->unk6C.unk0.z * temp_f12);
+    temp_f0 = (f32) arg2->unk9 * 0.00787402f;
+    temp_f2 = (f32) arg2->unkA * 0.00787402f;
+    temp_f12 = (f32) arg2->unkB * 0.00787402f;
+    sp4C.unk14.x = (arg0->unk6C.unk14.x * temp_f0) + (arg0->unk6C.unkC.x * temp_f2) + (arg0->unk6C.unk0.x * temp_f12);
+    sp4C.unk14.y = (arg0->unk6C.unk14.y * temp_f0) + (arg0->unk6C.unkC.y * temp_f2) + (arg0->unk6C.unk0.y * temp_f12);
+    sp4C.unk14.z = (arg0->unk6C.unk14.z * temp_f0) + (arg0->unk6C.unkC.z * temp_f2) + (arg0->unk6C.unk0.z * temp_f12);
+    temp_f0 = (f32) arg3->unk0 * 0.1f;
+    temp_f2 = (f32) arg3->unk2 * 0.1f;
+    temp_f12 = (f32) arg3->unk4 * 0.1f;
+    sp28.unk0.x = arg0->unk24.unk14.z + (arg0->unk6C.unk14.x * temp_f0) + (arg0->unk6C.unkC.x * temp_f2) +
+                  (arg0->unk6C.unk0.x * temp_f12);
+    sp28.unk0.y = arg0->unk48.unk0.x + (arg0->unk6C.unk14.y * temp_f0) + (arg0->unk6C.unkC.y * temp_f2) +
+                  (arg0->unk6C.unk0.y * temp_f12);
+    sp28.unk0.z = arg0->unk48.unk0.y + (arg0->unk6C.unk14.z * temp_f0) + (arg0->unk6C.unkC.z * temp_f2) +
+                  (arg0->unk6C.unk0.z * temp_f12);
+    temp_f0 = (f32) arg3->unk6 * 0.00787402f;
+    temp_f2 = (f32) arg3->unk7 * 0.00787402f;
+    temp_f12 = (f32) arg3->unk8 * 0.00787402f;
+    sp28.unkC.x = (arg0->unk6C.unk14.x * temp_f0) + (arg0->unk6C.unkC.x * temp_f2) + (arg0->unk6C.unk0.x * temp_f12);
+    sp28.unkC.y = (arg0->unk6C.unk14.y * temp_f0) + (arg0->unk6C.unkC.y * temp_f2) + (arg0->unk6C.unk0.y * temp_f12);
+    sp28.unkC.z = (arg0->unk6C.unk14.z * temp_f0) + (arg0->unk6C.unkC.z * temp_f2) + (arg0->unk6C.unk0.z * temp_f12);
+    temp_f0 = (f32) arg3->unk9 * 0.00787402f;
+    temp_f2 = (f32) arg3->unkA * 0.00787402f;
+    temp_f12 = (f32) arg3->unkB * 0.00787402f;
+    sp28.unk14.x = (arg0->unk6C.unk14.x * temp_f0) + (arg0->unk6C.unkC.x * temp_f2) + (arg0->unk6C.unk0.x * temp_f12);
+    sp28.unk14.y = (arg0->unk6C.unk14.y * temp_f0) + (arg0->unk6C.unkC.y * temp_f2) + (arg0->unk6C.unk0.y * temp_f12);
+    sp28.unk14.z = (arg0->unk6C.unk14.z * temp_f0) + (arg0->unk6C.unkC.z * temp_f2) + (arg0->unk6C.unk0.z * temp_f12);
+    func_8005374C(arg1, arg4, (UnkStruct_80052C6C_2*) &sp4C, (UnkStruct_80052C6C_2*) &sp28);
+}
 
 void func_8005790C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
     UnkStruct_80192690* temp_s0;
@@ -1163,7 +1213,6 @@ void func_8005790C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
         arg1->unkFC.unk14.x = 0;
         arg1->unkFC.unk14.y = 1.0f;
         arg1->unkFC.unk14.z = 0;
-        
     }
 }
 

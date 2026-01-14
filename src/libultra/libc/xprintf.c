@@ -43,19 +43,12 @@ s32 _Printf(char* (*prout)(char*, const char*, size_t), char* dst, const char* f
     sp78.size = 0;
     while (true) {
         fmt_ptr = (fmt_type*) fmt;
-#if defined(VERSION_SH) || defined(VERSION_CN)
-        // new version: don't point fmt_ptr beyond NUL character
-        while ((c = *fmt_ptr) != 0 && c != '%') {
-            fmt_ptr++;
-        }
-#else
         while ((c = *fmt_ptr++) > 0) {
             if (c == '%') {
                 fmt_ptr--;
                 break;
             }
         }
-#endif
         _PROUT(dst, fmt, fmt_ptr - (fmt_type*) fmt);
         if (c == 0) {
             return sp78.size;
