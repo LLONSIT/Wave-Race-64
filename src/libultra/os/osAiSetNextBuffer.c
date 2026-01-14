@@ -31,6 +31,10 @@ s32 osAiSetNextBuffer(void* buff, u32 len) {
         hdwrBugFlag = 0;
     }
 
+    if (__osAiDeviceBusy()) {
+        return -1;
+    }
+
     IO_WRITE(AI_DRAM_ADDR_REG, osVirtualToPhysical(bptr));
     IO_WRITE(AI_LEN_REG, len);
     return 0;

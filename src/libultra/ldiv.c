@@ -3,6 +3,7 @@
 
 // for some reason the order of the functions has been swapped
 
+#ifdef VERSION_CN
 ldiv_t ldiv(long num, long denom) {
     ldiv_t ret;
 
@@ -15,6 +16,7 @@ ldiv_t ldiv(long num, long denom) {
 
     return ret;
 }
+#endif
 
 lldiv_t lldiv(long long num, long long denom) {
     lldiv_t ret;
@@ -29,6 +31,7 @@ lldiv_t lldiv(long long num, long long denom) {
     return ret;
 }
 
+#ifndef VERSION_CN
 ldiv_t ldiv(long num, long denom) {
     ldiv_t ret;
 
@@ -41,3 +44,4 @@ ldiv_t ldiv(long num, long denom) {
 
     return ret;
 }
+#endif
