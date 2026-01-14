@@ -2,11 +2,7 @@
 #define _PRINTF_H_
 #include <stdarg.h>
 
-#ifdef VERSION_CN
-typedef char fmt_type;
-#else
 typedef u8 fmt_type;
-#endif
 
 typedef struct
 {

@@ -37,8 +37,6 @@ s32 osAiSetFrequency(u32 freq) {
 
     IO_WRITE(AI_DACRATE_REG, dacRate - 1);
     IO_WRITE(AI_BITRATE_REG, bitRate - 1);
-#ifndef VERSION_CN
     IO_WRITE(AI_CONTROL_REG, AI_CONTROL_DMA_ON);
-#endif
     return osViClock / (s32) dacRate;
 }

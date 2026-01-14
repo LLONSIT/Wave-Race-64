@@ -7,12 +7,6 @@
 
 u32 osSetTimer(OSTimer* timer, OSTime countdown, OSTime interval, OSMesgQueue* mq, OSMesg msg) {
     OSTime time;
-#ifdef VERSION_CN
-    OSTimer* next;
-    u32 count;
-    u32 remaining;
-    u32 prevInt;
-#endif
 
     timer->next = NULL;
     timer->prev = NULL;

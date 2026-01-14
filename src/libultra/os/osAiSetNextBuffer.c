@@ -19,33 +19,21 @@ s32 osAiSetNextBuffer(void* buff, u32 len) {
     static u8 hdwrBugFlag = 0;
     char* bptr;
 
-#ifdef VERSION_CN
-    if (__osAiDeviceBusy()) {
-        return -1;
-    }
-#endif
-
     bptr = buff;
 
     if (hdwrBugFlag != 0) {
         bptr -= 0x2000;
     }
 
-#ifdef VERSION_CN
-    if ((((uintptr_t) buff + len) & 0x1fff) == 0) {
-#else
     if ((((uintptr_t) buff + len) & 0x3fff) == 0x2000) {
-#endif
         hdwrBugFlag = 1;
     } else {
         hdwrBugFlag = 0;
     }
 
-#ifndef VERSION_CN
     if (__osAiDeviceBusy()) {
         return -1;
     }
-#endif
 
     IO_WRITE(AI_DRAM_ADDR_REG, osVirtualToPhysical(bptr));
     IO_WRITE(AI_LEN_REG, len);
