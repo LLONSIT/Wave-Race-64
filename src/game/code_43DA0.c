@@ -69,7 +69,8 @@ extern s16 D_800D9890;
 extern s32 D_800D9894;
 extern f32 D_801CB160;
 extern s32 D_800D9924[];
-extern f32 D_801C4170;
+extern UnkStruct_8008962C D_801C4170;
+extern UnkStruct_8008962C D_801C4188;
 extern u16 D_10102B0[];
 extern s32 D_800DA628[];
 extern RgbaColors D_800DA6A8[];
@@ -97,8 +98,8 @@ void func_800895A0(f64* arg0, f64* arg1, f32 arg2, f32 arg3) {
 }
 
 f32 func_8008962C(f32 arg0, f32 arg1, f32 arg2, UnkStruct_8008962C* arg3) {
-    Matrix spD0;
-    Matrix sp90;
+    MtxF spD0;
+    MtxF sp90;
     camera_unk_1* cam;
     f64 sp80;
     f64 sp78;
@@ -123,8 +124,8 @@ f32 func_8008962C(f32 arg0, f32 arg1, f32 arg2, UnkStruct_8008962C* arg3) {
         arg3->unk10 = 0.0f;
         arg3->unk14 = -1.0f;
     } else {
-        SysUtils_MtxToMtxF(&gGfxPool->unkE008[D_80223930], spD0);
-        SysUtils_MtxToMtxF(&gGfxPool->unkE088[D_80223930], sp90);
+        SysUtils_MtxToMtxF(&gGfxPool->unkE008[D_80223930], &spD0);
+        SysUtils_MtxToMtxF(&gGfxPool->unkE088[D_80223930], &sp90);
         temp_fv0 = arg0;
         sp80 = COS(ANGLE_TO_CUSTOM_UNITS(arg1)) * temp_fv0;
         sp70 = SIN(ANGLE_TO_CUSTOM_UNITS(arg1)) * temp_fv0;
@@ -135,13 +136,13 @@ f32 func_8008962C(f32 arg0, f32 arg1, f32 arg2, UnkStruct_8008962C* arg3) {
         sp80 += cam->unk4C;
         sp70 += cam->unk54;
 
-        temp_fv0 = ((sp90[0][0] * sp80) + var_ft4 + (sp90[2][0] * sp70)) + sp90[3][0];
-        temp_fv1 = ((sp90[0][1] * sp80) + var_ft4 + (sp90[2][1] * sp70)) + sp90[3][1];
-        temp_fa0 = ((sp90[0][2] * sp80) + var_ft4 + (sp90[2][2] * sp70)) + sp90[3][2];
-        sp80 = ((spD0[0][0] * temp_fv0) + (spD0[1][0] * temp_fv1) + (spD0[2][0] * temp_fa0)) + spD0[3][0];
-        sp78 = ((spD0[0][1] * temp_fv0) + (spD0[1][1] * temp_fv1) + (spD0[2][1] * temp_fa0)) + spD0[3][1];
-        sp70 = ((spD0[0][2] * temp_fv0) + (spD0[1][2] * temp_fv1) + (spD0[2][2] * temp_fa0)) + spD0[3][2];
-        var_ft4 = ((spD0[0][3] * temp_fv0) + (spD0[1][3] * temp_fv1) + (spD0[2][3] * temp_fa0)) + spD0[3][3];
+        temp_fv0 = ((sp90.mf[0][0] * sp80) + var_ft4 + (sp90.mf[2][0] * sp70)) + sp90.mf[3][0];
+        temp_fv1 = ((sp90.mf[0][1] * sp80) + var_ft4 + (sp90.mf[2][1] * sp70)) + sp90.mf[3][1];
+        temp_fa0 = ((sp90.mf[0][2] * sp80) + var_ft4 + (sp90.mf[2][2] * sp70)) + sp90.mf[3][2];
+        sp80 = ((spD0.mf[0][0] * temp_fv0) + (spD0.mf[1][0] * temp_fv1) + (spD0.mf[2][0] * temp_fa0)) + spD0.mf[3][0];
+        sp78 = ((spD0.mf[0][1] * temp_fv0) + (spD0.mf[1][1] * temp_fv1) + (spD0.mf[2][1] * temp_fa0)) + spD0.mf[3][1];
+        sp70 = ((spD0.mf[0][2] * temp_fv0) + (spD0.mf[1][2] * temp_fv1) + (spD0.mf[2][2] * temp_fa0)) + spD0.mf[3][2];
+        var_ft4 = ((spD0.mf[0][3] * temp_fv0) + (spD0.mf[1][3] * temp_fv1) + (spD0.mf[2][3] * temp_fa0)) + spD0.mf[3][3];
         if ((var_ft4 < 0.01) && (var_ft4 > -0.01)) {
             if (var_ft4 >= 0.0) {
                 var_ft4 = 0.01;
@@ -159,8 +160,8 @@ f32 func_8008962C(f32 arg0, f32 arg1, f32 arg2, UnkStruct_8008962C* arg3) {
         if ((sp70 > 1000000000.0) || (sp70 < -1000000000.0)) {
             sp70 = 511.0;
         }
-        arg3->unkC = sp90[1][0] * arg2;
-        arg3->unk10 = sp90[1][1] * arg2;
+        arg3->unkC = sp90.mf[1][0] * arg2;
+        arg3->unk10 = sp90.mf[1][1] * arg2;
         arg3->unk0 = ((sp80 * 320.0 * 0.5) / var_ft4) + 160.0;
         arg3->unk4 = 239.0 - (((sp78 * 240.0 * 0.5) / var_ft4) + 120.0);
         arg3->unk8 = sp70 / var_ft4;
@@ -221,30 +222,30 @@ void func_80089E24(void) {
 }
 
 void func_80089F28(void) {
-    Matrix sp80;
-    Matrix sp40;
+    MtxF sp80;
+    MtxF sp40;
     char pad[0x20];
-    SysUtils_MtxToMtxF((MF*) &gGfxPool->unkE008[D_80223930], sp80);
-    SysUtils_MtxToMtxF((MF*) &gGfxPool->unkE088[D_80223930], sp40);
+    SysUtils_MtxToMtxF(&gGfxPool->unkE008[D_80223930], &sp80);
+    SysUtils_MtxToMtxF(&gGfxPool->unkE088[D_80223930], &sp40);
 
-    D_801C41A0.fwork[3] = sp40[1][0] * (D_800D9924[gCourseID] + 0x3C);
-    D_801C41A0.fwork[4] = sp40[1][1] * (D_800D9924[gCourseID] + 0x3C);
-    D_801C41A0.fwork[9] = sp40[1][0] * (D_800D9924[gCourseID] + 0x1E);
-    D_801C41A0.fwork[0xA] = sp40[1][1] * (D_800D9924[gCourseID] + 0x1E);
-    D_801C41A0.fwork[0xF] = sp40[1][0] * (D_800D9924[gCourseID] - 0xA);
-    D_801C41A0.fwork[0x10] = sp40[1][1] * (D_800D9924[gCourseID] - 0xA);
-    D_801C41A0.fwork[0x15] = sp40[1][0] * (D_800D9924[gCourseID] - 0x14);
-    D_801C41A0.fwork[0x16] = sp40[1][1] * (D_800D9924[gCourseID] - 0x14);
-    D_801C41A0.fwork[0x1B] = sp40[1][0] * (D_800D9924[gCourseID] - 0x28);
-    D_801C41A0.fwork[0x1C] = sp40[1][1] * (D_800D9924[gCourseID] - 0x28);
-    D_801C41A0.fwork[0x21] = sp40[1][0] * (D_800D9924[gCourseID] - 0x32);
-    D_801C41A0.fwork[0x22] = sp40[1][1] * (D_800D9924[gCourseID] - 0x32);
-    D_801C41A0.fwork[0x27] = sp40[1][0] * (D_800D9924[gCourseID] - 0x3C);
-    D_801C41A0.fwork[0x28] = sp40[1][1] * (D_800D9924[gCourseID] - 0x3C);
-    D_801C41A0.fwork[0x2D] = sp40[1][0] * (D_800D9924[gCourseID] - 0xF);
-    D_801C41A0.fwork[0x2E] = sp40[1][1] * (D_800D9924[gCourseID] - 0xF);
-    D_801C41A0.fwork[0x33] = sp40[1][0] * (D_800D9924[gCourseID] - 0x1E);
-    D_801C41A0.fwork[0x34] = sp40[1][1] * (D_800D9924[gCourseID] - 0x1E);
+    D_801C41A0.fwork[3] = sp40.mf[1][0] * (D_800D9924[gCourseID] + 0x3C);
+    D_801C41A0.fwork[4] = sp40.mf[1][1] * (D_800D9924[gCourseID] + 0x3C);
+    D_801C41A0.fwork[9] = sp40.mf[1][0] * (D_800D9924[gCourseID] + 0x1E);
+    D_801C41A0.fwork[0xA] = sp40.mf[1][1] * (D_800D9924[gCourseID] + 0x1E);
+    D_801C41A0.fwork[0xF] = sp40.mf[1][0] * (D_800D9924[gCourseID] - 0xA);
+    D_801C41A0.fwork[0x10] = sp40.mf[1][1] * (D_800D9924[gCourseID] - 0xA);
+    D_801C41A0.fwork[0x15] = sp40.mf[1][0] * (D_800D9924[gCourseID] - 0x14);
+    D_801C41A0.fwork[0x16] = sp40.mf[1][1] * (D_800D9924[gCourseID] - 0x14);
+    D_801C41A0.fwork[0x1B] = sp40.mf[1][0] * (D_800D9924[gCourseID] - 0x28);
+    D_801C41A0.fwork[0x1C] = sp40.mf[1][1] * (D_800D9924[gCourseID] - 0x28);
+    D_801C41A0.fwork[0x21] = sp40.mf[1][0] * (D_800D9924[gCourseID] - 0x32);
+    D_801C41A0.fwork[0x22] = sp40.mf[1][1] * (D_800D9924[gCourseID] - 0x32);
+    D_801C41A0.fwork[0x27] = sp40.mf[1][0] * (D_800D9924[gCourseID] - 0x3C);
+    D_801C41A0.fwork[0x28] = sp40.mf[1][1] * (D_800D9924[gCourseID] - 0x3C);
+    D_801C41A0.fwork[0x2D] = sp40.mf[1][0] * (D_800D9924[gCourseID] - 0xF);
+    D_801C41A0.fwork[0x2E] = sp40.mf[1][1] * (D_800D9924[gCourseID] - 0xF);
+    D_801C41A0.fwork[0x33] = sp40.mf[1][0] * (D_800D9924[gCourseID] - 0x1E);
+    D_801C41A0.fwork[0x34] = sp40.mf[1][1] * (D_800D9924[gCourseID] - 0x1E);
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008A0E0.s")

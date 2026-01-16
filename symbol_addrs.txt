@@ -11,7 +11,7 @@ gTaskOutputBuffer = 0x800EEDD0;
 gGfxPool = 0x801518B8;
 gOSYieldData = 0x80045800;
 SysMain_Thread = 0x80046DA0;
-
+sGfxTask = 0x80151940;
 //game_23E0
 SysUtils_Srand = 0x80047E44;
 SysUtils_Rand = 0x80047E50;
