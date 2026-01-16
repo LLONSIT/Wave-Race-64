@@ -93,7 +93,7 @@ void func_80046CF8(OSTask* task) {
 
 void SysMain_GfxInitBuffers(void) {
     D_8011F8E0 ^= 1;
-    D_80151940 = &D_801518C0[D_8011F8E0];
+    sGfxTask = &D_801518C0[D_8011F8E0];
     gGfxPool = &D_8011F8E8[D_8011F8E0];
     gDisplayListHead = gGfxPool->dList;
 }
@@ -182,8 +182,8 @@ void* SysMain_Thread(void* entry) {
     func_800468E0();
     SysMain_GfxFullSync();
 
-    SysMain_CreateGfxTask(D_80151940);
-    func_80046CF8(D_80151940);
+    SysMain_CreateGfxTask(sGfxTask);
+    func_80046CF8(sGfxTask);
 
     func_80091F50();
 
@@ -217,7 +217,7 @@ void* SysMain_Thread(void* entry) {
 
         func_80097E68();
 
-        SysMain_CreateGfxTask(D_80151940);
+        SysMain_CreateGfxTask(sGfxTask);
 
         if (D_800DAB1C == 2) {
             temp_v1 = (u32*) D_801542C0[D_8015194C] + 38399;
@@ -227,7 +227,7 @@ void* SysMain_Thread(void* entry) {
             }
         }
 
-        func_80046CF8(D_80151940);
+        func_80046CF8(sGfxTask);
 
         //! osViSetMode arrays are likely just one array, so this is likely fake.
         //! osViSetMode arrays are likely just one array, so this is likely fake.

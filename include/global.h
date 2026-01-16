@@ -6,7 +6,7 @@
 #include "structs.h"
 #include "variables.h"
 #include "functions.h"
-#include "sys_matrix.h"
+#include "sys_utils.h"
 #include "wr64math.h"
 #include "structs.h"
 #include "assets.h"

@@ -427,13 +427,13 @@ void func_801EDBD4(f32 arg0, f32 arg1, f32 arg2, f32* arg3, f32* arg4, f32* arg5
     }
 }
 
-void func_801EDC60(Matrix arg0, f32 arg1, f32 arg2, f32 arg3, f32* arg4, f32* arg5, f32* arg6) {
+void func_801EDC60(MtxF_t arg0, f32 arg1, f32 arg2, f32 arg3, f32* arg4, f32* arg5, f32* arg6) {
     *arg4 = (arg0[0][0] * arg1) + arg0[1][0] * arg2 + (arg0[2][0] * arg3) + arg0[3][0];
     *arg5 = (arg0[0][1] * arg1) + arg0[1][1] * arg2 + (arg0[2][1] * arg3) + arg0[3][1];
     *arg6 = (arg0[0][2] * arg1) + arg0[1][2] * arg2 + (arg0[2][2] * arg3) + arg0[3][2];
 }
 
-void func_801EDD04(Matrix arg0, f32 arg1, f32 arg2, f32 arg3, f32* arg4, f32* arg5, f32* arg6) {
+void func_801EDD04(MtxF_t arg0, f32 arg1, f32 arg2, f32 arg3, f32* arg4, f32* arg5, f32* arg6) {
     *arg4 = (arg0[0][0] * arg1) + (arg0[1][0] * arg2) + (arg0[2][0] * arg3);
     *arg5 = (arg0[0][1] * arg1) + (arg0[1][1] * arg2) + (arg0[2][1] * arg3);
     *arg6 = (arg0[0][2] * arg1) + (arg0[1][2] * arg2) + (arg0[2][2] * arg3);
@@ -510,7 +510,7 @@ void _MtxF_to_Mtx(MtxF* src, Mtx* dest) {
     FRACPART(0, 0);
 }
 
-void func_801EDF9C(Matrix arg0, f32 x, f32 y, f32 z) {
+void func_801EDF9C(MtxF_t arg0, f32 x, f32 y, f32 z) {
     arg0[3][3] = 1.0f;
     arg0[2][2] = 1.0f;
     arg0[1][1] = 1.0f;
@@ -531,8 +531,8 @@ void func_801EDF9C(Matrix arg0, f32 x, f32 y, f32 z) {
     arg0[3][2] = z;
 }
 
-void func_801EDFFC(Matrix* arg0, f32 arg1, f32 arg2, f32 arg3) {
-    Matrix mtx;
+void func_801EDFFC(MtxF* arg0, f32 arg1, f32 arg2, f32 arg3) {
+    MtxF mtx;
 
     func_801EDF9C(&mtx, arg1, arg2, arg3);
 
