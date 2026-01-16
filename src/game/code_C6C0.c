@@ -1732,6 +1732,7 @@ void func_80062918(Vec3f* arg0) {
         arg0[i + 220].x = sqrtf(D_800D4A68[i]) * temp_f20;
     }
 }
+
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_800629A8.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_C6C0/func_80062E50.s")
