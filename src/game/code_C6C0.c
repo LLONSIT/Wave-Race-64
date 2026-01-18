@@ -1600,8 +1600,8 @@ void func_8005D390(UnkStruct_80052E90_arg1_s* arg0, UnkStruct_8005CEF8* arg1) {
 }
 
 void func_8005D828(UnkStruct_80052C6C_2* arg0, Mtx* arg1, s32 arg2) {
-    s32 temp_ft3;   // sp4C
-    f32 temp_f6_2;  // sp48
+    s32 temp_ft3; // sp4C
+    f32 temp_f6_2;  // sp48 
     f32 temp_f10_2; // sp44
     f32 temp_f0_2;
     s32 temp_ft0;
@@ -1611,11 +1611,12 @@ void func_8005D828(UnkStruct_80052C6C_2* arg0, Mtx* arg1, s32 arg2) {
     temp_ft0 = (s32) (arg0->unkC.x * 6553.6f);
     temp_ft3 = (s32) (arg0->unkC.y * 6553.6f);
     temp_ft1 = (s32) (arg0->unkC.z * 6553.6f);
-
+    
     arg1->m[1][0] = (temp_ft0 & 0xFFFF0000) | ((u32) temp_ft3 >> 0x10);
     arg1->m[1][1] = temp_ft1 & 0xFFFF0000;
     arg1->m[3][0] = (temp_ft0 << 0x10) | (temp_ft3 & 0xFFFF);
     arg1->m[3][1] = temp_ft1 << 0x10;
+    
 
     temp_f6_2 = (arg0->unk14.y * arg0->unkC.z) - (arg0->unk14.z * arg0->unkC.y);
     temp_f10_2 = (arg0->unk14.z * arg0->unkC.x) - (arg0->unk14.x * arg0->unkC.z);
