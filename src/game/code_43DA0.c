@@ -142,7 +142,8 @@ f32 func_8008962C(f32 arg0, f32 arg1, f32 arg2, UnkStruct_8008962C* arg3) {
         sp80 = ((spD0.mf[0][0] * temp_fv0) + (spD0.mf[1][0] * temp_fv1) + (spD0.mf[2][0] * temp_fa0)) + spD0.mf[3][0];
         sp78 = ((spD0.mf[0][1] * temp_fv0) + (spD0.mf[1][1] * temp_fv1) + (spD0.mf[2][1] * temp_fa0)) + spD0.mf[3][1];
         sp70 = ((spD0.mf[0][2] * temp_fv0) + (spD0.mf[1][2] * temp_fv1) + (spD0.mf[2][2] * temp_fa0)) + spD0.mf[3][2];
-        var_ft4 = ((spD0.mf[0][3] * temp_fv0) + (spD0.mf[1][3] * temp_fv1) + (spD0.mf[2][3] * temp_fa0)) + spD0.mf[3][3];
+        var_ft4 =
+            ((spD0.mf[0][3] * temp_fv0) + (spD0.mf[1][3] * temp_fv1) + (spD0.mf[2][3] * temp_fa0)) + spD0.mf[3][3];
         if ((var_ft4 < 0.01) && (var_ft4 > -0.01)) {
             if (var_ft4 >= 0.0) {
                 var_ft4 = 0.01;

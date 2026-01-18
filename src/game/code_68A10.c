@@ -31,10 +31,10 @@ extern s32 D_80223934;
 
 // External functions
 f32 Math_FloatRand(f32);
-void func_801EE97C(Mtx*, f32, f32, f32);             /* extern */
+void func_801EE97C(Mtx*, f32, f32, f32); /* extern */
 
 // File functions
-void func_800B43BC(Gfx **arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, u32 arg5);
+void func_800B43BC(Gfx** gdl, f32 arg1, f32 arg2, f32 arg3, f32 arg4, u32 arg5);
 
 // Already matched but neeeds struct migration
 // https://decomp.me/scratch/MKa6P
@@ -116,13 +116,13 @@ void func_800AF51C(void) {
 }
 
 void func_800AF798(Gfx** gdl) {
-    s32* var_a2;    
+    s32* var_a2;
     camera_unk_1* var_s3;
-    f32 temp_fa0;    
+    f32 temp_fa0;
     f32 temp_fa1;
     f32 temp_ft4;
     f32 temp_ft5;
-    f32 temp_fs0;    
+    f32 temp_fs0;
     f32 var_fv0;
     f32 var_fv1;
     Gfx* gdlh;
@@ -150,11 +150,11 @@ void func_800AF798(Gfx** gdl) {
         temp_fa0 = var_s3->unk4C - D_801D7A18[i].unk8;
         temp_fs2 = var_s3->unk50 - D_801D7A18[i].unkC;
         temp_fa1 = var_s3->unk54 - D_801D7A18[i].unk10;
-        
+
         // fake match
         if (temp_fa0 == temp_fa1) {}
         if (temp_fa0 == temp_fa1) {}
-        
+
         if ((temp_fa0 != 0.0f) || (temp_fa1 != 0.0f)) {
             var_fv0 = 1.0f;
             var_fv1 = 0.0f;
@@ -162,10 +162,8 @@ void func_800AF798(Gfx** gdl) {
             var_fv0 = 0.0f;
             var_fv1 = 1.0f;
         }
-        SysUtils_MatrixLookAt(&D_801AE948->unk4140[D_801AE950], &spD8, temp_fa0,
-                      temp_fs2, temp_fa1, 0.0f,
-                      var_fv0, var_fv1,
-                      D_801D7A18[i].unk8, D_801D7A18[i].unkC, D_801D7A18[i].unk10);
+        SysUtils_MatrixLookAt(&D_801AE948->unk4140[D_801AE950], &spD8, temp_fa0, temp_fs2, temp_fa1, 0.0f, var_fv0,
+                              var_fv1, D_801D7A18[i].unk8, D_801D7A18[i].unkC, D_801D7A18[i].unk10);
 
         gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
         func_801EE97C(&D_801AE948->unk4140[D_801AE950], D_801D7A18[i].unk14, D_801D7A18[i].unk14, D_801D7A18[i].unk14);
@@ -201,7 +199,6 @@ void func_800AF798(Gfx** gdl) {
     *gdl = gdlh;
 }
 
-
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800AFBD0.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800B08F8.s")
@@ -213,15 +210,14 @@ void func_800AF798(Gfx** gdl) {
 void func_800B43BC(Gfx** gdl, f32 arg1, f32 arg2, f32 arg3, f32 arg4, u32 arg5) {
     camera_unk_1* temp_t0;
     f32 temp_f14;
-    f32 temp_f16;    
+    f32 temp_f16;
     f32 var_f0;
     f32 var_f2;
-    s32* var_a3;    
-    f32 other;    
+    s32* var_a3;
+    f32 other;
     Gfx* gdlh;
     char pad[0x4];
     MtxF sp74;
-    
 
     gdlh = *gdl;
     gSPDisplayList(gdlh++, &D_10514D0);
@@ -240,39 +236,38 @@ void func_800B43BC(Gfx** gdl, f32 arg1, f32 arg2, f32 arg3, f32 arg4, u32 arg5) 
         var_f2 = 1.0f;
         var_f0 = 0.0f;
     }
-    SysUtils_MatrixLookAt(&D_801AE948->unk4140[D_801AE950], &sp74, 
-                          temp_f14, other, temp_f16,
-                          0.0f, var_f0, var_f2, arg1, arg2, arg3);
+    SysUtils_MatrixLookAt(&D_801AE948->unk4140[D_801AE950], &sp74, temp_f14, other, temp_f16, 0.0f, var_f0, var_f2,
+                          arg1, arg2, arg3);
     gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
     func_801EE97C(&D_801AE948->unk4140[D_801AE950], arg4, arg4, arg4);
     gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950], G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
     D_801AE950 += 1;
     switch (arg5) {
-    default:
-    case 0:
-        var_a3 = &D_1049C80;
-        break;
-    case 1:
-        var_a3 = &D_104A488;
-        break;
-    case 2:
-        var_a3 = &D_104AC90;
-        break;
-    case 3:
-        var_a3 = &D_104B498;
-        break;
-    case 4:
-        var_a3 = &D_104BCA0;
-        break;
-    case 5:
-        var_a3 = &D_104C4A8;
-        break;
-    case 6:
-        var_a3 = &D_104CCB0;
-        break;
+        default:
+        case 0:
+            var_a3 = &D_1049C80;
+            break;
+        case 1:
+            var_a3 = &D_104A488;
+            break;
+        case 2:
+            var_a3 = &D_104AC90;
+            break;
+        case 3:
+            var_a3 = &D_104B498;
+            break;
+        case 4:
+            var_a3 = &D_104BCA0;
+            break;
+        case 5:
+            var_a3 = &D_104C4A8;
+            break;
+        case 6:
+            var_a3 = &D_104CCB0;
+            break;
     }
     gDPLoadTextureBlock(gdlh++, var_a3, G_IM_FMT_IA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP,
-                            G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
     gSPDisplayList(gdlh++, &D_1051580);
     *gdl = gdlh;
 }
