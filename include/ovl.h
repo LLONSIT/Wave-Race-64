@@ -1,26 +1,26 @@
 #ifndef OVL_H
 #define OVL_H
-struct ovl_A95D0_801DAFA0 {
-    char pad[0x50];
-    float unk50;
-};
 
-struct ovl_A95D0_801DFDA8 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-    s32 unk1C;
-    s32 unk20;
-    s32 unk24;
-    s32 unk28;
-    s32 unk2C;
-    s32 unk30;
-    s32 unk34;
-};
-
-void func_801DAFA0(struct ovl_A95D0_801DAFA0** arg0, int arg1);
+typedef enum OverlayId {
+    OVL_BOOT_UP,
+    OVL_TITLE_SCREEN,
+    OVL_RIDER_SELECT,
+    OVL_COURSE_OVERVIEW,
+    OVL_COURSE_SELECT,
+    OVL_RACE_RESULTS,
+    OVL_6,
+    OVL_TIME_TRIALS_RESULTS,
+    OVL_STUNT_MODE_RESULTS,
+    OVL_OPTIONS_MENU,
+    OVL_OPTIONS_CHANGE_NAMES,
+    OVL_OPTIONS_VIEW_RECORDS,
+    OVL_OPTIONS_CHANGE_CONDITIONS,
+    OVL_OPTIONS_AUDIO,
+    OVL_OPTIONS_ERASE_COURSE_RECORDS,
+    OVL_OPTIONS_SAVE_AND_LOAD,
+    OVL_16,
+    OVL_CEREMONY,
+    OVL_DEMO,
+    OVL_TIME_TRIAL
+} OverlayId;
 #endif /* OVL_H */

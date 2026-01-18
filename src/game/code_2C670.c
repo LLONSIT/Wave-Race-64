@@ -80,6 +80,8 @@ s32 func_80074448(f32 arg0, f32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_800744EC.s")
 
+
+
 void func_80075274(void) {
     func_80071E70();
     if (D_801CE638 != 21) {

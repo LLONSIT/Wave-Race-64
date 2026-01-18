@@ -6,7 +6,6 @@ extern u8 D_80227A60[];
 extern u8 D_80228E10[];
 extern u8 D_80227A60[];
 extern u8 D_801FC840[];
-extern s32 gGameState;
 extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
 extern OSIoMesg D_801542A0;
@@ -26,80 +25,80 @@ void GameLoad_LoadOverlay(void) {
     Overlay* ovl;
 
     switch (gGameState) {
-        case 0x5:
+        case GAME_STATE_BOOT_UP:
             ovl = &gOverlayTable[0];
             flag = 1;
             break;
-        case 0x2:
+        case GAME_STATE_TITLE_SCREEN:
             ovl = &gOverlayTable[1];
             flag = 1;
             break;
-        case 0xA:
+        case GAME_STATE_RIDER_SELECT:
             ovl = &gOverlayTable[2];
             flag = 1;
             break;
-        case 0x1E:
+        case GAME_SATE_COURSE_OVERVIEW:
             ovl = &gOverlayTable[3];
             flag = 1;
             break;
-        case 0x14:
+        case GAME_STATE_COURSE_SELECT:
             ovl = &gOverlayTable[4];
             flag = 1;
             break;
-        case 0x34:
+        case GAME_STATE_RACE_RESULTS:
             ovl = &gOverlayTable[5];
             flag = 1;
             break;
-        case 0x36:
+        case GAME_STATE_36:
             ovl = &gOverlayTable[6];
             flag = 1;
             break;
-        case 0x32:
+        case GAME_STATE_TIME_TRIALS_RESULTS:
             ovl = &gOverlayTable[7];
             flag = 1;
             break;
-        case 0x38:
+        case GAME_STATE_STUNT_MODE_RESULTS:
             ovl = &gOverlayTable[8];
             flag = 1;
             break;
-        case 0x3C:
+        case GAME_STATE_OPTIONS_MENU:
             ovl = &gOverlayTable[9];
             flag = 1;
             break;
-        case 0x3E:
+        case GAME_STATE_OPTIONS_CHANGE_NAMES:
             ovl = &gOverlayTable[10];
             flag = 1;
             break;
-        case 0x42:
+        case GAME_STATE_OPTIONS_VIEW_RECORDS:
             ovl = &gOverlayTable[11];
             flag = 1;
             break;
-        case 0x44:
+        case GAME_STATE_OPTIONS_CHANGE_CONDITIONS:
             ovl = &gOverlayTable[12];
             flag = 1;
             break;
-        case 0x48:
+        case GAME_STATE_OPTIONS_AUDIO:
             ovl = &gOverlayTable[13];
             flag = 1;
             break;
-        case 0x46:
+        case GAME_STATE_OPTIONS_ERASE_COURSE_RECORDS:
             ovl = &gOverlayTable[14];
             flag = 1;
             break;
-        case 0x40:
+        case GAME_STATE_OPTIONS_SAVE_AND_LOAD:
             ovl = &gOverlayTable[15];
             flag = 1;
             break;
-        case 0x50:
+        case GAME_STATE_50:
             ovl = &gOverlayTable[16];
             flag = 1;
             break;
-        case 0x66:
+        case GAME_STATE_CEREMONY:
             ovl = &gOverlayTable[17];
             flag = 1;
             break;
-        case 0x7:
-        case 0x28:
+        case GAME_STATE_DEMO:
+        case GAME_STATE_TIME_TRIAL:
             ovl = &gOverlayTable[18];
             flag = 1;
             break;
