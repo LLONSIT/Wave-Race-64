@@ -212,7 +212,7 @@ segments:
       - [0x8C920, c, libultra/ldiv] # OK
       
       # GFX MICROCODE
-      - [0x8CAB0, textbin, rspboot] # TODO: Put these on a separated segment
+      - [0x8CAB0, textbin, rspboot]
       - [0x8CB80, textbin, f3d]
 
       # Audio Microcode

@@ -14,6 +14,7 @@
 #include "player.h"
 #include "wr64dma.h"
 #include "wr64fade.h"
+#include "camera.h"
 #include "game.h"
 
 #endif /* GLOBAL_H */

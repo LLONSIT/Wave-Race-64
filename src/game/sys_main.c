@@ -167,7 +167,7 @@ void* SysMain_Thread(void* entry) {
 
     SysUtils_TaylorSeries();
 
-    func_80048854(&D_8011F820.unk_A40, &mtx, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    SysUtils_MatrixLookAt(&D_8011F820.unk_A40, &mtx, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
     SysUtils_Srand(osGetTime());
     osSetTime(0);

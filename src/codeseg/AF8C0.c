@@ -2,7 +2,6 @@
 
 extern s32 D_800D461C;
 extern s32 D_800DAB1C;
-extern s32 gGameState;
 extern s32 D_801CE630;
 extern s32 D_801CE634;
 extern s32 D_801CE638;
@@ -83,7 +82,7 @@ extern s32 D_801CE644;
 void func_801E2B8C(s32 arg0) {
     D_801CE634 = gGameState;
     D_801CE630 = arg0;
-    gGameState = 0x65;
+    gGameState = GAME_STATE_65;
     D_801CE638 = 6;
     D_801CE63C = 1;
     D_801CE640 = 0;

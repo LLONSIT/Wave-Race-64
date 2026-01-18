@@ -24,6 +24,7 @@ SysUtils_LightsSetSource = 0x80047F90;
 SysUtils_MatrixAffineMultiply = 0x80049EB8;
 SysUtils_UpdateControllers = 0x8004A2B4;
 SysUtils_ContInitialize = 0x8004A130;
+SysUtils_MatrixLookAt = 0x80048854;
 
 //R_G_B_A
 gColorRed   = 0x800D47E8;
