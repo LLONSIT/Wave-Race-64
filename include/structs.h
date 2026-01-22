@@ -640,7 +640,9 @@ typedef struct SEGA2 {
 // This is probably a part of UnkStruct_801C3C50
 typedef struct UnkStruct_80192690 {
     /* 0x0000 */ f32 unk0;
-    /* 0x0004 */ char pad4[0x40];                   /* maybe part of unk0[0x11]? */
+    /* 0x0004 */ char pad4[0x24];                   /* maybe part of unk0[0xA]? */
+    /* 0x0028 */ s32 unk28;                         /* inferred */
+    /* 0x002C */ char pad2C[0x18];                  /* maybe part of unk28[7]? */
     /* 0x0044 */ Vec3f unk44;
     /* 0x0050 */ char pad50[0x1C];                  /* maybe part of unk44[3]? */
     /* 0x006C */ f32 unk6C;
@@ -652,8 +654,8 @@ typedef struct UnkStruct_80192690 {
     /* 0x0084 */ f32 unk84;
     /* 0x0088 */ f32 unk88;
     /* 0x008C */ f32 unk8C;
-    /* 0x0090 */ struct UnkStruct_8004B0F8_1 unk90[13];
-    /* 0x0210 */ char pad210[0x926];
+    /* 0x0090 */ UnkStruct_8004B0F8_1 unk90[0xD];
+    /* 0x0230 */ char pad230[0x926];                /* maybe part of unk90[6]? */
     /* 0x0B56 */ u16 unkB56;
     /* 0x0B58 */ char padB58[8];                    /* maybe part of unkB56[5]? */
     /* 0x0B60 */ s32 unkB60;
@@ -696,7 +698,11 @@ typedef struct UnkStruct_80192690 {
     /* 0x1438 */ f32 unk1438;
     /* 0x143C */ f32 unk143C;
     /* 0x1440 */ f32 unk1440;
-    /* 0x1444 */ char pad1444[0x19A];               /* maybe part of unk1440[0x67]? */
+    /* 0x1444 */ char pad1444[0x170];               /* maybe part of unk1440[0x5D]? */
+    /* 0x15B4 */ f32 unk15B4;                       /* inferred */
+    /* 0x15B8 */ f32 unk15B8;                       /* inferred */
+    /* 0x15BC */ f32 unk15BC;                       /* inferred */
+    /* 0x15C0 */ char pad15C0[0x1E];                /* maybe part of unk15BC[8]? */
     /* 0x15DE */ s16 unk15DE;
     /* 0x15E0 */ char pad15E0[0x28];                /* maybe part of unk15DE[0x15]? */
     /* 0x1608 */ u16 unk1608;
@@ -707,5 +713,4 @@ typedef struct UnkStruct_80192690 {
     /* 0x16D8 */ s32 unk16D8;
     /* 0x16DC */ char pad16DC[0x3C];                /* maybe part of unk16D8[0x10]? */
 } UnkStruct_80192690;                               /* size = 0x1718 */
-
 #endif /* STRUCTS_H */

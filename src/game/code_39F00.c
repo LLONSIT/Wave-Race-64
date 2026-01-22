@@ -16,14 +16,113 @@ typedef struct UnkStruct_801BFD78_s {
     /* 0x30 */ f32 unk30; /* inferred */
     /* 0x34 */ f32 unk34; /* inferred */
     /* 0x38 */ f32 unk38; /* inferred */
-    /* 0x3C */ char pad3C[4];
+    /* 0x3C */ s32 unk3C;
 } UnkStruct_801BFD78; /* size = 0x40 */
 extern UnkStruct_801BFD78 D_801BFD78[];
 extern s32 D_801C0578;
 
 void func_8007F700(UnkStruct_80192690* arg0);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_39F00/func_8007F700.s")
+void func_8007F700(UnkStruct_80192690* arg0) {
+    UnkStruct_801BFD78* var_v0;
+    f32 temp_f12;
+    f32 temp_f14;
+    f32 temp_f18_3;
+    f32 var_f0;
+    f32 var_f16;
+    f32 var_f2;
+    UnkStruct_8004B0F8_1* var_a0;
+    s32 var_a3;
+    UnkStruct_8004B0F8_1* var_a2;
+
+    for (var_v0 = &D_801BFD78[D_801C0578 - 1]; (u32) var_v0 >= (u32) D_801BFD78; var_v0--) {
+        var_a3 = arg0->unk28;
+        for (var_a2 = &arg0->unk90[var_a3]; (u32) var_a2 >= (u32) &arg0->unk90; var_a2--, var_a3--) {
+            var_f2 = var_v0->unk0 - var_a2->unk0;
+            var_f0 = var_v0->unk4 - var_a2->unk4;
+            temp_f12 = var_v0->unk8 - var_a2->unk8;
+            var_f16 = (var_v0->unkC * var_f2) + (var_f0 * var_v0->unk10) + (temp_f12 * var_v0->unk14);
+            if ((var_f16 < 0.0f) || (var_v0->unk30 <= var_f16)) {
+                continue;
+            }
+            temp_f14 = (var_v0->unk18 * var_f2) + (var_f0 * var_v0->unk1C) + (temp_f12 * var_v0->unk20);
+            if ((temp_f14 < 0.0f) || (var_v0->unk34 <= temp_f14)) {
+                continue;
+            }
+            temp_f18_3 = (var_v0->unk24 * var_f2) + (var_f0 * var_v0->unk28) + (temp_f12 * var_v0->unk2C);
+            if ((temp_f18_3 < 0.0f) || (var_v0->unk38 <= temp_f18_3)) {
+                continue;
+            }
+
+            if (var_f16 > var_v0->unk30 - var_f16) {
+                var_f16 = var_v0->unk30 - var_f16;
+                var_f2 = -var_v0->unkC;
+                var_f0 = -var_v0->unk10;
+                temp_f12 = -var_v0->unk14;
+            } else {
+                var_f2 = var_v0->unkC;
+                var_f0 = var_v0->unk10;
+                temp_f12 = var_v0->unk14;
+                
+            }
+            
+            if (temp_f14 < var_f16) {
+                var_f16 = temp_f14;
+                var_f2 = var_v0->unk18;
+                var_f0 = var_v0->unk1C;
+                temp_f12 = var_v0->unk20;
+            }
+            if (var_f16 > var_v0->unk34 - temp_f14) {
+                var_f16 = var_v0->unk34 - temp_f14;
+                var_f2 = -var_v0->unk18;
+                var_f0 = -var_v0->unk1C;
+                temp_f12 = -var_v0->unk20;
+            }
+            if (temp_f18_3 < var_f16) {
+                var_f16 = temp_f18_3;
+                var_f2 = var_v0->unk24;
+                var_f0 = var_v0->unk28;
+                temp_f12 = var_v0->unk2C;
+            }
+            temp_f14 = var_v0->unk38 - temp_f18_3;
+            if (temp_f14 < var_f16) {
+                var_f16 = temp_f14;
+                var_f2 = -var_v0->unk24;
+                var_f0 = -var_v0->unk28;
+                temp_f12 = -var_v0->unk2C;
+            }
+            if ((var_f0 <= 0.0f) && ((var_a3 == 1) || (var_a3 == 8) || (var_a3 == 11))) {
+                continue;
+            }
+
+            temp_f14 = ((-var_f2 * var_a2->unkC) - (var_f0 * var_a2->unk10)) - (temp_f12 * var_a2->unk14);
+            if (var_v0->unk3C != 0) {
+                arg0->unk15DE = 1;
+                temp_f18_3 = 0.4f * temp_f14;
+            } else {
+                temp_f18_3 = temp_f14;
+            }
+            if (arg0->unkC48 < temp_f18_3) {
+                arg0->unkC48 = temp_f18_3;
+                arg0->unk15B4 = var_f2;
+                arg0->unk15B8 = var_f0;
+                arg0->unk15BC = temp_f12;
+            }
+            var_a2->unkC += (temp_f14 * var_f2);
+            var_a2->unk10 += (temp_f14 * var_f0);
+            var_a2->unk14 += (temp_f14 * temp_f12);
+
+            var_f2 *= var_f16;
+            var_f0 *= var_f16;
+            temp_f12 *= var_f16;
+            for (var_a0 = &arg0->unk90[0]; (u32) var_a0 < (u32) &arg0->unk90[12]; var_a0++) {
+                var_a0->unk0 += var_f2;
+                var_a0->unk4 += var_f0;
+                var_a0->unk8 += temp_f12;
+            }
+        }
+    }
+}
 
 f32 func_8007FAE4(f32 arg0, f32 arg1, f32 arg2, f32* arg3, f32* arg4, f32* arg5) {
     UnkStruct_801BFD78* var_v0;
