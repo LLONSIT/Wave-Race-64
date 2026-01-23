@@ -23,7 +23,7 @@ extern s32 D_801C0578;
 
 void func_8007F700(UnkStruct_80192690* arg0);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_39F00/func_8007F700.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_39F00/func_8007F700.s")
 
 f32 func_8007FAE4(f32 arg0, f32 arg1, f32 arg2, f32* arg3, f32* arg4, f32* arg5) {
     UnkStruct_801BFD78* var_v0;

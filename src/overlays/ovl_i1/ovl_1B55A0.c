@@ -49,15 +49,15 @@ void func_i1_802C5900(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C59E8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C59E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C5AE4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C5AE4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C5DF4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C5DF4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C63B4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C63B4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6550.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6550.s")
 
 void func_i1_802C6B00(void) {
     if (D_80228A16 == 1) {
@@ -66,13 +66,13 @@ void func_i1_802C6B00(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6B38.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6B38.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6BD8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6BD8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6DCC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6DCC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6FE0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6FE0.s")
 
 void func_i1_802C7394(void) {
     D_801CE634 = gGameState;
@@ -154,15 +154,15 @@ void func_i1_802C7570(s32 arg0) {
     func_800C21F4(3, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C7608.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C7608.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C7D00.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C7D00.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C7E48.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C7E48.s")
 
 // https://decomp.me/scratch/7qW05
 #ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C8E70.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C8E70.s")
 #else
 void func_i1_802C8E70(void) {
     s32 pad;
@@ -288,7 +288,7 @@ Gfx* func_i1_802C913C(Gfx* dList) {
 
     if ((D_80228A16 == 1) && (gGameState == 7)) {
         func_800BFDD0(&D_80192610);
-        func_800BFEF8(&D_80192630);
+        func_800BFEF8((u8*) &D_80192630);
     }
 
     if (D_i1_802C9440 >= 0) {

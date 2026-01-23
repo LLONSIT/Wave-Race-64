@@ -113,8 +113,8 @@ if __name__ == "__main__":
         sys.exit(1)
     
     input_file = sys.argv[1]
-    output_dir = "bin/mio0_extracted"
-    decompressed_dir = "bin/mio0_decompressed"
+    output_dir = "mio0/mio0_extracted"
+    decompressed_dir = "mio0/mio0_decompressed"
     os.makedirs(output_dir, exist_ok=True)
     os.makedirs(decompressed_dir, exist_ok=True)
     

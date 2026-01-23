@@ -3,9 +3,11 @@
 
 void __osCleanupThread(void);
 
+#ifdef __GNUC__
 // Don't warn about pointer->u64 cast
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpointer-to-int-cast"
+#endif
 
 void osCreateThread(OSThread* thread, OSId id, void (*entry)(void*), void* arg, void* sp, OSPri pri) {
     register u32 saveMask;
@@ -34,4 +36,6 @@ void osCreateThread(OSThread* thread, OSId id, void (*entry)(void*), void* arg, 
     __osRestoreInt(saveMask);
 }
 
+#ifdef __GNUC__
 #pragma GCC diagnostic pop
+#endif

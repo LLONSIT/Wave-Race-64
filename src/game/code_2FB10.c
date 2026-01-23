@@ -21,7 +21,7 @@ static const char devstr2[] = "dolphin condition full\n";
 static const char devstr3[] = "rank value adjust\n";
 static const char devstr4[] = "simultaneously goal !!\n";
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_80075310.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2FB10/func_80075310.s")
 
 s32 func_80076240(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     s32 sp24;
@@ -56,11 +56,11 @@ void func_800762D0(struct_800762D0* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_80076378.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2FB10/func_80076378.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_8007687C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2FB10/func_8007687C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_80077F5C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2FB10/func_80077F5C.s")
 
 void func_80078264(void) {
     UnkStruct_801C2C24* temp_a0;
@@ -119,6 +119,6 @@ void func_80078264(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_800783AC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2FB10/func_800783AC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2FB10/func_80079528.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2FB10/func_80079528.s")

@@ -34,7 +34,7 @@ f32 func_801E31A0(void) {
     return var_f2;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B17D0/func_801E3250.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B17D0/func_801E3250.s")
 
 Gfx* func_801E34F8(Gfx* arg0) {
     if (D_801CE63C != 0) {
@@ -90,4 +90,4 @@ void func_801E355C(void) {
     D_802288FC = 0x28 - D_802288F8;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B17D0/func_801E3698.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B17D0/func_801E3698.s")

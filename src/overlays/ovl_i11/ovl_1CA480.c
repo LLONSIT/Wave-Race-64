@@ -1,8 +1,8 @@
 #include "global.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i11/ovl_1CA480/func_i11_802C5800.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i11/ovl_1CA480/func_i11_802C5800.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i11/ovl_1CA480/func_i11_802C5D48.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i11/ovl_1CA480/func_i11_802C5D48.s")
 
 void func_i11_802C5F7C(void) {
     if (D_i11_802C6150 == 0) {

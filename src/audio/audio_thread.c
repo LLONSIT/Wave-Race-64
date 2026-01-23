@@ -76,7 +76,7 @@ SPTask* AudioThread_CreateTask(void) {
     if (osRecvMesg(gThreadCmdProcQueue, &sp54, 0) != -1) {
         AudioThread_ProcessCmds((u32) sp54);
     }
-    gAudioCmd = AudioSynth_Update((Acmd*) gAudioCmd, &writtenCmds, currAiBuffer, gAiBufferLengths[index]);
+    gAudioCmd = AudioSynth_Update((u64*) gAudioCmd, &writtenCmds, currAiBuffer, gAiBufferLengths[index]);
     gAudioRandom = (gAudioRandom + gAudioFrameCount) * gAudioFrameCount;
     gAudioRandom = gAudioRandom + gAiBuffers[index][gAudioFrameCount & 0xFF];
 
@@ -204,19 +204,19 @@ void AudioThread_QueueCmd(s32 arg0, s32* arg1) {
 
 // Original name: Nap_SetF32
 void AudioThread_QueueCmdF32(u32 opArgs, f32 val) {
-    AudioThread_QueueCmd(opArgs, (void**) &val);
+    AudioThread_QueueCmd(opArgs, (void*) &val);
 }
 
 // Original name: Nap_SetS32
 void AudioThread_QueueCmdS32(u32 opArgs, u32 val) {
-    AudioThread_QueueCmd(opArgs, (void**) &val);
+    AudioThread_QueueCmd(opArgs, (void*) &val);
 }
 
 // Original name: Nap_SetS8
 void AudioThread_QueueCmdS8(u32 opArgs, s8 val) {
     s32 data = val << 0x18;
 
-    AudioThread_QueueCmd(opArgs, (void**) &data);
+    AudioThread_QueueCmd(opArgs, (void*) &data);
 }
 
 // Original name: Nap_SendStart

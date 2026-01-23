@@ -22,6 +22,7 @@ struct UnkStruct_801C4000 {
 
 f32 func_8004D30C(f32 arg0, f32 arg1);
 s32 func_80087134(f32, f32);
+void func_80087444(void);
 
 extern struct UnkStruct_800D9854 D_800D9854;
 extern f32 D_800EA410;
@@ -53,6 +54,7 @@ extern s32 D_800D9874;
 extern s32 D_800DA9F8;
 
 void func_80086CE0(void);
+void func_80085964(void);
 f32 func_80088D94(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5);
 
 void func_80080400(s32 arg0) {
@@ -1322,7 +1324,7 @@ void func_80085510(void) {
         var_f0 = (sp4C * sp44) + (sp48 * sp40);
     }
 
-    temp_f18 = ((D_801C3C58->pad54 * 70.0f) / D_801C3C50->unkBB8);
+    // temp_f18 = ((D_801C3C58->pad54 * 70.0f) / D_801C3C50->unkBB8);
 
     var_f12 = var_f0;
     D_801C3C58->pad58 = var_f0;
@@ -1397,11 +1399,10 @@ void func_80085510(void) {
     D_801C3C58->unkA8 = (s32) D_801C3C50->unkB52;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80085510.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_3AC00/func_80085510.s")
 #endif
 
 void func_80085964(void) {
-
     if ((D_801C3C58->unk90 >= 0x32) &&
         ((D_801C3C50->unkC7C[0] == 0) || (!((f64) (SQ(D_801C3C50->unk15B4) + SQ(D_801C3C50->unk15BC)) < 0.95)))) {
         if ((f32) D_801C3C58->unk68 > 0.0f) {

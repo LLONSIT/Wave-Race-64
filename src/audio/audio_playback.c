@@ -576,7 +576,8 @@ void Audio_AudioListPushFront(AudioListItem* list, AudioListItem* item) {
 }
 
 // Original name: Nas_CutList
-void Audio_AudioListRemove(Note* note) {
+void Audio_AudioListRemove(AudioListItem* audioListItem) {
+    Note* note = (Note*) audioListItem;
     // remove 'item' from the list it's in, if any
     if (note->listItem.prev != NULL) {
         note->listItem.prev->next = note->listItem.next;

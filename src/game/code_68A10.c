@@ -38,9 +38,9 @@ void func_800B43BC(Gfx** gdl, f32 arg1, f32 arg2, f32 arg3, f32 arg4, u32 arg5);
 
 // Already matched but neeeds struct migration
 // https://decomp.me/scratch/MKa6P
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800AE210.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_68A10/func_800AE210.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800AE7C4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_68A10/func_800AE7C4.s")
 
 void func_800AF40C(f32 arg0, f32 arg1, f32 arg2) {
     D_801D7ADC = 4;
@@ -199,13 +199,13 @@ void func_800AF798(Gfx** gdl) {
     *gdl = gdlh;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800AFBD0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_68A10/func_800AFBD0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800B08F8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_68A10/func_800B08F8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800B2ABC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_68A10/func_800B2ABC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800B305C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_68A10/func_800B305C.s")
 
 void func_800B43BC(Gfx** gdl, f32 arg1, f32 arg2, f32 arg3, f32 arg4, u32 arg5) {
     camera_unk_1* temp_t0;
