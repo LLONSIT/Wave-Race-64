@@ -414,6 +414,11 @@ all: finalrom
 toolchain:
 	@$(MAKE) -s -C $(TOOLS)
 
+dependencies: tools
+	@make -C tools
+	@$(PYTHON) -m pip install -r tools/splat/requirements.txt #Install the splat dependencies
+	@$(PYTHON) -m pip install GitPython colour
+
 torch:
 	@$(MAKE) -s -C $(TOOLS) torch
 	rm -f torch.hash.yml
