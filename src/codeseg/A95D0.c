@@ -241,7 +241,7 @@ void func_801DBF68(struct UnkStruct_801DB0E4_arg0* arg0) {
             D_802287A8 = 1;
 
             if (arg0->unk8 == sp4C.unk0[var_s2].unk0) {
-                func_801DB0E4(&D_80228190, &sp4C.unk0[var_s2].unk8, &D_80228110);
+                func_801DB0E4(&D_80228190, (UnkStruct_801DB0E4_arg1*) &sp4C.unk0[var_s2].unk8, &D_80228110);
             }
             func_801DB1DC(&D_80228190, (UnkStruct_801DB0E4_arg1*) &sp4C.unk0[var_s2].unk8, &D_80228110);
         }

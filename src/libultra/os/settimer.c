@@ -3,7 +3,9 @@
 #include "PRinternal/osint.h"
 #include "PRinternal/viint.h"
 
+#ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#endif
 
 u32 osSetTimer(OSTimer* timer, OSTime countdown, OSTime interval, OSMesgQueue* mq, OSMesg msg) {
     OSTime time;

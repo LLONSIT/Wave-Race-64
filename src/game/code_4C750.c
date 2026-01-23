@@ -580,24 +580,24 @@ s32 func_80093104(void) {
         return 0;
     }
 
-    if (osPfsIsPlug(&D_801540D0, &D_801CB6C0) != 0) {
+    if (osPfsIsPlug(&D_801540D0, (u8*) &D_801CB6C0) != 0) {
         return 0;
     }
 
-    if (osPfsInit(&D_801540D0, &D_801CB658, D_801CB404) != 0) {
+    if (osPfsInit(&D_801540D0, (OSPfs*) &D_801CB658, D_801CB404) != 0) {
         return 0;
     }
 
-    if (osPfsNumFiles(&D_801CB658, &D_801CB40C, &D_801CB408) != 0) {
+    if (osPfsNumFiles((OSPfs*) &D_801CB658, (s32*) &D_801CB40C, (s32*) &D_801CB408) != 0) {
         return 0;
     }
 
     for (i = 0; i < 0x10; i++) {
-        result = osPfsFileState(&D_801CB658, i, (OSPfsState*) &D_801CB418[i << 5]);
+        result = osPfsFileState((OSPfs*) &D_801CB658, i, (OSPfsState*) &D_801CB418[i << 5]);
         D_801CB618[i] = result;
     }
 
-    if (osPfsFreeBlocks(&D_801CB658, &D_801CB410) != 0) {
+    if (osPfsFreeBlocks((OSPfs*) &D_801CB658, &D_801CB410) != 0) {
         return 0;
     }
 

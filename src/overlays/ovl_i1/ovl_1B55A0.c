@@ -288,7 +288,7 @@ Gfx* func_i1_802C913C(Gfx* dList) {
 
     if ((D_80228A16 == 1) && (gGameState == 7)) {
         func_800BFDD0(&D_80192610);
-        func_800BFEF8(&D_80192630);
+        func_800BFEF8((u8*) &D_80192630);
     }
 
     if (D_i1_802C9440 >= 0) {

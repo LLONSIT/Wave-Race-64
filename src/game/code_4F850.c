@@ -1,6 +1,6 @@
 #include "global.h"
 
-struct UnkStruct_800DACD0 {
+typedef struct UnkStruct_800DACD0 {
     /* 0x00 */ s32 unk0;  /* inferred */
     /* 0x04 */ s32 unk4;  /* inferred */
     /* 0x08 */ s32 unk8;  /* inferred */
@@ -18,7 +18,7 @@ struct UnkStruct_800DACD0 {
     /* 0x38 */ s32 unk38; /* inferred */
     /* 0x3C */ s32 unk3C; /* inferred */
     /* 0x40 */ s32 unk40; /* inferred */
-};
+} UnkStruct_800DACD0;
 
 typedef struct UnkStruct_800980D0_s {
     char pad[0xC0];
@@ -28,7 +28,7 @@ typedef struct UnkStruct_800980D0_s {
 extern s32 D_800DAB90[];
 extern s32 D_800DABA0[];
 extern s32 D_800DABC0[];
-extern struct UnkStruct_800DACD0 D_800DACD0[];
+extern UnkStruct_800DACD0 D_800DACD0[];
 extern s32 D_801CE73C;
 extern s32 D_801CE740[];
 
@@ -51,8 +51,7 @@ void func_800967EC(u32* arg0, s32 arg1);
 extern void game_dma_copy(uintptr_t devAddr, void* vAddr, u32 nbytes);
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/unk_game_load.s")
-//#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_80095A28.s")
-#if 1
+
 void func_80095A28(DmaEntry* entry) {
     u32 size;
     u32 i;
@@ -121,7 +120,7 @@ void func_80095A28(DmaEntry* entry) {
         }
     }
 }
-#endif
+
 void func_80095CE8(u8* arg0, s32 arg1) {
 
     s32 var_a1;
@@ -135,7 +134,7 @@ void func_80095CE8(u8* arg0, s32 arg1) {
     u32 var_s5;
     s32 temp_s0;
 
-    var_a2 = &D_801CE740[arg1];
+    var_a2 = (s16*) &D_801CE740[arg1];
     if (var_a2[1] != 0) {
         sp60 = 2;
     } else {
@@ -266,7 +265,7 @@ void func_80095CE8(u8* arg0, s32 arg1) {
                 var_a1 = D_800DAB90[arg1];
             }
 
-            func_800967EC(arg0 + var_s1, var_a1);
+            func_800967EC((u32*) (arg0 + var_s1), var_a1);
         }
     }
 }
@@ -473,8 +472,7 @@ void func_800980D0(UnkStruct_800980D0* arg0) {
     for (i = 0; i < 3; i++) {
         s32* var = D_801542C0[i];
         /* clang-format off */
-        for (j = 0; j < 0x9600; j++) { *var++ = 0;
-}
+        for (j = 0; j < 0x9600; j++) { *var++ = 0; }
         /* clang-format on */
     }
 
