@@ -321,7 +321,7 @@ $(shell mkdir -p $(BUILD_DIR)/linker_scripts/$(VERSION)/$(REV) $(BUILD_DIR)/link
 
 ifeq ($(COMPILER),ido)
 
-build/src/libultra/os/%.o: OPTFLAGS := -O1
+$(BUILD_DIR)/src/libultra/os/%.o: OPTFLAGS := -O1
 $(BUILD_DIR)/src/libultra/os/osVirtualtoPhysical.o: OPTFLAGS := -O1
 $(BUILD_DIR)/src/libultra/gu/%.o: OPTFLAGS := -O3
 $(BUILD_DIR)/src/libultra/io/%.o: OPTFLAGS := -O1
@@ -379,33 +379,21 @@ $(BUILD_DIR)/src/libultra/io/contramwrite.o: MIPS_VERSION := -mips1
 $(BUILD_DIR)/src/libultra/io/controller.o: OPTFLAGS := -O2
 $(BUILD_DIR)/src/libultra/io/controller.o: MIPS_VERSION := -mips1
 
-# $(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll.o: MIPS_VERSION := -mips3 -o32
-# $(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll%.o: MIPS_VERSION := -mips3 -o32
-# $(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll.o: OPTFLAGS := -O1
-# $(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll%.o: OPTFLAGS := -O1
-build/src/libultra/libc/ll.o: OPTFLAGS := -O1 -g0
-build/src/libultra/libc/ll.o: MIPS_VERSION := -mips3 -32
+$(BUILD_DIR)/src/libultra/libc/ll.o: OPTFLAGS := -O1 -g0
+$(BUILD_DIR)/src/libultra/libc/ll.o: MIPS_VERSION := -mips3 -32
 
+# cc & asm-processor
 CC := $(ASM_PROC) $(ASM_PROC_FLAGS) $(IDO) -- $(AS) $(ASFLAGS) --
-build/src/libultra/gu/lookatref.o: CC := $(IDO)
-build/src/libultra/gu/ortho.o: CC := $(IDO) 
-build/src/libultra/gu/translate.o: CC := $(IDO) 
-build/src/libultra/gu/perspective.o: CC := $(IDO)
-build/src/libultra/gu/mtxutil.o: CC := $(IDO)
-build/src/libultra/gu/cosf.o: CC := $(IDO)
-build/src/libultra/audio/bnkf.o: CC := $(IDO)
-build/src/libultra/libc/ll.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/gu/lookatref.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/gu/ortho.o: CC := $(IDO) 
+$(BUILD_DIR)/src/libultra/gu/translate.o: CC := $(IDO) 
+$(BUILD_DIR)/src/libultra/gu/perspective.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/gu/mtxutil.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/gu/cosf.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/audio/bnkf.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/libc/ll.o: CC := $(IDO)
 
-# cc & asm-processor
-
-
-else
-# directory flags
-
-# per-file flags
-
-
-# cc & asm-processor
+else # GCC
 
 endif
 
@@ -466,6 +454,9 @@ clean:
 	@git clean -fdx src/assets/
 	@git clean -fdx include/assets/
 	@git clean -fdx linker_scripts/$(VERSION)/$(REV)/*.ld
+
+  # temporary, remove when we start decompiling other versions
+	@git clean -fdx bin/
 
 format:
 	@$(PYTHON) $(TOOLS)/format.py -j $(N_THREADS)
