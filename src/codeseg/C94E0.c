@@ -42,7 +42,7 @@ void func_801FBFB4(Gfx**); /* extern */
 void func_801FAEB0(s32 arg0) {
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/C94E0/func_801FAEB8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/C94E0/func_801FAEB8.s")
 
 void func_801FB488(s32 arg0, s32 arg1, s32 arg2) {
     UnkStruct_80228AE0* var_v1;
@@ -72,9 +72,9 @@ void func_801FB488(s32 arg0, s32 arg1, s32 arg2) {
     D_80228D14 = D_80228D18 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/C94E0/func_801FB514.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/C94E0/func_801FB514.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/C94E0/func_801FBFB4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/C94E0/func_801FBFB4.s")
 
 void func_801FC39C(void) {
     Players player;

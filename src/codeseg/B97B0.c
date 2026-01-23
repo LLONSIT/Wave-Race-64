@@ -4,23 +4,23 @@
 #include "camera.h"
 #include "libc/math.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EB180.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EB180.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EB4F4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EB4F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EB91C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EB91C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EBD28.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EBD28.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EBFE4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EBFE4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC0D4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EC0D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC20C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EC20C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC304.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EC304.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EC3AC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EC3AC.s")
 
 void func_801EC500(void) {
     D_801CE634 = gGameState;
@@ -186,13 +186,13 @@ void func_801ECAF4(void) {
     func_800C21F4(8, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801ECB98.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801ECB98.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801ECE50.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801ECE50.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801ECF18.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801ECF18.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801ED004.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801ED004.s")
 
 f32 func_801ED090(f32 arg0) {
     if ((arg0 < -1.0f) || (arg0 > 1.0f)) {
@@ -531,71 +531,71 @@ void func_801EDF9C(MtxF_t arg0, f32 x, f32 y, f32 z) {
     arg0[3][2] = z;
 }
 
-void func_801EDFFC(MtxF* arg0, f32 arg1, f32 arg2, f32 arg3) {
+void func_801EDFFC(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3) {
     MtxF mtx;
 
-    func_801EDF9C(&mtx, arg1, arg2, arg3);
+    func_801EDF9C((float (*)[4])&mtx, arg1, arg2, arg3);
 
     _MtxF_to_Mtx(&mtx, arg0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE040.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE040.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE228.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE228.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE274.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE274.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE46C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE46C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE4D0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE4D0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE698.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE698.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE6F4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE6F4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE8C0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE8C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE91C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE91C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE97C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE97C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EE9C0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE9C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EED70.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EED70.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EF3C4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EF3C4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EF504.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EF504.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801EFFD8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EFFD8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F03E0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F03E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F06A0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F06A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F0E7C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F0E7C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F14B4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F14B4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F1CFC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F1CFC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F2060.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F2060.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F23A0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F23A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F25E0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F25E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F4120.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F4120.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F8DD0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F8DD0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F9520.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F9520.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801F9EA0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F9EA0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801FA3C0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801FA3C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/B97B0/func_801FAD68.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801FAD68.s")
 
 void func_801FAEA8(void) {
 }

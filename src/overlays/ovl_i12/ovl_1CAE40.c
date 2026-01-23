@@ -21,7 +21,7 @@ Gfx* func_i12_802C5800(Gfx* dList) {
     return dList;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i12/ovl_1CAE40/func_i12_802C58A0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i12/ovl_1CAE40/func_i12_802C58A0.s")
 
 void func_i12_802C5EE4(s32 arg0) {
     D_801CE634 = gGameState;
@@ -36,4 +36,4 @@ void func_i12_802C5EE4(s32 arg0) {
     FadeTransition_SetProps(1, 4, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i12/ovl_1CAE40/func_i12_802C5F6C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i12/ovl_1CAE40/func_i12_802C5F6C.s")

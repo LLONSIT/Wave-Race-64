@@ -50,8 +50,9 @@ void func_800967EC(u32* arg0, s32 arg1);
 
 extern void game_dma_copy(uintptr_t devAddr, void* vAddr, u32 nbytes);
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/unk_game_load.s")
-
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/unk_game_load.s")
+//#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_80095A28.s")
+#if 1
 void func_80095A28(DmaEntry* entry) {
     u32 size;
     u32 i;
@@ -120,7 +121,7 @@ void func_80095A28(DmaEntry* entry) {
         }
     }
 }
-
+#endif
 void func_80095CE8(u8* arg0, s32 arg1) {
 
     s32 var_a1;
@@ -270,9 +271,9 @@ void func_80095CE8(u8* arg0, s32 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80096048.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_80096048.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_800961B8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_800961B8.s")
 
 u32* func_800962F0(s32 arg0) {
     s32 pad[2];
@@ -297,7 +298,7 @@ u32* func_800962F0(s32 arg0) {
     return sp34;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_800963CC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_800963CC.s")
 
 void func_800964C4(void) {
 }
@@ -352,7 +353,7 @@ u32* func_800965B8(s32 arg0) {
     return sp34;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80096694.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_80096694.s")
 
 void func_800967EC(u32* arg0, s32 arg1) {
     s32 var_a0;
@@ -379,9 +380,9 @@ loop_1:
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_8009684C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_8009684C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4F850/func_80096960.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_80096960.s")
 
 void func_80097E68(void) {
     DmaTransfer* transfer = D_800DAB38;

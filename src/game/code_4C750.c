@@ -1,24 +1,24 @@
 #include "global.h"
 
-struct unaligned_struct {
+typedef struct unaligned_struct {
     u16 pad[5];
-};
-struct UnkStruct_800DAB10 {
+} unaligned_struct;
+typedef struct UnkStruct_800DAB10 {
     struct unaligned_struct unk0;
     s32 unk4;
     s32 unk8;
-};
+} UnkStruct_800DAB10;
 
-struct UnkStruct_801CE658 {
+typedef struct UnkStruct_801CE658 {
     struct unaligned_struct unal[2];
     s32 unk0;
     s32 unk4;
-};
+} UnkStruct_801CE658;
 
-struct UnkStruct_801CB6C8 {
+typedef struct UnkStruct_801CB6C8 {
     Mtx unk0[1];
     char pad[0x1758];
-};
+} UnkStruct_801CB6C8;
 
 void func_8004BA18(void);
 void func_80051530(void);
@@ -63,7 +63,7 @@ extern s32 D_800DC698[];
 extern s32 D_800DC6BC[];
 
 #ifndef NEEDS_RODATA_IMPORTED
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80091F50.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80091F50.s")
 #else
 void func_80091F50(void) {
     s8 temp_t3;
@@ -321,17 +321,17 @@ void func_800922E4(void) {
     func_801E71A8();
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800922E4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_800922E4.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800926F4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_800926F4.s")
 
 // Matched but needs struct migration
 // https://decomp.me/scratch/2lS51
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80092938.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80092938.s")
 
 #ifndef NEEDS_RODATA_IMPORTED
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80092CF0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80092CF0.s")
 #else
 Gfx* func_80092CF0(Gfx* dList) {
     s32 pad;
@@ -593,7 +593,7 @@ s32 func_80093104(void) {
     }
 
     for (i = 0; i < 0x10; i++) {
-        result = osPfsFileState(&D_801CB658, i, &D_801CB418[i << 5]);
+        result = osPfsFileState(&D_801CB658, i, (OSPfsState *) &D_801CB418[i << 5]);
         D_801CB618[i] = result;
     }
 
@@ -654,7 +654,7 @@ Gfx* func_800933C4(Gfx* arg0) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_8009345C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_8009345C.s")
 
 Gfx* func_80093AFC(Gfx* GfxPtr) {
     gSPClearGeometryMode(GfxPtr++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
@@ -833,9 +833,9 @@ Gfx* func_80094200(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094338.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80094338.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_800948DC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_800948DC.s")
 
 Gfx* func_800949B8(Gfx* gdl, s32 courseId) {
     RGB* temp = &short_RGB[courseId];
@@ -865,7 +865,7 @@ void func_80094ABC(void) {
     D_800DAB0C = 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_4C750/func_80094ACC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80094ACC.s")
 
 void func_80094FE8(void) {
     D_801CE634 = gGameState;

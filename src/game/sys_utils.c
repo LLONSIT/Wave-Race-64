@@ -652,11 +652,11 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
 
     SysUtils_MtxFToMtx(arg1, arg0);
 }
-#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_800498A4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_utils/func_800498A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_80049A94.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_utils/func_80049A94.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_80049C9C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_utils/func_80049C9C.s")
 
 void SysUtils_MatrixAffineMultiply(MtxF* dest, MtxF* mtxFA, MtxF* mtxFB) {
     mtxFB->mf[0][0] =
@@ -763,6 +763,6 @@ UNUSED void SysUtils_ReadContData(void) {
     SysUtils_UpdateControllers();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_8004A3C0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_utils/func_8004A3C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_utils/func_8004A8B0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_utils/func_8004A8B0.s")

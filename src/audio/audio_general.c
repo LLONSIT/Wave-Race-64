@@ -380,7 +380,7 @@ void func_800BFFCC(s32 arg0) {
 }
 
 // https://decomp.me/scratch/qHsP1 STACK only
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800BFFEC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/audio/audio_general/func_800BFFEC.s")
 
 void func_800C0044(u8 arg0, s8 arg1, u8 arg2) {
     AudioThread_QueueCmdS8(((arg0 & 0xFF) << 8) | 0x06000000 | 6, arg2);
@@ -396,7 +396,7 @@ void func_800C00B0(s8 arg0, f32 arg1) {
 }
 
 // chonker
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C010C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/audio/audio_general/func_800C010C.s")
 
 void func_800C118C(s32 arg0) {
     if ((D_800E7CBC == 0) || (D_800E7C94 == 4)) {
@@ -405,7 +405,7 @@ void func_800C118C(s32 arg0) {
 }
 
 // https://decomp.me/scratch/cOjnQ
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C11CC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/audio/audio_general/func_800C11CC.s")
 
 void func_800C123C(u8* arg0) {
     arg0[4] = 1;
@@ -656,7 +656,7 @@ void func_800C1B98(void) {
 }
 
 // https://decomp.me/scratch/io8AQ
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C1BD8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/audio/audio_general/func_800C1BD8.s")
 
 void func_800C1DA8(void) {
     if (D_800E7C94 == 7) {
@@ -1416,7 +1416,7 @@ void func_800C37D4(s32 arg0) {
 }
 
 // chonker
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C37F4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/audio/audio_general/func_800C37F4.s")
 
 void func_800C3DE0(void) {
     func_800C37F4(0x20, 0);
@@ -1453,7 +1453,7 @@ void func_800C3E6C(s32 arg0) {
 
 // https://decomp.me/scratch/ymeGg
 // problematic switch
-#pragma GLOBAL_ASM("asm/nonmatchings/audio/audio_general/func_800C3EF4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/audio/audio_general/func_800C3EF4.s")
 
 void func_800C4078(void) {
     AudioThread_QueueCmdS8(0x06000B00U, 0);

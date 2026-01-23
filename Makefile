@@ -30,7 +30,7 @@ COMPILER ?= ido
 # Whether to colorize build messages
 COLOR ?= 1
 # Whether to hide commands or not
-VERBOSE ?= 1
+VERBOSE ?= 0
 # Command for printing messages during the make.
 PRINT ?= printf
 
@@ -237,7 +237,6 @@ else
   RM_MDEBUG = @:
 endif
 
-# acá está el hdp
 # Check code syntax with host compiler
 CHECK_WARNINGS := -Wall -Wextra -Wimplicit-fallthrough -Wno-unknown-pragmas -Wno-missing-braces -Wno-sign-compare -Wno-uninitialized
 # Have CC_CHECK pretend to be a MIPS compiler
@@ -410,7 +409,7 @@ else
 
 endif
 
-all: uncompressed
+all: finalrom
 
 toolchain:
 	@$(MAKE) -s -C $(TOOLS)
@@ -422,19 +421,18 @@ torch:
 init:
 	@$(MAKE) clean
 	@$(MAKE) extract -j $(N_THREADS)
-	@$(MAKE) uncompressed 
-  # -j $(N_THREADS)
+	@$(MAKE) finalrom -j $(N_THREADS)
 
-SF := ___  ___\n/ __||  _|\n\__ \|  _|\n|___/|_|\n
+WR := \n
 
-uncompressed: $(ROM)
+finalrom: $(ROM)
 ifneq ($(COMPARE),0)
-#	@md5sum --status -c $(TARGET).$(VERSION).$(REV).md5 && \
-#	$(PRINT) "$(BLUE)$(TARGET).$(VERSION).$(REV).z64$(NO_COL): $(GREEN)OK$(NO_COL)\n$(YELLOW) $(SF)" || \
-#	$(PRINT) "$(BLUE)$(TARGET).$(VERSION).$(REV).z64 $(RED)FAILED$(NO_COL)\n\
-#	$(RED)CAN'T LET YOU DO THAT, STARFOX.$(NO_COL)\n"
-#	@md5sum --status -c $(TARGET).$(VERSION).$(REV).md5
-	@sha1sum -c wr64.us.sha1
+	@echo "$(GREEN)Calculating Rom Checksum... $(YELLOW)$<$(NO_COL)"
+	@sha1sum --status -c $(TARGET).$(VERSION).$(REV).sha1 && \
+	$(PRINT) "$(BLUE)$(TARGET).$(VERSION).$(REV).z64$(NO_COL): $(GREEN)OK$(NO_COL)\n$(YELLOW) $(WR)" || \
+	$(PRINT) "$(BLUE)$(TARGET).$(VERSION).$(REV).z64 $(RED)FAILED$(NO_COL)\n\
+	$(RED)ROM BUILT FINE BUT IT DOESN'T MATCH THE ORIGINAL.$(NO_COL)\n"
+	@sha1sum --status -c $(TARGET).$(VERSION).$(REV).sha1
 endif
 
 
@@ -537,4 +535,4 @@ build/src/libultra/libc/ll.o: src/libultra/libc/ll.c
 # Print target for debugging
 print-% : ; $(info $* is a $(flavor $*) variable set to [$($*)]) @true
 
-.PHONY: all uncompressed compressed clean init extract expected format checkformat   assets context disasm toolchain
+.PHONY: all finalrom clean init extract expected format checkformat assets context disasm toolchain

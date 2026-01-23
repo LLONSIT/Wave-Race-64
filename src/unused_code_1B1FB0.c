@@ -5,25 +5,25 @@ extern s32 D_800D45DC[]; // array pointing to some mio0 adresses
 s32 func_1B1FB0_802C71B8(s32, char, s32, s32);
 extern s32 D_802C7718;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C5800.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C5800.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C5BA4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C5BA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C5DF4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C5DF4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C62E4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C62E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C67BC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C67BC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C6970.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C6970.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C6C1C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C6C1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C6E40.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C6E40.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C6FF8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C6FF8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C71B8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/unused_code_1B1FB0/func_1B1FB0_802C71B8.s")
 
 s32 func_1B1FB0_802C7304(s32 arg0, s8* arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 s1 = arg3;

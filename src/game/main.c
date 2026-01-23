@@ -244,5 +244,5 @@ void Main_AudioThread(void* entry) {
 #else
 // .data
 OSTask* D_800D4630 = NULL; // sAudioTask
-#pragma GLOBAL_ASM("asm/nonmatchings/game/main/Main_AudioThread.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/main/Main_AudioThread.s")
 #endif

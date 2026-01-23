@@ -231,8 +231,8 @@ void func_801E74BC(FadeTransition* fade) {
             break;
     }
 
-    func_800481E0((MF*) &D_801CE5F8[0x1300], &D_80228A34, 33.0f, 1.0f, 16.0f, 4096.0f, 0.0f, 0.0f);
-    func_80048A88(&D_801CE5F8[0x1340], 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, (f32) fade->unk_18, (f32) fade->unk_1A,
+    func_800481E0((Mtx*) &D_801CE5F8[0x1300], &D_80228A34, 33.0f, 1.0f, 16.0f, 4096.0f, 0.0f, 0.0f);
+    func_80048A88((Mtx*)&D_801CE5F8[0x1340], 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, (f32) fade->unk_18, (f32) fade->unk_1A,
                   -250.0f, 0.05f);
 
     fade->unk_1E++;
@@ -284,8 +284,8 @@ void func_801E76C0(FadeTransition* fade) {
             break;
     }
 
-    func_800481E0((MF*) &D_801CE5F8[0x1300], &D_80228A34, 33.0f, 1.0f, 16.0f, 4096.0f, 0.0f, 0.0f);
-    func_80048A88(D_801CE5F8 + 0x1340, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, (f32) fade->unk_18, (f32) fade->unk_1A,
+    func_800481E0((Mtx*) &D_801CE5F8[0x1300], &D_80228A34, 33.0f, 1.0f, 16.0f, 4096.0f, 0.0f, 0.0f);
+    func_80048A88((Mtx*)&D_801CE5F8[0x1340], 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, (f32) fade->unk_18, (f32) fade->unk_1A,
                   -250.0f, 0.05f);
 
     fade->unk_1E += 1;
@@ -296,7 +296,7 @@ void func_801E76C0(FadeTransition* fade) {
 }
 
 // https://decomp.me/scratch/udOjy 86.02%
-#pragma GLOBAL_ASM("asm/nonmatchings/codeseg/wr64_fade/func_801E7908.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/wr64_fade/func_801E7908.s")
 
 Gfx* func_801E7C58(Gfx* dList, u32 ulx, u32 uly, u32 lrx, u32 lry, u32 r, u32 g, u32 b, u32 a) {
     if (r > 255) {

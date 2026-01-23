@@ -1,8 +1,8 @@
 #include "global.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i15/ovl_1CFB60/func_i15_802C5800.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i15/ovl_1CFB60/func_i15_802C5800.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i15/ovl_1CFB60/func_i15_802C5CE8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i15/ovl_1CFB60/func_i15_802C5CE8.s")
 
 void func_i15_802C5EE4(s32 arg0) {
     UnkStruct_D_802C6E80* thing;
@@ -28,9 +28,9 @@ void func_i15_802C5EE4(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i15/ovl_1CFB60/func_i15_802C5F50.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i15/ovl_1CFB60/func_i15_802C5F50.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i15/ovl_1CFB60/func_i15_802C602C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i15/ovl_1CFB60/func_i15_802C602C.s")
 
 void func_i15_802C6C1C(void) {
     if (D_i15_802C6DF4) {
