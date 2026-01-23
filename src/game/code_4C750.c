@@ -593,7 +593,7 @@ s32 func_80093104(void) {
     }
 
     for (i = 0; i < 0x10; i++) {
-        result = osPfsFileState(&D_801CB658, i, (OSPfsState *) &D_801CB418[i << 5]);
+        result = osPfsFileState(&D_801CB658, i, (OSPfsState*) &D_801CB418[i << 5]);
         D_801CB618[i] = result;
     }
 

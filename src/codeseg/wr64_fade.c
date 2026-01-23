@@ -232,8 +232,8 @@ void func_801E74BC(FadeTransition* fade) {
     }
 
     func_800481E0((Mtx*) &D_801CE5F8[0x1300], &D_80228A34, 33.0f, 1.0f, 16.0f, 4096.0f, 0.0f, 0.0f);
-    func_80048A88((Mtx*)&D_801CE5F8[0x1340], 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, (f32) fade->unk_18, (f32) fade->unk_1A,
-                  -250.0f, 0.05f);
+    func_80048A88((Mtx*) &D_801CE5F8[0x1340], 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, (f32) fade->unk_18,
+                  (f32) fade->unk_1A, -250.0f, 0.05f);
 
     fade->unk_1E++;
     if (fade->unk_1E >= 2) {
@@ -285,8 +285,8 @@ void func_801E76C0(FadeTransition* fade) {
     }
 
     func_800481E0((Mtx*) &D_801CE5F8[0x1300], &D_80228A34, 33.0f, 1.0f, 16.0f, 4096.0f, 0.0f, 0.0f);
-    func_80048A88((Mtx*)&D_801CE5F8[0x1340], 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, (f32) fade->unk_18, (f32) fade->unk_1A,
-                  -250.0f, 0.05f);
+    func_80048A88((Mtx*) &D_801CE5F8[0x1340], 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, (f32) fade->unk_18,
+                  (f32) fade->unk_1A, -250.0f, 0.05f);
 
     fade->unk_1E += 1;
     if (fade->unk_1E >= 2) {

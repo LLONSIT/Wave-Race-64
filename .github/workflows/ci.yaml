@@ -5,7 +5,7 @@ on: [push, pull_request_target]
 
 jobs:
   build_repo:
-    name: Build US REV 1
+    name: Build ROM US REV 1
     runs-on: ubuntu-latest
 
     strategy:
