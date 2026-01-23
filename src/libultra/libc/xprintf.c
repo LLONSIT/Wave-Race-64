@@ -29,7 +29,6 @@ char spaces[] = "                                ";
 char zeroes[] = "00000000000000000000000000000000";
 
 static void _Putfld(printf_struct*, va_list*, fmt_type, fmt_type*);
-
 s32 _Printf(char* (*prout)(char*, const char*, size_t), char* dst, const char* fmt, va_list args) {
     static const char flags_str[] = " +-#0";
     static const u32 flags_arr[] = { FLAGS_SPACE, FLAGS_PLUS, FLAGS_MINUS, FLAGS_HASH, FLAGS_ZERO, 0 };

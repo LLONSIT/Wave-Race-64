@@ -1322,7 +1322,7 @@ void func_80085510(void) {
         var_f0 = (sp4C * sp44) + (sp48 * sp40);
     }
 
-    temp_f18 = ((D_801C3C58->pad54 * 70.0f) / D_801C3C50->unkBB8);
+    // temp_f18 = ((D_801C3C58->pad54 * 70.0f) / D_801C3C50->unkBB8);
 
     var_f12 = var_f0;
     D_801C3C58->pad58 = var_f0;

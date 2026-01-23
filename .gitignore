@@ -21,6 +21,7 @@ asm/
 src/assets/*
 include/assets/*
 bin/
+mio0/
 
 # Automatically generated files, so they should be ignored
 waverace64.ld

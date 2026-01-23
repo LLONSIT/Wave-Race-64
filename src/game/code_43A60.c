@@ -1,4 +1,5 @@
-#include "common.h"
+#include "global.h"
+#include "rider.h"
 
 struct unk_D_801C3C60 {
     struct unk_D_801C3C58* unk0;

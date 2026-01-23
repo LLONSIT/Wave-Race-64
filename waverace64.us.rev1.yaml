@@ -3,24 +3,25 @@ name: Wave Race 64 (North America)
 sha1: 508dfc2d4caa42b6f6de5263d0aed5e44ac7966a
 options:
   basename: waverace64
-  target_path: baserom.us.z64
-  elf_path: build/waverace64.us.elf
+  target_path: baserom.us.rev1.z64
+  elf_path: build/waverace64.us.rev1.elf
 
   base_path: .
   compiler: IDO
   find_file_boundaries: True
   header_encoding: ASCII
   platform: n64
-  undefined_funcs_auto_path: undefined_funcs_auto.txt
-  undefined_syms_auto_path: undefined_syms_auto.txt
+  ld_script_path: linker_scripts/us/rev1/waverace64.ld
+  undefined_funcs_auto_path: linker_scripts/us/rev1/auto/undefined_funcs_auto.ld
+  undefined_syms_auto_path: linker_scripts/us/rev1/auto/undefined_syms_auto.ld
   symbol_addrs_path: 
-  - symbol_addrs.txt
-  - ovl_symbols.txt
-  - audio_symbols.txt
-  - libultra_symbols.txt
-  asm_path: asm
+  - linker_scripts/us/rev1/symbol_addrs.txt
+  - linker_scripts/us/rev1/ovl_symbols.txt
+  - linker_scripts/us/rev1/audio_symbols.txt
+  - linker_scripts/us/rev1/libultra_symbols.txt
+  asm_path: asm/us/rev1
   src_path: src
-  asset_path: bin
+  asset_path: bin/us/rev1
   build_path: build
   extensions_path: tools/splat_ext
   ld_legacy_generation: True
@@ -34,7 +35,7 @@ options:
   disasm_unknown: True
   create_asm_dependencies: True
   ld_dependencies: True
-#  o_as_suffix: True
+  o_as_suffix: True
 
 segments:
   - name: header
