@@ -29,6 +29,7 @@ waverace64.d
 undefined_funcs_auto.txt
 undefined_syms_auto.txt
 torch.hash.yml
+*_auto.ld
 
 # CTX files for m2c should be ignored as we generate those
 ctx.c
