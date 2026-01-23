@@ -208,6 +208,7 @@ OBJDUMP         := $(MIPS_BINUTILS_PREFIX)objdump
 ICONV           := iconv
 ASM_PROC        := $(PYTHON) $(TOOLS)/asm-processor/build.py
 TORCH           := $(TOOLS)/Torch/cmake-build-release/torch
+CRC             := $(TOOLS)/n64crc $(BUILD_DIR)/$(TARGET).$(VERSION).$(REV).z64
 
 # Prefer clang as C preprocessor if installed on the system
 ifneq (,$(call find-command,clang))
@@ -485,6 +486,8 @@ disasm:
 $(ROM): $(ELF)
 	$(call print,ELF->ROM:,$<,$@)
 	$(V)$(OBJCOPY) -O binary $< $@
+	$(call print,Fixing ROM CRC:,$<,$@)
+	@$(CRC)
 
 # Link
 $(ELF): $(O_FILES) $(LD_SCRIPT)
