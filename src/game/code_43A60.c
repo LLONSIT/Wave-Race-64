@@ -67,10 +67,10 @@ void func_80088EA8(void) {
     }
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43A60/func_80088EA8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43A60/func_80088EA8.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43A60/func_800890B4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43A60/func_800890B4.s")
 
 void func_800893A8(void) {
     func_800890B4();

@@ -155,7 +155,7 @@ void func_8004B0F8(struct UnkStruct_8004B0F8* arg0) {
     arg0->unk4C = (f32) (var_f0 / var_f14);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004B1B4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_5480/func_8004B1B4.s")
 
 void func_8004B680(void) {
 }
@@ -222,7 +222,7 @@ void func_8004B6E0(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004BA18.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_5480/func_8004BA18.s")
 
 Gfx* func_8004BC40(Gfx* gdl) {
     gSPDisplayList(gdl++, &D_1000140);
@@ -231,4 +231,4 @@ Gfx* func_8004BC40(Gfx* gdl) {
     return gdl;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_5480/func_8004BC98.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_5480/func_8004BC98.s")

@@ -1397,7 +1397,7 @@ void func_80085510(void) {
     D_801C3C58->unkA8 = (s32) D_801C3C50->unkB52;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_3AC00/func_80085510.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_3AC00/func_80085510.s")
 #endif
 
 void func_80085964(void) {

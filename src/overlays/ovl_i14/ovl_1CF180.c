@@ -38,9 +38,9 @@ void func_i14_802C5840(void) {
     func_800C37F4(0x31, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i14/ovl_1CF180/func_i14_802C5924.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i14/ovl_1CF180/func_i14_802C5924.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i14/ovl_1CF180/func_i14_802C5B70.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i14/ovl_1CF180/func_i14_802C5B70.s")
 
 void func_i14_802C5E5C(s32 arg0) {
     D_801CE634 = gGameState;

@@ -46,10 +46,10 @@ def firstDiffMain():
 
     buildFolder = Path("build")
 
-    BUILTROM = Path(buildFolder / f"waverace64.us.z64")
-    BUILTMAP = buildFolder / f"waverace64.us.map"
+    BUILTROM = Path(buildFolder / f"waverace64.us.rev1.z64")
+    BUILTMAP = buildFolder / f"waverace64.us.rev1.map"
 
-    EXPECTEDROM = Path("baserom.us.z64")
+    EXPECTEDROM = Path("baserom.us.rev1.z64")
     EXPECTEDMAP = "expected" / BUILTMAP
 
     mapfile_parser.frontends.first_diff.doFirstDiff(BUILTMAP, EXPECTEDMAP, BUILTROM, EXPECTEDROM, args.count, mismatchSize=True, addColons=args.add_colons, bytesConverterCallback=decodeInstruction)

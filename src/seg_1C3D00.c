@@ -32,7 +32,7 @@ Gfx* func_1C3D00_802C5800(Gfx* gDisplayListHead) {
     return gDisplayListHead;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/seg_1C3D00/func_1C3D00_802C58DC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/seg_1C3D00/func_1C3D00_802C58DC.s")
 
 void func_1C3D00_802C5C4C(s32 arg0) {
     D_801CE634 = gGameState;

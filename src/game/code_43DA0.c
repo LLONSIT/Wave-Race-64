@@ -249,9 +249,9 @@ void func_80089F28(void) {
     D_801C41A0.fwork[0x34] = sp40.mf[1][1] * (D_800D9924[gCourseID] - 0x1E);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008A0E0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008A0E0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008BD2C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008BD2C.s")
 
 Gfx* func_8008CFEC(Gfx* gdl) {
     UnkStruct_8008962C* var_t1;
@@ -297,17 +297,17 @@ Gfx* func_8008CFEC(Gfx* gdl) {
     return gdl;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008D454.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008D454.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008D94C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008D94C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008DFD0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008DFD0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008E4B0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008E4B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008E794.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008E794.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_8008FB74.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008FB74.s")
 
 Gfx* Draw_WaterEffects(Gfx* gdl) {
     s32 pad;
@@ -396,9 +396,9 @@ Gfx* Draw_WaterEffects(Gfx* gdl) {
     return gdl;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_800916B4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_800916B4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_80091CD8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_80091CD8.s")
 
 #ifdef NEEDS_DATA
 void* func_80091DBC(Gfx* gdl) {
@@ -428,5 +428,5 @@ void* func_80091DBC(Gfx* gdl) {
     return gdl;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_43DA0/func_80091DBC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_80091DBC.s")
 #endif

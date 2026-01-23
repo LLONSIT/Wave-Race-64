@@ -16,7 +16,7 @@ void func_i4_802C5800(void) {
     func_80069798(D_801CE5F8 + 0xA80, D_801CE5F8 + 0x1780, D_801CE5F8 + 0xA40, &D_802C76AC, &D_80198310, &D_80198350);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C58F8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C58F8.s")
 
 Gfx* func_i4_802C5B78(Gfx* dList) {
     Gfx* temp_v0;
@@ -59,11 +59,11 @@ Gfx* func_i4_802C5B78(Gfx* dList) {
     return dList;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C5CDC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C5CDC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C6778.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C6778.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C69C4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C69C4.s")
 
 void func_i4_802C6BAC(void) {
     switch (D_i4_802C7538) {
@@ -82,11 +82,11 @@ void func_i4_802C6BAC(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C6C2C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C6C2C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C6ED0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C6ED0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C70C0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i4/ovl_1BE0B0/func_i4_802C70C0.s")
 
 void func_i4_802C7344(void) {
     if (D_801CE65A[D_802C76B0].unk0 & (A_BUTTON | Z_TRIG | START_BUTTON)) {
