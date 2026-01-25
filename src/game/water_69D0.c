@@ -10,7 +10,7 @@ typedef struct UnkStruct_80162420_s {
 
 extern UnkStruct_80162420 D_80162420[];
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/water_69D0/func_8004C1D0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/water_69D0/func_8004C1D0.s")
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/water_69D0/func_8004C998.s")
 

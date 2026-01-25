@@ -181,10 +181,12 @@ endif
 ifeq ($(COLOR),1)
 NO_COL  := \033[0m
 RED     := \033[0;31m
+RED2    := \033[1;31m
 GREEN   := \033[0;32m
-BLUE    := \033[0;34m
 YELLOW  := \033[0;33m
-BLINK   := \033[33;5m
+BLUE    := \033[0;34m
+PINK    := \033[0;35m
+CYAN    := \033[0;36m
 endif
 
 # Common build print status function
@@ -421,9 +423,9 @@ WR := \n
 
 finalrom: $(ROM)
 ifneq ($(COMPARE),0)
-	@echo "$(GREEN)Calculating Rom Checksum... $(YELLOW)$<$(NO_COL)"
+	@printf "$(GREEN)Calculating Rom Checksum $(NO_COL)  $<\n"
 	@sha1sum --status -c $(TARGET).$(VERSION).$(REV).sha1 && \
-	$(PRINT) "$(BLUE)$(TARGET).$(VERSION).$(REV).z64$(NO_COL): $(GREEN)OK$(NO_COL)\n$(YELLOW) $(WR)" || \
+	$(PRINT) "$(BLUE)$(TARGET).$(VERSION).$(REV).z64$(NO_COL): $(GREEN)OK$(NO_COL)$(YELLOW) $(WR)" || \
 	$(PRINT) "$(BLUE)$(TARGET).$(VERSION).$(REV).z64 $(RED)FAILED$(NO_COL)\n\
 	$(RED)ROM BUILT FINE BUT IT DOESN'T MATCH THE ORIGINAL.$(NO_COL)\n"
 	@sha1sum --status -c $(TARGET).$(VERSION).$(REV).sha1
