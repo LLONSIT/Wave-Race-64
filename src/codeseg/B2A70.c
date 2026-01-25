@@ -3,7 +3,6 @@
 extern s16 gCurrentPauseMenuOption;
 extern s16 D_801CE62C;
 extern s32 D_80228910;
-extern s32 gRiderGameModes;
 extern s16 D_801CE628;
 
 // Needs more context

@@ -242,3 +242,4 @@ _osContInitialized = 0x800E8FE0;
 _bnkfPatchBank = 0x800CA710;
 alBnkfNew = 0x800CA804;
 bnkf_stub = 0x800CA700;
+__osException = 0x800CAB60; // defined:true type:func

@@ -22,7 +22,7 @@ extern u16 D_80228A34;
 extern Gfx* gDisplayListHead;
 
 // Global message, used in main.c and game_1050
-extern OSMesgQueue D_80154130;
+extern OSMesgQueue gMainThreadMesgQueue;
 
 // Used in 3 files (or more)
 extern s32 D_800D461C;

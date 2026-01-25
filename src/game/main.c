@@ -6,7 +6,7 @@
 #include "os_vi.h"
 
 // TODO: Classify by .bss, .data etc..
-extern OSTask* second_task;
+extern OSTask* gCurrentAudioOSTask;
 extern OSTask* first_task;
 
 //.data, .rodata
@@ -34,7 +34,7 @@ extern s32 D_801531E0;
 extern OSThread gAudioThread;
 extern OSThread D_80153EF0;
 extern OSMesgQueue D_801540B8;
-extern OSMesgQueue D_801540E8;
+extern OSMesgQueue gAudioTaskMesgQueue;
 extern OSMesgQueue D_80154100;
 extern OSMesgQueue D_80154118;
 extern void* D_80154248;
@@ -59,7 +59,7 @@ void main(void);
 void func_80047B00(void);
 void func_800980C8(void);
 void func_800980D0(void*);
-void Main_AudioThread(void* entry);
+void SysAudio_AudioThreadEntry(void* entry);
 
 void func_80047470(void) {
     osSpTaskYield();
@@ -68,8 +68,8 @@ void func_80047470(void) {
 }
 
 void func_800474A0(void) {
-    osSpTaskLoad(second_task);
-    osSpTaskStartGo(second_task);
+    osSpTaskLoad(gCurrentAudioOSTask);
+    osSpTaskStartGo(gCurrentAudioOSTask);
     D_800D4600 = 2;
     D_800D4604 = 1;
 }
@@ -87,17 +87,17 @@ void Main_Thread(void* entry) {
 
     osCreateMesgQueue(&D_801540B8, &D_80154248, 1);
     osCreateMesgQueue(&D_801540D0, &D_8015424C, 1);
-    osCreateMesgQueue(&D_801540E8, &D_80154250, 1);
+    osCreateMesgQueue(&gAudioTaskMesgQueue, &D_80154250, 1);
     osCreateMesgQueue(&D_80154100, &D_80154254, 1);
     osCreateMesgQueue(&D_80154118, &D_80154258, 1);
-    osCreateMesgQueue(&D_80154130, &D_80154260, 0x10);
+    osCreateMesgQueue(&gMainThreadMesgQueue, &D_80154260, 0x10);
     osSetEventMesg(5U, &D_801540D0, (void*) 0xB);
-    osSetEventMesg(4U, &D_80154130, (void*) 0x17);
-    osSetEventMesg(9U, &D_80154130, (void*) 0x18);
-    osViSetEvent(&D_80154130, (void*) 0x19, 1U);
+    osSetEventMesg(4U, &gMainThreadMesgQueue, (void*) 0x17);
+    osSetEventMesg(9U, &gMainThreadMesgQueue, (void*) 0x18);
+    osViSetEvent(&gMainThreadMesgQueue, (void*) 0x19, 1U);
     func_800980C8(); // stub
 
-    osCreateThread(&gAudioThread, 4, Main_AudioThread, NULL, &gIdleThread, 0x14);
+    osCreateThread(&gAudioThread, 4, SysAudio_AudioThreadEntry, NULL, &gIdleThread, 0x14);
     if (D_800D4628 != 0) {
         osStartThread(&gAudioThread);
     }
@@ -108,9 +108,9 @@ void Main_Thread(void* entry) {
     }
 
     while (true) {
-        osRecvMesg(&D_80154130, &sp4C, 1);
+        osRecvMesg(&gMainThreadMesgQueue, &sp4C, 1);
         if (sp4C == (void*) 0x19) {
-            osSendMesg(&D_801540E8, (void*) 0x1F, OS_MESG_NOBLOCK);
+            osSendMesg(&gAudioTaskMesgQueue, (void*) 0x1F, OS_MESG_NOBLOCK);
 
             D_800D4610++;
             if ((D_800D4610 - D_800D4614) >= D_800D4618) {
@@ -222,27 +222,3 @@ void bootproc(void) {
 void func_80047B00(void) {
     func_800BF370();
 }
-
-// Extra nops at the end?
-#ifdef NON_MATCHING
-extern OSMesg D_801542D0;
-
-void Main_AudioThread(void* entry) {
-    static OSTask* sAudioTask = NULL;
-    AudioLoad_Init();
-    while (true) {
-        osRecvMesg(&D_801540E8, &D_801542D0, 1);
-        if (sAudioTask != 0) {
-            second_task = sAudioTask;
-            osSendMesg(&D_80154130, (void*) 0x16, OS_MESG_NOBLOCK);
-        }
-
-        sAudioTask = AudioThread_CreateTask();
-        continue;
-    }
-}
-#else
-// .data
-OSTask* D_800D4630 = NULL; // sAudioTask
-#pragma GLOBAL_ASM("asm/nonmatchings/game/main/Main_AudioThread.s")
-#endif

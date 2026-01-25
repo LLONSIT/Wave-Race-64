@@ -44,6 +44,22 @@ segments:
   - name: boot
     type: bin
     start: 0x40
+
+  - name: audio_heap_bss
+    type: code
+    start: 0x1000
+    vram: 0x80001000
+    bss_size: 0x37100 # guess
+    subsegments:
+      - { type: bss, start: 0x1000, vram: 0x80001000, name: audio_heap_bss } 
+
+  - name: audio_bss
+    type: code
+    start: 0x1000
+    vram: 0x80038100
+    bss_size: 0xE700 # guess
+    subsegments:
+      - { type: bss, start: 0x1000, vram: 0x80038100, name: audio_bss }   
   
   - name: entry
     type: code
@@ -65,6 +81,7 @@ segments:
       # GAME CODE
       - [0x1050, c, game/sys_main] # Some GFX macros
       - [0x1C70, c, game/main]
+      - [0x2320, c, sys/sys_audio]
       - [0x23E0, c, game/sys_utils]
       - [0x5480, c, game/code_5480]
       - [0x69D0, c, game/water_69D0]
@@ -220,7 +237,7 @@ segments:
 
       - [0x8EDD0, data]
       - [0x8EDF0, data]
-      - [0x8EE30, .data, game/main]
+      - [0x8EE30, .data, sys/sys_audio]
       - [0x8EE40, data]
       - [0x8EFE0, .data, game/code_BD30]
       - [0x8F000, data]
@@ -324,7 +341,7 @@ segments:
 
   - name: codeseg # This segment is loaded into memory on func_80098190
     type: code
-    start: 0xA95D0
+    start: 0xA95D0           
     vram: 0x801DAFA0
     subsegments:
     - [0xA95D0, c, codeseg/A95D0]
@@ -756,21 +773,19 @@ segments:
     - [0x405810, bin, mio0_128]
 
 
-
-  - name: sound_data_ctl
+  - name: SoundDataADSR
     type: bin
     start: 0x40B530
 
-  - name: sound_data
+  - name: SoundDataRaw
     type: bin
     start: 0x428C30
 
-    #TODO: Check this
-  - name: sound_sequences
+  - name: MusicData
     type: bin
     start: 0x7AE8B0
 
-  - name: bank_sets
+  - name: BankSetsData
     type: bin
     start: 0x7C4B70
 

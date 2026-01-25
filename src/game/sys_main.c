@@ -88,7 +88,7 @@ void SysMain_CreateGfxTask(OSTask* task) {
 
 void func_80046CF8(OSTask* task) {
     first_task = task;
-    osSendMesg(&D_80154130, (OSMesg) 0x15, OS_MESG_NOBLOCK);
+    osSendMesg(&gMainThreadMesgQueue, (OSMesg) 0x15, OS_MESG_NOBLOCK);
 }
 
 void SysMain_GfxInitBuffers(void) {
