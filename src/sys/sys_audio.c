@@ -11,7 +11,7 @@ void SysAudio_AudioThreadEntry(void* entry) {
     while (true) {
         osRecvMesg(&gAudioTaskMesgQueue, &sAudioTaskMsg, 1);
         if (sAudioTask != 0) {
-            gCurrentAudioOSTask = (s32)sAudioTask;
+            gCurrentAudioOSTask = (s32) sAudioTask;
             osSendMesg(&gMainThreadMesgQueue, (void*) 0x16, OS_MESG_NOBLOCK);
         }
 

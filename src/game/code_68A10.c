@@ -5,14 +5,12 @@ typedef struct UnkStruct_801AE948_s {
     Mtx unk4140[1];
 } UnkStruct_801AE948;
 
-
 typedef struct UnkStruct_801D0798_s {
     /* 0x0000 */ char pad0[0x1C54];
-    /* 0x1C54 */ s32 unk1C54;                       /* inferred */
-    /* 0x1C58 */ s32 unk1C58;                       /* inferred */
-    /* 0x1C5C */ char pad1C5C[0x18];                /* maybe part of unk1C58[7]? */
-} UnkStruct_801D0798;                               /* size = 0x1C74 */
-
+    /* 0x1C54 */ s32 unk1C54;        /* inferred */
+    /* 0x1C58 */ s32 unk1C58;        /* inferred */
+    /* 0x1C5C */ char pad1C5C[0x18]; /* maybe part of unk1C58[7]? */
+} UnkStruct_801D0798;                /* size = 0x1C74 */
 
 extern UnkStruct_801D0798 D_801D0798[];
 extern f32 D_801D79BC;
@@ -75,13 +73,12 @@ void func_800AE210(s32 rider) {
     f32 temp_f0_2;
     f32 temp_f14;
     f32 temp_f2;
-    StructVarS0* temp_v0; //Real
+    StructVarS0* temp_v0; // Real
     UnkStruct_80192690* temp_v0_2;
     UnkStruct_801D0798* var_v1;
 
-
     if ((D_801D7A08 != 0) && (gRiders == rider)) {
-        temp_v0 = &D_801CF060[D_801D7A04]; //Struct wise..
+        temp_v0 = &D_801CF060[D_801D7A04]; // Struct wise..
         D_801D79C8 = temp_v0->unk24;
         D_801D79CC = temp_v0->unk28;
         D_801D79D0 = temp_v0->unk2C;
@@ -91,7 +88,7 @@ void func_800AE210(s32 rider) {
         D_801D79EC = -temp_v0->unk38;
         D_801D79F0 = temp_v0->unk34;
         D_801D79F4 = temp_v0->unk30;
-        
+
         var_v1 = &D_801D0798[rider];
         D_801D79BC = temp_v0->unk64 + (96.0f * D_801D79E0);
         D_801D79C0 = temp_v0->unk68 - 5.0f;
@@ -123,13 +120,13 @@ void func_800AE210(s32 rider) {
         D_801D7A0C = (s32) temp_v0_2->unk16E0;
         D_801D79F8 = temp_v0_2->unkBF0;
         D_801D79FC = temp_v0_2->unkBF4;
-        if ((D_801D7A14 != 0) && (temp_v0_2->unkC4C > 0.0f) && 
-        (((func_8004D30C(D_801D79BC, D_801D79C4) + 4.0f) < D_801D79C0))) {
+        if ((D_801D7A14 != 0) && (temp_v0_2->unkC4C > 0.0f) &&
+            (((func_8004D30C(D_801D79BC, D_801D79C4) + 4.0f) < D_801D79C0))) {
             D_801D0798[rider].unk1C54 = 1;
         } else {
             D_801D0798[rider].unk1C54 = 0;
         }
-        D_801D7A10 =  temp_v0_2->unk16CC;
+        D_801D7A10 = temp_v0_2->unk16CC;
         if (D_801D7A10 != 0) {
             D_801D79C0 += 2.0f;
         }
@@ -140,14 +137,13 @@ void func_800AE210(s32 rider) {
         D_801D7A00 = func_8004D30C(D_801D79BC, D_801D79C4);
         if (D_801D79C0 <= D_801D7A00) {
             D_801D0798[rider].unk1C58 = 0;
-            
         }
     } else {
-        D_801D79C0 -= 2.0f; 
-        D_801D0798[rider].unk1C58 = 1; 
+        D_801D79C0 -= 2.0f;
+        D_801D0798[rider].unk1C58 = 1;
         D_801D7A00 = D_801D79C0 + 12.0f;
     }
-    
+
     temp_f0_2 = sqrtf(SQ(D_801D79EC) + SQ(D_801D79F4));
     if (temp_f0_2 > 0.0f) {
         float expr1 = (D_801D79EC / temp_f0_2);
@@ -155,7 +151,7 @@ void func_800AE210(s32 rider) {
         D_801D79D8 = (D_801D79C8 * expr1) + (D_801D79D0 * expr2);
 
         D_801D79D8 = FABS(D_801D79D8);
-        
+
     } else {
         D_801D79D8 = sqrtf(SQ(D_801D79C8) + SQ(D_801D79D0));
     }

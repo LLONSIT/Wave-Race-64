@@ -63,9 +63,8 @@ void func_8007F700(UnkStruct_80192690* arg0) {
                 var_f2 = var_v0->unkC;
                 var_f0 = var_v0->unk10;
                 temp_f12 = var_v0->unk14;
-                
             }
-            
+
             if (temp_f14 < var_f16) {
                 var_f16 = temp_f14;
                 var_f2 = var_v0->unk18;

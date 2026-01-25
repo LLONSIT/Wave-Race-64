@@ -1,7 +1,7 @@
 #include "global.h"
 
 #define TWO_OVER_SQRT_3 1.1547005f
-#define DIRLIGHT_DIRECTION ( 0.57735026f)
+#define DIRLIGHT_DIRECTION (0.57735026f)
 
 typedef struct UnkStruct_80162420_s {
     s16 unk0;
@@ -69,7 +69,7 @@ void func_8004F3D4(f32 arg0, f32 arg1, s32 arg2) {
     temp_hi_2 = (s32) (TWO_OVER_SQRT_3 * arg1) % 24576;
     temp_a0 = temp_hi_2 >> 6;
     temp_a1 = temp_hi >> 6;
-    
+
     if ((temp_hi - (temp_a1 * 64)) < (temp_hi_2 - (temp_a0 * 64))) {
         var_v0 = D_80162420 + ((((((temp_a0 + 1) + (temp_a1 & ~0x7F) + 0x600) % 384)) * 128) + (temp_a1 & 0x7F));
     } else {
