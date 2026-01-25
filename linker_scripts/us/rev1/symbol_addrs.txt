@@ -1,7 +1,7 @@
 
 //Game Symbols
 first_task  = 0x801542B4;
-second_task = 0x801542B8;
+gCurrentAudioOSTask = 0x801542B8;
 create_obj =  0x800B490C;
 gDisplayListHead = 0x80151944;
 unk_game_load = 0x80095050;
@@ -50,7 +50,6 @@ gDifficulty = 0x801CB338;
 gGameModes = 0x801CE620;
 Mio0_Decompress = 0x800B4D30;
 osTvType = 0x80000300;
-Main_AudioThread = 0x80047B20;
 Main_IdleThread = 0x8004791C;
 gIdleThread = 0x801539E0;
 game_dma_copy = 0x80097EC8; //defined:true
@@ -109,9 +108,51 @@ Save_PfsFindFile = 0x8007D1B8;
 Save_PfsCheckFree = 0x8007D24C;
 Save_GenCheckSum = 0x8007BBF8;
 
+gMainThreadMesgQueue = 0x80154130;
+gAudioTaskMesgQueue = 0x801540E8;
+sAudioTaskMsg = 0x801542D0;
+
 D_80198350 = 0x80198350;
 D_801CE61C = 0x801CE61C;
 D_801CE65A = 0x801CE65A;
 D_801C3A10 = 0x801C3A10;
 D_80198310 = 0x80198310;
 D_801CE692 = 0x801CE692;
+
+D_800452F8 = 0x800452F8; //defined:true
+D_8003FE64 = 0x8003FE64; //defined:true
+D_8003FF48 = 0x8003FF48; //defined:true
+D_80038220 = 0x80038220; //defined:true
+D_8003FF4F = 0x8003FF4F; //defined:true 
+D_8003FCCF = 0x8003FCCF; //defined:true
+
+D_800D4A3D = 0x800D4A3D; //defined:true
+D_800D4A3E = 0x800D4A3E; //defined:true
+D_800D4A3F = 0x800D4A3F; //defined:true
+D_800D826A = 0x800D826A; //defined:true
+D_800DA95B = 0x800DA95B; //defined:true
+D_800DA95C = 0x800DA95C; //defined:true
+D_800DA95D = 0x800DA95D; //defined:true
+D_800DA9C8 = 0x800DA9C8; //defined:true
+D_800DA9D0 = 0x800DA9D0; //defined:true
+D_800DA9D8 = 0x800DA9D8; //defined:true
+D_800DA9F0 = 0x800DA9F0; //defined:true
+D_800DA9FC = 0x800DA9FC; //defined:true
+D_800DAA04 = 0x800DAA04; //defined:true
+D_800DAA08 = 0x800DAA08; //defined:true
+D_800DAA10 = 0x800DAA10; //defined:true
+D_800DAA34 = 0x800DAA34; //defined:true
+D_800DAAB4 = 0x800DAAB4; //defined:true
+D_800DAAD8 = 0x800DAAD8; //defined:true
+D_800DAB6C = 0x800DAB6C; //defined:true
+D_800DB58C = 0x800DB58C; //defined:true
+D_800E7F75 = 0x800E7F75; //defined:true
+D_800EABB2 = 0x800EABB2; //defined:true
+D_800EABBC = 0x800EABBC; //defined:true
+D_800EAC14 = 0x800EAC14; //defined:true
+D_800EAC44 = 0x800EAC44; //defined:true
+D_800EDC6A = 0x800EDC6A; //defined:true
+D_80151BE0 = 0x80151BE0; //defined:true
+D_801CE626 = 0x801CE626; //defined:true
+D_801FC840 = 0x801FC840; //defined:true
+

@@ -680,7 +680,7 @@ void AudioLoad_Init() {
     // PRINTF("Main Heap Initialize.\n");
 
     gSeqFileHeader = (ALSeqFile*) buf;
-    data = gMusicData;
+    data = MusicData_ROM_START;
     Audio_DmaCopyImmediate((uintptr_t) data, gSeqFileHeader, 0x10);
     gSequenceCount = gSeqFileHeader->seqCount;
     size = gSequenceCount * sizeof(ALSeqData) + 4;
@@ -690,17 +690,17 @@ void AudioLoad_Init() {
     alSeqFileNew(gSeqFileHeader, data);
 
     gAlCtlHeader = (ALSeqFile*) buf;
-    data = gSoundDataADSR;
+    data = SoundDataADSR_ROM_START;
     Audio_DmaCopyImmediate((uintptr_t) data, gAlCtlHeader, 0x10);
     size = gAlCtlHeader->seqCount * sizeof(ALSeqData) + 4;
     size = (((size) + 0xF) & ~0xF);
     gCtlEntries = AudioHeap_AllocZeroed(&gAudioInitPool, gAlCtlHeader->seqCount * sizeof(CtlEntry));
     gAlCtlHeader = AudioHeap_AllocZeroed(&gAudioInitPool, size);
     Audio_DmaCopyImmediate((uintptr_t) data, gAlCtlHeader, size);
-    alSeqFileNew(gAlCtlHeader, gSoundDataADSR);
+    alSeqFileNew(gAlCtlHeader, SoundDataADSR_ROM_START);
 
     gAlTbl = (ALSeqFile*) buf;
-    data = gSoundDataRaw;
+    data = SoundDataRaw_ROM_START;
     Audio_DmaCopyImmediate((uintptr_t) data, gAlTbl, 0x10); //
     size = gAlTbl->seqCount * sizeof(ALSeqData) + 4;
     size = (((size) + 0xF) & ~0xF);
@@ -709,7 +709,7 @@ void AudioLoad_Init() {
     alSeqFileNew(gAlTbl, data);
 
     gAlBankSets = AudioHeap_AllocZeroed(&gAudioInitPool, 0x100);
-    Audio_DmaCopyImmediate((uintptr_t) gBankSetsData, gAlBankSets, 0x100);
+    Audio_DmaCopyImmediate((uintptr_t) BankSetsData_ROM_START, gAlBankSets, 0x100);
     AudioSeq_InitSequencePlayers();
     gAudioLoadLock = 0x76557364;
     // PRINTF("---------- Init Completed. ------------\n");

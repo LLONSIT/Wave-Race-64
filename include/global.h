@@ -16,5 +16,6 @@
 #include "wr64fade.h"
 #include "camera.h"
 #include "game.h"
+#include "rider.h"
 
 #endif /* GLOBAL_H */

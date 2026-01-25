@@ -83,10 +83,10 @@ gSequenceChannelNone = 0x80044688;
 gPitchBendFrequencyScale = 0x800EC9E4;
 
 // Some linker symbols
-gSoundDataADSR = 0x40B530;
-gSoundDataRaw = 0x428C30;
-gMusicData = 0x7AE8B0;
-gBankSetsData = 0x7C4B70;
+SoundDataADSR_ROM_START = 0x40B530; //defined:true
+SoundDataRaw_ROM_START = 0x428C30; //defined:true
+MusicData_ROM_START = 0x7AE8B0; //defined:true
+BankSetsData_ROM_START = 0x7C4B70; //defined:true
 
 //bank_sets_ROM_END = ????
 
@@ -235,7 +235,7 @@ Audio_GetPortamentoFreqScale = 0x800BC134;
 Audio_GetVibratoPitchChange = 0x800BC208;
 Audio_GetVibratoFreqScale = 0x800BC24C;
 
-// Main_AudioThread.c
+// SysAudio_AudioThreadEntry.c
 AudioThread_CreateTask = 0x800C4C40;
 AudioThread_InitQueues = 0x800C52CC;
 AudioThread_SetFadeInTimer = 0x800C528C;
