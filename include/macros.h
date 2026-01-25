@@ -20,7 +20,9 @@
 #ifdef __GNUC__
 #define UNUSED __attribute__((unused))
 #else
+#ifndef UNUSED
 #define UNUSED // Ignore for IDO
+#endif
 #endif
 
 // Avoid undefined behaviour for non-returning functions

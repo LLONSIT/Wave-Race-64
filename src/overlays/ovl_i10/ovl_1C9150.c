@@ -1,6 +1,6 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i10/ovl_1C9150/func_i10_802C5800.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i10/ovl_1C9150/func_i10_802C5800.s")
 
 Gfx* func_i10_802C5968(Gfx* gfxP) {
     if (D_801CE63C != 0) {
@@ -24,8 +24,8 @@ Gfx* func_i10_802C5968(Gfx* gfxP) {
     return gfxP;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i10/ovl_1C9150/func_i10_802C5A10.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i10/ovl_1C9150/func_i10_802C5A10.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i10/ovl_1C9150/func_i10_802C6200.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i10/ovl_1C9150/func_i10_802C6200.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i10/ovl_1C9150/func_i10_802C6A00.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i10/ovl_1C9150/func_i10_802C6A00.s")

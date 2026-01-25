@@ -10,10 +10,10 @@ extern void* D_80151954;
 extern OSMesgQueue D_801540B8;
 extern OSIoMesg D_801542A0;
 
-extern void game_dma_copy();
-
 void GameLoad_LoadCodeseg(void) {
     osInvalICache(codeseg_VRAM, D_801FC840 - codeseg_VRAM);
+
+    // This function call doesn't match with the correct prototype
     game_dma_copy(codeseg_ROM_START, D_8015196C, ALIGN16(codeseg_ROM_END - codeseg_ROM_START));
     bzero(D_80227A60, D_80228E10 - D_80227A60);
 }

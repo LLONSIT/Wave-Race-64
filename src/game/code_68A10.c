@@ -61,6 +61,25 @@ extern s32 D_801AE950;
 extern s32 D_80223934;
 
 // External functions
+extern UnkStruct_801D7A18 D_801D7A18[];
+extern UnkStruct_801AE948* D_801AE948;
+extern s32 D_1049C80;
+extern s32 D_104A488;
+extern s32 D_104AC90;
+extern s32 D_104B498;
+extern s32 D_104BCA0;
+extern s32 D_104C4A8;
+extern s32 D_104CCB0;
+extern s32 D_10514D0;
+extern s32 D_1051580;
+extern UnkStruct_801AE948 D_5000000[];
+extern s32 D_800E6D84;
+extern s32 D_800E6D88;
+extern s32 D_800E6D8C;
+extern s32 D_801AE950;
+extern s32 D_80223934;
+
+// External functions
 f32 Math_FloatRand(f32);
 void func_801EE97C(Mtx*, f32, f32, f32); /* extern */
 f32 func_8004D30C(f32 arg0, f32 arg1);
@@ -157,7 +176,7 @@ void func_800AE210(s32 rider) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800AE7C4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_68A10/func_800AE7C4.s")
 
 void func_800AF40C(f32 arg0, f32 arg1, f32 arg2) {
     D_801D7ADC = 4;
@@ -316,13 +335,39 @@ void func_800AF798(Gfx** gdl) {
     *gdl = gdlh;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800AFBD0.s")
+    gdlh = *gdl;
+    gSPDisplayList(gdlh++, &D_10514D0);
+    gDPSetCombineLERP(gdlh++, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0,
+                      SHADE, 0);
+    gDPSetRenderMode(gdlh++, G_RM_ZB_CLD_SURF, G_RM_ZB_CLD_SURF2);
+    gDPSetEnvColor(gdlh++, D_800E6D84, D_800E6D88, D_800E6D8C, 0xFF);
+    if (D_800DAB2C == 0) {
+        var_s3 = &gCameraPerspective[D_80223930];
+    } else {
+        var_s3 = &gCameraPerspective[D_80223934];
+    }
+    for (i = 0; i < 8; i++) {
+        if (D_801D7A18[i].unk0 == 0) {
+            continue;
+        }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800B08F8.s")
+        temp_fa0 = var_s3->unk4C - D_801D7A18[i].unk8;
+        temp_fs2 = var_s3->unk50 - D_801D7A18[i].unkC;
+        temp_fa1 = var_s3->unk54 - D_801D7A18[i].unk10;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800B2ABC.s")
+        // fake match
+        if (temp_fa0 == temp_fa1) {}
+        if (temp_fa0 == temp_fa1) {}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_68A10/func_800B305C.s")
+        if ((temp_fa0 != 0.0f) || (temp_fa1 != 0.0f)) {
+            var_fv0 = 1.0f;
+            var_fv1 = 0.0f;
+        } else {
+            var_fv0 = 0.0f;
+            var_fv1 = 1.0f;
+        }
+        SysUtils_MatrixLookAt(&D_801AE948->unk4140[D_801AE950], &spD8, temp_fa0, temp_fs2, temp_fa1, 0.0f, var_fv0,
+                              var_fv1, D_801D7A18[i].unk8, D_801D7A18[i].unkC, D_801D7A18[i].unk10);
 
 void func_800B43BC(Gfx** gdl, f32 arg1, f32 arg2, f32 arg3, f32 arg4, u32 arg5) {
     camera_unk_1* temp_t0;

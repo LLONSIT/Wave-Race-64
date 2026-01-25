@@ -1,22 +1,22 @@
 #include "common.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C5800.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C5800.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C5D3C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C5D3C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C5EB8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C5EB8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C63E4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C63E4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6ADC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6ADC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6D58.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6D58.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6DA8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6DA8.s")
 
 void func_i8_802C6E00(void) {
     if ((D_802C7548) != 0) {
-        func_i8_802C6FD4(&D_802C7548, &D_801CB298[D_i8_802C74F8[D_i8_802C7040]].unk0, 11);
+        func_i8_802C6FD4(&D_802C7548, (s8*) &D_801CB298[D_i8_802C74F8[D_i8_802C7040]].unk0, 11);
     }
     D_802C756C = 1;
 }
@@ -29,7 +29,7 @@ void func_i8_802C6E68(void* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6EB8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6EB8.s")
 
 void func_i8_802C6F4C(void) {
     D_801CE634 = gGameState;

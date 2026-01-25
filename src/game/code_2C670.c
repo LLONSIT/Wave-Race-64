@@ -14,13 +14,13 @@ extern s32 D_801CE638;
 static const char devstr1[] = "Error: number of buoy2\n";
 static const char devstr2[] = "Error: number of buoy3\n";
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80071E70.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2C670/func_80071E70.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_800735EC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2C670/func_800735EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_80073E6C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2C670/func_80073E6C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_800741A4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2C670/func_800741A4.s")
 
 s32 func_80074264(f32 arg0, f32 arg1) {
     s32 i;
@@ -78,7 +78,7 @@ s32 func_80074448(f32 arg0, f32 arg1) {
     return matchFound;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/code_2C670/func_800744EC.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2C670/func_800744EC.s")
 
 void func_80075274(void) {
     func_80071E70();

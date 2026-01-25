@@ -180,16 +180,16 @@ void func_8007AFF4(func_8007AFF4_arg0* arg0, func_8007AFF4_arg1* arg1) {
     temp_t1 >>= 5;
     arg1->unk4 = temp_t1 & 7;
 
-    func_8007AEFC(&arg1->unk10, &arg0->unk3);
+    func_8007AEFC((UnkStruct_8007AEFC*) &arg1->unk10, (UnkStruct_8007AEFC*) &arg0->unk3);
 
     arg1->unk13 = 0;
     arg1->unk8 = (arg0->unk3 >> 7) & 1;
     arg1->unkC = arg0->unk5;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B09C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007B09C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B110.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007B110.s")
 
 void func_8007B1AC(Unkstruct_8007B1AC_arg0* arg0, Unkstruct_8007B1AC_arg1* arg1) {
     s32 new_var2;
@@ -209,7 +209,7 @@ void func_8007B1AC(Unkstruct_8007B1AC_arg0* arg0, Unkstruct_8007B1AC_arg1* arg1)
     arg1->unk3 = (u8) (arg1->unk3 ^ (arg0->unkB << 7));
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B220.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007B220.s")
 
 void func_8007B2BC(s32 arg0, UnkStruct_8007B2BC* arg1) {
     if (arg0 < 0) {
@@ -250,11 +250,11 @@ void func_8007B31C(void) {
     D_801AEA23 = (s8) D_801CB294;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B370.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007B370.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B630.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007B630.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007B930.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007B930.s")
 
 void func_8007BBE8() {
 }
@@ -282,7 +282,7 @@ s32 Save_EepromRead(void) {
     s32 var_a1;
     s32 i;
 
-    if (osEepromLongRead(&D_801540D0, 0x0, &D_801AEA18, 0x200) != 0) {
+    if (osEepromLongRead(&D_801540D0, 0x0, (u8*) &D_801AEA18, 0x200) != 0) {
         return 2;
     }
 
@@ -294,7 +294,7 @@ s32 Save_EepromRead(void) {
     }
 
     if (var_a1 == 0) {
-        temp_v0 = Save_GenCheckSum(&D_801AEA18);
+        temp_v0 = Save_GenCheckSum((u8*) &D_801AEA18);
         if (temp_v0 != D_801AEA18.unk2) {
             var_a1 = 1;
             func_8007BBF0();
@@ -310,8 +310,8 @@ s32 Save_EepromRead(void) {
 }
 
 s32 func_8007BD20(void) {
-    D_801AEA18.unk2 = Save_GenCheckSum(&D_801AEA18);
-    if (osEepromLongWrite(&D_801540D0, 0U, &D_801AEA18, 0x200) != 0) {
+    D_801AEA18.unk2 = Save_GenCheckSum((u8*) &D_801AEA18);
+    if (osEepromLongWrite(&D_801540D0, 0U, (u8*) &D_801AEA18, 0x200) != 0) {
         return 3;
     }
     return 0;
@@ -361,15 +361,15 @@ s32 func_8007BE64(void) {
     return func_8007BD20();
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007BEA4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007BEA4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C0B8.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007C0B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C204.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007C204.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C31C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007C31C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C494.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007C494.s")
 
 int func_8007C50C(void) {
     int i;
@@ -398,11 +398,11 @@ int func_8007C50C(void) {
     return EEPROM_SUCCESS;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C604.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007C604.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007C9D4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007C9D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007CB68.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007CB68.s")
 
 s32 func_8007D110(void) {
     UnkStruct_8007D110 wtf;
@@ -518,9 +518,9 @@ static const char devstr51[] = "PFS write error\n";
 static const char devstr52[] = "PFS no delete file\n";
 static const char devstr53[] = "PFS delete error %d\n";
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D2D4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007D2D4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/game/core/wr64_save/func_8007D614.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007D614.s")
 
 s32 func_8007DB40(void) {
     s32 temp_v0;

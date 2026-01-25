@@ -103,7 +103,7 @@ void SysMain_GfxInitBuffers(void) {
 // D_801DAFA0 & D_801DAFA0_2
 // D_1008290 & D_1008290_2
 #if 1
-#pragma GLOBAL_ASM("asm/nonmatchings/game/sys_main/SysMain_Thread.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_main/SysMain_Thread.s")
 #else
 void* SysMain_Thread(void* entry) {
     s32 pad;

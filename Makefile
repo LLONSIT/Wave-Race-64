@@ -1,355 +1,537 @@
-#forked from mkst/sssv
-BASENAME  = waverace64
-VERSION  := us
+# Build options can be changed by modifying the makefile or by building with 'make SETTING=value'.
+# It is also possible to override the settings in Defaults in a file called .make_options as 'SETTING=value'.
 
-# Colors
+-include .make_options
 
-NO_COL  := \033[0m
-RED     := \033[0;31m
-RED2    := \033[1;31m
-GREEN   := \033[0;32m
-YELLOW  := \033[0;33m
-BLUE    := \033[0;34m
-PINK    := \033[0;35m
-CYAN    := \033[0;36m
+MAKEFLAGS += --no-builtin-rules --no-print-directory
 
-# Directories
-ASM_DIRS  := $(shell find asm/ -type d -not -path "asm/nonmatchings/*")
-
-BUILD_DIR = build
-
-SRC_DIR   = src
-BIN_DIR = bin
-OVL_SRC_DIR   = $(SRC_DIR)/overlays
-OVL_ASSET_DIR = $(BIN_DIR)/overlays
-
-BIN_DIRS  = bin bin/mio0_seg $(OVERLAY_ASSETS_DIRS)
-
-DEFINE_SRC_DIRS  = $(SRC_DIR) $(SRC_DIR)/game $(SRC_DIR)/codeseg $(SRC_DIR)/game/core $(SRC_DIR)/game/audio $(OVERLAY_SRC_DIRS) $(LIBULTRA_SRC_DIRS)
-
-SRC_DIRS      := $(shell find src -type d)
-
-TOOLS_DIR = tools
-
-# Files
-
-S_FILES         = $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))
-C_FILES         = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
-BIN_FILES       = $(foreach dir,$(BIN_DIRS),$(wildcard $(dir)/*.bin))
-
-O_FILES := $(foreach file,$(S_FILES),$(BUILD_DIR)/$(file).o) \
-           $(foreach file,$(C_FILES),$(BUILD_DIR)/$(file).o) \
-           $(foreach file,$(BIN_FILES),$(BUILD_DIR)/$(file).o)
-
-
+# Returns the path to the command $(1) if exists. Otherwise returns an empty string.
 find-command = $(shell which $(1) 2>/dev/null)
 
-# Tools
+#### Defaults ####
 
-ifeq ($(shell type mips-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
-  CROSS := mips-linux-gnu-
-else ifeq ($(shell type mips64-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
-  CROSS := mips64-linux-gnu-
-else
-  CROSS := mips64-elf-
-endif
-
-AS       = $(CROSS)as
-CPP      = cpp
-LD       = $(CROSS)ld
-OBJCOPY  = $(CROSS)objcopy
-PYTHON   = python3
-GCC      = gcc
-TOOLS	 = tools
-TORCH    := $(TOOLS)/Torch/cmake-build-release/torch
-
-XGCC     = mips64-elf-gcc
-
-GREP     = grep -rl
-
+# If COMPARE is 1, check the output md5sum after building
+COMPARE ?= 1
+# If NON_MATCHING is 1, define the NON_MATCHING C flag when building
+NON_MATCHING ?= 0
+# if WERROR is 1, pass -Werror to CC_CHECK, so warnings would be treated as errors
+WERROR ?= 0
+# Keep .mdebug section in build
+KEEP_MDEBUG ?= 0
+# Check code syntax with host compiler
+RUN_CC_CHECK ?= 1
+CC_CHECK_COMP ?= gcc
+# Dump build object files
+OBJDUMP_BUILD ?= 0
+# Number of threads to compress with
 N_THREADS ?= $(shell nproc)
+# If COMPILER is GCC, compile with GCC instead of IDO.
+COMPILER ?= ido
+# Whether to colorize build messages
+COLOR ?= 1
+# Whether to hide commands or not
+VERBOSE ?= 0
+# Command for printing messages during the make.
+PRINT ?= printf
 
-#For segments without GLOBAL_ASM
-
-USE_QEMU_IRIX ?= 0
-$(eval $(call validate-option,USE_QEMU_IRIX,0 1))
-
-
-ifeq ($(USE_QEMU_IRIX),1)
-  # Verify that qemu-irix exists
-  QEMU_IRIX := $(call find-command,qemu-irix)
-  ifeq (,$(QEMU_IRIX))
-    $(error Using the IDO compiler requires qemu-irix. Please install qemu-irix)
-  endif
-endif
-
-#Options
-
-ifeq ($(USE_QEMU_IRIX),1)
-        CC       := $(QEMU_IRIX) -silent -L $(TOOLS_DIR)/ido5.3_cc $(TOOLS_DIR)/ido5.3_cc/usr/bin/cc
+# Set prefix to mips binutils binaries (mips-linux-gnu-ld => 'mips-linux-gnu-') - Change at your own risk!
+# Auto-detect prefix for MIPS toolchain
+ifneq      ($(call find-command,mips-linux-gnu-ld),)
+  MIPS_BINUTILS_PREFIX := mips-linux-gnu-
+else ifneq ($(call find-command,mips64-linux-gnu-ld),)
+  MIPS_BINUTILS_PREFIX := mips64-linux-gnu-
+else ifneq ($(call find-command,mips64-elf-ld),)
+  MIPS_BINUTILS_PREFIX := mips64-elf-
 else
-        CC       := $(TOOLS_DIR)/ido-static-recomp/build/5.3/out/cc
+  $(error Unable to detect a suitable MIPS toolchain installed)
 endif
 
-SPLAT    = $(TOOLS_DIR)/splat/split.py
+VERSION ?= us
+REV ?= rev1
 
-	CRC := @$(TOOLS_DIR)/n64crc build/$(BASENAME).$(VERSION).z64 #Recalculating the CRC
+BASEROM              := baserom.$(VERSION).$(REV).z64
+TARGET               := waverace64
 
-OPT_FLAGS      = -O2
-LOOP_UNROLL    =
+### Output ###
 
-MIPSISET       = -mips2 -32
+BUILD_DIR := build
+TOOLS	  := tools
+PYTHON	  := python3
+ROM       := $(BUILD_DIR)/$(TARGET).$(VERSION).$(REV).z64
+ELF       := $(BUILD_DIR)/$(TARGET).$(VERSION).$(REV).elf
+LD_MAP    := $(BUILD_DIR)/$(TARGET).$(VERSION).$(REV).map
+LD_SCRIPT := linker_scripts/$(VERSION)/$(REV)/$(TARGET).ld
 
-INCLUDE_CFLAGS = -I . -I include/libc  -I include/PR -I include -I bin -I src/libultra
+#### Setup ####
 
-ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
-OBJCOPYFLAGS   = -O binary
+# If gcc is used, define the NON_MATCHING flag respectively so the files that
+# are safe to be used can avoid using GLOBAL_ASM which doesn't work with gcc.
+ifeq ($(COMPILER),gcc)
+  $(warning WARNING: GCC support is experimental. Use at your own risk.)
+  CFLAGS += -DCOMPILER_GCC
+  NON_MATCHING := 1
+endif
 
-# Files requiring pre/post-processing
-GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) </dev/null 2>/dev/null)
-GLOBAL_ASM_O_FILES := $(foreach file,$(GLOBAL_ASM_C_FILES),$(BUILD_DIR)/$(file).o)
+# Detect compiler and set variables appropriately.
+ifeq ($(COMPILER),gcc)
+  CC       := $(MIPS_BINUTILS_PREFIX)gcc
+else
+ifeq ($(COMPILER),ido)
+  CC       := $(TOOLS)/ido-static-recomp/$(DETECTED_OS)/7.1/cc
+  CC_OLD   := $(TOOLS)/ido-static-recomp/$(DETECTED_OS)/5.3/cc
+else
+$(error Unsupported compiler. Please use either ido or gcc as the COMPILER variable.)
+endif
+endif
 
+ifeq ($(COMPILER),gcc)
+  OPTFLAGS := -Os
+else
+  OPTFLAGS := -O2
+endif
 
-DEFINES := -D_LANGUAGE_C -D_FINALROM -DF3D_OLD -DWIN32 -DSSSV -DNDEBUG -DTARGET_N64 -DCOMPILING_LIBULTRA
+ifeq ($(COMPILER),gcc)
+  CFLAGS += -G 0 -ffast-math -fno-unsafe-math-optimizations -march=vr4300 -mfix4300 -mabi=32 -mno-abicalls -mdivide-breaks -fno-zero-initialized-in-bss -fno-toplevel-reorder -ffreestanding -fno-common -fno-merge-constants -mno-explicit-relocs -mno-split-addresses $(CHECK_WARNINGS) -funsigned-char
+  MIPS_VERSION := -mips3
+else
+  # we support Microsoft extensions such as anonymous structs, which the compiler does support but warns for their usage. Surpress the warnings with -woff.
+  CFLAGS += -G 0 -non_shared -fullwarn -verbose -Xcpluscomm $(IINC) -nostdinc -Wab,-r4300_mul -woff 649,838,712,516
+  MIPS_VERSION := -mips2 -32
+  WARNINGS := -fullwarn -verbose -woff 624,649,838,712,516,513,596,564,594,709,807
+endif
 
+ifeq ($(COMPILER),ido)
+  # Have CC_CHECK pretend to be a MIPS compiler
+  MIPS_BUILTIN_DEFS := -D_MIPS_ISA_MIPS2=2 -D_MIPS_ISA=_MIPS_ISA_MIPS2 -D_ABIO32=1 -D_MIPS_SIM=_ABIO32 -D_MIPS_SZINT=32 -D_MIPS_SZLONG=32 -D_MIPS_SZPTR=32
+  CC_CHECK  = gcc -fno-builtin -fsyntax-only -funsigned-char -std=gnu90 -D_LANGUAGE_C -DNON_MATCHING $(MIPS_BUILTIN_DEFS) $(IINC) $(CHECK_WARNINGS)
+  ifeq ($(shell getconf LONG_BIT), 32)
+    # Work around memory allocation bug in QEMU
+    export QEMU_GUEST_BASE := 1
+  else
+    # Ensure that gcc (warning check) treats the code as 32-bit
+    CC_CHECK += -m32
+  endif
+else
+  CC_CHECK  = @:
+endif
 
-DEFINES += -DVERSION_US
+BUILD_DEFINES ?=
 
-VERIFY = verify
-
-#Soon
-#ifeq ($(NON_MATCHING),1)
-#DEFINES += -DNON_MATCHING
-#VERIFY = no_verify
-#PROGRESS_NONMATCHING = --non-matching
-#endif
-
-CFLAGS := -Wab,-r4300_mul -non_shared -G 0 -Xcpluscomm -fullwarn  -nostdinc -g0
-CFLAGS += $(DEFINES)
-# ignore compiler warnings about anonymous structs
-CFLAGS += -woff 624,649,838,712,516,513,596,564,594,709,807
-CFLAGS += $(INCLUDE_CFLAGS)
-
-CHECK_WARNINGS := -Wall -Wextra -Wno-format-security -Wno-unknown-pragmas -Wunused-function -Wno-unused-parameter -Wno-unused-variable -Wno-missing-braces -Wno-int-conversion
-CC_CHECK := $(GCC) -fsyntax-only -fno-builtin -fsigned-char -std=gnu90 -m32 $(CHECK_WARNINGS) $(INCLUDE_CFLAGS) $(DEFINES)
-
-GCC_FLAGS := $(INCLUDE_CFLAGS) $(DEFINES)
-GCC_FLAGS += -G 0 -mno-shared -march=vr4300 -mfix4300 -mabi=32 -mhard-float
-GCC_FLAGS += -mdivide-breaks -fno-stack-protector -fno-common -fno-zero-initialized-in-bss -fno-PIC -mno-abicalls -fno-strict-aliasing -fno-inline-functions -ffreestanding -fwrapv
-GCC_FLAGS += -Wall -Wextra -Wno-missing-braces
-
-TARGET     = $(BUILD_DIR)/$(BASENAME).$(VERSION)
-LD_SCRIPT  = $(BASENAME).ld
-
-LD_FLAGS   = -T $(LD_SCRIPT) -T undefined_funcs_auto.txt  -T undefined_syms_auto.txt -T libultra_undefined_syms.txt -T resolve.txt
-LD_FLAGS  += -Map $(TARGET).map --no-check-sections
+# Version check
+ifeq ($(VERSION),jp)
+    BUILD_DEFINES   += -DVERSION_JP=1
+endif
 
 ifeq ($(VERSION),us)
-LD_FLAGS_EXTRA  =
-LD_FLAGS_EXTRA += $(foreach sym,$(UNDEFINED_SYMS),-u $(sym))
-else
-LD_FLAGS_EXTRA  =
+    BUILD_DEFINES   += -DVERSION_US=1
 endif
 
-ASM_PROCESSOR_DIR := $(TOOLS_DIR)/asm-processor
-ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
+ifeq ($(VERSION),eu)
+    BUILD_DEFINES   += -DVERSION_EU=1
+	REV := rev0
+endif
 
-### Optimisation Overrides
-$(BUILD_DIR)/src/libultra/os/%.c.o: OPT_FLAGS := -O1
-$(BUILD_DIR)/src/libultra/audio/%.c.o: OPT_FLAGS := -O3
-$(BUILD_DIR)/src/libultra/gu/%.c.o: OPT_FLAGS := -O3
-$(BUILD_DIR)/src/libultra/gu/lookathil.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/os/osVirtualtoPhysical.c.o: OPT_FLAGS := -O1
-$(BUILD_DIR)/src/libultra/io/%.c.o: OPT_FLAGS := -O1
-$(BUILD_DIR)/src/libultra/libc/%.c.o: OPT_FLAGS := -O1
+ifeq ($(VERSION),au)
+	BUILD_DEFINES	+= -DVERSION_AU=1
+	REV := rev0
+endif
+
+ifeq ($(VERSION),ln)
+	BUILD_DEFINES	+= -DVERSION_LN=1
+	REV := rev0
+endif
+
+ifeq ($(NON_MATCHING),1)
+    BUILD_DEFINES   += -DNON_MATCHING -DAVOID_UB
+    CPPFLAGS += -DNON_MATCHING -DAVOID_UB
+endif
+
+MAKE = make
+CPPFLAGS += -fno-dollars-in-identifiers -P
+LDFLAGS  := --no-check-sections --accept-unknown-input-arch --emit-relocs
+
+UNAME_S := $(shell uname -s)
+UNAME_M := $(shell uname -m)
+ifeq ($(OS),Windows_NT)
+$(error Native Windows is currently unsupported for building this repository, use WSL instead c:)
+else ifeq ($(UNAME_S),Linux)
+    DETECTED_OS := linux
+    #Detect aarch64 devices (Like Raspberry Pi OS 64-bit)
+    #If it's found, then change the compiler to a version that can compile in 32 bit mode.
+    ifeq ($(UNAME_M),aarch64)
+        CC_CHECK_COMP := arm-linux-gnueabihf-gcc
+    endif
+else ifeq ($(UNAME_S),Darwin)
+    DETECTED_OS := macos
+    MAKE := gmake
+    CPPFLAGS += -xc++
+    CC_CHECK_COMP := clang
+endif
+
+# Support python venv's if one is installed.
+PYTHON_VENV = .venv/bin/python3
+ifneq "$(wildcard $(PYTHON_VENV) )" ""
+  PYTHON = $(PYTHON_VENV)
+endif
+
+ifeq ($(VERBOSE),0)
+  V := @
+endif
+
+ifeq ($(COLOR),1)
+NO_COL  := \033[0m
+RED     := \033[0;31m
+GREEN   := \033[0;32m
+BLUE    := \033[0;34m
+YELLOW  := \033[0;33m
+BLINK   := \033[33;5m
+endif
+
+# Common build print status function
+define print
+  @$(PRINT) "$(GREEN)$(1) $(YELLOW)$(2)$(GREEN) -> $(BLUE)$(3)$(NO_COL)\n"
+endef
+
+#### Tools ####
+ifneq ($(shell type $(MIPS_BINUTILS_PREFIX)ld >/dev/null 2>/dev/null; echo $$?), 0)
+$(error Unable to find $(MIPS_BINUTILS_PREFIX)ld. Please install or build MIPS binutils, commonly mips-linux-gnu. (or set MIPS_BINUTILS_PREFIX if your MIPS binutils install uses another prefix))
+endif
+
+
+### Compiler ###
+
+IDO             := $(TOOLS)/ido-static-recomp/build/5.3/out/cc
+AS              := $(MIPS_BINUTILS_PREFIX)as
+LD              := $(MIPS_BINUTILS_PREFIX)ld
+OBJCOPY         := $(MIPS_BINUTILS_PREFIX)objcopy
+OBJDUMP         := $(MIPS_BINUTILS_PREFIX)objdump
+ICONV           := iconv
+ASM_PROC        := $(PYTHON) $(TOOLS)/asm-processor/build.py
+TORCH           := $(TOOLS)/Torch/cmake-build-release/torch
+CRC             := $(TOOLS)/n64crc $(BUILD_DIR)/$(TARGET).$(VERSION).$(REV).z64
+
+# Prefer clang as C preprocessor if installed on the system
+ifneq (,$(call find-command,clang))
+  CPP      := clang
+  CPPFLAGS := -E -P -x c -Wno-trigraphs -Wmissing-prototypes -Wstrict-prototypes -D_LANGUAGE_ASSEMBLY
+else
+  CPP      := cpp
+  CPPFLAGS := -P -Wno-trigraphs -Wmissing-prototypes -Wstrict-prototypes -D_LANGUAGE_ASSEMBLY
+endif
+
+ASM_PROC_FLAGS  := --input-enc=utf-8 --output-enc=euc-jp --convert-statics=global-with-filename
+
+SPLAT           ?= $(PYTHON) $(TOOLS)/splat/split.py
+SPLAT_YAML      ?= $(TARGET).$(VERSION).$(REV).yaml
+
+COMPTOOL		:= $(TOOLS)/comptool.py
+COMPTOOL_DIR	:= baserom
+MIO0			:= $(TOOLS)/mio0
+
+
+IINC := -I include -I .
+IINC += -I include/libc -I include/PR -I include -I bin -I src/libultra
+
+ifeq ($(KEEP_MDEBUG),0)
+  RM_MDEBUG = $(OBJCOPY) --remove-section .mdebug $@
+else
+  RM_MDEBUG = @:
+endif
+
+# Check code syntax with host compiler
+CHECK_WARNINGS := -Wall -Wextra -Wimplicit-fallthrough -Wno-unknown-pragmas -Wno-missing-braces -Wno-sign-compare -Wno-uninitialized
+# Have CC_CHECK pretend to be a MIPS compiler
+MIPS_BUILTIN_DEFS := -DMIPSEB -D_MIPS_FPSET=16 -D_MIPS_ISA=2 -D_ABIO32=1 -D_MIPS_SIM=_ABIO32 -D_MIPS_SZINT=32 -D_MIPS_SZPTR=32
+ifneq ($(RUN_CC_CHECK),0)
+#   The -MMD flags additionaly creates a .d file with the same name as the .o file.
+    CHECK_WARNINGS    := -Wno-unused-variable -Wno-int-conversion
+    CC_CHECK          := $(CC_CHECK_COMP)
+    CC_CHECK_FLAGS    := -MMD -MP -fno-builtin -fsyntax-only -funsigned-char -fdiagnostics-color -std=gnu89 -DNON_MATCHING -DAVOID_UB -DCC_CHECK=1
+
+    # Ensure that gcc treats the code as 32-bit
+    ifeq ($(UNAME_M),aarch64)
+        CC_CHECK_FLAGS += -march=armv7-a+fp
+    else
+        CC_CHECK_FLAGS += -m32
+    endif
+	ifneq ($(WERROR), 0)
+        CHECK_WARNINGS += -Werror
+    endif
+else
+    CC_CHECK          := @:
+endif
+
+ASFLAGS         := -march=vr4300 -32 -G0
+COMMON_DEFINES  := -D_MIPS_SZLONG=32
+GBI_DEFINES     := -DF3D_OLD
+RELEASE_DEFINES := -DNDEBUG
+AS_DEFINES      := -DMIPSEB -D_LANGUAGE_ASSEMBLY -D_ULTRA64
+C_DEFINES       := -D_FINALROM -DCOMPILING_LIBULTRA -DTARGET_N64 -DSSSV -DWIN32 -DLANGUAGE_C -D_LANGUAGE_C ${RELEASE_DEFINES}
+ENDIAN          := -EB
+
+ICONV_FLAGS     := --from-code=UTF-8 --to-code=EUC-JP
+
+# Use relocations and abi fpr names in the dump
+OBJDUMP_FLAGS := --disassemble --reloc --disassemble-zeroes -Mreg-names=32 -Mno-aliases
+
+ifneq ($(OBJDUMP_BUILD), 0)
+    OBJDUMP_CMD = $(OBJDUMP) $(OBJDUMP_FLAGS) $@ > $(@:.o=.dump.s)
+    OBJCOPY_BIN = $(OBJCOPY) -O binary $@ $@.bin
+else
+    OBJDUMP_CMD = @:
+    OBJCOPY_BIN = @:
+endif
+
+# rom compression flags
+COMPFLAGS := --threads $(N_THREADS)
+ifeq ($(NON_MATCHING),0)
+    COMPFLAGS += --matching
+endif
+
+#### Files ####
+
+$(shell mkdir -p asm bin linker_scripts/$(VERSION)/$(REV)/auto)
+
+SRC_DIRS      := $(shell find src -type d)
+# Temporary, until we decide how we're gonna handle other versions
+ifeq ($(VERSION), jp)
+SRC_DIRS      := $(shell find srcjp -type d)
+endif
+ifeq ($(VERSION), eu)
+SRC_DIRS      := $(shell find srceu -type d)
+endif
+ASM_DIRS      := $(shell find asm/$(VERSION)/$(REV) -type d -not -path "asm/$(VERSION)/$(REV)/nonmatchings/*")
+BIN_DIRS      := $(shell find bin -type d)
+
+
+C_FILES       := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+C_FILES       := $(filter-out %.inc.c,$(C_FILES))
+S_FILES       := $(foreach dir,$(ASM_DIRS) $(SRC_DIRS),$(wildcard $(dir)/*.s))
+BIN_FILES     := $(foreach dir,$(BIN_DIRS),$(wildcard $(dir)/*.bin))
+O_FILES       := $(foreach f,$(C_FILES:.c=.o),$(BUILD_DIR)/$f) \
+                 $(foreach f,$(S_FILES:.s=.o),$(BUILD_DIR)/$f) \
+                 $(foreach f,$(BIN_FILES:.bin=.o),$(BUILD_DIR)/$f)
+
+
+# Automatic dependency files
+DEP_FILES := $(O_FILES:.o=.d) \
+             $(O_FILES:.o=.asmproc.d)
+
+# create build directories
+$(shell mkdir -p $(BUILD_DIR)/linker_scripts/$(VERSION)/$(REV) $(BUILD_DIR)/linker_scripts/$(VERSION)/$(REV)/auto $(foreach dir,$(SRC_DIRS) $(ASM_DIRS) $(BIN_DIRS),$(BUILD_DIR)/$(dir)))
+
+ifeq ($(COMPILER),ido)
+
+$(BUILD_DIR)/src/libultra/os/%.o: OPTFLAGS := -O1
+$(BUILD_DIR)/src/libultra/os/osVirtualtoPhysical.o: OPTFLAGS := -O1
+$(BUILD_DIR)/src/libultra/gu/%.o: OPTFLAGS := -O3
+$(BUILD_DIR)/src/libultra/io/%.o: OPTFLAGS := -O1
+$(BUILD_DIR)/src/libultra/audio/%.o: OPTFLAGS := -O3
+$(BUILD_DIR)/src/libultra/libc/%.o: OPTFLAGS := -O1
+
 # File exceptions
-$(BUILD_DIR)/src/libultra/libc/sprintf.c.o: OPT_FLAGS := -O1
-$(BUILD_DIR)/src/libultra/libc/sprintf.c.o: MIPSISET := -mips2
+$(BUILD_DIR)/src/libultra/gu/lookathil.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/os/osVirtualtoPhysical.o: OPTFLAGS := -O1
+$(BUILD_DIR)/src/libultra/libc/sprintf.o: OPTFLAGS := -O1
+$(BUILD_DIR)/src/libultra/libc/sprintf.o: MIPS_VERSION := -mips2
 
-$(BUILD_DIR)/libultra/libc/xprintf.c.o: OPTFLAGS := -O1
-$(BUILD_DIR)/libultra/libc/xprintf.c.o: MIPSISET := -mips2
+$(BUILD_DIR)/libultra/libc/xprintf.o: OPTFLAGS := -O1
+$(BUILD_DIR)/libultra/libc/xprintf.o: MIPS_VERSION := -mips2
 
-$(BUILD_DIR)/src/libultra/io/pfsinit.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfsinit.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfsinit.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsinit.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/pfsisplug.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfsisplug.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfsisplug.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsisplug.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/pfssearchfile.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfssearchfile.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfssearchfile.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfssearchfile.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/pfsfreeblocks.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfsfreeblocks.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfsfreeblocks.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsfreeblocks.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/pfsreadwritefile.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfsreadwritefile.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfsreadwritefile.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsreadwritefile.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/pfsallocatefile.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfsallocatefile.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfsallocatefile.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsallocatefile.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/pfsdeletefile.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfsdeletefile.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfsdeletefile.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsdeletefile.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/pfsnumfiles.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfsnumfiles.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfsnumfiles.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsnumfiles.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/pfsfilestate.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfsfilestate.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfsfilestate.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfsfilestate.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/pfs.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfs.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfs.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfs.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/pfschecker.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/pfschecker.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/pfschecker.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/pfschecker.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/contramread.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/contramread.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/contramread.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/contramread.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/contramwrite.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/contramwrite.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/contramwrite.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/contramwrite.o: MIPS_VERSION := -mips1
 
-$(BUILD_DIR)/src/libultra/io/controller.c.o: OPT_FLAGS := -O2
-$(BUILD_DIR)/src/libultra/io/controller.c.o: MIPSISET := -mips1
+$(BUILD_DIR)/src/libultra/io/controller.o: OPTFLAGS := -O2
+$(BUILD_DIR)/src/libultra/io/controller.o: MIPS_VERSION := -mips1
 
+$(BUILD_DIR)/src/libultra/libc/ll.o: OPTFLAGS := -O1 -g0
+$(BUILD_DIR)/src/libultra/libc/ll.o: MIPS_VERSION := -mips3 -32
 
-$(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll.o: MIPSISET := -mips3 -o32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll%.o: MIPSISET := -mips3 -o32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll.o: OPT_FLAGS := -O1
-$(BUILD_DIR)/$(SRC_DIR)/libultra/libc/ll%.o: OPT_FLAGS := -O1
+# cc & asm-processor
+CC := $(ASM_PROC) $(ASM_PROC_FLAGS) $(IDO) -- $(AS) $(ASFLAGS) --
+$(BUILD_DIR)/src/libultra/gu/lookatref.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/gu/ortho.o: CC := $(IDO) 
+$(BUILD_DIR)/src/libultra/gu/translate.o: CC := $(IDO) 
+$(BUILD_DIR)/src/libultra/gu/perspective.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/gu/mtxutil.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/gu/cosf.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/audio/bnkf.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/libc/ll.o: CC := $(IDO)
 
+else # GCC
 
-### Targets
+endif
 
-default: all
-
-all: $(VERIFY)
-
-dirs:
-	$(foreach dir,$(SRC_DIRS) $(ASM_DIRS) $(BIN_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-
-
-
-check: .baserom.$(VERSION).ok
-
-verify: $(TARGET).z64
-	@sha1sum -c wr64.us.sha1
-
-no_verify: $(TARGET).z64
-	@echo "Skipping SHA1SUM check!"
+all: finalrom
 
 toolchain:
 	@$(MAKE) -s -C $(TOOLS)
-
-assets:
-	rm -r -f torch.hash.yml
-	@echo "Extracting assets from ROM..."
-	@$(TORCH) code $(TARGET).z64 -v
-	@$(TORCH) header $(TARGET).z64
-	@$(TORCH) modding export $(TARGET).z64
-
-splat: $(SPLAT)
-
-init: splat tools
-	@$(MAKE) clean
-	@make extract
-	@make -j $(N_THREADS)
-
-extract: splat tools
-	rm -rf asm
-	rm -rf build
-	$(PYTHON) $(SPLAT) $(BASENAME).$(VERSION).yaml
-	@$(PYTHON) $(TOOLS_DIR)/mio0_extract.py baserom.$(VERSION).z64
 
 dependencies: tools
 	@make -C tools
 	@$(PYTHON) -m pip install -r tools/splat/requirements.txt #Install the splat dependencies
 	@$(PYTHON) -m pip install GitPython colour
 
+torch:
+	@$(MAKE) -s -C $(TOOLS) torch
+	rm -f torch.hash.yml
+
+init:
+	@$(MAKE) clean
+	@$(MAKE) extract -j $(N_THREADS)
+	@$(MAKE) finalrom -j $(N_THREADS)
+
+WR := \n
+
+finalrom: $(ROM)
+ifneq ($(COMPARE),0)
+	@echo "$(GREEN)Calculating Rom Checksum... $(YELLOW)$<$(NO_COL)"
+	@sha1sum --status -c $(TARGET).$(VERSION).$(REV).sha1 && \
+	$(PRINT) "$(BLUE)$(TARGET).$(VERSION).$(REV).z64$(NO_COL): $(GREEN)OK$(NO_COL)\n$(YELLOW) $(WR)" || \
+	$(PRINT) "$(BLUE)$(TARGET).$(VERSION).$(REV).z64 $(RED)FAILED$(NO_COL)\n\
+	$(RED)ROM BUILT FINE BUT IT DOESN'T MATCH THE ORIGINAL.$(NO_COL)\n"
+	@sha1sum --status -c $(TARGET).$(VERSION).$(REV).sha1
+endif
+
+
+#### Main Targets ###
+
+extract:
+	@$(RM) -r asm/$(VERSION)/$(REV) bin/$(VERSION)/$(REV)
+	@echo "Extracting..."
+	@$(SPLAT) $(SPLAT_YAML)
+	@$(PYTHON) tools/mio0_extract.py $(BASEROM)
+
+assets:
+	@echo "Extracting assets from ROM..."
+	@$(TORCH) code $(BASEROM)
+	@$(TORCH) header $(BASEROM)
+	@$(TORCH) modding export $(BASEROM)
+
+mod:
+	@$(TORCH) modding import code $(BASEROM)
+
+clean:
+	rm -f torch.hash.yml
+	@git clean -fdx asm/$(VERSION)/$(REV)
+	@git clean -fdx bin/$(VERSION)/$(REV)
+	@git clean -fdx build/
+	@git clean -fdx src/assets/
+	@git clean -fdx include/assets/
+	@git clean -fdx linker_scripts/$(VERSION)/$(REV)/*.ld
+
+  # temporary, remove when we start decompiling other versions
+	@git clean -fdx bin/
+
+format:
+	@$(PYTHON) $(TOOLS)/format.py -j $(N_THREADS)
+
+checkformat:
+	@$(TOOLS)/check_format.sh -j $(N_THREADS)
+
+# asm-differ expected object files
 expected:
 	mkdir -p expected/build
 	rm -rf expected/build/
 	cp -r build/ expected/build/
 
-clean:
-	rm -rf asm
-	rm -rf build
+context:
+	@echo "Generating ctx.c ..."
+	@$(PYTHON) ./$(TOOLS)/m2ctx.py $(filter-out $@, $(MAKECMDGOALS))
 
-distclean: clean
-	rm -rf asm
-	rm -rf assets
-	rm -f *auto.txt
+disasm:
+	@$(RM) -r asm/$(VERSION)/$(REV) bin/$(VERSION)/$(REV)
+	@echo "Extracting..."
+	@$(SPLAT) $(SPLAT_YAML) --disassemble-all
 
-format:
-	python3 tools/format.py -j
+#### Various Recipes ####
 
-### Recipes
-.baserom.$(VERSION).ok: baserom.$(VERSION).z64
-	@echo "$$(cat $(BASENAME).$(VERSION).sha1)  $<" | sha1sum --check
-	@touch $@
-
-$(TARGET).elf: dirs $(BASENAME).ld $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_FILES) $(IMAGE_O_FILES)
-	@$(LD) $(LD_FLAGS) $(LD_FLAGS_EXTRA) -o $@
-	@printf "[$(PINK) GNU Linker $(NO_COL)]  $<\n"
-
-ifndef PERMUTER
-$(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c
-	@$(CC_CHECK) $<
-	@printf "[$(YELLOW) GCC Syntax check $(NO_COL)] $<\n"
-	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< > $(BUILD_DIR)/$<
-	@$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $(BUILD_DIR)/$<
-	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< --post-process $@ \
-		--assembler "$(AS) $(ASFLAGS)" --asm-prelude $(ASM_PROCESSOR_DIR)/prelude.inc
-	@printf "[$(GREEN) IRIS Development Option 5.3 $(NO_COL)]  $<\n" 
-endif
-
-# non asm-processor recipe
-$(BUILD_DIR)/%.c.o: %.c
-#	@$(CC_CHECK) $<
-	@$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $<
-	@printf "[$(GREEN) IRIS Development Option 5.3 $(NO_COL)]  $<\n"
-
-## Patch ll.o
-build/src/libultra/libc/ll.c.o: src/libultra/libc/ll.c
-	@printf "[$(YELLOW) Patching and compiling libultra - ll.o $(NO_COL)] $<\n"
-	@$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $<
-	@tools/set_o32abi_bit.py $@
-
-#$(BUILD_DIR)/src/libultra: src/libultra
-#	@mkdir -p $$(dirname $@)
-#	@cp $< $@
-#	@$(PYTHON) $(TOOLS_DIR)/set_o32abi_bit.py $@
-
-
-
-$(BUILD_DIR)/%.s.o: %.s
-	@$(AS) $(ASFLAGS) -o $@ $<
-	@printf "[$(GREEN) MIPS GNU Assembler   $(NO_COL)]  $<\n"
-
-$(BUILD_DIR)/%.bin.o: %.bin
-	@$(LD) -r -b binary -o $@ $<
-	@printf "[$(PINK) MIPS GNU Linker $(NO_COL)]  $<\n"
-
-$(TARGET).bin: $(TARGET).elf
-	@$(OBJCOPY) $(OBJCOPYFLAGS) $< $@
-	@printf "[$(CYAN) GNU Objcopy $(NO_COL)]  $<\n"
-
-$(TARGET).z64: $(TARGET).bin
-	@printf "[$(CYAN) .bin -> .z64 $(NO_COL)] $<\n"
-	@cp build/$(BASENAME).$(VERSION).bin build/$(BASENAME).$(VERSION).z64
-	@printf "[$(GREEN) Calculating CRC $(NO_COL)]  $<\n"
+# Final ROM
+$(ROM): $(ELF)
+	$(call print,ELF->ROM:,$<,$@)
+	$(V)$(OBJCOPY) -O binary $< $@
+	$(call print,Fixing ROM CRC:,$<,$@)
 	@$(CRC)
 
-# fake targets for better error handling
-$(SPLAT):
-	$(info Repo cloned without submodules, attempting to fetch them now...)
-	@which git >/dev/null || echo "ERROR: git binary not found on PATH"
-	@which git >/dev/null
-	git submodule update --init --recursive
+# Link
+$(ELF): $(O_FILES) $(LD_SCRIPT)
+	$(call print,Linking:,$<,$@)
+	$(V)$(LD) $(LDFLAGS) -T $(LD_SCRIPT) \
+		-T linker_scripts/$(VERSION)/$(REV)/auto/undefined_funcs_auto.ld  -T linker_scripts/$(VERSION)/$(REV)/auto/undefined_syms_auto.ld -T linker_scripts/$(VERSION)/$(REV)/libultra_undefined_syms.txt -T linker_scripts/$(VERSION)/$(REV)/resolve.txt \
+		-Map $(LD_MAP) -o $@
 
-baserom.$(VERSION).z64:
-	$(error Place the Wave Race 64 ROM, named '$@', in the root of this repo and try again.)
+# PreProcessor
+$(BUILD_DIR)/%.ld: %.ld
+	$(call print,PreProcessor:,$<,$@)
+	$(V)$(CPP) $(CPPFLAGS) $(BUILD_DEFINES) $(IINC) $< > $@
 
-### Settings
-.SECONDARY:
-.PHONY: all clean default assets expected
-SHELL = /bin/bash -e -o pipefail
+# Binary
+$(BUILD_DIR)/%.o: %.bin
+	$(call print,Binary:,$<,$@)
+	$(V)$(OBJCOPY) -I binary -O elf32-big $< $@
+
+# Assembly
+$(BUILD_DIR)/%.o: %.s
+	$(call print,Assembling:,$<,$@)
+	$(V)$(CPP) $(CPPFLAGS) $(BUILD_DEFINES) $(IINC) -I $(dir $*) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(AS_DEFINES) $< | $(ICONV) $(ICONV_FLAGS) | $(AS) $(ASFLAGS) $(ENDIAN) $(IINC) -I $(dir $*) -o $@
+	$(V)$(OBJDUMP_CMD)
+
+# C
+$(BUILD_DIR)/%.o: %.c
+	$(call print,Compiling:,$<,$@)
+	@$(CC_CHECK) $(CC_CHECK_FLAGS) $(IINC) -I $(dir $*) $(CHECK_WARNINGS) $(BUILD_DEFINES) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(C_DEFINES) $(MIPS_BUILTIN_DEFS) -o $@ $<
+	$(V)$(CC) -c $(CFLAGS) $(BUILD_DEFINES) $(IINC) $(WARNINGS) $(MIPS_VERSION) $(ENDIAN) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(C_DEFINES) $(OPTFLAGS) -o $@ $<
+	$(V)$(OBJDUMP_CMD)
+	$(V)$(RM_MDEBUG)
+
+# Patch ll.o
+build/src/libultra/libc/ll.o: src/libultra/libc/ll.c
+	$(call print,Patching:,$<,$@)
+	@$(CC_CHECK) $(CC_CHECK_FLAGS) $(IINC) -I $(dir $*) $(CHECK_WARNINGS) $(BUILD_DEFINES) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(C_DEFINES) $(MIPS_BUILTIN_DEFS) -o $@ $<
+	$(V)$(CC) -c $(CFLAGS) $(BUILD_DEFINES) $(IINC) $(WARNINGS) $(MIPS_VERSION) $(ENDIAN) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(C_DEFINES) $(OPTFLAGS) -o $@ $<
+	$(V)$(PYTHON) $(TOOLS)/set_o32abi_bit.py $@
+	$(V)$(OBJDUMP_CMD)
+	$(V)$(RM_MDEBUG)
+
+-include $(DEP_FILES)
+
+# Print target for debugging
+print-% : ; $(info $* is a $(flavor $*) variable set to [$($*)]) @true
+
+.PHONY: all finalrom clean init extract expected format checkformat assets context disasm toolchain

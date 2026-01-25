@@ -14,7 +14,7 @@ void __osViSwapContext() {
     u32 sp34;
     u32 field;
     field = 0;
-    s1 = __osViNext;
+    s1 = (OSViContext*) __osViNext;
     viMode = s1->modep;
     field = IO_READ(VI_V_CURRENT_LINE_REG) & 1;
     origin = osVirtualToPhysical(s1->buffer) + viMode->fldRegs[field].origin;
@@ -58,6 +58,6 @@ void __osViSwapContext() {
     IO_WRITE(VI_Y_SCALE_REG, s1->unk2c);
     IO_WRITE(VI_CONTROL_REG, s1->features);
     __osViNext = __osViCurr;
-    __osViCurr = s1;
+    __osViCurr = (__OSViContext*) s1;
     *__osViNext = *__osViCurr;
 }

@@ -897,7 +897,7 @@ void AudioHeap_Init(void);
 void AudioLoad_InitSampleDmaBuffers(s32);
 void Audio_InitNoteFreeList(void);
 void Audio_NoteInitAll(void);
-void Audio_AudioListRemove(Note* note);
+void Audio_AudioListRemove(AudioListItem* audioListItem);
 void Audio_InitNoteSub(Note* note, f32 velocity, u8 pan, u8 reverbVol);
 void Audio_AudioListPushFront(AudioListItem* list, AudioListItem* item);
 void Audio_SeqLayerNoteRelease(SequenceChannelLayer* layer);
