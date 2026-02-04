@@ -324,7 +324,102 @@ void func_800922E4(void) {
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_800922E4.s")
 #endif
 
+// https://decomp.me/scratch/MEV9a
+#ifndef NEEDS_RODATA_IMPORTED
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_800926F4.s")
+#else
+extern s32 D_800D49B0;
+extern s32 D_801CE634;
+extern s32 D_801CE6F8;
+
+void func_800926F4(void) {
+    s32 sp14;
+    s32 sp18;
+
+    switch (gGameState) {
+        case 40:
+        case 2:
+        case 10:
+        case 62:
+        case 30:
+        case 102:
+        case 7:
+            func_8006AACC(gCourseID);
+            func_80067E40();
+
+            if (gGameState == 102) {
+                func_8004F9E0(-150, D_800D49B0);
+            } else {
+                func_8004F9E0(0, D_800D49B0);
+            }
+
+            func_8008E4B0();
+            func_801DDA24();
+            func_800AC184();
+            func_800AE7C4();
+            func_800893A8();
+            func_8009C968();
+
+            if (gPlayers == 1) {
+                func_8007FD80();
+            }
+
+            if (gGameState == 40) {
+                D_801CE6F8 = 0;
+            }
+            break;
+
+        case 20:
+        case 52:
+        case 54:
+        case 56:
+            func_8004F9E0(0, D_800D49B0);
+            func_8008E4B0();
+            func_801DDA24();
+            break;
+
+        case 50:
+            if (D_801CE634 != 100) {
+                func_8004F9E0(0, D_800D49B0);
+                func_8008E4B0();
+                func_801DDA24();
+            }
+            break;
+
+        case 100:
+            if (D_801CE634 == 103) {
+                func_8004F9E0(0, D_800D49B0);
+                func_8008E4B0();
+                func_801DDA24();
+            } else if (D_801CE608 == 0) {
+                func_8004F9E0(0, D_800D49B0);
+                func_8008E4B0();
+                func_801DDA24();
+            }
+            break;
+
+        case 80:
+            sp18 = 1;
+
+            if (D_801CE608 == 4) {
+                if (D_801CE634 != 67) {
+                    sp18 = 0;
+                }
+            } else {
+                if ((D_801CE634 == 100) || (D_801CE634 == 50) || (D_801CE634 == 57)) {
+                    sp18 = 0;
+                }
+            }
+
+            if (sp18 != 0) {
+                func_8004F9E0(0, D_800D49B0);
+                func_8008E4B0();
+                func_801DDA24();
+            }
+            break;
+    }
+}
+#endif
 
 // Matched but needs struct migration
 // https://decomp.me/scratch/2lS51
