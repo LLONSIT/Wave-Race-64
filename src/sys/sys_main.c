@@ -81,7 +81,7 @@ void SysMain_CreateGfxTask(OSTask* task) {
     task->t.output_buff = (u64*) (ALIGN16((u32) gTaskOutputBuffer));
     task->t.output_buff_size = (u64*) (ALIGN16((u32) gTaskOutputBuffer) + 0x6000);
     task->t.data_ptr = (u64*) gGfxPool->dList;
-    task->t.data_size = ((s32) (gDisplayListHead - gGfxPool->dList)) * 8;
+    task->t.data_size = ((s32) (gDisplayListHead - gGfxPool->dList)) * sizeof(Gfx);
     task->t.yield_data_ptr = gOSYieldData;
     task->t.yield_data_size = OS_YIELD_DATA_SIZE;
 }

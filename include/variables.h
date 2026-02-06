@@ -29,7 +29,7 @@ extern s32 D_800D461C;
 extern s32 D_800DAB1C;
 extern OSMesgQueue D_801540D0;
 extern s32 D_801CE630;
-extern s32 D_801CE634;
+extern s32 D_801CE634; // gPrevGameState ?
 extern s32 D_801CE638;
 extern s32 D_801CE63C;
 extern s32 D_801CE640;
