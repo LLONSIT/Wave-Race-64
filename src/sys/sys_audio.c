@@ -1,8 +1,7 @@
 #include "common.h"
 #include "wr64audio.h"
 
-<<<<<<< HEAD
-extern OSMesg sAudioTaskMsg;
+<<<<<<< HEAD extern OSMesg sAudioTaskMsg;
 extern OSMesgQueue gAudioTaskMesgQueue;
 extern OSTask* gCurrentAudioTask;
 =======
