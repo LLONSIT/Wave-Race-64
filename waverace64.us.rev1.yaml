@@ -80,10 +80,10 @@ segments:
      #Main Segment -> ucode -> Data/Rodata -> MIO_SEGMENT | Overlays
 
       # GAME CODE
-      - [0x1050, c, game/sys_main] # Some GFX macros
+      - [0x1050, c, sys/sys_main] # Some GFX macros
       - [0x1C70, c, game/main]
       - [0x2320, c, sys/sys_audio]
-      - [0x23E0, c, game/sys_utils]
+      - [0x23E0, c, sys/sys_utils]
       - [0x5480, c, game/code_5480]
       - [0x69D0, c, game/water_69D0]
       - [0xBD30, c, game/code_BD30]
@@ -264,7 +264,7 @@ segments:
 
       # GAME RODATA
       - [0xA39F0, .data, libultra/libc/xlitob] 
-      - [0xA3A20, .rodata, game/sys_utils]
+      - [0xA3A20, .rodata, sys/sys_utils]
       - [0xA3A70, .rodata, game/code_5480]
       - [0xA3A80, .rodata, game/water_69D0]
       - [0xA3B30, .rodata, game/code_C6C0]

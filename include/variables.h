@@ -12,10 +12,10 @@
 
 // Used in game_1050, game_4C750
 extern s32 D_80151950;
-extern s32 D_80151948;
+extern s32 gFramebuffersIdx;
 extern s32 D_8015194C;
 extern s32 D_800D45D8;
-extern s32 D_801542C0[];
+extern s32 gFrameBuffers[];
 extern u16 D_80228A34;
 
 // Global GFX Pointer
@@ -35,7 +35,7 @@ extern s32 D_801CE63C;
 extern s32 D_801CE640;
 extern s32 D_801CE644;
 extern s32 D_801CE620;
-extern OSTask* first_task;
+extern OSTask* gCurrentGfxTask;
 extern s32 D_801542B8;
 extern Gfx D_1000000[];
 extern s32 D_800D45E4;
@@ -43,9 +43,9 @@ extern u8* D_800D45E8;
 extern u8* D_800D45F0;
 extern s32 D_800DAB1C;
 extern void* D_8011EDE0;
-extern s32 D_80151948;
+extern s32 gFramebuffersIdx;
 extern s32 D_80151984;
-extern s32 D_801542C0[]; // tex save?
+extern s32 gFrameBuffers[]; // tex save?
 extern u8* D_801CE5F8;
 // overlay
 extern s32 D_800DAB2C;
@@ -333,4 +333,7 @@ extern s8 D_800E7C94;
 // audio_general.c
 extern s8 D_800E7C94;
 
+extern UnkStruct_801AE948* D_801AE948;
+extern UnkStruct_801AE948 D_5000000[];
+extern UnkStruct_801AEE20 D_801AEE20[];
 #endif /* VARIABLES_H */

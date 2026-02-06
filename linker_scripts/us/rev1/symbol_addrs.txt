@@ -1,7 +1,7 @@
 
 //Game Symbols
-first_task  = 0x801542B4;
-gCurrentAudioOSTask = 0x801542B8;
+gCurrentGfxTask  = 0x801542B4;
+gCurrentAudioTask = 0x801542B8;
 create_obj =  0x800B490C;
 gDisplayListHead = 0x80151944;
 unk_game_load = 0x80095050;
@@ -12,6 +12,7 @@ gGfxPool = 0x801518B8;
 gOSYieldData = 0x80045800;
 SysMain_Thread = 0x80046DA0;
 sGfxTask = 0x80151940;
+
 //game_23E0
 SysUtils_Srand = 0x80047E44;
 SysUtils_Rand = 0x80047E50;
@@ -25,6 +26,8 @@ SysUtils_MatrixAffineMultiply = 0x80049EB8;
 SysUtils_UpdateControllers = 0x8004A2B4;
 SysUtils_ContInitialize = 0x8004A130;
 SysUtils_MatrixLookAt = 0x80048854;
+SysUtils_InterpolateMtx = 0x80049144;
+SysUtils_NormalizeVertexTri = 0x80048E0C;
 
 //R_G_B_A
 gColorRed   = 0x800D47E8;
@@ -54,9 +57,11 @@ Main_IdleThread = 0x8004791C;
 gIdleThread = 0x801539E0;
 game_dma_copy = 0x80097EC8; //defined:true
 SysMain_GfxFullSync = 0x80046BF4;
+SysMain_SendGfxTaskSetMesg = 0x80046CF8;
 SysMain_GfxInitBuffers = 0x80046D2C;
 gGameState = 0x800DAB24;
 Draw_WaterEffects = 0x80090F58;
+UnusedPrintFontDL = 0x10144F8;
 //Fix build
 D_80228A78 = 0x80228A78;
 D_80227E98 = 0x80227E98;
@@ -107,7 +112,9 @@ Strlen2 = 0x800941D0;
 Save_PfsFindFile = 0x8007D1B8;
 Save_PfsCheckFree = 0x8007D24C;
 Save_GenCheckSum = 0x8007BBF8;
-
+gFrameBuffers = 0x801542C0;
+gFramebuffersIdx = 0x80151948;
+gFrameCounter = 0x80151960;
 gMainThreadMesgQueue = 0x80154130;
 gAudioTaskMesgQueue = 0x801540E8;
 sAudioTaskMsg = 0x801542D0;

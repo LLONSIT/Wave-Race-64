@@ -3,6 +3,8 @@
 #include "game.h"
 #include "common.h"
 
+typedef enum SegmentLineIntersectResult_e { NO_INTERSECT = -1, INTERSECT = 1 } SegmentLineIntersectResult;
+
 typedef struct UnkStruct_800D9854 {
     s32 unk0;
     s32 unk4;
@@ -23,6 +25,7 @@ struct UnkStruct_801C4000 {
 f32 func_8004D30C(f32 arg0, f32 arg1);
 s32 func_80087134(f32, f32);
 void func_80087444(void);
+s32 Math_TwoLineSegmentsIntersect(f32 ax, f32 ay, f32 bx, f32 by, f32 cx, f32 cy);
 
 extern struct UnkStruct_800D9854 D_800D9854;
 extern f32 D_800EA410;
@@ -34,7 +37,6 @@ extern struct UnkStruct_801C2C24 D_801C2C24[];
 extern struct UnkStruct_801C2C24 D_801C2938[];
 extern s32 D_800D98C8;
 extern s16 D_800DAB68;
-extern struct UnkStruct_801C3C54 D_801AEE20;
 extern struct UnkStruct_801C3C54 D_801B2F20;
 extern struct UnkStruct_801C2C24 D_801C2C2C[];
 extern struct UnkStruct_801C4000 D_801C4000;
@@ -89,15 +91,15 @@ void func_800804C4(void) {
     if (((D_801C3C54[temp_a0].unk70 * (D_801C3C50->unk44 - D_801C3C54[temp_a0].unk0)) +
          (D_801C3C54[temp_a0].unk74 * (D_801C3C50->unk4C - D_801C3C54[temp_a0].unk8))) > 0.0f) {
 
-        D_801C2948[D_801C3C58->unk0].lapCount = D_801C3C54[temp_a0].unkCC[D_801C3C58->unk4];
+        D_801C2948[D_801C3C58->unk0].lapCount = D_801C3C54[temp_a0].unkCC[D_801C3C58->currentRider];
     }
 
-    temp_a0 = D_801C3C54[D_801C3C58->unk8].unkF4[D_801C3C58->unk4];
+    temp_a0 = D_801C3C54[D_801C3C58->unk8].unkF4[D_801C3C58->currentRider];
 
     if (((D_801C3C54[temp_a0].unk70 * (D_801C3C50->unk44 - D_801C3C54[temp_a0].unk0)) +
          (D_801C3C54[temp_a0].unk74 * (D_801C3C50->unk4C - D_801C3C54[temp_a0].unk8))) < 0.0f) {
 
-        D_801C2948[D_801C3C58->unk0].lapCount = D_801C3C54[temp_a0].unkF4[D_801C3C58->unk4];
+        D_801C2948[D_801C3C58->unk0].lapCount = D_801C3C54[temp_a0].unkF4[D_801C3C58->currentRider];
     }
 }
 
@@ -305,37 +307,37 @@ void func_80081048(void) {
                         break;
                     case -1: /* switch 4 */
                     case 0:  /* switch 4 */
-                        D_801C3C50->unk1578 = 0.76f;
+                        D_801C3C50->riderSpeedMultiplier = 0.76f;
                         break;
                     case 1: /* switch 4 */
-                        D_801C3C50->unk1578 = 0.73f;
+                        D_801C3C50->riderSpeedMultiplier = 0.73f;
                         break;
                     case 2: /* switch 4 */
-                        D_801C3C50->unk1578 = 0.7f;
+                        D_801C3C50->riderSpeedMultiplier = 0.7f;
                         break;
                 }
             } else if (D_801C2938[D_801C3C58->unk0].racePosition < D_801C2938->racePosition) {
                 switch (D_801C3C58->unk5C) { /* switch 2; irregular */
                     case -1:                 /* switch 2 */
                     case 0:                  /* switch 2 */
-                        D_801C3C50->unk1578 = 0.7f;
+                        D_801C3C50->riderSpeedMultiplier = 0.7f;
                         break;
                     case 1: /* switch 2 */
-                        D_801C3C50->unk1578 = 0.6f;
+                        D_801C3C50->riderSpeedMultiplier = 0.6f;
                         break;
-                    case 2:                         /* switch 2 */
-                        switch (D_801C3C58->unk4) { /* switch 3; irregular */
-                            case 0:                 /* switch 3 */
-                                D_801C3C50->unk1578 = 0.4f;
+                    case 2:                                 /* switch 2 */
+                        switch (D_801C3C58->currentRider) { /* switch 3; irregular */
+                            case RIDER_RHAYAMI:             /* switch 3 */
+                                D_801C3C50->riderSpeedMultiplier = 0.4f;
                                 break;
-                            case 1: /* switch 3 */
-                                D_801C3C50->unk1578 = 0.57f;
+                            case RIDER_DMARINER: /* switch 3 */
+                                D_801C3C50->riderSpeedMultiplier = 0.57f;
                                 break;
-                            case 2: /* switch 3 */
-                                D_801C3C50->unk1578 = 0.4f;
+                            case RIDER_ASTEWART: /* switch 3 */
+                                D_801C3C50->riderSpeedMultiplier = 0.4f;
                                 break;
-                            case 3: /* switch 3 */
-                                D_801C3C50->unk1578 = 0.5f;
+                            case RIDER_MJETER: /* switch 3 */
+                                D_801C3C50->riderSpeedMultiplier = 0.5f;
                                 break;
                         }
                         break;
@@ -344,13 +346,13 @@ void func_80081048(void) {
                 switch (D_801C3C58->unk5C) { /* switch 1; irregular */
                     case -1:                 /* switch 1 */
                     case 0:                  /* switch 1 */
-                        D_801C3C50->unk1578 = 0.9f;
+                        D_801C3C50->riderSpeedMultiplier = 0.9f;
                         break;
                     case 1: /* switch 1 */
-                        D_801C3C50->unk1578 = 0.8f;
+                        D_801C3C50->riderSpeedMultiplier = 0.8f;
                         break;
                     case 2: /* switch 1 */
-                        D_801C3C50->unk1578 = 0.7f;
+                        D_801C3C50->riderSpeedMultiplier = 0.7f;
                         break;
                 }
             }
@@ -359,42 +361,42 @@ void func_80081048(void) {
             if ((D_801C3C58->unkA4 != 0) ||
                 ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) &&
                  (D_801C3C58->unkB0 == 0))) {
-                switch (D_801C3C58->unk4) { /* switch 7; irregular */
-                    default:                /* switch 7 */
+                switch (D_801C3C58->currentRider) { /* switch 7; irregular */
+                    default:                        /* switch 7 */
                         break;
                     case 0: /* switch 7 */
                     case 2: /* switch 7 */
                     case 3: /* switch 7 */
-                        D_801C3C50->unk1578 = 0.88f;
+                        D_801C3C50->riderSpeedMultiplier = 0.88f;
                         break;
                     case 1: /* switch 7 */
-                        D_801C3C50->unk1578 = 0.86f;
+                        D_801C3C50->riderSpeedMultiplier = 0.86f;
                         break;
                 }
             } else if (D_801C2938[D_801C3C58->unk0].racePosition < D_801C2938->racePosition) {
                 switch (D_801C3C58->unk5C) { /* switch 6; irregular */
                     case -1:                 /* switch 6 */
                     case 0:                  /* switch 6 */
-                        D_801C3C50->unk1578 = 0.9f;
+                        D_801C3C50->riderSpeedMultiplier = 0.9f;
                         break;
                     case 1: /* switch 6 */
-                        D_801C3C50->unk1578 = 0.8f;
+                        D_801C3C50->riderSpeedMultiplier = 0.8f;
                         break;
                     case 2: /* switch 6 */
-                        D_801C3C50->unk1578 = 0.7f;
+                        D_801C3C50->riderSpeedMultiplier = 0.7f;
                         break;
                 }
             } else {
                 switch (D_801C3C58->unk5C) { /* switch 5; irregular */
                     case -1:                 /* switch 5 */
                     case 0:                  /* switch 5 */
-                        D_801C3C50->unk1578 = 1.0f;
+                        D_801C3C50->riderSpeedMultiplier = 1.0f;
                         break;
                     case 1: /* switch 5 */
-                        D_801C3C50->unk1578 = 0.93f;
+                        D_801C3C50->riderSpeedMultiplier = 0.93f;
                         break;
                     case 2: /* switch 5 */
-                        D_801C3C50->unk1578 = 0.85f;
+                        D_801C3C50->riderSpeedMultiplier = 0.85f;
                         break;
                 }
             }
@@ -404,18 +406,18 @@ void func_80081048(void) {
                 ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) &&
                  (D_801C3C58->unkB0 == 0))) {
 
-                D_801C3C50->unk1578 = 0.95f;
+                D_801C3C50->riderSpeedMultiplier = 0.95f;
             } else if (D_801C2938[D_801C3C58->unk0].racePosition < D_801C2938->racePosition) {
                 switch (D_801C3C58->unk5C) { /* switch 9; irregular */
                     case -1:                 /* switch 9 */
                     case 0:                  /* switch 9 */
-                        D_801C3C50->unk1578 = 1.0f;
+                        D_801C3C50->riderSpeedMultiplier = 1.0f;
                         break;
                     case 1: /* switch 9 */
-                        D_801C3C50->unk1578 = 0.95f;
+                        D_801C3C50->riderSpeedMultiplier = 0.95f;
                         break;
                     case 2: /* switch 9 */
-                        D_801C3C50->unk1578 = 0.9f;
+                        D_801C3C50->riderSpeedMultiplier = 0.9f;
                         break;
 
                     default:
@@ -425,13 +427,13 @@ void func_80081048(void) {
                 switch (D_801C3C58->unk5C) { /* switch 8; irregular */
                     case -1:                 /* switch 8 */
                     case 0:                  /* switch 8 */
-                        D_801C3C50->unk1578 = 1.0f;
+                        D_801C3C50->riderSpeedMultiplier = 1.0f;
                         break;
                     case 1: /* switch 8 */
-                        D_801C3C50->unk1578 = 0.95f;
+                        D_801C3C50->riderSpeedMultiplier = 0.95f;
                         break;
                     case 2: /* switch 8 */
-                        D_801C3C50->unk1578 = 0.9f;
+                        D_801C3C50->riderSpeedMultiplier = 0.9f;
                         break;
                 }
             }
@@ -442,42 +444,42 @@ void func_80081048(void) {
     }
 
     if (D_801C2938[D_801C3C58->unk0].unk2F4 != 0) {
-        switch (D_801C3C58->unk4) { /* switch 10; irregular */
-            case 0:                 /* switch 10 */
-                D_801C3C50->unk1578 = 0.4f;
+        switch (D_801C3C58->currentRider) { /* switch 10; irregular */
+            case RIDER_RHAYAMI:             /* switch 10 */
+                D_801C3C50->riderSpeedMultiplier = 0.4f;
                 break;
-            case 1: /* switch 10 */
-                D_801C3C50->unk1578 = 0.57f;
+            case RIDER_DMARINER: /* switch 10 */
+                D_801C3C50->riderSpeedMultiplier = 0.57f;
                 break;
-            case 2: /* switch 10 */
-                D_801C3C50->unk1578 = 0.4f;
+            case RIDER_ASTEWART: /* switch 10 */
+                D_801C3C50->riderSpeedMultiplier = 0.4f;
                 break;
-            case 3: /* switch 10 */
-                D_801C3C50->unk1578 = 0.5f;
+            case RIDER_MJETER: /* switch 10 */
+                D_801C3C50->riderSpeedMultiplier = 0.5f;
                 break;
         }
     }
     if (D_801C3C58->unk98 != 0 || ABS(D_801C3C50->unkB52) > 56.0) {
-        D_801C3C50->unk1578 = 1.0f;
+        D_801C3C50->riderSpeedMultiplier = 1.0f;
     }
 
     if (D_801C3C50->unk15DE != 0) {
-        D_801C3C50->unk1578 = 1.05f;
+        D_801C3C50->riderSpeedMultiplier = 1.05f;
     } else if (D_801C3C50->unkC7C[0] == 0) {
-        D_801C3C50->unk1578 = 1.2f;
+        D_801C3C50->riderSpeedMultiplier = 1.2f;
     }
 
     if (D_801C3C58->unk90 >= 16) {
-        D_801C3C50->unk1578 = 1.0f;
+        D_801C3C50->riderSpeedMultiplier = 1.0f;
     }
     if (gCourseID == DOLPHIN_PARK) {
-        D_801C3C50->unk1578 = 1.0f;
+        D_801C3C50->riderSpeedMultiplier = 1.0f;
     }
-    if (D_801C3C50->unk1578 > 1.2f) {
-        D_801C3C50->unk1578 = 1.2f;
+    if (D_801C3C50->riderSpeedMultiplier > 1.2f) {
+        D_801C3C50->riderSpeedMultiplier = 1.2f;
     }
-    if (D_801C3C50->unk1578 < 0.5f) {
-        D_801C3C50->unk1578 = 0.5f;
+    if (D_801C3C50->riderSpeedMultiplier < 0.5f) {
+        D_801C3C50->riderSpeedMultiplier = 0.5f;
     }
 }
 
@@ -1415,9 +1417,9 @@ void func_80085964(void) {
 
 void func_800859F4(void) {
     D_801C3C58->unk1C = D_801C3C54[D_801C3C58->unk10].unk98;
-    D_801C3C58->unk14 = D_801C3C54[D_801C3C58->unk10].unkC0[D_801C3C58->unk4 + 3];
+    D_801C3C58->unk14 = D_801C3C54[D_801C3C58->unk10].unkC0[D_801C3C58->currentRider + 3];
     D_801C3C58->unk20 = D_801C3C54[D_801C3C58->unk14].unk98;
-    D_801C3C58->unk18 = D_801C3C54[D_801C3C58->unk10].unkF4[D_801C3C58->unk4];
+    D_801C3C58->unk18 = D_801C3C54[D_801C3C58->unk10].unkF4[D_801C3C58->currentRider];
     D_801C3C58->unk24 = D_801C3C54[D_801C3C58->unk18].unk98;
 }
 
@@ -1493,7 +1495,7 @@ void func_80085EEC(s32 arg0) {
     } else {
         switch (gCourseID) {
             case PORT_BLUE:
-                if ((D_801C3C58->unk4 == 1) && (gDifficulty != DIFFICULTY_EXPERT)) {
+                if ((D_801C3C58->currentRider == RIDER_DMARINER) && (gDifficulty != DIFFICULTY_EXPERT)) {
                     D_801C3C54 = &D_801B2F20;
                 } else {
                     D_801C3C54 = &D_801AEE20;
@@ -1512,9 +1514,9 @@ void func_80085EEC(s32 arg0) {
     D_801C3C58->unkC = D_801C3C54[D_801C3C58->unk8].unk98;
     D_801C3C58->unk10 = D_801C2938[arg0].unk10;
     D_801C3C58->unk1C = D_801C3C54[D_801C3C58->unk10].unk98;
-    D_801C3C58->unk14 = D_801C3C54[D_801C3C58->unk10].unkC0[D_801C3C58->unk4 + 3];
+    D_801C3C58->unk14 = D_801C3C54[D_801C3C58->unk10].unkC0[D_801C3C58->currentRider + 3];
     D_801C3C58->unk20 = D_801C3C54[D_801C3C58->unk14].unk98;
-    D_801C3C58->unk18 = D_801C3C54[D_801C3C58->unk10].unkF4[D_801C3C58->unk4];
+    D_801C3C58->unk18 = D_801C3C54[D_801C3C58->unk10].unkF4[D_801C3C58->currentRider];
     D_801C3C58->unk24 = D_801C3C54[D_801C3C58->unk18].unk98;
 }
 
@@ -1539,29 +1541,30 @@ void func_800861AC(void) {
         case 1:
             if (((D_801C3C58->unk10 == D_801C3C58->unk8) && (D_801C3C58->unk2C < 0x12C)) &&
                 (D_801C3C54[D_801C3C58->unk8].unkBC == 0)) {
-                D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->unk4];
+                D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->currentRider];
                 func_800859F4();
             } else {
                 switch (D_801C3C58->unk20) {
                     case 1:
                     case 4: {
-                        if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C,
-                                          (80.0f * D_801C4060[5]) + D_801C3C54[D_801C3C58->unk10].unk0,
-                                          D_801C3C54[D_801C3C58->unk10].unk8 - (D_801C4060[4] * (0, 80.0f)),
-                                          D_801C3C54[D_801C3C58->unk14].unk0,
-                                          D_801C3C54[D_801C3C58->unk14].unk8) == 1) {
-                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->unk4];
+                        if (Math_TwoLineSegmentsIntersect(
+                                D_801C3C50->unk44, D_801C3C50->unk4C,
+                                (80.0f * D_801C4060[5]) + D_801C3C54[D_801C3C58->unk10].unk0,
+                                D_801C3C54[D_801C3C58->unk10].unk8 - (D_801C4060[4] * (0, 80.0f)),
+                                D_801C3C54[D_801C3C58->unk14].unk0, D_801C3C54[D_801C3C58->unk14].unk8) == 1) {
+                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->currentRider];
                             func_800859F4();
                         }
                     } break;
 
                     case 0:
-                        if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C,
-                                          (80.0f * D_801C4060[5]) + D_801C3C54[D_801C3C58->unk10].unk0,
-                                          D_801C3C54[D_801C3C58->unk10].unk8 - (D_801C4060[4] * (0, 80.0f)),
-                                          D_801C3C54[D_801C3C58->unk14].unk0 - (D_801C4060[5] * (0, 300.0f)),
-                                          (300.0f * D_801C4060[4]) + D_801C3C54[D_801C3C58->unk14].unk8) == 1) {
-                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->unk4];
+                        if (Math_TwoLineSegmentsIntersect(
+                                D_801C3C50->unk44, D_801C3C50->unk4C,
+                                (80.0f * D_801C4060[5]) + D_801C3C54[D_801C3C58->unk10].unk0,
+                                D_801C3C54[D_801C3C58->unk10].unk8 - (D_801C4060[4] * (0, 80.0f)),
+                                D_801C3C54[D_801C3C58->unk14].unk0 - (D_801C4060[5] * (0, 300.0f)),
+                                (300.0f * D_801C4060[4]) + D_801C3C54[D_801C3C58->unk14].unk8) == 1) {
+                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->currentRider];
                             func_800859F4();
                         }
                         break;
@@ -1570,15 +1573,16 @@ void func_800861AC(void) {
 
                     {
 
-                        if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C,
-                                          (80.0f * D_801C4080[5]) + D_801C3C54[D_801C3C58->unk10].unk0,
-                                          D_801C3C54[D_801C3C58->unk10].unk8 - (D_801C4080[4] * ((0, 80.0f))),
-                                          D_801C3C54[D_801C3C58->unk14].unkC - (D_801C4080[5] * (0, 50.0f)),
-                                          (50.0f * D_801C4080[4]) + D_801C3C54[D_801C3C58->unk14].unk14) == 1)
+                        if (Math_TwoLineSegmentsIntersect(
+                                D_801C3C50->unk44, D_801C3C50->unk4C,
+                                (80.0f * D_801C4080[5]) + D_801C3C54[D_801C3C58->unk10].unk0,
+                                D_801C3C54[D_801C3C58->unk10].unk8 - (D_801C4080[4] * ((0, 80.0f))),
+                                D_801C3C54[D_801C3C58->unk14].unkC - (D_801C4080[5] * (0, 50.0f)),
+                                (50.0f * D_801C4080[4]) + D_801C3C54[D_801C3C58->unk14].unk14) == 1)
 
                         {
 
-                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->unk4];
+                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->currentRider];
                             func_800859F4();
                         }
                         break;
@@ -1590,19 +1594,19 @@ void func_800861AC(void) {
         case 0:
             if (((D_801C3C58->unk10 == D_801C3C58->unk8) && (D_801C3C58->unk2C < 0x12C)) &&
                 (D_801C3C54[D_801C3C58->unk8].unkBC == 0)) {
-                D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->unk4];
+                D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->currentRider];
                 func_800859F4();
             } else {
                 switch (D_801C3C58->unk20) {
                     case 0:
                     case 4:
 
-                        if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C,
-                                          D_801C3C54[D_801C3C58->unk10].unk0 - (D_801C4060[5] * (0, 80.0f)),
-                                          (80.0f * D_801C4060[4]) + D_801C3C54[D_801C3C58->unk10].unk8,
-                                          D_801C3C54[D_801C3C58->unk14].unk0,
-                                          D_801C3C54[D_801C3C58->unk14].unk8) == -1) {
-                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->unk4];
+                        if (Math_TwoLineSegmentsIntersect(
+                                D_801C3C50->unk44, D_801C3C50->unk4C,
+                                D_801C3C54[D_801C3C58->unk10].unk0 - (D_801C4060[5] * (0, 80.0f)),
+                                (80.0f * D_801C4060[4]) + D_801C3C54[D_801C3C58->unk10].unk8,
+                                D_801C3C54[D_801C3C58->unk14].unk0, D_801C3C54[D_801C3C58->unk14].unk8) == -1) {
+                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->currentRider];
                             func_800859F4();
                         }
 
@@ -1613,15 +1617,16 @@ void func_800861AC(void) {
 
                         new_var3 = D_801C4060[4];
 
-                        if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C,
-                                          D_801C3C54[D_801C3C58->unk10].unk0 - (80.0f * new_var2),
-                                          (80.0f * new_var3) + D_801C3C54[D_801C3C58->unk10].unk8,
-                                          (300.0f * new_var2) + D_801C3C54[D_801C3C58->unk14].unk0,
-                                          D_801C3C54[D_801C3C58->unk14].unk8 - (300.0f * new_var3)) == (-1))
+                        if (Math_TwoLineSegmentsIntersect(D_801C3C50->unk44, D_801C3C50->unk4C,
+                                                          D_801C3C54[D_801C3C58->unk10].unk0 - (80.0f * new_var2),
+                                                          (80.0f * new_var3) + D_801C3C54[D_801C3C58->unk10].unk8,
+                                                          (300.0f * new_var2) + D_801C3C54[D_801C3C58->unk14].unk0,
+                                                          D_801C3C54[D_801C3C58->unk14].unk8 - (300.0f * new_var3)) ==
+                            (-1))
 
                         {
 
-                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->unk4];
+                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->currentRider];
 
                             func_800859F4();
                         }
@@ -1636,15 +1641,16 @@ void func_800861AC(void) {
 
                         new_var3 = D_801C40A0[4];
 
-                        if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C,
-                                          D_801C3C54[D_801C3C58->unk10].unk0 - (80.0f * new_var2),
-                                          (80.0f * new_var3) + D_801C3C54[D_801C3C58->unk10].unk8,
-                                          D_801C3C54[D_801C3C58->unk14].unk18 + (50.0f * new_var2),
-                                          D_801C3C54[D_801C3C58->unk14].unk20 - (50.0f * new_var3)) == (-1))
+                        if (Math_TwoLineSegmentsIntersect(D_801C3C50->unk44, D_801C3C50->unk4C,
+                                                          D_801C3C54[D_801C3C58->unk10].unk0 - (80.0f * new_var2),
+                                                          (80.0f * new_var3) + D_801C3C54[D_801C3C58->unk10].unk8,
+                                                          D_801C3C54[D_801C3C58->unk14].unk18 + (50.0f * new_var2),
+                                                          D_801C3C54[D_801C3C58->unk14].unk20 - (50.0f * new_var3)) ==
+                            (-1))
 
                         {
 
-                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->unk4];
+                            D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->currentRider];
 
                             func_800859F4();
                         }
@@ -1659,23 +1665,24 @@ void func_800861AC(void) {
 
         case 3:
 
-            if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C, D_801C3C54[D_801C3C58->unk14].unk0,
-                              D_801C3C54[D_801C3C58->unk14].unk8,
-                              D_801C3C54[D_801C3C58->unk10].unkC - (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f),
-                              D_801C3C54[D_801C3C58->unk10].unk14 - (D_801C3C54[D_801C3C58->unk10].unk7C * 120.0f)) ==
-                1)
+            if (Math_TwoLineSegmentsIntersect(
+                    D_801C3C50->unk44, D_801C3C50->unk4C, D_801C3C54[D_801C3C58->unk14].unk0,
+                    D_801C3C54[D_801C3C58->unk14].unk8,
+                    D_801C3C54[D_801C3C58->unk10].unkC - (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f),
+                    D_801C3C54[D_801C3C58->unk10].unk14 - (D_801C3C54[D_801C3C58->unk10].unk7C * 120.0f)) == INTERSECT)
 
             {
 
-                if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C, D_801C3C54[D_801C3C58->unk14].unk0,
-                                  D_801C3C54[D_801C3C58->unk14].unk8,
-                                  D_801C3C54[D_801C3C58->unk10].unk18 + (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f),
-                                  D_801C3C54[D_801C3C58->unk10].unk20 +
-                                      (D_801C3C54[D_801C3C58->unk10].unk7C * 120.0f)) == (-1))
+                if (Math_TwoLineSegmentsIntersect(
+                        D_801C3C50->unk44, D_801C3C50->unk4C, D_801C3C54[D_801C3C58->unk14].unk0,
+                        D_801C3C54[D_801C3C58->unk14].unk8,
+                        D_801C3C54[D_801C3C58->unk10].unk18 + (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f),
+                        D_801C3C54[D_801C3C58->unk10].unk20 + (D_801C3C54[D_801C3C58->unk10].unk7C * 120.0f)) ==
+                    NO_INTERSECT)
 
                 {
 
-                    D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->unk4];
+                    D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->currentRider];
 
                     func_800859F4();
                 }
@@ -1691,7 +1698,7 @@ void func_800861AC(void) {
 
             {
 
-                D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->unk4];
+                D_801C3C58->unk10 = D_801C3C54[D_801C3C58->unk10].unkCC[D_801C3C58->currentRider];
 
                 func_800859F4();
             }
@@ -1710,21 +1717,21 @@ void func_800861AC(void) {
             case 0:
             case 1:
                 while ((D_801C3C54[var_a0].unk98 == 8) || (D_801C3C54[var_a0].unk98 == 9)) {
-                    var_a0 = (D_801C3C58->unk10 = D_801C3C54[var_a0].unkCC[D_801C3C58->unk4]);
+                    var_a0 = (D_801C3C58->unk10 = D_801C3C54[var_a0].unkCC[D_801C3C58->currentRider]);
                 }
 
                 func_800859F4();
                 break;
             case 2:
                 while (D_801C3C54[var_a0].unk98 == 9) {
-                    var_a0 = (D_801C3C58->unk10 = D_801C3C54[var_a0].unkCC[D_801C3C58->unk4]);
+                    var_a0 = (D_801C3C58->unk10 = D_801C3C54[var_a0].unkCC[D_801C3C58->currentRider]);
                 }
                 func_800859F4();
                 break;
             default:
             case 3:
                 while (D_801C3C54[var_a0].unk98 == 8) {
-                    var_a0 = (D_801C3C58->unk10 = D_801C3C54[var_a0].unkCC[D_801C3C58->unk4]);
+                    var_a0 = (D_801C3C58->unk10 = D_801C3C54[var_a0].unkCC[D_801C3C58->currentRider]);
                 }
 
                 func_800859F4();
@@ -1733,25 +1740,25 @@ void func_800861AC(void) {
     }
 }
 
-s32 func_80086C40(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
-    f32 temp_f0;
-    f32 temp_f16;
-    f32 temp_f18;
-    f32 temp_f2;
+s32 Math_TwoLineSegmentsIntersect(f32 ax, f32 ay, f32 bx, f32 by, f32 cx, f32 cy) {
+    f32 diffABx;
+    f32 diffCAx;
+    f32 diffCAy;
+    f32 diffBAy;
 
-    temp_f0 = arg2 - arg0;
-    temp_f2 = arg3 - arg1;
+    diffABx = bx - ax;
+    diffBAy = by - ay;
 
-    temp_f16 = arg4 - arg0;
-    temp_f18 = arg5 - arg1;
+    diffCAx = cx - ax;
+    diffCAy = cy - ay;
 
-    if (((SQ(temp_f0) + SQ(temp_f2)) == 0.0f) || (((SQ(temp_f16) + temp_f18 + temp_f18) == 0.0f))) {
-        return -1;
+    if (((SQ(diffABx) + SQ(diffBAy)) == 0.0f) || (((SQ(diffCAx) + diffCAy + diffCAy) == 0.0f))) {
+        return NO_INTERSECT;
     }
-    if ((temp_f0 * temp_f18) < (temp_f16 * temp_f2)) {
-        return 1;
+    if ((diffABx * diffCAy) < (diffCAx * diffBAy)) {
+        return INTERSECT;
     }
-    return -1;
+    return NO_INTERSECT;
 }
 
 void func_80086CE0(void) {
@@ -1872,26 +1879,26 @@ s32 func_80087134(f32 arg0, f32 arg1) {
 
     temp_s0 = (void*) ((D_8011F8E0 * 0x3630) + 0x2D0 + (s32) &D_801C43F8);
 
-    if (func_80086C40((f32) ((s16*) temp_s0)[8],  // unk10
-                      (f32) ((s16*) temp_s0)[10], // unk14
-                      (f32) ((s16*) temp_s0)[0],  // unk00
-                      (f32) ((s16*) temp_s0)[2],  // unk04
-                      arg0, arg1) == -1 &&
-        func_80086C40((f32) ((s16*) temp_s0)[24], // unk30
-                      (f32) ((s16*) temp_s0)[26], // unk34
-                      (f32) ((s16*) temp_s0)[16], // unk20
-                      (f32) ((s16*) temp_s0)[18], // unk24
-                      arg0, arg1) == 1 &&
-        func_80086C40((f32) ((s16*) temp_s0)[8],  // unk10
-                      (f32) ((s16*) temp_s0)[10], // unk14
-                      (f32) ((s16*) temp_s0)[24], // unk30
-                      (f32) ((s16*) temp_s0)[26], // unk34
-                      arg0, arg1) == 1 &&
-        func_80086C40((f32) ((s16*) temp_s0)[0],  // unk00
-                      (f32) ((s16*) temp_s0)[2],  // unk04
-                      (f32) ((s16*) temp_s0)[16], // unk20
-                      (f32) ((s16*) temp_s0)[18], // unk24
-                      arg0, arg1) == -1) {
+    if (Math_TwoLineSegmentsIntersect((f32) ((s16*) temp_s0)[8],  // unk10
+                                      (f32) ((s16*) temp_s0)[10], // unk14
+                                      (f32) ((s16*) temp_s0)[0],  // unk00
+                                      (f32) ((s16*) temp_s0)[2],  // unk04
+                                      arg0, arg1) == NO_INTERSECT &&
+        Math_TwoLineSegmentsIntersect((f32) ((s16*) temp_s0)[24], // unk30
+                                      (f32) ((s16*) temp_s0)[26], // unk34
+                                      (f32) ((s16*) temp_s0)[16], // unk20
+                                      (f32) ((s16*) temp_s0)[18], // unk24
+                                      arg0, arg1) == INTERSECT &&
+        Math_TwoLineSegmentsIntersect((f32) ((s16*) temp_s0)[8],  // unk10
+                                      (f32) ((s16*) temp_s0)[10], // unk14
+                                      (f32) ((s16*) temp_s0)[24], // unk30
+                                      (f32) ((s16*) temp_s0)[26], // unk34
+                                      arg0, arg1) == INTERSECT &&
+        Math_TwoLineSegmentsIntersect((f32) ((s16*) temp_s0)[0],  // unk00
+                                      (f32) ((s16*) temp_s0)[2],  // unk04
+                                      (f32) ((s16*) temp_s0)[16], // unk20
+                                      (f32) ((s16*) temp_s0)[18], // unk24
+                                      arg0, arg1) == NO_INTERSECT) {
         return true;
     } else {
         return false;

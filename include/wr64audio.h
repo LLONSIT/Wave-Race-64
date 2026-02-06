@@ -835,6 +835,9 @@ extern s16* gAiBuffers[3];
 extern OSMesgQueue* gAudioTaskStartQueue;
 extern OSMesgQueue* gAudioResetQueue;
 extern OSMesgQueue* gAudioSpecQueue;
+extern OSMesgQueue gAudioTaskMesgQueue;
+extern OSMesg sAudioTaskMsg;
+extern OSTask* gCurrentAudioTask;
 
 // audio_general.c
 extern u32 D_8003FF48;

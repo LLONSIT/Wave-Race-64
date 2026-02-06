@@ -2,6 +2,20 @@
 #include "rider.h"
 #include "camera.h"
 
+typedef struct UnkStruct_801C0C90_s {
+    s32 riders[4];
+} UnkStruct_801C0C90;
+
+typedef struct VtxData_s {
+    Vtx vtx[4];
+} VtxData;
+
+typedef struct UnkStruct_80198368_s {
+    /* 0x0 */ char pad[0x5140];
+    /* 0x5140 */ VtxData unk5140[2];
+    /* 0x5144 */ char pad5144[0x612c];
+} UnkStruct_80198368;
+
 extern s32 D_800D92B0;
 extern s32 D_800D92B4;
 extern UnkStruct_801BC940 D_801BC940[];
@@ -20,11 +34,31 @@ extern f32 D_801C0C8C;
 extern u16 D_101F170[];
 extern LookAt D_500B2C0[];
 extern LookAt D_500B2D0[];
-extern s32 D_801AE948;
+
+extern s32 D_800D543C;
+extern s32 D_800D5454;
+
+extern UnkStruct_80198368 D_80198368[2];
+extern UnkStruct_801C0C90 D_801C0C90[2];
+extern s32 D_801C0CB0;
+extern s32 D_801C0CB4;
+extern s32 D_801C0CB8;
+extern s32 D_801C0CBC;
+extern s32 D_801C0CC0;
+extern s32 D_801C0CC4;
+
+extern Gfx D_102BF48[];
+extern Gfx D_102C798[];
+
+extern s32 D_801AE950;
+extern s32 D_801BB120;
+extern s16 D_801C0840[];
 
 void func_800C3628(s32);           /* extern */
 void func_801FB488(s32, s32, s32); /* extern */
-
+void func_8006A300(void);
+void func_800B4750(void);
+void func_801EDFFC(s32, s32, f32, s32); /* extern */
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006A300.s")
 
 void func_8006A748(void) {
@@ -104,7 +138,57 @@ void func_8006AA58(void) {
     D_801C0C8C = 700.0f;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006AACC.s")
+void func_8006AACC(s32 arg0) {
+    s32 i;
+    s32 k;
+    s32 j;
+    Vtx* vtx;
+    s32 temp;
+    if (D_800D543C != 0) {
+        D_800D543C = 0;
+        func_8006A300();
+    }
+    func_80075274();
+
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 2; j++) {
+            vtx = D_80198368[i].unk5140[j].vtx;
+            for (k = 0; k < 4; k++) {
+                vtx->v.flag = 0;
+                temp = k % 4;
+                if ((temp == 0) || (temp == 3)) {
+                    vtx->v.cn[0] = 0xC0;
+                    vtx->v.cn[1] = 0xC0;
+                    vtx->v.cn[2] = 0x20;
+                } else {
+                    vtx->v.cn[0] = 0x20;
+                    vtx->v.cn[1] = 0xC0;
+                    vtx->v.cn[2] = 0x20;
+                }
+                vtx->v.cn[3] = 0xFF;
+                vtx++;
+            }
+        }
+    }
+    func_8006AA58();
+    func_800B4750();
+    D_801C0CB0 = D_801C0CB4 = 0;
+
+    for (k = 0; k < 2; k++) {
+        for (i = 0; i < gRiders; i++) {
+            D_801C0C90[k].riders[i] = 0xFF;
+        }
+    }
+
+    D_801C0CB8 = D_801C0CBC = D_801C0CC0 = D_801C0CC4 = 0;
+    if (gCourseID == 2) {
+        D_800D5454 = 0;
+    } else if (gCourseID == 4) {
+        D_800D5454 = 2;
+    } else {
+        D_800D5454 = 1;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006AC84.s")
 
@@ -116,7 +200,38 @@ void func_8006AA58(void) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006CB98.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006CDE8.s")
+void func_8006CDE8(Gfx** gdl) {
+    s32 var_s3;
+    Gfx* gdlh;
+
+    gdlh = *gdl;
+    gSPClearGeometryMode(gdlh++, G_ZBUFFER | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR);
+    gSPSetGeometryMode(gdlh++, G_ZBUFFER | G_SHADE | G_CULL_BACK | G_SHADING_SMOOTH);
+    gSPTexture(gdlh++, 0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON);
+    gDPPipeSync(gdlh++);
+    gDPSetCycleType(gdlh++, G_CYC_1CYCLE);
+    gDPSetCombineMode(gdlh++, G_CC_MODULATEIDECALA, G_CC_MODULATEIDECALA);
+    gDPSetRenderMode(gdlh++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+
+    for (var_s3 = 0; var_s3 < D_801BB120; var_s3++) {
+        if (D_801C0840[var_s3] < 0) {
+            continue;
+        }
+
+        if ((D_801AEE20[var_s3].unk9C != 0) || (D_801AEE20[var_s3].unkC8 == 0)) {
+            continue;
+        }
+
+        func_801EDFFC(&D_801AE948->unk4140[D_801AE950], D_801AEE20[var_s3].unk24, 0, D_801AEE20[var_s3].unk28);
+        gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        if (D_801AEE20[var_s3].unk98 == 0) {
+            gSPDisplayList(gdlh++, D_102C798);
+        } else {
+            gSPDisplayList(gdlh++, D_102BF48);
+        }
+    }
+    *gdl = gdlh;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006D034.s")
 
@@ -129,7 +244,7 @@ void func_8006DE24(Gfx** gdl) {
     gdlh = *gdl;
     temp_v1 = &gCameraPerspective[D_80223930];
 
-    guLookAtReflect(D_801AE948 + 0x4100, D_801AE948 + 0xB2C0, temp_v1->unk4C, temp_v1->unk50, temp_v1->unk54,
+    guLookAtReflect(D_801AE948->unk4100, D_801AE948->unkB2C0, temp_v1->unk4C, temp_v1->unk50, temp_v1->unk54,
                     temp_v1->unk7C, temp_v1->unk80, temp_v1->unk84, -1.0f, 0.0f, 0.0f);
     gSPClearGeometryMode(gdlh++, G_ZBUFFER | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR);
     gSPSetGeometryMode(gdlh++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH);

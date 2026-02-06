@@ -2,16 +2,6 @@
 
 extern s32 D_800D48E0;
 
-typedef struct UnkStruct_801AEE20_s {
-    /* 0x000 */ char pad0[0x88];
-    /* 0x088 */ f32 unk88;       /* inferred */
-    /* 0x08C */ char pad8C[0xC]; /* maybe part of unk88[4]? */
-    /* 0x098 */ s32 unk98;       /* inferred */
-    /* 0x09C */ char pad9C[4];
-    /* 0x0A0 */ s32 unkA0;        /* inferred */
-    /* 0x0A4 */ char padA4[0x60]; /* maybe part of unkA0[0x19]? */
-} UnkStruct_801AEE20;             /* size = 0x104 */
-
 extern UnkStruct_801AEE20 D_801AEE20[];
 extern s32 D_801BB120;
 extern UnkStruct_801C2C24 D_801C2938[];

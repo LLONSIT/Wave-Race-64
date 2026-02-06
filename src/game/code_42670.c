@@ -98,10 +98,10 @@ void func_80087E70(void) {
     temp_fs2 = D_801C3C54[D_801C3C58->unk8].unk8 - D_801C3C50->unk4C;
     D_801C3C58->unk38 = (s32) sqrtf(SQ(temp_fs1) + SQ(temp_fs2));
 
-    D_801C3C58->unk3C =
-        func_80086C40(temp_fs1 = D_801C3C54[D_801C3C58->unk10].unk0, temp_fs2 = D_801C3C54[D_801C3C58->unk10].unk8,
-                      (D_801C3C54[D_801C3C58->unk10].unk70 * 256.0f) + temp_fs1,
-                      (D_801C3C54[D_801C3C58->unk10].unk74 * 256.0f) + temp_fs2, D_801C3C50->unk44, D_801C3C50->unk4C);
+    D_801C3C58->unk3C = Math_TwoLineSegmentsIntersect(
+        temp_fs1 = D_801C3C54[D_801C3C58->unk10].unk0, temp_fs2 = D_801C3C54[D_801C3C58->unk10].unk8,
+        (D_801C3C54[D_801C3C58->unk10].unk70 * 256.0f) + temp_fs1,
+        (D_801C3C54[D_801C3C58->unk10].unk74 * 256.0f) + temp_fs2, D_801C3C50->unk44, D_801C3C50->unk4C);
 }
 
 void func_80088418(void) {
@@ -158,20 +158,22 @@ void func_80088488(s32 arg0) {
         case 2:
         case 3:
             temp = 120.0f;
-            if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C,
-                              D_801C3C54[D_801C3C58->unk10].unk18 + (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f),
+            if (Math_TwoLineSegmentsIntersect(
+                    D_801C3C50->unk44, D_801C3C50->unk4C,
+                    D_801C3C54[D_801C3C58->unk10].unk18 + (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f),
 
-                              D_801C3C54[D_801C3C58->unk10].unk20 + (D_801C3C54[D_801C3C58->unk10].unk7C * 120.0f),
-                              D_801C3C54[D_801C3C58->unk14].unk0, D_801C3C54[D_801C3C58->unk14].unk8) == -1) {
+                    D_801C3C54[D_801C3C58->unk10].unk20 + (D_801C3C54[D_801C3C58->unk10].unk7C * 120.0f),
+                    D_801C3C54[D_801C3C58->unk14].unk0, D_801C3C54[D_801C3C58->unk14].unk8) == -1) {
 
                 D_801C4000.unk8 = D_801C3C54[D_801C3C58->unk10].unk18 + (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f);
                 D_801C4000.unkC = D_801C3C54[D_801C3C58->unk10].unk20 + (D_801C3C54[D_801C3C58->unk10].unk7C * 120.0f);
             } else {
 
-                if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C,
-                                  D_801C3C54[D_801C3C58->unk10].unkC - (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f),
-                                  D_801C3C54[D_801C3C58->unk10].unk14 - (D_801C3C54[D_801C3C58->unk10].unk7C * 120.0f),
-                                  D_801C3C54[D_801C3C58->unk14].unk0, D_801C3C54[D_801C3C58->unk14].unk8) == 1) {
+                if (Math_TwoLineSegmentsIntersect(
+                        D_801C3C50->unk44, D_801C3C50->unk4C,
+                        D_801C3C54[D_801C3C58->unk10].unkC - (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f),
+                        D_801C3C54[D_801C3C58->unk10].unk14 - (D_801C3C54[D_801C3C58->unk10].unk7C * 120.0f),
+                        D_801C3C54[D_801C3C58->unk14].unk0, D_801C3C54[D_801C3C58->unk14].unk8) == 1) {
 
                     D_801C4000.unk8 =
                         D_801C3C54[D_801C3C58->unk10].unkC - (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f);
@@ -182,11 +184,11 @@ void func_80088488(s32 arg0) {
                     if (D_801C3C58->unk8 != D_801C3C58->unk10) {
                         if (D_801C3C58->unk24 == 0) {
 
-                            if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C,
-                                              D_801C3C54[D_801C3C58->unk18].unk0 - (50.0f * D_801C4040.unk14),
-                                              D_801C3C54[D_801C3C58->unk18].unk8 + (50.0f * D_801C4040.unk10),
-                                              D_801C3C54[D_801C3C58->unk10].unk0,
-                                              D_801C3C54[D_801C3C58->unk10].unk8) == 1) {
+                            if (Math_TwoLineSegmentsIntersect(
+                                    D_801C3C50->unk44, D_801C3C50->unk4C,
+                                    D_801C3C54[D_801C3C58->unk18].unk0 - (50.0f * D_801C4040.unk14),
+                                    D_801C3C54[D_801C3C58->unk18].unk8 + (50.0f * D_801C4040.unk10),
+                                    D_801C3C54[D_801C3C58->unk10].unk0, D_801C3C54[D_801C3C58->unk10].unk8) == 1) {
 
                                 D_801C4000.unk8 = D_801C3C54[D_801C3C58->unk10].unk18 +
                                                   (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f);
@@ -196,11 +198,11 @@ void func_80088488(s32 arg0) {
                             }
                         }
                         if (D_801C3C58->unk24 == 1) {
-                            if (func_80086C40(D_801C3C50->unk44, D_801C3C50->unk4C,
-                                              D_801C3C54[D_801C3C58->unk18].unk0 + (50.0f * D_801C4040.unk14),
-                                              D_801C3C54[D_801C3C58->unk18].unk8 - (50.0f * D_801C4040.unk10),
-                                              D_801C3C54[D_801C3C58->unk10].unk0,
-                                              D_801C3C54[D_801C3C58->unk10].unk8) == -1) {
+                            if (Math_TwoLineSegmentsIntersect(
+                                    D_801C3C50->unk44, D_801C3C50->unk4C,
+                                    D_801C3C54[D_801C3C58->unk18].unk0 + (50.0f * D_801C4040.unk14),
+                                    D_801C3C54[D_801C3C58->unk18].unk8 - (50.0f * D_801C4040.unk10),
+                                    D_801C3C54[D_801C3C58->unk10].unk0, D_801C3C54[D_801C3C58->unk10].unk8) == -1) {
 
                                 D_801C4000.unk8 =
                                     D_801C3C54[D_801C3C58->unk10].unkC - (D_801C3C54[D_801C3C58->unk10].unk78 * 120.0f);

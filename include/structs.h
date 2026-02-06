@@ -59,10 +59,28 @@ typedef struct {
     f32 unkC;
 } struct_801C1F84;
 
-// Size: 0x104 bytes - could be an array of a smaller struct
-typedef struct {
-    f32 pad[0x41];
-} struct_801AEE20;
+typedef struct UnkStruct_801AEE20_s {
+    /* 0x000 */ f32 unk0;
+    /* 0x004 */ char pad4[4];
+    /* 0x008 */ f32 unk8;
+    /* 0x00C */ char padC[0x18];                    /* maybe part of unk8[7]? */
+    /* 0x024 */ s32 unk24;                          /* inferred */
+    /* 0x028 */ s32 unk28;                          /* inferred */
+    /* 0x02C */ char pad2C[0x44];                   /* maybe part of unk28[0x12]? */
+    /* 0x070 */ f32 unk70;
+    /* 0x074 */ f32 unk74;
+    /* 0x078 */ f32 unk78;
+    /* 0x07C */ f32 unk7C;
+    /* 0x080 */ char pad80[0x8];                   /* maybe part of unk7C[7]? */
+                f32 unk88;
+                char pad8C[0xC];
+    /* 0x098 */ s32 unk98;
+    /* 0x09C */ s32 unk9C;                          /* inferred */
+    /* 0x0A0 */ s32 unkA0;                   /* maybe part of unk9C[0xB]? */
+                char padA4[0x24];
+    /* 0x0C8 */ s32 unkC8;                          /* inferred */
+    /* 0x0CC */ char padCC[0x38];                   /* maybe part of unkC8[0xF]? */
+} UnkStruct_801AEE20;                               /* size = 0x104 */
 
 typedef struct {
     u8 pad00[0x19B];
@@ -153,7 +171,7 @@ struct UnkStruct_801C3C54 {
 };
 typedef struct {
     /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
+    /* 0x04 */ s32 currentRider;
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;
     /* 0x10 */ s32 unk10;
@@ -257,8 +275,8 @@ struct UnkStruct_801C3C50 {
     /* 0x0C60 */ char padC60[0x1C];                 /* maybe part of unkC5C[8]? */
     /* 0x0C7C */ u16 unkC7C[1];
     /* 0x0C7E */ char padC7E[0x8FA];                /* maybe part of unkC7C[0x47E]? */
-    /* 0x1578 */ f32 unk1578;
-    /* 0x157C */ char pad157C[0x38];                /* maybe part of unk1578[0xF]? */
+    /* 0x1578 */ f32 riderSpeedMultiplier;
+    /* 0x157C */ char pad157C[0x38];                /* maybe part of riderSpeedMultiplier[0xF]? */
     /* 0x15B4 */ f32 unk15B4;
     /* 0x15B8 */ f32 unk15B8;
     /* 0x15BC */ f32 unk15BC;
@@ -733,4 +751,17 @@ typedef struct UnkStruct_80192690 {
     /* 0x16E0 */ u16 unk16E0;                       /* inferred */
     /* 0x16E2 */ char pad16E2[0x36];                /* maybe part of unk16E0[0x1C]? */
 } UnkStruct_80192690;                               /* size = 0x1718 */
+
+
+typedef struct UnkStruct_801AE948_s {
+    char pad[0x4100];
+    Mtx unk4100[1];
+    Mtx unk4140[1];
+    char pad4180[0x7140];
+    LookAt unkB2C0[1];
+} UnkStruct_801AE948;
+
+typedef struct UnkStruct_80069740_s {
+    s32 pad[0x10];
+} UnkStruct_80069740;
 #endif /* STRUCTS_H */

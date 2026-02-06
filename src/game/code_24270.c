@@ -29,7 +29,6 @@ extern s32 D_800D4B04;
 extern s32 D_800D4B08;
 extern s32 D_800D4B0C;
 extern struct UnkStruct_80198368 D_80198368[];
-extern void* D_801AE948;
 extern void* D_801AE94C;
 extern s32 D_801AE950;
 extern s32 D_801AE9D8;

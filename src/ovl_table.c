@@ -1,7 +1,4 @@
-
-
-#include "wr64dma.h"
-#include "functions.h"
+#include "global.h"
 
 // This won't work until we disassemble all overlays correctly
 // as the linker is unable to know the size of BSS.

@@ -1,10 +1,5 @@
 #include "global.h"
 
-typedef struct UnkStruct_801AE948_s {
-    char pad[0x4140];
-    Mtx unk4140[1];
-} UnkStruct_801AE948;
-
 typedef struct UnkStruct_801D0798_s {
     /* 0x0000 */ char pad0[0x1C54];
     /* 0x1C54 */ s32 unk1C54;        /* inferred */
@@ -43,7 +38,6 @@ extern f32 D_801D7AE8;
 extern s32 D_801D7B10;
 extern s32 D_801D7AD8;
 extern UnkStruct_801D7A18 D_801D7A18[];
-extern UnkStruct_801AE948* D_801AE948;
 extern s32 D_1049C80;
 extern s32 D_104A488;
 extern s32 D_104AC90;
@@ -53,7 +47,6 @@ extern s32 D_104C4A8;
 extern s32 D_104CCB0;
 extern s32 D_10514D0;
 extern s32 D_1051580;
-extern UnkStruct_801AE948 D_5000000[];
 extern s32 D_800E6D84;
 extern s32 D_800E6D88;
 extern s32 D_800E6D8C;

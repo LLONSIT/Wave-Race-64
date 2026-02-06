@@ -3,9 +3,8 @@
 extern struct_801C1F84* D_801C1F80;
 extern struct_801C1F84* D_801C1F84;
 extern struct_801C1F84* D_801C1F88;
-extern struct_801AEE20 D_801AEE20;
-extern struct_801AEE20 D_801B2F20;
-extern struct_801AEE20 D_801B7020;
+extern UnkStruct_801AEE20 D_801B2F20;
+extern UnkStruct_801AEE20 D_801B7020;
 extern s32 D_801BB120;
 extern s32 D_801BB124;
 extern s32 D_801BB128;
@@ -83,7 +82,7 @@ s32 func_80074448(f32 arg0, f32 arg1) {
 void func_80075274(void) {
     func_80071E70();
     if (D_801CE638 != 21) {
-        func_800735EC(&D_801AEE20, D_801BB120);
+        func_800735EC(D_801AEE20, D_801BB120);
         if (D_801BB124 != 0) {
             func_800735EC(&D_801B2F20, D_801BB124);
         }

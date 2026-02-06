@@ -470,7 +470,7 @@ void func_800980D0(UnkStruct_800980D0* arg0) {
     u16* v1;
 
     for (i = 0; i < 3; i++) {
-        s32* var = D_801542C0[i];
+        s32* var = gFrameBuffers[i];
         /* clang-format off */
         for (j = 0; j < 0x9600; j++) { *var++ = 0; }
         /* clang-format on */

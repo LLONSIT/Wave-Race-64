@@ -30,7 +30,6 @@ void func_80094FE8(void);
 
 extern s16 D_800DAB74;
 extern s16 D_800DAB78;
-extern s32 D_801AE948;
 extern s32 D_801CE5FC;
 extern s32 D_801CE608;
 extern s16 gCurrentPauseMenuOption;
@@ -184,21 +183,21 @@ void func_800922E4(void) {
     }
     func_80092938();
     switch (gGameState) {
-        case 0x2:
-        case 0x3:
-        case 0x4:
-        case 0x7:
-        case 0x8:
-        case 0x1E:
-        case 0x1F:
-        case 0x28:
-        case 0x29:
-        case 0x2A:
-        case 0x2B:
-        case 0x2C:
-        case 0x2D:
-        case 0x66:
-        case 0x67:
+        case GAME_STATE_TITLE_SCREEN:
+        case GAME_STATE_MAIN_MENU:
+        case GAME_STATE_4:
+        case GAME_STATE_DEMO:
+        case GAME_STATE_8:
+        case GAME_SATE_COURSE_OVERVIEW:
+        case GAME_SATE_1F:
+        case GAME_STATE_TIME_TRIAL:
+        case GAME_STATE_29:
+        case GAME_STATE_2A:
+        case GAME_STATE_2B:
+        case GAME_STATE_2C:
+        case GAME_STATE_2D:
+        case GAME_STATE_CEREMONY:
+        case GAME_STATE_67:
             func_80086148();
             func_800665B0();
             func_801DDE48();
@@ -221,22 +220,22 @@ void func_800922E4(void) {
                 func_i3_802C5800();
             }
             break;
-        case 0x32:
-        case 0x33:
+        case GAME_STATE_TIME_TRIALS_RESULTS:
+        case GAME_STATE_33:
             func_801DDE48();
             func_80051238();
             func_8008E794();
             func_i3_802C5800();
             break;
-        case 0x50:
-        case 0x51:
+        case GAME_STATE_50:
+        case GAME_STATE_51:
             func_801DDE48();
             func_80051238();
             func_8008E794();
             func_i3_802C5800();
             break;
-        case 0xA:
-        case 0xB:
+        case GAME_STATE_RIDER_SELECT:
+        case GAME_STATE_B:
             func_80086148();
             func_800665B0();
             func_801DDE48();
@@ -246,8 +245,8 @@ void func_800922E4(void) {
             func_800B2ABC();
             func_i3_802C5800();
             break;
-        case 0x14:
-        case 0x15:
+        case GAME_STATE_COURSE_SELECT:
+        case GAME_STATE_15:
             func_801DDE48();
             func_80051238();
             func_8008E794();
@@ -791,7 +790,7 @@ Gfx* func_80093C44(Gfx* gdl) {
 
     for (i = 0; i < 3; i++) {
         gDPPipeSync(gdl++);
-        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(D_801542C0[i]));
+        gDPSetColorImage(gdl++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(gFrameBuffers[i]));
 
         gDPSetFillColor(gdl++, 0x10001);
         gDPFillRectangle(gdl++, 0, 0, 319, 239);
@@ -815,7 +814,7 @@ Gfx* func_80093DBC(Gfx* gfxPtr, u16 red, u16 green, u16 blue) {
 
     for (i = 0; i < 3; i++) {
         gDPPipeSync(gfxPtr++);
-        gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(D_801542C0[i]));
+        gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(gFrameBuffers[i]));
         gDPSetFillColor(gfxPtr++, (GPACK_RGBA5551(red, green, blue, 1) << 0x10) | GPACK_RGBA5551(red, green, blue, 1));
         gDPFillRectangle(gfxPtr++, 8, 20, 310, 219);
     }
@@ -833,7 +832,7 @@ Gfx* func_80093F78(Gfx* gfxPtr) {
     gDPSetRenderMode(gfxPtr++, G_RM_NOOP, G_RM_NOOP2);
     gDPSetAlphaCompare(gfxPtr++, G_AC_NONE);
     gDPSetScissor(gfxPtr++, G_SC_NON_INTERLACE, 0, 0, 319, 239);
-    gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(D_801542C0[D_80151948]));
+    gDPSetColorImage(gfxPtr++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(gFrameBuffers[gFramebuffersIdx]));
     gDPSetFillColor(gfxPtr++, 0x00010001);
     gDPFillRectangle(gfxPtr++, 0, 0, 319, 239);
 

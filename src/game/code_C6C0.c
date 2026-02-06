@@ -335,6 +335,7 @@ f32 func_8007FAE4(f32, f32, f32, f32*, f32*, f32*); /* extern */
 f32 func_8007F448(f32, f32, f32, f32*, f32*, f32*); /* extern */
 void func_80061184(UnkStruct_80192690*);            /* extern */
 void func_80080400(void);                           /* extern */
+Gfx* func_800694B8(Gfx*, s32);                      /* extern */
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80051EC0.s")
 
@@ -871,24 +872,18 @@ s32 func_800551EC(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3,
     return var_v1;
 }
 
-// More float fun!
-#ifdef NON_EQUIVALENT
-void func_800534AC(UnkStruct_80052C6C_2*, f32*, f32*, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32,
-                   f32); /* extern */
 extern f32 D_800D4960;
 
 s32 func_80055270(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3) {
     UnkStruct_80192690* temp_s2;
     UnkStruct_802238DC* temp_s1;
-    f32 temp_f0;
-    f32 temp_f0_2;
     f32 temp_f12;
-    f32 temp_f12_2;
     f32 temp_f14;
-    f32 temp_f14_2;
     f32 temp_f2;
-    f32 temp_f2_2;
-    char pad[0x20];
+    f32 temp_f0;
+    f32 spB4;
+    f32 spB0;
+    f32 spAC;
 
     temp_s1 = D_802238DC[arg2];
     if (arg3 >= temp_s1->unk0) {
@@ -903,26 +898,31 @@ s32 func_80055270(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
     temp_f12 = arg1->unkD8.unk0.y - temp_s2->unk44.y;
     temp_f14 = arg1->unkD8.unk0.z - temp_s2->unk44.z;
     temp_f0 = temp_s2->unk16B8 * D_800D4960;
-    temp_f0_2 = ((temp_s2->unk16BC * 0.9f) - 0.9f) *
-                ((temp_f2 * temp_s2->unk78) + (temp_f12 * temp_s2->unk7C) + (temp_f14 * temp_s2->unk80));
-    temp_f2_2 = temp_f2 + temp_s2->unk44.x + (temp_f0_2 * temp_s2->unk78) + (temp_s2->unk84 * temp_f0);
+    spB4 = temp_s2->unk84 * temp_f0;
+    spB0 = temp_s2->unk88 * temp_f0;
+    spAC = temp_s2->unk8C * temp_f0;
+    temp_f0 = ((temp_s2->unk16BC * 0.9f) - 0.9f) *
+              ((temp_f2 * temp_s2->unk78) + (temp_f12 * temp_s2->unk7C) + (temp_f14 * temp_s2->unk80));
 
-    temp_f12_2 = temp_f12 + temp_s2->unk44.y + (temp_f0_2 * temp_s2->unk7C) + (temp_s2->unk88 * temp_f0);
+    temp_f2 += temp_s2->unk44.x + (temp_f0 * temp_s2->unk78) + spB4;
+    spB4 = temp_f2 - arg1->unkD8.unk0.x;
+    temp_f12 += temp_s2->unk44.y + (temp_f0 * temp_s2->unk7C) + spB0;
+    spB0 = temp_f12 - arg1->unkD8.unk0.y;
+    temp_f14 += temp_s2->unk44.z + (temp_f0 * temp_s2->unk80) + spAC;
+    spAC = temp_f14 - arg1->unkD8.unk0.z;
 
-    temp_f14_2 = temp_f14 + temp_s2->unk44.z + (temp_f0_2 * temp_s2->unk80) + (temp_s2->unk8C * temp_f0);
-
-    arg1->unkD8.unk0.x = temp_f2_2;
-    arg1->unkD8.unk0.y = temp_f12_2;
-    arg1->unkD8.unk0.z = temp_f14_2;
+    arg1->unkD8.unk0.x = temp_f2;
+    arg1->unkD8.unk0.y = temp_f12;
+    arg1->unkD8.unk0.z = temp_f14;
 
     func_80052C6C(temp_s2, &temp_s1->unk4[temp_s1->unk10[arg3]], &arg1->unk48);
-    arg1->unk48.unk0.x += arg1->unkD8.unk0.x;
-    arg1->unk48.unk0.y += arg1->unkD8.unk0.y;
-    arg1->unk48.unk0.z += arg1->unkD8.unk0.z;
+    arg1->unk48.unk0.x += spB4;
+    arg1->unk48.unk0.y += spB0;
+    arg1->unk48.unk0.z += spAC;
     func_80052C6C(temp_s2, &temp_s1->unk4[temp_s1->unk1C[arg3]], &arg1->unkB4);
-    arg1->unkB4.unk0.x += arg1->unkD8.unk0.x;
-    arg1->unkB4.unk0.y += arg1->unkD8.unk0.y;
-    arg1->unkB4.unk0.z += arg1->unkD8.unk0.z;
+    arg1->unkB4.unk0.x += spB4;
+    arg1->unkB4.unk0.y += spB0;
+    arg1->unkB4.unk0.z += spAC;
     func_80052C6C(temp_s2, &temp_s1->unk4[temp_s1->unk8[arg3]], &arg1->unk0);
     func_80052C6C(temp_s2, &temp_s1->unk4[temp_s1->unk14[arg3]], &arg1->unk6C);
     func_80052C6C(temp_s2, &temp_s1->unk4[temp_s1->unkC[arg3]], &arg1->unk24);
@@ -954,21 +954,21 @@ s32 func_80055270(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
     func_80052C6C(temp_s2, &temp_s1->unk4[temp_s1->unk2C[arg3]], &arg1->unk144);
     func_80052C6C(temp_s2, &temp_s1->unk4[temp_s1->unk38[arg3]], &arg1->unk1B0);
     func_80053FBC(temp_s2, &temp_s1->unk4[temp_s1->unk40[arg3]], &arg1->unk1F8);
-    arg1->unk1F8.unk0.x += (arg1->unkD8.unk0.x - arg1->unk1F8.unk0.x);
-    arg1->unk1F8.unk0.y += (arg1->unkD8.unk0.y - arg1->unk1F8.unk0.y);
-    arg1->unk1F8.unk0.z += (arg1->unkD8.unk0.z - arg1->unk1F8.unk0.z);
+    arg1->unk1F8.unk0.x += (spB4 = arg1->unkD8.unk0.x - arg1->unk1F8.unk0.x);
+    arg1->unk1F8.unk0.y += (spB0 = arg1->unkD8.unk0.y - arg1->unk1F8.unk0.y);
+    arg1->unk1F8.unk0.z += (spAC = arg1->unkD8.unk0.z - arg1->unk1F8.unk0.z);
     func_80053FBC(temp_s2, &temp_s1->unk4[temp_s1->unk24[arg3]], &arg1->unkFC);
-    arg1->unkFC.unk0.x += arg1->unk1F8.unk0.x;
-    arg1->unkFC.unk0.y += arg1->unk1F8.unk0.y;
-    arg1->unkFC.unk0.z += arg1->unk1F8.unk0.z;
+    arg1->unkFC.unk0.x += spB4;
+    arg1->unkFC.unk0.y += spB0;
+    arg1->unkFC.unk0.z += spAC;
     func_80053FBC(temp_s2, &temp_s1->unk4[temp_s1->unk30[arg3]], &arg1->unk168);
-    arg1->unk168.unk0.x += arg1->unk1F8.unk0.x;
-    arg1->unk168.unk0.y += arg1->unk1F8.unk0.y;
-    arg1->unk168.unk0.z += arg1->unk1F8.unk0.z;
+    arg1->unk168.unk0.x += spB4;
+    arg1->unk168.unk0.y += spB0;
+    arg1->unk168.unk0.z += spAC;
     func_80053FBC(temp_s2, &temp_s1->unk4[temp_s1->unk3C[arg3]], &arg1->unk1D4);
-    arg1->unk1D4.unk0.x += arg1->unk1F8.unk0.x;
-    arg1->unk1D4.unk0.y += arg1->unk1F8.unk0.y;
-    arg1->unk1D4.unk0.z += arg1->unk1F8.unk0.z;
+    arg1->unk1D4.unk0.x += spB4;
+    arg1->unk1D4.unk0.y += spB0;
+    arg1->unk1D4.unk0.z += spAC;
     func_800534AC(&arg1->unk144, &arg1->unk144.unk0.y, &arg1->unk144.unk0.z, arg1->unk168.unk0.x, arg1->unk168.unk0.y,
                   arg1->unk168.unk0.z, arg1->unk120.unk0.x, arg1->unk120.unk0.y, arg1->unk120.unk0.z, 72.98288f,
                   109.34885f, -arg1->unk168.unk14.x, -arg1->unk168.unk14.y, -arg1->unk168.unk14.z);
@@ -998,9 +998,6 @@ s32 func_80055270(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3)
 
     return arg3;
 }
-#else
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80055270.s")
-#endif
 
 s32 func_80055C6C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3) {
     UnkStruct_80192690* temp_s2;
@@ -1760,13 +1757,70 @@ void func_80062918(Vec3f* arg0) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_800687A4.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_8006931C.s")
+s32 func_8006931C(UnkStruct_80192690* arg0, Mtx* arg1) {
+    MtxF sp30;
+
+    sp30.mf[2][0] = arg0->unk6C;
+    sp30.mf[2][2] = arg0->unk74;
+    if ((sp30.mf[3][3] = (SQ(arg0->unk6C) + SQ(arg0->unk74))) == 0.0f) {
+        return -1;
+    }
+    sp30.mf[3][3] = 1 / sqrtf(sp30.mf[3][3]);
+    sp30.mf[0][0] = sp30.mf[3][3] * arg0->unk74;
+    sp30.mf[0][2] = sp30.mf[3][3] * -arg0->unk6C;
+    sp30.mf[3][0] = sp30.mf[0][2] * arg0->unk70;
+    sp30.mf[3][1] = (arg0->unk74 * sp30.mf[0][0]) - (sp30.mf[0][2] * arg0->unk6C);
+    sp30.mf[3][2] = sp30.mf[0][0] * -arg0->unk70;
+    if ((sp30.mf[3][3] = (SQ(sp30.mf[3][0]) + SQ(sp30.mf[3][1])) + SQ(sp30.mf[3][2])) == 0.0f) {
+        return -1;
+    }
+    sp30.mf[3][3] = 1 / sqrtf(sp30.mf[3][3]);
+    sp30.mf[1][0] = sp30.mf[3][3] * sp30.mf[3][0];
+    sp30.mf[1][2] = sp30.mf[3][3] * sp30.mf[3][2];
+    sp30.mf[3][0] = arg0->unk44.x;
+    sp30.mf[3][1] = func_8004D30C(arg0->unk44.x, arg0->unk44.z);
+    sp30.mf[3][2] = arg0->unk44.z;
+    sp30.mf[0][1] = sp30.mf[1][1] = sp30.mf[2][1] = sp30.mf[0][3] = sp30.mf[1][3] = sp30.mf[2][3] = 0;
+    sp30.mf[3][3] = 1.0f;
+
+    SysUtils_MtxFToMtx(&sp30, arg1);
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_800694B8.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80069594.s")
+Gfx* func_80069594(Gfx* arg0) {
+    UnkStruct_80192690* temp_v1;
+    camera_unk_1* temp_v0;
+    f32 temp_f0;
+    Gfx* s1;
+    s32 var_s0;
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80069740.s")
+    if (!(gPlayers != TWO_PLAYERS) || (gCourseID == DRAKE_LAKE) || (D_801CE638 == 0x15)) {
+        return arg0;
+    }
+    arg0 = func_800694B8(arg0, D_800D48DC);
+    for (var_s0 = 0; var_s0 < gRiders; var_s0++) {
+        if (var_s0 != D_800D48DC) {
+            temp_v0 = &gCameraPerspective[D_80223930];
+            temp_v1 = &D_80192690[var_s0];
+            temp_f0 = (temp_v0->unk6C * (temp_v1->unk44.z - temp_v0->unk54)) +
+                      (((temp_v1->unk44.x - temp_v0->unk4C) * temp_v0->unk64) +
+                       ((temp_v1->unk44.y - temp_v0->unk50) * temp_v0->unk68));
+            if ((temp_f0 > 0.0f) && (temp_f0 < 1000.0f)) {
+                arg0 = func_800694B8(arg0, var_s0);
+            }
+        }
+        if (1) {
+            ; // FAKE
+        }
+    }
+    return arg0;
+}
+
+void func_80069740(UnkStruct_80069740* arg0, UnkStruct_80069740* arg1) {
+    *arg0 = *arg1;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_8006977C.s")
 
