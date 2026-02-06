@@ -119,10 +119,6 @@ gMainThreadMesgQueue = 0x80154130;
 gAudioTaskMesgQueue = 0x801540E8;
 sAudioTaskMsg = 0x801542D0;
 
-gMainThreadMesgQueue = 0x80154130;
-gAudioTaskMesgQueue = 0x801540E8;
-sAudioTaskMsg = 0x801542D0;
-
 D_80198350 = 0x80198350;
 D_801CE61C = 0x801CE61C;
 D_801CE65A = 0x801CE65A;
