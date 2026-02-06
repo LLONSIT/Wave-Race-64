@@ -453,7 +453,7 @@ void func_80048A88(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, 
     }
 }
 
-void func_80048E0C(Vtx* vtx, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void SysUtils_NormalizeVertexTri(Vtx* vtx, s32 targetVtxIndex, s32 triIdx1, s32 triIdx2, s32 triIdx3) {
     s32 var20;
     s32 var22;
     s32 var24;
@@ -469,17 +469,17 @@ void func_80048E0C(Vtx* vtx, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     f32 sp3C;
     Vtx* vtx2;
 
-    vtx2 = &vtx[arg2];
+    vtx2 = &vtx[triIdx1];
     var20 = vtx2->v.ob[0];
     var22 = vtx2->v.ob[1];
     var24 = vtx2->v.ob[2];
 
-    vtx2 = &vtx[arg3];
+    vtx2 = &vtx[triIdx2];
     var30 = vtx2->v.ob[0];
     var32 = vtx2->v.ob[1];
     var34 = vtx2->v.ob[2];
 
-    vtx2 = &vtx[arg4];
+    vtx2 = &vtx[triIdx3];
     var40 = vtx2->v.ob[0];
     var42 = vtx2->v.ob[1];
     var44 = vtx2->v.ob[2];
@@ -496,7 +496,7 @@ void func_80048E0C(Vtx* vtx, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
     sp3C = 110.0f / sqrtf(sp3C);
 
-    vtx2 = &vtx[arg1];
+    vtx2 = &vtx[targetVtxIndex];
     vtx2->v.cn[0] = sp48 * sp3C;
     vtx2->v.cn[1] = sp44 * sp3C;
     vtx2->v.cn[2] = sp40 * sp3C;
@@ -505,7 +505,7 @@ void func_80048E0C(Vtx* vtx, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 #define MTXTOMTXF(mtx, i1, i2) ((((s16) mtx->mu.intPart[(i1)][(i2)] << 0x10) | mtx->mu.fracPart[(i1)][(i2)]) / 65536.0f)
 
 // Similar to func_8006B33C from fzerox
-void func_80049144(Mtx* arg0, Mtx* arg1, Mtx* dest, f32 arg3) {
+void SysUtils_InterpolateMtx(Mtx* arg0, Mtx* arg1, Mtx* dest, f32 arg3) {
     f32 temp_fa0;
     f32 temp_fv1;
     s32 x2;
@@ -652,11 +652,11 @@ void func_80049710(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5
 
     SysUtils_MtxFToMtx(arg1, arg0);
 }
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_utils/func_800498A4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/sys/sys_utils/func_800498A4.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_utils/func_80049A94.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/sys/sys_utils/func_80049A94.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_utils/func_80049C9C.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/sys/sys_utils/func_80049C9C.s")
 
 void SysUtils_MatrixAffineMultiply(MtxF* dest, MtxF* mtxFA, MtxF* mtxFB) {
     mtxFB->mf[0][0] =
@@ -763,6 +763,6 @@ UNUSED void SysUtils_ReadContData(void) {
     SysUtils_UpdateControllers();
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_utils/func_8004A3C0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/sys/sys_utils/func_8004A3C0.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_utils/func_8004A8B0.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/sys/sys_utils/func_8004A8B0.s")

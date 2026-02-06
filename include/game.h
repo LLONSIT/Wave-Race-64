@@ -45,7 +45,9 @@ typedef enum {
     GAME_STATE_RIDER_SELECT = 0x0A, /* Overlay2 */
     GAME_STATE_B = 0x0B,
     GAME_STATE_COURSE_SELECT = 0x14,
+    GAME_STATE_15 = 0x15,
     GAME_SATE_COURSE_OVERVIEW = 0x1E,
+    GAME_SATE_1F = 0x1F,
     GAME_STATE_TIME_TRIAL = 0x28,
     GAME_STATE_29 = 0x29, /* Overlay18 */
     GAME_STATE_2A = 0x2A,
@@ -53,6 +55,7 @@ typedef enum {
     GAME_STATE_2C = 0x2C,
     GAME_STATE_2D = 0x2D,
     GAME_STATE_TIME_TRIALS_RESULTS = 0x32,
+    GAME_STATE_33 = 0x33,
     GAME_STATE_RACE_RESULTS = 0x34,
     GAME_STATE_36 = 0x36,
     GAME_STATE_STUNT_MODE_RESULTS = 0x38,
@@ -66,10 +69,12 @@ typedef enum {
     GAME_STATE_OPTIONS_AUDIO = 0x48,
     GAME_STATE_49 = 0x49,
     GAME_STATE_50 = 0x50,
+    GAME_STATE_51 = 0x51,
     GAME_STATE_5A = 0x5A,
     GAME_STATE_64 = 0x64,
     GAME_STATE_65 = 0x65,
-    GAME_STATE_CEREMONY = 0x66 // Award scene
+    GAME_STATE_CEREMONY = 0x66, // Award scene
+    GAME_STATE_67 = 0x67 // Award scene
 } GameState;
 
 extern GameModeState gGameModeState; // Current state of the game mode

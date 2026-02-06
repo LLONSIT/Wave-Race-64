@@ -1,9 +1,9 @@
 #include "common.h"
 #include "wr64audio.h"
 
-extern OSMesgQueue sAudioTaskMsg;
-extern OSMesg gAudioTaskMesgQueue;
-extern OSTask* gCurrentAudioOSTask;
+extern OSMesg sAudioTaskMsg;
+extern OSMesgQueue gAudioTaskMesgQueue;
+extern OSTask* gCurrentAudioTask;
 
 void SysAudio_AudioThreadEntry(void* entry) {
     static OSTask* sAudioTask = NULL;
@@ -11,7 +11,7 @@ void SysAudio_AudioThreadEntry(void* entry) {
     while (true) {
         osRecvMesg(&gAudioTaskMesgQueue, &sAudioTaskMsg, 1);
         if (sAudioTask != 0) {
-            gCurrentAudioOSTask = (s32) sAudioTask;
+            gCurrentAudioTask = (s32) sAudioTask;
             osSendMesg(&gMainThreadMesgQueue, (void*) 0x16, OS_MESG_NOBLOCK);
         }
 

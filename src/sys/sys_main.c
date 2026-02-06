@@ -4,11 +4,11 @@
 extern void game_dma_copy(uintptr_t devAddr, void* vAddr, u32 nbytes);
 
 void func_80046850(void) {
-    s32 temp_t7 = D_8015194C;
+    s32 prevValue = D_8015194C;
 
-    D_8015194C = D_80151948;
-    D_80151948 = D_80151950;
-    D_80151950 = temp_t7;
+    D_8015194C = gFramebuffersIdx;
+    gFramebuffersIdx = D_80151950;
+    D_80151950 = prevValue;
 
     if (D_800DAB1C == 3) {
         D_800D45D8 ^= 1;
@@ -18,8 +18,8 @@ void func_80046850(void) {
 void func_800468AC(void) {
     s32 temp_t7 = D_80151950;
 
-    D_80151950 = D_80151948;
-    D_80151948 = D_8015194C;
+    D_80151950 = gFramebuffersIdx;
+    gFramebuffersIdx = D_8015194C;
     D_8015194C = temp_t7;
 }
 
@@ -43,15 +43,15 @@ void func_800468E0(void) {
         case 0:
             gDPPipeSync(gDisplayListHead++);
             gDPSetColorImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320,
-                             OS_K0_TO_PHYSICAL(D_801542C0[D_80151948]));
+                             OS_K0_TO_PHYSICAL(gFrameBuffers[gFramebuffersIdx]));
             break;
 
         case 1:
         case 2:
-            gSPSegment(gDisplayListHead++, 4, OS_K0_TO_PHYSICAL(D_801542C0[0xC - 10 + 1]));
+            gSPSegment(gDisplayListHead++, 4, OS_K0_TO_PHYSICAL(gFrameBuffers[0xC - 10 + 1]));
             gDPPipeSync(gDisplayListHead++);
             gDPSetColorImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320,
-                             OS_K0_TO_PHYSICAL(D_801542C0[0xC - 10 + 1]));
+                             OS_K0_TO_PHYSICAL(gFrameBuffers[0xC - 10 + 1]));
             break;
 
         case 3:
@@ -86,8 +86,8 @@ void SysMain_CreateGfxTask(OSTask* task) {
     task->t.yield_data_size = OS_YIELD_DATA_SIZE;
 }
 
-void func_80046CF8(OSTask* task) {
-    first_task = task;
+void SysMain_SendGfxTaskSetMesg(OSTask* gfxTask) {
+    gCurrentGfxTask = gfxTask;
     osSendMesg(&gMainThreadMesgQueue, (OSMesg) 0x15, OS_MESG_NOBLOCK);
 }
 
@@ -103,7 +103,7 @@ void SysMain_GfxInitBuffers(void) {
 // D_801DAFA0 & D_801DAFA0_2
 // D_1008290 & D_1008290_2
 #if 1
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/sys_main/SysMain_Thread.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/sys/sys_main/SysMain_Thread.s")
 #else
 void* SysMain_Thread(void* entry) {
     s32 pad;
@@ -162,7 +162,7 @@ void* SysMain_Thread(void* entry) {
     D_8011F8E0 = 0;
 
     D_8015194C = 2;
-    D_80151948 = 0;
+    gFramebuffersIdx = 0;
     D_80151950 = 1;
 
     SysUtils_TaylorSeries();
@@ -172,7 +172,7 @@ void* SysMain_Thread(void* entry) {
     SysUtils_Srand(osGetTime());
     osSetTime(0);
 
-    osViSwapBuffer(D_801542C0[D_80151948]);
+    osViSwapBuffer(gFrameBuffers[gFramebuffersIdx]);
 
     SysUtils_ContInitialize();
 
@@ -183,11 +183,11 @@ void* SysMain_Thread(void* entry) {
     SysMain_GfxFullSync();
 
     SysMain_CreateGfxTask(sGfxTask);
-    func_80046CF8(sGfxTask);
+    SysMain_SendGfxTaskSetMesg(sGfxTask);
 
     func_80091F50();
 
-    for (D_80151960 = 0; /* Empty? */; D_80151960++) {
+    for (gFrameCounter = 0; /* Empty? */; gFrameCounter++) {
         osContStartReadData(&D_801540D0);
         osRecvMesg(&D_80154100, D_80151958, OS_MESG_BLOCK);
         func_80047B00();
@@ -220,22 +220,22 @@ void* SysMain_Thread(void* entry) {
         SysMain_CreateGfxTask(sGfxTask);
 
         if (D_800DAB1C == 2) {
-            temp_v1 = (u32*) D_801542C0[D_8015194C] + 38399;
-            temp_v0 = (u32*) D_801542C0[3] + 38399;
-            for (; (u32) temp_v0 >= (u32) D_801542C0[3]; --temp_v0, --temp_v1) {
+            temp_v1 = (u32*) gFrameBuffers[D_8015194C] + 38399;
+            temp_v0 = (u32*) gFrameBuffers[3] + 38399;
+            for (; (u32) temp_v0 >= (u32) gFrameBuffers[3]; --temp_v0, --temp_v1) {
                 *temp_v0 = *temp_v1;
             }
         }
 
-        func_80046CF8(sGfxTask);
+        SysMain_SendGfxTaskSetMesg(sGfxTask);
 
         //! osViSetMode arrays are likely just one array, so this is likely fake.
         //! osViSetMode arrays are likely just one array, so this is likely fake.
         //! osViSetMode arrays are likely just one array, so this is likely fake.
 
         if (D_800DAB1C == 3) {
-            if ((gGameState == 5) && (D_801CE63C != 0)) {
-                if (osTvType == 1) {
+            if ((gGameState == GAME_STATE_BOOT_UP) && (D_801CE63C != 0)) {
+                if (osTvType == OS_TV_NTSC) {
                     osViSetMode(D_800E89A0);
                 } else {
                     osViSetMode(D_800E8E00);
@@ -254,7 +254,7 @@ void* SysMain_Thread(void* entry) {
                 osViSetSpecialFeatures(OS_VI_GAMMA_OFF | OS_VI_GAMMA_DITHER_ON | OS_VI_DIVOT_OFF |
                                        OS_VI_DITHER_FILTER_ON);
             }
-            osViSwapBuffer(D_801542C0[D_8015194C]);
+            osViSwapBuffer(gFrameBuffers[D_8015194C]);
         }
     }
 }

@@ -4,9 +4,9 @@
  */
 #include "common.h"
 
-extern Gfx D_10144F8[];
+extern Gfx UnusedPrintFontDL[];
 
-void func_8007A550(Gfx** dListP) {
+void UnusedPrint_DrawBackground1(Gfx** dListP) {
     Gfx* gfxPtr = *dListP;
 
     gDPPipeSync(gfxPtr++);
@@ -20,7 +20,7 @@ void func_8007A550(Gfx** dListP) {
     *dListP = gfxPtr;
 }
 
-void UnusedPrint_DrawBackground(Gfx** gfxP, s32 topR, s32 topG, s32 topB, s32 bottomR, s32 bottomG, s32 bottomB) {
+void UnusedPrint_DrawBackground2(Gfx** gfxP, s32 topR, s32 topG, s32 topB, s32 bottomR, s32 bottomG, s32 bottomB) {
     Gfx* gfx = *gfxP;
     s32 color;
     s32 i;
@@ -48,7 +48,7 @@ void UnusedPrint_DrawBackground(Gfx** gfxP, s32 topR, s32 topG, s32 topB, s32 bo
 /*
  * Formats an integer to a string
  */
-void Str_Itoa(char* str, s32 num) {
+void UnusedPrint_StrItoa(char* str, s32 num) {
     s16 i;
     s8 dest[20];
     s16 len;
@@ -82,7 +82,7 @@ void Str_Itoa(char* str, s32 num) {
 /*
  * Formats an integer to a string with a width
  */
-void Str_Itoaw(char* str, s32 num, s32 width) {
+void UnusedPrint_StrItoaw(char* str, s32 num, s32 width) {
     s16 i;
     s8 dest[20];
     s16 len;
@@ -123,9 +123,9 @@ void Str_Itoaw(char* str, s32 num, s32 width) {
     str[i] = 0;
 }
 
-void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, s8* buf) {
+void UnusedPrint_DrawChar(Gfx** gdl, s32 x, s32 y, s8* buf) {
     char pad[0x4];
-    s32 x;
+    s32 xCord;
     s32 t;
     s32 s;
     Gfx* gdlh;
@@ -136,7 +136,7 @@ void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, s8* buf) {
 
     gdlh = *gdl;
 
-    gSPDisplayList(gdlh++, D_10144F8);
+    gSPDisplayList(gdlh++, UnusedPrintFontDL);
 
     var_t0 = 1;
     i = 0;
@@ -174,8 +174,8 @@ void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, s8* buf) {
             }
         }
         if (!dontDraw) {
-            x = ((var_t0 * 6) + arg1) - 6;
-            gSPTextureRectangle(gdlh++, x << 2, arg2 << 2, (x + 5) << 2, (arg2 + 7) << 2, 0, s << 5, t << 5, 0x400,
+            xCord = ((var_t0 * 6) + x) - 6;
+            gSPTextureRectangle(gdlh++, xCord << 2, y << 2, (xCord + 5) << 2, (y + 7) << 2, 0, s << 5, t << 5, 0x400,
                                 0x400);
         }
         var_t0++;
@@ -183,18 +183,18 @@ void func_8007AAAC(Gfx** gdl, s32 arg1, s32 arg2, s8* buf) {
     *gdl = gdlh;
 }
 
-void func_8007AD40(Gfx** gdl, s32 arg1, s32 arg2, s32 number) {
+void UnusedPrint_PrintNumber(Gfx** gdl, s32 x, s32 y, s32 number) {
     s32 pad;
     char buf[60];
 
-    Str_Itoa(buf, number);
-    func_8007AAAC(gdl, arg1, arg2, buf);
+    UnusedPrint_StrItoa(buf, number);
+    UnusedPrint_DrawChar(gdl, x, y, buf);
 }
 
-void func_8007AD84(Gfx** gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+void UnusedPrint_PrintNumberWithWidth(Gfx** gdl, s32 x, s32 y, s32 number, s32 width) {
     s32 pad;
     char buf[60];
 
-    Str_Itoaw(buf, arg3, arg4);
-    func_8007AAAC(gdl, arg1, arg2, buf);
+    UnusedPrint_StrItoaw(buf, number, width);
+    UnusedPrint_DrawChar(gdl, x, y, buf);
 }

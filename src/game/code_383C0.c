@@ -19,7 +19,6 @@ struct UnkStruct_801AEE20 {
 };
 
 extern struct UnkStruct_801BC940 D_801BC940[];
-extern struct UnkStruct_801AEE20 D_801AEE20[];
 
 f32 func_8004D30C(f32, f32); /* extern */
 extern s32 D_801BB120;

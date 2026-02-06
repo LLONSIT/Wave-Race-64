@@ -5,8 +5,6 @@ typedef struct UnkPool {
     Mtx unk_4140[1];
 } UnkPool;
 
-extern struct UnkPool* D_801AE948;
-extern struct UnkPool D_5000000;
 extern int D_801D7DB0;
 extern struct Vec3f D_800E6DD0[4];
 extern s32 D_800E6E30[];
@@ -119,10 +117,10 @@ void func_800B4ABC(Gfx** gdl) {
         struct UnkStruct_801D7B70* var_s0 = &D_801D7B70[i];
 
         if (var_s0->unk0 != 0) {
-            func_801EE46C(&D_801AE948->unk_4140[D_801AE950], (-var_s0->unk4) * 8, -var_s0->unk1C, 0, var_s0->unk14,
+            func_801EE46C(&D_801AE948->unk4140[D_801AE950], (-var_s0->unk4) * 8, -var_s0->unk1C, 0, var_s0->unk14,
                           var_s0->unk8, var_s0->unkC, var_s0->unk10);
 
-            gSPMatrix(gdlh++, &D_5000000.unk_4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
             gSPDisplayList(gdlh++, var_s0->unk20);
         }

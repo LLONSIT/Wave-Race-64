@@ -6,8 +6,8 @@
 #include "os_vi.h"
 
 // TODO: Classify by .bss, .data etc..
-extern OSTask* gCurrentAudioOSTask;
-extern OSTask* first_task;
+extern OSTask* gCurrentAudioTask;
+extern OSTask* gCurrentGfxTask;
 
 //.data, .rodata
 extern s32 D_800D4600;
@@ -68,16 +68,16 @@ void func_80047470(void) {
 }
 
 void func_800474A0(void) {
-    osSpTaskLoad(gCurrentAudioOSTask);
-    osSpTaskStartGo(gCurrentAudioOSTask);
+    osSpTaskLoad(gCurrentAudioTask);
+    osSpTaskStartGo(gCurrentAudioTask);
     D_800D4600 = 2;
     D_800D4604 = 1;
 }
 
 void func_800474E4(void) {
     osDpSetStatus(0x3C0);
-    osSpTaskLoad(first_task);
-    osSpTaskStartGo(first_task);
+    osSpTaskLoad(gCurrentGfxTask);
+    osSpTaskStartGo(gCurrentGfxTask);
     D_800D4600 = 3;
     D_800D4604 = 1;
 }
@@ -123,7 +123,7 @@ void Main_Thread(void* entry) {
         if (sp4C == (void*) 0x17) {
             switch (D_800D4600) {
                 case 1:
-                    if (osSpTaskYielded(first_task) != 0) {
+                    if (osSpTaskYielded(gCurrentGfxTask) != 0) {
                         D_800D4608 = 1;
                     }
                     func_800474A0();
@@ -177,9 +177,9 @@ void Main_Thread(void* entry) {
 }
 
 void Main_IdleThread(void* entry) {
-    D_801542C0[0] = (s32) &D_8038F800;
-    D_801542C0[1] = &D_803B5000;
-    D_801542C0[2] = &D_803DA800;
+    gFrameBuffers[0] = (s32) &D_8038F800;
+    gFrameBuffers[1] = &D_803B5000;
+    gFrameBuffers[2] = &D_803DA800;
     osCreateViManager(0xFE);
     if (osTvType == 1) { // NTSC
         osViSetMode(&D_800E8770);
@@ -187,16 +187,16 @@ void Main_IdleThread(void* entry) {
         osViSetMode(&D_800E8BD0);
     }
     osViBlack(true);
-    osViSwapBuffer(D_801542C0[1]);
+    osViSwapBuffer(gFrameBuffers[1]);
 
-    while ((u32) osViGetCurrentFramebuffer() != (u32) D_801542C0[1]) {
+    while ((u32) osViGetCurrentFramebuffer() != (u32) gFrameBuffers[1]) {
         ;
     }
 
-    func_800980D0(D_801542C0[0]);
-    osViSwapBuffer((void*) D_801542C0[0]);
+    func_800980D0(gFrameBuffers[0]);
+    osViSwapBuffer((void*) gFrameBuffers[0]);
 
-    while ((u32) osViGetCurrentFramebuffer() != (u32) D_801542C0[0]) {
+    while ((u32) osViGetCurrentFramebuffer() != (u32) gFrameBuffers[0]) {
         ;
     }
 

@@ -2,11 +2,11 @@
 #define RIDER_H
 
 typedef enum {
- /* 0 */ HAYAMI,
- /* 1 */ MARINER,
- /* 2 */ STEWART,
- /* 3 */ JETER,
-} RIDER_ID;
+ /* 0 */ RIDER_RHAYAMI,
+ /* 1 */ RIDER_DMARINER,
+ /* 2 */ RIDER_ASTEWART,
+ /* 3 */ RIDER_MJETER,
+} RiderId;
 
 typedef enum {
     /* 0 */ PAUSE_MODE,    // Stop all the game objects, that's why is used when the game is paused
