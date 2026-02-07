@@ -25,6 +25,24 @@ typedef struct UnkStruct_800980D0_s {
     u16 unkC0[20];
 } UnkStruct_800980D0;
 
+typedef struct UnkStruct_800DB4A8_s {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+} UnkStruct_800DB4A8;
+
+typedef struct UnkStruct_801CE7D8_s {
+    s32 unk0;
+    s32 unk4;
+} UnkStruct_801CE7D8;
+
+extern UnkStruct_800DB4A8 D_800DB4A8[];
+extern UnkStruct_800DB4A8 D_800DB538[];
+extern UnkStruct_800DB4A8 D_800DB558;
+extern s32 D_800DCE18[];
+extern s16 D_801CE768[];
+extern UnkStruct_801CE7D8 D_801CE7D8[];
 extern s32 D_800DAB90[];
 extern s32 D_800DABA0[];
 extern s32 D_800DABC0[];
@@ -379,7 +397,38 @@ loop_1:
     }
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_8009684C.s")
+void func_8009684C(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_v0;
+    s32 var_v1;
+    s32 t6;
+    s32 i;
+
+    var_v0 = arg0;
+    for (i = 0; i < 2; i++) {
+        if (i == 0) {
+            var_v1 = arg1;
+            if (arg1 != -1) {
+                D_801CE768[arg1] = 0;
+            }
+        } else {
+            var_v1 = arg2;
+            if (arg2 != -1) {
+                D_801CE768[arg2] = 1;
+            }
+        }
+        D_801CE7D8[i].unk0 = var_v1;
+        D_801CE7D8[i].unk4 = var_v0;
+        if (var_v1 == -1) {
+            D_800DB538[i].unk8 = 0;
+            D_800DB538[i].unkC = 0;
+        } else {
+            D_800DB538[i] = D_800DB4A8[var_v1];
+            D_800DB538[i].unkC = var_v0 & 0xFFFFFF;
+            var_v0 += D_800DCE18[var_v1];
+            var_v0 = (var_v0 + 0x3F) & ~0x3F;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_80096960.s")
 
