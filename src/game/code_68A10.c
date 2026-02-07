@@ -55,7 +55,7 @@ extern s32 D_80223934;
 
 // External functions
 f32 Math_FloatRand(f32);
-void func_801EE97C(Mtx*, f32, f32, f32); /* extern */
+void func_801EE97C(Mtx*, f32, f32, f32);
 f32 func_8004D30C(f32 arg0, f32 arg1);
 
 // File functions

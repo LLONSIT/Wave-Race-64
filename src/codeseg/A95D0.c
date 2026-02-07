@@ -43,7 +43,7 @@ typedef struct UnkStruct_801DBF68 {
 
 extern struct UnkStruct_801DBF68 D_80225CF4;
 
-void func_800AB92C(void); /* extern */
+void func_800AB92C(void);
 
 #define ANG_NORMALIZE_1(x) (x < 0.0f ? 360.0f : 0.0f)
 #define ANG_NORMALIZE_2(x) (x > 360.0f ? -360.0f : 0.0f)

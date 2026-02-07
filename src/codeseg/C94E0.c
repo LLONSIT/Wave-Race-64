@@ -26,18 +26,18 @@ extern UnkStruct_80228AE0 D_80228AE0[];
 extern s32 D_80228D14;
 extern s32 D_80228D18;
 
-void func_801EE9C0(void);  /* extern */
-void func_801EF3C4(void);  /* extern */
-void func_801EFFD8(Gfx**); /* extern */
-void func_801F06A0(Gfx**); /* extern */
-void func_801F14B4(Gfx**); /* extern */
-void func_801F2060(Gfx**); /* extern */
-void func_801F4120(Gfx**); /* extern */
-void func_801F9520(Gfx**); /* extern */
-void func_801FA3C0(Gfx**); /* extern */
-void func_801FAEB8(Gfx**); /* extern */
-void func_801FB514(Gfx**); /* extern */
-void func_801FBFB4(Gfx**); /* extern */
+void func_801EE9C0(void);
+void func_801EF3C4(void);
+void func_801EFFD8(Gfx**);
+void func_801F06A0(Gfx**);
+void func_801F14B4(Gfx**);
+void func_801F2060(Gfx**);
+void func_801F4120(Gfx**);
+void func_801F9520(Gfx**);
+void func_801FA3C0(Gfx**);
+void func_801FAEB8(Gfx**);
+void func_801FB514(Gfx**);
+void func_801FBFB4(Gfx**);
 
 void func_801FAEB0(s32 arg0) {
 }

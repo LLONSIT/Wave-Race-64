@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_801E9858(Gfx*, s32, s32, s32, s32); /* extern */
+void func_801E9858(Gfx*, s32, s32, s32, s32);
 extern f32 D_80226E24;
 extern s16 D_80226E28;
 

@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_801EC830(s32*); /* extern */
+void func_801EC830(s32*);
 extern u32 D_802288F0;
 extern s32 D_802288F4;
 extern s32 D_802288F8;

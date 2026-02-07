@@ -1,14 +1,5 @@
 #include "global.h"
 
-typedef struct unaligned_struct {
-    u16 pad[5];
-} unaligned_struct;
-typedef struct UnkStruct_800DAB10 {
-    struct unaligned_struct unk0;
-    s32 unk4;
-    s32 unk8;
-} UnkStruct_800DAB10;
-
 typedef struct {
     /* 0x00 */ ControllerBase unk_00;
     /* 0x0A */ ControllerBase unk_0A;
@@ -157,23 +148,23 @@ void func_80091F50(void) {
 #endif
 
 #ifdef NEEDS_RODATA_IMPORTED
-void func_80051238(void);    /* extern */
-void func_800665B0(void);    /* extern */
-void func_8006A264(void);    /* extern */
-void func_8006E3A8(void);    /* extern */
-void func_8008E794(void);    /* extern */
-void func_800926F4(void);    /* extern */
-void func_80092938(void);    /* extern */
-void func_800AD418(void);    /* extern */
-void func_800B2ABC(void);    /* extern */
-void func_801DDE48(void);    /* extern */
-void func_801E1290(void);    /* extern */
-void func_801E3250(void);    /* extern */
-void func_801E71A8(void);    /* extern */
-void func_801EAFB4(void);    /* extern */
-void func_802C7090(void);    /* extern */
-void func_802C7608(void);    /* extern */
-void func_i3_802C5800(void); /* extern */
+void func_80051238(void);
+void func_800665B0(void);
+void func_8006A264(void);
+void func_8006E3A8(void);
+void func_8008E794(void);
+void func_800926F4(void);
+void func_80092938(void);
+void func_800AD418(void);
+void func_800B2ABC(void);
+void func_801DDE48(void);
+void func_801E1290(void);
+void func_801E3250(void);
+void func_801E71A8(void);
+void func_801EAFB4(void);
+void func_802C7090(void);
+void func_802C7608(void);
+void func_i3_802C5800(void);
 extern s32 D_800D47E0;
 extern s8 D_801CB400;
 extern s8 D_801CB401;
@@ -990,7 +981,7 @@ s32 Strlen2(s8* str) {
     return len;
 }
 
-Gfx* func_801E9858(Gfx*, s32, s8*, s32, s32); /* extern */
+Gfx* func_801E9858(Gfx*, s32, s8*, s32, s32);
 
 // Rodata
 extern char D_800EAC74; // "%d"
@@ -1169,7 +1160,7 @@ void func_80094ACC(void) {
         D_801CE718[i] = i;
     }
 
-    for (i = 0; i < 4 - 1; i++) {
+    for (i = 0; i < 3; i++) {
         for (j = i + 1; j < 4; j++) {
             var_a0 = 0;
 
@@ -1192,7 +1183,7 @@ void func_80094ACC(void) {
         D_800DA9DC[i] = i;
     }
 
-    for (i = 0; i < 4 - 1; i++) {
+    for (i = 0; i < 3; i++) {
         for (j = i + 1; j < 4; j++) {
             var_a0 = 0;
 

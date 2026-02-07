@@ -1475,7 +1475,7 @@ void func_8009D5C0(void) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_8009D96C.s")
 
-Gfx* func_8009D96C(Gfx*, s32, f32); /* extern */
+Gfx* func_8009D96C(Gfx*, s32, f32);
 
 extern s32 D_800E6CA0;
 extern s16 D_801CE774;
@@ -1533,7 +1533,7 @@ Gfx* func_8009E794(Gfx* dl, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_800A52D8.s")
 
-void func_800C1E0C(f32); /* extern */
+void func_800C1E0C(f32);
 extern f32 D_800EB7F8;
 
 void func_800A5C74(void) {

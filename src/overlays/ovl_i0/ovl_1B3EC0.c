@@ -2,7 +2,7 @@
 #include "global.h"
 #include "rider.h"
 
-void func_i0_802C6878(void); /* extern */
+void func_i0_802C6878(void);
 Gfx* func_i0_802C6AE4(Gfx*);
 // Draw text?
 Gfx* func_801E9858(Gfx* arg0, u32 arg1, char* arg2, s32 arg3, s32 arg4);

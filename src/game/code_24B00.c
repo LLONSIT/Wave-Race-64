@@ -54,11 +54,11 @@ extern s32 D_801AE950;
 extern s32 D_801BB120;
 extern s16 D_801C0840[];
 
-void func_800C3628(s32);           /* extern */
-void func_801FB488(s32, s32, s32); /* extern */
+void func_800C3628(s32);
+void func_801FB488(s32, s32, s32);
 void func_8006A300(void);
 void func_800B4750(void);
-void func_801EDFFC(s32, s32, f32, s32); /* extern */
+void func_801EDFFC(s32, s32, f32, s32);
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006A300.s")
 
 void func_8006A748(void) {

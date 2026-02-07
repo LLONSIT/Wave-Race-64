@@ -310,7 +310,7 @@ extern f32 D_800D495C;
 extern f32 D_800D49E8;
 extern f32 D_800D4A04;
 extern f32 D_800D4A68[7];
-void func_80098048(s32, s32); /* extern */
+void func_80098048(s32, s32);
 f32 func_8004D30C(f32, f32);
 void func_80052C6C(UnkStruct_80192690* arg0, UnkStruct_80052C6C_1* arg1, UnkStruct_80052C6C_2* arg2);
 s32 func_80052E90(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
@@ -325,17 +325,16 @@ s32 func_80054130(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3,
 s32 func_80054E14(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
 s32 func_80055270(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
 s32 func_80055C6C(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3);
-void func_800534AC(UnkStruct_80052C6C_2*, f32*, f32*, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32,
-                   f32); /* extern */
+void func_800534AC(UnkStruct_80052C6C_2*, f32*, f32*, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
 void func_80052BB8(UnkStruct_80052E90_arg1_s* arg0);
 void func_80057B24(s32 arg0, UnkStruct_80052E90_arg1_s* arg1);
 void func_8005A1B4(Vec3f* arg0, Vec3f* arg1, f32 arg2, Vec3f* arg3);
 void func_8005CEF8(UnkStruct_80052E90_arg1_s* arg0, UnkStruct_8005CEF8* arg1);
-f32 func_8007FAE4(f32, f32, f32, f32*, f32*, f32*); /* extern */
-f32 func_8007F448(f32, f32, f32, f32*, f32*, f32*); /* extern */
-void func_80061184(UnkStruct_80192690*);            /* extern */
-void func_80080400(void);                           /* extern */
-Gfx* func_800694B8(Gfx*, s32);                      /* extern */
+f32 func_8007FAE4(f32, f32, f32, f32*, f32*, f32*);
+f32 func_8007F448(f32, f32, f32, f32*, f32*, f32*);
+void func_80061184(UnkStruct_80192690*);
+void func_80080400(void);
+Gfx* func_800694B8(Gfx*, s32);
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80051EC0.s")
 
@@ -758,7 +757,7 @@ void func_80053A5C(UnkStruct_80052E90_arg1_s* arg0, f32 arg1, UnkStruct_80052E90
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80053C08.s")
 
-void func_80053C08(f32, s32); /* extern */
+void func_80053C08(f32, s32);
 
 s32 func_80053EAC(s32 arg0, s32 arg1, s32 arg2, f32 arg3, u16 arg4) {
     UnkStruct_80192690* temp_v0;
