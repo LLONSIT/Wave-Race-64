@@ -68,6 +68,14 @@ extern s32 D_800DC6BC[];
 extern s8 D_801CB400;
 extern s8 D_801CB401;
 extern s32 D_80154344;
+extern s32 D_800DA9DC[];
+extern UnkStruct_801C2C24 D_801C2938[];
+extern s32 D_801CB340[];
+extern s32 D_801CB350[][4];
+extern s16 D_801CE60E;
+extern s32 D_801CE718[];
+extern s32 D_801CB334;
+extern s16 D_800EABB0[];
 
 #ifndef NEEDS_RODATA_IMPORTED
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80091F50.s")
@@ -1136,7 +1144,86 @@ void func_80094ABC(void) {
     D_800DAB0C = 1;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80094ACC.s")
+void func_80094ACC(void) {
+    s32 i;
+    s32 j;
+    s32 temp1;
+    s32 temp2;
+    s32 temp3;
+    s32 var_a0;
+
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < D_801CE60E; j++) {
+            if (i == D_801C2938[j].racePosition) {
+                if (D_801C2938[j].unk2EC) {
+                    D_801CB350[D_801CB334][j] = 0;
+                } else {
+                    D_801CB350[D_801CB334][j] = D_800EABB0[i];
+                }
+                D_801CB340[j] += D_801CB350[D_801CB334][j];
+            }
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        D_801CE718[i] = i;
+    }
+
+    for (i = 0; i < 4 - 1; i++) {
+        for (j = i + 1; j < 4; j++) {
+            var_a0 = 0;
+
+            temp1 = D_801CE718[i];
+            temp2 = D_801CE718[j];
+
+            if (D_801CB350[D_801CB334][temp1] < D_801CB350[D_801CB334][temp2]) {
+                var_a0 = 1;
+            }
+
+            if (var_a0 != 0) {
+                temp3 = D_801CE718[i];
+                D_801CE718[i] = D_801CE718[j];
+                D_801CE718[j] = temp3;
+            }
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        D_800DA9DC[i] = i;
+    }
+
+    for (i = 0; i < 4 - 1; i++) {
+        for (j = i + 1; j < 4; j++) {
+            var_a0 = 0;
+
+            temp1 = D_800DA9DC[i];
+            temp2 = D_800DA9DC[j];
+
+            if (D_801CB340[temp1] == D_801CB340[temp2]) {
+                if (D_801C2938[temp1].racePosition > D_801C2938[temp2].racePosition) {
+                    var_a0 = 1;
+                }
+            } else if (D_801CB340[temp1] < D_801CB340[temp2]) {
+                var_a0 = 1;
+            }
+
+            if (var_a0 != 0) {
+                temp3 = D_800DA9DC[i];
+                D_800DA9DC[i] = D_800DA9DC[j];
+                D_800DA9DC[j] = temp3;
+            }
+        }
+    }
+
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            if (D_800DA9DC[j] == i) {
+                break;
+            }
+        }
+        D_801C2938[i].unk338 = j;
+    }
+}
 
 void func_80094FE8(void) {
     D_801CE634 = gGameState;
