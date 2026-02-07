@@ -10,5 +10,6 @@
 #include "structs.h"
 #include "wr64dma.h"
 #include "wr64fade.h"
+#include "wr64ovl.h"
 
 #endif /* COMMON_H */

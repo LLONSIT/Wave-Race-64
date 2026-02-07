@@ -397,7 +397,6 @@ loop_1:
     }
 }
 
-
 void func_8009684C(s32 arg0, s32 arg1, s32 arg2) {
     s32 var_v0;
     s32 var_v1;
