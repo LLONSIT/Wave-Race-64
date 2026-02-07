@@ -1,6 +1,6 @@
 #include "common.h"
 
-struct UnkStruct_80069E44 {
+typedef struct UnkStruct_80069E44 {
     s32 unk0;
     s32 unk4;
     s32 unk8;
@@ -9,20 +9,20 @@ struct UnkStruct_80069E44 {
     f32 unk14;
     f32 unk18;
     s32 unk1C;
-};
+} UnkStruct_80069E44;
 
-struct UnkStruct_801AE958 {
+typedef struct UnkStruct_801AE958 {
     s32 unk0;
     s32 unk4;
     s32 unk8;
     s32 unkC;
     s32 unk10;
-};
+} UnkStruct_801AE958;
 
-struct UnkStruct_80198368 {
+typedef struct UnkStruct_80198368 {
     s32 unk0;
     char pad[0xB2EC];
-};
+} UnkStruct_80198368;
 
 extern s32 D_800D4B00;
 extern s32 D_800D4B04;
@@ -46,11 +46,11 @@ extern s32 D_801AEA0C;
 extern s32 D_801AEA10;
 extern s32 D_801AEA00;
 extern s32 D_801AE9FC;
-extern struct UnkStruct_801AE958 D_801AE958;
+extern UnkStruct_801AE958 D_801AE958;
 extern f32 D_801AE96C;
 extern f32 D_801AE970;
 extern f32 D_801AE974;
-extern struct Controller_info gControllerOne[];
+extern ControllerBase gControllerOne[];
 
 void func_80069A70(s32 arg0, s32 arg1, f32* stickX, f32* stickY) {
     s32 var_t0;
@@ -110,17 +110,17 @@ void func_80069A70(s32 arg0, s32 arg1, f32* stickX, f32* stickY) {
 }
 
 UNUSED void func_80069D48(s32 arg0) {
-    struct Controller_info* temp_v0;
+    struct ControllerBase* temp_v0;
 
     temp_v0 = &gControllerOne[arg0];
 
-    D_801AE958.unk0 = temp_v0->unk0;
-    D_801AE958.unk4 = temp_v0->unk2;
-    D_801AE958.unk8 = temp_v0->unk6;
-    D_801AE958.unkC = temp_v0->unk8;
-    D_801AE958.unk10 = temp_v0->unk9;
+    D_801AE958.unk0 = temp_v0->unk_0;
+    D_801AE958.unk4 = temp_v0->unk_2;
+    D_801AE958.unk8 = temp_v0->unk_6;
+    D_801AE958.unkC = temp_v0->unk_8;
+    D_801AE958.unk10 = temp_v0->unk_9;
 
-    func_80069A70(temp_v0->unk8, temp_v0->unk9, &D_801AE96C, &D_801AE970);
+    func_80069A70(temp_v0->unk_8, temp_v0->unk_9, &D_801AE96C, &D_801AE970);
     D_801AE974 = sqrtf(SQ(D_801AE96C) + SQ(D_801AE970));
 }
 

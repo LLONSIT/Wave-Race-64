@@ -534,14 +534,15 @@ typedef struct StructCEC70 {
     f32 unk4[20];
 } StructCEC70;
 
-typedef struct Controller_info {
-    u16 unk0;
-    u16 unk2;
-    u16 unk4;
-    u16 unk6;
-    s8 unk8;
-    s8 unk9;
-} Controller_info;
+typedef struct ControllerBase {
+    /* 0x0 */ u16 unk_0;
+    /* 0x2 */ u16 unk_2;
+    /* 0x4 */ u16 unk_4;
+    /* 0x6 */ u16 unk_6;
+    /* 0x8 */ s8 unk_8;
+    /* 0x9 */ s8 unk_9;
+} ControllerBase; // size 0xA
+
 typedef struct UnkStruct_func_i8_802C6E00 {
     s16 unk0;
     char pad[0xB];

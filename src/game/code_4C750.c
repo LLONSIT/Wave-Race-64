@@ -9,11 +9,12 @@ typedef struct UnkStruct_800DAB10 {
     s32 unk8;
 } UnkStruct_800DAB10;
 
-typedef struct UnkStruct_801CE658 {
-    struct unaligned_struct unal[2];
-    s32 unk0;
-    s32 unk4;
-} UnkStruct_801CE658;
+typedef struct {
+    /* 0x00 */ ControllerBase unk_00;
+    /* 0x0A */ ControllerBase unk_0A;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+} UnkStruct_801CE658; // size = 0x1C
 
 typedef struct UnkStruct_801CB6C8 {
     Mtx unk0[1];
@@ -42,7 +43,7 @@ extern u8 D_1008290[];
 extern s32 D_800DA940[];
 extern s32 D_800DA950;
 extern s32 D_800DA988[][3];
-extern struct unaligned_struct D_800DAB10;
+extern ControllerBase D_800DAB10;
 extern s32 D_800DCE90;
 extern s16 D_800EABEC[9];
 extern s16 D_800EAC00[9];
@@ -55,7 +56,7 @@ extern s32 D_801CE600;
 extern s16 D_801CE60C;
 extern s16 D_801CE628;
 extern s16 D_801CE62C;
-extern struct UnkStruct_801CE658 D_801CE658[];
+extern UnkStruct_801CE658 D_801CE658[];
 extern s32 D_801CE6AC;
 extern s16 D_801CE72E;
 extern struct UnkStruct_801CB6C8 D_801CB6C8[];
@@ -64,6 +65,9 @@ extern s32 D_800DC4F0[];
 extern s32 D_800DC514[];
 extern s32 D_800DC698[];
 extern s32 D_800DC6BC[];
+extern s8 D_801CB400;
+extern s8 D_801CB401;
+extern s32 D_80154344;
 
 #ifndef NEEDS_RODATA_IMPORTED
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80091F50.s")
@@ -424,9 +428,82 @@ void func_800926F4(void) {
 }
 #endif
 
-// Matched but needs struct migration
-// https://decomp.me/scratch/2lS51
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80092938.s")
+void func_80092938(void) {
+    UnkStruct_801CE658* var_v1;
+    s32 i;
+
+    for (i = 0, var_v1 = &D_801CE658[i]; i < 3; i++, var_v1++) {
+        var_v1->unk_0A = var_v1->unk_00;
+
+        switch (i) {
+            case 0:
+                if (D_80154344 < 1) {
+                    var_v1->unk_00 = D_800DAB10;
+                } else {
+                    var_v1->unk_00 = gControllerOne[D_80154330[0]];
+                }
+                break;
+
+            case 1:
+                if (D_80154344 == 0) {
+                    var_v1->unk_00 = D_800DAB10;
+                } else if (D_80154344 == 1) {
+                    var_v1->unk_00 = gControllerOne[D_80154330[0]];
+                } else {
+                    var_v1->unk_00 = gControllerOne[D_80154330[1]];
+                }
+                break;
+
+            case 2:
+                if (D_80154344 < 1) {
+                    var_v1->unk_00 = D_800DAB10;
+                } else {
+                    var_v1->unk_00 = gControllerOne[D_80154330[0]];
+                }
+                if (D_80154344 >= 2) {
+                    var_v1->unk_00.unk_0 |= D_801CE658[1].unk_00.unk_0;
+                    var_v1->unk_00.unk_2 |= D_801CE658[1].unk_00.unk_2;
+                }
+                break;
+        }
+
+        if (var_v1->unk_00.unk_8 >= D_801CB400) {
+            if (var_v1->unk_0A.unk_8 < D_801CB400) {
+                var_v1->unk_00.unk_2 |= R_JPAD;
+                var_v1->unk_14 = 0;
+            } else {
+                var_v1->unk_00.unk_0 |= R_JPAD;
+                var_v1->unk_14++;
+            }
+        } else if (var_v1->unk_00.unk_8 <= -D_801CB400) {
+            if (var_v1->unk_0A.unk_8 > -D_801CB400) {
+                var_v1->unk_00.unk_2 |= L_JPAD;
+                var_v1->unk_14 = 0;
+            } else {
+                var_v1->unk_00.unk_0 |= L_JPAD;
+                var_v1->unk_14++;
+            }
+        }
+
+        if (var_v1->unk_00.unk_9 >= D_801CB401) {
+            if (var_v1->unk_0A.unk_9 < D_801CB401) {
+                var_v1->unk_00.unk_2 |= U_JPAD;
+                var_v1->unk_18 = 0;
+            } else {
+                var_v1->unk_00.unk_0 |= U_JPAD;
+                var_v1->unk_18++;
+            }
+        } else if (var_v1->unk_00.unk_9 <= -D_801CB401) {
+            if (var_v1->unk_0A.unk_9 > -D_801CB401) {
+                var_v1->unk_00.unk_2 |= D_JPAD;
+                var_v1->unk_18 = 0;
+            } else {
+                var_v1->unk_00.unk_0 |= D_JPAD;
+                var_v1->unk_18++;
+            }
+        }
+    }
+}
 
 #ifndef NEEDS_RODATA_IMPORTED
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80092CF0.s")
@@ -674,7 +751,7 @@ s32 func_80093104(void) {
         return 0;
     }
 
-    if ((gControllerOne[D_801CB404].unk0 & 0x1000) == 0) {
+    if ((gControllerOne[D_801CB404].unk_0 & 0x1000) == 0) {
         return 0;
     }
 

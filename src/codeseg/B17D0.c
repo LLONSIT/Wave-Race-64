@@ -11,7 +11,7 @@ f32 func_801E31A0(void) {
     int temp;
     f32 var_f2;
     s32 var_v0;
-    var_v0 = gControllerOne[D_80154330[0]].unk8;
+    var_v0 = gControllerOne[D_80154330[0]].unk_8;
 
     if (var_v0 < 0) {
         var_v0 = -var_v0;

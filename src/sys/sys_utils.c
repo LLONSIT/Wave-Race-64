@@ -712,7 +712,7 @@ void SysUtils_ContInitialize(void) {
 }
 
 void func_8004A208(void) {
-    Controller_info* temp_v0;
+    ControllerBase* temp_v0;
     u8 var_v0;
     s32 var_v1;
 
@@ -720,10 +720,10 @@ void func_8004A208(void) {
     for (var_v1 = 0; var_v1 < 4; var_v1++) {
         if (D_80154340 & var_v0) {
             temp_v0 = &gControllerOne[var_v1];
-            temp_v0->unk9 = temp_v0->unk4 = temp_v0->unk6 = 0;
-            temp_v0->unk2 = 0;
-            temp_v0->unk0 = 0;
-            temp_v0->unk8 = temp_v0->unk9;
+            temp_v0->unk_9 = temp_v0->unk_4 = temp_v0->unk_6 = 0;
+            temp_v0->unk_2 = 0;
+            temp_v0->unk_0 = 0;
+            temp_v0->unk_8 = temp_v0->unk_9;
         }
         var_v0 <<= 1;
     }
@@ -737,22 +737,22 @@ void SysUtils_UpdateControllers(void) {
 
     for (i = 0; i < 4; i++) {
         if (D_80154340 & mask) {
-            Controller_info* ctrl;
+            ControllerBase* ctrl;
             OSContPad* new_var3;
             u16 new_var;
             s32 new_var2;
 
             ctrl = &gControllerOne[i];
             new_var3 = &gControllers[i];
-            ctrl->unk6 = ctrl->unk0;
-            ctrl->unk0 = new_var3->button;
-            new_var = ctrl->unk0 ^ ctrl->unk6;
+            ctrl->unk_6 = ctrl->unk_0;
+            ctrl->unk_0 = new_var3->button;
+            new_var = ctrl->unk_0 ^ ctrl->unk_6;
             new_var2 = new_var;
-            ctrl->unk2 = ctrl->unk0 & new_var2;
-            ctrl->unk4 = ctrl->unk6 & new_var;
+            ctrl->unk_2 = ctrl->unk_0 & new_var2;
+            ctrl->unk_4 = ctrl->unk_6 & new_var;
             new_var2 = new_var & 0xFFFF;
-            ctrl->unk8 = new_var3->stick_x;
-            ctrl->unk9 = new_var3->stick_y;
+            ctrl->unk_8 = new_var3->stick_x;
+            ctrl->unk_9 = new_var3->stick_y;
         }
         mask <<= 1;
     }
