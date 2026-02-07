@@ -44,11 +44,15 @@ extern s32 D_800DA950;
 extern s32 D_800DA988[][3];
 extern struct unaligned_struct D_800DAB10;
 extern s32 D_800DCE90;
+extern s16 D_800EABEC[9];
+extern s16 D_800EAC00[9];
 extern f32 D_800EAC78;
 extern s32 D_801519AC;
 extern s32 D_801CB288[];
-extern s32 D_801CB308[1][3];
+extern s32 D_801CB308[3][3];
 extern Mtx D_801CCE60;
+extern s32 D_801CE600;
+extern s16 D_801CE60C;
 extern s16 D_801CE628;
 extern s16 D_801CE62C;
 extern struct UnkStruct_801CE658 D_801CE658[];
@@ -929,7 +933,37 @@ Gfx* func_80094200(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80094338.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_800948DC.s")
+s32 func_800948DC(s32 arg0, s32 arg1) {
+    s32 ret;
+
+    switch (D_801CB308[arg0][0]) {
+        case 0:
+            D_801CE600 = 0;
+            if (D_801CE60C == 1) {
+                ret = D_800EABEC[arg1];
+            } else {
+                ret = D_800EAC00[arg1];
+            }
+            break;
+
+        case 1:
+            D_801CE600 = 1;
+            ret = 10;
+            break;
+
+        case 2:
+            D_801CE600 = 1;
+            ret = 40;
+            break;
+
+        case 3:
+            D_801CE600 = 1;
+            ret = (SysUtils_Rand() % 31) + 10;
+            break;
+    }
+
+    return ret;
+}
 
 Gfx* func_800949B8(Gfx* gdl, s32 courseId) {
     RGB* temp = &short_RGB[courseId];
