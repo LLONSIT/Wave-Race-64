@@ -26,80 +26,80 @@ void GameLoad_LoadOverlay(void) {
 
     switch (gGameState) {
         case GAME_STATE_BOOT_UP:
-            ovl = &gOverlayTable[0];
+            ovl = &gOverlayTable[OVL_BOOT_UP];
             flag = 1;
             break;
         case GAME_STATE_TITLE_SCREEN:
-            ovl = &gOverlayTable[1];
+            ovl = &gOverlayTable[OVL_TITLE_SCREEN];
             flag = 1;
             break;
         case GAME_STATE_RIDER_SELECT:
-            ovl = &gOverlayTable[2];
+            ovl = &gOverlayTable[OVL_RIDER_SELECT];
             flag = 1;
             break;
         case GAME_SATE_COURSE_OVERVIEW:
-            ovl = &gOverlayTable[3];
+            ovl = &gOverlayTable[OVL_COURSE_OVERVIEW];
             flag = 1;
             break;
         case GAME_STATE_COURSE_SELECT:
-            ovl = &gOverlayTable[4];
+            ovl = &gOverlayTable[OVL_COURSE_SELECT];
             flag = 1;
             break;
         case GAME_STATE_RACE_RESULTS:
-            ovl = &gOverlayTable[5];
+            ovl = &gOverlayTable[OVL_RACE_RESULTS];
             flag = 1;
             break;
         case GAME_STATE_36:
-            ovl = &gOverlayTable[6];
+            ovl = &gOverlayTable[OVL_6];
             flag = 1;
             break;
         case GAME_STATE_TIME_TRIALS_RESULTS:
-            ovl = &gOverlayTable[7];
+            ovl = &gOverlayTable[OVL_TIME_TRIALS_RESULTS];
             flag = 1;
             break;
         case GAME_STATE_STUNT_MODE_RESULTS:
-            ovl = &gOverlayTable[8];
+            ovl = &gOverlayTable[OVL_STUNT_MODE_RESULTS];
             flag = 1;
             break;
         case GAME_STATE_OPTIONS_MENU:
-            ovl = &gOverlayTable[9];
+            ovl = &gOverlayTable[OVL_OPTIONS_MENU];
             flag = 1;
             break;
         case GAME_STATE_OPTIONS_CHANGE_NAMES:
-            ovl = &gOverlayTable[10];
+            ovl = &gOverlayTable[OVL_OPTIONS_CHANGE_NAMES];
             flag = 1;
             break;
         case GAME_STATE_OPTIONS_VIEW_RECORDS:
-            ovl = &gOverlayTable[11];
+            ovl = &gOverlayTable[OVL_OPTIONS_VIEW_RECORDS];
             flag = 1;
             break;
         case GAME_STATE_OPTIONS_CHANGE_CONDITIONS:
-            ovl = &gOverlayTable[12];
+            ovl = &gOverlayTable[OVL_OPTIONS_CHANGE_CONDITIONS];
             flag = 1;
             break;
         case GAME_STATE_OPTIONS_AUDIO:
-            ovl = &gOverlayTable[13];
+            ovl = &gOverlayTable[OVL_OPTIONS_AUDIO];
             flag = 1;
             break;
         case GAME_STATE_OPTIONS_ERASE_COURSE_RECORDS:
-            ovl = &gOverlayTable[14];
+            ovl = &gOverlayTable[OVL_OPTIONS_ERASE_COURSE_RECORDS];
             flag = 1;
             break;
         case GAME_STATE_OPTIONS_SAVE_AND_LOAD:
-            ovl = &gOverlayTable[15];
+            ovl = &gOverlayTable[OVL_OPTIONS_SAVE_AND_LOAD];
             flag = 1;
             break;
         case GAME_STATE_50:
-            ovl = &gOverlayTable[16];
+            ovl = &gOverlayTable[OVL_16];
             flag = 1;
             break;
         case GAME_STATE_CEREMONY:
-            ovl = &gOverlayTable[17];
+            ovl = &gOverlayTable[OVL_CEREMONY];
             flag = 1;
             break;
         case GAME_STATE_DEMO:
         case GAME_STATE_TIME_TRIAL:
-            ovl = &gOverlayTable[18];
+            ovl = &gOverlayTable[OVL_DEMO];
             flag = 1;
             break;
         case 1:
