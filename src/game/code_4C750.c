@@ -931,7 +931,73 @@ Gfx* func_80094200(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80094338.s")
+// Seems to be drawing the green squared frames of the menu entries
+Gfx* func_80094338(Gfx* gdl, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    s32 i;
+    s32 spA0;
+    s32 var_v0;
+    s32 sp98;
+    s32 sp94;
+    s32 var_a1;
+    s32 sp8C;
+    s32 uly;
+    s32 lry;
+    u16* sp80;
+
+    switch (arg1) {
+        case 0:
+            spA0 = 4;
+            sp80 = D_10515A8;
+            sp98 = 256;
+            sp94 = 8;
+            var_a1 = 0x40000 / arg4;
+            sp8C = 0x8000 / arg5;
+            break;
+
+        case 2:
+            spA0 = 4;
+            sp80 = D_10565B8;
+            sp98 = 256;
+            sp94 = 8;
+            var_a1 = 0x40000 / arg4;
+            sp8C = 0x8000 / arg5;
+            break;
+
+        case 1:
+            spA0 = 1;
+            sp80 = D_10555B0;
+            sp98 = 64;
+            sp94 = 32;
+            var_a1 = 0x10000 / arg4;
+            sp8C = 0x8000 / arg5;
+            break;
+    }
+
+    var_v0 = 1;
+    if (arg2 >= SCREEN_WIDTH) {
+        var_v0 = 0;
+    } else if ((arg2 + arg4) < 0) {
+        var_v0 = 0;
+    } else if (arg3 >= SCREEN_HEIGHT) {
+        var_v0 = 0;
+    } else if ((arg3 + arg5) < 0) {
+        var_v0 = 0;
+    }
+
+    if (var_v0 == 0) {
+        return gdl;
+    }
+
+    for (i = 0; i < spA0; i++) {
+        uly = (arg3 + (f32) arg5 / (f32) spA0 * i) * 4.0f;
+        lry = (arg3 + (f32) arg5 / (f32) spA0 * i + (f32) arg5 / (f32) spA0) * 4.0f;
+        gDPLoadTextureBlock(gdl++, sp80 + sp98 * sp94 * i, G_IM_FMT_RGBA, G_IM_SIZ_16b, sp98, sp94, 0, G_TX_CLAMP,
+                            G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gSPScisTextureRectangle(gdl++, arg2 << 2, uly, (arg2 + arg4) << 2, lry, G_TX_RENDERTILE, 0, 0, var_a1, sp8C);
+    }
+
+    return gdl;
+}
 
 s32 func_800948DC(s32 arg0, s32 arg1) {
     s32 ret;
