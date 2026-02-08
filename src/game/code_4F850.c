@@ -514,8 +514,6 @@ void func_800980C8(void) {
 void func_800980D0(UnkStruct_800980D0* arg0) {
     s32 i;
     s32 j;
-    s32 k;
-    s32 l;
     u16* v1;
 
     for (i = 0; i < 3; i++) {
@@ -527,8 +525,8 @@ void func_800980D0(UnkStruct_800980D0* arg0) {
 
     v1 = D_800DCEC8;
     for (i = 56; i < 184; i++) {
-        u16* v0 = (i * 320) + arg0->unkC0;
-        for (j = 0; j < 0x80; j++) {
+        u16* v0 = (i * SCREEN_WIDTH) + arg0->unkC0;
+        for (j = 0; j < 128; j++) {
             *v0++ = *v1++;
         }
     }
