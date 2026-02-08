@@ -1238,8 +1238,8 @@ Gfx* GameUtils_MakeTitleSquare(Gfx* gdl, s32 arg1, s32 width, s32 height, s32 ar
     for (i = 0; i < spA0; i++) {
         uly = (height + (f32) arg5 / (f32) spA0 * i) * 4.0f;
         lry = (height + (f32) arg5 / (f32) spA0 * i + (f32) arg5 / (f32) spA0) * 4.0f;
-        gDPLoadTextureBlock(gdl++, timg + texWidth * textHeight * i, G_IM_FMT_RGBA, G_IM_SIZ_16b, texWidth, textHeight, 0, G_TX_CLAMP,
-                            G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gDPLoadTextureBlock(gdl++, timg + texWidth * textHeight * i, G_IM_FMT_RGBA, G_IM_SIZ_16b, texWidth, textHeight,
+                            0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
         gSPScisTextureRectangle(gdl++, width << 2, uly, (width + arg4) << 2, lry, G_TX_RENDERTILE, 0, 0, dsdx, dsdy);
     }
 
