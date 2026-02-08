@@ -15,7 +15,7 @@ typedef struct UnkStruct_801CB6C8 {
 void func_8004BA18(void);
 void func_80051530(void);
 void func_8007BD70(void);
-void func_8007BE00(void);
+s32 func_8007BE00(void);
 void func_80088EA0(void);
 void func_801DD85C(void);
 void func_80094FE8(void);
@@ -66,9 +66,7 @@ extern s32 D_801CE718[];
 extern s32 D_801CB334;
 extern s16 D_800EABB0[];
 
-#ifndef NEEDS_RODATA_IMPORTED
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80091F50.s")
-#else
+#ifdef NEEDS_RODATA
 void func_80091F50(void) {
     s8 temp_t3;
     s32 i;
@@ -109,8 +107,8 @@ void func_80091F50(void) {
         }
     }
 
-    guFrustum(D_801CB6C8->unk0, 0.0f, 319.0f, 239.0f, 0.0f, 100.0f, -100.0f, 1.0f);
-    guFrustum(&D_801CCE60, 0.0f, 319.0f, 239.0f, 0.0f, 100.0f, -100.0f, 1.0f);
+    guOrtho(D_801CB6C8->unk0, 0.0f, 319.0f, 239.0f, 0.0f, 100.0f, -100.0f, 1.0f);
+    guOrtho(&D_801CCE60, 0.0f, 319.0f, 239.0f, 0.0f, 100.0f, -100.0f, 1.0f);
     func_8004BA18();
     func_80051530();
     func_80088EA0();
@@ -139,10 +137,13 @@ void func_80091F50(void) {
     }
 
     for (i = 0; i < 3; i++) {
-        D_801CE658[i].unal[0] = D_800DAB10;
-        D_801CE658[i].unk0 = D_801CE658[i].unk4 = 0;
+        D_801CE658[i].unk_00 = D_800DAB10;
+        D_801CE658[i].unk_14 = D_801CE658[i].unk_18 = 0;
     }
 }
+#else
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80091F50.s")
+
 #endif
 
 #ifdef NEEDS_RODATA_IMPORTED
@@ -1178,7 +1179,7 @@ Gfx* func_80094200(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 }
 
 // Seems to be drawing the green squared frames of the menu entries
-Gfx* func_80094338(Gfx* gdl, s32 arg1, s32 width, s32 height, s32 arg4, s32 arg5) {
+Gfx* GameUtils_MakeTitleSquare(Gfx* gdl, s32 arg1, s32 width, s32 height, s32 arg4, s32 arg5) {
     s32 i;
     s32 spA0;
     s32 drawTexRect;
