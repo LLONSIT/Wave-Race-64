@@ -870,7 +870,7 @@ void func_8009345C(void) {
     gGameModes = D_801CE608.gameMode;
     gPlayers = D_801CE608.player;
     gRiders = (s32) D_801CE608.rider;
-    D_800D8174 = D_801CE608.powerMisses;
+    gBuoyMisses = D_801CE608.powerMisses;
     D_800D4970 = (s16) D_801CE608.unk_14;
     D_800D49B0 = D_801CE608.waveLevel;
 
@@ -1179,7 +1179,7 @@ Gfx* func_80094200(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 }
 
 // Seems to be drawing the green squared frames of the menu entries
-Gfx* GameUtils_MakeTitleSquare(Gfx* gdl, s32 arg1, s32 width, s32 height, s32 arg4, s32 arg5) {
+Gfx* func_80094338(Gfx* gdl, s32 arg1, s32 width, s32 height, s32 arg4, s32 arg5) {
     s32 i;
     s32 spA0;
     s32 drawTexRect;

@@ -339,7 +339,7 @@ extern UnkStruct_801AEE20 D_801AEE20[];
 extern s32 D_800D48E0;
 extern s16 D_800D4970;
 extern s32 D_800D49B0;
-extern s32 D_800D8174;
+extern s32 gBuoyMisses;
 extern s32 D_800D8178;
 extern s32 D_800DA9C0;
 extern s16 D_800DAB68;

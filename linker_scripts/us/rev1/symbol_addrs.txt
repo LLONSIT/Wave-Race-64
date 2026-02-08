@@ -13,6 +13,7 @@ gOSYieldData = 0x80045800;
 SysMain_Thread = 0x80046DA0;
 sGfxTask = 0x80151940;
 gPrevGameState = 0x801CE634;
+gBuoyMisses = 0x800D8174;
 
 //game_23E0
 SysUtils_Srand = 0x80047E44;
