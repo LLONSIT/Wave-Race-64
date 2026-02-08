@@ -23,15 +23,7 @@ typedef enum GameMode {
     /* 11 */ GMODE_STUNT = 11
 } GameMode;
 
-typedef struct Game_801CE608_s {
-    /* 0x0 */ GameMode gameMode;
-    /* 0x4 */ s16 player;
-    /* 0x6 */ s16 rider;
-    /* 0x8 */ s32 waveLevel;
-    /* 0xC */ s32 powerMisses;
-    /* 0x10 */ s32 laps; // Race lap count
-    /* 0x14 */ s32 unk_14;
-} Game_801CE608;
+
 
 typedef enum {
     GAME_STATE_0 = 0x00,

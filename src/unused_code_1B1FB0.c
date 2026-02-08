@@ -67,7 +67,7 @@ Gfx* func_1B1FB0_802C73B0(Gfx* gdl) {
 }
 
 void func_1B1FB0_802C7510(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 6;
     D_801CE638 = 0x13;

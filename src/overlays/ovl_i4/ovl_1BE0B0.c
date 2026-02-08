@@ -125,7 +125,7 @@ void func_i4_802C7344(void) {
 }
 
 void func_i4_802C7474(s32 arg0) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = arg0;
     gGameState = 21;
     D_801CE638 = 5;

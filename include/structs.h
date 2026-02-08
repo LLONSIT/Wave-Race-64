@@ -98,7 +98,7 @@ struct unk_80097E68 {
     struct unk_80097E68* unk4;
 };
 
-struct UnkStruct_801D7B70 {
+typedef struct UnkStruct_801D7B70 {
     s32 unk0;
     s32 unk4;
     f32 unk8;
@@ -108,7 +108,7 @@ struct UnkStruct_801D7B70 {
     f32 unk18;
     f32 unk1C;
     s32 unk20;
-};
+} UnkStruct_801D7B70;
 
 typedef struct Vec3f {
     /* 0x0 */ f32 x;
@@ -545,7 +545,10 @@ typedef struct ControllerBase {
 
 typedef struct UnkStruct_func_i8_802C6E00 {
     s16 unk0;
-    char pad[0xB];
+    char pad2[9];
+    s8 unkB;
+    s8 unkC;
+    s8 unkD;
 } UnkStruct_func_i8_802C6E00;
 
 typedef struct UnkStruct_8004B0F8_1 {
@@ -688,11 +691,13 @@ typedef struct UnkStruct_80192690 {
     /* 0x0B58 */ char padB58[8]; /* maybe part of unkB56[5]? */
     /* 0x0B60 */ s32 unkB60;
     /* 0x0B64 */ char padB64[4];
-    /* 0x0B68 */ s32 unkB68;
-    /* 0x0B6C */ char padB6C[0xC]; /* maybe part of unkB68[4]? */
-    /* 0x0B78 */ f32 unkB78;
-    /* 0x0B7C */ f32 unkB7C;
-    /* 0x0B80 */ f32 unkB80;
+    s32 unkB68;
+    s32 unkB6C;
+    s32 unkB70;
+    s32 unkB74;
+    f32 unkB78;
+    f32 unkB7C;
+    f32 unkB80;
     /* 0x0B84 */ char padB84[0xC]; /* maybe part of unkB80[4]? */
     /* 0x0B90 */ f32 unkB90;
     /* 0x0B94 */ char padB94[0x5C]; /* maybe part of unkB90[0x18]? */
@@ -764,4 +769,32 @@ typedef struct UnkStruct_801AE948_s {
 typedef struct UnkStruct_80069740_s {
     s32 pad[0x10];
 } UnkStruct_80069740;
+typedef struct Game_801CE608 {
+    /* 0x0 */ s32 gameMode;
+    /* 0x4 */ s16 player;
+    /* 0x6 */ s16 rider;
+    /* 0x8 */ s32 waveLevel;
+    /* 0xC */ s32 powerMisses;
+    /* 0x10 */ s32 lapCount; // Race lap count
+    /* 0x14 */ s32 unk_14;
+} Game_801CE608;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} UnkStruct_800D96A4;
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+} UnkStruct_800DB568;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+} UnkStruct_800DA9B0;
+
 #endif /* STRUCTS_H */

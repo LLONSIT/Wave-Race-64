@@ -29,7 +29,7 @@ extern s32 D_800D461C;
 extern s32 D_800DAB1C;
 extern OSMesgQueue D_801540D0;
 extern s32 D_801CE630;
-extern s32 D_801CE634; // gPrevGameState ?
+extern s32 gPrevGameState; // gPrevGameState ?
 extern s32 D_801CE638;
 extern s32 D_801CE63C;
 extern s32 D_801CE640;
@@ -57,7 +57,6 @@ extern s32 D_801CE64C;
 extern s32 D_800DA9D0;
 extern s32 D_801542CC;
 extern s32 D_801CB328; // Selected course id??
-extern s32 D_801CE608;
 extern u8 D_800E5134;
 extern OSContPad gControllers[];
 extern Vp* D_106F008;
@@ -67,7 +66,7 @@ extern struct UnkStruct_80192690 D_80192690[];
 extern struct_801C3C58* D_801C3C58;
 extern s32 D_80228A90;
 extern s32 D_800DAB2C;
-
+extern Game_801CE608 D_801CE608;
 extern s16 D_80228A16;
 extern s32 D_i1_802C9440;
 extern s32 D_i1_802C9570;
@@ -76,7 +75,7 @@ extern s16 D_80192630[];
 extern s32 D_800D461C;
 extern s32 D_800DAB1C;
 extern s32 D_801CE630;
-extern s32 D_801CE634;
+extern s32 gPrevGameState;
 extern s32 D_801CE638;
 extern s32 D_801CE63C;
 extern s32 D_801CE640;
@@ -336,4 +335,27 @@ extern s8 D_800E7C94;
 extern UnkStruct_801AE948* D_801AE948;
 extern UnkStruct_801AE948 D_5000000[];
 extern UnkStruct_801AEE20 D_801AEE20[];
+
+extern s32 D_800D48E0;
+extern s16 D_800D4970;
+extern s32 D_800D49B0;
+extern s32 D_800D8174;
+extern s32 D_800D8178;
+extern s32 D_800DA9C0;
+extern s16 D_800DAB68;
+extern UnkStruct_800DB568 D_800DB568[];
+extern s16 D_800EABEC[];
+extern s32 D_801CB32C;
+extern s16 D_801CB3F8[];
+extern s32 D_801CE600;
+extern s16 D_801CE6F0;
+extern s16 D_801CE6F4[];
+extern s32 D_801CE6F8;
+extern s16 D_801CE6FC;
+extern s16 D_801CE72C;
+extern s32 gRiders;
+extern UnkStruct_func_i8_802C6E00 D_800DA950[];
+extern s32 D_800DA9B0[20];
+extern UnkStruct_800D96A4 D_800D96A4[7][4];
+extern s32 D_801CE728[];
 #endif /* VARIABLES_H */

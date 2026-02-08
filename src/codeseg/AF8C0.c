@@ -3,7 +3,7 @@
 extern s32 D_800D461C;
 extern s32 D_800DAB1C;
 extern s32 D_801CE630;
-extern s32 D_801CE634;
+extern s32 gPrevGameState;
 extern s32 D_801CE638;
 extern s32 D_801CE63C;
 extern s32 D_801CE640;
@@ -80,7 +80,7 @@ extern s32 D_801CE644;
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/AF8C0/func_801E2530.s")
 
 void func_801E2B8C(s32 arg0) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = arg0;
     gGameState = GAME_STATE_65;
     D_801CE638 = 6;

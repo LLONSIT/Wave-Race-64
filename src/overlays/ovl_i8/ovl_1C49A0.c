@@ -32,7 +32,7 @@ void func_i8_802C6E68(void* arg0) {
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6EB8.s")
 
 void func_i8_802C6F4C(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 0x3F;
     D_801CE638 = 0xA;

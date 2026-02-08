@@ -13,15 +13,15 @@ void func_i14_802C5840(void) {
 
     D_802C61EC = 4;
 
-    if (D_801CE608 == 4) {
-        if (D_801CE634 == 0x43) {
+    if (D_801CE608.gameMode == 4) {
+        if (gPrevGameState == 0x43) {
             flag = 1;
         }
-    } else if ((D_801CE634 != 100) && (D_801CE634 != 0x32) && (D_801CE634 != 0x39)) {
+    } else if ((gPrevGameState != 100) && (gPrevGameState != 0x32) && (gPrevGameState != 0x39)) {
         flag = 1;
     }
 
-    if (D_801CE608 == 4) {
+    if (D_801CE608.gameMode == 4) {
         D_802C61EC = 2;
     }
 
@@ -43,7 +43,7 @@ void func_i14_802C5840(void) {
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i14/ovl_1CF180/func_i14_802C5B70.s")
 
 void func_i14_802C5E5C(s32 arg0) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = arg0;
     gGameState = 0x51;
     D_801CE638 = 0xD;
@@ -90,7 +90,7 @@ void func_i14_802C5F60(void) {
     }
 
     if (D_801CE65A[0].unk0 & (A_BUTTON | Z_TRIG | START_BUTTON)) {
-        if (D_801CE608 == 4) {
+        if (D_801CE608.gameMode == 4) {
             func_i14_802C5E5C(D_i14_802C6134[D_i14_802C60F0]);
         } else {
             func_i14_802C5E5C(D_i14_802C6124[D_i14_802C60F0]);

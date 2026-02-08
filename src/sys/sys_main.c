@@ -204,7 +204,7 @@ void* SysMain_Thread(void* entry) {
 
         while (osDpGetStatus() & 0x170) {}
 
-        if ((D_801CE634 == 6) && (D_801CE63C != 0)) {
+        if ((gPrevGameState == 6) && (D_801CE63C != 0)) {
             game_dma_copy((u8*) D_FE320, (u8*) D_8015198C, ALIGN16(D_165C00 - D_FE320));
         }
 
@@ -244,7 +244,7 @@ void* SysMain_Thread(void* entry) {
             }
             osViSwapBuffer(D_800D45DC[D_800D45D8]);
         } else {
-            if ((D_801CE634 == 6) && (D_801CE63C != 0)) {
+            if ((gPrevGameState == 6) && (D_801CE63C != 0)) {
                 if (osTvType == 1) {
                     osViSetMode(D_800E8770);
                 } else {

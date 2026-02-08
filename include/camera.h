@@ -43,7 +43,8 @@ typedef struct camera_unk_1 {
                 f32 unkF4;
                 char padF8[4];
                 f32 camViewY;
-                char pad100[0xC];
+                char pad100[0x8];
+                s32 unk10C;
 } camera_unk_1;
 
 extern struct camera_unk_1 gCameraPerspective[];

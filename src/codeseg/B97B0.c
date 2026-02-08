@@ -23,7 +23,7 @@
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EC3AC.s")
 
 void func_801EC500(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 0x42;
     D_801CE638 = 0xC;
@@ -39,7 +39,7 @@ void func_801EC500(void) {
 }
 
 void func_801EC5B4(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 0x44;
     D_801CE638 = 0xE;
@@ -54,7 +54,7 @@ void func_801EC5B4(void) {
 }
 
 void func_801EC650(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 0x48;
     D_801CE638 = 0x14;
@@ -69,7 +69,7 @@ void func_801EC650(void) {
 }
 
 void func_801EC6EC(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 0x46;
     D_801CE638 = 0x10;
@@ -83,7 +83,7 @@ void func_801EC6EC(void) {
 }
 
 void func_801EC780(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 0x40;
     D_801CE638 = 0xB;
@@ -100,7 +100,7 @@ void func_801EC780(void) {
 void func_801EC830(void) {
     s32 var_v1;
 
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 0x50;
     D_801CE638 = 0xD;
@@ -116,11 +116,11 @@ void func_801EC830(void) {
 
     var_v1 = false;
 
-    if (D_801CE608 == 4) {
-        if (D_801CE634 == 0x43) {
+    if (D_801CE608.gameMode == 4) {
+        if (gPrevGameState == 0x43) {
             var_v1 = true;
         }
-    } else if ((D_801CE634 != 0x32) && (D_801CE634 != 0x39)) {
+    } else if ((gPrevGameState != 0x32) && (gPrevGameState != 0x39)) {
         var_v1 = true;
     }
     if (var_v1) {
@@ -132,7 +132,7 @@ void func_801EC830(void) {
 }
 
 void func_801EC944(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 0x5A;
     D_801CE638 = 0xF;
@@ -145,7 +145,7 @@ void func_801EC944(void) {
 }
 
 void func_801EC9C8(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 0x64;
     D_801CE638 = 6;
@@ -158,12 +158,12 @@ void func_801EC9C8(void) {
     gRiderGameModes = 1;
     D_801CE64C = 1;
     gGameModeState = 0;
-    if ((D_801CE608 == 0) || (D_801CE608 == 0xB)) {
+    if ((D_801CE608.gameMode == 0) || (D_801CE608.gameMode == 0xB)) {
         func_80096960(2, 0, 1, 2, 3);
     }
-    if (D_801CE634 == 0x67) {
+    if (gPrevGameState == 0x67) {
         FadeTransition_SetProps(7, 0x14, 0);
-    } else if (D_801CE634 == 0x2A) {
+    } else if (gPrevGameState == 0x2A) {
         FadeTransition_SetProps(4, 1, 0);
     }
     func_801E6A4C(0, 0);
@@ -172,7 +172,7 @@ void func_801EC9C8(void) {
 }
 
 void func_801ECAF4(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 5;
     D_801CE638 = 0x13;

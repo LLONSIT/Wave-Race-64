@@ -8,7 +8,7 @@ typedef struct UnkPool {
 extern int D_801D7DB0;
 extern struct Vec3f D_800E6DD0[4];
 extern s32 D_800E6E30[];
-extern struct UnkStruct_801D7B70 D_801D7B70[];
+extern UnkStruct_801D7B70 D_801D7B70[16];
 extern s32 D_801D7DB0;
 extern s32 D_801AE950;
 
@@ -20,7 +20,7 @@ void func_800B4750(void) {
 
     D_801D7DB0 = 0;
 
-    for (i = 0; i < 16; i++) {
+    for (i = 0; i < ARRAY_COUNT(D_801D7B70); i++) {
         D_801D7B70[i].unk0 = 0;
     }
 }
@@ -69,10 +69,10 @@ void func_800B4788(s32 source_id, f32 x_position, f32 y_position, f32 z_position
 }
 
 void create_obj(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
-    s32 var_s0;
+    s32 i;
 
-    for (var_s0 = 0; var_s0 < 8; var_s0++) {
-        func_800B4788(var_s0, arg0, arg1, arg2, arg3, arg4, arg5);
+    for (i = 0; i < 8; i++) {
+        func_800B4788(i, arg0, arg1, arg2, arg3, arg4, arg5);
     }
     func_800AF43C(arg0, arg1 + 24.0f, arg2);
 }
@@ -89,6 +89,7 @@ void func_800B49C4(void) {
             temp_v0->unkC += temp_v0->unk18;
             temp_v0->unk10 += temp_v0->unk1C;
             temp_v0->unk18 -= 6.0f;
+
             if (temp_v0->unkC < -128.0f) {
                 temp_v0->unk0 = 0;
             }
@@ -113,7 +114,7 @@ void func_800B4ABC(Gfx** gdl) {
     gDPSetRenderMode(gdlh++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
     gDPSetAlphaCompare(gdlh++, G_AC_NONE);
 
-    for (i = 0; i < 16; i++) {
+    for (i = 0; i < ARRAY_COUNT(D_801D7B70); i++) {
         struct UnkStruct_801D7B70* var_s0 = &D_801D7B70[i];
 
         if (var_s0->unk0 != 0) {

@@ -24,7 +24,7 @@ Gfx* func_i12_802C5800(Gfx* dList) {
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i12/ovl_1CAE40/func_i12_802C58A0.s")
 
 void func_i12_802C5EE4(s32 arg0) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = arg0;
     gGameState = 0x47;
     D_801CE638 = 0x10;

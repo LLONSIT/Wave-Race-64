@@ -4,14 +4,14 @@ void func_i1_802C5800(void) {
     if ((D_801CE63C != 0) && (gGameState == 0x28)) {
         func_i1_802C587C();
     }
-    if ((gCourseID == 0) && (D_801CE608 == 4) && (D_800DAB64 == 0)) {
+    if ((gCourseID == 0) && (D_801CE608.gameMode == 4) && (D_800DAB64 == 0)) {
         func_i1_802C5900();
     }
 }
 
 void func_i1_802C587C(void) {
     D_i1_802C9440 = 0;
-    if (D_801CE608 == 4) {
+    if (D_801CE608.gameMode == 4) {
         if (gCourseID == 0) {
             D_802C96A8 = D_i1_802C94C8;
         }
@@ -75,7 +75,7 @@ void func_i1_802C6B00(void) {
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i1/ovl_1B55A0/func_i1_802C6FE0.s")
 
 void func_i1_802C7394(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 44;
     D_801CE638 = 1;
@@ -97,7 +97,7 @@ void func_i1_802C7394(void) {
 }
 
 void func_i1_802C744C(s32 arg0) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = arg0;
     gGameState = 43;
     D_801CE638 = 1;
@@ -140,7 +140,7 @@ void func_i1_802C744C(s32 arg0) {
 }
 
 void func_i1_802C7570(s32 arg0) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = arg0;
     gGameState = 0x2D;
     D_801CE638 = 1;
@@ -342,7 +342,7 @@ Gfx* func_i1_802C913C(Gfx* dList) {
 }
 
 void func_i1_802C9380(s32 arg0) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = arg0;
     gGameState = 8;
     D_801CE638 = 0;

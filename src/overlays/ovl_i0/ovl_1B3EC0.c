@@ -67,7 +67,7 @@ void stub_func_i0_802C5800() {
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i0/ovl_1B3EC0/func_i0_802C63AC.s")
 
 void func_i0_802C6878(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 3;
     D_801CE638 = 0;
@@ -117,7 +117,7 @@ Gfx* func_i0_802C6944(Gfx* arg0) {
 }
 
 void func_i0_802C6A1C(s32 arg0) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = arg0;
     gGameState = 4;
     D_801CE638 = 0;

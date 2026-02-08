@@ -19,11 +19,11 @@ void func_8007BE00(void);
 void func_80088EA0(void);
 void func_801DD85C(void);
 void func_80094FE8(void);
+s32 func_8009684C(s32, s16, s16);
 
 extern s16 D_800DAB74;
 extern s16 D_800DAB78;
 extern s32 D_801CE5FC;
-extern s32 D_801CE608;
 extern s16 gCurrentPauseMenuOption;
 extern s16 D_801CE62A;
 extern s16 D_801CE62E;
@@ -32,11 +32,9 @@ extern s16 D_80228A36;
 extern s32 D_80228A40;
 extern u8 D_1008290[];
 extern s32 D_800DA940[];
-extern s32 D_800DA950;
 extern s32 D_800DA988[][3];
 extern ControllerBase D_800DAB10;
 extern s32 D_800DCE90;
-extern s16 D_800EABEC[9];
 extern s16 D_800EAC00[9];
 extern f32 D_800EAC78;
 extern s32 D_801519AC;
@@ -335,7 +333,7 @@ void func_800922E4(void) {
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_800926F4.s")
 #else
 extern s32 D_800D49B0;
-extern s32 D_801CE634;
+extern s32 gPrevGameState;
 extern s32 D_801CE6F8;
 
 void func_800926F4(void) {
@@ -385,7 +383,7 @@ void func_800926F4(void) {
             break;
 
         case 50:
-            if (D_801CE634 != 100) {
+            if (gPrevGameState != 100) {
                 func_8004F9E0(0, D_800D49B0);
                 func_8008E4B0();
                 func_801DDA24();
@@ -393,7 +391,7 @@ void func_800926F4(void) {
             break;
 
         case 100:
-            if (D_801CE634 == 103) {
+            if (gPrevGameState == 103) {
                 func_8004F9E0(0, D_800D49B0);
                 func_8008E4B0();
                 func_801DDA24();
@@ -408,11 +406,11 @@ void func_800926F4(void) {
             sp18 = 1;
 
             if (D_801CE608 == 4) {
-                if (D_801CE634 != 67) {
+                if (gPrevGameState != 67) {
                     sp18 = 0;
                 }
             } else {
-                if ((D_801CE634 == 100) || (D_801CE634 == 50) || (D_801CE634 == 57)) {
+                if ((gPrevGameState == 100) || (gPrevGameState == 50) || (gPrevGameState == 57)) {
                     sp18 = 0;
                 }
             }
@@ -828,7 +826,179 @@ Gfx* func_800933C4(Gfx* arg0) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_8009345C.s")
+void func_8009345C(void) {
+    UnkStruct_func_i8_802C6E00* var_v1;
+    s32 var_a1;
+    s32 var_a2;
+    s32 id;
+    s32 pad;
+
+    gPrevGameState = gGameState;
+    D_801CE630 = 0;
+    gGameState = GAME_STATE_TIME_TRIAL;
+    D_801CE638 = 1;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    D_800D461C = 3;
+    D_801CE600 = 0;
+
+    if (gDifficulty == DIFFICULTY_NORMAL) {
+        D_801CE608.waveLevel = func_800948DC(0, gCourseID);
+        D_801CE608.powerMisses = D_801CB308[0][1];
+        D_801CE608.lapCount = D_801CB308[0][2];
+        D_801CE72C = (s16) D_801CB308[0][0];
+    } else if (gDifficulty == DIFFICULTY_HARD) {
+        D_801CE608.waveLevel = func_800948DC(1, gCourseID);
+        D_801CE608.powerMisses = D_801CB308[1][1];
+        D_801CE608.lapCount = D_801CB308[1][2];
+        D_801CE72C = (s16) D_801CB308[1][0];
+    } else if (D_800DAB68 != 0) {
+        D_801CE608.waveLevel = D_800EABEC[gCourseID];
+        D_801CE608.powerMisses = 5;
+        D_801CE608.lapCount = 3;
+        D_801CE72C = 0;
+    } else {
+        D_801CE608.waveLevel = func_800948DC(2, gCourseID);
+        D_801CE608.powerMisses = D_801CB308[2][1];
+        D_801CE608.lapCount = D_801CB308[2][2];
+        D_801CE72C = (s16) D_801CB308[2][0];
+    }
+
+    gGameModes = D_801CE608.gameMode;
+    gPlayers = D_801CE608.player;
+    gRiders = (s32) D_801CE608.rider;
+    D_800D8174 = D_801CE608.powerMisses;
+    D_800D4970 = (s16) D_801CE608.unk_14;
+    D_800D49B0 = D_801CE608.waveLevel;
+
+    if (D_801CE608.gameMode == GMODE_CHAMPIONSHIP) {
+        if (D_801CE6F8 != 0) {
+            D_801CE728[0] = D_801CE608.lapCount;
+        }
+    } else if (D_801CE608.gameMode == GMODE_STUNT) {
+        D_801CE600 = 0;
+        D_801CE608.waveLevel = (D_800D49B0 = D_800EABEC[gCourseID]);
+        D_801CE608.lapCount = (D_801CE728[0] = 1);
+        D_801CE72C = 0;
+    } else {
+        D_801CE728[0] = D_801CE608.lapCount;
+    }
+
+    D_800D8178 = 0;
+    D_801CE64C = 0;
+    D_801CE6FC = 0;
+
+    if ((gCourseID == DOLPHIN_PARK) && (gGameModes == GMODE_STUNT)) {
+        D_801CE6FC = 1;
+    }
+    if ((gCourseID == DOLPHIN_PARK) && (D_801CE6FC == 0)) {
+        gGameModeState = 3;
+        gRiderGameModes = 3;
+    } else {
+        gGameModeState = 0;
+        gRiderGameModes = 1;
+    }
+
+    D_801CE6F0 = 0;
+
+    switch (D_801CE608.gameMode) {
+        case GMODE_CHAMPIONSHIP:
+            if (D_800DAB68 != 0) {
+                gDifficulty = DIFFICULTY_EXPERT;
+            }
+            D_800D8240 = 0;
+            for (var_a2 = 0; var_a2 < 4; var_a2++) {
+                D_801CB3F8[var_a2] = 0;
+                D_80192690[var_a2].unkB68 = D_800DA9B0[var_a2];
+                if (var_a2 == D_800D48DC) {
+                    if (D_801CB32C == 0) {
+                        var_v1 = &D_800DA950[D_80192690[var_a2].unkB68];
+                    } else {
+                        var_v1 = &D_801CB298[D_80192690[var_a2].unkB68];
+                    }
+
+                    D_80192690[var_a2].unkB6C = (s32) var_v1->unkB;
+                    D_80192690[var_a2].unkB70 = (s32) var_v1->unkC;
+                    D_80192690[var_a2].unkB74 = (s32) var_v1->unkD;
+                } else {
+                    D_80192690[var_a2].unkB6C = D_800D96A4[gCourseID][D_80192690[var_a2].unkB68].unk0;
+                    D_80192690[var_a2].unkB70 = D_800D96A4[gCourseID][D_80192690[var_a2].unkB68].unk4;
+                    D_80192690[var_a2].unkB74 = D_800D96A4[gCourseID][D_80192690[var_a2].unkB68].unk8;
+                }
+            }
+
+            var_a1 = D_800DA9B0[D_800D48DC];
+            if (D_801CE6F4[0] != 0) {
+                var_a1 += 4;
+            }
+            func_80096960(0, var_a1, D_800DA9B0[1], D_800DA9B0[2], D_800DA9B0[3]);
+
+            break;
+
+        case GMODE_TIME_TRIALS:
+            if (D_800DAB68 != 0) {
+                gDifficulty = DIFFICULTY_EXPERT;
+            }
+            var_a1 = D_800DA9B0[D_800D48DC];
+            if (D_801CE6F4[0] != 0) {
+                var_a1 += 4;
+            }
+            func_80096960(0, var_a1, D_800DA9B0[1], D_800DA9B0[2], D_800DA9B0[3]);
+            break;
+
+        case GMODE_STUNT:
+            if (gCourseID == PORT_BLUE) {
+                gDifficulty = DIFFICULTY_NORMAL;
+            } else {
+                gDifficulty = DIFFICULTY_EXPERT;
+            }
+            var_a1 = D_800DA9B0[D_800D48DC];
+            if (D_801CE6F4[0] != 0) {
+                var_a1 += 4;
+            }
+            func_80096960(0, var_a1, D_800DA9B0[1], D_800DA9B0[2], D_800DA9B0[3]);
+            break;
+
+        case GMODE_2P_VS:
+            var_a1 = D_800DA9B0[D_800D48DC];
+            if (D_801CE6F4[0] != 0) {
+                var_a1 += 4;
+            }
+            var_a2 = D_800DA9B0[D_800D48E0];
+            if (D_801CE6F4[1] != 0) {
+                var_a2 += 4;
+            }
+            func_80096960(4, var_a1, var_a2, var_a1, var_a2);
+            break;
+
+        default:
+            func_80096960(0, 0, 1, 1, 1);
+            break;
+    }
+
+    id = gCourseID;
+    if (id < DOLPHIN_PARK) {
+        id = DOLPHIN_PARK;
+    }
+    if (id >= RIDER_SELECTION) {
+        id = SOUTHERN_ISLAND;
+    }
+
+    func_8009684C(0x08060000, D_800DB568[id].unk0, D_800DB568[id].unk2);
+    FadeTransition_SetProps(2, 4, 0);
+    func_801E6A4C(0, 0);
+
+    gCameraPerspective->viewMode = 3;
+    if (gPlayers == TWO_PLAYERS) {
+        gCameraPerspective[1].viewMode = gCameraPerspective->viewMode;
+    }
+
+    D_800DA9AC = 0;
+
+    func_800C21F4(7, gCourseID);
+}
 
 Gfx* func_80093AFC(Gfx* GfxPtr) {
     gSPClearGeometryMode(GfxPtr++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING |
@@ -1217,7 +1387,7 @@ void func_80094ACC(void) {
 }
 
 void func_80094FE8(void) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = 0;
     gGameState = 0;
     D_801CE638 = 0x11;

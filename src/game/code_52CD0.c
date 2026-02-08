@@ -122,7 +122,7 @@ extern UnkStruct_801CEFF8 D_801CEC70[10];
 extern UnkStruct_801CEFF8 D_801CEC7C[10];
 extern UnkStruct_801C2C24 D_801C2C70[];
 extern UnkStruct_8009A04C D_801CEB48;
-extern s32 D_801CE728[];
+
 extern s32 D_801D0738;
 
 //.data

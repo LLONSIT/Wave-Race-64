@@ -30,7 +30,7 @@ void func_i11_802C5F7C(void) {
 }
 
 void func_i11_802C6098(s32 arg0) {
-    D_801CE634 = gGameState;
+    gPrevGameState = gGameState;
     D_801CE630 = arg0;
     gGameState = 73;
     D_801CE638 = 20;
