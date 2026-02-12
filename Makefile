@@ -409,6 +409,7 @@ dependencies: tools
 	@make -C tools
 	@$(PYTHON) -m pip install -r tools/splat/requirements.txt #Install the splat dependencies
 	@$(PYTHON) -m pip install GitPython colour
+	@$(PYTHON) -m pip install -r tools/objdiff_requirements.txt
 
 torch:
 	@$(MAKE) -s -C $(TOOLS) torch

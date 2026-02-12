@@ -1,0 +1,4 @@
+ipl3checksum>=1.0.0,<2.0.0
+mapfile_parser>=2.12.1,<3.0.0
+GitPython
+

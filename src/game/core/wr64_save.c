@@ -27,12 +27,21 @@ typedef struct UnkStruct_8007B2E4 {
     /* 0x2 */ u8 unk_2;
 } UnkStruct_8007B2E4;
 
+typedef struct UnkStruct_800D8578_s {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+} UnkStruct_800D8578;
+
 typedef struct UnkStruct_801AEA18_s {
     s16 unk0;
     u16 unk2;
     u8 pad[0x4C];
     u8 unk50[1][3];
-    char pad54[0x1AC];
+    char pad54[0xCD];
+    char unk120[1][3][5];
+    char pad124[0xDD];
 } UnkStruct_801AEA18;
 
 typedef struct UnkStruct_8007D110_s {
@@ -41,7 +50,9 @@ typedef struct UnkStruct_8007D110_s {
     u8 pad33[10];
 } UnkStruct_8007D110;
 
-extern UnkStruct_801AEA18 D_801AEA18;
+extern UnkStruct_801AEA18 D_801AEA18[];
+extern UnkStruct_801AEA18 D_801AEB38;
+
 extern s32 D_800D8264;
 extern OSPfs D_801C3AD0;
 extern s32 D_800D8260;
@@ -49,12 +60,15 @@ extern u8 D_801AEA68;
 extern s32 D_801CB308[1][3];
 extern s32 D_801CB32C;
 extern u8 D_800D8268[1];
+extern s32 D_800D826C[];
+extern UnkStruct_800D8578 D_800D8578[][3];
+extern UnkStruct_800D8578 D_801C26E8[][3];
 extern s32 D_800D826A;
 extern u8 D_800D82D8;
 extern u8 D_800D82E8;
 extern OSPfs D_801C3AD0;
 
-#define EEPROM_SUCCESS 0
+#define SAVE_SUCCESS 0
 
 static const char devstr1[] = "EEPROM read error 1 (%d)\n";
 static const char devstr2[] = "EEPROM check code error 1\n";
@@ -84,7 +98,7 @@ static const char devstr24[] = "EEPROM write error\n";
 s32 Save_GenCheckSum(u8*);
 void func_8007BBF0(void);
 s32 func_8007BDB8(void);
-s32 func_8007D110(void);
+s32 Save_PfsIsPlug(void);
 void func_8007B370(void*);
 void func_8007B630(void);
 void func_8007B930(void);
@@ -187,7 +201,15 @@ void func_8007AFF4(func_8007AFF4_arg0* arg0, func_8007AFF4_arg1* arg1) {
     arg1->unkC = arg0->unk5;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007B09C.s")
+void func_8007B09C(UnkStruct_func_8007AF78_1* arg0, UnkStruct_func_8007AF78_2* arg1) {
+    s32 temp_t3;
+    temp_t3 = arg0->unk0;
+    arg1->unk0 = ((((temp_t3) >> 16) & 0xFF) + (arg0->unk7 << 5));
+    arg1->unk1 = (temp_t3 >> 8) & 0xFF;
+    arg1->unk2 = temp_t3 & 0xFF;
+    func_8007AE8C((UnkStruct_func_8007AE8C*) &arg1->unk3, (UnkStruct_func_8007AE8C*) &arg0->unk10);
+    arg1->unk3 ^= (arg0->unkB << 7);
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007B110.s")
 
@@ -262,12 +284,12 @@ void func_8007BBE8() {
 void func_8007BBF0() {
 }
 
-s32 Save_GenCheckSum(u8* arg0) {
+s32 Save_GenCheckSum(u8* data) {
     u16 chksum;
     s32 i;
     u8* temp;
 
-    temp = &arg0[4];
+    temp = &data[4];
     chksum = 0;
 
     for (i = 0; i < 508; i++) {
@@ -282,12 +304,12 @@ s32 Save_EepromRead(void) {
     s32 var_a1;
     s32 i;
 
-    if (osEepromLongRead(&D_801540D0, 0x0, (u8*) &D_801AEA18, 0x200) != 0) {
+    if (osEepromLongRead(&D_801540D0, 0x0, (u8*) D_801AEA18, 0x200) != 0) {
         return 2;
     }
 
     for (i = 0, var_a1 = 0; i < 2; i++) {
-        if (D_801AEA18.pad[i - 4] != D_800D8268[i]) {
+        if (D_801AEA18->pad[i - 4] != D_800D8268[i]) {
             var_a1 = 1;
             break;
         }
@@ -295,7 +317,7 @@ s32 Save_EepromRead(void) {
 
     if (var_a1 == 0) {
         temp_v0 = Save_GenCheckSum((u8*) &D_801AEA18);
-        if (temp_v0 != D_801AEA18.unk2) {
+        if (temp_v0 != D_801AEA18->unk2) {
             var_a1 = 1;
             func_8007BBF0();
         }
@@ -310,7 +332,7 @@ s32 Save_EepromRead(void) {
 }
 
 s32 func_8007BD20(void) {
-    D_801AEA18.unk2 = Save_GenCheckSum((u8*) &D_801AEA18);
+    D_801AEA18->unk2 = Save_GenCheckSum((u8*) &D_801AEA18);
     if (osEepromLongWrite(&D_801540D0, 0U, (u8*) &D_801AEA18, 0x200) != 0) {
         return 3;
     }
@@ -381,30 +403,57 @@ int func_8007C50C(void) {
 
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
-            D_801AEA18.unk50[i][j] = D_801CB308[i][j];
+            D_801AEA18->unk50[i][j] = D_801CB308[i][j];
         }
     }
 
     func_8007B31C();
-    D_801AEA18.unk2 = Save_GenCheckSum((u8*) &D_801AEA18);
+    D_801AEA18->unk2 = Save_GenCheckSum((u8*) &D_801AEA18);
     if (osEepromLongWrite(&D_801540D0, 0U, (u8*) &D_801AEA18, 16) != 0) {
         return 3;
     }
 
-    if (osEepromLongWrite(&D_801540D0, ((u32) ((u32) &D_801AEA68 - (u32) &D_801AEA18.unk0) >> 3), &D_801AEA68, 16) !=
+    if (osEepromLongWrite(&D_801540D0, ((u32) ((u32) &D_801AEA68 - (u32) &D_801AEA18->unk0) >> 3), &D_801AEA68, 16) !=
         0) {
         return 3;
     }
-    return EEPROM_SUCCESS;
+    return SAVE_SUCCESS;
 }
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007C604.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007C9D4.s")
+s32 func_8007C9D4(s32 arg0) {
+    s32 temp_v0;
+    s32 var_v0;
+
+    for (var_v0 = 0; var_v0 < 3; var_v0++) {
+        D_801C26E8[arg0][var_v0] = D_800D8578[arg0][var_v0];
+    }
+
+    for (var_v0 = 0; var_v0 < 3; var_v0++) {
+        func_8007B1AC((Unkstruct_8007B1AC_arg0*) &D_801C26E8[arg0][var_v0],
+                      (Unkstruct_8007B1AC_arg1*) D_801AEA18->unk120[arg0][var_v0]);
+    }
+
+    func_8007B31C();
+    D_801AEA18->unk2 = Save_GenCheckSum((u8*) D_801AEA18);
+    if (D_800D8260 == 0) {
+        return 1;
+    }
+    if (osEepromLongWrite(&D_801540D0, 0U, (u8*) D_801AEA18, 0x10) != 0) {
+        return 3;
+    }
+    temp_v0 = D_800D826C[arg0];
+    if (osEepromLongWrite(&D_801540D0, ((((uintptr_t) &D_801AEB38 - (uintptr_t) &D_801AEA18) + temp_v0)) >> 3,
+                          (u8*) D_801AEA18->unk120 + temp_v0, 0x18) != 0) {
+        return 3;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007CB68.s")
 
-s32 func_8007D110(void) {
+s32 Save_PfsIsPlug(void) {
     UnkStruct_8007D110 wtf;
 
     PRINTF("PfsisPlug: %02x %d\n", 0, 0);
@@ -445,17 +494,17 @@ extern u8 D_800D82E8;
 extern OSPfs D_801C3AD0;
 
 s32 Save_PfsFindFile(void) {
-    s32 temp_v0;
-    s32 sp20;
+    s32 ret;
+    s32 fileNo;
 
-    temp_v0 = func_8007D110();
-    if (temp_v0 != 0) {
-        return temp_v0;
+    ret = Save_PfsIsPlug();
+    if (ret != 0) {
+        return ret;
     }
-    temp_v0 = osPfsFindFile(&D_801C3AD0, 1U, 0x4E57524AU, &D_800D82E8, &D_800D82D8, &sp20);
-    switch (temp_v0) {
+    ret = osPfsFindFile(&D_801C3AD0, 1U, 0x4E57524AU, &D_800D82E8, &D_800D82D8, &fileNo);
+    switch (ret) {
         case 0:
-            return EEPROM_SUCCESS;
+            return SAVE_SUCCESS;
         case PFS_ERR_INVALID:
             PRINTF("PFS file not exists\n");
             return 4;
@@ -465,28 +514,28 @@ s32 Save_PfsFindFile(void) {
         case PFS_ERR_NEW_PACK:
         case PFS_ERR_INCONSISTENT:
         case PFS_ERR_CONTRFAIL:
-            PRINTF("PFS find file error %d\n", temp_v0);
+            PRINTF("PFS find file error %d\n", ret);
             return 2;
     }
 }
 
 s32 Save_PfsCheckFree(void) {
-    s32 temp_v0;
-    s32 sp18;
+    s32 ret;
+    s32 bytesFree;
 
-    temp_v0 = func_8007D110();
-    if (temp_v0 != 0) {
-        return temp_v0;
+    ret = Save_PfsIsPlug();
+    if (ret != 0) {
+        return ret;
     }
-    temp_v0 = osPfsFreeBlocks(&D_801C3AD0, &sp18);
-    switch (temp_v0) {
+    ret = osPfsFreeBlocks(&D_801C3AD0, &bytesFree);
+    switch (ret) {
         case 0:
-            PRINTF("PFS free size %d\n", sp18);
-            if (sp18 >= 0x200) {
-                return 0;
+            PRINTF("PFS free size %d\n", bytesFree);
+            if (bytesFree >= 0x200) {
+                return SAVE_SUCCESS;
             }
             return 3;
-        case 5:
+        case PFS_ERR_INVALID:
             PRINTF("PFS file not exists\n");
             return 4;
         default:
@@ -494,7 +543,7 @@ s32 Save_PfsCheckFree(void) {
         case PFS_ERR_NEW_PACK:
         case PFS_ERR_INCONSISTENT:
         case PFS_ERR_CONTRFAIL:
-            PRINTF("PFS check free error %d\n", temp_v0);
+            PRINTF("PFS check free error %d\n", ret);
             return 2;
     }
 }
@@ -522,18 +571,18 @@ static const char devstr53[] = "PFS delete error %d\n";
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007D614.s")
 
-s32 func_8007DB40(void) {
-    s32 temp_v0;
+s32 Save_PfsDeleteFile(void) {
+    s32 ret;
 
-    temp_v0 = func_8007D110();
-    if (temp_v0 != 0) {
-        return temp_v0;
+    ret = Save_PfsIsPlug();
+    if (ret != 0) {
+        return ret;
     }
-    temp_v0 = osPfsDeleteFile(&D_801C3AD0, 1U, 0x4E57524AU, &D_800D82E8, &D_800D82D8);
-    switch (temp_v0) { /* irregular */
+    ret = osPfsDeleteFile(&D_801C3AD0, 1U, 0x4E57524AU, &D_800D82E8, &D_800D82D8);
+    switch (ret) { /* irregular */
         case 0:
-            return 0;
-        case 5:
+            return SAVE_SUCCESS;
+        case PFS_ERR_INVALID:
             return 4;
         default:
             return 2;

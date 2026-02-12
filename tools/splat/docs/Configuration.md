@@ -54,18 +54,31 @@ platform: psx
 
 Compiler used to build the binary.
 
-splat recognizes the following compilers, and it will adapt it behavior accordingly for them, but unknown compilers can be passed as well:
+splat recognizes the following compilers, and it will adapt it behavior accordingly for them:
+
 - GCC
 - SN64
 - IDO
+- KMC
+- EGCS
+- PSYQ
+- MWCCPS2
+- EEGCC
+
+In general it is better to use a specific disassembler instead of the general `GCC` option, since splat will be able to better adapt to the specific compiler's codegen.
+For example, most N64 games that do not use `IDO` will want to select `KMC` instead of `GCC`, even if `KMC` is just an specific gcc build.
+
+An unknown compiler may be passed as well, but the internal disassembler may complain about it.
 
 #### Usage
+
 ```yaml
 compiler: IDO
 ```
 
 #### Default
-`ido`
+
+`IDO`
 
 
 ### endianness
@@ -109,16 +122,56 @@ String that is placed before the contents of newly-generated assembly (`.s`) fil
 generated_s_preamble: .set fp=64
 ```
 
+### generated_macro_inc_content
+
+String that is placed after the contents of the splat-generated `macro.inc` file.
+
+### generate_asm_macros_files
+
+Tells splat to regenerate files containing assembly macros and C macros each time splat is run.
+
+Specifically splat generates `include/include_asm.h`, `include/macro.inc`, `include/labels.inc` and `include/gte_macros.inc`, which contain the proper C and assembly macro definitions expected for building the generated assembly correctly. This allows splat to update the macro definitions with minimal user intervention and headaches.
+
+Turning this off can be useful in case the user wants to control exactly the contents of those files, but it is not recommended, since the user definitions may get outdated. Before turning this option off consider using the [`generated_macro_inc_content`](#generated_macro_inc_content) option to customize the contents of the generated `macro.inc` file.
+
+Some files may not be generated depending on the selected platform and compiler, because those setups don't require them. For example `include_asm.h` won't be generated if the compiler is set to `IDO` or `MWCCPS2`. `include/gte_macros.inc` is only generated on psx projects.
+
+Defaults to `True`.
+
+### include_asm_macro_style
+
+Allows configuring the style used by the generated `INCLUDE_ASM` macro. It currently allows two possible values:
+
+- `default`: Uses the default definition for the macro. This is the default.
+- `maspsx_hack`: Changes the definition of the generated `INCLUDE_ASM` to be compatible with the one expected by `maspsx` when using the [reordering workaround hack](https://github.com/mkst/maspsx?tab=readme-ov-file#include_asm-reordering-workaround-hack).
+
+Defaults to `default`.
+
+### generated_asm_macros_directory
+
+Change the directory where the assembly macros files are written to.
+
+Defaults to `include`.
 
 ### o_as_suffix
 
-Determines whether to replace the suffix of the file to `.o` or to append `.o` to the suffix of the file.
+Used to determine the file extension of the built files that will be listed on the linker script.
+
+Setting it to `True` tells splat to use `.o` as the file extension of the built file, replacing the existing one.
+For example `some_file.o`.
+
+Setting this to `False` appends `.o` to the extension of the file.
+For example `some_file.c.o`.
+
+Defaults to `False`.
 
 
 ### gp_value
 
 The value of the `$gp` register to correctly calculate offset to `%gp_rel` relocs.
 
+It is strongly encouraged to provide a [`ld_gp_expression`](#ld_gp_expression) once the sections of the binary are properly understood.
+Not setting this expression makes splat always emit a hardcoded value for `_gp` in the linker script, preventing proper shiftability.
 
 ### check_consecutive_segment_types
 
@@ -132,6 +185,21 @@ This option disables said feature.
 check_consecutive_segment_types: False
 ```
 
+
+### is_unsupported_platform
+
+Disable checks on `platform` option.
+
+Defaults to `False`.
+
+
+### allow_segment_overrides
+
+Allows to take precedence over the splat builtin platform segments via splat extension.
+
+Setting it to `True` tells splat to look for platorm segments in `extensions_path`.
+
+Defaults to `False`.
 
 ## Paths
 
@@ -167,9 +235,15 @@ symbol_addrs_path: path/to/symbol_addrs
 
 
 
-### reloc_addrs_paths
+### reloc_addrs_path
 
+Determines the path to the reloc addresses file(s). A `reloc_addrs` file contains metadata to override relocations within the generated assembly. For more information about the syntax and how to use it refer to the corresponding [reloc_addrs chapter](Advanced-Reloc.md).
 
+It's possible to use more than one file by supplying a list instead of a string.
+
+#### Default
+
+`reloc_addrs.txt`
 
 ### build_path
 Path that built files will be found. Used for generation of the linker script.
@@ -216,6 +290,9 @@ Determines the path to the asm data directory
 
 Determines the path to the asm nonmatchings directory
 
+### matchings_path
+
+Determines the path to the asm matchings directory (used alongside `disassemble_all` to organize matching functions from nonmatching functions)
 
 ### cache_path
 Path to splat cache
@@ -305,7 +382,7 @@ extensions_path: path/to/extensions/folder
 
 ### lib_path
 
-Determines the path to library files that are to be linked into the target binary
+Determines the path to library files that are to be linked into the target binary when the [`lib`](https://github.com/ethteck/splat/wiki/Segments#lib) segment type is used.
 
 
 ### elf_section_list_path
@@ -338,9 +415,20 @@ subalign: 4
 `16`
 
 
-### auto_all_sections
+### emit_subalign
 
-TODO
+Controls whether the `SUBALIGN` directive can be emitted in generated linker scripts. Enabled by default.
+
+This parameter was added as a way to override standard behavior with multiple yamls.
+The base project yaml may need to use subalign for matching purposes, but shiftable builds might not want such a linker script.
+
+
+### auto_link_sections
+
+A list of linker sections for which entries will be automatically added to the linker script. If a segment contains 10 "c" subsegments, one can rely on this feature to automatically create linker entries for these files in the specified sections. This feature reduces the need to manually add lines to your yaml which only would serve to add linker entries for common sections, such as .data, .rodata, and .bss.
+
+#### Default
+`[".data", ".rodata", ".bss"]`
 
 ### ld_script_path
 
@@ -368,20 +456,84 @@ ld_symbol_header_path: path/to/linker_symbol_header
 
 ### ld_discard_section
 
-Determines whether to add a discard section to the linker script
+Determines whether to add a wildcard discard section to the linker script.
+
+This tells the linker that every section not explicitly listed on the linker script will be discarded.
+
+### ld_sections_allowlist
+
+A list of sections to preserve during link time. It can be useful to preserve debugging sections.
+
+#### Usage
+
+```yaml
+  ld_sections_allowlist:
+    - .shstrtab
+    - .mdebug
+    - .mdebug.abi32
+```
+
+Generates entries at the bottom of the linker script like:
+
+```text
+    .shstrtab 0 :
+    {
+        *(.shstrtab);
+    }
+    .mdebug 0 :
+    {
+        *(.mdebug);
+    }
+    .mdebug.abi32 0 :
+    {
+        *(.mdebug.abi32);
+    }
+```
+
+### ld_sections_denylist
+
+A list of sections to discard during link time. It can be useful to avoid using the [wildcard discard](#ld_discard_section).
+
+Note this option does not turn off [`ld_discard_section`](#ld_discard_section), neither checks if the listed sections overlap with it.
+
+#### Usage
+
+```yaml
+  ld_sections_denylist:
+    - .reginfo
+    - .MIPS.abiflags
+    - .MIPS.options
+    - .note.gnu.build-id
+    - .interp
+    - .eh_frame
+```
+
+Generates a discard section like this:
+
+```text
+    /DISCARD/ :
+    {
+        *(.reginfo);
+        *(.MIPS.abiflags);
+        *(.MIPS.options);
+        *(.note.gnu.build-id);
+        *(.interp);
+        *(.eh_frame);
+    }
+```
 
 ### ld_wildcard_sections
 
 Determines whether to add wildcards for section linking in the linker script (.rodata* for example)
 
-### ld_use_symbolic_vram_addreses
+### ld_use_symbolic_vram_addresses
 
 Determines whether to use `follows_vram` (segment option) and `vram_symbol` / `follows_classes` (vram_class options) to calculate vram addresses in the linker script.
 Enabled by default. If disabled, this uses the plain integer values for vram addresses defined in the yaml.
 
 ### ld_partial_linking
 
-Change linker script generation to allow partially linking segments. Requires both `ld_partial_scripts_path` and `ld_partial_build_segments_path` to be set.
+Change linker script generation to allow partially linking segments. Requires both [`ld_partial_scripts_path`](#ld_partial_scripts_path) and [`ld_partial_build_segments_path`](#ld_partial_build_segments_path) to be set.
 
 ### ld_partial_scripts_path
 
@@ -397,7 +549,11 @@ Generate a dependency file for every linker script generated. Dependency files w
 
 ### ld_legacy_generation
 
-Legacy linker script generation does not impose the section_order specified in the yaml options or per-segment options.
+Currently splat imposes the given `section_order` when generating the linker script. But in some cases it may not be desirable to impose the section ordering because the ROM itself may not follow a logical section ordering.
+
+To disable this behavior then turn on the `ld_legacy_generation` option. This way splat will blindly follow the yaml order, allowing to interleave unrelated sections. This setting must be treated as a last resort, since most ROMs do follow a logical ordering. If some specific files have weird ordering on one of their sections then it is recommended to use the [`linker_section_order`](Segments.md#linker_section_order) attribute of a given file entry instead.
+
+This option defaults to `False`.
 
 ### segment_end_before_align
 
@@ -427,7 +583,6 @@ This behavior can be customized per segment too. See [ld_fill_value](Segments.md
 
 Defaults to 0.
 
-
 ### ld_bss_is_noload
 
 Allows to control if `bss` sections (and derivatived sections) will be put on a `NOLOAD` segment on the generated linker script or not.
@@ -435,6 +590,17 @@ Allows to control if `bss` sections (and derivatived sections) will be put on a 
 Applies to all `bss` (`sbss`, `common`, `scommon`, etc) sections.
 
 Defaults to `True`, meaning `bss` sections will be put on `NOLOAD` segments.
+
+
+### ld_align_segment_start
+
+Specify that segments should be aligned before starting them.
+
+This option specifies the desired alignment value, or `null` if no alignment should be imposed on the segment start.
+
+This behavior can be customized per segment too. See [ld_align_segment_start](Segments.md#ld_align_segment_start) on the Segments section.
+
+Defaults to `null`.
 
 
 ### ld_align_segment_vram_end
@@ -458,13 +624,53 @@ Defaults to `True`.
 
 If enabled, the generated linker script will have a linker symbol for each data file.
 
-Defaults to `True`.
+Defaults to `False`.
 
 ### ld_bss_contains_common
 
 Sets the default option for the `bss_contains_common` attribute of all segments.
 
 Defaults to `False`.
+
+### ld_gp_expression
+
+Provides an expression for the `_gp` symbol to be emitted in the generated linker script.
+
+Most projects start by only setting a [`gp_value`](#gp_value) on their yamls. This is fine while matching the project, but it is bad for shiftable builds, becuase it prevents the `_gp` symbol to shift around as needed.
+
+This expression is used as-is in the generated linker script, so care must be taken to provide an expression that makes sense for shiftable builds and also matches the original gp value on matching builds.
+
+Usually this expression is relative to the start of an "small section" (`.sdata`, `.srodata`, `.sbss`, etc.) plus an optional offset (usually `0x7FF0` or `0x8000`).
+
+The recommended approach to know what to set here is to try to understand where the first small section is, take the difference between the [`gp_value`](#gp_value) and the address of the small section to know what the offset is and then use the linker symbol for the start of that small section.
+
+For example, say your gp value is `0x00397FF0` and you found the first small section on the rom is a `.sdata` section at vram address `0x00390000` (note *vram* address, not rom address) which is part of the top-level segment `main`. The difference between those two addresses is `0x7FF0`, so that's your offset. Given this information the expression you want for gp is `main_SDATA_START + 0x7FF0`; where `main` is the top-level segment, `SDATA` comes from the `.sdata` section and the `+ 0x7FF0` is your calculated offset. If you did this process right, then the matching build should still match after setting the gp expression.
+
+Note you should **not** remove the `gp_value` from your yaml when you set `ld_gp_expression`. `gp_value` is still used for the disassembly; without it you wouldn't get symbolized gp-accesses.
+
+#### Usage
+
+Not using `ld_gp_expression` makes splat hardcode the value:
+
+```yaml
+  gp_value: 0x0039DD70
+```
+
+```txt
+    _gp = 0x0039DD70;
+```
+
+When a `ld_gp_expression` is given then splat is able to emit a non-hardcoded expression for `_gp` without interfering with the disassembly process:
+
+```yaml
+  gp_value: 0x0039DD70
+  ld_gp_expression: main_SDATA_START + 0x7FF0
+```
+
+```txt
+    _gp = main_SDATA_START + 0x7FF0;
+```
+
 
 ## C file options
 
@@ -493,13 +699,13 @@ Determine the format that symbols should be named by default
 
 ### symbol_name_format_no_rom
 
-Same as `symbol_name_format` but for symbols with no rom address
+Same as [`symbol_name_format`](#symbol_name_format) but for symbols with no rom address
 
 ### find_file_boundaries
 
 Determines whether to detect and hint to the user about likely file splits when disassembling.
 
-This setting can also be set on a per segment basis, if you'd like to enable or disable detection for specific segments. This could be useful when you are confident you identified all subsegments in a segment, yet `splat` still hints that subsegments could be split.  
+This setting can also be set on a per segment basis, if you'd like to enable or disable detection for specific segments. This could be useful when you are confident you identified all subsegments in a segment, yet `splat` still hints that subsegments could be split.
 
 ### pair_rodata_to_text
 
@@ -519,27 +725,51 @@ Determines the macro used to declare functions in asm files
 
 ### asm_function_alt_macro
 
-Determines the macro used to declare symbols in the middle of functions in asm files (which may be alternative entries)
+Determines the macro used to declare symbols in the middle of functions in asm files (which may be alternative entries).
+
+Defaults to `alabel`.
 
 ### asm_jtbl_label_macro
 
-Determines the macro used to declare jumptable labels in asm files
+Determines the macro used to declare jumptable labels in asm files.
+
+Defaults to `jlabel`.
 
 ### asm_data_macro
 
-Determines the macro used to declare data symbols in asm files
+Determines the macro used to declare data symbols in asm files.
+
+Defaults to `dlabel`.
 
 ### asm_end_label
 
-Determines the macro used at the end of a function, such as endlabel or .end
+Determines the macro used at the end of a function, such as `endlabel` or `.end`.
+
+Defaults to `endlabel`.
+
+### asm_data_end_label
+
+Determines the macro used at the end of a data symbol.
+
+Defaults to `enddlabel`.
+
+### asm_ehtable_label_macro
+
+Determines the macro used to declare ehtable labels in asm files.
+
+Defaults to `ehlabel`
+
+### asm_nonmatching_label_macro
+
+Determines the macro used to declare the given symbol is a non matching one.
+
+Explicitly specifying that a symbol haven't been matched yet in the generated assembly is useful for other tools that consume the build artifacts of the project. This information can be used by those tools for stuff like progress reporting.
+
+Defaults to `nonmatching`
 
 ### asm_emit_size_directive
 
 Toggles the .size directive emitted by the disassembler
-
-### include_macro_inc
-
-Determines including the macro.inc file on non-migrated rodata variables
 
 ### mnemonic_ljust
 
@@ -572,7 +802,9 @@ Determines whether functions inside c files should have named registers
 
 ### add_set_gp_64
 
-Determines whether to add ".set gp=64" to asm/hasm files
+Determines whether to add ".set gp=64" to asm/hasm files.
+
+Defaults to `False` on psx and ps2 platforms, `True` for every other platform.
 
 ### create_asm_dependencies
 
@@ -610,6 +842,59 @@ Tries to detect redundant and unreferenced functions ends and merge them togethe
 
 Don't skip disassembling already matched functions and migrated sections
 
+### make_full_disasm_for_code
+
+Emit a full `.s` file for each `c`/`cpp` segment containing disassembly of .text and any available sibling sections, in addition to the normally-generated `nonmatchings` individual functions.
+
+Can be used to generate "target" or "expected" objects for asm diffing.
+
+To generate `.s` files for data-only TUs (or rodata/bss only, or any other combination that doesn't have a text section) a dummy `c` or `cpp` section with the same name as the data section must be defined in the yaml with an start value of `auto` instead of a number. For example:
+
+```yaml
+      - [auto, c, boot/rom_offsets]
+
+      # -- Other c or data subsegments --
+
+      - [0x00F340, .data, boot/rom_offsets]
+```
+
+### global_vram_start and global_vram_end
+
+Allow specifying that the global memory range may be larger than what was automatically detected.
+
+Useful for projects where splat is used in multiple individual files, meaning the expected global segment may not be properly detected because each instance of splat can't see the info from other files, like in PSX and PSP projects.
+
+### use_gp_rel_macro_nonmatching
+
+If True then use the `%gp_rel` explicit relocation parameter on instructions that use the $gp register, otherwise strip the `%gp_rel` parameter entirely
+and convert those instructions into macro instructions that may not assemble to the original bytes.
+
+In the latter case, it is the user's responsability to provide the symbol's information to the assembler so it can assemble the instruction with the
+proper relocation, for example by declaring the required symbol on the corresponding `.c` or `.cpp` file.
+
+Turning off this setting may be useful for projects with old assemblers that do not support `%gp_rel`, like PS2 and PSP projects.
+
+This setting is applied exclusively to `c` segments (functions under the nonmatchings folder).
+
+Defaults to `True`
+
+### use_gp_rel_macro
+
+Does the same as `use_gp_rel_macro_nonmatching`, except it is only applied to `asm` and `hasm` segments.
+
+Defaults to `True`
+
+### suggestion_rodata_section_start
+
+splat is able to suggest where the rodata section may start by inspecting a corresponding data section (as long as the rodata section follows rodata and not the other way around).
+Don't trust this suggestion blindly since it may be incorrect, either because the rodata section may start a lot before than what splat suggests or splat even may be completely wrong and suggest something that
+actually is data as if it were rodata.
+
+This option allows turning off the suggestion in case you have checked it is not correct.
+
+This can be turned off [per segment](Segments.md#suggestion_rodata_section_start), which is recommended if you are still on the exploration stage of the decompilation project.
+
+Defaults to `True`.
 
 ## N64-specific options
 
@@ -652,12 +937,32 @@ Append the type of an image to its file extension. For example, when enabled, a 
 ## Compiler-specific options
 
 ### use_legacy_include_asm
-If `True`, generate c files using the longer `INCLUDE_ASM` macro. This is defaulted to `True` to by-default support projects using the longer macro.
+If `True`, generate c files using the longer old `INCLUDE_ASM` macro. The non-legacy `INCLUDE_ASM` macro is highly recommended, and the legacy version is only supported for compatibility reasons.
+
+For more information on these macros, see [macros](https://github.com/ethteck/splat/wiki/General-Workflow#macros).
 
 #### Usage
 ```yaml
-use_legacy_include_asm: False
+use_legacy_include_asm: True
 ```
 
 #### Default
-`True`
+`False`
+
+## align_on_branch_labels
+
+If enabled emit no-op alignment directives on all branch labels.
+
+This is useful as a workaround for the "short loop bug" present in SN PS2 compilers, in which the compiler may decide to insert extra `nop` instructions due to a hardware defect, producing non-matching builds.
+
+This option is enabled automatically if the selected compiler is known to have this issue, but this option allows to override the default selection in case this setting ends up producing problems.
+
+#### Usage
+
+```yaml
+align_on_branch_labels: False
+```
+
+#### Default
+
+`True` if [`compiler`](#compiler) is set to `EEGCC`, `False` otherwise

@@ -51,7 +51,7 @@ def write_file_if_different(path: Path, new_content: str):
 
     if old_content != new_content:
         path.parent.mkdir(parents=True, exist_ok=True)
-        with path.open("w") as f:
+        with path.open("w", newline=options.opts.c_newline) as f:
             f.write(new_content)
 
 
@@ -162,9 +162,9 @@ class LinkerEntry:
             linker_writer._write_symbol(path_cname, ".")
 
     def emit_path(self, linker_writer: "LinkerWriter"):
-        assert (
-            self.object_path is not None
-        ), f"{self.segment.name}, {self.segment.rom_start}"
+        assert self.object_path is not None, (
+            f"{self.segment.name}, {self.segment.rom_start}"
+        )
 
         if self.noload and self.bss_contains_common:
             linker_writer._write_object_path_section(
@@ -204,8 +204,10 @@ class LinkerWriter:
         if not self.is_partial:
             self._writeln(f"__romPos = {options.opts.ld_rom_start};")
 
-            if options.opts.gp is not None:
-                self._writeln("_gp = " + f"0x{options.opts.gp:X};")
+            if options.opts.ld_gp_expression is not None:
+                self._writeln(f"_gp = {options.opts.ld_gp_expression};")
+            elif options.opts.gp is not None:
+                self._writeln(f"_gp = 0x{options.opts.gp:X};")
 
     # Write a series of statements which compute a symbol that represents the highest address among a list of segments' end addresses
     def write_max_vram_end_sym(self, symbol: str, overlays: List[Segment]):
@@ -235,9 +237,9 @@ class LinkerWriter:
             return
 
         section_entries: OrderedDict[str, List[LinkerEntry]] = OrderedDict()
-        for l in segment.section_order:
-            if l in options.opts.section_order:
-                section_entries[l] = []
+        for section_name in segment.section_order:
+            if section_name in options.opts.section_order:
+                section_entries[section_name] = []
 
         # Add all entries to section_entries
         prev_entry = None
@@ -268,6 +270,12 @@ class LinkerWriter:
             any_noload = any_noload or entry.noload
             prev_entry = entry.section_order_type
 
+        if segment.ld_align_segment_start:
+            self._write_symbol(
+                "__romPos", f"ALIGN(__romPos, 0x{segment.ld_align_segment_start:X})"
+            )
+            self._write_symbol(".", f"ALIGN(., 0x{segment.ld_align_segment_start:X})")
+
         seg_rom_start = get_segment_rom_start(seg_name)
         self._write_symbol(seg_rom_start, "__romPos")
 
@@ -293,7 +301,7 @@ class LinkerWriter:
 
         # To keep track which sections has been started
         started_sections: Dict[str, bool] = {
-            l: False for l in options.opts.section_order
+            section_name: False for section_name in options.opts.section_order
         }
 
         # Find where sections are last seen
@@ -304,6 +312,12 @@ class LinkerWriter:
                 and entry.section_order_type not in last_seen_sections.values()
             ):
                 last_seen_sections[entry] = entry.section_order_type
+
+        if segment.ld_align_segment_start:
+            self._write_symbol(
+                "__romPos", f"ALIGN(__romPos, 0x{segment.ld_align_segment_start:X})"
+            )
+            self._write_symbol(".", f"ALIGN(., 0x{segment.ld_align_segment_start:X})")
 
         seg_rom_start = get_segment_rom_start(seg_name)
         self._write_symbol(seg_rom_start, "__romPos")
@@ -359,6 +373,12 @@ class LinkerWriter:
         for sym, segs in max_vram_syms:
             self.write_max_vram_end_sym(sym, segs)
 
+        if segment.ld_align_segment_start:
+            self._write_symbol(
+                "__romPos", f"ALIGN(__romPos, 0x{segment.ld_align_segment_start:X})"
+            )
+            self._write_symbol(".", f"ALIGN(., 0x{segment.ld_align_segment_start:X})")
+
         seg_rom_start = get_segment_rom_start(seg_name)
         self._write_symbol(seg_rom_start, "__romPos")
 
@@ -369,14 +389,19 @@ class LinkerWriter:
 
             self._begin_segment(segment, seg_name, noload=False, is_first=is_first)
 
-            for l in segment.section_order:
-                if l not in options.opts.section_order:
+            for section_name in segment.section_order:
+                if section_name not in options.opts.section_order:
                     continue
-                if l == ".bss":
+                if section_name == ".bss":
                     continue
 
                 entry = LinkerEntry(
-                    segment, [], segments_path / f"{seg_name}.o", l, l, noload=False
+                    segment,
+                    [],
+                    segments_path / f"{seg_name}.o",
+                    section_name,
+                    section_name,
+                    noload=False,
                 )
                 self.dependencies_entries.append(entry)
                 entry.emit_entry(self)
@@ -419,9 +444,9 @@ class LinkerWriter:
         seg_name = segment.get_cname()
 
         section_entries: OrderedDict[str, List[LinkerEntry]] = OrderedDict()
-        for l in segment.section_order:
-            if l in options.opts.section_order:
-                section_entries[l] = []
+        for section_name in segment.section_order:
+            if section_name in options.opts.section_order:
+                section_entries[section_name] = []
 
         # Add all entries to section_entries
         prev_entry = None
@@ -504,18 +529,18 @@ class LinkerWriter:
             )
 
     def save_dependencies_file(self, output_path: Path, target_elf_path: Path):
-        output = f"{target_elf_path}:"
+        output = f"{clean_up_path(target_elf_path).as_posix()}:"
 
         for entry in self.dependencies_entries:
             if entry.object_path is None:
                 continue
-            output += f" \\\n    {entry.object_path}"
+            output += f" \\\n    {entry.object_path.as_posix()}"
 
         output += "\n"
         for entry in self.dependencies_entries:
             if entry.object_path is None:
                 continue
-            output += f"{entry.object_path}:\n"
+            output += f"{entry.object_path.as_posix()}:\n"
         write_file_if_different(output_path, output)
 
     def _writeln(self, line: str):
@@ -543,7 +568,7 @@ class LinkerWriter:
         self.header_symbols.add(symbol)
 
     def _write_object_path_section(self, object_path: Path, section: str):
-        self._writeln(f"{object_path}({section});")
+        self._writeln(f"{object_path.as_posix()}({section});")
 
     def _begin_segment(
         self, segment: Segment, seg_name: str, noload: bool, is_first: bool
@@ -574,7 +599,7 @@ class LinkerWriter:
         if not noload:
             seg_rom_start = get_segment_rom_start(seg_name)
             line += f" AT({seg_rom_start})"
-        if segment.subalign != None:
+        if options.opts.emit_subalign and segment.subalign is not None:
             line += f" SUBALIGN({segment.subalign})"
 
         self._writeln(line)
@@ -616,7 +641,7 @@ class LinkerWriter:
         if noload:
             line += " (NOLOAD)"
         line += " :"
-        if segment.subalign != None:
+        if options.opts.emit_subalign and segment.subalign is not None:
             line += f" SUBALIGN({segment.subalign})"
 
         self._writeln(line)

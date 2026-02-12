@@ -11,7 +11,7 @@ import zlib
 from dataclasses import dataclass
 
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 import rabbitizer
 import spimdisasm
@@ -70,16 +70,46 @@ unknown_cic = CIC("unknown", "unknown", 0x0000000)
 
 
 @dataclass
+class EntryAddressInfo:
+    value: int
+    rom_hi: int
+    rom_lo: int
+
+    @staticmethod
+    def new(
+        value: Optional[int], hi: Optional[int], lo: Optional[int]
+    ) -> Optional["EntryAddressInfo"]:
+        if value is not None and hi is not None and lo is not None:
+            return EntryAddressInfo(value, hi, lo)
+        return None
+
+
+@dataclass
 class N64EntrypointInfo:
     entry_size: int
-    bss_start_address: Optional[int]
-    bss_size: Optional[int]
-    main_address: Optional[int]
-    stack_top: int
+    data_size: Optional[int]
+    bss_start_address: Optional[EntryAddressInfo]
+    bss_size: Optional[EntryAddressInfo]
+    bss_end_address: Optional[EntryAddressInfo]
+    main_address: Optional[EntryAddressInfo]
+    stack_top: Optional[EntryAddressInfo]
+    traditional_entrypoint: bool
+
+    def segment_size(self) -> int:
+        if self.data_size is not None:
+            return self.entry_size + self.data_size
+        return self.entry_size
+
+    def get_bss_size(self) -> Optional[int]:
+        if self.bss_size is not None:
+            return self.bss_size.value
+        if self.bss_start_address is not None and self.bss_end_address is not None:
+            return self.bss_end_address.value - self.bss_start_address.value
+        return None
 
     @staticmethod
     def parse_rom_bytes(
-        rom_bytes, offset: int = 0x1000, size: int = 0x60
+        rom_bytes, vram: int, offset: int = 0x1000, size: int = 0x60
     ) -> "N64EntrypointInfo":
         word_list = spimdisasm.common.Utils.bytesToWords(
             rom_bytes, offset, offset + size
@@ -87,15 +117,30 @@ class N64EntrypointInfo:
         nops_count = 0
 
         register_values = [0 for _ in range(32)]
+        completed_pair = [False for _ in range(32)]
+        hi_assignments: List[Optional[int]] = [None for _ in range(32)]
+        lo_assignments: List[Optional[int]] = [None for _ in range(32)]
 
         register_bss_address: Optional[int] = None
         register_bss_size: Optional[int] = None
         register_main_address: Optional[int] = None
 
+        bss_address: Optional[EntryAddressInfo] = None
+        bss_size: Optional[EntryAddressInfo] = None
+        bss_end_address: Optional[EntryAddressInfo] = None
+
+        traditional_entrypoint = True
+        decrementing_bss_routine = True
+        data_size: Optional[int] = None
+        func_call_target: Optional[EntryAddressInfo] = None
+
         size = 0
-        for word in word_list:
-            insn = rabbitizer.Instruction(word)
-            if not insn.isImplemented():
+        i = 0
+        while i < len(word_list):
+            word = word_list[i]
+            current_rom = offset + i * 4
+            insn = rabbitizer.Instruction(word, vram)
+            if not insn.isValid():
                 break
 
             if insn.isNop():
@@ -104,29 +149,42 @@ class N64EntrypointInfo:
                 break
             elif insn.canBeHi():
                 register_values[insn.rt.value] = insn.getProcessedImmediate() << 16
+                completed_pair[insn.rt.value] = False
+                hi_assignments[insn.rt.value] = current_rom
             elif insn.canBeLo():
                 if insn.isLikelyHandwritten():
                     # Try to skip these instructions:
                     # addi        $t0, $t0, 0x8
                     # addi        $t1, $t1, -0x8
                     pass
-                elif insn.modifiesRt():
+                elif insn.modifiesRt() and not completed_pair[insn.rt.value]:
                     register_values[insn.rt.value] = (
                         register_values[insn.rs.value] + insn.getProcessedImmediate()
                     )
+                    completed_pair[insn.rt.value] = True
+                    if not insn.isUnsigned():
+                        lo_assignments[insn.rt.value] = current_rom
                 elif insn.doesStore():
                     if insn.rt == rabbitizer.RegGprO32.zero:
                         # Try to detect the zero-ing bss algorithm
                         # sw          $zero, 0x0($t0)
                         register_bss_address = insn.rs.value
             elif insn.isBranch():
-                # lui         $t1, 0x2
-                # addiu       $t1, $t1, -0x7220
-                # ...
-                # addi        $t1, $t1, -0x8
-                # ...
-                # bnez        $t1, label
-                register_bss_size = insn.rs.value
+                if insn.uniqueId == rabbitizer.InstrId.cpu_beq:
+                    traditional_entrypoint = False
+                    decrementing_bss_routine = False
+                elif insn.uniqueId == rabbitizer.InstrId.cpu_bnez:
+                    # Traditional entrypoints set the bss size into a register
+                    # and loop through it by decrementing it, with a pattern
+                    # like the following:
+                    #
+                    # lui         $t1, %hi(BSS_SIZE)
+                    # addiu       $t1, $t1, %lo(BSS_SIZE)
+                    # ...
+                    # addi        $t1, $t1, -0x8
+                    # ...
+                    # bnez        $t1, label
+                    register_bss_size = insn.rs.value
 
             elif insn.isJumptableJump() or insn.isReturn():
                 # lui         $t2, 0x8000
@@ -135,29 +193,166 @@ class N64EntrypointInfo:
                 # jr          $t2
                 register_main_address = insn.rs.value
 
+            elif insn.uniqueId == rabbitizer.InstrId.cpu_sltu:
+                # Some non-traditional entrypoints clear bss by loading the
+                # bss start and looping though it until reaches the address
+                # of the bss end instead of looping by using the bss size
+                # explicitly.
+                #
+                # .clear_bss:
+                # addiu      $t0, $t0, 0x4
+                # sltu       $at, $t0, $t1
+                # bnez       $at, .clear_bss
+                #  sw        $zero, -0x4($t0)
+                if bss_address is None and bss_size is None:
+                    bss_address = EntryAddressInfo.new(
+                        register_values[insn.rs.value],
+                        hi_assignments[insn.rs.value],
+                        lo_assignments[insn.rs.value],
+                    )
+                    bss_end_address = EntryAddressInfo.new(
+                        register_values[insn.rt.value],
+                        hi_assignments[insn.rt.value],
+                        lo_assignments[insn.rt.value],
+                    )
+
+            elif insn.isFunctionCall():
+                # Some games don't follow the usual pattern for entrypoints.
+                # Those usually use `jal` instead of `jr` to jump out of the
+                # entrypoint to actual code.
+                traditional_entrypoint = False
+                func_call_target = EntryAddressInfo(
+                    insn.getInstrIndexAsVram(), current_rom, current_rom
+                )
+
+            elif insn.uniqueId == rabbitizer.InstrId.cpu_break:
+                traditional_entrypoint = False
+                size += 4
+                vram += 4
+                i += 1
+                break
+
+            # Traditional entrypoints don't touch the $gp register.
+            if insn.modifiesRd() and insn.rd == rabbitizer.RegGprO32.gp:
+                traditional_entrypoint = False
+            if insn.modifiesRs() and insn.rs == rabbitizer.RegGprO32.gp:
+                traditional_entrypoint = False
+            if insn.modifiesRt() and insn.rt == rabbitizer.RegGprO32.gp:
+                traditional_entrypoint = False
+
             # print(f"{word:08X}", insn)
             size += 4
+            vram += 4
+            i += 1
 
         # for i, val in enumerate(register_values):
-        #     print(i, f"{val:08X}")
+        #     if val != 0:
+        #         print(i, f"{val:08X}")
 
-        bss_address = (
-            register_values[register_bss_address]
-            if register_bss_address is not None
-            else None
+        if decrementing_bss_routine:
+            if register_bss_address is not None:
+                bss_address = EntryAddressInfo.new(
+                    register_values[register_bss_address],
+                    hi_assignments[register_bss_address],
+                    lo_assignments[register_bss_address],
+                )
+            if register_bss_size is not None:
+                bss_size = EntryAddressInfo.new(
+                    register_values[register_bss_size],
+                    hi_assignments[register_bss_size],
+                    lo_assignments[register_bss_size],
+                )
+
+        if register_main_address is not None:
+            main_address = EntryAddressInfo.new(
+                register_values[register_main_address],
+                hi_assignments[register_main_address],
+                lo_assignments[register_main_address],
+            )
+        else:
+            main_address = None
+
+        stack_top = EntryAddressInfo.new(
+            register_values[rabbitizer.RegGprO32.sp.value],
+            hi_assignments[rabbitizer.RegGprO32.sp.value],
+            lo_assignments[rabbitizer.RegGprO32.sp.value],
         )
-        bss_size = (
-            register_values[register_bss_size]
-            if register_bss_size is not None
-            else None
+
+        if not traditional_entrypoint:
+            if func_call_target is not None:
+                main_address = func_call_target
+                if func_call_target.value > vram:
+                    # Some weird-entrypoint games have non-code between the
+                    # entrypoint and the actual user code.
+                    # We try to find where actual code may begin, and tag
+                    # everything in between as "entrypoint data".
+
+                    code_start = find_code_after_data(rom_bytes, offset + i * 4, vram)
+                    if code_start is not None and code_start > offset + size:
+                        data_size = code_start - (offset + size)
+
+        return N64EntrypointInfo(
+            size,
+            data_size,
+            bss_address,
+            bss_size,
+            bss_end_address,
+            main_address,
+            stack_top,
+            traditional_entrypoint,
         )
-        main_address = (
-            register_values[register_main_address]
-            if register_main_address is not None
-            else None
-        )
-        stack_top = register_values[rabbitizer.RegGprO32.sp.value]
-        return N64EntrypointInfo(size, bss_address, bss_size, main_address, stack_top)
+
+
+def find_code_after_data(
+    rom_bytes: bytes, offset: int, vram: int, threshold: int = 0x18000
+) -> Optional[int]:
+    code_offset: Optional[int] = None
+
+    # We loop through every word until we find a valid `jr $ra` instruction and
+    # hope for it to be part of valid code.
+    # Once we find it, we loop back until we find anything that is invalid
+    # again to try to find the start of this function.
+
+    jr_ra_found = False
+    while offset < len(rom_bytes) // 4 and offset < threshold:
+        word = spimdisasm.common.Utils.bytesToWords(rom_bytes, offset, offset + 4)[0]
+        insn = rabbitizer.Instruction(word, vram)
+
+        if insn.isValid() and insn.isReturn():
+            # Check the instruction on the delay slot of the `jr $ra` is valid too.
+            next_word = spimdisasm.common.Utils.bytesToWords(
+                rom_bytes, offset + 4, offset + 4 + 4
+            )[0]
+            if rabbitizer.Instruction(next_word, vram + 4).isValid():
+                jr_ra_found = True
+                break
+
+        vram += 4
+        offset += 4
+
+    if jr_ra_found:
+        code_offset = offset
+
+        vram -= 4
+        offset -= 4
+
+        while offset >= 0:
+            word = spimdisasm.common.Utils.bytesToWords(rom_bytes, offset, offset + 4)[
+                0
+            ]
+            insn = rabbitizer.Instruction(word, vram)
+
+            if not insn.isValid():
+                # Garbage instructions, stop
+                break
+
+            if not insn.isNop():
+                # Ignore `nop`s as the code start since they may be file padding.
+                code_offset = offset
+
+            vram -= 4
+            offset -= 4
+    return code_offset
 
 
 @dataclass
@@ -242,7 +437,7 @@ def get_info_bytes(rom_bytes: bytes, header_encoding: str) -> N64Rom:
 
     try:
         name = rom_bytes[0x20:0x34].decode(header_encoding).rstrip(" \0") or "empty"
-    except:
+    except UnicodeError:
         sys.exit(
             "splat could not decode the game name;"
             " try using a different encoding by passing the --header-encoding argument"
@@ -258,7 +453,9 @@ def get_info_bytes(rom_bytes: bytes, header_encoding: str) -> N64Rom:
 
     sha1 = hashlib.sha1(rom_bytes).hexdigest()
 
-    entrypoint_info = N64EntrypointInfo.parse_rom_bytes(rom_bytes)
+    entrypoint_info = N64EntrypointInfo.parse_rom_bytes(
+        rom_bytes, entry_point, size=0x100
+    )
 
     return N64Rom(
         name,
@@ -290,7 +487,7 @@ def get_compiler_info(rom_bytes, entry_point, print_result=True):
         elif insn.uniqueId == rabbitizer.InstrId.cpu_b:
             branches += 1
 
-    compiler = "IDO" if branches > jumps else "GCC"
+    compiler = "IDO" if branches > jumps else "KMC"
     if print_result:
         print(
             f"{branches} branches and {jumps} jumps detected in the first code segment."

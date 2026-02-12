@@ -1,10 +1,8 @@
-from . import asm as asm
 from . import ci as ci
 from . import ci4 as ci4
 from . import ci8 as ci8
 from . import decompressor as decompressor
 from . import gfx as gfx
-from . import hasm as hasm
 from . import header as header
 from . import i1 as i1
 from . import i4 as i4
@@ -14,12 +12,10 @@ from . import ia4 as ia4
 from . import ia8 as ia8
 from . import img as img
 from . import ipl3 as ipl3
-from . import linker_offset as linker_offset
 from . import mio0 as mio0
 from . import palette as palette
 from . import rgba16 as rgba16
 from . import rgba32 as rgba32
 from . import rsp as rsp
-from . import segment as segment
 from . import vtx as vtx
 from . import yay0 as yay0

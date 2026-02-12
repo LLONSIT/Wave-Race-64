@@ -186,6 +186,34 @@ def handle_sym_addrs(
                             if attr_name == "filename":
                                 sym.given_filename = attr_val
                                 continue
+                            if attr_name == "visibility":
+                                sym.given_visibility = attr_val
+                                continue
+                            if attr_name == "function_owner":
+                                sym.function_owner = attr_val
+                                continue
+                            if attr_name == "align":
+                                align = int(attr_val, 0)
+
+                                if align < 0:
+                                    log.parsing_error_preamble(path, line_num, line)
+                                    log.error(
+                                        f"The given alignment for '{sym.name}' (0x{sym.vram_start:08X}) is negative."
+                                    )
+                                align_shift = (align & (-align)).bit_length() - 1
+                                if (1 << align_shift) != align:
+                                    log.parsing_error_preamble(path, line_num, line)
+                                    log.error(
+                                        f"The given alignment '0x{align:X}' for symbol '{sym.name}' (0x{sym.vram_start:08X}) is not a power of two."
+                                    )
+                                if sym.vram_start % align != 0:
+                                    log.parsing_error_preamble(path, line_num, line)
+                                    log.error(
+                                        f"The symbol '{sym.name}' (0x{sym.vram_start:08X}) is not aligned already to the given alignment '0x{align:X}'."
+                                    )
+
+                                sym.given_align = align
+                                continue
                         except:
                             log.parsing_error_preamble(path, line_num, line)
                             log.write(
@@ -198,7 +226,9 @@ def handle_sym_addrs(
                         tf_val = (
                             True
                             if is_truey(attr_val)
-                            else False if is_falsey(attr_val) else None
+                            else False
+                            if is_falsey(attr_val)
+                            else None
                         )
                         if tf_val is None:
                             log.parsing_error_preamble(path, line_num, line)
@@ -228,6 +258,12 @@ def handle_sym_addrs(
                                 continue
                             if attr_name == "dont_allow_addend":
                                 sym.dont_allow_addend = tf_val
+                                continue
+                            if attr_name == "can_reference":
+                                sym.can_reference = tf_val
+                                continue
+                            if attr_name == "can_be_referenced":
+                                sym.can_be_referenced = tf_val
                                 continue
                             if attr_name == "allow_duplicated":
                                 sym.allow_duplicated = True
@@ -314,13 +350,15 @@ def initialize(all_segments: "List[Segment]"):
 def initialize_spim_context(all_segments: "List[Segment]") -> None:
     global_vrom_start = None
     global_vrom_end = None
-    global_vram_start = None
-    global_vram_end = None
+    global_vram_start = options.opts.global_vram_start
+    global_vram_end = options.opts.global_vram_end
     overlay_segments: Set[spimdisasm.common.SymbolsSegment] = set()
 
     spim_context.bannedSymbols |= ignored_addresses
 
     from ..segtypes.common.code import CommonSegCode
+
+    global_segments_after_overlays: List[CommonSegCode] = []
 
     for segment in all_segments:
         if not isinstance(segment, CommonSegCode):
@@ -352,6 +390,10 @@ def initialize_spim_context(all_segments: "List[Segment]") -> None:
             elif global_vram_end < segment.vram_end:
                 global_vram_end = segment.vram_end
 
+                if len(overlay_segments) > 0:
+                    # Global segment *after* overlay segments?
+                    global_segments_after_overlays.append(segment)
+
             if global_vrom_start is None:
                 global_vrom_start = segment.rom_start
             elif segment.rom_start < global_vrom_start:
@@ -362,7 +404,9 @@ def initialize_spim_context(all_segments: "List[Segment]") -> None:
             elif global_vrom_end < segment.rom_end:
                 global_vrom_end = segment.rom_end
 
-        else:
+        elif segment.vram_start != segment.vram_end:
+            # Do not tell to spimdisasm about zero-sized segments.
+
             spim_segment = spim_context.addOverlaySegment(
                 ram_id,
                 segment.rom_start,
@@ -387,19 +431,38 @@ def initialize_spim_context(all_segments: "List[Segment]") -> None:
             global_vrom_start, global_vrom_end, global_vram_start, global_vram_end
         )
 
+        overlaps_found = False
         # Check the vram range of the global segment does not overlap with any overlay segment
         for ovl_segment in overlay_segments:
-            assert (
-                ovl_segment.vramStart <= ovl_segment.vramEnd
-            ), f"{ovl_segment.vramStart:08X} {ovl_segment.vramEnd:08X}"
+            assert ovl_segment.vramStart <= ovl_segment.vramEnd, (
+                f"{ovl_segment.vramStart:08X} {ovl_segment.vramEnd:08X}"
+            )
             if (
                 ovl_segment.vramEnd > global_vram_start
                 and global_vram_end > ovl_segment.vramStart
             ):
                 log.write(
-                    f"Warning: the vram range ([0x{ovl_segment.vramStart:08X}, 0x{ovl_segment.vramEnd:08X}]) of the non-global segment at rom address 0x{ovl_segment.vromStart:X} overlaps with the global vram range ([0x{global_vram_start:08X}, 0x{global_vram_end:08X}])",
+                    f"Error: the vram range ([0x{ovl_segment.vramStart:08X}, 0x{ovl_segment.vramEnd:08X}]) of the non-global segment at rom address 0x{ovl_segment.vromStart:X} overlaps with the global vram range ([0x{global_vram_start:08X}, 0x{global_vram_end:08X}])",
                     status="warn",
                 )
+                overlaps_found = True
+        if overlaps_found:
+            log.write(
+                "Many overlaps between non-global and global segments were found.",
+            )
+            log.write(
+                "This is usually caused by missing `exclusive_ram_id` tags on segments that have a higher vram address than other `exclusive_ram_id`-tagged segments"
+            )
+            if len(global_segments_after_overlays) > 0:
+                log.write(
+                    "These segments are the main suspects for missing a `exclusive_ram_id` tag:",
+                    status="warn",
+                )
+                for seg in global_segments_after_overlays:
+                    log.write(f"    '{seg.name}', rom: 0x{seg.rom_start:06X}")
+            else:
+                log.write("No suspected segments??", status="warn")
+            log.error("Stopping due to the above errors")
 
     # pass the global symbols to spimdisasm
     for segment in all_segments:
@@ -414,6 +477,19 @@ def initialize_spim_context(all_segments: "List[Segment]") -> None:
         for symbols_list in segment.seg_symbols.values():
             for sym in symbols_list:
                 add_symbol_to_spim_segment(spim_context.globalSegment, sym)
+
+    if global_vram_start and global_vram_end:
+        # Pass global symbols to spimdisasm that are not part of any segment on the binary we are splitting (for psx and psp)
+        for sym in all_symbols:
+            if sym.segment is not None:
+                # We already handled this symbol somewhere else
+                continue
+
+            if sym.vram_start < global_vram_start or sym.vram_end > global_vram_end:
+                # Not global
+                continue
+
+            add_symbol_to_spim_segment(spim_context.globalSegment, sym)
 
 
 def add_symbol_to_spim_segment(
@@ -454,13 +530,22 @@ def add_symbol_to_spim_segment(
         context_sym.forceMigration = True
     if sym.force_not_migration:
         context_sym.forceNotMigration = True
+    context_sym.functionOwnerForMigration = sym.function_owner
     if sym.allow_addend:
         context_sym.allowedToReferenceAddends = True
     if sym.dont_allow_addend:
         context_sym.notAllowedToReferenceAddends = True
+    if sym.can_reference is not None:
+        context_sym.allowedToReferenceSymbols = sym.can_reference
+    if sym.can_be_referenced is not None:
+        context_sym.allowedToBeReferenced = sym.can_be_referenced
     context_sym.setNameGetCallbackIfUnset(lambda _: sym.name)
     if sym.given_name_end:
         context_sym.nameEnd = sym.given_name_end
+    if sym.given_visibility:
+        context_sym.visibility = sym.given_visibility
+    if sym.given_align:
+        context_sym.setAlignment(sym.given_align)
 
     return context_sym
 
@@ -503,15 +588,25 @@ def add_symbol_to_spim_section(
         context_sym.forceMigration = True
     if sym.force_not_migration:
         context_sym.forceNotMigration = True
+    context_sym.functionOwnerForMigration = sym.function_owner
     context_sym.setNameGetCallbackIfUnset(lambda _: sym.name)
     if sym.given_name_end:
         context_sym.nameEnd = sym.given_name_end
+    if sym.given_visibility:
+        context_sym.visibility = sym.given_visibility
+    if sym.given_align:
+        context_sym.setAlignment(sym.given_align)
 
     return context_sym
 
 
+# force_in_segment=True when the symbol belongs to this specific segment.
+# force_in_segment=False when this symbol is just a reference.
 def create_symbol_from_spim_symbol(
-    segment: "Segment", context_sym: spimdisasm.common.ContextSymbol
+    segment: "Segment",
+    context_sym: spimdisasm.common.ContextSymbol,
+    *,
+    force_in_segment: bool,
 ) -> "Symbol":
     in_segment = False
 
@@ -541,7 +636,7 @@ def create_symbol_from_spim_symbol(
                 in_segment = segment.contains_vram(context_sym.vram)
 
     sym = segment.create_symbol(
-        context_sym.vram, in_segment, type=sym_type, reference=True
+        context_sym.vram, force_in_segment or in_segment, type=sym_type, reference=True
     )
 
     if sym.given_name is None and context_sym.name is not None:
@@ -590,15 +685,22 @@ class Symbol:
 
     force_migration: bool = False
     force_not_migration: bool = False
+    function_owner: Optional[str] = None
 
     allow_addend: bool = False
     dont_allow_addend: bool = False
+
+    can_reference: Optional[bool] = None
+    can_be_referenced: Optional[bool] = None
 
     linker_section: Optional[str] = None
 
     allow_duplicated: bool = False
 
     given_filename: Optional[str] = None
+    given_visibility: Optional[str] = None
+
+    given_align: Optional[int] = None
 
     _generated_default_name: Optional[str] = None
     _last_type: Optional[str] = None

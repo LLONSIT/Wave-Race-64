@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 
-from spimdisasm.common import FileSectionType
-
-from src.splat.scripts.split import *
-import unittest
-import io
+import difflib
 import filecmp
-from src.splat.util import symbols, options
+import io
+from pathlib import Path
 import spimdisasm
+import unittest
+from typing import List, Tuple
+
+from src.splat import __version__
+from src.splat.disassembler import disassembler_instance
+from src.splat.scripts.split import main
+from src.splat.util import symbols, options
 from src.splat.segtypes.common.rodata import CommonSegRodata
 from src.splat.segtypes.common.code import CommonSegCode
 from src.splat.segtypes.common.c import CommonSegC
 from src.splat.segtypes.common.bss import CommonSegBss
-from src.splat import __version__
-import difflib
+from src.splat.segtypes.segment import Segment
 
 
 class Testing(unittest.TestCase):
@@ -21,28 +24,32 @@ class Testing(unittest.TestCase):
         with io.open(test_path) as test_f, io.open(ref_path) as ref_f:
             self.assertListEqual(list(test_f), list(ref_f))
 
-    def get_same_files(self, dcmp, out):
+    def get_same_files(self, dcmp: filecmp.dircmp, out: List[Tuple[str, str, str]]):
         for name in dcmp.same_files:
             out.append((name, dcmp.left, dcmp.right))
 
         for sub_dcmp in dcmp.subdirs.values():
             self.get_same_files(sub_dcmp, out)
 
-    def get_diff_files(self, dcmp, out):
+    def get_diff_files(self, dcmp: filecmp.dircmp, out: List[Tuple[str, str, str]]):
         for name in dcmp.diff_files:
             out.append((name, dcmp.left, dcmp.right))
 
         for sub_dcmp in dcmp.subdirs.values():
             self.get_diff_files(sub_dcmp, out)
 
-    def get_left_only_files(self, dcmp, out):
+    def get_left_only_files(
+        self, dcmp: filecmp.dircmp, out: List[Tuple[str, str, str]]
+    ):
         for name in dcmp.left_only:
             out.append((name, dcmp.left, dcmp.right))
 
         for sub_dcmp in dcmp.subdirs.values():
             self.get_left_only_files(sub_dcmp, out)
 
-    def get_right_only_files(self, dcmp, out):
+    def get_right_only_files(
+        self, dcmp: filecmp.dircmp, out: List[Tuple[str, str, str]]
+    ):
         for name in dcmp.right_only:
             out.append((name, dcmp.left, dcmp.right))
 
@@ -51,9 +58,11 @@ class Testing(unittest.TestCase):
 
     def test_basic_app(self):
         spimdisasm.common.GlobalConfig.ASM_GENERATED_BY = False
-        main(["test/basic_app/splat.yaml"], None, False)
+        main([Path("test/basic_app/splat.yaml")], None, False)
 
-        comparison = filecmp.dircmp("test/basic_app/split", "test/basic_app/expected")
+        comparison = filecmp.dircmp(
+            "test/basic_app/split", "test/basic_app/expected", [".gitkeep"]
+        )
 
         diff_files: List[Tuple[str, str, str]] = []
         self.get_diff_files(comparison, diff_files)
@@ -72,11 +81,27 @@ class Testing(unittest.TestCase):
         print("left_only_files", left_only_files)
         print("right_only_files", right_only_files)
 
+        remove_from_diff = set()
+
         # if the files are different print out the difference
         for file in diff_files:
             # can't diff binary
             if file[0] == ".splache":
+                bytes_1 = (Path(f"{file[1]}") / file[0]).read_bytes()
+                bytes_2 = (Path(f"{file[2]}") / file[0]).read_bytes()
+
+                # Ignore version number differences due to a newer pickle version.
+                # This can happen because the committed .splache file may use
+                # a different pickle version than the default pickle version
+                # used in CI. For example Python 3.14 started using pickle 5,
+                # while our committed binary is pickle 4.
+                # We are pretty much hoping for newer pickle versions to not
+                # introduce real changes to our test case, otherwise this hack
+                # won't work.
+                if bytes_1[2:] == bytes_2[2:]:
+                    remove_from_diff.add(file)
                 continue
+
             with open(f"{file[1]}/{file[0]}") as file1:
                 file1_lines = file1.readlines()
             with open(f"{file[2]}/{file[0]}") as file2:
@@ -86,6 +111,9 @@ class Testing(unittest.TestCase):
                 file1_lines, file2_lines, fromfile="file1", tofile="file2", lineterm=""
             ):
                 print(line)
+
+        for file in remove_from_diff:
+            diff_files.remove(file)
 
         assert len(diff_files) == 0, diff_files
         assert len(left_only_files) == 0, left_only_files
@@ -121,7 +149,7 @@ def test_init():
             [0x1290],
         ],
     }
-    options.initialize(options_dict, ["./test/basic_app/splat.yaml"], [], False)
+    options.initialize(options_dict, [Path("./test/basic_app/splat.yaml")], [], False)
 
 
 class Symbols(unittest.TestCase):
@@ -183,7 +211,7 @@ class Symbols(unittest.TestCase):
             vram=0x40000000,
             filename="test",
             words=[],
-            sectionType=FileSectionType.Text,
+            sectionType=spimdisasm.common.FileSectionType.Text,
             segmentVromStart=0x0,
             overlayCategory=None,
         )
@@ -211,7 +239,9 @@ class Symbols(unittest.TestCase):
             yaml=None,
         )
         context_sym = spimdisasm.common.ContextSymbol(address=0)
-        result = symbols.create_symbol_from_spim_symbol(segment, context_sym)
+        result = symbols.create_symbol_from_spim_symbol(
+            segment, context_sym, force_in_segment=False
+        )
         assert result.referenced
         assert result.extract
         assert result.name == "D_0"
@@ -297,7 +327,7 @@ class Rodata(unittest.TestCase):
 
         result = common_seg_rodata.get_possible_text_subsegment_for_symbol(rodata_sym)
         assert result is not None
-        assert type(result[0]) == CommonSegC
+        assert type(result[0]) is CommonSegC
         assert result[1].address == result_symbol_addr
 
 
@@ -340,8 +370,6 @@ class Bss(unittest.TestCase):
 
 class SymbolsInitialize(unittest.TestCase):
     def test_attrs(self):
-        import pathlib
-
         symbols.reset_symbols()
         test_init()
 
@@ -361,9 +389,7 @@ class SymbolsInitialize(unittest.TestCase):
             )
         ]
 
-        symbols.handle_sym_addrs(
-            pathlib.Path("/tmp/thing"), sym_addrs_lines, all_segments
-        )
+        symbols.handle_sym_addrs(Path("/tmp/thing"), sym_addrs_lines, all_segments)
         assert symbols.all_symbols[0].given_name == "func_1"
         assert symbols.all_symbols[0].type == "func"
         assert symbols.all_symbols[0].given_size == 10
@@ -372,8 +398,6 @@ class SymbolsInitialize(unittest.TestCase):
         assert symbols.all_symbols[0].given_name_end == "the_name_end"
 
     def test_boolean_attrs(self):
-        import pathlib
-
         symbols.reset_symbols()
         test_init()
 
@@ -394,19 +418,15 @@ class SymbolsInitialize(unittest.TestCase):
             )
         ]
 
-        symbols.handle_sym_addrs(
-            pathlib.Path("/tmp/thing"), sym_addrs_lines, all_segments
-        )
-        assert symbols.all_symbols[0].defined == True
-        assert symbols.all_symbols[0].force_migration == True
-        assert symbols.all_symbols[0].force_not_migration == True
-        assert symbols.all_symbols[0].allow_addend == True
-        assert symbols.all_symbols[0].dont_allow_addend == True
+        symbols.handle_sym_addrs(Path("/tmp/thing"), sym_addrs_lines, all_segments)
+        assert symbols.all_symbols[0].defined
+        assert symbols.all_symbols[0].force_migration
+        assert symbols.all_symbols[0].force_not_migration
+        assert symbols.all_symbols[0].allow_addend
+        assert symbols.all_symbols[0].dont_allow_addend
 
     # test spim ban range
     def test_ignore(self):
-        import pathlib
-
         symbols.reset_symbols()
         test_init()
 
@@ -424,9 +444,7 @@ class SymbolsInitialize(unittest.TestCase):
             )
         ]
 
-        symbols.handle_sym_addrs(
-            pathlib.Path("/tmp/thing"), sym_addrs_lines, all_segments
-        )
+        symbols.handle_sym_addrs(Path("/tmp/thing"), sym_addrs_lines, all_segments)
         assert symbols.spim_context.bannedRangedSymbols[0].start == 0x100
         assert symbols.spim_context.bannedRangedSymbols[0].end == 0x100 + 4
 
@@ -454,11 +472,11 @@ class InitializeSpimContext(unittest.TestCase):
 
         all_segments: List["Segment"] = [
             CommonSegCode(
-                rom_start=0x0,
-                rom_end=0x200,
+                rom_start=0x1000,
+                rom_end=0x1140,
                 type="code",
                 name="main",
-                vram_start=0x100,
+                vram_start=0x80000400,
                 args=[],
                 yaml=yaml,
             )
@@ -470,8 +488,8 @@ class InitializeSpimContext(unittest.TestCase):
         symbols.initialize_spim_context(all_segments)
         # spim should have added something to overlaySegments
         assert (
-            type(symbols.spim_context.overlaySegments["overlay"][0])
-            == spimdisasm.common.SymbolsSegment
+            type(symbols.spim_context.overlaySegments["overlay"][0x1000])
+            is spimdisasm.common.SymbolsSegment
         )
 
     # test globalSegment settings
@@ -483,22 +501,21 @@ class InitializeSpimContext(unittest.TestCase):
             "name": "boot",
             "type": "code",
             "start": 0x1000,
-            "vram": 0x80000400,
+            "vram": 0x100,
             "bss_size": 0x80,
-            "exclusive_ram_id": "overlay",
             "subsegments": [
                 [0x1000, "c", "main"],
                 [0x10F0, "hasm", "handwritten"],
                 [0x1100, "data", "main"],
                 [0x1110, ".rodata", "main"],
-                {"start": 0x1140, "type": "bss", "vram": 0x80000540, "name": "main"},
+                {"start": 0x1140, "type": "bss", "vram": 0x240, "name": "main"},
             ],
         }
 
         all_segments: List["Segment"] = [
             CommonSegCode(
-                rom_start=0x0,
-                rom_end=0x200,
+                rom_start=0x1000,
+                rom_end=0x1140,
                 type="code",
                 name="main",
                 vram_start=0x100,
@@ -511,7 +528,7 @@ class InitializeSpimContext(unittest.TestCase):
         assert symbols.spim_context.globalSegment.vramEnd == 0x80001000
         symbols.initialize_spim_context(all_segments)
         assert symbols.spim_context.globalSegment.vramStart == 0x100
-        assert symbols.spim_context.globalSegment.vramEnd == 0x380
+        assert symbols.spim_context.globalSegment.vramEnd == 0x2C0
 
 
 if __name__ == "__main__":

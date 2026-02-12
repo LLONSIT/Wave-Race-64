@@ -344,7 +344,7 @@ extern s32 D_800D8178;
 extern s32 D_800DA9C0;
 extern s16 D_800DAB68;
 extern UnkStruct_800DB568 D_800DB568[];
-extern s16 D_800EABEC[];
+extern const s16 D_800EABEC[];
 extern s32 D_801CB32C;
 extern s16 D_801CB3F8[];
 extern s32 D_801CE600;

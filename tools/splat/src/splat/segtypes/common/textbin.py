@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 from typing import Optional, TextIO
 
 from ...util import log, options
@@ -7,6 +8,29 @@ from .segment import CommonSegment
 
 
 class CommonSegTextbin(CommonSegment):
+    def __init__(
+        self,
+        rom_start: Optional[int],
+        rom_end: Optional[int],
+        type: str,
+        name: str,
+        vram_start: Optional[int],
+        args: list,
+        yaml,
+    ):
+        super().__init__(
+            rom_start,
+            rom_end,
+            type,
+            name,
+            vram_start,
+            args=args,
+            yaml=yaml,
+        )
+        self.use_src_path: bool = isinstance(yaml, dict) and yaml.get(
+            "use_src_path", False
+        )
+
     @staticmethod
     def is_text() -> bool:
         return True
@@ -18,6 +42,9 @@ class CommonSegTextbin(CommonSegment):
         return "ax"
 
     def out_path(self) -> Optional[Path]:
+        if self.use_src_path:
+            return options.opts.src_path / self.dir / f"{self.name}.s"
+
         return options.opts.data_path / self.dir / f"{self.name}.s"
 
     def bin_path(self) -> Path:
@@ -49,28 +76,66 @@ class CommonSegTextbin(CommonSegment):
 
         f.write(f"{self.get_section_asm_line()}\n\n")
 
+        sym_name = None
+        sym_name_end = None
+        sym_size_matches = None
+
         # Check if there's a symbol at this address
-        sym = None
         vram = self.rom_to_ram(self.rom_start)
         if vram is not None:
             sym = self.get_symbol(vram, in_segment=True)
-
-        if sym is not None:
-            f.write(f"{asm_label} {sym.name}\n")
-            sym.defined = True
-
-        f.write(f'.incbin "{binpath}"\n')
-
-        if sym is not None:
-            if self.is_text() and options.opts.asm_end_label != "":
-                f.write(f"{options.opts.asm_end_label} {sym.name}\n")
-
-            if sym.given_name_end is not None:
+            if sym is not None:
+                sym.defined = True
+                sym_name = sym.name
+                sym_name_end = sym.given_name_end
                 if (
                     sym.given_size is None
                     or sym.given_size == self.rom_end - self.rom_start
                 ):
-                    f.write(f"{asm_label} {sym.given_name_end}\n")
+                    sym_size_matches = self.rom_end - self.rom_start
+
+        if sym_name is None:
+            # Normalize stuff like slashes and such.
+            n = regex_sym_name_normalizer.sub("_", self.name)
+            if self.is_text():
+                suffix = "textbin"
+            elif self.is_data():
+                suffix = "databin"
+            elif self.is_rodata():
+                suffix = "rodatabin"
+            else:
+                suffix = "incbin"
+            sym_name = f"__{n}_{suffix}"
+
+        if options.opts.asm_nonmatching_label_macro != "":
+            siz = f", 0x{sym_size_matches:X}" if sym_size_matches is not None else ""
+            f.write(f"{options.opts.asm_nonmatching_label_macro} {sym_name}{siz}\n\n")
+
+        f.write(f"{asm_label} {sym_name}\n")
+        if asm_label == ".globl":
+            if self.is_text():
+                f.write(f".ent {sym_name}\n")
+            f.write(f"{sym_name}:\n")
+
+        f.write(f'.incbin "{binpath.as_posix()}"\n')
+
+        if options.opts.asm_emit_size_directive:
+            f.write(f".size {sym_name}, . - {sym_name}\n")
+
+        if self.is_text() and options.opts.asm_end_label != "":
+            f.write(f"{options.opts.asm_end_label} {sym_name}\n")
+        elif options.opts.asm_data_end_label != "":
+            f.write(f"{options.opts.asm_data_end_label} {sym_name}\n")
+
+        if sym_name_end is not None and sym_size_matches is not None:
+            f.write(f"{asm_label} {sym_name_end}\n")
+            if asm_label == ".globl":
+                f.write(f"{sym_name_end}:\n")
+
+            if self.is_text() and options.opts.asm_end_label != "":
+                f.write(f"{options.opts.asm_end_label} {sym_name_end}\n")
+            elif options.opts.asm_data_end_label != "":
+                f.write(f"{options.opts.asm_data_end_label} {sym_name_end}\n")
 
     def split(self, rom_bytes):
         if self.rom_end is None:
@@ -116,3 +181,6 @@ class CommonSegTextbin(CommonSegment):
         return (
             self.extract and self.should_scan()
         )  # only split if the segment was scanned first
+
+
+regex_sym_name_normalizer = re.compile(r"[^0-9a-zA-Z_]")

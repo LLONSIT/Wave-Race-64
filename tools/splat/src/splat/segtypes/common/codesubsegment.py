@@ -1,4 +1,5 @@
-from typing import Optional
+from pathlib import Path
+from typing import Optional, List
 
 import spimdisasm
 import rabbitizer
@@ -41,6 +42,7 @@ class CommonSegCodeSubsegment(Segment):
         )
 
         self.is_hasm = False
+        self.use_gp_rel_macro = options.opts.use_gp_rel_macro
 
     @property
     def needs_symbols(self) -> bool:
@@ -59,9 +61,13 @@ class CommonSegCodeSubsegment(Segment):
         section.isHandwritten = self.is_hasm
         section.instrCat = self.instr_category
         section.detectRedundantFunctionEnd = self.detect_redundant_function_end
+        section.setGpRelHack(not self.use_gp_rel_macro)
 
     def scan_code(self, rom_bytes, is_hasm=False):
         self.is_hasm = is_hasm
+
+        if self.is_auto_segment:
+            return
 
         if not isinstance(self.rom_start, int):
             log.error(
@@ -113,17 +119,17 @@ class CommonSegCodeSubsegment(Segment):
         self.parent: CommonSegCode = self.parent
 
         symbols.create_symbol_from_spim_symbol(
-            self.get_most_parent(), func_spim.contextSym
+            self.get_most_parent(), func_spim.contextSym, force_in_segment=False
         )
 
         # Gather symbols found by spimdisasm and create those symbols in splat's side
-        for referenced_vram in func_spim.instrAnalyzer.referencedVrams:
+        for referenced_vram in func_spim.referencedVrams:
             context_sym = self.spim_section.get_section().getSymbol(
                 referenced_vram, tryPlusOffset=False
             )
             if context_sym is not None:
                 symbols.create_symbol_from_spim_symbol(
-                    self.get_most_parent(), context_sym
+                    self.get_most_parent(), context_sym, force_in_segment=False
                 )
 
         # Main loop
@@ -144,12 +150,10 @@ class CommonSegCodeSubsegment(Segment):
             if instr_offset in func_spim.instrAnalyzer.symbolInstrOffset:
                 sym_address = func_spim.instrAnalyzer.symbolInstrOffset[instr_offset]
 
-                context_sym = self.spim_section.get_section().getSymbol(
-                    sym_address, tryPlusOffset=False
-                )
+                context_sym = self.spim_section.get_section().getSymbol(sym_address)
                 if context_sym is not None:
                     symbols.create_symbol_from_spim_symbol(
-                        self.get_most_parent(), context_sym
+                        self.get_most_parent(), context_sym, force_in_segment=False
                     )
 
     def print_file_boundaries(self):
@@ -159,9 +163,6 @@ class CommonSegCodeSubsegment(Segment):
         assert isinstance(self.rom_start, int)
 
         for in_file_offset in self.spim_section.get_section().fileBoundaries:
-            if (in_file_offset % 16) != 0:
-                continue
-
             if not self.parent.reported_file_split:
                 self.parent.reported_file_split = True
 
@@ -181,7 +182,7 @@ class CommonSegCodeSubsegment(Segment):
                 print(
                     "File split suggestions for this segment will follow in config yaml format:"
                 )
-            print(f"      - [0x{self.rom_start+in_file_offset:X}, {self.type}]")
+            print(f"      - [0x{self.rom_start + in_file_offset:X}, {self.type}]")
 
     def should_scan(self) -> bool:
         return (
@@ -194,3 +195,117 @@ class CommonSegCodeSubsegment(Segment):
         return (
             self.extract and options.opts.is_mode_active("code") and self.should_scan()
         )  # only split if the segment was scanned first
+
+    def should_self_split(self) -> bool:
+        return self.should_split()
+
+    def get_asm_file_header(self) -> List[str]:
+        ret = []
+
+        ret.append('.include "macro.inc"')
+        ret.append("")
+
+        ret.extend(self.get_asm_file_extra_directives())
+
+        preamble = options.opts.generated_s_preamble
+        if preamble:
+            ret.append(preamble)
+            ret.append("")
+
+        ret.append(self.get_section_asm_line())
+        ret.append("")
+
+        return ret
+
+    def get_asm_file_extra_directives(self) -> List[str]:
+        ret = []
+
+        ret.append(".set noat")  # allow manual use of $at
+        ret.append(".set noreorder")  # don't insert nops after branches
+        if options.opts.add_set_gp_64:
+            ret.append(".set gp=64")  # allow use of 64-bit general purpose registers
+        ret.append("")
+
+        return ret
+
+    def asm_out_path(self) -> Path:
+        return options.opts.asm_path / self.dir / f"{self.name}.s"
+
+    def out_path(self) -> Optional[Path]:
+        return self.asm_out_path()
+
+    def split_as_asm_file(self, out_path: Optional[Path]):
+        if self.spim_section is None:
+            return
+
+        if not out_path:
+            return
+
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+
+        self.print_file_boundaries()
+
+        with open(out_path, "w", newline="\n") as f:
+            # Write `.text` contents
+            for line in self.get_asm_file_header():
+                f.write(line + "\n")
+            f.write(self.spim_section.disassemble())
+
+    # Same as above but write all sections from siblings
+    def split_as_asmtu_file(self, out_path: Path):
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+
+        self.print_file_boundaries()
+
+        with open(out_path, "w", newline="\n") as f:
+            # self.spim_section would be None if the current section was
+            # declared `auto` in the yaml.
+            # This can be useful when there are TUs with only data/rodata/bss/etc
+            # sections but not text section.
+            if self.spim_section is not None:
+                # Write `.text` contents
+                for line in self.get_asm_file_header():
+                    f.write(line + "\n")
+                f.write(self.spim_section.disassemble())
+
+            # Disassemble the siblings to this file by respecting the `section_order`
+            for sect in self.section_order:
+                if sect == self.get_linker_section_linksection():
+                    continue
+
+                sibling = self.siblings.get(sect)
+                if sibling is None:
+                    continue
+
+                if (
+                    isinstance(sibling, CommonSegCodeSubsegment)
+                    and sibling.spim_section is not None
+                    and (
+                        not sibling.should_self_split()
+                        or options.opts.make_full_disasm_for_code
+                    )
+                ):
+                    f.write("\n")
+                    f.write(f"{sibling.get_section_asm_line()}\n\n")
+                    f.write(sibling.spim_section.disassemble())
+
+            # Another loop to check anything that somehow may not be present in the `section_order`
+            for sect, sibling in self.siblings.items():
+                if sect == self.get_linker_section_linksection():
+                    continue
+
+                if sect in self.section_order:
+                    # Already handled in the above loop
+                    continue
+
+                if (
+                    isinstance(sibling, CommonSegCodeSubsegment)
+                    and sibling.spim_section is not None
+                    and (
+                        not sibling.should_self_split()
+                        or options.opts.make_full_disasm_for_code
+                    )
+                ):
+                    f.write("\n")
+                    f.write(f"{sibling.get_section_asm_line()}\n\n")
+                    f.write(sibling.spim_section.disassemble())

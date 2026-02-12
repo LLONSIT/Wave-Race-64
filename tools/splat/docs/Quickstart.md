@@ -1,6 +1,7 @@
 # Quickstart
 
-> **Note**: This quickstart is written with N64 ROMs in mind, and the assumption that you are using Ubuntu 20.04 either natively, via WSL2 or via Docker.
+> [!NOTE]
+> This quickstart is written with N64 ROMs in mind, and the assumption that you are using Ubuntu 20.04 either natively, via WSL2 or via Docker.
 
 For the purposes of this quickstart, we will assume that we are going to split a game called `mygame` and we have the ROM in `.z64` format named `baserom.z64`.
 
@@ -14,13 +15,13 @@ Copy the `baserom.z64` file into the `mygame` directory inside your home directo
 
 ## System packages
 
-### Python 3.8
+### Python 3.9
 
-Ensure you are have **Python 3.8** or higher installed:
+Ensure you are have **Python 3.9** or higher installed:
 
 ```sh
-python3 --version
-Python 3.8.10
+$ python3 --version
+Python 3.9.10
 ```
 
 If you get `bash: python3: command not found` install it with the following command:
@@ -79,7 +80,7 @@ options:
   asm_data_macro: dlabel
 
   # section_order: [".text", ".data", ".rodata", ".bss"]
-  # auto_all_sections: [".data", ".rodata", ".bss"]
+  # auto_link_sections: [".data", ".rodata", ".bss"]
 
   symbol_addrs_path:
     - symbol_addrs.txt

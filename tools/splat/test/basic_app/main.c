@@ -35,7 +35,7 @@ int do_switch(void)
 }
 
 // c
-void bootproc(void)
+void Main_BootProc(void)
 {
     do_switch();
     for (;;)

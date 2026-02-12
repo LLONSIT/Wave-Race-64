@@ -1,8 +1,10 @@
+import collections
+import dataclasses
 import importlib
 import importlib.util
 from pathlib import Path
 
-from typing import Dict, List, Optional, Set, Type, TYPE_CHECKING, Union
+from typing import Dict, List, Optional, Set, Type, TYPE_CHECKING, Union, Tuple
 
 from intervaltree import Interval, IntervalTree
 from ..util import vram_classes
@@ -54,7 +56,7 @@ def parse_segment_subalign(segment: Union[dict, list]) -> Optional[int]:
     default = options.opts.subalign
     if isinstance(segment, dict):
         subalign = segment.get("subalign", default)
-        if subalign != None:
+        if subalign is not None:
             subalign = int(subalign)
         return subalign
     return default
@@ -67,6 +69,27 @@ def parse_segment_section_order(segment: Union[dict, list]) -> List[str]:
     return default
 
 
+SegmentType = str
+
+
+@dataclasses.dataclass
+class SegmentStatisticsInfo:
+    size: int
+    count: int
+
+    def merge(self, other: "SegmentStatisticsInfo") -> "SegmentStatisticsInfo":
+        return SegmentStatisticsInfo(
+            size=self.size + other.size, count=self.count + other.count
+        )
+
+
+SegmentStatistics = dict[SegmentType, SegmentStatisticsInfo]
+
+
+def empty_statistics() -> SegmentStatistics:
+    return collections.defaultdict(lambda: SegmentStatisticsInfo(size=0, count=0))
+
+
 class Segment:
     require_unique_name = True
 
@@ -76,10 +99,21 @@ class Segment:
         if seg_type.startswith("."):
             seg_type = seg_type[1:]
 
-        segment_class = Segment.get_base_segment_class(seg_type)
-        if segment_class == None:
-            # Look in extensions
+        if options.opts.allow_segment_overrides:
             segment_class = Segment.get_extension_segment_class(seg_type)
+            if segment_class is None:
+                segment_class = Segment.get_base_segment_class(seg_type)
+        else:
+            segment_class = Segment.get_base_segment_class(seg_type)
+            if segment_class is None:
+                # Look in extensions
+                segment_class = Segment.get_extension_segment_class(seg_type)
+
+        if segment_class is None:
+            log.error(
+                f"could not load segment type '{seg_type}'\n(hint: confirm your extension directory is configured correctly)"
+            )
+
         return segment_class
 
     @staticmethod
@@ -124,29 +158,36 @@ class Segment:
             ext_mod = importlib.util.module_from_spec(ext_spec)
             assert ext_spec.loader is not None
             ext_spec.loader.exec_module(ext_mod)
-        except Exception as err:
-            log.write(err, status="error")
-            log.error(
-                f"could not load segment type '{seg_type}'\n(hint: confirm your extension directory is configured correctly)"
-            )
+        except Exception:
+            return None
 
         return getattr(
             ext_mod, f"{platform.upper()}Seg{seg_type[0].upper()}{seg_type[1:]}"
         )
 
     @staticmethod
-    def parse_segment_start(segment: Union[dict, list]) -> Optional[int]:
+    def parse_segment_start(segment: Union[dict, list]) -> Tuple[Optional[int], bool]:
+        """
+        Parses the rom start address of a given segment.
+
+        Returns a two-tuple containing:
+        - The rom start address of the segment, if any.
+        - `True` if the user explicitly specified `auto` as the start address.
+          Note this will be `False` if user specified an actual number or did not specify anything at all (in the dict notation).
+          Not specifying a explicit `start` is useful for `bss`/`sbss` segments, since they do not have a real rom address.
+        """
+
         if isinstance(segment, dict):
-            s = segment.get("start", "auto")
+            s = segment.get("start", None)
         else:
             s = segment[0]
 
+        if s is None:
+            return None, False
         if s == "auto":
-            return None
-        elif s == "...":
-            return None
+            return None, True
         else:
-            return int(s)
+            return int(s), False
 
     @staticmethod
     def parse_segment_type(segment: Union[dict, list]) -> str:
@@ -214,6 +255,31 @@ class Segment:
             return yaml["ld_fill_value"]
         return default
 
+    @staticmethod
+    def parse_ld_align_segment_start(yaml: Union[dict, list]) -> Optional[int]:
+        if isinstance(yaml, dict) and "ld_align_segment_start" in yaml:
+            return yaml["ld_align_segment_start"]
+        return options.opts.ld_align_segment_start
+
+    @staticmethod
+    def parse_suggestion_rodata_section_start(
+        yaml: Union[dict, list],
+    ) -> Optional[bool]:
+        if isinstance(yaml, dict):
+            suggestion_rodata_section_start = yaml.get(
+                "suggestion_rodata_section_start"
+            )
+            if suggestion_rodata_section_start is not None:
+                assert isinstance(suggestion_rodata_section_start, bool)
+                return suggestion_rodata_section_start
+        return None
+
+    @staticmethod
+    def parse_pair_segment(yaml: Union[dict, list]) -> Optional[str]:
+        if isinstance(yaml, dict) and "pair_segment" in yaml:
+            return yaml["pair_segment"]
+        return None
+
     def __init__(
         self,
         rom_start: Optional[int],
@@ -259,6 +325,9 @@ class Segment:
         self.parent: Optional[Segment] = None
         self.sibling: Optional[Segment] = None
         self.siblings: Dict[str, Segment] = {}
+        self.pair_segment_name: Optional[str] = self.parse_pair_segment(yaml)
+        self.paired_segment: Optional[Segment] = None
+
         self.file_path: Optional[Path] = None
 
         self.args: List[str] = args
@@ -288,8 +357,21 @@ class Segment:
             yaml, options.opts.ld_fill_value
         )
 
-        # True if this segment was generated based on auto_all_sections
-        self.is_auto_all: bool = False
+        self.ld_align_segment_start: Optional[int] = self.parse_ld_align_segment_start(
+            yaml
+        )
+
+        # True if this segment was generated based on auto_link_sections
+        self.is_generated: bool = False
+
+        self.given_suggestion_rodata_section_start: Optional[bool] = (
+            self.parse_suggestion_rodata_section_start(yaml)
+        )
+
+        # Is an automatic segment, generated automatically or declared on the yaml by the user
+        self.is_auto_segment: bool = False
+
+        self.index_within_group: Optional[int] = None
 
         if self.rom_start is not None and self.rom_end is not None:
             if self.rom_start > self.rom_end:
@@ -303,6 +385,7 @@ class Segment:
         yaml: Union[dict, list],
         rom_start: Optional[int],
         rom_end: Optional[int],
+        parent: Optional["Segment"],
         vram=None,
     ):
         type = Segment.parse_segment_type(yaml)
@@ -328,6 +411,38 @@ class Segment:
             args=args,
             yaml=yaml,
         )
+        if parent is not None:
+            if "subalign" in yaml:
+                log.error(
+                    f"Non top-level segment '{name}' (rom address 0x{rom_start:X}) specified a `subalign`. `subalign` is valid only for top-level segments"
+                )
+            if "ld_fill_value" in yaml:
+                log.error(
+                    f"Non top-level segment '{name}' (rom address 0x{rom_start:X}) specified a `ld_fill_value`. `ld_fill_value` is valid only for top-level segments"
+                )
+
+        ret.parent = parent
+
+        # Import here to avoid circular imports
+        from .common.code import CommonSegCode
+        from .common.bss import CommonSegBss
+
+        if options.opts.ld_bss_is_noload and isinstance(ret, CommonSegBss):
+            # We need to know the bss space for the segment.
+            if isinstance(parent, CommonSegCode):
+                if parent.bss_size <= 0:
+                    log.error(
+                        f"Top-level segment '{parent.name}' is missing a `bss_size` value.\n    A non-zero `bss_size` value must be defined on the top-level segments that contain '{ret.type}' sections (produced by the '{ret.name}' section)."
+                    )
+                if (
+                    isinstance(ret.vram_start, int)
+                    and isinstance(parent.vram_end, int)
+                    and ret.vram_start >= parent.vram_end
+                ):
+                    log.error(
+                        f"The section '{ret.name}' (vram 0x{ret.vram_start:08X}) is outside its parent's address range '{parent.name}' (0x{parent.vram_start:08X} ~ 0x{parent.vram_end:08X}).\n    This may happen when the specified `bss_size` value is too small."
+                    )
+
         ret.given_section_order = parse_segment_section_order(yaml)
         ret.given_subalign = parse_segment_subalign(yaml)
 
@@ -423,10 +538,10 @@ class Segment:
 
     @property
     def subalign(self) -> Optional[int]:
-        if self.parent:
-            return self.parent.subalign
-        else:
-            return self.given_subalign
+        assert self.parent is None, (
+            f"subalign is not valid for non-top-level segments. ({self})"
+        )
+        return self.given_subalign
 
     @property
     def vram_symbol(self) -> Optional[str]:
@@ -468,6 +583,17 @@ class Segment:
             return None
 
     @property
+    def statistics(self) -> SegmentStatistics:
+        stats = empty_statistics()
+        if self.size is not None:
+            stats[self.statistics_type] = SegmentStatisticsInfo(size=self.size, count=1)
+        return stats
+
+    @property
+    def statistics_type(self) -> SegmentType:
+        return self.type
+
+    @property
     def vram_end(self) -> Optional[int]:
         if self.vram_start is not None and self.size is not None:
             return self.vram_start + self.size
@@ -485,6 +611,14 @@ class Segment:
         return (
             self.section_order.index(".rodata") - self.section_order.index(".data") == 1
         )
+
+    @property
+    def suggestion_rodata_section_start(self) -> bool:
+        if self.given_suggestion_rodata_section_start is not None:
+            return self.given_suggestion_rodata_section_start
+        if self.parent is not None:
+            return self.parent.suggestion_rodata_section_start
+        return options.opts.suggestion_rodata_section_start
 
     def get_cname(self) -> str:
         name = self.name
@@ -677,8 +811,7 @@ class Segment:
         items = [
             i
             for i in items
-            if i.segment is None
-            or Segment.visible_ram(self, i.segment)
+            if (i.segment is None or Segment.visible_ram(self, i.segment))
             and (type == i.type)
         ]
 

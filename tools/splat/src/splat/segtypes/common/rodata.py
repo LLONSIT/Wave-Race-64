@@ -15,6 +15,9 @@ class CommonSegRodata(CommonSegData):
     def get_linker_section(self) -> str:
         return ".rodata"
 
+    def get_section_flags(self) -> Optional[str]:
+        return "a"
+
     @staticmethod
     def is_data() -> bool:
         return False
@@ -61,6 +64,9 @@ class CommonSegRodata(CommonSegData):
             section.stringEncoding = self.str_encoding
 
     def disassemble_data(self, rom_bytes):
+        if self.is_auto_segment:
+            return
+
         if not isinstance(self.rom_start, int):
             log.error(
                 f"Segment '{self.name}' (type '{self.type}') requires a rom_start. Got '{self.rom_start}'"
@@ -102,9 +108,19 @@ class CommonSegRodata(CommonSegData):
 
         for symbol in self.spim_section.get_section().symbolList:
             generated_symbol = symbols.create_symbol_from_spim_symbol(
-                self.get_most_parent(), symbol.contextSym
+                self.get_most_parent(), symbol.contextSym, force_in_segment=True
             )
             generated_symbol.linker_section = self.get_linker_section_linksection()
+
+            # Gather symbols found by spimdisasm and create those symbols in splat's side
+            for referenced_vram in symbol.referencedVrams:
+                context_sym = self.spim_section.get_section().getSymbol(
+                    referenced_vram, tryPlusOffset=False
+                )
+                if context_sym is not None:
+                    symbols.create_symbol_from_spim_symbol(
+                        self.get_most_parent(), context_sym, force_in_segment=False
+                    )
 
             possible_text = self.get_possible_text_subsegment_for_symbol(symbol)
             if possible_text is not None:
@@ -114,7 +130,7 @@ class CommonSegRodata(CommonSegData):
                         f"\nRodata segment '{self.name}' may belong to the text segment '{text_segment.name}'"
                     )
                     print(
-                        f"    Based on the usage from the function {refenceeFunction.getName()} to the symbol {symbol.getName()}"
+                        f"    Based on the usage from the function {refenceeFunction.getNameUnquoted()} to the symbol {symbol.getNameUnquoted()}"
                     )
                     possible_text_segments.add(text_segment)
 

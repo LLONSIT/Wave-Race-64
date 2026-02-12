@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+VENV_DIR="venv"
+
+# Check if venv directory exists
+if [ ! -d "$VENV_DIR" ]; then
+    echo "Virtual environment not found. Creating..."
+    python3 -m venv "$VENV_DIR"
+
+    if [ $? -ne 0 ]; then
+        echo "Failed to create virtual environment."
+        exit 1
+    fi
+fi
+
+echo "Activating virtual environment..."
+source $VENV_DIR/bin/activate
+
+echo "Virtual environment is now active."
+pip install -r tools/objdiff_requirements.txt
