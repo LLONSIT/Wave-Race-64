@@ -1,0 +1,59 @@
+name: Wonder Project J2
+repo: https://github.com/LLONSIT-glitch/wonder
+platform: n64
+versions:
+- name: us
+  fullname: US
+  sha1: 508dfc2d4caa42b6f6de5263d0aed5e44ac7966a
+  paths:
+    target: "baserom.us.rev1.z64"
+    build_dir: "build"
+    map: "build/waverace64.us.rev1.map"
+    compiled_target: "build/waverace64.us.rev1.z64"
+    elf: "build/waverace64.us.rev1.elf"
+    expected_dir: "expected"
+    asm: "asm"
+    nonmatchings: "asm/nonmatchings"
+
+tools:
+  decompme:
+    preset: 51
+  permuter:
+    decompme_compilers:
+      tools/ido7.1/cc: ido7.1
+      tools/ido5.3/cc: ido5.3
+  mapfile_parser:
+    progress_report:
+      output: build/progress.json
+      check_asm_paths: True
+      report_data: True
+      prefixes_to_trim:
+        - build/src/
+        - build/asm/data/
+        - build/asm/
+        - build/
+      categories:
+        - id: game
+          name: game
+          paths:
+            - game
+        - id: audio
+          name: audio
+          paths:
+            - audio
+        - id: codeseg
+          name: codeseg
+          paths:
+            - codeseg
+        - id: sys
+          name: sys
+          paths:
+            - sys
+        - id: overlays
+          name: overlays
+          paths:
+            - overlays
+        - id: libultra
+          name: libultra
+          paths:
+            - libultra
