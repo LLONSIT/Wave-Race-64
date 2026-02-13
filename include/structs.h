@@ -611,13 +611,14 @@ typedef struct UnkStruct_801BC940 {
     /* 0x40 */ char pad40[0xC];                     /* maybe part of unk3C[4]? */
     /* 0x4C */ s32 unk4C;
     /* 0x50 */ char pad50[4];
-    /* 0x54 */ s32 unk54;                           /* inferred */
+    /* 0x54 */ s32 unk54;
     /* 0x58 */ s32 unk58;
     /* 0x5C */ char pad5C[0x10];                    /* maybe part of unk58[5]? */
     /* 0x6C */ s32 unk6C;
-    /* 0x70 */ char pad70[0x44];                    /* maybe part of unk6C[0x12]? */
-    /* 0xB4 */ Gfx* unkB4;                           /* inferred */
-    /* 0xB8 */ Gfx* unkB8;                           /* inferred */
+    /* 0x70 */ char pad70[4];
+    /* 0x74 */ MtxF unk74;                          /* inferred */
+    /* 0xB4 */ Gfx* unkB4;
+    /* 0xB8 */ Gfx* unkB8;
     /* 0xBC */ s32 unkBC;
     /* 0xC0 */ s32 unkC0;
 } UnkStruct_801BC940;                               /* size = 0xC4 */
@@ -762,11 +763,14 @@ typedef struct UnkStruct_80192690 {
 } UnkStruct_80192690;                /* size = 0x1718 */
 
 typedef struct UnkStruct_801AE948_s {
-    char pad[0x4100];
+    char pad[0x35D0];
+    Lights0 unk35D8[1];
+    char pad35DC[0xB14];
     Mtx unk4100[1];
     Mtx unk4140[1];
     char pad4180[0x7140];
     LookAt unkB2C0[1];
+    Hilite unkB2E0[1];
 } UnkStruct_801AE948;
 
 typedef struct UnkStruct_80069740_s {
