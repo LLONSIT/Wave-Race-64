@@ -86,10 +86,11 @@ void func_800B4750(void);
 void func_801EDFFC(s32, s32, f32, s32);
 
 // TODO: Move this to the proper header
-extern void guLookAtHilite(Mtx* m, LookAt* l, Hilite* h, float xEye, float yEye, float zEye, float xAt, float yAt, float zAt,
-                    float xUp, float yUp, float zUp, float xl1, float yl1, float zl1, /* light 1 direction */
-                    float xl2, float yl2, float zl2,                                  /* light 2 direction */
-                    int twidth, int theight);
+extern void guLookAtHilite(Mtx* m, LookAt* l, Hilite* h, float xEye, float yEye, float zEye, float xAt, float yAt,
+                           float zAt, float xUp, float yUp, float zUp, float xl1, float yl1,
+                           float zl1,                       /* light 1 direction */
+                           float xl2, float yl2, float zl2, /* light 2 direction */
+                           int twidth, int theight);
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006A300.s")
 
