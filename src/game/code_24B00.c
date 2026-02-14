@@ -4,28 +4,28 @@
 
 typedef struct UnkStruct_801BB138_s {
     /* 0x00 */ char pad0[4];
-    /* 0x04 */ f32 unk4;                            /* inferred */
-    /* 0x08 */ char pad8[8];                        /* maybe part of unk4[3]? */
-    /* 0x10 */ s32 unk10;                           /* inferred */
+    /* 0x04 */ f32 unk4;     /* inferred */
+    /* 0x08 */ char pad8[8]; /* maybe part of unk4[3]? */
+    /* 0x10 */ s32 unk10;    /* inferred */
     /* 0x14 */ char pad14[4];
-} UnkStruct_801BB138;                               /* size = 0x18 */
+} UnkStruct_801BB138; /* size = 0x18 */
 
 typedef struct UnkStruct_801BFA48_s {
-    /* 0x00 */ f32 unk0;                            /* inferred */
-    /* 0x04 */ f32 unk4;                            /* inferred */
-    /* 0x08 */ f32 unk8;                            /* inferred */
-    /* 0x0C */ f32 unkC;                            /* inferred */
-    /* 0x10 */ f32 unk10;                           /* inferred */
-    /* 0x14 */ s32 unk14;                           /* inferred */
-    /* 0x18 */ s32 unk18;                           /* inferred */
-    /* 0x1C */ s32 unk1C;                           /* inferred */
+    /* 0x00 */ f32 unk0;  /* inferred */
+    /* 0x04 */ f32 unk4;  /* inferred */
+    /* 0x08 */ f32 unk8;  /* inferred */
+    /* 0x0C */ f32 unkC;  /* inferred */
+    /* 0x10 */ f32 unk10; /* inferred */
+    /* 0x14 */ s32 unk14; /* inferred */
+    /* 0x18 */ s32 unk18; /* inferred */
+    /* 0x1C */ s32 unk1C; /* inferred */
     /* 0x20 */ char pad20[4];
-} UnkStruct_801BFA48;                               /* size = 0x24 */
+} UnkStruct_801BFA48; /* size = 0x24 */
 
 typedef struct UnkStruct_801BFB70_s {
-    /* 0x00 */ s32 unk0;                            /* inferred */
-    /* 0x04 */ char pad4[0x3C];                     /* maybe part of unk0[0x10]? */
-} UnkStruct_801BFB70;                               /* size = 0x40 */
+    /* 0x00 */ s32 unk0;        /* inferred */
+    /* 0x04 */ char pad4[0x3C]; /* maybe part of unk0[0x10]? */
+} UnkStruct_801BFB70;           /* size = 0x40 */
 
 typedef struct UnkStruct_801C0C90_s {
     s32 riders[4];
@@ -103,7 +103,7 @@ extern u16 D_101ED68[];
 extern UnkStruct_801AE948 D_6000000[];
 extern s32 D_802E1F0[];
 extern s32 D_802E9F8[];
-                               /* extern */
+/* extern */
 extern s32 D_800D4B00;
 extern UnkStruct_801BB138 D_801BB138[];
 extern s32 D_801BC938;
@@ -115,7 +115,6 @@ extern s32 D_801C0CBC;
 extern s32 D_801C0CC0;
 extern s32 D_801C0CC4;
 
-
 // TODO: Move this to the proper header
 extern void guLookAtHilite(Mtx* m, LookAt* l, Hilite* h, float xEye, float yEye, float zEye, float xAt, float yAt,
                            float zAt, float xUp, float yUp, float zUp, float xl1, float yl1,
@@ -123,16 +122,15 @@ extern void guLookAtHilite(Mtx* m, LookAt* l, Hilite* h, float xEye, float yEye,
                            float xl2, float yl2, float zl2, /* light 2 direction */
                            int twidth, int theight);
 
-
 void func_800C3628(s32);
 void func_801FB488(s32, s32, s32);
 void func_8006A300(void);
 void func_800B4750(void);
 void func_801EDFFC(s32, s32, f32, s32);
-void func_8004CC7C(UnkStruct_801BFB70*);                                /* extern */
+void func_8004CC7C(UnkStruct_801BFB70*); /* extern */
 void func_8004F520(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5);
-void func_80079528(void);                                  /* extern */
-void func_8007DBC0(void);                                  /* extern */
+void func_80079528(void); /* extern */
+void func_8007DBC0(void); /* extern */
 void func_800B49C4(void);
 void func_8006E0F4(void);
 
