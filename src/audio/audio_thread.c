@@ -213,7 +213,7 @@ void AudioThread_QueueCmdS32(u32 opArgs, u32 val) {
 }
 
 // Original name: Nap_SetS8
-void AudioThread_QueueCmdS8(u32 opArgs, s8 val) {
+void AudioThread_QueueCmdS8(s32 opArgs, s8 val) {
     s32 data = val << 0x18;
 
     AudioThread_QueueCmd(opArgs, (void*) &data);

@@ -2,8 +2,10 @@
 #include "wr64audio.h"
 
 void SysAudio_AudioThreadEntry(void* entry) {
-    static OSTask* sAudioTask = NULL;
+    static SPTask* sAudioTask = NULL;
+
     AudioLoad_Init();
+
     while (true) {
         osRecvMesg(&gAudioTaskMesgQueue, &sAudioTaskMsg, 1);
         if (sAudioTask != 0) {

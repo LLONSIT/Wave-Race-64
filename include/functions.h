@@ -93,7 +93,7 @@ void func_80086DA8(void);
 void func_80087AE8(void);
 void func_80087E70(void);
 void func_80088418(void);
-void AudioThread_QueueCmdS8(u32 opArgs, s8 val);
+void AudioThread_QueueCmdS8(s32 opArgs, s8 val);
 void AudioThread_QueueCmdF32(u32 opArgs, f32 val);
 Gfx* func_8008FB74(Gfx* arg0);
 Gfx* Draw_WaterEffects(Gfx*);

@@ -3,6 +3,8 @@
 
 #include "global.h"
 
+#include "audiothread_cmd.h"
+
 #define MAX_CHANNELS 16
 
 #define SOUND_MODE_STEREO 0
