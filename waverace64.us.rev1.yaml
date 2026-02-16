@@ -36,6 +36,7 @@ options:
   create_asm_dependencies: True
   ld_dependencies: True
   o_as_suffix: True
+  asm_nonmatching_label_macro: ""
 
 segments:
   - name: header
@@ -242,6 +243,8 @@ segments:
       - [0x8EE40, data]
       - [0x8EFE0, .data, game/code_BD30]
       - [0x8F000, data]
+      - [0x95140, .data, game/code_4C750]
+      - [0x95310, data]
       - [0x9F6D0, .data, ovl_table]
       - [0x9F930, data]
       - [0xA2EB0, .data, audio/audio_thread]
@@ -261,9 +264,9 @@ segments:
       - [0xA3930, .data, libultra/os/kdebugserver]
       - [0xA3940, .data, libultra/os/syncputchars]
       - [0xA3950, .data, libultra/vimodes]
+      - [0xA39F0, .data, libultra/libc/xlitob] 
 
       # GAME RODATA
-      - [0xA39F0, .data, libultra/libc/xlitob] 
       - [0xA3A20, .rodata, sys/sys_utils]
       - [0xA3A70, .rodata, game/code_5480]
       - [0xA3A80, .rodata, game/water_69D0]
@@ -292,8 +295,7 @@ segments:
       - [0xA52B0, .rodata, game/code_42670]
       - [0xA52D0, .rodata, game/code_43A60]
       - [0xA52F0, .rodata, game/code_43DA0]
-      - [0xA53B0, data] # could be rodata from code_4C750 but it's weird, i can't make it compile
-      - [0xA5630, data] # rodata from code_4C750 too?
+      - [0xA53B0, .rodata, game/code_4C750]
       - [0xA5950, .rodata, game/code_4F850]
       - [0xA5B20, .rodata, game/wr64_game_load]
       - [0xA5CC0, data] # rodata from code_52CD0, introduces a gap if .rodata'd

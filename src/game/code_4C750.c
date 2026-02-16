@@ -35,7 +35,7 @@ extern s32 D_800DA940[];
 extern s32 D_800DA988[][3];
 extern ControllerBase D_800DAB10;
 extern s32 D_800DCE90;
-extern s16 D_800EAC00[9];
+
 extern f32 D_800EAC78;
 extern s32 D_801519AC;
 extern s32 D_801CB288[];
@@ -64,9 +64,79 @@ extern s32 D_801CB350[][4];
 extern s16 D_801CE60E;
 extern s32 D_801CE718[];
 extern s32 D_801CB334;
-extern s16 D_800EABB0[];
 
-#ifdef NEEDS_RODATA
+s32 D_800DA940[] = { 1, 0, 0, 0 };
+
+UnkStruct_func_i8_802C6E00 D_800DA950[] = {
+    { "R.HAYAMI", 5, 5, 5 },
+    { "D.MARINER", 5, 5, 5 },
+    { "A.STEWART", 5, 5, 5 },
+    { "M.JETER", 5, 5, 5 },
+};
+
+s32 D_800DA988[][3] = {
+    { 0, 5, 3 },
+    { 0, 5, 3 },
+    { 0, 5, 3 },
+};
+
+s16 D_800DA9AC = 1;
+
+s32 D_800DA9B0[4] = { 0, 1, 2, 3 };
+s32 D_800DA9C0[2] = { 0, 3 };
+s32 D_800DA9C8[2] = { 0, 0 };
+
+s32 D_800DA9D0 = 0;
+s32 gCurrentOptionsMenuItem = 0;
+s32 D_800DA9D8 = 0;
+
+s32 D_800DA9DC[] = { 3, 2, 1, 0 };
+
+s32 D_800DA9EC[] = { 0, 1, 0 };
+
+s32 D_800DA9F8 = 2;
+s32 D_800DA9FC = 3;
+s16 D_800DAA00 = 0;
+s32 D_800DAA04 = 1;
+s32 D_800DAA08 = 0;
+s32 D_800DAA0C = 0;
+
+s32 D_800DAA10[] = { 0x00000008, 0x00000009, 0x0000000A, 0x0000000B, 0x0000000C,
+                     0x0000000D, 0x0000000E, 0x0000000F, 0x00000010 };
+s32 D_800DAA34[] = { 0x00000008, 0x00000009, 0x0000000A, 0x0000000B, 0x0000000C,
+                     0x0000000D, 0x0000000E, 0x0000000F, 0x00000016 };
+
+RGB short_RGB[] = {
+    { 0, 242, 228 }, { 0, 242, 228 }, { 227, 112, 129 }, { 43, 135, 146 },  { 137, 180, 189 },
+    { 80, 117, 85 }, { 12, 58, 117 }, { 28, 90, 221 },   { 137, 180, 189 },
+};
+
+// These are real segmented addressed symbols:
+Vtx* D_800DAA90[] = { (Vtx*) 0x0106F930, (Vtx*) 0x0106F930, (Vtx*) 0x0106F970, (Vtx*) 0x0106F9B0, (Vtx*) 0x0106F9F0,
+                      (Vtx*) 0x0106FA30, (Vtx*) 0x0106FA70, (Vtx*) 0x0106FAB0, (Vtx*) 0x0106F9F0 };
+
+// These are real symbols:
+void* D_800DAAB4[] = { (void*) 0x800E9870, (void*) 0x800E98B0, (void*) 0x800E98F0,
+                       (void*) 0x800E9930, (void*) 0x800E9970, (void*) 0x800E99B0,
+                       (void*) 0x800E99F0, (void*) 0x800E9A30, (void*) 0x800E9A70 };
+
+Course D_800DAAD8[] = { 0, 1, 2, 4, 3, 5, 6, 8, 7 };
+
+const s16 D_800EABB0[] = { 7, 4, 2, 1, 0, 0 };
+const s16 D_800EABBC[] = { 0x0000, 0x0001, 0x0002, 0x0004, 0x0008, 0x000C, 0x0010, 0x0000,
+                           0x0002, 0x0004, 0x0006, 0x000A, 0x000E, 0x0015, 0x001C, 0x0000,
+                           0x0002, 0x0004, 0x0008, 0x000C, 0x0010, 0x0017, 0x001E, 0x0025 };
+const s16 D_800EABEC[] = { 0x0014, 0x0014, 0x0014, 0x0028, 0x000A, 0x001E, 0x0014, 0x0019, 0x0019, 0x0000 };
+const s16 D_800EAC00[] = { 0x000F, 0x000F, 0x000F, 0x0023, 0x0005, 0x0014, 0x000F, 0x0014, 0x0014, 0x0000 };
+
+const s16 D_800EAC14[] = { 0x0000, 0x0001, 0x0002, 0x0004, 0x0003, 0x0005, 0x0007, 0xFFFF,
+                           0x0001, 0x0002, 0x0004, 0x0003, 0x0005, 0x0006, 0x0007, 0xFFFF,
+                           0x0001, 0x0002, 0x0004, 0x0003, 0x0005, 0x0006, 0x0008, 0x0007 };
+const s16 D_800EAC44[] = { 0x0000, 0x0002, 0x0001, 0x0003, 0x0002, 0x0003, 0x0000, 0x0001,
+                           0x0001, 0x0002, 0x0003, 0x0000, 0x0003, 0x0000, 0x0002, 0x0001 };
+s8* D_800DAAFC[] = { "R.H", "D.M", "A.S", "M.J" };
+s16 D_800DAB0C = 0;
+
 void func_80091F50(void) {
     s8 temp_t3;
     s32 i;
@@ -97,11 +167,11 @@ void func_80091F50(void) {
     D_801CE72E = one;
     D_801CB280 = 0;
 
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 4; i++) {
         D_801CB288[i] = D_800DA940[i];
     }
 
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
             D_801CB308[i][j] = D_800DA988[i][j];
         }
@@ -141,12 +211,7 @@ void func_80091F50(void) {
         D_801CE658[i].unk_14 = D_801CE658[i].unk_18 = 0;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80091F50.s")
 
-#endif
-
-#ifdef NEEDS_RODATA_IMPORTED
 void func_80051238(void);
 void func_800665B0(void);
 void func_8006A264(void);
@@ -325,14 +390,7 @@ void func_800922E4(void) {
     func_801EAFB4();
     func_801E71A8();
 }
-#else
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_800922E4.s")
-#endif
 
-// https://decomp.me/scratch/MEV9a
-#ifndef NEEDS_RODATA_IMPORTED
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_800926F4.s")
-#else
 extern s32 D_800D49B0;
 extern s32 gPrevGameState;
 extern s32 D_801CE6F8;
@@ -396,7 +454,7 @@ void func_800926F4(void) {
                 func_8004F9E0(0, D_800D49B0);
                 func_8008E4B0();
                 func_801DDA24();
-            } else if (D_801CE608 == 0) {
+            } else if (D_801CE608.gameMode == 0) {
                 func_8004F9E0(0, D_800D49B0);
                 func_8008E4B0();
                 func_801DDA24();
@@ -406,7 +464,7 @@ void func_800926F4(void) {
         case 80:
             sp18 = 1;
 
-            if (D_801CE608 == 4) {
+            if (D_801CE608.gameMode == 4) {
                 if (gPrevGameState != 67) {
                     sp18 = 0;
                 }
@@ -424,7 +482,6 @@ void func_800926F4(void) {
             break;
     }
 }
-#endif
 
 void func_80092938(void) {
     UnkStruct_801CE658* var_v1;
@@ -503,9 +560,6 @@ void func_80092938(void) {
     }
 }
 
-#ifndef NEEDS_RODATA_IMPORTED
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4C750/func_80092CF0.s")
-#else
 Gfx* func_80092CF0(Gfx* dList) {
     s32 pad;
 
@@ -543,7 +597,8 @@ Gfx* func_80092CF0(Gfx* dList) {
 
         case 0x2:
             D_801CE62A = 0;
-            dList = func_802C5800(dList);
+            dList = func_1C3D00_802C5800(
+                dList); // These are likely pointing to the wrong overlay function right now, VERIFY
             break;
 
         case 0x3:
@@ -563,7 +618,7 @@ Gfx* func_80092CF0(Gfx* dList) {
             break;
 
         case 0x28:
-            if (((D_801CE608 == 4) || (D_801CE608 == 1)) && (gGameModeState != 3)) {
+            if (((D_801CE608.gameMode == 4) || (D_801CE608.gameMode == 1)) && (gGameModeState != 3)) {
                 D_801CE62A = 0;
             }
             dList = func_802C5AE4(dList);
@@ -585,7 +640,7 @@ Gfx* func_80092CF0(Gfx* dList) {
         case 0x36:
         case 0x37:
             D_801CE62A = 0;
-            dList = func_802C5800(dList);
+            dList = func_1C3D00_802C5800(dList);
             break;
 
         case 0x32:
@@ -627,7 +682,8 @@ Gfx* func_80092CF0(Gfx* dList) {
         case 0x3C:
         case 0x3D:
             D_801CE62A = 0;
-            dList = func_802C5800(dList);
+            dList = func_1C3D00_802C5800(
+                dList); // These are likely pointing to the wrong overlay function right now, VERIFY
             break;
 
         case 0x3E:
@@ -651,13 +707,15 @@ Gfx* func_80092CF0(Gfx* dList) {
         case 0x48:
         case 0x49:
             D_801CE62A = 0;
-            dList = func_802C5800(dList);
+            dList = func_1C3D00_802C5800(
+                dList); // These are likely pointing to the wrong overlay function right now, VERIFY
             break;
 
         case 0x46:
         case 0x47:
             D_801CE62A = 0;
-            dList = func_802C5800(dList);
+            dList = func_1C3D00_802C5800(
+                dList); // These are likely pointing to the wrong overlay function right now, VERIFY
             break;
 
         case 0x40:
@@ -733,7 +791,6 @@ Gfx* func_80092CF0(Gfx* dList) {
 
     return dList;
 }
-#endif
 
 s32 func_80093104(void) {
     s32 i;
@@ -920,9 +977,9 @@ void func_8009345C(void) {
                         var_v1 = &D_801CB298[D_80192690[var_a2].unkB68];
                     }
 
-                    D_80192690[var_a2].unkB6C = (s32) var_v1->unkB;
-                    D_80192690[var_a2].unkB70 = (s32) var_v1->unkC;
-                    D_80192690[var_a2].unkB74 = (s32) var_v1->unkD;
+                    D_80192690[var_a2].unkB6C = (s32) var_v1->unk_B[0];
+                    D_80192690[var_a2].unkB70 = (s32) var_v1->unk_B[1];
+                    D_80192690[var_a2].unkB74 = (s32) var_v1->unk_B[2];
                 } else {
                     D_80192690[var_a2].unkB6C = D_800D96A4[gCourseID][D_80192690[var_a2].unkB68].unk0;
                     D_80192690[var_a2].unkB70 = D_800D96A4[gCourseID][D_80192690[var_a2].unkB68].unk4;
@@ -1154,9 +1211,6 @@ s32 Strlen2(s8* str) {
 
 Gfx* func_801E9858(Gfx*, s32, s8*, s32, s32);
 
-// Rodata
-extern char D_800EAC74; // "%d"
-
 Gfx* func_80094200(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 var_s0;
     s32 var_s1;
@@ -1171,7 +1225,7 @@ Gfx* func_80094200(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     var_s0 = arg2;
 
     for (var_s1 = 0, var_s2 = arg3 + var_v0 * 4; var_s1 < 5; var_s1++, var_s2 += -var_v0, var_s0 /= 10) {
-        sprintf(buf, &D_800EAC74, var_s0 % 10);
+        sprintf(buf, "%d", var_s0 % 10);
         arg0 = func_801E9858(arg0, arg1, buf, var_s2, arg4);
     }
 

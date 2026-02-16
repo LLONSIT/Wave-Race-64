@@ -544,11 +544,8 @@ typedef struct ControllerBase {
 } ControllerBase; // size 0xA
 
 typedef struct UnkStruct_func_i8_802C6E00 {
-    s16 unk0;
-    char pad2[9];
-    s8 unkB;
-    s8 unkC;
-    s8 unkD;
+    /* 0x0 */ s8 unk_0[0xB];
+    /* 0xB */ s8 unk_B[0x3];
 } UnkStruct_func_i8_802C6E00;
 
 typedef struct UnkStruct_8004B0F8_1 {
