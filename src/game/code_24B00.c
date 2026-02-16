@@ -2,6 +2,31 @@
 #include "rider.h"
 #include "camera.h"
 
+typedef struct UnkStruct_801BB138_s {
+    /* 0x00 */ char pad0[4];
+    /* 0x04 */ f32 unk4;     /* inferred */
+    /* 0x08 */ char pad8[8]; /* maybe part of unk4[3]? */
+    /* 0x10 */ s32 unk10;    /* inferred */
+    /* 0x14 */ char pad14[4];
+} UnkStruct_801BB138; /* size = 0x18 */
+
+typedef struct UnkStruct_801BFA48_s {
+    /* 0x00 */ f32 unk0;  /* inferred */
+    /* 0x04 */ f32 unk4;  /* inferred */
+    /* 0x08 */ f32 unk8;  /* inferred */
+    /* 0x0C */ f32 unkC;  /* inferred */
+    /* 0x10 */ f32 unk10; /* inferred */
+    /* 0x14 */ s32 unk14; /* inferred */
+    /* 0x18 */ s32 unk18; /* inferred */
+    /* 0x1C */ s32 unk1C; /* inferred */
+    /* 0x20 */ char pad20[4];
+} UnkStruct_801BFA48; /* size = 0x24 */
+
+typedef struct UnkStruct_801BFB70_s {
+    /* 0x00 */ s32 unk0;        /* inferred */
+    /* 0x04 */ char pad4[0x3C]; /* maybe part of unk0[0x10]? */
+} UnkStruct_801BFB70;           /* size = 0x40 */
+
 typedef struct UnkStruct_801C0C90_s {
     s32 riders[4];
 } UnkStruct_801C0C90;
@@ -25,6 +50,10 @@ typedef struct UnkStruct_801C0C80_s {
     char pad58[0x20];
     s32 unk78;
     s32 unk7C;
+    char pad80[0x2C];
+    f32 unkAC;
+    f32 unkB0;
+    f32 unkB4;
 } UnkStruct_801C0C80;
 
 extern s16 D_801C0AC0[];
@@ -70,12 +99,41 @@ extern Gfx D_102C828[];
 extern s32 D_801AE950;
 extern s32 D_801BB120;
 extern s16 D_801C0840[];
+extern u16 D_101ED68[];
+extern UnkStruct_801AE948 D_6000000[];
+extern s32 D_802E1F0[];
+extern s32 D_802E9F8[];
+/* extern */
+extern s32 D_800D4B00;
+extern UnkStruct_801BB138 D_801BB138[];
+extern s32 D_801BC938;
+extern UnkStruct_801BFA48 D_801BFA48[];
+extern s32 D_801BFB68;
+extern UnkStruct_801BFB70 D_801BFB70[];
+extern s32 D_801BFD70;
+extern s32 D_801C0CBC;
+extern s32 D_801C0CC0;
+extern s32 D_801C0CC4;
+
+// TODO: Move this to the proper header
+extern void guLookAtHilite(Mtx* m, LookAt* l, Hilite* h, float xEye, float yEye, float zEye, float xAt, float yAt,
+                           float zAt, float xUp, float yUp, float zUp, float xl1, float yl1,
+                           float zl1,                       /* light 1 direction */
+                           float xl2, float yl2, float zl2, /* light 2 direction */
+                           int twidth, int theight);
 
 void func_800C3628(s32);
 void func_801FB488(s32, s32, s32);
 void func_8006A300(void);
 void func_800B4750(void);
 void func_801EDFFC(s32, s32, f32, s32);
+void func_8004CC7C(UnkStruct_801BFB70*); /* extern */
+void func_8004F520(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5);
+void func_80079528(void); /* extern */
+void func_8007DBC0(void); /* extern */
+void func_800B49C4(void);
+void func_8006E0F4(void);
+
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006A300.s")
 
 void func_8006A748(void) {
@@ -346,8 +404,101 @@ void func_8006D034(Gfx** gdl) {
     *gdl = gdlh;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006D494.s")
+// clang-format off
+void func_8006D494(Gfx** gdl) {
+    camera_unk_1* cam;
+    f32 var_f0;
+    s32 i;
+    Gfx* gdlh;
+    UnkStruct_801BC940 *ptr;
 
+    gdlh = *gdl;
+    cam = &gCameraPerspective[D_80223930];
+    if (D_800D5454 == 0) {
+        guLookAtHilite(D_801AE948->unk4100, D_801AE948->unkB2C0, D_801AE948->unkB2E0, cam->unk4C, cam->unk50,
+                       cam->unk54, cam->unk7C, cam->unk80, cam->unk84, cam->unk70, cam->unk74,
+                       cam->unk78, D_801C0C80->unkAC, D_801C0C80->unkB0, D_801C0C80->unkB4, 1.0f, 0.0f, 0.0f, 0x20,
+                       0x20);
+    } else {
+        guLookAtReflect(D_801AE948->unk4100, D_801AE948->unkB2C0, cam->unk4C, cam->unk50, cam->unk54,
+                        cam->unk7C, cam->unk80, cam->unk84, cam->unk70, cam->unk74, cam->unk78);
+    }
+    gSPClearGeometryMode(gdlh++, G_ZBUFFER | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR);
+    gSPSetGeometryMode(gdlh++, G_ZBUFFER | G_SHADE | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_SHADING_SMOOTH);
+    gSPSetLights0(gdlh++, D_6000000->unk35D8[D_800DAB2C]);
+    gSPLookAt(gdlh++, D_500B2C0);
+    gSPTexture(gdlh++, 0x07C0, 0x07C0, 0, G_TX_RENDERTILE, G_ON);
+    gDPPipeSync(gdlh++);
+    gDPSetCycleType(gdlh++, G_CYC_2CYCLE);
+
+    if (D_800D5454 == 0) {
+        gSPTexture(gdlh++, 0x07C0, 0x07C0, 0, G_TX_RENDERTILE, G_ON);
+        gDPSetEnvColor(gdlh++, 255, 255, 200, 255);
+
+        // Custom version of gDPLoadTextureBlock?
+        gDPSetTextureImage(gdlh++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, D_101ED68);gDPSetTile(gdlh++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+                   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);gDPLoadSync(gdlh++);gDPLoadBlock(gdlh++, G_TX_LOADTILE, 0, 0, 511, 512);gDPPipeSync(gdlh++);gDPSetTile(gdlh++, G_IM_FMT_IA, G_IM_SIZ_8b, 4, 0, 1, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+                   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);gDPSetTileSize(gdlh++, 1, 0, 0, (32 - 1) << 2, (32 - 1) << 2);
+
+        gDPSetHilite1Tile(gdlh++, 1, D_801AE948->unkB2E0, 32, 32);
+
+        gDPSetCombineLERP(gdlh++, PRIMITIVE, 0, SHADE, 0, 0, 0, 0, SHADE, ENVIRONMENT, COMBINED, TEXEL0_ALPHA, COMBINED,
+                          0, 0, 0, SHADE);
+    } else if (D_800D5454 == 1) {
+        gSPTexture(gdlh++, 0x0F80, 0x0F80, 0, G_TX_RENDERTILE, G_ON);
+        gDPSetEnvColor(gdlh++, 255, 255, 255, 96); 
+        gDPSetTextureImage(gdlh++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_802E1F0); gDPSetTile(gdlh++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5,
+                   G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);gDPLoadSync(gdlh++);gDPLoadBlock(gdlh++, G_TX_LOADTILE, 0, 0, 1023, 256);gDPPipeSync(gdlh++);gDPSetTile(gdlh++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0x0000, 1, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+                   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);gDPSetTileSize(gdlh++, 1, 0, 0, 0x007C, 0x007C);
+        gDPSetCombineLERP(gdlh++, PRIMITIVE, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, COMBINED, ENV_ALPHA, COMBINED, 0, 0,
+                          0, SHADE);
+    } else {
+        gSPTexture(gdlh++, 0x0F80, 0x0F80, 0, G_TX_RENDERTILE, G_ON);
+        gDPSetEnvColor(gdlh++, 255, 255, 255, 96);
+        gDPSetTextureImage(gdlh++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_802E9F8);gDPSetTile(gdlh++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5,
+                   G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);gDPLoadSync(gdlh++);gDPLoadBlock(gdlh++, G_TX_LOADTILE, 0, 0, 1023, 256);gDPPipeSync(gdlh++);gDPSetTile(gdlh++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0x0000, 1, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
+                   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);gDPSetTileSize(gdlh++, 1, 0, 0, 0x007C, 0x007C);
+        gDPSetCombineLERP(gdlh++, PRIMITIVE, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, COMBINED, ENV_ALPHA, COMBINED, 0, 0,
+                          0, SHADE);
+    }
+    gSPFogFactor(gdlh++, 0x1F400 / ((s32) D_801C0C80->unk7C - (s32) D_801C0C80->unk78),
+                 (((0x1F4 - (s32) D_801C0C80->unk78) * 256) / ((s32) D_801C0C80->unk7C - (s32) D_801C0C80->unk78)))
+        gDPSetFogColor(gdlh++, D_801C0C80->unk48, D_801C0C80->unk4C, D_801C0C80->unk50, D_801C0C80->unk54);
+
+    for (i = 0; i < D_801BFA40; i++) {
+        ptr = &D_801BC940[i];
+        if (D_801C0AC0[i] < 0) {
+            continue;
+        }
+            
+        if (ptr->unk54 == 3) {
+            if (ptr->unk6C > 15) {
+                continue;
+            }
+            _MtxF_to_Mtx(&ptr->unk74, &D_801AE948->unk4140[D_801AE950]);
+            gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            
+            if (ptr->unkBC != 0) {
+                if (ptr->unk6C >= 8) {
+                    var_f0 = 1.0f - ((ptr->unk6C - 8) * 0.125f);
+                } else {
+                    var_f0 = 1.0f;
+                }
+                func_801EE97C(&D_801AE948->unk4140[D_801AE950], var_f0, var_f0, var_f0);
+                gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+            }
+
+            gSPSetGeometryMode(gdlh++, G_CULL_BACK);
+            if (ptr->unkB4 != NULL) {
+                gDPPipeSync(gdlh++);
+                gDPSetRenderMode(gdlh++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+                gSPDisplayList(gdlh++, ptr->unkB4);
+            }
+        }
+    }
+    *gdl = gdlh;
+}
+// clang-format on
 void func_8006DE24(Gfx** gdl) {
     Gfx* gdlh;
     camera_unk_1* temp_v1;
@@ -395,6 +546,61 @@ void configSignalRectangle(Gfx** gdl) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006E0F4.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006E3A8.s")
+void func_8006E3A8(void) {
+    f32 var_fv0;
+    s32 temp_v0;
+    s32 i;
+    s32 var_v0;
+    func_80079528();
+    if (gCurrentPauseMenuOption == (-1)) {
+        if (gGameModes == GMODE_STUNT) {
+            func_8006A748();
+        }
+        func_8007DBC0();
+        if (gCourseID == GLACIER_COAST) {
+            for (i = 0; i < D_801BC938; i++) {
+                if (D_801BB138[i].unk10 != 5) {
+                    D_801BB138[i].unk4 = gWaterLevel;
+                }
+            }
+        }
+        func_8006E0F4();
+        func_800B49C4();
+        for (i = 0; i < D_801BFB68; i++) {
+            if (D_801BFA48[i].unk18 != 0) {
+                var_fv0 = ((f32) (D_800D4B00 % D_801BFA48[i].unk14)) / D_801BFA48[i].unk14 * 360.0f;
+                var_fv0 = gSinTable[((s32) (((var_fv0) / 360.0f) * 4096.0f)) & 0xFFF];
+            } else {
+                var_fv0 = 1.0f;
+            }
+            func_8004F520(D_801BFA48[i].unk10 * var_fv0, D_801BFA48[i].unk0, D_801BFA48[i].unk4, D_801BFA48[i].unk8,
+                          D_801BFA48[i].unkC, D_801BFA48[i].unk1C);
+        }
+
+        for (i = 0; i < D_801BFD70; i++) {
+            func_8004CC7C(&D_801BFB70[i]);
+        }
+
+        if (gCourseID == TWILIGHT_CITY) {
+            D_801C0CBC += 4;
+            if (D_801C0CBC >= 0x40) {
+                D_801C0CBC = 0;
+            }
+            D_801C0CC4++;
+            if (D_801C0CC4 >= 0x13) {
+                D_801C0CC4 = 0;
+            }
+            if (D_801C0CC4 < 0xA) {
+                D_801C0CC0 = 0;
+            } else if (D_801C0CC4 < 0xC) {
+                D_801C0CC0 = 1;
+            } else if (D_801C0CC4 < 0x12) {
+                D_801C0CC0 = 2;
+            } else {
+                D_801C0CC0 = 1;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006E674.s")
