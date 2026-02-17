@@ -2,7 +2,6 @@
 //Game Symbols
 gCurrentGfxTask  = 0x801542B4;
 gCurrentAudioTask = 0x801542B8;
-create_obj =  0x800B490C;
 gDisplayListHead = 0x80151944;
 unk_game_load = 0x80095050;
 main_thread = 0x80047530;

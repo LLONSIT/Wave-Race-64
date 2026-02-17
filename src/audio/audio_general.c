@@ -1,5 +1,12 @@
 #include "wr64audio.h"
 
+typedef enum SequencePlayers_e {
+    SEQ_PLAYER_0,
+    SEQ_PLAYER_1,
+    SEQ_PLAYER_2,
+    SEQ_PLAYER_3,
+} SequencePlayers;
+
 u8 func_800C32A0(u32 arg0, s32 arg1, s32 arg2);
 void func_800C3524(s32 arg0, u32 arg1);
 void func_800C37C0(s32 arg0, s32 arg1);
@@ -108,7 +115,7 @@ void func_800BF370(void) {
             }
         }
     } else {
-        AudioThread_QueueCmdS32(0xF1000000U, 0U);
+        AUDIOCMD_GLOBAL_MUTE();
     }
     AudioThread_ScheduleProcessCmds();
 }
@@ -187,14 +194,14 @@ void func_800BF964(void) {
     for (i = 0; i < 16; i++) {
         channel = gSequencePlayers[2].channels[i];
         if (channel != &gSequenceChannelNone) {
-            AudioThread_QueueCmdF32(((i & 0xFF) << 8) | 0x04020000, channel->freqScale * 0.99f);
+            AUDIOCMD_CHANNEL_SET_FREQ_SCALE(SEQ_PLAYER_2, i, channel->freqScale * 0.99f);
         }
     }
     D_800E7CE0--;
 }
 
-void func_800BFA38(u32 arg0, u32 arg1, u32 arg2) {
-    AudioThread_QueueCmdS8((((arg0 & 0xFF) << 0x10) | 0x08000000) | ((arg1 & 0xFF) << 8), arg2);
+UNUSED void AudioGeneral_Mute(u32 seqPlayerIndex, u32 channelIndex, u32 muted) {
+    AUDIOCMD_CHANNEL_SET_MUTE(seqPlayerIndex, channelIndex, muted);
 }
 
 void func_800BFA80(s32 seqPlayerIdx, u32 arg1, u8 arg2) {
@@ -379,22 +386,22 @@ void func_800BFFCC(s32 arg0) {
     func_800BFD68();
 }
 
-void func_800BFFEC(u8 arg0, u8 arg1, u8 arg2) {
-    AUDIOCMD_CHANNEL_SET_IO(0, arg0, 5, arg2);
-    AUDIOCMD_CHANNEL_SET_IO(0, arg0, 0, arg1);
+void func_800BFFEC(u8 channelIndex, u8 arg1, u8 arg2) {
+    AUDIOCMD_CHANNEL_SET_IO(SEQ_PLAYER_0, channelIndex, 5, arg2);
+    AUDIOCMD_CHANNEL_SET_IO(SEQ_PLAYER_0, channelIndex, 0, arg1);
 }
 
 void func_800C0044(u8 arg0, s8 arg1, u8 arg2) {
-    AudioThread_QueueCmdS8(((arg0 & 0xFF) << 8) | 0x06000000 | 6, arg2);
-    AudioThread_QueueCmdS8(((arg0 & 0xFF) << 8) | 0x06000000 | 1, arg1);
+    AUDIOCMD_CHANNEL_SET_IO(SEQ_PLAYER_0, arg0, 6, arg2);
+    AUDIOCMD_CHANNEL_SET_IO(SEQ_PLAYER_0, arg0, 1, arg1);
 }
 
 void func_800C00A4(s32 arg0, s32 arg1) {
 }
 
-void func_800C00B0(s8 arg0, f32 arg1) {
-    AudioThread_QueueCmdF32(0x04000300U, arg1);
-    AudioThread_QueueCmdF32(0x01000300U, (f32) arg0 / 127.0f);
+void func_800C00B0(s8 vol, f32 freqMod) {
+    AUDIOCMD_CHANNEL_SET_FREQ_SCALE(SEQ_PLAYER_0, 3, freqMod);
+    AUDIOCMD_CHANNEL_SET_VOL_SCALE(SEQ_PLAYER_0, 3, vol / 127.0f);
 }
 
 // chonker
@@ -419,7 +426,7 @@ void func_800C123C(u8* arg0) {
 }
 
 void func_800C1268(unkStruct_func_800C1268* arg0) {
-    s32 var_v0;
+    s32 vol;
 
     if ((7 == D_800E7C94) && (D_801D7DC4 == 0)) {
         if (arg0->unk_4 != (*arg0).unk_5) {
@@ -437,13 +444,13 @@ void func_800C1268(unkStruct_func_800C1268* arg0) {
         }
 
         if (arg0->unk_0 > 4.0f) {
-            var_v0 = (s32) (508.0f / arg0->unk_0);
+            vol = (s32) (508.0f / arg0->unk_0);
         } else {
-            var_v0 = 127;
+            vol = 127;
         }
 
-        AudioThread_QueueCmdF32(0x01000500U, ((f32) var_v0) / 127.0f);
-        AudioThread_QueueCmdS8(0x03000500U, arg0->unk_7);
+        AUDIOCMD_CHANNEL_SET_VOL_SCALE(0, 5, vol / 127.0f);
+        AUDIOCMD_CHANNEL_SET_PAN(0, 5, arg0->pan);
     }
 }
 
@@ -452,7 +459,7 @@ void func_800C13AC(s32 arg0) {
     OSMesg msg;
 
     D_8003FCCF = arg0;
-    AudioThread_QueueCmdS32(0x82000000, 0);
+    AUDIOCMD_GLOBAL_INIT_SEQPLAYER(0, 0, 0, 0);
     AudioThread_ScheduleProcessCmds();
     osRecvMesg(gAudioTaskStartQueue, &msg, 1);
     osRecvMesg(gAudioTaskStartQueue, &msg, 1);
@@ -470,15 +477,15 @@ void func_800C141C(void) {
 }
 
 void func_800C1488(void) {
-    AudioThread_QueueCmdS32(0x83000000, 0);
+    AUDIOCMD_GLOBAL_DISABLE_SEQPLAYER(0, 0);
 }
 
 void func_800C14AC(void) {
-    AudioThread_QueueCmdS32(0x83000000, 0xB4);
+    AUDIOCMD_GLOBAL_DISABLE_SEQPLAYER(0, 180);
 }
 
-void func_800C14D0(s32 arg0) {
-    AudioThread_QueueCmdS32(((arg0 & 0xFF) << 8) | 0x81000000, 0);
+void func_800C14D0(s32 seqId) {
+    AUDIOCMD_GLOBAL_SYNC_LOAD_SEQ_PARTS(seqId, 0);
 }
 
 void func_800C1500(s32 arg0, u32 arg1) {
@@ -502,32 +509,32 @@ void func_800C15C8(s32 arg0, u32 arg1) {
     AudioThread_QueueCmdF32(0x41030000U, 0.7f);
 }
 
-void func_800C1608(u32 arg0) {
-    AudioThread_QueueCmdS32(0x83030000U, arg0);
+void AudioGeneral_DisableSeqPlayer3(u32 fade) {
+    AUDIOCMD_GLOBAL_DISABLE_SEQPLAYER(SEQ_PLAYER_3, fade);
 }
 
-void func_800C162C(u32 arg0) {
-    AudioThread_QueueCmdS32(0x83000000U, arg0);
+void AudioGeneral_DisableSeqPlayer0(u32 fade) {
+    AUDIOCMD_GLOBAL_DISABLE_SEQPLAYER(SEQ_PLAYER_0, fade);
 }
 
-void func_800C1650(u32 arg0) {
-    AudioThread_QueueCmdS32(0x83010000U, arg0);
+void AudioGeneral_DisableSeqPlayer1(u32 fade) {
+    AUDIOCMD_GLOBAL_DISABLE_SEQPLAYER(SEQ_PLAYER_1, fade);
 }
 
-void func_800C1674(u32 arg0) {
-    AudioThread_QueueCmdS32(0x83020000U, arg0);
+void AudioGeneral_DisableSeqPlayer2(u32 fade) {
+    AUDIOCMD_GLOBAL_DISABLE_SEQPLAYER(SEQ_PLAYER_2, fade);
 }
 
-void func_800C1698(void) {
+void AudioGeneral_InitSequencePlayers(void) {
     s32 i;
 
-    for (i = 0; i < 4; i++) {
-        AudioThread_QueueCmdS32(((i & 0xFF) << 0x10) | 0x83000000, 0);
+    for (i = 0; i < MAX_SEQ_PLAYERS; i++) {
+        AUDIOCMD_GLOBAL_DISABLE_SEQPLAYER(i, 0);
     }
 }
 
-void func_800C16F0(void) {
-    AudioThread_QueueCmdS32(0xF2000000U, 0U);
+void AudioGeneral_UnmuteSequencePlayers(void) {
+    AUDIOCMD_GLOBAL_UNMUTE(0);
 }
 
 void func_800C1714(OSMesg incMsg) {
@@ -736,69 +743,69 @@ void func_800C1F60(s32 arg0) {
         switch (arg0) {
             case 0:
                 D_800E7CB8 = 0;
-                func_800C1650(0xA0U);
-                func_800C1674(0xA0U);
-                func_800C1608(0xA0U);
+                AudioGeneral_DisableSeqPlayer1(0xA0U);
+                AudioGeneral_DisableSeqPlayer2(0xA0U);
+                AudioGeneral_DisableSeqPlayer3(0xA0U);
                 break;
 
             case 9:
                 if (D_800E7C94 == 0) {
-                    func_800C1650(0xA0U);
+                    AudioGeneral_DisableSeqPlayer1(0xA0U);
                 }
                 if (D_801D7DCC != 0x18) {
-                    func_800C1674(0xA0U);
+                    AudioGeneral_DisableSeqPlayer2(0xA0U);
                 }
                 break;
 
             case 1:
                 if (D_800E7C94 != 0xA) {
-                    func_800C1650(0xA0U);
-                    func_800C1674(0xA0U);
-                    func_800C1608(0xA0U);
+                    AudioGeneral_DisableSeqPlayer1(0xA0U);
+                    AudioGeneral_DisableSeqPlayer2(0xA0U);
+                    AudioGeneral_DisableSeqPlayer3(0xA0U);
                 }
                 break;
 
             case 2:
-                func_800C1674(0xA0U);
-                func_800C1608(0xA0U);
+                AudioGeneral_DisableSeqPlayer2(0xA0U);
+                AudioGeneral_DisableSeqPlayer3(0xA0U);
                 break;
             case 3:
                 if (D_801D7DC8 == 4) {
-                    func_800C1674(0x140U);
+                    AudioGeneral_DisableSeqPlayer2(0x140U);
                 }
                 break;
 
             case 5:
-                func_800C1608(0x46U);
-                func_800C1674(0xAU);
+                AudioGeneral_DisableSeqPlayer3(0x46U);
+                AudioGeneral_DisableSeqPlayer2(0xAU);
                 break;
 
             case 7:
-                func_800C162C(0x8CU);
-                func_800C1650(0x8CU);
+                AudioGeneral_DisableSeqPlayer0(0x8CU);
+                AudioGeneral_DisableSeqPlayer1(0x8CU);
                 break;
 
             case 10:
                 if (D_800E7C94 != 1) {
-                    func_800C1650(0xA0U);
-                    func_800C1674(0xA0U);
-                    func_800C1608(0xA0U);
+                    AudioGeneral_DisableSeqPlayer1(0xA0U);
+                    AudioGeneral_DisableSeqPlayer2(0xA0U);
+                    AudioGeneral_DisableSeqPlayer3(0xA0U);
                 }
                 break;
 
             case 11:
-                func_800C162C(0x258U);
-                func_800C1650(0x258U);
-                func_800C1674(0x258U);
-                func_800C1608(0x258U);
+                AudioGeneral_DisableSeqPlayer0(0x258U);
+                AudioGeneral_DisableSeqPlayer1(0x258U);
+                AudioGeneral_DisableSeqPlayer2(0x258U);
+                AudioGeneral_DisableSeqPlayer3(0x258U);
                 break;
 
             case 12:
                 if (D_800E7C94 == 5) {
-                    func_800C162C(0x12CU);
-                    func_800C1650(0x12CU);
-                    func_800C1674(0x12CU);
-                    func_800C1608(0x12CU);
+                    AudioGeneral_DisableSeqPlayer0(0x12CU);
+                    AudioGeneral_DisableSeqPlayer1(0x12CU);
+                    AudioGeneral_DisableSeqPlayer2(0x12CU);
+                    AudioGeneral_DisableSeqPlayer3(0x12CU);
                 }
                 break;
         }
@@ -841,7 +848,7 @@ void func_800C21F4(s32 arg0, int courseID) {
     D_801D7DF4[2] = 0;
     D_801D7DF4[3] = 0;
     D_800E7CB0 = 0;
-    func_800C16F0();
+    AudioGeneral_UnmuteSequencePlayers();
     if ((arg0 != D_800E7C94) || ((arg0 != 1) && (arg0 != 10))) {
         temp_v0 = D_800E7C94;
         D_800E7C94 = (s8) arg0;
@@ -849,7 +856,7 @@ void func_800C21F4(s32 arg0, int courseID) {
         D_800E7CC0 = 1;
         switch (arg0) { /* irregular */
             case 0x0:
-                func_800C1698();
+                AudioGeneral_InitSequencePlayers();
                 if (temp_v0 != 0) {
                     func_800C1714(NULL);
                 }
@@ -881,7 +888,7 @@ void func_800C21F4(s32 arg0, int courseID) {
                 if (temp_v0 != 0xA) {
                     func_800C1488();
                     func_800C13AC(1);
-                    func_800C1608(0xA0U);
+                    AudioGeneral_DisableSeqPlayer3(0xA0U);
                     func_800C1588(4, 0x50);
                     AudioThread_QueueCmdF32(0x01000200U, 0.0f);
                     AudioThread_QueueCmdF32(0x01000500U, 0.0f);
@@ -903,14 +910,15 @@ void func_800C21F4(s32 arg0, int courseID) {
             case 0x2:
                 func_800C1488();
                 func_800C13AC(0);
-                func_800C1674(0U);
-                func_800C1608(0U);
-                AudioThread_QueueCmdS8(0x03000000U, 0x40);
-                AudioThread_QueueCmdS8(0x03000100U, 0x40);
-                AudioThread_QueueCmdS8(0x03000200U, 0x40);
-                AudioThread_QueueCmdS8(0x03000300U, 0x40);
-                AudioThread_QueueCmdS8(0x03000400U, 0x40);
-                AudioThread_QueueCmdS8(0x03000500U, 0x40);
+                AudioGeneral_DisableSeqPlayer2(0U);
+                AudioGeneral_DisableSeqPlayer3(0U);
+                AUDIOCMD_CHANNEL_SET_PAN(0, 0, 0x40);
+                AUDIOCMD_CHANNEL_SET_PAN(0, 1, 0x40);
+                AUDIOCMD_CHANNEL_SET_PAN(0, 2, 0x40);
+                AUDIOCMD_CHANNEL_SET_PAN(0, 3, 0x40);
+                AUDIOCMD_CHANNEL_SET_PAN(0, 4, 0x40);
+                AUDIOCMD_CHANNEL_SET_PAN(0, 5, 0x40);
+
                 AudioThread_QueueCmdF32(0x02000000U, 0.0f);
                 AudioThread_QueueCmdF32(0x02000300U, 0.0f);
                 AudioThread_QueueCmdF32(0x01000200U, 0.0f);
@@ -1124,7 +1132,7 @@ void func_800C21F4(s32 arg0, int courseID) {
                 func_800C13AC(0);
                 break;
             case 0xB:
-                func_800C1698();
+                AudioGeneral_InitSequencePlayers();
                 func_800C1714((void*) 0xA);
                 // ! fake
                 temp_v0 = gDifficulty;
@@ -1149,13 +1157,13 @@ void func_800C21F4(s32 arg0, int courseID) {
                 break;
             case 0xC:
                 if (temp_v0 == 5) {
-                    func_800C1698();
+                    AudioGeneral_InitSequencePlayers();
                     func_800C13AC(0);
                     func_800C1500(0x16, 0x28U);
                 }
                 break;
             case 0xFF:
-                func_800C1698();
+                AudioGeneral_InitSequencePlayers();
                 break;
         }
         if ((D_800E7C94 == 7) || (D_800E7C94 == 6) || (D_800E7C94 == 0xB) || (D_800E7C94 == 0)) {
@@ -1206,18 +1214,18 @@ void func_800C3044(void) {
 
 void func_800C3050(s32 arg0) {
     if (arg0 > 0) {
-        func_800C1650(0x40);
-        func_800C1674(0x40);
+        AudioGeneral_DisableSeqPlayer1(0x40);
+        AudioGeneral_DisableSeqPlayer2(0x40);
         func_800C1540(arg0 + 2, 0x40, 0);
     } else if (arg0 == 0) {
-        func_800C1674(0x100);
+        AudioGeneral_DisableSeqPlayer2(0x100);
     }
     D_801D7DCC = arg0 + 2;
 }
 
 void func_800C30BC(void) {
     if (D_800E7C94 == 4) {
-        func_800C1650(0);
+        AudioGeneral_DisableSeqPlayer1(0);
         func_800C15C8(0x13, 0);
     }
 }
@@ -1474,7 +1482,7 @@ void func_800C40B0(void) {
                         case 0x3CA:       /* switch 2 */
                             break;
                         case 0x2EE: /* switch 2 */
-                            func_800C1650(0x4B0U);
+                            AudioGeneral_DisableSeqPlayer1(0x4B0U);
                             break;
                         case 0x348: /* switch 2 */
                             func_800C3500(0);
@@ -1494,7 +1502,7 @@ void func_800C40B0(void) {
                         case 0x311: /* switch 3 */
                             break;
                         case 0x28A: /* switch 3 */
-                            func_800C1650(0x3E8U);
+                            AudioGeneral_DisableSeqPlayer1(0x3E8U);
 
                             break;
                         case 0x2BC: /* switch 3 */
@@ -1521,7 +1529,7 @@ void func_800C40B0(void) {
                             /* switch 4 */
                             break;
                         case 0x258: /* switch 4 */
-                            func_800C1650(0x4B0U);
+                            AudioGeneral_DisableSeqPlayer1(0x4B0U);
 
                             break;
                         case 0x2A8: /* switch 4 */
@@ -1551,7 +1559,7 @@ void func_800C40B0(void) {
                         case 0x262:       /* switch 6 */
                             break;
                         case 0x1B8: /* switch 6 */
-                            func_800C1650(0x708U);
+                            AudioGeneral_DisableSeqPlayer1(0x708U);
 
                             break;
                         case 0x1EA: /* switch 6 */
@@ -1577,7 +1585,7 @@ void func_800C40B0(void) {
                         case 0x280:       /* switch 7 */
                             break;
                         case 0x1E0: /* switch 7 */
-                            func_800C1650(0x3E8U);
+                            AudioGeneral_DisableSeqPlayer1(0x3E8U);
 
                             break;
                         case 0x208: /* switch 7 */
@@ -1603,7 +1611,7 @@ void func_800C40B0(void) {
                         case 0x26C:       /* switch 8 */
                             break;
                         case 0x208: /* switch 8 */
-                            func_800C1650(0x320U);
+                            AudioGeneral_DisableSeqPlayer1(0x320U);
 
                             break;
                         case 0x226: /* switch 8 */
@@ -1628,7 +1636,7 @@ void func_800C40B0(void) {
                 case 0x26C:       /* switch 9 */
                     break;
                 case 0x190: /* switch 9 */
-                    func_800C1650(0x320U);
+                    AudioGeneral_DisableSeqPlayer1(0x320U);
                     break;
                 case 0x1E0: /* switch 9 */
                     func_800C3500(3);
@@ -1698,7 +1706,7 @@ void func_800C4998(s32 arg0, s32 arg1) {
     D_801D7E10 = D_800E7D10[arg1];
     D_801D7DC0 = arg0;
     D_801D7DC4 = arg1;
-    func_800C1650(0xF0U);
+    AudioGeneral_DisableSeqPlayer1(0xF0U);
     func_800C1488();
     func_800C13AC(0);
     switch (D_801D7DC0) { /* irregular */

@@ -6,6 +6,7 @@
 #include "audiothread_cmd.h"
 
 #define MAX_CHANNELS 16
+#define MAX_SEQ_PLAYERS 4
 
 #define SOUND_MODE_STEREO 0
 #define SOUND_MODE_MONO 3
@@ -719,7 +720,7 @@ extern struct SoundMultiPool gSeqLoadedPool;
 extern struct SoundMultiPool gBankLoadedPool;
 extern u8 gBankLoadStatus[64];
 extern u8 gSeqLoadStatus[256];
-extern SequencePlayer gSequencePlayers[4];
+extern SequencePlayer gSequencePlayers[MAX_SEQ_PLAYERS];
 extern f32 gLeftVolRampings[3][1024];
 extern f32 gRightVolRampings[3][1024];
 extern u8 gAudioHeap[];
@@ -798,7 +799,6 @@ extern OSMesg gAudioDmaMesg;
 extern OSIoMesg gAudioDmaIoMesg;
 extern u8* gAlBankSets;
 extern u16 gSequenceCount;
-extern struct SequencePlayer gSequencePlayers[4];
 extern s32 gRefreshRate;
 extern f32 gAudio_Unk80045610;
 extern s32 gAudioHeapSize;
@@ -893,7 +893,7 @@ void func_800C377C(s32 arg0);
 
 void AudioThread_QueueCmdS32(u32 opArgs, u32 val);
 void AudioThread_ScheduleProcessCmds(void);
-void func_800BFFEC(u8 arg0, u8 arg1, u8 arg2);
+void func_800BFFEC(u8 channelIndex, u8 arg1, u8 arg2);
 void* AudioHeap_AllocCached(struct SoundMultiPool* arg0, s32 arg1, s32 size, s32 arg3, s32 id);
 void* AudioHeap_AllocZeroed(struct SoundAllocPool* pool, u32 size);
 void* AudioHeap_SearchRegularCaches(struct SoundMultiPool* multiPool, s32 arg1, s32 id);

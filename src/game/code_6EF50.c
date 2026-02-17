@@ -68,7 +68,7 @@ void func_800B4788(s32 source_id, f32 x_position, f32 y_position, f32 z_position
     D_801D7DB0 = D_801D7DB0 % 16;
 }
 
-void create_obj(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
+void func_800B490C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5) {
     s32 i;
 
     for (i = 0; i < 8; i++) {
