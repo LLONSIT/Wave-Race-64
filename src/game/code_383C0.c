@@ -67,7 +67,7 @@ void func_800B490C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5);
 void func_8007E938(UnkStruct_80192690* arg0, f32 arg1, f32 arg2, f32 arg3, UnkStruct_8007E938* arg4,
                    UnkStruct_8007E938* arg5, UnkStruct_8007E938* arg6);
 void func_8007EF80(UnkStruct_80192690* arg0);
-void func_8007DF4C(UnkStruct_80192690 *arg0, f32 arg1, f32 arg2, f32 arg3, void *arg4, void *arg5, void *arg6);
+void func_8007DF4C(UnkStruct_80192690* arg0, f32 arg1, f32 arg2, f32 arg3, void* arg4, void* arg5, void* arg6);
 s32 func_800741A4(f32, f32, u8**);
 extern f32 D_800D49B8;
 extern s32 D_801C3B44;
@@ -82,7 +82,7 @@ extern s16* D_801C3B7C;
 extern u16* D_801C3B80;
 extern s16 D_801C3B40;
 extern UnkStruct_801C3B84* D_801C3B84;
-              
+
 void func_8007DBC0(void) {
     f32 temp_f12;
     f32 temp_f14;
@@ -144,7 +144,7 @@ void func_8007DBC0(void) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_383C0/func_8007DF4C.s")
 
-void func_8007E8C8(UnkStruct_80192690 *arg0) {
+void func_8007E8C8(UnkStruct_80192690* arg0) {
     func_8007DF4C(arg0, arg0->unk160C, arg0->unk1610, arg0->unk1614, &arg0->unk90[4], &arg0->unk90[5], &arg0->unk90[3]);
     func_8007DF4C(arg0, arg0->unk1654, arg0->unk1658, arg0->unk165C, (UnkStruct_8007E938*) &arg0->unk90[0xB],
                   (UnkStruct_8007E938*) &arg0->unk90[0xA], (UnkStruct_8007E938*) &arg0->unk90[9]);
@@ -342,14 +342,22 @@ f32 func_8007F448(f32 arg0, f32 arg1, f32 arg2, f32* arg3, f32* arg4, f32* arg5)
         temp_f0 = temp_a0->unk0 - arg0;
         temp_f2 = temp_a0->unk4 - arg1;
         temp_f16 = temp_a0->unk8 - arg2;
-        if (((temp_a0->unk18 * temp_f0) + (temp_f2 * temp_a0->unk1C) + (temp_f16 * temp_a0->unk20)) < 0.0f) { continue; }
-        if (((temp_a0->unk24 * temp_f0) + (temp_f2 * temp_a0->unk28) + (temp_f16 * temp_a0->unk2C)) < 0.0f) { continue; }
+        if (((temp_a0->unk18 * temp_f0) + (temp_f2 * temp_a0->unk1C) + (temp_f16 * temp_a0->unk20)) < 0.0f) {
+            continue;
+        }
+        if (((temp_a0->unk24 * temp_f0) + (temp_f2 * temp_a0->unk28) + (temp_f16 * temp_a0->unk2C)) < 0.0f) {
+            continue;
+        }
 
         temp_f18 = (temp_a0->unk30 * temp_f0) + (temp_f2 * temp_a0->unk34) + (temp_f16 * temp_a0->unk38);
-        if (temp_f18 >= 0.0f || temp_f18 < temp_a0->unk3C) { continue; }
+        if (temp_f18 >= 0.0f || temp_f18 < temp_a0->unk3C) {
+            continue;
+        }
 
         temp_f18 = (temp_a0->unkC * temp_f0) + (temp_f2 * temp_a0->unk10) + (temp_f16 * temp_a0->unk14);
-        if (temp_f18 < 0.0f || temp_f18 > 16.0f) { continue; }
+        if (temp_f18 < 0.0f || temp_f18 > 16.0f) {
+            continue;
+        }
 
         *arg3 = temp_a0->unkC;
         *arg4 = temp_a0->unk10;
