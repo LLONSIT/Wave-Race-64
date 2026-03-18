@@ -269,3 +269,5 @@ AudioSynth_FinalResample = 0x800B68A4;
 
 aspMainTextStart = 0x800D37B0; //name_end:aspMainTextEnd
 aspMainDataStart = 0x800EEB10; //name_end:aspMainDataEnd
+
+AudioGeneral_DisableSeqPlayer2 = 0x800C1674;
