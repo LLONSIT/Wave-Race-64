@@ -77,8 +77,7 @@ ifeq ($(COMPILER),gcc)
   CC       := $(MIPS_BINUTILS_PREFIX)gcc
 else
 ifeq ($(COMPILER),ido)
-  CC       := $(TOOLS)/ido-static-recomp/$(DETECTED_OS)/7.1/cc
-  CC_OLD   := $(TOOLS)/ido-static-recomp/$(DETECTED_OS)/5.3/cc
+  CC := $(ASM_PROC) $(ASM_PROC_FLAGS) $(IDO) -- $(AS) $(ASFLAGS) --
 else
 $(error Unsupported compiler. Please use either ido or gcc as the COMPILER variable.)
 endif
@@ -386,15 +385,15 @@ $(BUILD_DIR)/src/libultra/libc/ll.o: OPTFLAGS := -O1 -g0
 $(BUILD_DIR)/src/libultra/libc/ll.o: MIPS_VERSION := -mips3 -32
 
 # cc & asm-processor
-CC_OLD := $(ASM_PROC) $(ASM_PROC_FLAGS) $(IDO) -- $(AS) $(ASFLAGS) --
-$(BUILD_DIR)/src/libultra/gu/lookatref.o: CC_OLD := $(IDO)
-$(BUILD_DIR)/src/libultra/gu/ortho.o: CC_OLD := $(IDO) 
-$(BUILD_DIR)/src/libultra/gu/translate.o: CC_OLD := $(IDO) 
-$(BUILD_DIR)/src/libultra/gu/perspective.o: CC_OLD := $(IDO)
-$(BUILD_DIR)/src/libultra/gu/mtxutil.o: CC_OLD := $(IDO)
-$(BUILD_DIR)/src/libultra/gu/cosf.o: CC_OLD := $(IDO)
-$(BUILD_DIR)/src/libultra/audio/bnkf.o: CC_OLD := $(IDO)
-$(BUILD_DIR)/src/libultra/libc/ll.o: CC_OLD := $(IDO)
+CC := $(ASM_PROC) $(ASM_PROC_FLAGS) $(IDO) -- $(AS) $(ASFLAGS) --
+$(BUILD_DIR)/src/libultra/gu/lookatref.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/gu/ortho.o: CC := $(IDO) 
+$(BUILD_DIR)/src/libultra/gu/translate.o: CC := $(IDO) 
+$(BUILD_DIR)/src/libultra/gu/perspective.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/gu/mtxutil.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/gu/cosf.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/audio/bnkf.o: CC := $(IDO)
+$(BUILD_DIR)/src/libultra/libc/ll.o: CC := $(IDO)
 
 else # GCC
 
@@ -519,7 +518,7 @@ $(BUILD_DIR)/%.o: %.s
 $(BUILD_DIR)/%.o: %.c
 	$(call print,Compiling:,$<,$@)
 	@$(CC_CHECK) $(CC_CHECK_FLAGS) $(IINC) -I $(dir $*) $(CHECK_WARNINGS) $(BUILD_DEFINES) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(C_DEFINES) $(MIPS_BUILTIN_DEFS) -o $@ $<
-	$(V)$(CC_OLD) -c $(CFLAGS) $(BUILD_DEFINES) $(IINC) $(WARNINGS) $(MIPS_VERSION) $(ENDIAN) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(C_DEFINES) $(OPTFLAGS) -o $@ $<
+	$(V)$(CC) -c $(CFLAGS) $(BUILD_DEFINES) $(IINC) $(WARNINGS) $(MIPS_VERSION) $(ENDIAN) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(C_DEFINES) $(OPTFLAGS) -o $@ $<
 	$(V)$(OBJDUMP_CMD)
 	$(V)$(RM_MDEBUG)
 
@@ -527,7 +526,7 @@ $(BUILD_DIR)/%.o: %.c
 build/src/libultra/libc/ll.o: src/libultra/libc/ll.c
 	$(call print,Patching:,$<,$@)
 	@$(CC_CHECK) $(CC_CHECK_FLAGS) $(IINC) -I $(dir $*) $(CHECK_WARNINGS) $(BUILD_DEFINES) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(C_DEFINES) $(MIPS_BUILTIN_DEFS) -o $@ $<
-	$(V)$(CC_OLD) -c $(CFLAGS) $(BUILD_DEFINES) $(IINC) $(WARNINGS) $(MIPS_VERSION) $(ENDIAN) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(C_DEFINES) $(OPTFLAGS) -o $@ $<
+	$(V)$(CC) -c $(CFLAGS) $(BUILD_DEFINES) $(IINC) $(WARNINGS) $(MIPS_VERSION) $(ENDIAN) $(COMMON_DEFINES) $(RELEASE_DEFINES) $(GBI_DEFINES) $(C_DEFINES) $(OPTFLAGS) -o $@ $<
 	$(V)$(PYTHON) $(TOOLS)/set_o32abi_bit.py $@
 	$(V)$(OBJDUMP_CMD)
 	$(V)$(RM_MDEBUG)
