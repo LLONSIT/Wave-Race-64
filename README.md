@@ -83,7 +83,7 @@ A early decompilation of a game with many waves!
 
 - Cloning the repo
 
-``git clone https://github.com/LLONSIT/wr64.git --recursive``
+``git clone https://github.com/LLONSIT/Wave-Race-64.git --recursive``
 
 - installing the splat dependencies and building some tools
  
@@ -126,5 +126,3 @@ Assuming that you cloned the repository with --recursive
 	│   └── core: DMA code
 	|   └── overlays: Game overlays
 	└── tools: build tools
-
-
