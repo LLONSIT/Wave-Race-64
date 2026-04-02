@@ -68,7 +68,7 @@ Gfx* func_i2_802C5B4C(Gfx* gdl) {
     } else {
         gdl = func_i2_802C7C50(gdl);
         if (D_802C8C58.player_1_ready == 0) {
-             gSPDisplayList(gdl++, &D_80BE4A8);
+            gSPDisplayList(gdl++, &D_80BE4A8);
         }
         if (D_802C8C58.player_2_ready == 0) {
             gSPDisplayList(gdl++, &D_80BE500);
@@ -82,15 +82,15 @@ Gfx* func_i2_802C5B4C(Gfx* gdl) {
     } else if (D_80228A16 == 1) {
         func_8007C31C();
         switch (D_801CE630) {
-        case 2:
-            func_801EB180();
-            break;
-        case 30:
-            func_801EB91C();
-            break;
-        case 20:
-            func_801EBFE4();
-            break;
+            case 2:
+                func_801EB180();
+                break;
+            case 30:
+                func_801EB91C();
+                break;
+            case 20:
+                func_801EBFE4();
+                break;
         }
     }
     return gdl;
