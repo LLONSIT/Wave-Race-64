@@ -18,11 +18,12 @@ void func_i2_802C5AE4(void) {
         D_802C8C60[i] = 0;
         D_801CE6F4[i] = i;
     };
+// clang-format off
+    for (i = 0; i < 4; i++) { \
+        D_802C8C70[i] = 0; \
+    } \
 
-    for (i = 0; i < 4; i++) {
-        D_802C8C70[i] = 0;
-    }
-    D_802C8C68 = 0;
+// clang-format on
     D_802C8C6A = 0;
 }
 
