@@ -115,6 +115,10 @@ extern s32 D_801C0CBC;
 extern s32 D_801C0CC0;
 extern s32 D_801C0CC4;
 
+extern UNK_TYPE D_1029978[];
+extern u16 D_800D4B18[4][256];
+extern u8 D_800D5318[4][3];
+
 // TODO: Move this to the proper header
 extern void guLookAtHilite(Mtx* m, LookAt* l, Hilite* h, float xEye, float yEye, float zEye, float xAt, float yAt,
                            float zAt, float xUp, float yUp, float zUp, float xl1, float yl1,
@@ -134,7 +138,37 @@ void func_8007DBC0(void); /* extern */
 void func_800B49C4(void);
 void func_8006E0F4(void);
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006A300.s")
+void func_8006A300(void) {
+    s32 temp_a0;
+    s32 temp_lo;
+    s32 temp_s6;
+    s32 temp_t0;
+    s32 temp_t1;
+    u16* var_ra;
+    s32 i;
+    s32 j; 
+    s32 r;
+    s32 g;
+    s32 b;
+
+    var_ra = SegmentedToVirtual(D_1029978);
+    for (i = 0; i < 4; i++) {
+        s16 temp_s1 = D_800D5318[i][0];
+        s16 temp_s2 = D_800D5318[i][1];
+        s16 temp_s3 = D_800D5318[i][2];
+        for (j = 0; j < 256; j++) {
+            temp_a0 = (var_ra[j] >> 6) & 0x1F;
+            temp_t0 = (var_ra[j] >> 1) & 0x1F;
+            temp_lo = (var_ra[j] >> 0xB) ;
+            temp_t1 = (var_ra[j] & 1);
+            r = (((((0, temp_lo) * temp_s1) / 255) + ((temp_a0 * (0xFF - temp_s1)) / 255)));
+            g = ((((0, temp_lo) * temp_s2) / 255) + ((temp_a0 * (0xFF - temp_s2)) / 255));
+            b = ((((0, temp_lo) * temp_s3) / 255) + ((temp_t0 * (0xFF - temp_s3)) / 255));
+            D_800D4B18[i][j] = ((r << 0xB) + (g << 6) + (b << 1) + temp_t1);
+        }
+    }
+}
+
 
 void func_8006A748(void) {
     UnkStruct_80192690* temp_a0;

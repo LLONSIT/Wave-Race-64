@@ -1,10 +1,5 @@
 #include "common.h"
 
-typedef struct UnkPool {
-    s8 pad0[0x4140];
-    Mtx unk_4140[1];
-} UnkPool;
-
 extern int D_801D7DB0;
 extern struct Vec3f D_800E6DD0[4];
 extern s32 D_800E6E30[];
