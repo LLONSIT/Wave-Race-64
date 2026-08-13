@@ -31,7 +31,7 @@ jobs:
       run: ./decrypt_secret.sh
       env:
           SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
-          SECRET_BASENAME: baserom.us.z64
+          SECRET_NAME: baserom.us.z64
           SECRET_VERSION: us
     - name: Install Packages
       run: sudo apt-get install -y git make git build-essential binutils-mips-linux-gnu python3 python3-pip
