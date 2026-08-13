@@ -1,5 +1,6 @@
 name: regress-validate
 on:
+  workflow_dispatch:
   workflow_call:
     secrets:
       SECRET_PASSPHRASE: { required: true }
