@@ -1,19 +1,18 @@
-name: Check Format
+name: Format
 
 # Build on every branch push, tag push, and pull request change:
 on: [push, pull_request]
 
 jobs:
   build:
-    name: Check format
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout reposistory
+    - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Install package requirements
-      run: sudo apt-get install -y python3 python3-pip clang-format-14 clang-tidy-14
+    - name: Install Packages
+      run: sudo apt-get install -y python3 python3-pip clang-format-20 clang-tidy-20 clang-tools-20
 
-    - name: Check format
+    - name: Check Format
       run: ./tools/check_format.sh
