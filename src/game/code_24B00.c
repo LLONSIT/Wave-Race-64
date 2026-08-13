@@ -27,17 +27,9 @@ typedef struct UnkStruct_801BFB70_s {
     /* 0x04 */ char pad4[0x3C]; /* maybe part of unk0[0x10]? */
 } UnkStruct_801BFB70;           /* size = 0x40 */
 
-typedef struct UnkStruct_801C0C90_s {
-    s32 riders[4];
-} UnkStruct_801C0C90;
-
-typedef struct VtxData_s {
-    Vtx vtx[4];
-} VtxData;
-
 typedef struct UnkStruct_80198368_s {
     /* 0x0 */ char pad[0x5140];
-    /* 0x5140 */ VtxData unk5140[2];
+    /* 0x5140 */ Vtx unk5140[2][4];
     /* 0x5144 */ char pad5144[0x612c];
 } UnkStruct_80198368;
 
@@ -56,68 +48,90 @@ typedef struct UnkStruct_801C0C80_s {
     f32 unkB4;
 } UnkStruct_801C0C80;
 
-extern s16 D_801C0AC0[];
-extern UnkStruct_801C0C80* D_801C0C80;
-extern s32 D_80223934;
+typedef struct UnkStruct_800D5330_s {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    f32 unkC;
+} UnkStruct_800D5330;
 
+typedef struct UnkStruct_801C0580_s {
+    f32 unk0;
+    f32 unk4;
+    f32 unk8;
+    s32 unkC;
+} UnkStruct_801C0580;
+
+// .data
+extern s32 D_800D4B00;
+extern u16 D_800D4B18[4][256];
+extern u8 D_800D5318[4][3];
+extern UnkStruct_800D5330 D_800D5330[];
+extern s32 D_800D543C;
+extern s32 D_800D5454;
 extern s32 D_800D92B0;
 extern s32 D_800D92B4;
+
+// .bss
+extern UnkStruct_80198368 D_80198368[2];
+extern s32 D_801AE950;
+extern s32 D_801BB120;
+extern UnkStruct_801BB138 D_801BB138[];
+extern s32 D_801BC938;
 extern UnkStruct_801BC940 D_801BC940[];
 extern s32 D_801BFA40;
-extern s32 D_801C0CB0;
-extern s32 D_801C0CB4;
-extern s32 D_801C292C;
-extern UnkStruct_801C2C24 D_801C2938[];
+extern UnkStruct_801BFA48 D_801BFA48[];
+extern s32 D_801BFB68;
+extern UnkStruct_801BFB70 D_801BFB70[];
+extern s32 D_801BFD70;
 extern s32 D_801C058C;
 extern s32 D_801C059C;
 extern s32 D_801C05AC;
 extern s32 D_801C05BC;
+extern UnkStruct_801C0580 D_801C0580[];
+extern s16 D_801C0840[];
+extern s16 D_801C0AC0[];
+extern UnkStruct_801C0C80* D_801C0C80;
 extern f32 D_801C0C84;
 extern f32 D_801C0C88;
 extern f32 D_801C0C8C;
-extern u16 D_101F170[];
-extern LookAt D_500B2C0[];
-extern LookAt D_500B2D0[];
-
-extern s32 D_800D543C;
-extern s32 D_800D5454;
-
-extern UnkStruct_80198368 D_80198368[2];
-extern UnkStruct_801C0C90 D_801C0C90[2];
+extern s32 D_801C0C90[2][4];
 extern s32 D_801C0CB0;
 extern s32 D_801C0CB4;
 extern s32 D_801C0CB8;
 extern s32 D_801C0CBC;
 extern s32 D_801C0CC0;
 extern s32 D_801C0CC4;
+extern s32 D_801C1FD0;
+extern s32 D_801C292C;
+extern UnkStruct_801C2C24 D_801C2938[];
+extern UnkStruct_801BC940_unk60 D_801BFD78[];
+extern s32 D_801C1FC8;
+extern s32 D_801BB12C;
 
-extern Gfx D_102BF48[];
-extern Gfx D_102C798[];
-extern Gfx D_102BFD8[];
-extern Gfx D_102C828[];
-
-extern s32 D_801AE950;
-extern s32 D_801BB120;
-extern s16 D_801C0840[];
+// segmented addresses
+extern Gfx D_10145F0[];
 extern u16 D_101ED68[];
+extern u16 D_101F170[];
+extern UNK_TYPE D_1029978[];
+extern Gfx D_102BF48[];
+extern Gfx D_102BFD8[];
+extern Gfx D_102C798[];
+extern Gfx D_102C828[];
+extern s32 D_1014A18[];
+extern s32 D_1015220[];
+extern s32 D_1015A28[];
+extern s32 D_1016230[];
+extern Gfx D_102CE78[];
+extern LookAt D_500B2C0[];
+extern LookAt D_500B2D0[];
 extern UnkStruct_801AE948 D_6000000[];
 extern s32 D_802E1F0[];
 extern s32 D_802E9F8[];
-/* extern */
-extern s32 D_800D4B00;
-extern UnkStruct_801BB138 D_801BB138[];
-extern s32 D_801BC938;
-extern UnkStruct_801BFA48 D_801BFA48[];
-extern s32 D_801BFB68;
-extern UnkStruct_801BFB70 D_801BFB70[];
-extern s32 D_801BFD70;
-extern s32 D_801C0CBC;
-extern s32 D_801C0CC0;
-extern s32 D_801C0CC4;
+extern u8 D_E0098D0[];
 
-extern UNK_TYPE D_1029978[];
-extern u16 D_800D4B18[4][256];
-extern u8 D_800D5318[4][3];
+// codeseg
+extern s32 D_80223934;
 
 // TODO: Move this to the proper header
 extern void guLookAtHilite(Mtx* m, LookAt* l, Hilite* h, float xEye, float yEye, float zEye, float xAt, float yAt,
@@ -133,10 +147,12 @@ void func_800B4750(void);
 void func_801EDFFC(s32, s32, f32, s32);
 void func_8004CC7C(UnkStruct_801BFB70*); /* extern */
 void func_8004F520(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, s32 arg5);
-void func_80079528(void); /* extern */
-void func_8007DBC0(void); /* extern */
+void func_801EE6F4(s32*, s32, s32, f32, f32, f32, f32); /* extern */
+void func_80079528(void);                               /* extern */
+void func_8007DBC0(void);                               /* extern */
 void func_800B49C4(void);
 void func_8006E0F4(void);
+f32 func_801ED338(f32);
 
 void func_8006A300(void) {
     s32 temp_a0;
@@ -146,7 +162,7 @@ void func_8006A300(void) {
     s32 temp_t1;
     u16* var_ra;
     s32 i;
-    s32 j; 
+    s32 j;
     s32 r;
     s32 g;
     s32 b;
@@ -159,8 +175,9 @@ void func_8006A300(void) {
         for (j = 0; j < 256; j++) {
             temp_a0 = (var_ra[j] >> 6) & 0x1F;
             temp_t0 = (var_ra[j] >> 1) & 0x1F;
-            temp_lo = (var_ra[j] >> 0xB) ;
+            temp_lo = (var_ra[j] >> 0xB);
             temp_t1 = (var_ra[j] & 1);
+            // FAKE
             r = (((((0, temp_lo) * temp_s1) / 255) + ((temp_a0 * (0xFF - temp_s1)) / 255)));
             g = ((((0, temp_lo) * temp_s2) / 255) + ((temp_a0 * (0xFF - temp_s2)) / 255));
             b = ((((0, temp_lo) * temp_s3) / 255) + ((temp_t0 * (0xFF - temp_s3)) / 255));
@@ -168,7 +185,6 @@ void func_8006A300(void) {
         }
     }
 }
-
 
 void func_8006A748(void) {
     UnkStruct_80192690* temp_a0;
@@ -261,7 +277,7 @@ void func_8006AACC(s32 arg0) {
 
     for (i = 0; i < 2; i++) {
         for (j = 0; j < 2; j++) {
-            vtx = D_80198368[i].unk5140[j].vtx;
+            vtx = D_80198368[i].unk5140[j];
             for (k = 0; k < 4; k++) {
                 vtx->v.flag = 0;
                 temp = k % 4;
@@ -285,7 +301,7 @@ void func_8006AACC(s32 arg0) {
 
     for (k = 0; k < 2; k++) {
         for (i = 0; i < gRiders; i++) {
-            D_801C0C90[k].riders[i] = 0xFF;
+            D_801C0C90[k][i] = 0xFF;
         }
     }
 
@@ -301,11 +317,301 @@ void func_8006AACC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006AC84.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006B334.s")
+void func_8006B334(Gfx** gdl) {
+    f32 var_fv0;
+    f32 temp_f18;
+    f32 temp_f8;
+    f32 temp_fa0;
+    s32 var_t5;
+    f32 var_fv1;
+    s32 var_t2;
+    s32* var_t4;
+    s32* var_ra_2;
+    s32 var_v0_2;
+    f32 var_fa0;
+    f32 temp_ft5;
+    f32 temp_fv1;
+    f32 sp160;
+    f32 temp_fa1;
+    f32 temp_fv0;
+    f32 temp_ft4;
+    f32 temp_fv0_2;
+    s32 var_ra;
+    s32 var_v1;
+    camera_unk_1* sp144;
+    UnkStruct_801C2C24* var_v0;
+    s32 pad;
+    Gfx* gdlh;
+    MtxF spF8;
+
+    gdlh = *gdl;
+    if (D_800DAB2C == 0) {
+        sp144 = &gCameraPerspective[D_80223930];
+        var_v0 = &D_801C2938[D_800D48DC];
+    } else {
+        sp144 = &gCameraPerspective[D_80223934];
+        var_v0 = &D_801C2938[D_800D48E0];
+    }
+    if (var_v0->unk2F4 != 0) {
+        return;
+    }
+    if ((var_v0->unk320 != var_v0->lapCount)) {
+        return;
+    }
+    if ((var_v0->unkC == D_801BB12C) && (var_v0->unk20 == 0)) {
+        return;
+    }
+    var_t5 = 0;
+    var_ra = 0;
+    var_v1 = var_v0->unkC;
+    if ((var_v0->lapCount >= D_801CE728[0]) && (var_v0->unkC == (0, D_801BB12C))) {
+        var_ra = 1;
+    }
+    var_v0_2 = D_801BB120;
+    while (((D_801AEE20[var_v1].unk9C != 0) || (D_801AEE20[var_v1].unkC8 == 0)) && (--var_v0_2 > 0)) {
+
+        if ((var_v0->lapCount >= D_801CE728[0]) && (var_v1 == D_801BB12C)) {
+            var_t5 = 1;
+            var_ra = 1;
+        }
+        var_v1 = D_801AEE20[var_v1].unkA0;
+    }
+    var_t2 = D_801AEE20[var_v1].unkA0;
+    if ((var_v0->lapCount >= D_801CE728[0]) && (var_t2 == D_801BB12C)) {
+        var_t5 = 1;
+    }
+    var_v0_2 = D_801BB120;
+    while (((D_801AEE20[var_t2].unk9C != 0) || (D_801AEE20[var_t2].unkC8 == 0)) && (--var_v0_2 > 0)) {
+        if ((var_v0->lapCount >= D_801CE728[0]) && (var_t2 == D_801BB12C)) {
+            var_t5 = 1;
+        }
+        var_t2 = D_801AEE20[var_t2].unkA0;
+    }
+    gSPClearGeometryMode(gdlh++, G_ZBUFFER | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR);
+    gSPSetGeometryMode(gdlh++, G_ZBUFFER | G_SHADE);
+    gSPTexture(gdlh++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+    gDPPipeSync(gdlh++);
+    gDPSetCycleType(gdlh++, G_CYC_1CYCLE | 0x0100000);
+    gDPSetCombineLERP(gdlh++, TEXEL1, TEXEL0, PRIMITIVE, TEXEL0, TEXEL1, TEXEL0, PRIMITIVE, TEXEL0, ENVIRONMENT,
+                      COMBINED, ENV_ALPHA, COMBINED, 0, 0, 0, COMBINED);
+    gDPSetRenderMode(gdlh++, G_RM_PASS, G_RM_AA_ZB_TEX_EDGE2);
+
+    if ((D_801CE638 == 1) && (D_801AEE20[var_v1].unk9C == 0) && (D_801AEE20[var_v1].unkC8 != 0) && (var_ra == 0)) {
+        switch (D_801AEE20[var_v1].unk98) {
+            case 0:
+                var_t4 = D_1015A28;
+                var_ra_2 = D_1016230;
+                break;
+            case 1:
+                var_t4 = D_1014A18;
+                var_ra_2 = D_1015220;
+                break;
+            default:
+                var_t4 = D_1015A28;
+                var_ra_2 = D_1016230;
+                break;
+        }
+
+        temp_ft5 = D_801AEE20[var_v1].unk0;
+        temp_fv1 = D_801AEE20[var_v1].unk4 + 128.0f;
+        sp160 = D_801AEE20[var_v1].unk8;
+        temp_fa1 = sp144->unk4C - temp_ft5;
+        temp_fv0 = sp144->unk50 - temp_fv1;
+        temp_ft4 = sp144->unk54 - sp160;
+        temp_fv0_2 = sqrtf(SQ(temp_fa1) + SQ(temp_fv0) + SQ(temp_ft4));
+        if (temp_fv0_2 > 3000.0f) {
+            var_fa0 = temp_fv0_2 / 3000.0f;
+        } else {
+            var_fa0 = 1.0f;
+        }
+        if ((temp_fa1 != 0.0f) || (temp_ft4 != 0.0f)) {
+            var_fv0 = 1.0f;
+            var_fv1 = 0.0f;
+        } else {
+            var_fv0 = 0.0f;
+            var_fv1 = 1.0f;
+        }
+
+        SysUtils_MatrixLookAt(&D_801AE948->unk4140[D_801AE950], &spF8, temp_fa1, temp_fv0, temp_ft4, 0.0f, var_fv0,
+                              var_fv1, temp_ft5, temp_fv1, sp160);
+        gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        func_801EE97C(&D_801AE948->unk4140[D_801AE950], var_fa0, var_fa0, var_fa0);
+        gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+        gDPPipeSync(gdlh++);
+        gDPLoadTextureBlock(gdlh++, var_t4, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+                            G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+
+        gDPLoadMultiBlock(gdlh++, var_ra_2, 0x100, 1, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0,
+                          G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
+                          G_TX_NOLOD);
+        var_v0_2 = D_800D4B00 & 3;
+        if (var_v0_2 == 3) {
+            var_v0_2 = 1;
+        }
+
+        var_v0_2 *= 127;
+        gDPSetPrimColor(gdlh++, 0, 0, var_v0_2, var_v0_2, var_v0_2, var_v0_2);
+        gDPSetEnvColor(gdlh++, D_801C0C80->unk48, D_801C0C80->unk4C, D_801C0C80->unk50, 0);
+        gSPDisplayList(gdlh++, D_102CE78);
+    }
+    gDPPipeSync(gdlh++);
+    gDPSetCycleType(gdlh++, G_CYC_1CYCLE);
+    gDPSetCombineLERP(gdlh++, ENVIRONMENT, TEXEL0, ENV_ALPHA, TEXEL0, 0, 0, 0, TEXEL0, ENVIRONMENT, TEXEL0, ENV_ALPHA,
+                      TEXEL0, 0, 0, 0, TEXEL0);
+    gDPSetRenderMode(gdlh++, G_RM_AA_ZB_TEX_EDGE, G_RM_AA_ZB_TEX_EDGE2);
+    if ((D_801CE638 == 1) && (D_801AEE20[var_t2].unk9C == 0) && (D_801C0840[var_t2] >= 0) && (var_t5 == 0)) {
+        if (D_801C0840[var_t2]) {}
+        switch (D_801AEE20[var_t2].unk98) {
+            case 0:
+                var_t4 = D_1015A28;
+                break;
+            case 1:
+                var_t4 = D_1014A18;
+                break;
+            default:
+                var_t4 = D_1015A28;
+                break;
+        }
+
+        temp_ft5 = D_801AEE20[var_t2].unk0;
+        temp_fv1 = D_801AEE20[var_t2].unk4 + 128.0f;
+        sp160 = D_801AEE20[var_t2].unk8;
+        temp_fa1 = sp144->unk4C - temp_ft5;
+        temp_fv0 = sp144->unk50 - temp_fv1;
+        temp_ft4 = sp144->unk54 - sp160;
+        if ((temp_fa1 != 0.0f) || (temp_ft4 != 0.0f)) {
+            var_fv0 = 1.0f;
+            var_fv1 = 0.0f;
+        } else {
+            var_fv1 = 1.0f;
+            var_fv0 = 0.0f;
+        }
+        SysUtils_MatrixLookAt(&D_801AE948->unk4140[D_801AE950], &spF8, temp_fa1, temp_fv0, temp_ft4, 0, var_fv0,
+                              var_fv1, temp_ft5, temp_fv1, sp160);
+        gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gDPPipeSync(gdlh++);
+        gDPLoadTextureBlock(gdlh++, var_t4, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+                            G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        gDPSetEnvColor(gdlh++, D_801C0C80->unk48, D_801C0C80->unk4C, D_801C0C80->unk50, 0);
+        gSPDisplayList(gdlh++, D_102CE78);
+    }
+    *gdl = gdlh;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006BE74.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006C5D8.s")
+void func_8006C5D8(Gfx** gdl) {
+    f32 temp_fv0;
+    f32 temp_fv0_2;
+    f32 temp_fs0;
+    f32 temp_fs1;
+    f32 temp_fv1;
+    f32 temp_f4;
+    f32 temp_f6;
+    f32 var_f0;
+    s32 pad[1];
+    f32 sp150;
+    s32 pad14C;
+    f32 var_f24;
+    f32 sp144;
+    f32 sp140;
+    f32 var_f26;
+    s32 var_s1;
+    s32 i;
+    f32 sp130;
+    s32 j;
+    camera_unk_1* temp_s3;
+    UnkStruct_800D5330* var_v0;
+    MtxF spE4;
+    Gfx* gdlh;
+
+    gdlh = *gdl;
+    temp_s3 = &gCameraPerspective[D_80223930];
+    var_f26 = temp_s3->unk64;
+    var_f24 = temp_s3->unk6C;
+    temp_fv0 = sqrtf(SQ(var_f26) + SQ(var_f24));
+    if (temp_fv0 > 0.0f) {
+        var_f26 /= temp_fv0;
+        var_f24 /= temp_fv0;
+    }
+    sp130 = -var_f26;
+    gSPClearGeometryMode(gdlh++, G_ZBUFFER | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR);
+    gSPSetGeometryMode(gdlh++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
+    gSPTexture(gdlh++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+    gDPPipeSync(gdlh++);
+    gDPSetCycleType(gdlh++, G_CYC_1CYCLE);
+    gDPSetCombineLERP(gdlh++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+    gDPSetRenderMode(gdlh++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+    gDPLoadTextureBlock(gdlh++, &D_E0098D0[(D_800D4B00 & 0x1F) << 5], G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0,
+                        G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD,
+                        G_TX_NOLOD);
+
+    sp150 = 0.0f;
+    if ((var_f26 != 0.0f) || (var_f24 != 0.0f)) {
+        sp140 = 0.0f;
+        sp144 = 1.0f;
+    } else {
+        sp144 = 0.0f;
+        sp140 = 1.0f;
+        sp150 = 1.0f;
+    }
+    for (i = 0; i < 4; i++) {
+        if (D_801C0580[i].unkC == 0) {
+            if (D_801C1FD0 != 0) {
+                continue;
+            }
+
+            temp_fs0 = D_801C0C84 - temp_s3->unk4C;
+            temp_fs1 = D_801C0C88 - temp_s3->unk54;
+            temp_fv0 = sqrtf(SQ(temp_fs0) + SQ(temp_fs1));
+            if (!(D_801C0C8C < temp_fv0)) {
+                continue;
+            }
+
+            D_801C0C84 = temp_s3->unk4C;
+            D_801C0C88 = temp_s3->unk54;
+            D_801C0C8C = func_801ED338(500.0f) + 500.0f;
+            D_801C0580[i].unkC = 1;
+            temp_fv1 = func_801ED338(1024.0f) - 512.0f;
+            temp_f4 = temp_fv1 * var_f24;
+            D_801C0580[i].unk0 = (temp_s3->unk4C + (var_f26 * 2024.0f) + temp_f4);
+            D_801C0580[i].unk4 = -64.0f;
+            D_801C0580[i].unk8 = (temp_s3->unk54 + (var_f24 * 2024.0f) + (temp_fv1 * sp130));
+            var_s1 = false;
+            for (j = 0; D_800D5330[j].unk0 != D_800D5330[j].unk4; j++) {
+                temp_fv0 = D_800D5330[j].unk0;
+                if ((D_800D5330[j].unk0 <= D_801C0580[i].unk0) && (D_801C0580[i].unk0 <= D_800D5330[j].unk4) &&
+                    ((D_800D5330[j].unk8 <= D_801C0580[i].unk8)) && (D_801C0580[i].unk8 <= D_800D5330[j].unkC)) {
+                    var_s1 = true;
+                    break;
+                }
+            }
+
+            if (var_s1) {
+                D_801C0580[i].unkC = 0;
+                continue;
+            }
+        } else {
+            temp_fs0 = D_801C0580[i].unk0 - temp_s3->unk4C;
+            temp_fs1 = D_801C0580[i].unk8 - temp_s3->unk54;
+            temp_fv0 = sqrtf(SQ(temp_fs0) + SQ(temp_fs1));
+            if (temp_fv0 > 0.0f) {
+                temp_fs0 /= temp_fv0;
+                temp_fs1 /= temp_fv0;
+            }
+            if (((temp_fs0 * var_f26) + (temp_fs1 * var_f24)) < -0.3f) {
+                D_801C0580[i].unkC = 0;
+                continue;
+            }
+        }
+        SysUtils_MatrixLookAt(&D_801AE948->unk4140[D_801AE950], &spE4, var_f26, sp150, var_f24, 0.0f, sp144, sp140,
+                              D_801C0580[i].unk0, D_801C0580[i].unk4, D_801C0580[i].unk8);
+        gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPDisplayList(gdlh++, D_10145F0);
+    }
+
+    *gdl = gdlh;
+}
 
 void func_8006CB98(Gfx** gdl) {
     s32 var_s3;
@@ -578,7 +884,67 @@ void configSignalRectangle(Gfx** gdl) {
     *gdl = gdlh;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006E0F4.s")
+void func_8006E0F4(void) {
+    UnkStruct_801BC940_unk60* var_s8 = D_801BFD78;
+    s32 i;
+
+    for (i = 0; i < D_801BFA40; i++) {
+        UnkStruct_801BC940* ptr = &D_801BC940[i];
+        f32* temp_s4;
+
+        if ((ptr->unk4C == 0xA) && (ptr->unkBC != 0)) {
+            ptr->unk54 = 0;
+            if (ptr->unk6C < 0xFF) {
+                ptr->unk6C++;
+            }
+        }
+
+        if (ptr->unk58 == 0) {
+            continue;
+        }
+
+        if (ptr->unk4C != 1) {
+            if (ptr->unk4C == 2) {
+                if (D_801C1FC8 != 0) {
+                    if (ptr->unk4 < 128.0f) {
+                        ptr->unk4 += 6.0f;
+                    }
+                }
+            } else if (ptr->unk4C == 8) {
+                if (ptr->unkC0 & 1) {
+                    ptr->unk14 += 4.0f;
+                    if (ptr->unk14 >= 360.0f) {
+                        ptr->unk14 -= 360.0f;
+                    }
+                } else {
+                    ptr->unk14 -= 4.0f;
+                    if (ptr->unk14 < 0.0f) {
+                        ptr->unk14 += 360.0f;
+                    }
+                }
+            }
+        }
+
+        func_801EE6F4((s32*) &ptr->unk74, ptr->unkC, ptr->unk10, ptr->unk14, ptr->unk0, ptr->unk4, ptr->unk8);
+
+        // FAKE
+        if (D_801BFD78) {}
+        if (ptr->unk68 == 1) {}
+        if (ptr->unk68 == 10) {}
+        if (ptr->unk68 > 0) {
+            UnkStruct_801BC940_unk60* var_s0 = &D_801BFD78[ptr->unk64];
+            UnkStruct_801BC940_unk60* var_s1 = ptr->unk60;
+            s32 var_s2;
+
+            for (var_s2 = 0; var_s2 < ptr->unk68; var_s2++) {
+                func_801EDC60((s32*) &ptr->unk74, var_s1->unk0, var_s1->unk4, var_s1->unk8, &var_s0->unk0,
+                              &var_s0->unk4, &var_s0->unk8);
+                var_s0++;
+                var_s1++;
+            }
+        }
+    }
+}
 
 void func_8006E3A8(void) {
     f32 var_fv0;

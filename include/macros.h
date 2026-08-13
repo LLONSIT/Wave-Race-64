@@ -70,7 +70,9 @@
 
 #define ARRAY_UNK_SIZE 4
 
-#define SQ(x) (x * x)
+#define SQ(x) ((x) * (x))
+
+#define CUBE(x) ((x) * (x) * (x))
 
 #define FABS(x) ((x) >= 0.0f ? (x) : -(x))
 
