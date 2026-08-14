@@ -525,7 +525,7 @@ s32 func_80099514(s32 arg0, s32 arg1, UnkStruct_801CED60* arg2, s16* arg3, f32* 
     // FAKE
     if (*arg3) {
         ;
-}
+    }
     if (var_v1 < 0) {
         var_v1 = 0;
         var_fa0 = 0.0f;
