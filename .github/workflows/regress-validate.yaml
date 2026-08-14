@@ -48,6 +48,6 @@ jobs:
         path: build/progress.json
     - name: Discord Progress
       if: ${{ github.event_name == 'push' }}
-      run: python3 tools/upload_progress.py --discord_url ${{ secrets.DISCORD_URL }} --version ${{ matrix.version }}
+      run: python3 tools/upload_progress.py --discord_url ${{ secrets.DISCORD_URL }}
     - name: Cleanup
       run: rm -f baserom.us.z64
