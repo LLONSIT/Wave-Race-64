@@ -2,7 +2,7 @@ name: regress-internal
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
     types: [ opened, synchronize ]
 jobs:
