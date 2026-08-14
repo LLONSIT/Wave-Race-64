@@ -10,12 +10,12 @@ typedef struct UnkStruct_800E60DC_s {
 typedef struct UnkStruct_801CED60_s {
     /* 0x0 */ s8 unk0;
     /* 0x1 */ s8 unk1;
-    /* 0x2 */ s8 unk2;                              /* inferred */
+    /* 0x2 */ s8 unk2; /* inferred */
     /* 0x3 */ s8 unk3;
-    /* 0x4 */ s16 unk4;                             /* inferred */
-    /* 0x6 */ s16 unk6;                             /* inferred */
-    /* 0x8 */ s16 unk8;                             /* inferred */
-} UnkStruct_801CED60;                               /* size = 0xA */
+    /* 0x4 */ s16 unk4; /* inferred */
+    /* 0x6 */ s16 unk6; /* inferred */
+    /* 0x8 */ s16 unk8; /* inferred */
+} UnkStruct_801CED60;   /* size = 0xA */
 
 typedef struct UnkStruct_801CEBE0 {
     /* 0x00 */ Vec3f unk0;
@@ -175,7 +175,7 @@ void func_8009C814(UnkStruct_8009A04C*, s32);
 void func_8009A1CC(UnkStruct_8009A04C*, f32);
 void func_8009934C(f32 t, Vec3f* arg1, f32* arg2, f32* arg3, f32* arg4, f32* arg5, f32* arg6);
 u8 func_8009CD50(UnkStruct_func_8009CCE8*);
-u8 func_8009CB70(UnkStruct_801CF060* arg0, UnkStruct_func_8009CCE8* arg1) ;
+u8 func_8009CB70(UnkStruct_801CF060* arg0, UnkStruct_func_8009CCE8* arg1);
 
 f32 Math_Fabs(f32 x) {
     if (x < 0.0f) {
@@ -523,7 +523,9 @@ s32 func_80099514(s32 arg0, s32 arg1, UnkStruct_801CED60* arg2, s16* arg3, f32* 
     var_v1 = *arg3;
     sp40 = arg2[var_v1].unk0;
     // FAKE
-    if (*arg3);
+    if (*arg3) {
+        ;
+}
     if (var_v1 < 0) {
         var_v1 = 0;
         var_fa0 = 0.0f;
@@ -532,10 +534,10 @@ s32 func_80099514(s32 arg0, s32 arg1, UnkStruct_801CED60* arg2, s16* arg3, f32* 
         return 1;
     }
     for (i = 0; i < 4; i++) {
-        sp5C[i][0] = arg2[var_v1+i].unk4;
-        sp5C[i][1] = arg2[var_v1+i].unk6;
-        sp5C[i][2] = arg2[var_v1+i].unk8;
-        sp5C[i][3] = arg2[var_v1+i].unk2;   
+        sp5C[i][0] = arg2[var_v1 + i].unk4;
+        sp5C[i][1] = arg2[var_v1 + i].unk6;
+        sp5C[i][2] = arg2[var_v1 + i].unk8;
+        sp5C[i][3] = arg2[var_v1 + i].unk2;
     }
 
     func_8009934C(var_fa0, arg0, arg1, sp5C[0], sp5C[1], sp5C[2], sp5C[3]);
@@ -556,13 +558,12 @@ s32 func_80099514(s32 arg0, s32 arg1, UnkStruct_801CED60* arg2, s16* arg3, f32* 
         *arg4 -= 1.0f;
     }
     if (D_800E5138 == 0) {
-        func_80098C04((Vec3f* ) arg0, D_800D48DC, sp40);
+        func_80098C04((Vec3f*) arg0, D_800D48DC, sp40);
     } else {
-        func_80098C04((Vec3f* ) arg0, D_800D48E0, sp40);
+        func_80098C04((Vec3f*) arg0, D_800D48E0, sp40);
     }
     return sp9C;
 }
-
 
 void func_80099858(struct UnkStruct_80099858* arg0, s8 arg1, s8 arg2, u16 arg3, s16* arg4, s32 arg5) {
     arg0->unk0 = arg1;
@@ -723,7 +724,7 @@ void func_8009A1CC(UnkStruct_8009A04C* arg0, f32 arg1) {
         arg1 = 0.0f;
     }
     if (arg0->unk90 < arg1) {
-       func_80099AD8(1, arg0, var_fv1, var_fv1 / 10.0f, 90.0f);
+        func_80099AD8(1, arg0, var_fv1, var_fv1 / 10.0f, 90.0f);
         func_80099AD8(2, arg0, var_fa1, var_fa1 / 10.0f, 180.0f);
         arg0->unk90 = arg1;
     }
@@ -1437,7 +1438,7 @@ void func_8009C814(UnkStruct_8009A04C* arg0, s32 arg1) {
     arg0->unk94 = 0;
     arg0->unk90 = 0.0f;
     Math_Vec3f_Initialize(&arg0->unkC);
-    Math_Vec3f_Set((Vec3f* ) arg0, 0.0f, 0.0f, 500.0f);
+    Math_Vec3f_Set((Vec3f*) arg0, 0.0f, 0.0f, 500.0f);
     Math_Vec3f_Initialize(&arg0->unk2C);
     Math_Vec3f_Set(&arg0->unk20, 0.0f, 0.0f, 500.0f);
     Math_Vec3f_Set(&arg0->unk38, 0.0f, 1.0f, 0.0f);
@@ -1449,7 +1450,7 @@ void func_8009C814(UnkStruct_8009A04C* arg0, s32 arg1) {
     D_801CEAA6[arg1] = 0;
     Math_Vec3f_Initialize(&temp_s1->unkC);
     Math_Vec3f_Initialize(&temp_s1->unk0);
-    Math_Vec3f_Initialize((Vec3f* ) &temp_s1->pad18);
+    Math_Vec3f_Initialize((Vec3f*) &temp_s1->pad18);
     Math_Vec3f_Initialize(&temp_s1->unk30);
     Math_Vec3f_Initialize(&temp_s1->unk24);
     Math_Vec3f_Initialize(&temp_s1->unk3C);
@@ -1556,9 +1557,9 @@ u8 func_8009CD50(UnkStruct_func_8009CCE8* arg0) {
     Vec3f sp38;
     UnkStruct_8009A04C* temp_s1;
 
-    temp_s1 = &D_801CEAB0[arg0->unkE8];\
+    temp_s1 = &D_801CEAB0[arg0->unkE8];
     D_800E5138 = arg0->unkE8;
-    D_801CF058[D_800E5138] = (UnkStruct_801CF058* ) arg0;
+    D_801CF058[D_800E5138] = (UnkStruct_801CF058*) arg0;
 
     Math_Vec3f_Set(&sp50, arg0->unk4C, arg0->unk50, arg0->unk54);
     Math_Vec3f_Set(&sp44, arg0->unk7C, arg0->unk80, arg0->unk84);
@@ -1580,7 +1581,7 @@ u8 func_8009CD50(UnkStruct_func_8009CCE8* arg0) {
             temp_s1->unk4 = arg0->unk80;
             temp_s1->unk8 = arg0->unk84;
             func_8009C2CC(temp_s1);
-            func_80098FF8(&temp_s1->unkC, (Vec3f* ) temp_s1, &sp5C, &sp64, &sp60);
+            func_80098FF8(&temp_s1->unkC, (Vec3f*) temp_s1, &sp5C, &sp64, &sp60);
             if ((sp64 >= 80.0f) && (sp64 < 180.0f)) {
                 sp64 = 80.0f;
             }
@@ -1588,11 +1589,12 @@ u8 func_8009CD50(UnkStruct_func_8009CCE8* arg0) {
                 sp64 = 280.0f;
             }
             if ((sp64 == 80.0f) || ((sp64 == 280.0f))) {
-                func_800990A8(&temp_s1->unkC, (Vec3f* ) temp_s1, sp5C, sp64, sp60);
+                func_800990A8(&temp_s1->unkC, (Vec3f*) temp_s1, sp5C, sp64, sp60);
             }
             arg0->unk78 = SIN((s32) ((temp_s1->unk18 / 360.0f) * 4096.0f)) * SIN((s32) ((sp60 / 360.0f) * 4096.0f));
             arg0->unk74 = COS(((s32) ((temp_s1->unk18 / 360.0f) * 4096.0f)));
-            arg0->unk70 = -SIN((s32) ((temp_s1->unk18 / 360.0f) * 4096.0f)) * SIN(((s32) ((sp60 / 360.0f) * 4096.0f) + 0x400)) ;
+            arg0->unk70 =
+                -SIN((s32) ((temp_s1->unk18 / 360.0f) * 4096.0f)) * SIN(((s32) ((sp60 / 360.0f) * 4096.0f) + 0x400));
             arg0->unk4C = temp_s1->unkC.x;
             arg0->unk50 = temp_s1->unkC.y;
             arg0->unk54 = temp_s1->unkC.z;
@@ -1600,16 +1602,16 @@ u8 func_8009CD50(UnkStruct_func_8009CCE8* arg0) {
             arg0->unk80 = temp_s1->unk4;
             arg0->unk84 = temp_s1->unk8;
         }
-        func_80098E70((Vec3f* ) temp_s1, &sp50, &sp44, (s32) &sp38);
+        func_80098E70((Vec3f*) temp_s1, &sp50, &sp44, (s32) &sp38);
         arg0->unk4C -= D_801CEBE0[D_800E5138].unk30.x;
         arg0->unk50 -= D_801CEBE0[D_800E5138].unk30.y;
         arg0->unk54 -= D_801CEBE0[D_800E5138].unk30.z;
         arg0->unk7C -= D_801CEBE0[D_800E5138].unk24.x;
         arg0->unk80 -= D_801CEBE0[D_800E5138].unk24.y;
         arg0->unk84 -= D_801CEBE0[D_800E5138].unk24.z;
-        func_80099D94((UnkStruct_80099D94* ) temp_s1, (UnkStruct_80099D94* ) arg0);
-        func_80099BBC(0, (UnkStruct_801CF060* ) temp_s1, (UnkStruct_801CF060* ) arg0);
-        func_80099BBC(1, (UnkStruct_801CF060* ) temp_s1, (UnkStruct_801CF060* ) arg0);
+        func_80099D94((UnkStruct_80099D94*) temp_s1, (UnkStruct_80099D94*) arg0);
+        func_80099BBC(0, (UnkStruct_801CF060*) temp_s1, (UnkStruct_801CF060*) arg0);
+        func_80099BBC(1, (UnkStruct_801CF060*) temp_s1, (UnkStruct_801CF060*) arg0);
         Math_Vec3f_Set(&temp_s1->unk2C, arg0->unk4C, arg0->unk50, arg0->unk54);
         Math_Vec3f_Set(&temp_s1->unk20, arg0->unk7C, arg0->unk80, arg0->unk84);
         Math_Vec3f_Set(&temp_s1->unk38, arg0->unk70, arg0->unk74, arg0->unk78);
@@ -1623,13 +1625,12 @@ u8 func_8009CD50(UnkStruct_func_8009CCE8* arg0) {
         arg0->unk70 = temp_s1->unk38.x;
         arg0->unk74 = temp_s1->unk38.y;
         arg0->unk78 = temp_s1->unk38.z;
-    } 
+    }
     if (!D_801CEAA4[D_800E5138]) {
         func_8009A2E4(temp_s1);
     }
     return D_801CEAA4[arg0->unkE8];
 }
-
 
 void func_8009D320(void) {
     if (D_800E5148 == 0) {
@@ -1647,7 +1648,6 @@ void func_8009D340(void) {
     for (i = 0; i < 100; i++) {}
     for (i = 0; i < 100; i++) {}
 }
-
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_8009D3AC.s")
 
