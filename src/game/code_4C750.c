@@ -58,7 +58,7 @@ extern s8 D_801CB400;
 extern s8 D_801CB401;
 extern s32 D_80154344;
 extern s32 D_800DA9DC[];
-extern UnkStruct_801C2C24 D_801C2938[];
+extern RiderStruct D_801C2938[];
 extern s32 D_801CB340[];
 extern s32 D_801CB350[][4];
 extern s16 D_801CE60E;

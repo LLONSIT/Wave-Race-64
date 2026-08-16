@@ -4,7 +4,7 @@ extern s32 D_800D48E0;
 
 extern UnkStruct_801AEE20 D_801AEE20[];
 extern s32 D_801BB120;
-extern UnkStruct_801C2C24 D_801C2938[];
+extern RiderStruct D_801C2938[];
 
 static const char devstr1[] = "dolphin condition full at goal\n";
 static const char devstr2[] = "dolphin condition full\n";
@@ -53,8 +53,8 @@ void func_800762D0(struct_800762D0* arg0) {
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2FB10/func_80077F5C.s")
 
 void func_80078264(void) {
-    UnkStruct_801C2C24* temp_a0;
-    UnkStruct_801C2C24* temp_v1;
+    RiderStruct* temp_a0;
+    RiderStruct* temp_v1;
     s32 var_v0;
     f32 var_fv0;
     s32 lapCount;

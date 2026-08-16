@@ -292,7 +292,7 @@ struct UnkStruct_801C3C50 {
     /* 0x16F6 */ char pad16F6[2];
 }; /* size = 0x16F8 */
 
-typedef struct UnkStruct_801C2C24 {
+typedef struct RiderStruct {
     /* 0x000 */ s32 lapCount;
     /* 0x004 */ s32 racePosition;
     /* 0x008 */ char pad8[4];
@@ -315,7 +315,7 @@ typedef struct UnkStruct_801C2C24 {
     char pad33C[0x14];
     /* 0x350 */ struct UnkStruct_801C3C54* unk350;
     /* 0x354 */ char pad354[0x24]; /* maybe part of unk350[0xA]? */
-} UnkStruct_801C2C24;              /* size = 0x378 */
+} RiderStruct;              /* size = 0x378 */
 
 typedef struct Controller {
     /* 0x00*/ u16 unk0;

@@ -13,7 +13,7 @@ typedef struct UnkStruct_80228AE0_s {
 extern Vp D_1014450;
 extern s32 D_800D48E0;
 extern s32 D_801C1FD8;
-extern struct UnkStruct_801C2C24 D_801C2938[];
+extern struct RiderStruct D_801C2938[];
 extern s16 D_801CE6F0;
 extern s32 D_80228D08;
 extern s32 D_80227740;
@@ -112,7 +112,7 @@ void func_801FC39C(void) {
 }
 
 void func_801FC4D4(Gfx** arg0) {
-    struct UnkStruct_801C2C24* temp_v0;
+    struct RiderStruct* temp_v0;
     s32 pad;
     Gfx* sp2C;
 

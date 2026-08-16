@@ -5,7 +5,7 @@ typedef enum {
  /* 0 */ RIDER_RHAYAMI,
  /* 1 */ RIDER_DMARINER,
  /* 2 */ RIDER_ASTEWART,
- /* 3 */ RIDER_MJETER,
+ /* 3 */ RIDER_MJETER
 } RiderId;
 
 typedef enum {

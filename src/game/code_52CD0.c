@@ -82,6 +82,14 @@ typedef struct UnkStruct_80099D94 {
     f32 unk84;
 } UnkStruct_80099D94;
 
+typedef struct UnkStruct_801CE780_s {
+    /* 0x00 */ char pad0[8];
+    /* 0x08 */ u32 unk8;                            /* inferred */
+    /* 0x0C */ u32 unkC;                            /* inferred */
+    /* 0x10 */ u32 unk10;                           /* inferred */
+    /* 0x14 */ char pad14[0x18];                    /* maybe part of unk10[7]? */
+} UnkStruct_801CE780;                               /* size = 0x2C */
+
 extern u8 D_801CEAA6[];
 extern struct UnkStruct_801CEBE0 D_801CEBE0[];
 extern f32 D_801CEFE0[];
@@ -124,9 +132,13 @@ extern s32 D_800D48E0;
 extern s32 D_801CEAA0;
 extern UnkStruct_801CEFF8 D_801CEC70[10];
 extern UnkStruct_801CEFF8 D_801CEC7C[10];
-extern UnkStruct_801C2C24 D_801C2C70[];
+extern RiderStruct D_801C2C70[];
 extern UnkStruct_8009A04C D_801CEB48;
-
+extern s16 D_801CE776;
+extern UnkStruct_801CE780 D_801CE780[];
+extern Gfx D_800E6CA0[];
+extern s16 D_801CE774;
+extern s16 D_801CE76E;
 extern s32 D_801D0738;
 
 //.data
@@ -791,7 +803,7 @@ extern UNK_TYPE D_800E5264;
 extern UNK_TYPE D_800E528C;
 extern UNK_TYPE D_800E52B4;
 extern UNK_TYPE D_800E52E8;
-extern UnkStruct_801C2C24 D_801C293C[];
+extern RiderStruct D_801C293C[];
 
 void func_8009A554(UnkStruct_801CF060* arg0) {
     func_8009A460(func_8009A4DC, arg0, 0, 0);
@@ -1704,9 +1716,6 @@ void func_8009D5C0(void) {
 
 Gfx* func_8009D96C(Gfx*, s32, f32);
 
-extern s32 D_800E6CA0;
-extern s16 D_801CE774;
-extern s16 D_801CE76E;
 
 typedef struct UnkStruct_801CE798 {
     s32 unk0;
@@ -1719,7 +1728,7 @@ Gfx* func_8009DB90(Gfx* dl, s32 arg1) {
     s32 sp18;
 
     sp18 = D_801CE774;
-    gSPDisplayList(dl++, &D_800E6CA0);
+    gSPDisplayList(dl++, D_800E6CA0);
     dl = func_8009D96C(dl++, arg1, 0.1f);
     gSPDisplayList(dl++, D_801CE798[sp18].unk0);
     return dl;
@@ -1732,7 +1741,7 @@ Gfx* func_8009E794(Gfx* dl, s32 arg1) {
     s32 sp18;
 
     sp18 = D_801CE76E;
-    gSPDisplayList(dl++, &D_800E6CA0);
+    gSPDisplayList(dl++, D_800E6CA0);
     dl = func_8009D96C(dl++, arg1, 0.2f);
     gSPDisplayList(dl++, D_801CE798[sp18].unk0);
     return dl;
@@ -1754,7 +1763,41 @@ Gfx* func_8009E794(Gfx* dl, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_800A2308.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_800A28F4.s")
+Gfx* func_800A28F4(Gfx* gdl, s32 arg1) {
+    StructVarS0* temp_t0;
+    s32 sp68;
+    StructVarS0* temp_t0_2;
+    UnkStruct_801CE780* temp_a2;
+    s32 pad;
+
+    if (gCurrentPauseMenuOption == -1) {
+        D_801CF060[arg1].unk78 = (s32) (D_801CF060[arg1].unk78 + 1) % 2;
+    }
+    sp68 = D_801CE776;
+    gSPDisplayList(gdl++, D_800E6CA0);
+    gSPClearGeometryMode(gdl++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | 0xFFE0CDF8);
+    gSPSetGeometryMode(gdl++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
+    gSPTexture(gdl++, 0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON);
+    gDPPipeSync(gdl++);
+    gDPSetRenderMode(gdl++, G_RM_PASS, G_RM_AA_ZB_OPA_SURF2);
+    gdl = func_8009D96C(gdl, arg1, 0.4f);
+    gSPDisplayList(gdl++, D_801CE780[sp68].unk8);
+    gSPClearGeometryMode(gdl++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE 
+                       | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN 
+                       | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | 0xFFE0CDF8);
+    gSPSetGeometryMode(gdl++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
+    gSPTexture(gdl++, 0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON);
+    gDPPipeSync(gdl++);
+    gDPSetCombineMode(gdl++, G_CC_DECALRGBA, G_CC_PASS2);
+    gDPSetRenderMode(gdl++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
+
+    if (D_801CF060[arg1].unk78 == 0) {
+        gSPDisplayList(gdl++, D_801CE780[sp68].unkC);
+    } else {
+        gSPDisplayList(gdl++, D_801CE780[sp68].unk10);
+    }
+    return gdl;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_800A2B24.s")
 

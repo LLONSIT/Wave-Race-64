@@ -104,7 +104,7 @@ extern s32 D_801C0CC0;
 extern s32 D_801C0CC4;
 extern s32 D_801C1FD0;
 extern s32 D_801C292C;
-extern UnkStruct_801C2C24 D_801C2938[];
+extern RiderStruct D_801C2938[];
 extern UnkStruct_801BC940_unk60 D_801BFD78[];
 extern s32 D_801C1FC8;
 extern s32 D_801BB12C;
@@ -186,10 +186,11 @@ void func_8006A300(void) {
     }
 }
 
+// Updates stunt mode ring score
 void func_8006A748(void) {
     UnkStruct_80192690* temp_a0;
     UnkStruct_801BC940* var_v0;
-    UnkStruct_801C2C24* temp_v1;
+    RiderStruct* temp_v1;
     f32 temp_f0;
     f32 temp_f14;
     f32 temp_f16;
@@ -339,7 +340,7 @@ void func_8006B334(Gfx** gdl) {
     s32 var_ra;
     s32 var_v1;
     camera_unk_1* sp144;
-    UnkStruct_801C2C24* var_v0;
+    RiderStruct* var_v0;
     s32 pad;
     Gfx* gdlh;
     MtxF spF8;
