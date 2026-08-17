@@ -30,22 +30,22 @@ typedef struct PauseOption_s {
 } PauseOption; /* size = 0x8 */
 
 static PauseOption sDefaultPauseOptions[DEFAULT_PAUSE_OPTIONS] = { { PAUSE_MENU_ACTION_RESUME, 0, 0x30 },
-                                                            { PAUSE_MENU_ACTION_RESTART, 7, 0x31 } };
+                                                                   { PAUSE_MENU_ACTION_RESTART, 7, 0x31 } };
 static PauseOption sChampionshipPauseOptions[CHAMPIONSHIP_PAUSE_OPTIONS] = { { PAUSE_MENU_ACTION_RESUME, 0, 0x30 },
-                                                                      { PAUSE_MENU_ACTION_RESTART, 7, 0x31 },
-                                                                      { PAUSE_MENU_ACTION_7, -0x19, 0x64 },
-                                                                      { PAUSE_MENU_ACTION_QUIT, -3, 0x2F } };
+                                                                             { PAUSE_MENU_ACTION_RESTART, 7, 0x31 },
+                                                                             { PAUSE_MENU_ACTION_7, -0x19, 0x64 },
+                                                                             { PAUSE_MENU_ACTION_QUIT, -3, 0x2F } };
 
 static PauseOption sDolphinParkPauseOptions[DOLPHIN_PARK_PAUSE_OPTIONS] = { { PAUSE_MENU_ACTION_RESUME, 0, 0x30 },
-                                                                     { PAUSE_MENU_ACTION_START_GAME_MODE, -0x18, 0x45 },
-                                                                     { PAUSE_MENU_ACTION_QUIT, -3, 0x2F } };
+                                                                            { PAUSE_MENU_ACTION_START_GAME_MODE, -0x18,
+                                                                              0x45 },
+                                                                            { PAUSE_MENU_ACTION_QUIT, -3, 0x2F } };
 
 // Pause Options for the stunt mode and time trials
 static PauseOption sNonRacePauseOptions[NON_RACE_MODES_PAUSE_OPTIONS] = {
     { PAUSE_MENU_ACTION_RESUME, 0, 0x30 }, { PAUSE_MENU_ACTION_3, 2, 0x32 },     { PAUSE_MENU_ACTION_4, -0x27, 0x2D },
     { PAUSE_MENU_ACTION_5, -0x16, 0x2E },  { PAUSE_MENU_ACTION_QUIT, -3, 0x2F },
 };
-
 
 // from ovl_i1
 extern void func_i1_802C744C(s32 arg0);
@@ -70,7 +70,7 @@ Gfx* PauseMenu_Update(Gfx* gdl) {
     PauseOption* option;
 
     retire = false;
-    
+
     // Game not paused
     if (gCurrentPauseMenuOption == -1) {
         if (D_801CE628 != 0) {
