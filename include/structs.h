@@ -845,4 +845,13 @@ typedef struct {
     s32 unkC;
 } UnkStruct_800DA9B0;
 
+
+typedef struct {
+    /* 0x00 */ ControllerBase unk_00;
+    /* 0x0A */ ControllerBase unk_0A;
+    /* 0x14 */ s32 unk_14;
+    /* 0x18 */ s32 unk_18;
+} UnkStruct_801CE658; // size = 0x1C
+
+
 #endif /* STRUCTS_H */

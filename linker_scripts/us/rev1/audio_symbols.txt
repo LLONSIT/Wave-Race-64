@@ -235,6 +235,10 @@ Audio_GetPortamentoFreqScale = 0x800BC134;
 Audio_GetVibratoPitchChange = 0x800BC208;
 Audio_GetVibratoFreqScale = 0x800BC24C;
 
+
+// audio_general.c
+AudioGeneral_PlaySound = 0x800C37F4;
+
 // SysAudio_AudioThreadEntry.c
 AudioThread_CreateTask = 0x800C4C40;
 AudioThread_InitQueues = 0x800C52CC;

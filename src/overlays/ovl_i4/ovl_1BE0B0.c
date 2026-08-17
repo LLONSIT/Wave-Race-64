@@ -96,7 +96,7 @@ void func_i4_802C7344(void) {
             D_801CE61C = 0;
         }
         func_i4_802C7474(0x28);
-        func_800C37F4(0x37, 0);
+        AudioGeneral_PlaySound(0x37, 0);
         return;
     }
 
@@ -104,7 +104,7 @@ void func_i4_802C7344(void) {
         D_i4_802C7554 = 0;
         D_i4_802C7538 = 2;
         D_i4_802C753C = 0;
-        func_800C37F4(0x16, 0);
+        AudioGeneral_PlaySound(0x16, 0);
         return;
     }
 
@@ -112,7 +112,7 @@ void func_i4_802C7344(void) {
         if (--D_800DAA04 < 0) {
             D_800DAA04 = 1;
         }
-        func_800C37F4(0x10, 0);
+        AudioGeneral_PlaySound(0x10, 0);
         return;
     }
 
@@ -120,7 +120,7 @@ void func_i4_802C7344(void) {
         if (++D_800DAA04 >= 2) {
             D_800DAA04 = 0;
         }
-        func_800C37F4(0x10, 0);
+        AudioGeneral_PlaySound(0x10, 0);
     }
 }
 

@@ -24,7 +24,7 @@ Gfx* func_80093C44(Gfx*);
 Gfx* func_80093F78(Gfx*);
 Gfx* func_801E1E8C(Gfx*);
 Gfx* func_801E34F8(Gfx*);
-Gfx* func_801E4440(Gfx*);
+Gfx* PauseMenu_Update(Gfx*);
 void func_801E4C08(void);
 void func_801E4C38(void);
 Gfx* func_801E7908(Gfx*);
@@ -139,7 +139,7 @@ void func_800C6740();
 void Mio0_Decompress(u8* header, u8* dst);
 s32 Save_CodeToChar(s32);
 //void func_8007AE8C(void*, void*, void*, void*);
-void func_800C37F4(s32, s32);
+void AudioGeneral_PlaySound(s32, s32);
 void func_800481E0(Mtx* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
 void func_80048A88(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9,
                    f32 argA);
@@ -226,4 +226,9 @@ void func_801EBFE4(void);
 void func_8004DAF0(void*);
 s32 SysUtils_Round(f32 x);
 void func_801EE97C(Mtx*, f32, f32, f32); 
+Gfx* func_801E5554(Gfx*);
+
+// audio_general.c
+void func_800C3DE0(void);
+void func_800C3E18(void);
 #endif /*FUNCTIONS_H*/

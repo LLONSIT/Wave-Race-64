@@ -67,7 +67,7 @@ void func_1C3D00_802C5C4C(s32 arg0) {
 void func_1C3D00_802C5D44(void) {
     if (D_801CE692[0].unk0 & (A_BUTTON | Z_TRIG | START_BUTTON)) {
         func_1C3D00_802C5C4C(D_1C3D00_802C5ED0[D_802C5EF0]);
-        func_800C37F4(0x11, 0);
+        AudioGeneral_PlaySound(0x11, 0);
         return;
     }
 
@@ -76,7 +76,7 @@ void func_1C3D00_802C5D44(void) {
         if (D_802C5EF0 < 0) {
             D_802C5EF0 = 3;
         }
-        func_800C37F4(0x10, 0);
+        AudioGeneral_PlaySound(0x10, 0);
         return;
     }
 
@@ -85,7 +85,7 @@ void func_1C3D00_802C5D44(void) {
         if (D_802C5EF0 == 4) {
             D_802C5EF0 = 0;
         }
-        func_800C37F4(0x10, 0);
+        AudioGeneral_PlaySound(0x10, 0);
     }
 }
 

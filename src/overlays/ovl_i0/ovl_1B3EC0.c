@@ -87,7 +87,7 @@ void func_i0_802C6878(void) {
     D_i0_802C6BE0 = 0;
     D_802C6F14 = 0;
 
-    func_800C37F4(0x2D, 0);
+    AudioGeneral_PlaySound(0x2D, 0);
 }
 
 Gfx* func_i0_802C6944(Gfx* arg0) {

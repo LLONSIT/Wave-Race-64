@@ -1,12 +1,5 @@
 #include "global.h"
 
-typedef struct {
-    /* 0x00 */ ControllerBase unk_00;
-    /* 0x0A */ ControllerBase unk_0A;
-    /* 0x14 */ s32 unk_14;
-    /* 0x18 */ s32 unk_18;
-} UnkStruct_801CE658; // size = 0x1C
-
 typedef struct UnkStruct_801CB6C8 {
     Mtx unk0[1];
     char pad[0x1758];
@@ -754,7 +747,7 @@ Gfx* func_80092CF0(Gfx* dList) {
     }
 
     if ((((D_801CE690 & 0xF000) != 0xF000) || (gCurrentPauseMenuOption != -1)) && (D_800DAB78 == 0)) {
-        dList = func_801E4440(dList);
+        dList = PauseMenu_Update(dList);
     } else {
         // necessary to match
     }

@@ -93,7 +93,7 @@ func_801E3698 = 0x801e3698; //defined:true
 
 func_801E3EE0 = 0x801e3ee0; //defined:true
 
-func_801E4440 = 0x801e4440; //defined:true
+PauseMenu_Update = 0x801e4440; //defined:true
 func_801E4C08 = 0x801e4c08; //defined:true
 func_801E4C38 = 0x801e4c38; //defined:true
 func_801E4C60 = 0x801e4c60; //defined:true

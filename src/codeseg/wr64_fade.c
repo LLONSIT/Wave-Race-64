@@ -250,9 +250,9 @@ void func_801E76C0(FadeTransition* fade) {
                 fade->fadeTimer = 0;
                 if (D_801CE638 != 8) {
                     if (fade->fadeInTime == 2) {
-                        func_800C37F4(0x38, 0);
+                        AudioGeneral_PlaySound(0x38, 0);
                     } else {
-                        func_800C37F4(0x2A, 0);
+                        AudioGeneral_PlaySound(0x2A, 0);
                     }
                 }
             } else {

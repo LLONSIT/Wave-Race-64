@@ -26,20 +26,20 @@ Gfx* func_i7_802C5800(Gfx* arg0) {
     if (gGameState == 0x3C) {
         if (D_801CE65A->unk0 & (CONT_A | CONT_G | CONT_START)) {
             func_i7_802C5C94(D_i7_802C5D20[gCurrentOptionsMenuItem]);
-            func_800C37F4(0x11, 0);
+            AudioGeneral_PlaySound(0x11, 0);
         } else if (D_801CE65A->unk0 & CONT_B) {
             func_i7_802C5C94(2);
-            func_800C37F4(0x16, 0);
+            AudioGeneral_PlaySound(0x16, 0);
         } else if (D_801CE65A->unk0 & CONT_UP) {
             if ((--gCurrentOptionsMenuItem) < 0) {
                 gCurrentOptionsMenuItem = 6;
             }
-            func_800C37F4(0x10, 0);
+            AudioGeneral_PlaySound(0x10, 0);
         } else if (D_801CE65A->unk0 & CONT_DOWN) {
             if ((++gCurrentOptionsMenuItem) == 7) {
                 gCurrentOptionsMenuItem = 0;
             }
-            func_800C37F4(0x10, 0);
+            AudioGeneral_PlaySound(0x10, 0);
         }
     } else if (D_80228A16 == 1) {
         switch (D_801CE630) {

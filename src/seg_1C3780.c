@@ -108,7 +108,7 @@ void func_1C3780_802C5BD8(void) {
             break;
     }
     if (flag) {
-        func_800C37F4(0x31, 0);
+        AudioGeneral_PlaySound(0x31, 0);
     }
     D_802C5D8C = 0x28 - D_802C5D88;
 }

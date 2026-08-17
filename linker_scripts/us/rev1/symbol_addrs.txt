@@ -162,6 +162,6 @@ D_800EAC14 = 0x800EAC14; //defined:true
 D_800EAC44 = 0x800EAC44; //defined:true
 D_800EDC6A = 0x800EDC6A; //defined:true
 D_80151BE0 = 0x80151BE0; //defined:true
-D_801CE626 = 0x801CE626; //defined:true
+gCurrentPauseMenuOptionCount = 0x801CE626; //defined:true
 D_801FC840 = 0x801FC840; //defined:true
 

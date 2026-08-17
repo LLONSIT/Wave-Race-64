@@ -85,7 +85,7 @@ void func_801E355C(void) {
             break;
     }
     if (var_a1) {
-        func_800C37F4(0x31, 0);
+        AudioGeneral_PlaySound(0x31, 0);
     }
     D_802288FC = 0x28 - D_802288F8;
 }

@@ -650,7 +650,7 @@ void func_800C1A20(s32 arg0) {
 
 void func_800C1B30(void) {
     AudioThread_QueueCmdS8(0x06000700U, 0x10);
-    func_800C37F4(0x10, 0);
+    AudioGeneral_PlaySound(0x10, 0);
 }
 
 void func_800C1B64(void) {
@@ -928,7 +928,7 @@ void func_800C21F4(s32 arg0, int courseID) {
                 D_801D7E05 = 0xFF;
                 func_800BFB50();
                 if (courseID == SUNNY_BEACH) {
-                    func_800C37F4(0x34, 0);
+                    AudioGeneral_PlaySound(0x34, 0);
                     func_800C37C0(0x11, 0x50);
                     func_800C1500(0x19, 0xAU);
                 } else {
@@ -1426,16 +1426,16 @@ void func_800C37D4(s32 arg0) {
 }
 
 // chonker
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/audio/audio_general/func_800C37F4.s")
+#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/audio/audio_general/AudioGeneral_PlaySound.s")
 
 void func_800C3DE0(void) {
-    func_800C37F4(0x20, 0);
+    AudioGeneral_PlaySound(0x20, 0);
     AudioThread_QueueCmdS32(0xF1000000U, 0U);
     D_800E7CC4 = 1;
 }
 
 void func_800C3E18(void) {
-    func_800C37F4(32, 0);
+    AudioGeneral_PlaySound(32, 0);
     AudioThread_QueueCmdS32(0xF2000000U, 0U);
     D_800E7CC4 = 0;
 }

@@ -35,7 +35,7 @@ void func_i14_802C5840(void) {
     D_802C61E4 = 0x140;
     D_802C61E8 = -0xA9;
 
-    func_800C37F4(0x31, 0);
+    AudioGeneral_PlaySound(0x31, 0);
 }
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i14/ovl_1CF180/func_i14_802C5924.s")
@@ -95,7 +95,7 @@ void func_i14_802C5F60(void) {
         } else {
             func_i14_802C5E5C(D_i14_802C6124[D_i14_802C60F0]);
         }
-        func_800C37F4(0x11, 0);
+        AudioGeneral_PlaySound(0x11, 0);
         return;
     }
 
@@ -103,7 +103,7 @@ void func_i14_802C5F60(void) {
         if (--D_i14_802C60F0 < 0) {
             D_i14_802C60F0 = D_802C61EC - 1;
         }
-        func_800C37F4(0x10, 0);
+        AudioGeneral_PlaySound(0x10, 0);
         return;
     }
 
@@ -111,7 +111,7 @@ void func_i14_802C5F60(void) {
         if (++D_i14_802C60F0 >= D_802C61EC) {
             D_i14_802C60F0 = 0;
         }
-        func_800C37F4(0x10, 0);
+        AudioGeneral_PlaySound(0x10, 0);
         return;
     }
 }

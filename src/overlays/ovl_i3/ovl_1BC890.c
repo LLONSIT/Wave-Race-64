@@ -30,5 +30,5 @@ void func_i3_802C6E9C(void) {
 
     FadeTransition_SetProps(5, 0, 20);
     func_801E6A4C(0, 0);
-    func_800C37F4(58, 0);
+    AudioGeneral_PlaySound(58, 0);
 }
