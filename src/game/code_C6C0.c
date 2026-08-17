@@ -1448,7 +1448,6 @@ void func_8005A280(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
     f32 temp_ft4;
     f32 temp_ft5;
 
-    
     temp_s0 = &D_80192690[arg0];
     arg1->unk264.unk0.x = temp_s0->unk44.x;
     arg1->unk264.unk0.y = temp_s0->unk44.y;
@@ -1458,13 +1457,11 @@ void func_8005A280(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
     arg1->unk264.unkC.z = temp_s0->unk74;
 
     // useless assignment of temp_fv1_6 to force f registers
-    temp_fv1_6 = 
-    arg1->unk21C.unk14.x = arg1->unk264.unk14.x = temp_s0->unk78;
+    temp_fv1_6 = arg1->unk21C.unk14.x = arg1->unk264.unk14.x = temp_s0->unk78;
     arg1->unk240.unk14.x = arg1->unk21C.unk14.x + temp_s0->unk6C;
 
     // useless assignment of temp_fv1_6 to force f registers
-    temp_fv1_6 = 
-    arg1->unk21C.unk14.y = arg1->unk264.unk14.y = temp_s0->unk7C;
+    temp_fv1_6 = arg1->unk21C.unk14.y = arg1->unk264.unk14.y = temp_s0->unk7C;
     arg1->unk240.unk14.y = arg1->unk21C.unk14.y + temp_s0->unk70;
 
     arg1->unk21C.unk14.z = arg1->unk264.unk14.z = temp_s0->unk80;
@@ -1473,7 +1470,6 @@ void func_8005A280(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
     arg1->unk21C.unkC.x = temp_s0->unk84;
     arg1->unk21C.unkC.y = temp_s0->unk88;
     arg1->unk21C.unkC.z = temp_s0->unk8C;
-
 
     temp_fv1_6 = (temp_s0->unk44.x + (13.0 * temp_s0->unk78) + (37.0 * temp_s0->unk6C));
     arg1->unk240.unk0.x = temp_fv1_6;
@@ -1493,7 +1489,6 @@ void func_8005A280(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
         }
         var_v0->unk18 = var_v0->unkC + var_v0->unk24 * D_800D49F4;
         var_v0--;
-
     }
     temp_fs0 = temp_s0->unk698[0] - temp_s0->unk6C0[0];
     temp_fs1 = temp_s0->unk698[1] - temp_s0->unk6C0[1];
@@ -1502,9 +1497,9 @@ void func_8005A280(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
 
     temp_s0->unk698[0] = temp_s0->unk6C0[0] + (temp_fs0 *= temp_fv1_6);
     temp_s0->unk698[1] = temp_s0->unk6C0[1] + (temp_fs1 *= temp_fv1_6);
-    temp_s0->unk698[2] = temp_s0->unk6C0[2] + ( temp_fs2 *= temp_fv1_6);
+    temp_s0->unk698[2] = temp_s0->unk6C0[2] + (temp_fs2 *= temp_fv1_6);
 
-    temp_fa1 = temp_s0->unk6C0[0] + (0.8662848f * temp_fs0); 
+    temp_fa1 = temp_s0->unk6C0[0] + (0.8662848f * temp_fs0);
     temp_ft4 = temp_s0->unk6C0[1] + (0.8662848f * temp_fs1);
     temp_ft5 = temp_s0->unk6C0[2] + (0.8662848f * temp_fs2);
     temp_fs0 = temp_s0->unk6E8 - temp_s0->unk828;
@@ -1626,25 +1621,25 @@ void func_8005A280(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
     temp_s0->unk940 += temp_fv1_6 * temp_fs0;
     temp_s0->unk944 += temp_fv1_6 * temp_fs1;
     temp_s0->unk948 += temp_fv1_6 * temp_fs2;
-    func_8005A1B4((Vec3f* ) &temp_s0->unk698[0],  &temp_s0->unk670, 25.0f,  &temp_s0->unk670);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk6E8, (Vec3f* ) &temp_s0->unk710, 8.543002f, (Vec3f* ) &temp_s0->unk710);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk828, (Vec3f* ) &temp_s0->unk850, 8.543002f, (Vec3f* ) &temp_s0->unk850);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk710, (Vec3f* ) &temp_s0->unk738, 10.457f, (Vec3f* ) &temp_s0->unk738);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk850, (Vec3f* ) &temp_s0->unk878, 10.457f, (Vec3f* ) &temp_s0->unk878);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk738, (Vec3f* ) &temp_s0->unk760, 3.5f, (Vec3f* ) &temp_s0->unk760);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk878, (Vec3f* ) &temp_s0->unk8A0, 3.5f, (Vec3f* ) &temp_s0->unk8A0);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk788, (Vec3f* ) &temp_s0->unk7B0, 17.263002f, (Vec3f* ) &temp_s0->unk7B0);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk8C8, (Vec3f* ) &temp_s0->unk8F0, 17.263002f, (Vec3f* ) &temp_s0->unk8F0);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk7B0, (Vec3f* ) &temp_s0->unk7D8, 18.861843f, (Vec3f* ) &temp_s0->unk7D8);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk8F0, (Vec3f* ) &temp_s0->unk918, 18.861843f, (Vec3f* ) &temp_s0->unk918);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk7D8, (Vec3f* ) &temp_s0->unk800, 10.0f, (Vec3f* ) &temp_s0->unk800);
-    func_8005A1B4((Vec3f* ) &temp_s0->unk918, (Vec3f* ) &temp_s0->unk940, 10.0f, (Vec3f* ) &temp_s0->unk940);
+    func_8005A1B4((Vec3f*) &temp_s0->unk698[0], &temp_s0->unk670, 25.0f, &temp_s0->unk670);
+    func_8005A1B4((Vec3f*) &temp_s0->unk6E8, (Vec3f*) &temp_s0->unk710, 8.543002f, (Vec3f*) &temp_s0->unk710);
+    func_8005A1B4((Vec3f*) &temp_s0->unk828, (Vec3f*) &temp_s0->unk850, 8.543002f, (Vec3f*) &temp_s0->unk850);
+    func_8005A1B4((Vec3f*) &temp_s0->unk710, (Vec3f*) &temp_s0->unk738, 10.457f, (Vec3f*) &temp_s0->unk738);
+    func_8005A1B4((Vec3f*) &temp_s0->unk850, (Vec3f*) &temp_s0->unk878, 10.457f, (Vec3f*) &temp_s0->unk878);
+    func_8005A1B4((Vec3f*) &temp_s0->unk738, (Vec3f*) &temp_s0->unk760, 3.5f, (Vec3f*) &temp_s0->unk760);
+    func_8005A1B4((Vec3f*) &temp_s0->unk878, (Vec3f*) &temp_s0->unk8A0, 3.5f, (Vec3f*) &temp_s0->unk8A0);
+    func_8005A1B4((Vec3f*) &temp_s0->unk788, (Vec3f*) &temp_s0->unk7B0, 17.263002f, (Vec3f*) &temp_s0->unk7B0);
+    func_8005A1B4((Vec3f*) &temp_s0->unk8C8, (Vec3f*) &temp_s0->unk8F0, 17.263002f, (Vec3f*) &temp_s0->unk8F0);
+    func_8005A1B4((Vec3f*) &temp_s0->unk7B0, (Vec3f*) &temp_s0->unk7D8, 18.861843f, (Vec3f*) &temp_s0->unk7D8);
+    func_8005A1B4((Vec3f*) &temp_s0->unk8F0, (Vec3f*) &temp_s0->unk918, 18.861843f, (Vec3f*) &temp_s0->unk918);
+    func_8005A1B4((Vec3f*) &temp_s0->unk7D8, (Vec3f*) &temp_s0->unk800, 10.0f, (Vec3f*) &temp_s0->unk800);
+    func_8005A1B4((Vec3f*) &temp_s0->unk918, (Vec3f*) &temp_s0->unk940, 10.0f, (Vec3f*) &temp_s0->unk940);
     arg1->unkFC.unk0.x = temp_s0->unk698[0];
     arg1->unkFC.unk0.y = temp_s0->unk698[1];
     arg1->unkFC.unk0.z = temp_s0->unk698[2];
-    arg1->unkD8.unk0.x  = arg1->unk1F8.unk0.x = temp_s0->unk6C0[0];
+    arg1->unkD8.unk0.x = arg1->unk1F8.unk0.x = temp_s0->unk6C0[0];
     arg1->unkD8.unk0.y = arg1->unk1F8.unk0.y = temp_s0->unk6C0[1];
-    arg1->unkD8.unk0.z  = arg1->unk1F8.unk0.z = temp_s0->unk6C0[2];
+    arg1->unkD8.unk0.z = arg1->unk1F8.unk0.z = temp_s0->unk6C0[2];
     arg1->unk168.unk0.x = temp_s0->unk6E8;
     arg1->unk168.unk0.y = temp_s0->unk6EC;
     arg1->unk168.unk0.z = temp_s0->unk6F0;

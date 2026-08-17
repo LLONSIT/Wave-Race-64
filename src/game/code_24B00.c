@@ -342,15 +342,16 @@ void func_8006AC84(s32 arg0, Mtx* arg1) {
             var_ft5 = (64.0f - ((temp_t0 & 1) * 128.0f)) + 52.0f;
 
             if (temp_t0 >= 2) {
-                var_ft5 -=  32.0f;
+                var_ft5 -= 32.0f;
             }
             sp8C = (((gRiders - temp_t0) - 1) * 80.0f) + -512.0f;
 
-            temp_fv0 = (D_801AEE20[D_801BB12C].unk0 + (var_ft5 * D_801AEE20[D_801BB12C].unk78)) + (D_801AEE20[D_801BB12C].unk70 * sp8C);
-            temp_fa0 = (D_801AEE20[D_801BB12C].unk8 + (var_ft5 * D_801AEE20[D_801BB12C].unk7C)) + (D_801AEE20[D_801BB12C].unk74 * sp8C);
-            SysUtils_MatrixLookAt(arg1, &sp4C, D_801AEE20[D_801BB12C].unk70, 0.0f, D_801AEE20[D_801BB12C].unk74, 0.0f, 1.0f, 0.0f, 
-                                  temp_fv0, 0.0f,
-                                  temp_fa0);
+            temp_fv0 = (D_801AEE20[D_801BB12C].unk0 + (var_ft5 * D_801AEE20[D_801BB12C].unk78)) +
+                       (D_801AEE20[D_801BB12C].unk70 * sp8C);
+            temp_fa0 = (D_801AEE20[D_801BB12C].unk8 + (var_ft5 * D_801AEE20[D_801BB12C].unk7C)) +
+                       (D_801AEE20[D_801BB12C].unk74 * sp8C);
+            SysUtils_MatrixLookAt(arg1, &sp4C, D_801AEE20[D_801BB12C].unk70, 0.0f, D_801AEE20[D_801BB12C].unk74, 0.0f,
+                                  1.0f, 0.0f, temp_fv0, 0.0f, temp_fa0);
             return;
         }
         var_a1 = -1;
@@ -369,11 +370,12 @@ void func_8006AC84(s32 arg0, Mtx* arg1) {
                 break;
             }
         }
- 
+
         if (i >= D_801BB120) {
             i = temp_t0;
         }
-        SysUtils_MatrixLookAt(arg1, &sp4C, D_801AEE20[i].unk70, 0.0f, D_801AEE20[i].unk74, 0.0f, 1.0f, 0.0f, D_801AEE20[i].unk0, 0.0f, D_801AEE20[i].unk8);
+        SysUtils_MatrixLookAt(arg1, &sp4C, D_801AEE20[i].unk70, 0.0f, D_801AEE20[i].unk74, 0.0f, 1.0f, 0.0f,
+                              D_801AEE20[i].unk0, 0.0f, D_801AEE20[i].unk8);
         return;
     }
     if (D_801CE638 == 0x15) {
@@ -390,8 +392,7 @@ void func_8006AC84(s32 arg0, Mtx* arg1) {
         temp_fv0 = D_800D5408[i].x - 8.0f;
         temp_fv1 = D_800D5408[i].y;
         temp_fa0 = D_800D5408[i].z;
-        SysUtils_MatrixLookAt(arg1, &sp4C, var_fa1, 0.0f, var_ft5, 0.0f, 1.0f, 0.0f, temp_fv0, 
-                              temp_fv1, temp_fa0);
+        SysUtils_MatrixLookAt(arg1, &sp4C, var_fa1, 0.0f, var_ft5, 0.0f, 1.0f, 0.0f, temp_fv0, temp_fv1, temp_fa0);
         return;
     }
     if (gRiders == 1) {
@@ -440,13 +441,13 @@ void func_8006AC84(s32 arg0, Mtx* arg1) {
     } else {
         var_v1_3 = D_801AEE20;
     }
-    temp_fv0 = (var_v1_3[D_801BB12C].unk0 + (var_ft5 * var_v1_3[D_801BB12C].unk78)) + (var_v1_3[D_801BB12C].unk70 * sp8C);
-    temp_fa0 = (var_v1_3[D_801BB12C].unk8 + (var_ft5 * var_v1_3[D_801BB12C].unk7C)) + (var_v1_3[D_801BB12C].unk74 * sp8C);
-    SysUtils_MatrixLookAt(arg1, &sp4C, var_v1_3[D_801BB12C].unk70, 0.0f, var_v1_3[D_801BB12C].unk74, 0.0f, 1.0f, 0.0f, 
-                          temp_fv0, 0.0f, 
-                          temp_fa0);
+    temp_fv0 =
+        (var_v1_3[D_801BB12C].unk0 + (var_ft5 * var_v1_3[D_801BB12C].unk78)) + (var_v1_3[D_801BB12C].unk70 * sp8C);
+    temp_fa0 =
+        (var_v1_3[D_801BB12C].unk8 + (var_ft5 * var_v1_3[D_801BB12C].unk7C)) + (var_v1_3[D_801BB12C].unk74 * sp8C);
+    SysUtils_MatrixLookAt(arg1, &sp4C, var_v1_3[D_801BB12C].unk70, 0.0f, var_v1_3[D_801BB12C].unk74, 0.0f, 1.0f, 0.0f,
+                          temp_fv0, 0.0f, temp_fa0);
 }
-
 
 void func_8006B334(Gfx** gdl) {
     f32 var_fv0;
