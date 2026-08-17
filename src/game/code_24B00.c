@@ -108,6 +108,11 @@ extern RiderStruct D_801C2938[];
 extern UnkStruct_801BC940_unk60 D_801BFD78[];
 extern s32 D_801C1FC8;
 extern s32 D_801BB12C;
+extern s32 D_800D5438;
+extern RiderStruct D_801C2C70[];
+extern UnkStruct_801AEE20 D_801B2F20;
+extern Vec3f D_800D5408[];
+extern s32 D_801C26C0[];
 
 // segmented addresses
 extern Gfx D_10145F0[];
@@ -316,7 +321,132 @@ void func_8006AACC(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006AC84.s")
+void func_8006AC84(s32 arg0, Mtx* arg1) {
+    UnkStruct_801AEE20* temp_v0;
+    UnkStruct_801AEE20* var_v1_3;
+    f32 temp_fv0;
+    f32 temp_fv1;
+    f32 temp_fa0;
+    f32 var_ft5;
+    f32 var_fa1;
+    s32 temp_t0;
+    s32 var_a1;
+    f32 var_fv0;
+    f32 sp8C;
+    MtxF sp4C;
+    s32 i;
+
+    if (D_801CE638 == 8) {
+        if (gCourseID == SUNNY_BEACH) {
+            temp_t0 = (gRiders - arg0) - 1;
+            var_ft5 = (64.0f - ((temp_t0 & 1) * 128.0f)) + 52.0f;
+
+            if (temp_t0 >= 2) {
+                var_ft5 -=  32.0f;
+            }
+            sp8C = (((gRiders - temp_t0) - 1) * 80.0f) + -512.0f;
+
+            temp_fv0 = (D_801AEE20[D_801BB12C].unk0 + (var_ft5 * D_801AEE20[D_801BB12C].unk78)) + (D_801AEE20[D_801BB12C].unk70 * sp8C);
+            temp_fa0 = (D_801AEE20[D_801BB12C].unk8 + (var_ft5 * D_801AEE20[D_801BB12C].unk7C)) + (D_801AEE20[D_801BB12C].unk74 * sp8C);
+            SysUtils_MatrixLookAt(arg1, &sp4C, D_801AEE20[D_801BB12C].unk70, 0.0f, D_801AEE20[D_801BB12C].unk74, 0.0f, 1.0f, 0.0f, 
+                                  temp_fv0, 0.0f,
+                                  temp_fa0);
+            return;
+        }
+        var_a1 = -1;
+        temp_t0 = (arg0 + D_800D5438) & 3;
+        if (temp_t0 == 0) {
+            var_a1 = 0xB;
+        } else if (temp_t0 == 1) {
+            var_a1 = 0xC;
+        } else if (temp_t0 == 2) {
+            var_a1 = 0xD;
+        } else if (temp_t0 == 3) {
+            var_a1 = 0xE;
+        }
+        for (i = 0; i < D_801BB120; i++) {
+            if (var_a1 == D_801AEE20[i].unk98) {
+                break;
+            }
+        }
+ 
+        if (i >= D_801BB120) {
+            i = temp_t0;
+        }
+        SysUtils_MatrixLookAt(arg1, &sp4C, D_801AEE20[i].unk70, 0.0f, D_801AEE20[i].unk74, 0.0f, 1.0f, 0.0f, D_801AEE20[i].unk0, 0.0f, D_801AEE20[i].unk8);
+        return;
+    }
+    if (D_801CE638 == 0x15) {
+        temp_t0 = D_801C2C70[arg0].lapCount;
+        if (temp_t0 < 3) {
+            var_fa1 = 1.00f;
+            var_ft5 = 0.0f;
+            i = 0;
+        } else {
+            var_fa1 = 1.000f;
+            var_ft5 = -1.0f;
+            i = 3;
+        }
+        temp_fv0 = D_800D5408[i].x - 8.0f;
+        temp_fv1 = D_800D5408[i].y;
+        temp_fa0 = D_800D5408[i].z;
+        SysUtils_MatrixLookAt(arg1, &sp4C, var_fa1, 0.0f, var_ft5, 0.0f, 1.0f, 0.0f, temp_fv0, 
+                              temp_fv1, temp_fa0);
+        return;
+    }
+    if (gRiders == 1) {
+        sp8C = -512.0f;
+        var_ft5 = 0.0f;
+        if ((gGameModes != GMODE_STUNT) && (gCourseID == DOLPHIN_PARK)) {
+            sp8C -= 512.0f;
+        }
+    } else {
+        if (gRiders == 2) {
+            if (arg0 == D_800D48DC) {
+                var_ft5 = 48.0f;
+                sp8C = -512.0f;
+            } else {
+                var_ft5 = -48.0f;
+                sp8C = -512.0f;
+            }
+            var_ft5 += 52.0f;
+            if (gCourseID == DOLPHIN_PARK) {
+                sp8C -= 512.0f + ((f32) arg0 * 96.0f);
+            }
+        } else if (D_801CE638 == 0) {
+            var_ft5 = (64.0f - ((f32) (arg0 & 1) * 128.0f)) + 52.0f;
+            sp8C = ((f32) (gRiders - arg0) * 80.0f) + -512.0f;
+        } else if (gGameModes == GMODE_CHAMPIONSHIP) {
+            temp_t0 = D_801C26C0[arg0];
+            if (D_801C1F90 == 0) {
+                var_ft5 = (64.0f - ((f32) (temp_t0 & 1) * 128.0f)) + 52.0f;
+                if (temp_t0 >= 2) {
+                    var_ft5 -= 32.0f;
+                }
+            } else {
+                var_ft5 = (((f32) (temp_t0 & 1) * 128.0f) + -64.0f) - 52.0f;
+                if (temp_t0 >= 2) {
+                    var_ft5 += 32.0f;
+                }
+            }
+            sp8C = ((f32) ((gRiders - temp_t0) - 1) * 80.0f) + -512.0f;
+        } else {
+            var_ft5 = (64.0f - ((f32) (arg0 & 1) * 128.0f)) + 52.0f;
+            sp8C = ((f32) arg0 * 80.0f) + -512.0f;
+        }
+    }
+    if ((gCourseID == RIDER_SELECTION) && (arg0 == D_800D48E0)) {
+        var_v1_3 = &D_801B2F20;
+    } else {
+        var_v1_3 = D_801AEE20;
+    }
+    temp_fv0 = (var_v1_3[D_801BB12C].unk0 + (var_ft5 * var_v1_3[D_801BB12C].unk78)) + (var_v1_3[D_801BB12C].unk70 * sp8C);
+    temp_fa0 = (var_v1_3[D_801BB12C].unk8 + (var_ft5 * var_v1_3[D_801BB12C].unk7C)) + (var_v1_3[D_801BB12C].unk74 * sp8C);
+    SysUtils_MatrixLookAt(arg1, &sp4C, var_v1_3[D_801BB12C].unk70, 0.0f, var_v1_3[D_801BB12C].unk74, 0.0f, 1.0f, 0.0f, 
+                          temp_fv0, 0.0f, 
+                          temp_fa0);
+}
+
 
 void func_8006B334(Gfx** gdl) {
     f32 var_fv0;
