@@ -62,6 +62,11 @@ typedef struct UnkStruct_801C0580_s {
     s32 unkC;
 } UnkStruct_801C0580;
 
+// TODO: Find another type for D_10445C8
+typedef struct UnkStruct_10445C8_s {
+    char pad[0xC0];
+} UnkStruct_10445C8;
+
 // .data
 extern s32 D_800D4B00;
 extern u16 D_800D4B18[4][256];
@@ -114,6 +119,13 @@ extern UnkStruct_801AEE20 D_801B2F20;
 extern Vec3f D_800D5408[];
 extern s32 D_801C26C0[];
 
+extern s32 D_10149A0;
+extern s32 D_800D48E0;
+extern s32 D_80223934;
+extern s32 D_80228AAC;
+extern s32 D_80228AB0;
+extern s32 D_80228AB4;
+
 // segmented addresses
 extern Gfx D_10145F0[];
 extern u16 D_101ED68[];
@@ -134,6 +146,7 @@ extern UnkStruct_801AE948 D_6000000[];
 extern s32 D_802E1F0[];
 extern s32 D_802E9F8[];
 extern u8 D_E0098D0[];
+extern UnkStruct_10445C8 D_10445C8[];
 
 // codeseg
 extern s32 D_80223934;
@@ -630,7 +643,115 @@ void func_8006B334(Gfx** gdl) {
     *gdl = gdlh;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_24B00/func_8006BE74.s")
+void func_8006BE74(Gfx** gdl) {
+    Gfx* gdlh;
+    camera_unk_1* var_s5;
+    s32 sp17C;
+    s32 sp16C[4];
+    f32 temp_f0;
+    f32 temp_f0_3;
+    f32 temp_f14;
+    f32 temp_f26;
+    f32 temp_f2;
+    f32 var_f20;
+    f32 var_f22;
+    s32 temp_a1;
+    f32 sp148;
+    f32 sp144;
+    f32 sp140;
+    s32 temp_t0;
+    f32 sp138;
+    f32 sp134;
+    s32 temp_v1;
+    s32 var_s3;
+    s32 var_s4;
+    MtxF spE8;
+
+    gdlh = *gdl;
+    if (D_800DAB2C == 0) {
+        var_s5 = &gCameraPerspective[D_80223930];
+        sp17C = D_800D48DC;
+    } else {
+        var_s5 = &gCameraPerspective[D_80223934];
+        sp17C = D_800D48E0;
+    }
+    sp148 = -var_s5->unk64;
+    var_s3 = 0;
+    sp144 = -var_s5->unk68;
+    sp140 = -var_s5->unk6C;
+    if ((sp148 != 0.0f) || (sp140 != 0.0f)) {
+        sp134 = 0.0f;
+        sp138 = 1.0f;
+    } else {
+        sp134 = 1.0f;
+        sp138 = 0.0f;
+    }
+    for (var_s4 = 0; var_s4 < gRiders; var_s4++) {
+        sp16C[var_s4] = 0;
+        if ((D_800DAB2C == 0) && (var_s4 == D_800D48DC)) {
+            continue;
+        }
+        var_f20 = D_80192690[var_s4].unk44.x - var_s5->unk4C;
+        var_f22 = D_80192690[var_s4].unk44.z - var_s5->unk54;
+        temp_f0_3 = sqrtf(SQ(var_f20) + SQ(var_f22));
+        if (temp_f0_3 > 0.0f) {
+            var_f20 /= temp_f0_3;
+            var_f22 /= temp_f0_3;
+        }
+        if ((temp_f0_3 < 4096.0f) && (((var_s5->unkF0 * var_f20) + (var_f22 * var_s5->unkF4)) > 0.7f)) {
+            sp16C[var_s4] = 1;
+        }
+        if (sp16C[var_s4] != 0) {
+            if ((D_801C0C90[D_800DAB2C][var_s4] < 0xFF) && GAME_NOT_PAUSED) {
+                D_801C0C90[D_800DAB2C][var_s4]++;
+            }
+        } else {
+            D_801C0C90[D_800DAB2C][var_s4] = 0;
+        }
+    }
+    gSPClearGeometryMode(gdlh++, G_ZBUFFER | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR);
+    gSPSetGeometryMode(gdlh++, G_ZBUFFER | G_SHADE);
+    gSPTexture(gdlh++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+    gDPPipeSync(gdlh++);
+    gDPSetCycleType(gdlh++, G_CYC_1CYCLE);
+    gDPSetCombineLERP(gdlh++, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0,
+                      0, ENVIRONMENT, 0);
+    gDPSetRenderMode(gdlh++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+
+    for (var_s4 = 0; var_s4 < gRiders; var_s4++) {
+        if ((var_s4 == sp17C) || (D_801C0C90[D_800DAB2C][var_s4] >= 0x1E) || (sp16C[var_s4] == 0)) {
+            continue;
+        }
+        if ((D_801C2938[sp17C].racePosition < D_801C2938[var_s4].racePosition) || (D_801C2938[var_s4].unk2F4 != 0)) {
+            continue;
+        }
+
+        var_f20 = D_80192690[var_s4].unk44.x;
+        temp_f26 = D_80192690[var_s4].unk44.y;
+        var_f22 = D_80192690[var_s4].unk44.z;
+        temp_f0 = var_s5->unk4C - var_f20;
+        temp_f2 = var_s5->unk50 - temp_f26;
+        temp_f14 = var_s5->unk54 - var_f22;
+        temp_f0_3 = sqrtf(SQ(temp_f0) + SQ(temp_f2) + SQ(temp_f14));
+        if (temp_f0_3 < 1024.0f) {
+            D_801C0C90[D_800DAB2C][var_s4] = 0xFF;
+            continue;
+        }
+
+        SysUtils_MatrixLookAt(&D_801AE948->unk4140[D_801AE950], &spE8, sp148, sp144, sp140, 0.0f, sp138, sp134, var_f20,
+                              temp_f26 + 56.0f + (temp_f0_3 * 0.03125f), var_f22);
+        gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        func_801EE97C(&D_801AE948->unk4140[D_801AE950], temp_f0_3 * 0.0078125f, temp_f0_3 * 0.0078125f,
+                      temp_f0_3 * 0.0078125f);
+        gSPMatrix(gdlh++, &D_5000000->unk4140[D_801AE950++], G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+        gDPLoadTextureBlock(gdlh++, &D_10445C8[D_801C2938[var_s4].racePosition], G_IM_FMT_IA, G_IM_SIZ_8b, 16, 12, 0,
+                            G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK,
+                            G_TX_NOLOD, G_TX_NOLOD);
+        gDPSetEnvColor(gdlh++, D_80228AAC, D_80228AB0, D_80228AB4, 0xFF);
+        gSPDisplayList(gdlh++, &D_10149A0);
+    }
+    *gdl = gdlh;
+}
 
 void func_8006C5D8(Gfx** gdl) {
     f32 temp_fv0;

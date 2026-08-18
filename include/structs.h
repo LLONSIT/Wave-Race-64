@@ -986,4 +986,20 @@ typedef struct {
 } UnkStruct_801CE658; // size = 0x1C
 
 
+typedef struct UnkStruct_menu_buffer_1_s {
+    /* 0x00 */ u16 unk_0;
+    /* 0x02 */ u16 unk2;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ u16 unk_6;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ char pad10[4];
+    /* 0x14 */ f32 unk14;                           /* inferred */
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ s32 unk1C;                           /* inferred */
+    /* 0x20 */ s32 unk20;
+    /* 0x24 */ s32 unk24;
+    /* 0x28 */ s32 unk28;
+} UnkStruct_menu_buffer_1;                          /* size = 0x2C */
+
 #endif /* STRUCTS_H */

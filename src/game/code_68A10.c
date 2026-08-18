@@ -150,6 +150,7 @@ void func_800AE210(s32 rider) {
     }
 }
 
+// Matched but needs migration
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_68A10/func_800AE7C4.s")
 
 void func_800AF40C(f32 arg0, f32 arg1, f32 arg2) {

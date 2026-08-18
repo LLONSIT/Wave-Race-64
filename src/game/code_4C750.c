@@ -1299,7 +1299,7 @@ s32 func_800948DC(s32 arg0, s32 arg1) {
     switch (D_801CB308[arg0][0]) {
         case 0:
             D_801CE600 = 0;
-            if (D_801CE60C == 1) {
+            if (D_801CE608.player == 1) {
                 ret = D_800EABEC[arg1];
             } else {
                 ret = D_800EAC00[arg1];

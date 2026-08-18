@@ -93,7 +93,7 @@ void func_80095A28(DmaEntry* entry) {
             }
             if (entry->flag == 5) {
                 data = D_800D45E4;
-                if (D_801CE60C == 1) {
+                if (D_801CE608.player == 1) {
                     var_fp = D_800DCE3C[gCourseID];
                 } else {
                     var_fp = D_800DCE60[gCourseID];
