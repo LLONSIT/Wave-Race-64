@@ -372,18 +372,17 @@ typedef struct UnkStruct_802C96A8 {
 } UnkStruct_802C96A8; // size = 0x24;
 
 typedef struct GfxPool_s {
-    Gfx dList[0xC00];
-    char pad6000[0x8008];
-    Mtx unkE008[2];
-    Mtx unkE088[1];
-    char padE0C8[0x5CA0];
-    Vtx* unk13D68;
-    char pad13D6C[0x336C];
-    Vtx* unk170D8;
-    char pad170DC[0xD08];
-    Vtx unk185E8[8 * 16];
-    char pad185EC[0x9fc];
-} GfxPool;
+    /* 0x00000 */ Gfx dList[0xC00];
+    /* 0x06000 */ char pad6000[0x8008];
+    /* 0x0E008 */ Mtx unkE008[2];
+    /* 0x0E088 */ Mtx unkE088[1];
+    /* 0x0E0C8 */ char padE0C8[0x1D40];
+    /* 0x0FE08 */ Vtx unkFE08[0x3F6];
+    /* 0x13D68 */ Vtx* unk13D68;
+    /* 0x13D6C */ char pad13D6C[0x336C];
+    /* 0x170D8 */ Vtx* unk170D8;
+    /* 0x170DC */ char pad170DC[0x1F0C];
+} GfxPool; /* size = 0x18FE8 */
 
 typedef struct UnkStruct_801CEFF8 {
     /* 0x00 */ Vec3f vec1;
@@ -1001,5 +1000,24 @@ typedef struct UnkStruct_menu_buffer_1_s {
     /* 0x24 */ s32 unk24;
     /* 0x28 */ s32 unk28;
 } UnkStruct_menu_buffer_1;                          /* size = 0x2C */
+
+typedef struct UnkStruct_80198368_s {
+    /* 0x0000 */ s32 unk0;
+    /* 0x0004 */ char pad4[0x513C];
+    /* 0x5140 */ Vtx unk5140[2][4];
+    /* 0x51C0 */ Vtx unk51C0[4][0xC0];
+    /* 0x81C0 */ Vtx unk81C0[0xC0];
+    /* 0x8DC0 */ Vtx unk8DC0[4][16];                         /* inferred */
+    /* 0x91C0 */ Vtx unk91C0[4][16];                         /* inferred */
+    /* 0x95C0 */ char pad95C0[0x1D30];
+} UnkStruct_80198368;                               /* size = 0xB2F0 */
+
+typedef struct UnkStruct_801C43F8_s {
+    char pad[0x5D0];
+    Mtx unk5D0[1];
+    char pad610[0x2fc0];
+    Lights0 unk35D8[1];
+    char pad35E8[0x44];
+} UnkStruct_801C43F8;
 
 #endif /* STRUCTS_H */

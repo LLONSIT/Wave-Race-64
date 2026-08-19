@@ -19,6 +19,9 @@ extern s32 D_1000140;
 extern s32 D_10001E0;
 extern s32 D_800D4650;
 extern s32 D_800D4658[];
+extern Mtx D_8011F860;
+extern Mtx D_8011F8A0;
+extern s16 D_8011F8AA;
 
 void func_8004AC80(struct UnkStruct_8004B0F8* arg0, f32 arg1, f32 arg2, f32 arg3);
 void func_8004AE88(struct UnkStruct_8004B0F8* arg0);
@@ -222,7 +225,60 @@ void func_8004B6E0(void) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_5480/func_8004BA18.s")
+void func_8004BA18(void) {
+    GfxPool* poolIter;
+    s32 i;
+    s32 j;
+    s32 temp_lo;
+    s32 temp_hi;
+    s32 temp_v1;
+    s32 temp_a0;
+    Vtx* vtx;
+
+    for (i = 0; i < 2; i++) {
+        poolIter = &D_8011F8E8[i];
+
+        for (j = 0; j < 0x3F6; j++) {
+            temp_hi = j % 39;
+            temp_lo = j / 39;
+
+            temp_v1 = temp_hi * 8;
+            temp_a0 = temp_lo * 8;
+
+            vtx = &poolIter->unkFE08[j];
+
+            vtx->v.ob[0] = temp_v1 + 8;
+            vtx->v.ob[1] = temp_a0 + 0x14;
+            vtx->v.ob[2] = 0;
+            vtx->v.tc[0] = (temp_v1 * 0x59) + 0x2F4;
+            vtx->v.tc[1] = (temp_a0 * 0x59) + 0x720;
+
+            if (temp_hi == 38) {
+                vtx->v.tc[0] -= 0xDE;
+            }
+            if (temp_lo == 25) {
+                vtx->v.tc[1] -= 0xDE;
+            }
+
+            if (i == 0) {
+                vtx->v.cn[0] = SysUtils_Rand() & 0xFF;
+                vtx->v.cn[1] = SysUtils_Rand() & 0xFF;
+                vtx->v.cn[2] = SysUtils_Rand() & 0xFF;
+            } else {
+                vtx->v.cn[0] = D_8011F8E8[0].unkFE08[j].v.cn[0];
+                vtx->v.cn[1] = D_8011F8E8[0].unkFE08[j].v.cn[1];
+                vtx->v.cn[2] = D_8011F8E8[0].unkFE08[j].v.cn[2];
+            }
+            vtx->v.cn[3] = 0xFF;
+        }
+    }
+
+    guOrtho(&D_8011F860, -160.0f, 160.0f, -120.0f, 120.0f, 0.0f, 2.0f, 1.0f);
+    guTranslate(&D_8011F8A0, -160.0f, 120.0f, -1.0f);
+
+    D_8011F8AA = -1;
+    func_8004B6E0();
+}
 
 Gfx* func_8004BC40(Gfx* gdl) {
     gSPDisplayList(gdl++, &D_1000140);

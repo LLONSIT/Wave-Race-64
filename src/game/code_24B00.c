@@ -27,12 +27,6 @@ typedef struct UnkStruct_801BFB70_s {
     /* 0x04 */ char pad4[0x3C]; /* maybe part of unk0[0x10]? */
 } UnkStruct_801BFB70;           /* size = 0x40 */
 
-typedef struct UnkStruct_80198368_s {
-    /* 0x0 */ char pad[0x5140];
-    /* 0x5140 */ Vtx unk5140[2][4];
-    /* 0x5144 */ char pad5144[0x612c];
-} UnkStruct_80198368;
-
 typedef struct UnkStruct_801C0C80_s {
     char pad[0x48];
     s32 unk48;
@@ -142,7 +136,6 @@ extern s32 D_1016230[];
 extern Gfx D_102CE78[];
 extern LookAt D_500B2C0[];
 extern LookAt D_500B2D0[];
-extern UnkStruct_801AE948 D_6000000[];
 extern s32 D_802E1F0[];
 extern s32 D_802E9F8[];
 extern u8 D_E0098D0[];

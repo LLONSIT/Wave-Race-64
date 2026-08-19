@@ -82,13 +82,44 @@ typedef struct UnkStruct_80099D94 {
     f32 unk84;
 } UnkStruct_80099D94;
 
+typedef struct UnkStruct_801CE780_unk4_unk4_s {
+    /* 0x0 */ s16 unk0;         /* inferred */
+    /* 0x2 */ s16 unk2;         /* inferred */
+    /* 0x4 */ s16 unk4;         /* inferred */
+    /* 0x6 */ s8 unk6;          /* inferred */
+    /* 0x7 */ s8 unk7;          /* inferred */
+    /* 0x8 */ s8 unk8;          /* inferred */
+    /* 0x9 */ s8 unk9;          /* inferred */
+    /* 0xA */ s8 unkA;          /* inferred */
+    /* 0xB */ s8 unkB;          /* inferred */
+} UnkStruct_801CE780_unk4_unk4; /* size = 0xC */
+typedef struct UnkStruct_801CE780_unk4_s {
+    /* 0x00 */ s16 unk0; /* inferred */
+    /* 0x02 */ char pad2[2];
+    /* 0x04 */ UnkStruct_801CE780_unk4_unk4* unk4; /* inferred */
+    /* 0x08 */ s16* unk8;                          /* inferred */
+    /* 0x0C */ s16* unkC;                          /* inferred */
+    /* 0x10 */ s16* unk10;                         /* inferred */
+    /* 0x14 */ s16* unk14;                         /* inferred */
+    /* 0x18 */ s16* unk18;                         /* inferred */
+    /* 0x1C */ s16* unk1C;                         /* inferred */
+    /* 0x20 */ s16* unk20;                         /* inferred */
+} UnkStruct_801CE780_unk4;                         /* size = 0x24 */
+
 typedef struct UnkStruct_801CE780_s {
-    /* 0x00 */ char pad0[8];
-    /* 0x08 */ u32 unk8;         /* inferred */
-    /* 0x0C */ u32 unkC;         /* inferred */
-    /* 0x10 */ u32 unk10;        /* inferred */
-    /* 0x14 */ char pad14[0x18]; /* maybe part of unk10[7]? */
-} UnkStruct_801CE780;            /* size = 0x2C */
+    /* 0x00 */ char pad0[4];
+    /* 0x04 */ UnkStruct_801CE780_unk4** unk4; /* inferred */
+    /* 0x08 */ u32 unk8;                       /* inferred */
+    /* 0x0C */ u32 unkC;                       /* inferred */
+    /* 0x10 */ u32 unk10;                      /* inferred */
+    /* 0x14 */ u32 unk14;                      /* inferred */
+    /* 0x18 */ char pad18[0x14];               /* maybe part of unk14[6]? */
+} UnkStruct_801CE780;                          /* size = 0x2C */
+
+typedef struct UnkStruct_801CF0D8_s {
+    /* 0x00 */ s32 unk0;        /* inferred */
+    /* 0x04 */ char pad4[0xB8]; /* maybe part of unk0[0x2F]? */
+} UnkStruct_801CF0D8;           /* size = 0xBC */
 
 extern u8 D_801CEAA6[];
 extern struct UnkStruct_801CEBE0 D_801CEBE0[];
@@ -136,6 +167,7 @@ extern RiderStruct D_801C2C70[];
 extern UnkStruct_8009A04C D_801CEB48;
 extern s16 D_801CE776;
 extern UnkStruct_801CE780 D_801CE780[];
+extern UnkStruct_801CF0D8 D_801CF0D8[];
 extern Gfx D_800E6CA0[];
 extern s16 D_801CE774;
 extern s16 D_801CE76E;
@@ -153,7 +185,7 @@ extern s16 D_801CEA9C[];
 extern f32 D_800EB950;
 
 f32 func_801ED154(f32, f32);
-
+f32 func_801ED090(f32);
 f32 func_8009D3AC(f32, f32);
 f32 func_8009D564(f32);
 void func_8009D5C0(void);
@@ -188,6 +220,7 @@ void func_8009A1CC(UnkStruct_8009A04C*, f32);
 void func_8009934C(f32 t, Vec3f* arg1, f32* arg2, f32* arg3, f32* arg4, f32* arg5, f32* arg6);
 u8 func_8009CD50(UnkStruct_func_8009CCE8*);
 u8 func_8009CB70(UnkStruct_801CF060* arg0, UnkStruct_func_8009CCE8* arg1);
+void func_801E4C60(Mtx*, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32);
 
 f32 Math_Fabs(f32 x) {
     if (x < 0.0f) {
@@ -1661,7 +1694,25 @@ void func_8009D340(void) {
     for (i = 0; i < 100; i++) {}
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_8009D3AC.s")
+f32 func_8009D3AC(f32 arg0, f32 arg1) {
+    f32 var_fv1;
+    f32 temp_fa0;
+    s32 pad;
+
+    temp_fa0 = SQ(arg0) + SQ(arg1);
+    if (sqrtf(temp_fa0) != 0.0f) {
+        temp_fa0 = (1.0f / sqrtf(temp_fa0));
+    } else {
+        return 0;
+    }
+
+    if ((temp_fa0 * arg1) <= 0.0f) {
+        var_fv1 = (s32) func_801ED090(temp_fa0 * arg0);
+    } else {
+        var_fv1 = (s32) (360.0f - func_801ED090(temp_fa0 * arg0));
+    }
+    return var_fv1;
+}
 
 f32 func_8009D4A8(f32 arg0, f32 arg1) {
     return sqrtf(SQ(arg0) + SQ(arg1));
@@ -1746,7 +1797,85 @@ Gfx* func_8009E794(Gfx* dl, s32 arg1) {
     return dl;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_8009E814.s")
+Gfx* func_8009E814(Gfx* gdl, s32 arg1) {
+    UnkStruct_801CE780_unk4* temp_s4;
+    UnkStruct_801CE780_unk4** v1;
+    s32 index;
+    s32 sp68;
+    s32 var_s3;
+
+    index = D_801CE76E;
+
+    v1 = D_801CE780[index].unk4;
+
+    temp_s4 = *v1;
+    if (gCurrentPauseMenuOption == -1) {
+        D_801CF060[arg1].unk78 = (D_801CF060[arg1].unk78 + 1) % temp_s4->unk0;
+    }
+
+    sp68 = D_801CF0D8[arg1].unk0 % temp_s4->unk0;
+    gSPDisplayList(gdl++, D_800E6CA0);
+
+    gdl = func_8009D96C(gdl, arg1, 0.2f);
+
+    var_s3 = temp_s4->unk14[sp68];
+    func_801E4C60(&D_801C43F8[D_8011F8E0].unk5D0[D_801D06B8], temp_s4->unk4[var_s3].unk6, temp_s4->unk4[var_s3].unk7,
+                  temp_s4->unk4[var_s3].unk8, temp_s4->unk4[var_s3].unk9, temp_s4->unk4[var_s3].unkA,
+                  temp_s4->unk4[var_s3].unkB, temp_s4->unk4[var_s3].unk0, temp_s4->unk4[var_s3].unk2,
+                  temp_s4->unk4[var_s3].unk4, 1.0f);
+    gSPMatrix(gdl++, &D_6000000->unk5D0[D_801D06B8++], G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+    gSPDisplayList(gdl++, D_801CE780[index].unkC);
+    gSPPopMatrix(gdl++, G_MTX_MODELVIEW);
+    var_s3 = temp_s4->unk10[sp68];
+    func_801E4C60(&D_801C43F8[D_8011F8E0].unk5D0[D_801D06B8], temp_s4->unk4[var_s3].unk6, temp_s4->unk4[var_s3].unk7,
+                  temp_s4->unk4[var_s3].unk8, temp_s4->unk4[var_s3].unk9, temp_s4->unk4[var_s3].unkA,
+                  temp_s4->unk4[var_s3].unkB, temp_s4->unk4[var_s3].unk0, temp_s4->unk4[var_s3].unk2,
+                  temp_s4->unk4[var_s3].unk4, 1.0f);
+    gSPMatrix(gdl++, &D_6000000->unk5D0[D_801D06B8++], G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+    gSPDisplayList(gdl++, D_801CE780[index].unk10);
+    gSPPopMatrix(gdl++, G_MTX_MODELVIEW);
+    var_s3 = temp_s4->unkC[sp68];
+    func_801E4C60(&D_801C43F8[D_8011F8E0].unk5D0[D_801D06B8], temp_s4->unk4[var_s3].unk6, temp_s4->unk4[var_s3].unk7,
+                  temp_s4->unk4[var_s3].unk8, temp_s4->unk4[var_s3].unk9, temp_s4->unk4[var_s3].unkA,
+                  temp_s4->unk4[var_s3].unkB, temp_s4->unk4[var_s3].unk0, temp_s4->unk4[var_s3].unk2,
+                  temp_s4->unk4[var_s3].unk4, 1.0f);
+    gSPMatrix(gdl++, &D_6000000->unk5D0[D_801D06B8++], G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+    gSPDisplayList(gdl++, D_801CE780[index].unk14);
+    gSPPopMatrix(gdl++, G_MTX_MODELVIEW);
+    var_s3 = temp_s4->unk20[sp68];
+    func_801E4C60(&D_801C43F8[D_8011F8E0].unk5D0[D_801D06B8], temp_s4->unk4[var_s3].unk6, temp_s4->unk4[var_s3].unk7,
+                  temp_s4->unk4[var_s3].unk8, temp_s4->unk4[var_s3].unk9, temp_s4->unk4[var_s3].unkA,
+                  temp_s4->unk4[var_s3].unkB, temp_s4->unk4[var_s3].unk0, temp_s4->unk4[var_s3].unk2,
+                  temp_s4->unk4[var_s3].unk4, 1.0f);
+    gSPMatrix(gdl++, &D_6000000->unk5D0[D_801D06B8++], G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+    gSPDisplayList(gdl++, D_801CE780[index].unkC);
+    gSPPopMatrix(gdl++, G_MTX_MODELVIEW);
+    var_s3 = temp_s4->unk1C[sp68];
+    func_801E4C60(&D_801C43F8[D_8011F8E0].unk5D0[D_801D06B8], temp_s4->unk4[var_s3].unk6, temp_s4->unk4[var_s3].unk7,
+                  temp_s4->unk4[var_s3].unk8, temp_s4->unk4[var_s3].unk9, temp_s4->unk4[var_s3].unkA,
+                  temp_s4->unk4[var_s3].unkB, temp_s4->unk4[var_s3].unk0, temp_s4->unk4[var_s3].unk2,
+                  temp_s4->unk4[var_s3].unk4, 1.0f);
+    gSPMatrix(gdl++, &D_6000000->unk5D0[D_801D06B8++], G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+    gSPDisplayList(gdl++, D_801CE780[index].unk10);
+    gSPPopMatrix(gdl++, G_MTX_MODELVIEW);
+    var_s3 = temp_s4->unk18[sp68];
+    func_801E4C60(&D_801C43F8[D_8011F8E0].unk5D0[D_801D06B8], temp_s4->unk4[var_s3].unk6, temp_s4->unk4[var_s3].unk7,
+                  temp_s4->unk4[var_s3].unk8, temp_s4->unk4[var_s3].unk9, temp_s4->unk4[var_s3].unkA,
+                  temp_s4->unk4[var_s3].unkB, temp_s4->unk4[var_s3].unk0, temp_s4->unk4[var_s3].unk2,
+                  temp_s4->unk4[var_s3].unk4, 1.0f);
+    gSPMatrix(gdl++, &D_6000000->unk5D0[D_801D06B8++], G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+    gSPDisplayList(gdl++, D_801CE780[index].unk14);
+    gSPPopMatrix(gdl++, G_MTX_MODELVIEW);
+    var_s3 = temp_s4->unk8[sp68];
+    func_801E4C60(&D_801C43F8[D_8011F8E0].unk5D0[D_801D06B8], temp_s4->unk4[var_s3].unk6, temp_s4->unk4[var_s3].unk7,
+                  temp_s4->unk4[var_s3].unk8, temp_s4->unk4[var_s3].unk9, temp_s4->unk4[var_s3].unkA,
+                  temp_s4->unk4[var_s3].unkB, temp_s4->unk4[var_s3].unk0, temp_s4->unk4[var_s3].unk2,
+                  temp_s4->unk4[var_s3].unk4, 1.0f);
+    gSPMatrix(gdl++, &D_6000000->unk5D0[D_801D06B8++], G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+    gSPDisplayList(gdl++, D_801CE780[index].unk8);
+    gSPPopMatrix(gdl++, G_MTX_MODELVIEW);
+    return gdl;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_8009F398.s")
 
