@@ -528,7 +528,6 @@ void func_8009917C(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3) {
               (SIN((s32) ((arg3->y / 360.0f) * 4096.0f)) * sp24.vec1.x);
 }
 
-#ifdef NEEDS_RODATA
 void func_8009934C(f32 t, Vec3f* arg1, f32* arg2, f32* arg3, f32* arg4, f32* arg5, f32* arg6) {
     f32 b[4];
 
@@ -536,18 +535,15 @@ void func_8009934C(f32 t, Vec3f* arg1, f32* arg2, f32* arg3, f32* arg4, f32* arg
         t = 1.0f;
     }
 
-    b[0] = (CUBE(1.0f - t)) / 6.0f;
-    b[1] = ((CUBE(t) / 2.0f) - SQ(t)) + 2.0f / 3.0f;
-    b[2] = ((-t * t * t) / 2.0f) + (SQ(t) / 2.0f) + (t / 2.0f) + 1.0f / 6.0f;
-    b[3] = CUBE(t) / 6.0f;
+    b[0] = ((1.0f - t) * (1.0f - t) * (1.0f - t)) / 6.0f;
+    b[1] = (((t * t * t) / 2.0f) - (t * t)) + 2.0f / 3.0f;
+    b[2] = ((-t * t * t) / 2.0f) + ((t * t) / 2.0f) + (t / 2.0f) + 1.0f / 6.0f;
+    b[3] = (t * t * t) / 6.0f;
     arg1->x = (b[0] * arg3[0]) + (b[1] * arg4[0]) + (b[2] * arg5[0]) + (b[3] * arg6[0]);
     arg1->y = (b[0] * arg3[1]) + (b[1] * arg4[1]) + (b[2] * arg5[1]) + (b[3] * arg6[1]);
     arg1->z = (b[0] * arg3[2]) + (b[1] * arg4[2]) + (b[2] * arg5[2]) + (b[3] * arg6[2]);
     *arg2 = (b[0] * arg3[3]) + (b[1] * arg4[3]) + (b[2] * arg5[3]) + (b[3] * arg6[3]);
 }
-#else
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_8009934C.s")
-#endif
 
 s32 func_80099514(s32 arg0, s32 arg1, UnkStruct_801CED60* arg2, s16* arg3, f32* arg4) {
     s32 sp9C;
@@ -752,12 +748,11 @@ void func_8009A04C(s32 arg0, s16 arg1) {
 }
 
 void func_8009A1CC(UnkStruct_8009A04C* arg0, f32 arg1) {
-    f32 var_fa0;
-    f32 var_fa1;
     f32 var_fv1;
+    f32 var_fa1;
 
-    var_fa1 = arg1 / 7.0f;
     var_fv1 = (2.0f * arg1) / 7.0f;
+    var_fa1 = arg1 / 7.0f;
     if (var_fv1 > 2.0f) {
         var_fv1 = 2.0f;
     }
@@ -1617,7 +1612,7 @@ u8 func_8009CD50(UnkStruct_func_8009CCE8* arg0) {
     arg0->unk84 += D_801CEBE0[D_800E5138].unk0.z;
 
     if (gCurrentPauseMenuOption == -1) {
-        temp_s1->unk1C = func_8009CB70(temp_s1, arg0);
+        temp_s1->unk1C = func_8009CB70((UnkStruct_801CF060*) temp_s1, arg0);
         if (temp_s1->unk1C) {
             temp_s1->unkC.x = arg0->unk4C;
             temp_s1->unkC.y = arg0->unk50;
@@ -1625,7 +1620,7 @@ u8 func_8009CD50(UnkStruct_func_8009CCE8* arg0) {
             temp_s1->unk_0 = arg0->unk7C;
             temp_s1->unk4 = arg0->unk80;
             temp_s1->unk8 = arg0->unk84;
-            func_8009C2CC(temp_s1);
+            func_8009C2CC((UnkStruct_801CEBE0*) temp_s1);
             func_80098FF8(&temp_s1->unkC, (Vec3f*) temp_s1, &sp5C, &sp64, &sp60);
             if ((sp64 >= 80.0f) && (sp64 < 180.0f)) {
                 sp64 = 80.0f;
