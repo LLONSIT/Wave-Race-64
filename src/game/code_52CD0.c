@@ -631,7 +631,22 @@ s32 func_80099A00(UnkStruct_801CF060* arg0, void* arg1, void* arg2, s32 arg3) {
     return sp28;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_80099AD8.s")
+/**
+ * Updates wave parameters for a given wave index (0-2).
+ * If the new amplitude (arg2) is greater than the current one at offset 0x44,
+ * it updates amplitude (0x44), frequency (0x68), and phase (0x5C).
+ * Called with different float constants per course/wave configuration.
+ */
+void func_80099AD8(s32 arg0, void* arg1, f32 arg2, f32 arg3, f32 arg4) {
+    if (arg0 >= 0 && arg0 < 3) {
+        f32* ptr = (f32*)((s8*)arg1 + (arg0 * 4));
+        if (ptr[0x44 / 4] < arg2) {
+            ptr[0x44 / 4] = arg2;
+            ptr[0x68 / 4] = arg3;
+            ptr[0x5C / 4] = arg4;
+        }
+    }
+}
 
 void func_80099B20(f32* arg0, f32 arg1) {
     if (arg1 == 180.0f) {
