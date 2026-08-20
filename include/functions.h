@@ -143,6 +143,7 @@ void AudioGeneral_PlaySound(s32, s32);
 void func_800481E0(Mtx* arg0, u16* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
 void func_80048A88(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 arg8, f32 arg9,
                    f32 argA);
+void func_80049C9C(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
 Gfx* func_801E7C58(Gfx* dList, u32 ulx, u32 uly, u32 lrx, u32 lry, u32 r, u32 g, u32 b, u32 a);
 void func_i4_802C7474(s32);
 void func_i8_802C6FD4(s8* src, s8* dest, s32 count);
@@ -163,7 +164,7 @@ Gfx* func_801E946C(Gfx*, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, 
 void func_801EC9C8(void);
 void func_801ED004(void);
 void func_i15_802C6CAC(s32);
-void func_80099AD8(s8, void*, f32, f32, f32);
+void func_80099AD8(s32, void*, f32, f32, f32);
 void func_800BFD34(void);
 void func_800BFD68(void);
 int func_8007C50C(void);
