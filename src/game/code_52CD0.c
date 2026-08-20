@@ -1808,7 +1808,46 @@ void func_8009D5C0(void) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_8009D6B0.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_8009D96C.s")
+Gfx* func_8009D96C(Gfx* gdl, s32 index, f32 arg2) {
+    StructVarS0* v0;
+    f32 var_fa1;
+    f32 sp3C;
+    f32 sp40;
+
+    v0 = &D_801CF060[index];
+    if (v0->unkB8 == 0) {
+        var_fa1 = v0->unk18;
+        switch (v0->unk0 - 1) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 11:
+            case 12:
+                var_fa1 = -(var_fa1 - 90.0f);
+                break;
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                var_fa1 = 90.0f - var_fa1;
+                break;
+            default:
+                break;
+        }
+        sp3C = func_8009D564(v0->unk20);
+        sp40 = func_8009D564(var_fa1);
+        func_80049C9C(&D_801C43F8[D_8011F8E0].unk5D0[D_801D06B8], sp3C, sp40,
+                      func_8009D564(v0->unk1C), v0->unkC, v0->unk10, v0->unk14, arg2);
+    } else {
+        func_80048A88(&D_801C43F8[D_8011F8E0].unk5D0[D_801D06B8], v0->unk30, v0->unk34, v0->unk38,
+                      v0->unk3C, v0->unk48, v0->unk40, v0->unk44, v0->unkC, v0->unk10, v0->unk14);
+    }
+    gSPMatrix(gdl++, &D_6000000->unk5D0[D_801D06B8++], G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+    return gdl;
+}
 
 Gfx* func_8009D96C(Gfx*, s32, f32);
 
