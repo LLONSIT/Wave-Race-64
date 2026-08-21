@@ -375,14 +375,34 @@ typedef struct GfxPool_s {
     /* 0x00000 */ Gfx dList[0xC00];
     /* 0x06000 */ char pad6000[0x8008];
     /* 0x0E008 */ Mtx unkE008[2];
-    /* 0x0E088 */ Mtx unkE088[1];
-    /* 0x0E0C8 */ char padE0C8[0x1D40];
+    /* 0x0E088 */ Mtx unkE088[1]; // part of unkE008?
+    /* 0x0E0C8 */ char padE0C8[0x40];
+    /* 0x0E108 */ Mtx unkE108[4];
+    /* 0x0E208 */ Mtx unkE208[4];         
+    /* 0x0E308 */ Mtx unkE308[4];         
+    /* 0x0E408 */ Mtx unkE408[4];         
+    /* 0x0E508 */ Mtx unkE508[4];         
+    /* 0x0E608 */ Mtx unkE608[4];         
+    /* 0x0E708 */ Mtx unkE708[4];         
+    /* 0x0E808 */ Mtx unkE808[4];         
+    /* 0x0E908 */ Mtx unkE908[4];         
+    /* 0x0EA08 */ Mtx unkEA08[4];         
+    /* 0x0EB08 */ Mtx unkEB08[4];         
+    /* 0x0EC08 */ Mtx unkEC08[4];         
+    /* 0x0ED08 */ Mtx unkED08[4];         
+    /* 0x0EE08 */ Mtx unkEE08[4];         
+    /* 0x0EF08 */ Mtx unkEF08[4];         
+    /* 0x0F008 */ Mtx unkF008[4];         
+    /* 0x0F108 */ Mtx unkF108[4];         
+    /* 0x0F208 */ Mtx unkF208[4];         
+    /* 0x0F308 */ char padF308[0xB00];    
     /* 0x0FE08 */ Vtx unkFE08[0x3F6];
-    /* 0x13D68 */ Vtx* unk13D68;
+    /* 0x13D68 */ Vtx *unk13D68;
     /* 0x13D6C */ char pad13D6C[0x336C];
-    /* 0x170D8 */ Vtx* unk170D8;
+    /* 0x170D8 */ Vtx *unk170D8;
     /* 0x170DC */ char pad170DC[0x1F0C];
 } GfxPool; /* size = 0x18FE8 */
+
 
 typedef struct UnkStruct_801CEFF8 {
     /* 0x00 */ Vec3f vec1;
@@ -700,9 +720,14 @@ typedef struct SEGA2 {
     s8 unk13;
 } func_8007AFF4_arg1;
 
+union float_halfword {
+    f32 f;
+    u16 h;
+};
+
 // This is probably a part of UnkStruct_801C3C50
 typedef struct UnkStruct_80192690 {
-    /* 0x0000 */ f32 unk0;
+    /* 0x0000 */ union float_halfword unk0;
     /* 0x0004 */ char pad4[0x24];                   /* maybe part of unk0[0xA]? */
     /* 0x0028 */ s32 unk28;
     /* 0x002C */ char pad2C[0x18];                  /* maybe part of unk28[7]? */

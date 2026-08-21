@@ -325,6 +325,7 @@ extern f32 D_800D4A04;
 extern f32 D_800D4A68[7];
 extern f32 D_800D49F4;
 extern f32 D_800D4A00;
+extern UnkStruct_80192690 D_80193D5C[];
 
 void func_80098048(s32, s32);
 f32 func_8004D30C(f32, f32);
@@ -1771,7 +1772,57 @@ void func_8005A280(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_8005B510.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_8005CD24.s")
+s32 func_8005CD24(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3) {
+    switch (arg2) {
+    case 22:
+        if ((u16)D_80193D5C[arg0].unk0.h == 0) {
+            func_80057B24(arg0, arg1);
+            return 0;
+        }
+        func_8005790C(arg0, arg1);
+        return 0;
+    case 24:
+        func_8005B510();
+        return 0;
+    case 23:
+        func_8005A280(arg0, arg1);
+        return 0;
+    case 7:
+        return func_80054E14(arg0, arg1, arg2, arg3);
+    case 10:
+        return func_800551EC(arg0, arg1, arg2, arg3, 1, 1);
+    case 15:
+        return func_80054130(arg0, arg1, 7, arg3, 1, 1);
+    case 8:
+        return func_80056670(arg0, arg1, arg2, arg3);
+    case 2:
+    case 3:
+        return func_80054130(arg0, arg1, arg2, arg3, 0, 1);
+    case 1:
+    case 4:
+    case 6:
+        return func_80054130(arg0, arg1, arg2, arg3, 0, 0);
+    case 25:
+        if (D_80193D5C[arg0].unk0.h == 0) {
+            func_80052E90(arg0, arg1, 0, 4);
+            return 0;
+        }
+        func_80052E90(arg0, arg1, 0, 8);
+        return 0;
+    case 9:
+        return func_80055C6C(arg0, arg1, arg2, arg3);
+    case 17:
+        return func_80055270(arg0, arg1, arg2, arg3);
+    case 18:
+    case 19:
+    case 20:
+    case 21:
+        return func_80053268(arg0, arg1, arg2, arg3);
+    default:
+        return func_80052E90(arg0, arg1, arg2, arg3);
+    }
+}
+
 
 void func_8005CEF8(UnkStruct_80052E90_arg1_s* arg0, UnkStruct_8005CEF8* arg1) {
     arg1->unk10 = arg0->unkFC.unk0.x + (25.0f * arg0->unkFC.unkC.x);
@@ -1999,7 +2050,26 @@ void func_8005D828(UnkStruct_80052C6C_2* arg0, Mtx* arg1, s32 arg2) {
     arg1->m[3][3] = temp_ft1 << 0x10;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_8005DACC.s")
+void func_8005DACC(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
+    func_8005D828(&arg1->unk264, &gGfxPool->unkE108[arg0], 0);
+    func_8005D828(&arg1->unk240, &gGfxPool->unkE208[arg0], 0);
+    func_8005D828(&arg1->unk21C, &gGfxPool->unkE308[arg0], 0);
+    func_8005D828(&arg1->unkFC, &gGfxPool->unkE408[arg0], 0);
+    func_8005D828(&arg1->unk1F8, &gGfxPool->unkE508[arg0], 0);
+    func_8005D828(&arg1->unkD8, &gGfxPool->unkE608[arg0], 0);
+    func_8005D828(&arg1->unk168, &gGfxPool->unkE708[arg0], 0);
+    func_8005D828(&arg1->unk1D4, &gGfxPool->unkE808[arg0], 1);
+    func_8005D828(&arg1->unk144, &gGfxPool->unkE908[arg0], 0);
+    func_8005D828(&arg1->unk1B0, &gGfxPool->unkEA08[arg0], 1);
+    func_8005D828(&arg1->unk120, &gGfxPool->unkEB08[arg0], 0);
+    func_8005D828(&arg1->unk18C, &gGfxPool->unkEC08[arg0], 1);
+    func_8005D828(&arg1->unk48, &gGfxPool->unkED08[arg0], 0);
+    func_8005D828(&arg1->unkB4, &gGfxPool->unkEE08[arg0], 1);
+    func_8005D828(&arg1->unk24, &gGfxPool->unkEF08[arg0], 0);
+    func_8005D828(&arg1->unk90, &gGfxPool->unkF008[arg0], 1);
+    func_8005D828(&arg1->unk0, &gGfxPool->unkF108[arg0], 0);
+    func_8005D828(&arg1->unk6C, &gGfxPool->unkF208[arg0], 1);
+}
 
 s32 func_8005DD04(f32 arg0, f32 arg1, f32 arg2) {
     f32 temp_fs5;
@@ -2010,13 +2080,13 @@ s32 func_8005DD04(f32 arg0, f32 arg1, f32 arg2) {
     temp_fs5 = gWaterLevel - 0x32;
     for (arg1 -= 10.0f; arg1 > temp_fs5; arg1 -= 16.0F) {
         if (func_8007F448(arg0, arg1, arg2, &sp68, &sp64, &sp60) != 0.0f) {
-            return 1;
+            return true;
         }
         if (func_8007FAE4(arg0, arg1, arg2, &sp68, &sp64, &sp60) != 0.0f) {
-            return 1;
+            return true;
         }
     }
-    return 0;
+    return false;
 }
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_8005DE24.s")

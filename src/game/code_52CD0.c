@@ -943,7 +943,7 @@ void func_8009AB20(UnkStruct_801CF060* arg0, f32 arg1, f32 arg2, f32 arg3) {
     Math_Vec3f_Set(&sp3C, D_80192690[D_800D48DC].unk44.x, D_80192690[D_800D48DC].unk44.y,
                    D_80192690[D_800D48DC].unk44.z);
     func_8009917C(&D_801CEC88, &sp3C, &D_801CECA0.vec1, &D_801CEC7C->vec1);
-    D_801CEC70[1].vec1.y = (f32) (((D_801926D8[D_800D48DC].unk0 - arg0->unk0.y) * D_800EB4CC) + arg0->unk0.y);
+    D_801CEC70[1].vec1.y = (f32) (((D_801926D8[D_800D48DC].unk0.f - arg0->unk0.y) * D_800EB4CC) + arg0->unk0.y);
     Math_Vec3f_Copy(&arg0->unkC, &D_801CEC70->vec1);
     Math_Vec3f_Copy(&arg0->unk0, &D_801CEC88);
 }
@@ -972,7 +972,7 @@ void func_8009ADA8(UnkStruct_801CF060* arg0) {
     func_8009A460(func_8009AD14, arg0, 0, 0);
     func_80099A00(arg0, &D_800E54B0, &D_800E54D0, 0);
 
-    arg0->unk0.y = ((D_801926D8[D_800D48DC].unk0 - arg0->unk0.y) * 0.5f) + arg0->unk0.y;
+    arg0->unk0.y = ((D_801926D8[D_800D48DC].unk0.f - arg0->unk0.y) * 0.5f) + arg0->unk0.y;
 }
 
 void func_8009AE6C(UnkStruct_801CF060* arg0) {
@@ -1001,7 +1001,7 @@ void func_8009AFA0(UnkStruct_801CF060* arg0) {
 
     func_8009AB20(arg0, D_800EB4D4, 0.47f, D_800EB4D4);
     y = arg0->unkC.y;
-    arg0->unk0.y = ((D_801926D8[D_800D48DC].unk0 - y) * D_800EB4D8) + y;
+    arg0->unk0.y = ((D_801926D8[D_800D48DC].unk0.f - y) * D_800EB4D8) + y;
 }
 
 void func_8009B030(UnkStruct_801CF060* arg0) {
