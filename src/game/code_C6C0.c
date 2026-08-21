@@ -1774,55 +1774,54 @@ void func_8005A280(s32 arg0, UnkStruct_80052E90_arg1_s* arg1) {
 
 s32 func_8005CD24(s32 arg0, UnkStruct_80052E90_arg1_s* arg1, s32 arg2, s32 arg3) {
     switch (arg2) {
-    case 22:
-        if ((u16)D_80193D5C[arg0].unk0.h == 0) {
-            func_80057B24(arg0, arg1);
+        case 22:
+            if ((u16) D_80193D5C[arg0].unk0.h == 0) {
+                func_80057B24(arg0, arg1);
+                return 0;
+            }
+            func_8005790C(arg0, arg1);
             return 0;
-        }
-        func_8005790C(arg0, arg1);
-        return 0;
-    case 24:
-        func_8005B510();
-        return 0;
-    case 23:
-        func_8005A280(arg0, arg1);
-        return 0;
-    case 7:
-        return func_80054E14(arg0, arg1, arg2, arg3);
-    case 10:
-        return func_800551EC(arg0, arg1, arg2, arg3, 1, 1);
-    case 15:
-        return func_80054130(arg0, arg1, 7, arg3, 1, 1);
-    case 8:
-        return func_80056670(arg0, arg1, arg2, arg3);
-    case 2:
-    case 3:
-        return func_80054130(arg0, arg1, arg2, arg3, 0, 1);
-    case 1:
-    case 4:
-    case 6:
-        return func_80054130(arg0, arg1, arg2, arg3, 0, 0);
-    case 25:
-        if (D_80193D5C[arg0].unk0.h == 0) {
-            func_80052E90(arg0, arg1, 0, 4);
+        case 24:
+            func_8005B510();
             return 0;
-        }
-        func_80052E90(arg0, arg1, 0, 8);
-        return 0;
-    case 9:
-        return func_80055C6C(arg0, arg1, arg2, arg3);
-    case 17:
-        return func_80055270(arg0, arg1, arg2, arg3);
-    case 18:
-    case 19:
-    case 20:
-    case 21:
-        return func_80053268(arg0, arg1, arg2, arg3);
-    default:
-        return func_80052E90(arg0, arg1, arg2, arg3);
+        case 23:
+            func_8005A280(arg0, arg1);
+            return 0;
+        case 7:
+            return func_80054E14(arg0, arg1, arg2, arg3);
+        case 10:
+            return func_800551EC(arg0, arg1, arg2, arg3, 1, 1);
+        case 15:
+            return func_80054130(arg0, arg1, 7, arg3, 1, 1);
+        case 8:
+            return func_80056670(arg0, arg1, arg2, arg3);
+        case 2:
+        case 3:
+            return func_80054130(arg0, arg1, arg2, arg3, 0, 1);
+        case 1:
+        case 4:
+        case 6:
+            return func_80054130(arg0, arg1, arg2, arg3, 0, 0);
+        case 25:
+            if (D_80193D5C[arg0].unk0.h == 0) {
+                func_80052E90(arg0, arg1, 0, 4);
+                return 0;
+            }
+            func_80052E90(arg0, arg1, 0, 8);
+            return 0;
+        case 9:
+            return func_80055C6C(arg0, arg1, arg2, arg3);
+        case 17:
+            return func_80055270(arg0, arg1, arg2, arg3);
+        case 18:
+        case 19:
+        case 20:
+        case 21:
+            return func_80053268(arg0, arg1, arg2, arg3);
+        default:
+            return func_80052E90(arg0, arg1, arg2, arg3);
     }
 }
-
 
 void func_8005CEF8(UnkStruct_80052E90_arg1_s* arg0, UnkStruct_8005CEF8* arg1) {
     arg1->unk10 = arg0->unkFC.unk0.x + (25.0f * arg0->unkFC.unkC.x);
