@@ -1,6 +1,53 @@
-#include "common.h"
+#include "global.h"
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i10/ovl_1C9150/func_i10_802C5800.s")
+void func_i10_802C5800(void) {
+    s32 i;
+
+    if (D_801CE63C != 0) {
+        if (gGameState == 0x44) {
+            for (i = 0; i < 3 + 3; i++) {
+                D_802C6B40[i] = 0;
+            }
+
+            D_802C6B40[3] = D_802C6B40[4] = 1;
+
+            if (D_801CB280 & 1) {
+                D_802C6B40[0] = 1;
+            }
+            if (D_801CB280 & 2) {
+                D_802C6B40[1] = 1;
+            }
+            if (D_801CB280 & 4) {
+                D_802C6B40[2] = 1;
+            }
+
+            for (i = 0; i < 3 + 2; i++) {
+                if (D_802C6B40[i] != 0) {
+                    break;
+                }
+            }
+
+            if (i == 3) {
+                D_802C6B30 = 1;
+                D_802C6B34 = 1;
+            } else {
+                D_802C6B30 = i % 3;
+                D_802C6B34 = i / 3;
+            }
+
+            D_i10_802C6B14 = 0;
+            for (i = 0; i < 3; i++) {
+                if (D_802C6B40[i] != 0) {
+                    D_i10_802C6B14++;
+                }
+            }
+
+            if (D_i10_802C6B14 == 0) {
+                D_802C6B40[3] = 0;
+            }
+        }
+    }
+}
 
 Gfx* func_i10_802C5968(Gfx* gfxP) {
     if (D_801CE63C != 0) {

@@ -362,5 +362,9 @@ extern s32 D_801CE728[];
 
 extern s32 D_i9_802C80DC;
 extern s32 D_801CE63C;
+extern s32 D_802C6B30;
+extern s32 D_i10_802C6B14;
+extern s32 D_802C6B34;
+extern s32 D_802C6B40[];
 
 #endif /* VARIABLES_H */
