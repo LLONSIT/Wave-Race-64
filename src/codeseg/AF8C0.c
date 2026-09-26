@@ -1,6 +1,6 @@
 #include "global.h"
 
-extern s32 D_800D461C;
+extern s32 gVIsPerFrame;
 extern s32 D_800DAB1C;
 extern s32 D_801CE630;
 extern s32 gPrevGameState;
@@ -88,7 +88,7 @@ void func_801E2B8C(s32 arg0) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     FadeTransition_SetProps(1, 0xE, 0x14);
 }
 

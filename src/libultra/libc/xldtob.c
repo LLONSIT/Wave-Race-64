@@ -6,8 +6,8 @@
 
 #define BUFF_LEN 0x20
 
-static s16 _Ldunscale(s16*, printf_struct*);
-static void _Genld(printf_struct*, fmt_type, fmt_type*, s16, s16);
+s16 _Ldunscale(s16*, printf_struct*);
+void _Genld(printf_struct*, fmt_type, fmt_type*, s16, s16);
 
 const double pows[] = { 10e0L, 10e1L, 10e3L, 10e7L, 10e15L, 10e31L, 10e63L, 10e127L, 10e255L };
 
@@ -151,7 +151,7 @@ void _Ldtob(printf_struct* args, fmt_type type) {
     _Genld(args, type, ptr, nsig, exp);
 }
 
-static s16 _Ldunscale(s16* pex, printf_struct* px) {
+s16 _Ldunscale(s16* pex, printf_struct* px) {
 
     unsigned short* ps = (unsigned short*) px;
     short xchar = (ps[_D0] & _DMASK) >> _DOFF;
@@ -171,7 +171,7 @@ static s16 _Ldunscale(s16* pex, printf_struct* px) {
     }
 }
 
-static void _Genld(printf_struct* px, fmt_type code, fmt_type* p, s16 nsig, s16 xexp) {
+void _Genld(printf_struct* px, fmt_type code, fmt_type* p, s16 nsig, s16 xexp) {
     const fmt_type point = '.';
     if (nsig <= 0) {
         nsig = 1,

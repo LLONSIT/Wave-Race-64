@@ -28,7 +28,7 @@
 char spaces[] = "                                ";
 char zeroes[] = "00000000000000000000000000000000";
 
-static void _Putfld(printf_struct*, va_list*, fmt_type, fmt_type*);
+void _Putfld(printf_struct*, va_list*, fmt_type, fmt_type*);
 s32 _Printf(char* (*prout)(char*, const char*, size_t), char* dst, const char* fmt, va_list args) {
     static const char flags_str[] = " +-#0";
     static const u32 flags_arr[] = { FLAGS_SPACE, FLAGS_PLUS, FLAGS_MINUS, FLAGS_HASH, FLAGS_ZERO, 0 };
@@ -99,7 +99,7 @@ s32 _Printf(char* (*prout)(char*, const char*, size_t), char* dst, const char* f
     }
 }
 
-static void _Putfld(printf_struct* a0, va_list* args, fmt_type type, fmt_type* buff) {
+void _Putfld(printf_struct* a0, va_list* args, fmt_type type, fmt_type* buff) {
     a0->part1_len = a0->num_leading_zeros = a0->part2_len = a0->num_mid_zeros = a0->part3_len = a0->num_trailing_zeros =
         0;
 

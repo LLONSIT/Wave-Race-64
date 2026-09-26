@@ -5,8 +5,8 @@
 
 #define BUFF_LEN 0x18
 
-static u8 ldigs[] = "0123456789abcdef";
-static u8 udigs[] = "0123456789ABCDEF";
+u8 ldigs[] = "0123456789abcdef";
+u8 udigs[] = "0123456789ABCDEF";
 
 void _Litob(printf_struct* args, fmt_type type) {
     u8 buff[BUFF_LEN];

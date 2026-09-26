@@ -75,7 +75,7 @@ void func_i0_802C6878(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 3;
+    gVIsPerFrame = 3;
     D_802C6EE4 = D_800DA9D8;
     D_802C6EE0 = 0;
 
@@ -125,7 +125,7 @@ void func_i0_802C6A1C(s32 arg0) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 3;
+    gVIsPerFrame = 3;
 
     FadeTransition_SetProps(1, 4, 0);
     func_801E6A4C(0, 0);

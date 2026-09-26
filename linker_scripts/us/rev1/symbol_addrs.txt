@@ -62,6 +62,7 @@ SysMain_SendGfxTaskSetMesg = 0x80046CF8;
 SysMain_GfxInitBuffers = 0x80046D2C;
 gGameState = 0x800DAB24;
 Draw_WaterEffects = 0x80090F58;
+gVIsPerFrame = 0x800D461C;
 UnusedPrintFontDL = 0x10144F8;
 //Fix build
 D_80228A78 = 0x80228A78;

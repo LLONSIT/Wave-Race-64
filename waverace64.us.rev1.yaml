@@ -358,6 +358,7 @@ segments:
     - [0xB55E0, c, codeseg/wr64_fade]
     - [0xB66E0, c, codeseg/B66E0]
     - [0xB97B0, c, codeseg/B97B0]
+    - [0xBCFF0, c, codeseg/BCFF0]
     - [0xC94E0, c, codeseg/C94E0] #
     - [0xCAE70, data] # needs splitting
     - [0xF2810, data, codeseg/A95D0]

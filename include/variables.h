@@ -25,7 +25,7 @@ extern Gfx* gDisplayListHead;
 extern OSMesgQueue gMainThreadMesgQueue;
 
 // Used in 3 files (or more)
-extern s32 D_800D461C;
+extern s32 gVIsPerFrame;
 extern s32 D_800DAB1C;
 extern OSMesgQueue D_801540D0;
 extern s32 D_801CE630;
@@ -72,7 +72,7 @@ extern s32 D_i1_802C9440;
 extern s32 D_i1_802C9570;
 extern s32 D_80192610;
 extern s16 D_80192630[];
-extern s32 D_800D461C;
+extern s32 gVIsPerFrame;
 extern s32 D_800DAB1C;
 extern s32 D_801CE630;
 extern s32 gPrevGameState;

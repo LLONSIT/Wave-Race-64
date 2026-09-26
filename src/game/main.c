@@ -115,7 +115,7 @@ void Main_Thread(void* entry) {
             D_800D4610++;
             if ((D_800D4610 - D_800D4614) >= D_800D4618) {
                 D_800D4614 = D_800D4610;
-                D_800D4618 = D_800D461C;
+                D_800D4618 = gVIsPerFrame;
                 osSendMesg(&D_80154100, (void*) 0x29, OS_MESG_NOBLOCK);
             }
             continue;
