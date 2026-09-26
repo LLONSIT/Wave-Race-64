@@ -31,7 +31,7 @@ extern OSMesgQueue D_801540D0;
 extern s32 D_801CE630;
 extern s32 gPrevGameState; // gPrevGameState ?
 extern s32 D_801CE638;
-extern s32 D_801CE63C;
+extern s32 D_801CE63C; // Scene change requested
 extern s32 D_801CE640;
 extern s32 D_801CE644;
 extern s32 D_801CE620;
