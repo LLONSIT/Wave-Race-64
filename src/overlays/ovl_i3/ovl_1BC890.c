@@ -24,7 +24,7 @@ void func_i3_802C6E9C(void) {
     D_801CE640 = 0;
     D_801CE644 = 20;
     D_800DAB1C = 0;
-    D_800D461C = 3;
+    gVIsPerFrame = 3;
 
     D_i3_802C6FE0 = 1;
 

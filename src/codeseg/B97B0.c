@@ -31,7 +31,7 @@ void func_801EC500(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     gPlayers = ONE_PLAYER;
     func_80096960(2, 0, 1, 2, 3);
     FadeTransition_SetProps(2, 4, 0);
@@ -47,7 +47,7 @@ void func_801EC5B4(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     gPlayers = ONE_PLAYER;
     FadeTransition_SetProps(2, 4, 0);
     func_801E6A4C(0, 0);
@@ -62,7 +62,7 @@ void func_801EC650(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     gPlayers = ONE_PLAYER;
     FadeTransition_SetProps(2, 4, 0);
     func_801E6A4C(0, 0);
@@ -77,7 +77,7 @@ void func_801EC6EC(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     FadeTransition_SetProps(2, 4, 0);
     func_801E6A4C(0, 0);
 }
@@ -91,7 +91,7 @@ void func_801EC780(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     func_80096960(2, 0, 1, 2, 3);
     FadeTransition_SetProps(2, 4, 0);
     func_801E6A4C(0, 0);
@@ -108,7 +108,7 @@ void func_801EC830(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     gPlayers = ONE_PLAYER;
     gRiderGameModes = 1;
     D_801CE64C = 1;
@@ -140,7 +140,7 @@ void func_801EC944(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     func_800C21F4(5, 0);
 }
 
@@ -153,7 +153,7 @@ void func_801EC9C8(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     gPlayers = 1;
     gRiderGameModes = 1;
     D_801CE64C = 1;
@@ -180,7 +180,7 @@ void func_801ECAF4(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 3;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     FadeTransition_SetProps(0, 0, 0);
     func_801E6A4C(0, 0);
     func_800C21F4(8, 0);
@@ -558,44 +558,3 @@ void func_801EDFFC(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE91C.s")
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE97C.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE9C0.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EED70.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EF3C4.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EF504.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EFFD8.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F03E0.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F06A0.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F0E7C.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F14B4.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F1CFC.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F2060.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F23A0.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F25E0.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F4120.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F8DD0.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F9520.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801F9EA0.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801FA3C0.s")
-
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801FAD68.s")
-
-void func_801FAEA8(void) {
-}

@@ -36,3 +36,4 @@ ctx.c
 ctx_includes.c
 ctx.c.m2c
 venv/*
+venv_dir/*

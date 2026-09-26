@@ -133,7 +133,7 @@ void func_i4_802C7474(s32 arg0) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     FadeTransition_SetProps(1, 4, 0);
     func_801E6A4C(0, 0);
     if (D_801CE630 == 40) {

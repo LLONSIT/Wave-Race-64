@@ -80,6 +80,6 @@ void func_i7_802C5C94(s32 arg0) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 2;
+    gVIsPerFrame = 2;
     FadeTransition_SetProps(1, 4, 0);
 }

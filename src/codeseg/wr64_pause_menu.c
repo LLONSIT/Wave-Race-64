@@ -29,20 +29,19 @@ typedef struct PauseOption_s {
     /* 0x8 */ s32 unk4;
 } PauseOption; /* size = 0x8 */
 
-static PauseOption sDefaultPauseOptions[DEFAULT_PAUSE_OPTIONS] = { { PAUSE_MENU_ACTION_RESUME, 0, 0x30 },
-                                                                   { PAUSE_MENU_ACTION_RESTART, 7, 0x31 } };
-static PauseOption sChampionshipPauseOptions[CHAMPIONSHIP_PAUSE_OPTIONS] = { { PAUSE_MENU_ACTION_RESUME, 0, 0x30 },
-                                                                             { PAUSE_MENU_ACTION_RESTART, 7, 0x31 },
-                                                                             { PAUSE_MENU_ACTION_7, -0x19, 0x64 },
-                                                                             { PAUSE_MENU_ACTION_QUIT, -3, 0x2F } };
+PauseOption sDefaultPauseOptions[DEFAULT_PAUSE_OPTIONS] = { { PAUSE_MENU_ACTION_RESUME, 0, 0x30 },
+                                                            { PAUSE_MENU_ACTION_RESTART, 7, 0x31 } };
+PauseOption sChampionshipPauseOptions[CHAMPIONSHIP_PAUSE_OPTIONS] = { { PAUSE_MENU_ACTION_RESUME, 0, 0x30 },
+                                                                      { PAUSE_MENU_ACTION_RESTART, 7, 0x31 },
+                                                                      { PAUSE_MENU_ACTION_7, -0x19, 0x64 },
+                                                                      { PAUSE_MENU_ACTION_QUIT, -3, 0x2F } };
 
-static PauseOption sDolphinParkPauseOptions[DOLPHIN_PARK_PAUSE_OPTIONS] = { { PAUSE_MENU_ACTION_RESUME, 0, 0x30 },
-                                                                            { PAUSE_MENU_ACTION_START_GAME_MODE, -0x18,
-                                                                              0x45 },
-                                                                            { PAUSE_MENU_ACTION_QUIT, -3, 0x2F } };
+PauseOption sDolphinParkPauseOptions[DOLPHIN_PARK_PAUSE_OPTIONS] = { { PAUSE_MENU_ACTION_RESUME, 0, 0x30 },
+                                                                     { PAUSE_MENU_ACTION_START_GAME_MODE, -0x18, 0x45 },
+                                                                     { PAUSE_MENU_ACTION_QUIT, -3, 0x2F } };
 
 // Pause Options for the stunt mode and time trials
-static PauseOption sNonRacePauseOptions[NON_RACE_MODES_PAUSE_OPTIONS] = {
+PauseOption sNonRacePauseOptions[NON_RACE_MODES_PAUSE_OPTIONS] = {
     { PAUSE_MENU_ACTION_RESUME, 0, 0x30 }, { PAUSE_MENU_ACTION_3, 2, 0x32 },     { PAUSE_MENU_ACTION_4, -0x27, 0x2D },
     { PAUSE_MENU_ACTION_5, -0x16, 0x2E },  { PAUSE_MENU_ACTION_QUIT, -3, 0x2F },
 };

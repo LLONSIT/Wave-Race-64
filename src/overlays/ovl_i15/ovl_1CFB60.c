@@ -54,7 +54,7 @@ void func_i15_802C6CAC(s32 arg0) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 3;
+    gVIsPerFrame = 3;
 
     FadeTransition_SetProps(3, 0x14, 0);
 

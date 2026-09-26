@@ -1,8 +1,50 @@
-#include "common.h"
+#include "global.h"
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C5800.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C5D3C.s")
+extern u8 D_7000000[];
+extern u8 D_2000A40[];
+extern Gfx D_106F550[];
+extern Gfx D_8062290[];
+
+void func_8007C31C();
+void func_i8_802C5EB8();
+
+Gfx* func_i8_802C5D3C(Gfx* gdl) {
+    Gfx* p;
+    Gfx* q;
+
+    if (D_801CE63C != 0) {
+        D_801CE63C = 0;
+        if (gGameState == GAME_STATE_OPTIONS_CHANGE_NAMES) {
+            return func_80093C44(gdl);
+        }
+    }
+
+    D_800DAB2C = 0;
+
+    gDPPipeSync(gdl++);
+    gDPSetScissor(gdl++, G_SC_NON_INTERLACE, 8, 20, 311, 219);
+    gSPMatrix(gdl++, D_7000000, (G_MTX_PROJECTION | G_MTX_LOAD) | G_MTX_NOPUSH);
+    gSPMatrix(gdl++, D_2000A40, (G_MTX_MODELVIEW | G_MTX_LOAD) | G_MTX_NOPUSH);
+    gSPDisplayList(gdl++, D_106F550);
+
+    p = func_8009328C(gdl);
+    gDPPipeSync(p++);
+    gDPSetScissor(p++, G_SC_NON_INTERLACE, 8, 20, 311, 219);
+
+    q = func_i8_802C63E4(p);
+    gSPDisplayList(q++, D_8062290);
+    gdl = q;
+
+    if (gGameState == 0x3E) {
+        func_i8_802C5EB8();
+    } else if (D_80228A16 == 1) {
+        func_8007C31C();
+        func_801EC304();
+    }
+    return gdl;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C5EB8.s")
 
@@ -40,7 +82,7 @@ void func_i8_802C6F4C(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 3;
+    gVIsPerFrame = 3;
     FadeTransition_SetProps(1, 4, 0);
 }
 

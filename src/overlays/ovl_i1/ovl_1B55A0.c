@@ -83,7 +83,7 @@ void func_i1_802C7394(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 3;
+    gVIsPerFrame = 3;
 
     FadeTransition_SetProps(1, 4, 100);
     func_801E6A4C(0, 0);
@@ -105,7 +105,7 @@ void func_i1_802C744C(s32 arg0) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 3;
+    gVIsPerFrame = 3;
 
     FadeTransition_SetProps(1, 4, 0);
 
@@ -148,7 +148,7 @@ void func_i1_802C7570(s32 arg0) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 3;
+    gVIsPerFrame = 3;
     func_801E6A4C(0, 0);
     D_80228AA4 = 1;
     func_800C21F4(3, 0);
@@ -350,7 +350,7 @@ void func_i1_802C9380(s32 arg0) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 3;
+    gVIsPerFrame = 3;
 
     FadeTransition_SetProps(1, 4, 0);
     func_801E6A4C(0, 0);

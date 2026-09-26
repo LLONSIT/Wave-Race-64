@@ -1,9 +1,9 @@
 #include "libultra_internal.h"
 #include "PR/rdb.h"
 
-static s32 debugState = 0;
-static s32 numChars = 0;
-static s32 numCharsToReceive = 0;
+s32 debugState = 0;
+s32 numChars = 0;
+s32 numCharsToReceive = 0;
 
 u8 debugBuffer[0x100];
 OSThread __osThreadSave;

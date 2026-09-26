@@ -892,7 +892,7 @@ void func_8009345C(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 3;
+    gVIsPerFrame = 3;
     D_801CE600 = 0;
 
     if (gDifficulty == DIFFICULTY_NORMAL) {
@@ -1443,5 +1443,5 @@ void func_80094FE8(void) {
     D_801CE640 = 0;
     D_801CE644 = 0;
     D_800DAB1C = 0;
-    D_800D461C = 1;
+    gVIsPerFrame = 1;
 }
