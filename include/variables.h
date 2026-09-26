@@ -359,4 +359,8 @@ extern UnkStruct_func_i8_802C6E00 D_800DA950[];
 extern s32 D_800DA9B0[4];
 extern UnkStruct_800D96A4 D_800D96A4[7][4];
 extern s32 D_801CE728[];
+
+extern s32 D_i9_802C80DC;
+extern s32 D_801CE63C;
+
 #endif /* VARIABLES_H */
