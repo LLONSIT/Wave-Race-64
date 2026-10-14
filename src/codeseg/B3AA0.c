@@ -32,9 +32,84 @@ void func_801E5470(void) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E5554.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E6074.s")
+void func_801E6074(UnkStruct_menu_buffer_1* arg0) {
+    MtxF sp50;
+    f32 scale;
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E62A8.s")
+    switch (arg0->unk2) {
+        case 0:
+            scale = (arg0->unk18 / 5.0f) * 1.5f;
+            arg0->unk8 = (1 - scale) * 74.0f + 80.0f;
+            arg0->unkC = (1 - scale) * 20.0f + 93.0f;
+            func_80048A88(&D_801CE5F8->unk900[arg0->unk4], 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, arg0->unk8, arg0->unkC,
+                          0.0f, scale);
+            arg0->unk18++;
+            if (arg0->unk18 >= 6) {
+                arg0->unk2 = 1;
+                arg0->unk8 = 0x50;
+                arg0->unkC = 0x5D;
+                arg0->unk18 = 0;
+            }
+            break;
+        case 1:
+            SysUtils_MatrixLookAt(&D_801CE5F8->unk900[arg0->unk4], &sp50, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+                                  arg0->unk8, arg0->unkC, 0.0f);
+            arg0->unk18++;
+            if (D_801CE608.gameMode == 4) {
+                if (arg0->unk18 >= 0xB) {
+                    arg0->unk_0 = 0;
+                    func_801E6A4C(2, 0);
+                }
+            } else if (D_801CE608.gameMode == 0) {
+                if (arg0->unk18 >= 0xB) {
+                    arg0->unk_0 = 0;
+                    if (D_801C2650 == 1) {
+                        func_801E6A4C(2, 1);
+                    }
+                }
+            }
+            break;
+    }
+}
+
+void func_801E62A8(UnkStruct_menu_buffer_1* arg0) {
+    MtxF sp50;
+    f32 scale;
+
+    switch (arg0->unk2) {
+        case 0:
+            scale = (arg0->unk18 / 5.0f) * 1.5f;
+            if (arg0->unk28 != 0) {
+                arg0->unk8 = (u32) ((1 - scale) * 102.0f + 58.0f);
+                arg0->unkC = (u32) ((1 - scale) * 15.0f + 93.0f);
+            } else {
+                arg0->unk8 = (u32) ((1 - scale) * 38.0f + 120.0f);
+                arg0->unkC = (u32) ((1 - scale) * 20.0f + 93.0f);
+            }
+            func_80048A88(&D_801CE5F8->unk900[arg0->unk4], 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, arg0->unk8, arg0->unkC,
+                          0.0f, scale);
+            arg0->unk18++;
+            if (arg0->unk18 >= 6) {
+                arg0->unk2 = 1;
+                if (arg0->unk28 != 0) {
+                    arg0->unk8 = 0x3A;
+                } else {
+                    arg0->unk8 = 0x78;
+                }
+                arg0->unkC = 0x5D;
+                arg0->unk18 = 0;
+            }
+            break;
+        case 1:
+            SysUtils_MatrixLookAt(&D_801CE5F8->unk900[arg0->unk4], &sp50, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+                                  arg0->unk8, arg0->unkC, 0.0f);
+            arg0->unk18++;
+            if (arg0->unk18 >= 0x1F) {
+                arg0->unk_0 = 0;
+            }
+            break;
+    }
+}
 
 void func_801E66F4(UnkStruct_menu_buffer_1* arg0) {
     MtxF sp0;

@@ -82,16 +82,6 @@ typedef struct UnkStruct_801AEE20_s {
     /* 0x0CC */ char padCC[0x38]; /* maybe part of unkC8[0xF]? */
 } UnkStruct_801AEE20;             /* size = 0x104 */
 
-typedef struct {
-    u8 pad00[0x19B];
-    s32 unk19C;
-    u8 pad1AC[0x124];
-    s32 unk2C4;
-    u8 pad2C8[0x24];
-    s32 unk2EC;
-    u8 pad2F0[0x3C];
-    f32 unk32C;
-} struct_800762D0;
 
 struct unk_80097E68 {
     s16 unk0;
@@ -306,7 +296,11 @@ typedef struct RiderStruct {
     /* 0x12C */ s32 unk12C;
     /* 0x130 */ char pad130[0x6C];
     /* 0x19C */ s32 unk19C;
-    /* 0x1A0 */ char pad1A0[0x14C]; /* maybe part of unk19C[0x54]? */
+    /* 0x1A0 */ char pad1A0[0x124]; /* maybe part of unk19C[0x54]? */
+    /* 0x2C4 */ s32 unk2C4;
+    /* 0x2C8 */ char pad2C8[0x1C];
+    /* 0x2E4 */ s32 unk2E4;
+    /* 0x2E8 */ s32 unk2E8;
     /* 0x2EC */ s32 unk2EC;
     /* 0x2F0 */ char pad2F0[4];
     /* 0x2F4 */ s32 unk2F4;
@@ -314,7 +308,8 @@ typedef struct RiderStruct {
     /* 0x314 */ s32 unk314;
     /* 0x318 */ char pad318[8];
     /* 0x320 */ s32 unk320;                         /* inferred */
-    /* 0x324 */ char pad324[0xC];                   /* maybe part of unk320[4]? */
+    /* 0x324 */ char pad324[8];                     /* maybe part of unk320[4]? */
+    /* 0x32C */ f32 unk32C;
     /* 0x330 */ f32 unk330;        /* inferred */
     char pad334[0x4];
     s32 unk338;
@@ -986,7 +981,9 @@ typedef struct UnkStruct_80192690 {
     /* 0x16BC */ f32 unk16BC;
     /* 0x16C0 */ char pad16C0[0xC];                 /* maybe part of unk16BC[4]? */
     /* 0x16CC */ u16 unk16CC;
-    /* 0x16CE */ char pad16CE[0xA];                 /* maybe part of unk16CC[6]? */
+    /* 0x16CE */ char pad16CE[2];
+    /* 0x16D0 */ s32 unk16D0;
+    /* 0x16D4 */ char pad16D4[4];
     /* 0x16D8 */ s32 unk16D8;
     /* 0x16DC */ char pad16DC[4];
     /* 0x16E0 */ u16 unk16E0;
@@ -1102,7 +1099,8 @@ typedef struct UnkStruct_801C43F8_s {
 } UnkStruct_801C43F8;
 
 typedef struct UnkStruct_801CE5F8_s {
-    char pad[0x900];
+    char pad0[0x40];
+    Vtx unk40[0x8C];
     Mtx unk900[1];
     char pad940[0x100];
     Mtx unkA40[1];

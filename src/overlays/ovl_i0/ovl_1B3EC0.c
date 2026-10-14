@@ -4,8 +4,6 @@
 
 void func_i0_802C6878(void);
 Gfx* func_i0_802C6AE4(Gfx*);
-// Draw text?
-Gfx* func_801E9858(Gfx* arg0, u32 arg1, char* arg2, s32 arg3, s32 arg4);
 void func_801EB4F4(void);
 extern s32 D_801519D4;
 extern s32 D_80154344;

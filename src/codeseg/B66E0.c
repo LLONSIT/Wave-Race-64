@@ -1,6 +1,6 @@
 #include "common.h"
 
-void func_801E9858(Gfx*, s32, char*, s32, s32);
+extern Vtx D_7000000[];
 extern f32 D_80226E24;
 extern s16 D_80226E28;
 
@@ -19,7 +19,57 @@ extern UnkStruct_80228A78 D_80228A78;
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B66E0/func_801E80B0.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B66E0/func_801E8800.s")
+Gfx* func_801E8800(Gfx* gfx, u32 arg1, u32 arg2, s32 arg3, s32 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9,
+                   u8 arg10, u8 arg11, u8 arg12, u8 arg13, u8 arg14, u8 arg15, u8 arg16, f32 arg17) {
+    s32 i;
+    Vtx* v;
+
+    for (i = 0; i < 4; i++) {
+        v = &D_801CE5F8->unk40[D_80228A40 + i];
+        if ((i == 1) || (i == 3)) {
+            v->v.ob[0] = (s32) (arg1 * arg17) + arg3 - 1;
+            v->v.tc[0] = (arg1 * 2 + 1) << 5;
+        } else {
+            v->v.ob[0] = arg3;
+            v->v.tc[0] = -0x20;
+        }
+        if ((i == 2) || (i == 3)) {
+            v->v.ob[1] = (s32) (arg2 * arg17) + arg4 - 1;
+            v->v.tc[1] = (arg2 * 2) << 5;
+        } else {
+            v->v.ob[1] = arg4;
+            v->v.tc[1] = -0x20;
+        }
+        v->v.ob[2] = 0;
+        v->v.flag = 0;
+        if (i == 0) {
+            v->v.cn[0] = arg5;
+            v->v.cn[1] = arg6;
+            v->v.cn[2] = arg7;
+        } else if (i == 1) {
+            v->v.cn[0] = arg8;
+            v->v.cn[1] = arg9;
+            v->v.cn[2] = arg10;
+        } else if (i == 2) {
+            v->v.cn[0] = arg11;
+            v->v.cn[1] = arg12;
+            v->v.cn[2] = arg13;
+        } else {
+            v->v.cn[0] = arg14;
+            v->v.cn[1] = arg15;
+            v->v.cn[2] = arg16;
+        }
+        v->v.cn[3] = 0xFF;
+    }
+    gSPVertex(gfx++, &D_7000000[D_80228A40 + 4], 4, 0);
+    gSP1Triangle(gfx++, 0, 3, 1, 0);
+    gSP1Triangle(gfx++, 0, 2, 3, 0);
+    D_80228A40 += 4;
+    if (D_80228A40 >= 0x78) {
+        D_80228A40 = 0x74;
+    }
+    return gfx;
+}
 
 void func_801E8A84(Gfx* arg0, s32 arg1, char* buf, s32 arg3, s32 arg4, s32 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9,
                    u8 arg10, u8 arg11, u8 arg12, u8 arg13, u8 arg14, u8 arg15, u8 arg16, u8 arg17) {

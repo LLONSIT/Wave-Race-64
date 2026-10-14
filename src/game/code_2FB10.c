@@ -30,7 +30,7 @@ s32 func_80076240(f32 arg0, f32 arg1, f32 arg2, f32 arg3) {
     return 0;
 }
 
-void func_800762D0(struct_800762D0* arg0) {
+void func_800762D0(RiderStruct* arg0) {
     if (D_801CE638 == 1) {
         if ((gGameModes == GMODE_STUNT) && (arg0->unk2C4 <= 0)) {
             arg0->unk2EC = 2;

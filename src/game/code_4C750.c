@@ -40,7 +40,6 @@ extern s16 D_801CE628;
 extern s16 D_801CE62C;
 extern UnkStruct_801CE658 D_801CE658[];
 extern s32 D_801CE6AC;
-extern s16 D_801CE72E;
 extern struct UnkStruct_801CB6C8 D_801CB6C8[];
 extern s32 D_800DAB60[];
 extern s32 D_800DC4F0[];
@@ -1203,8 +1202,6 @@ s32 Strlen2(s8* str) {
 
     return len;
 }
-
-Gfx* func_801E9858(Gfx*, s32, s8*, s32, s32);
 
 Gfx* func_80094200(Gfx* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 var_s0;

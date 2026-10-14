@@ -94,7 +94,65 @@ void func_801F03E0(void) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/BCFF0/func_801F14B4.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/BCFF0/func_801F1CFC.s")
+void func_801F1CFC(void) {
+    f32 posX;
+    f32 posZ;
+    s32 sp44;
+    UnkStruct_80192690* s0;
+    RiderStruct* s1;
+    s32 var_s2;
+    s32 i;
+    s32 var_v0;
+    s32 offset;
+
+    if ((gGameModes == GMODE_2P_VS) &&
+        ((D_801C2938[D_800D48DC].unk2F4 != 0) || (D_801C2938[D_800D48DC].unk2EC != 0) ||
+         (D_801C2938[D_800D48E0].unk2F4 != 0) || (D_801C2938[D_800D48E0].unk2EC != 0))) {
+        sp44 = true;
+    } else {
+        sp44 = false;
+    }
+
+    for (i = 0; i < gPlayers; i++) {
+        if (i == 0) {
+            s0 = &D_80192690[D_800D48DC];
+            s1 = &D_801C2938[D_800D48DC];
+        } else {
+            s0 = &D_80192690[D_800D48E0];
+            s1 = &D_801C2938[D_800D48E0];
+        }
+
+        if ((s1->unk2EC != 0) || (s1->unk2F4 != 0)) {
+            continue;
+        }
+        posX = s0->unk44.x;
+        posZ = s0->unk44.z;
+        var_s2 = (gCourseID != SOUTHERN_ISLAND) && (s0->unk16D0 > 0x50);
+        var_v0 = (func_80074264(posX, posZ) || var_s2) && (sp44 == 0) && D_801CE72E;
+        if (s1->unk2E4 != 0) {
+            if (var_v0 == 0) {
+                s1->unk2E4 = 0;
+            } else if ((s0->unkC54 != 0x17) && (s0->unkC54 != 7)) {
+                if (s1->unk2E8 > 0) {
+                    if (s1->unk2E8 <= D_80228B5C) {
+                        offset = var_s2 ? 0x80 : 0;
+                        if (D_80228B5C == s1->unk2E8) {
+                            AudioGeneral_PlaySound(10, (s1->unk2E8 / 20) + offset);
+                        } else if ((s1->unk2E8 % 20) == 0) {
+                            AudioGeneral_PlaySound(10, (s1->unk2E8 / 20) + offset - 1);
+                        }
+                    }
+                    s1->unk2E8--;
+                } else if (s1->unk2E8 == 0) {
+                    func_800762D0(s1);
+                }
+            }
+        } else if (var_v0 != 0) {
+            s1->unk2E4 = 1;
+            s1->unk2E8 = D_80228B5C + 20;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/BCFF0/func_801F2060.s")
 
