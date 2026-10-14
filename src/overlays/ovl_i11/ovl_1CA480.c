@@ -4,6 +4,8 @@
 
 void func_i11_802C5D48(void) {
     s32* limits;
+    // Intentionally uninitialised: the original reads this stack slot unset when the
+    // selection is 0 or 1. Initialising it to 0 adds a store and breaks the match.
     s32 var_v0;
 
     if (D_801CE658[2].unk_00.unk_2 & (A_BUTTON | START_BUTTON | Z_TRIG)) {
