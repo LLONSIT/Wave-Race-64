@@ -132,7 +132,45 @@ s32 func_i2_802C67E4(s32 arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i2/ovl_1B9440/func_i2_802C7C50.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i2/ovl_1B9440/func_i2_802C84EC.s")
+void func_i2_802C84EC(s32 arg0) {
+    UnkStruct_func_i8_802C6E00(*tbl)[4] = (UnkStruct_func_i8_802C6E00(*)[4]) D_801CB298;
+    UnkStruct_func_i8_802C6E00* entry;
+    s32 player;
+    s32 i;
+
+    gPrevGameState = gGameState;
+    D_801CE630 = arg0;
+    gGameState = 0xB;
+    D_801CE638 = 4;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    gVIsPerFrame = 3;
+
+    for (i = 0; i < D_801CE60C; i++) {
+        if (D_800DA9C8[i] == 0) {
+            entry = &D_800DA950[D_i2_802C8BD8[D_800DA9C0[i]]];
+        } else {
+            entry = &tbl[i][D_i2_802C8BD8[D_800DA9C0[i]]];
+        }
+
+        player = (i == 0) ? D_800D48DC : D_800D48E0;
+        D_80192690[player].unkB6C = entry->unk_B[0];
+        D_80192690[player].unkB70 = entry->unk_B[1];
+        D_80192690[player].unkB74 = entry->unk_B[2];
+    }
+
+    if (D_801CE608.gameMode == 4 && D_801CE630 == 0x1E) {
+        FadeTransition_SetProps(5, 0, 0);
+    } else {
+        FadeTransition_SetProps(1, 4, 0);
+    }
+    func_801E6A4C(0, 0);
+    if (D_801CE630 == 0x1E) {
+        func_800C1F60(2);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i2/ovl_1B9440/func_i2_802C86E4.s")
 

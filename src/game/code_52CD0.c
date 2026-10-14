@@ -17,6 +17,13 @@ typedef struct UnkStruct_801CED60_s {
     /* 0x8 */ s16 unk8; /* inferred */
 } UnkStruct_801CED60;   /* size = 0xA */
 
+typedef struct UnkStruct_800998B0 {
+    /* 0x0 */ s8 unk0;
+    /* 0x1 */ u8 unk1;
+    /* 0x2 */ s8 unk2;
+    /* 0x4 */ s16 unk4[3];
+} UnkStruct_800998B0; /* size = 0xA */
+
 typedef struct UnkStruct_801CEBE0 {
     /* 0x00 */ Vec3f unk0;
     /* 0x0C */ Vec3f unkC;
@@ -212,7 +219,7 @@ void func_8009A9FC(UnkStruct_801CF060* arg0);
 void func_8009B130(UnkStruct_801CF060* arg0);
 void func_80099B20(f32*, f32);
 s32 func_80099514(s32 arg0, s32 arg1, UnkStruct_801CED60* arg2, s16* arg3, f32* arg4);
-void func_800998B0(s32 arg0, void* arg1, void* arg2);
+void func_800998B0(UnkStruct_801CED60* arg0, UnkStruct_800998B0* arg1, s32 arg2);
 void func_8009B650(UnkStruct_801CF060* arg0, f32 arg1, f32 arg2);
 void func_8009AD74(UnkStruct_801CF060*);
 void func_8009C814(UnkStruct_8009A04C*, s32);
@@ -610,7 +617,7 @@ s32 func_80099514(s32 arg0, s32 arg1, UnkStruct_801CED60* arg2, s16* arg3, f32* 
     return sp9C;
 }
 
-void func_80099858(struct UnkStruct_80099858* arg0, s8 arg1, s8 arg2, u16 arg3, s16* arg4, s32 arg5) {
+void func_80099858(UnkStruct_801CED60* arg0, s8 arg1, u8 arg2, s8 arg3, s16* arg4, s32 arg5) {
     arg0->unk0 = arg1;
     arg0->unk1 = arg2;
     arg0->unk2 = arg3;
@@ -623,13 +630,29 @@ void func_80099858(struct UnkStruct_80099858* arg0, s8 arg1, s8 arg2, u16 arg3, 
     arg0->unk8 = arg4[2];
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_800998B0.s")
+void func_800998B0(UnkStruct_801CED60* arg0, UnkStruct_800998B0* arg1, s32 arg2) {
+    s32 i;
+    s32 j;
+
+    func_80099858(&arg0[0], arg1[0].unk0, arg1[0].unk1, arg1[0].unk2, arg1[0].unk4, arg2);
+    i = 1;
+    j = 0;
+    do {
+        func_80099858(&arg0[i], arg1[j].unk0, arg1[j].unk1, arg1[j].unk2, arg1[j].unk4, arg2);
+        i++;
+        j++;
+    } while ((arg1[j].unk0 != -1) || ((i + 3) >= 31));
+    func_80099858(&arg0[i], arg1[0].unk0, arg1[j].unk1, arg1[j].unk2, arg1[j].unk4, arg2);
+    func_80099858(&arg0[i + 1], arg1[0].unk0, 0, arg1[j].unk2, arg1[j].unk4, arg2);
+    func_80099858(&arg0[i + 2], arg1[0].unk0, 0, arg1[j].unk2, arg1[j].unk4, arg2);
+    func_80099858(&arg0[i + 3], -1, 0, arg1[j].unk2, arg1[j].unk4, arg2);
+}
 
 s32 func_80099A00(UnkStruct_801CF060* arg0, void* arg1, void* arg2, s32 arg3) {
     s32 sp28;
 
-    func_800998B0(&D_801CED60, arg1, arg3);
-    func_800998B0(&D_801CEEA0, arg2, arg3);
+    func_800998B0(D_801CED60, arg1, arg3);
+    func_800998B0(D_801CEEA0, arg2, arg3);
     sp28 = func_80099514(&arg0->unkC, &arg0->unk18, D_801CED60, &D_801CEFE8[D_800E5138], &D_801CEFE0[D_800E5138]) |
            func_80099514(&arg0->unk0, &arg0->unk18, D_801CEEA0, &D_801CEFE8[D_800E5138], &D_801CEFE0[D_800E5138]);
     return sp28;
@@ -959,7 +982,7 @@ void func_8009AB20(UnkStruct_801CF060* arg0, f32 arg1, f32 arg2, f32 arg3) {
 void func_8009AC50(UnkStruct_801CF060* arg0, f32* arg1, f32 arg2, f32 arg3, f32 arg4) {
     Math_Vec3f_Set(&D_801CECA0.vec1, arg2, arg3, arg4);
     Math_Vec3f_Set(&D_801CEC7C->vec1, 0.0f, func_8009898C(D_800D48DC), 0.0f);
-    func_800998B0((s32) D_801CED60, arg1, NULL);
+    func_800998B0(D_801CED60, arg1, 0);
     func_80099514((s32) D_801CEC70, (s32) &arg0->unk18, D_801CED60, &D_801CEFE8[D_800E5138], &D_801CEFE0[D_800E5138]);
 }
 

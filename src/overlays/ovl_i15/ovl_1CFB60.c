@@ -1,8 +1,52 @@
 #include "global.h"
 
+extern RiderStruct D_801C2C70[];
+
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i15/ovl_1CFB60/func_i15_802C5800.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i15/ovl_1CFB60/func_i15_802C5CE8.s")
+void func_i15_802C5CE8(void) {
+    s32 i;
+    s32 j;
+
+    for (i = 0; i < 10; i++) {
+        D_802C6E80[i] = D_i15_802C6D8C;
+    }
+    D_802C6E7C = D_i15_802C6D54[gDifficulty];
+    if (D_801C2C70[D_800D48DC].lapCount == 3) {
+        D_802C6F44 = 6;
+    } else if (gDifficulty == DIFFICULTY_EXPERT) {
+        if (D_801C2C70[D_800D48DC].lapCount == 0) {
+            D_802C6F44 = 3;
+        } else if (D_801C2C70[D_800D48DC].lapCount == 1) {
+            D_802C6F44 = 4;
+        } else {
+            D_802C6F44 = 5;
+        }
+    } else {
+        if (D_801C2C70[D_800D48DC].lapCount == 0) {
+            D_802C6F44 = 0;
+        } else if (D_801C2C70[D_800D48DC].lapCount == 1) {
+            D_802C6F44 = 1;
+        } else {
+            D_802C6F44 = 2;
+        }
+    }
+    D_i15_802C6D6C = D_i15_802C6D70[D_802C6F44];
+    if (gDifficulty == DIFFICULTY_NORMAL) {
+        D_i15_802C6D68 = 1;
+    } else {
+        D_i15_802C6D68 = 0;
+    }
+    for (i = 0; i < D_802C6E7C + 1; i++) {
+        for (j = 0; j < 4; j++) {
+            if (D_800EABB0[j] == D_801CB350[i][0]) {
+                break;
+            }
+        }
+        D_802C6F20[i] = j;
+    }
+    D_800DAA08 = 1;
+}
 
 void func_i15_802C5EE4(s32 arg0) {
     UnkStruct_D_802C6E80* thing;

@@ -10,6 +10,7 @@ void func_801E74BC(FadeTransition* fade);
 FadeTransition sCurrentFadeTransitionProps;
 extern s16 D_80228A30;
 extern s16 D_80228A32;
+extern s16 D_80228A36;
 
 void FadeTransition_SetProps(s32 type, u32 fadeTime, s32 duration) {
     s32 fade_color = 255;
@@ -294,8 +295,67 @@ void func_801E76C0(FadeTransition* fade) {
     }
 }
 
-// https://decomp.me/scratch/udOjy 86.02%
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/wr64_fade/func_801E7908.s")
+Gfx* func_801E7908(Gfx* dList) {
+    Gfx** dlPair;
+    // needed for match
+    Gfx* dl0;
+    Gfx* dl1;
+    FadeTransition* fade = &sCurrentFadeTransitionProps;
+
+    if ((sCurrentFadeTransitionProps.state == 0) || (D_80228A14 == 0)) {
+        return dList;
+    }
+    if (D_80228A30 != D_80228A36) {
+        return dList;
+    }
+
+    switch (fade->state) {
+        case 1:
+        case 2:
+            if (gPlayers == ONE_PLAYER) {
+                dList = func_801E7C58(dList, 8, 0x14, 0x136, 0xDA, D_80228A20, D_80228A22, D_80228A24, D_80228A26);
+            } else {
+                dList = func_801E7C58(dList, 8, 0xC, 0x136, 0xE4, D_80228A20, D_80228A22, D_80228A24, D_80228A26);
+            }
+            break;
+
+        case 3:
+        case 7:
+            if (gPlayers == ONE_PLAYER) {
+                dList = func_801E7C58(dList, 8, 0x14, 0x136, 0xDA, D_80228A20, D_80228A22, D_80228A24, D_80228A26);
+            } else {
+                dList = func_801E7C58(dList, 8, 0xC, 0x136, 0xE4, D_80228A20, D_80228A22, D_80228A24, D_80228A26);
+            }
+            break;
+
+        case 4:
+        case 5:
+        case 6:
+            gSPPerspNormalize(dList++, D_80228A34);
+            gSPMatrix(dList++, D_7001300, G_MTX_PROJECTION | G_MTX_LOAD | G_MTX_NOPUSH);
+            gSPMatrix(dList++, D_7001340, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+            gSPDisplayList(dList++, D_106F5B0);
+
+            if (D_80228A1C == 0) {
+                dlPair = D_80226CE4[D_80228A18 & 1];
+            } else {
+                dlPair = D_80226CF4[D_80228A18 & 1];
+            }
+
+            dl0 = dlPair[0];
+            dl1 = dlPair[1];
+
+            gDPPipeSync(dList++);
+            gSPDisplayList(dList++, dl0);
+            gDPPipeSync(dList++);
+            gDPSetRenderMode(dList++, G_RM_PASS, G_RM_XLU_SURF2);
+            gDPSetScissor(dList++, G_SC_NON_INTERLACE, 0, 0, 320 - 1, 240 - 1);
+            gSPDisplayList(dList++, dl1);
+            break;
+    }
+
+    return dList;
+}
 
 Gfx* func_801E7C58(Gfx* dList, u32 ulx, u32 uly, u32 lrx, u32 lry, u32 r, u32 g, u32 b, u32 a) {
     if (r > 255) {

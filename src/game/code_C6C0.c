@@ -2113,7 +2113,39 @@ void func_800616B0(s32 arg0) {
     func_80061184(&D_80192690[arg0]);
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80061708.s")
+void func_80061708(s32 arg0, s32 arg1) {
+    UnkStruct_80192690* temp_s0;
+    f32 temp_fv0;
+    f32 temp_fv1;
+    f32 temp_fa1;
+
+    temp_s0 = &D_80192690[arg0];
+    if (temp_s0->unk1446 < 0) {
+        func_800616B0(arg0);
+        return;
+    }
+    if (arg1 < D_80154344) {
+        temp_s0->unkB50 = gControllers[D_80154330[arg1]];
+    } else {
+        temp_s0->unkB50.button = 0;
+        temp_s0->unkB50.stick_x = temp_s0->unkB50.stick_y = (s8) temp_s0->unkB50.button;
+    }
+    temp_s0->unk1578 = 1.0f;
+    func_80061184(temp_s0);
+    temp_fv1 = temp_s0->unkB5E < 0 ? -temp_s0->unkB5E : temp_s0->unkB5E;
+    temp_fa1 = temp_s0->unkB5F < 0 ? -temp_s0->unkB5F : temp_s0->unkB5F;
+    if ((SQ(temp_fv1) + SQ(temp_fa1)) == 0.0f) {
+        return;
+    }
+    temp_fv0 = sqrtf(SQ(temp_fv1) + SQ(temp_fa1));
+    if (temp_fa1 < temp_fv1) {
+        temp_fv0 = 70.0f / (70.0f / temp_fv0 * temp_fv1);
+    } else {
+        temp_fv0 = 70.0f / (70.0f / temp_fv0 * temp_fa1);
+    }
+    temp_s0->unkB5E = func_80061644(temp_s0->unkB5E * temp_fv0);
+    temp_s0->unkB5F = func_80061644(temp_s0->unkB5F * temp_fv0);
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_800618F4.s")
 

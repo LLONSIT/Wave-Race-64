@@ -300,13 +300,19 @@ typedef struct RiderStruct {
     /* 0x010 */ s32 unk10;
     /* 0x014 */ char pad14[0xC];                    /* maybe part of unk10[4]? */
     /* 0x020 */ s32 unk20;                          /* inferred */
-    /* 0x024 */ char pad24[0x178];                  /* maybe part of unk20[0x5F]? */
+    /* 0x024 */ char pad24[4];
+    /* 0x028 */ s32 unk28;
+    /* 0x02C */ char pad2C[0x100];
+    /* 0x12C */ s32 unk12C;
+    /* 0x130 */ char pad130[0x6C];
     /* 0x19C */ s32 unk19C;
     /* 0x1A0 */ char pad1A0[0x14C]; /* maybe part of unk19C[0x54]? */
     /* 0x2EC */ s32 unk2EC;
     /* 0x2F0 */ char pad2F0[4];
     /* 0x2F4 */ s32 unk2F4;
-    /* 0x2F8 */ char pad2F8[0x28];                  /* maybe part of unk2F4[0xB]? */
+    /* 0x2F8 */ char pad2F8[0x1C];
+    /* 0x314 */ s32 unk314;
+    /* 0x318 */ char pad318[8];
     /* 0x320 */ s32 unk320;                         /* inferred */
     /* 0x324 */ char pad324[0xC];                   /* maybe part of unk320[4]? */
     /* 0x330 */ f32 unk330;        /* inferred */
@@ -840,7 +846,8 @@ typedef struct UnkStruct_80192690 {
     /* 0x094C */ char pad94C[0x204];                /* maybe part of unk948[0x83]? */
     /* 0x0B50 */ OSContPad unkB50;
     /* 0x0B56 */ u16 unkB56;
-    /* 0x0B58 */ char padB58[6];
+    /* 0x0B58 */ u16 unkB58;
+    /* 0x0B5A */ char padB5A[4];
     /* 0x0B5E */ s8 unkB5E;
     /* 0x0B5F */ s8 unkB5F;
     /* 0x0B60 */ s32 unkB60;
@@ -1002,7 +1009,11 @@ typedef struct UnkStruct_80192540 {
 typedef struct UnkStruct_801AE948_s {
     char pad[0x35D0];
     Lights0 unk35D8[1];
-    char pad35DC[0xB14];
+    char pad35E8[0xA18];
+    Mtx unk4000[1];
+    Mtx unk4040[1];
+    Mtx unk4080[1];
+    Mtx unk40C0[1];
     Mtx unk4100[1];
     Mtx unk4140[1];
     char pad4180[0x7140];
@@ -1078,7 +1089,12 @@ typedef struct UnkStruct_80198368_s {
 } UnkStruct_80198368;                               /* size = 0xB2F0 */
 
 typedef struct UnkStruct_801C43F8_s {
-    char pad[0x5D0];
+    char pad0[0xE0];
+    Vtx unkE0[6];
+    Vtx unk140;
+    Vtx unk150[6];
+    Vtx unk1B0;
+    char pad1C0[0x410];
     Mtx unk5D0[1];
     char pad610[0x2fc0];
     Lights0 unk35D8[1];
@@ -1100,5 +1116,10 @@ typedef struct UnkStruct_801CE5F8_s {
     char pad1380[0x400];
     Mtx unk1780[1];
 } UnkStruct_801CE5F8;
+
+typedef struct UnkStruct_800DB760_s {
+    /* 0x0 */ u32 unk0;
+    /* 0x4 */ u32 unk4;
+} UnkStruct_800DB760;
 
 #endif /* STRUCTS_H */

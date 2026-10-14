@@ -12,7 +12,7 @@ typedef enum {
 typedef struct camera_unk_1 {
     /* 0x000 */ s32 viewMode;
     /* 0x004 */ f32 unk4;
-    /* 0x008 */ s32 unk8;
+    /* 0x008 */ f32 unk8;
     /* 0x00C */ f32 unkC;
     /* 0x010 */ f32 unk10;
     /* 0x014 */ f32 unk14;
@@ -39,11 +39,12 @@ typedef struct camera_unk_1 {
     /* 0x098 */ f32 unk98;
     /* 0x09C */ f32 unk9C;
     /* 0x0A0 */ f32 unkA0;
-    /* 0x0A4 */ char padA4[0x48];                   /* maybe part of unkA0[0x13]? */
+    /* 0x0A4 */ char padA4[0x44];                   /* maybe part of unkA0[0x13]? */
+    /* 0x0E8 */ s32 unkE8;
     /* 0x0EC */ s32 unkEC;
     /* 0x0F0 */ f32 unkF0;
     /* 0x0F4 */ f32 unkF4;
-    /* 0x0F8 */ char padF8[4];
+    /* 0x0F8 */ s32 unkF8;
     /* 0x0FC */ f32 camViewY;
     /* 0x100 */ char pad100[8];                     /* maybe part of camViewY[3]? */
     /* 0x108 */ s32 unk10C;

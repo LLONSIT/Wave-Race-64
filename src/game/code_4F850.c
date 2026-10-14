@@ -434,7 +434,32 @@ u32* func_800965B8(s32 arg0) {
     return sp34;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_80096694.s")
+void func_80096694(u8* arg0, s32 arg1, s32 arg2) {
+    s32 course;
+    s32 i;
+    UnkStruct_800DB760* ptr;
+    s32 pad; // needed for match (stack layout)
+
+    if (gGameState == 0x1E) {
+        course = gCourseID;
+    } else {
+        course = arg2;
+    }
+
+    for (i = 0; i < 6; i++) {
+        ptr = D_800DB760[i];
+        ptr += course;
+        if (D_800DB778[course][i] != 0) {
+            D_801CE7E8[course][i] = (ptr->unk0 & 0xFFFFFF) + 0x08000000;
+            D_801CE7E8[course][i + 6] = (ptr->unk4 & 0xFFFFFF) + 0x08000000;
+            func_800967EC((u32*) (arg0 + (ptr->unk0 & 0xFFFFFF)), arg1);
+            func_800967EC((u32*) (arg0 + (ptr->unk4 & 0xFFFFFF)), arg1);
+        } else {
+            D_801CE7E8[course][i] = 0;
+            D_801CE7E8[course][i + 6] = 0;
+        }
+    }
+}
 
 void func_800967EC(u32* arg0, s32 arg1) {
     s32 var_a0;

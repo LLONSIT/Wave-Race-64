@@ -19,14 +19,18 @@ typedef struct UnkStruct_8008962C_s {
 
 typedef struct UnkStruct_801CB058_s {
     /* 0x000 */ char pad0[0x88];
-    /* 0x088 */ s32 unk88;        /* inferred */
-    /* 0x08C */ s32 unk8C;        /* inferred */
-    /* 0x090 */ s32 unk90;        /* inferred */
-    /* 0x094 */ s32 unk94;        /* inferred */
-    /* 0x098 */ s32 unk98;        /* inferred */
-    /* 0x09C */ s32 unk9C;        /* inferred */
-    /* 0x0A0 */ char padA0[0x70]; /* maybe part of unk9C[0x1D]? */
-} UnkStruct_801CB058;             /* size = 0x110 */
+    /* 0x088 */ s32 unk88; /* inferred */
+    /* 0x08C */ s32 unk8C; /* inferred */
+    /* 0x090 */ s32 unk90; /* inferred */
+    /* 0x094 */ s32 unk94; /* inferred */
+    /* 0x098 */ s32 unk98; /* inferred */
+    /* 0x09C */ s32 unk9C; /* inferred */
+    /* 0x0A0 */ char padA0[0xC];
+    /* 0x0AC */ f32 unkAC;
+    /* 0x0B0 */ f32 unkB0;
+    /* 0x0B4 */ f32 unkB4;
+    /* 0x0B8 */ char padB8[0x58];
+} UnkStruct_801CB058; /* size = 0x110 */
 
 typedef struct UnkStruct_801C41A0_s {
     f32 fwork[0xD0];
@@ -51,6 +55,9 @@ extern UnkStruct_8008962C D_801C43E0;
 
 extern UnkStruct_801CB058 D_801CB058[];
 extern s32 D_800DA914;
+extern UnkStruct_801CB058 D_800D9964[];
+extern UnkStruct_801CB058 D_800DA404;
+extern UnkStruct_801CB058 D_801CB168;
 extern s32 D_8035C800[];
 extern s32 D_8035D200[];
 extern s32 D_8035DC00[];
@@ -303,7 +310,61 @@ Gfx* func_8008CFEC(Gfx* gdl) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008DFD0.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008E4B0.s")
+void func_8008E4B0(void) {
+    UnkStruct_801CB058* src = &D_800D9964[gCourseID];
+    UnkStruct_801C43F8* p;
+    s32 i;
+    s32 j;
+
+    D_801CB058[0] = *src;
+    D_801CB168 = *src;
+    if (D_801CE638 == 0x15) {
+        D_801CB058[0] = D_800DA404;
+    }
+    D_801C4160 = D_801CB058[0].unkAC;
+    D_801C4164 = D_801CB058[0].unkB0;
+    D_801C4168 = D_801CB058[0].unkB4;
+
+    for (i = 0; i < 2; i++) {
+        p = &D_801C43F8[i];
+        p->unk140.v.ob[1] = D_80192498 * 3;
+        p->unk140.v.tc[0] = 0x80;
+        p->unk140.v.tc[1] = 0x4FC0;
+        p->unk140.v.flag = 0;
+        p->unk140.v.cn[0] = 0;
+        p->unk140.v.cn[1] = 0;
+        p->unk140.v.cn[2] = 0;
+        p->unk140.v.cn[3] = 0xFF;
+        for (j = 0; j < 6; j++) {
+            p->unkE0[j].v.ob[1] = 0;
+            p->unkE0[j].v.tc[0] = 0x80;
+            p->unkE0[j].v.tc[1] = 0;
+            p->unkE0[j].v.flag = 0;
+            p->unkE0[j].v.cn[0] = 0;
+            p->unkE0[j].v.cn[1] = 0;
+            p->unkE0[j].v.cn[2] = 0;
+            p->unkE0[j].v.cn[3] = 0xFF;
+        }
+        p->unk1B0.v.ob[1] = D_80192498 * 3;
+        p->unk1B0.v.tc[0] = 0x80;
+        p->unk1B0.v.tc[1] = 0x4FC0;
+        p->unk1B0.v.flag = 0;
+        p->unk1B0.v.cn[0] = 0;
+        p->unk1B0.v.cn[1] = 0;
+        p->unk1B0.v.cn[2] = 0;
+        p->unk1B0.v.cn[3] = 0xFF;
+        for (j = 0; j < 6; j++) {
+            p->unk150[j].v.ob[1] = 0;
+            p->unk150[j].v.tc[0] = 0x80;
+            p->unk150[j].v.tc[1] = 0;
+            p->unk150[j].v.flag = 0;
+            p->unk150[j].v.cn[0] = 0;
+            p->unk150[j].v.cn[1] = 0;
+            p->unk150[j].v.cn[2] = 0;
+            p->unk150[j].v.cn[3] = 0xFF;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43DA0/func_8008E794.s")
 
