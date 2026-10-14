@@ -4,6 +4,18 @@ void func_801E9858(Gfx*, s32, s32, s32, s32);
 extern f32 D_80226E24;
 extern s16 D_80226E28;
 
+typedef struct {
+    /* 0x00 */ s16 unk_00;
+    /* 0x02 */ s16 unk_02;
+    /* 0x04 */ s32 unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
+} UnkStruct_80228A78; // size = 0x14
+
+extern UnkStruct_80228A78 D_80226E30;
+extern UnkStruct_80228A78 D_80228A78;
+
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B66E0/func_801E80B0.s")
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B66E0/func_801E8800.s")
@@ -41,8 +53,21 @@ void func_801E92FC(Gfx* arg0, s32 arg1, char* buf, s32 arg3, s32 arg4, s32 arg5,
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B66E0/func_801EADB0.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B66E0/func_801EAF78.s")
+void func_801EAF78(void) {
+    D_80228A78 = D_80226E30;
+}
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B66E0/func_801EAFB4.s")
+void func_801EAFB4(void) {
+    if (D_80228A78.unk_00 != 0) {
+        D_80228A78.unk_04++;
+        if (D_80228A78.unk_04 >= D_80228A78.unk_08) {
+            D_80228A78.unk_04 = 0;
+            D_80228A78.unk_02++;
+            if (D_80228A78.unk_02 == 4) {
+                D_80228A78.unk_02 = 0;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B66E0/func_801EB00C.s")

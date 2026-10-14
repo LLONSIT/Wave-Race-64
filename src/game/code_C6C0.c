@@ -2159,7 +2159,17 @@ void func_80062918(Vec3f* arg0) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80067810.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80067BFC.s")
+Gfx* func_80067810(Gfx* gfxP, s32 arg1, s32 arg2);
+
+Gfx* func_80067BFC(Gfx* gfxP, s32 arg1, s32 arg2) {
+    gfxP = func_80067810(gfxP, arg1, arg2);
+
+    gSPEndDisplayList(gfxP++);
+    if (D_80193D5C[arg2].unk0.h != 0) {
+        gfxP += 6;
+    }
+    return gfxP;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80067C6C.s")
 
@@ -2236,6 +2246,8 @@ void func_80069740(UnkStruct_80069740* arg0, UnkStruct_80069740* arg1) {
     *arg0 = *arg1;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_8006977C.s")
+void func_8006977C(Vec3f* arg0, Vec3f* arg1) {
+    *arg0 = *arg1;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80069798.s")

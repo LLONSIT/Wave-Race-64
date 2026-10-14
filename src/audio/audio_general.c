@@ -414,7 +414,18 @@ void func_800C118C(s32 arg0) {
 }
 
 // https://decomp.me/scratch/cOjnQ
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/audio/audio_general/func_800C11CC.s")
+void func_800C11CC(s32 arg0) {
+    if ((D_800E7CC0 == 0) || (D_800E7C94 == 4)) {
+        switch (D_800E7C90) {
+            case 0:
+                func_800C010C(arg0, 2);
+                break;
+            case 1:
+                func_800C010C(arg0, 1);
+                break;
+        }
+    }
+}
 
 void func_800C123C(u8* arg0) {
     arg0[4] = 1;

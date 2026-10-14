@@ -163,7 +163,7 @@ Gfx* func_801E946C(Gfx*, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32, 
 void func_801EC9C8(void);
 void func_801ED004(void);
 void func_i15_802C6CAC(s32);
-void func_80099AD8(s8, void*, f32, f32, f32);
+void func_80099AD8(s32, UnkStruct_8009A04C*, f32, f32, f32);
 void func_800BFD34(void);
 void func_800BFD68(void);
 int func_8007C50C(void);
@@ -174,7 +174,7 @@ void func_800BFD9C(u8*);
 void func_i4_802C5800(void);
 void func_i4_802C58F8(void);
 void func_80069740(UnkStruct_80069740* arg0, UnkStruct_80069740* arg1);
-void func_8006977C(void*, s32);
+void func_8006977C(Vec3f* arg0, Vec3f* arg1);
 void func_80069798(void*, void*, void*, void*, void*, void*);
 void func_80094ACC(void);
 void func_i5_802C5850(void);

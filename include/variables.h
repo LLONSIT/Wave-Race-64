@@ -99,7 +99,7 @@ extern s32 D_802C76B0;
 extern Controller D_801CE65A[];
 extern Controller D_801CE692[]; // to be confirmed
 
-extern s8 D_802C7548;
+extern s8 D_802C7548[];
 extern s32 D_802C756C;
 extern s32 D_i8_802C7040;
 extern s32 D_i8_802C74F8[];

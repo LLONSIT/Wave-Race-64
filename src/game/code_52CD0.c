@@ -635,7 +635,15 @@ s32 func_80099A00(UnkStruct_801CF060* arg0, void* arg1, void* arg2, s32 arg3) {
     return sp28;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_52CD0/func_80099AD8.s")
+void func_80099AD8(s32 arg0, UnkStruct_8009A04C* arg1, f32 arg2, f32 arg3, f32 arg4) {
+    if ((arg0 >= 0) && (arg0 < 3)) {
+        if ((&arg1->unk44.x)[arg0] < arg2) {
+            (&arg1->unk44.x)[arg0] = arg2;
+            (&arg1->unk68.x)[arg0] = arg3;
+            (&arg1->unk5C.x)[arg0] = arg4;
+        }
+    }
+}
 
 void func_80099B20(f32* arg0, f32 arg1) {
     if (arg1 == 180.0f) {

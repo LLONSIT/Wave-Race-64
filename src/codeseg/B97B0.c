@@ -541,20 +541,75 @@ void func_801EDFFC(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE040.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE228.s")
+void func_801EE040(MtxF* mtx, f32 arg1, f32 arg2, f32 arg3, f32 arg4);
+
+void func_801EE228(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4) {
+    MtxF mtx;
+
+    func_801EE040(&mtx, arg1, arg2, arg3, arg4);
+
+    _MtxF_to_Mtx(&mtx, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE274.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE46C.s")
+void func_801EE274(MtxF* mtx, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
+
+void func_801EE46C(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7) {
+    MtxF mtx;
+
+    func_801EE274(&mtx, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+
+    _MtxF_to_Mtx(&mtx, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE4D0.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE698.s")
+void func_801EE4D0(MtxF* mtx, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6);
+
+void func_801EE698(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {
+    MtxF mtx;
+
+    func_801EE4D0(&mtx, arg1, arg2, arg3, arg4, arg5, arg6);
+
+    _MtxF_to_Mtx(&mtx, arg0);
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE6F4.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE8C0.s")
+void func_801EE6F4(MtxF* mtx, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6);
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE91C.s")
+void func_801EE8C0(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6) {
+    MtxF mtx;
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EE97C.s")
+    func_801EE6F4(&mtx, arg1, arg2, arg3, arg4, arg5, arg6);
+
+    _MtxF_to_Mtx(&mtx, arg0);
+}
+
+void func_801EE91C(MtxF_t arg0, f32 x, f32 y, f32 z) {
+    arg0[0][0] = x;
+    arg0[1][1] = y;
+    arg0[2][2] = z;
+    arg0[1][0] = 0.0f;
+    arg0[2][0] = 0.0f;
+    arg0[0][1] = 0.0f;
+    arg0[2][1] = 0.0f;
+    arg0[0][2] = 0.0f;
+    arg0[1][2] = 0.0f;
+    arg0[0][3] = 0.0f;
+    arg0[1][3] = 0.0f;
+    arg0[2][3] = 0.0f;
+    arg0[3][0] = 0.0f;
+    arg0[3][1] = 0.0f;
+    arg0[3][2] = 0.0f;
+    arg0[3][3] = 1.0f;
+}
+
+void func_801EE97C(Mtx* arg0, f32 arg1, f32 arg2, f32 arg3) {
+    MtxF mtx;
+
+    func_801EE91C((float (*)[4]) & mtx, arg1, arg2, arg3);
+
+    _MtxF_to_Mtx(&mtx, arg0);
+}
