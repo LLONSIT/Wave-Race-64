@@ -12,15 +12,99 @@
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EBD28.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EBFE4.s")
+void func_801EBFE4(void) {
+    gPrevGameState = gGameState;
+    D_801CE630 = 0;
+    gGameState = 0x14;
+    D_801CE638 = 5;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    gVIsPerFrame = 2;
+    gPlayers = ONE_PLAYER;
+    gCourseID = 1;
+    gRiderGameModes = 1;
+    D_801CE64C = 1;
+    gGameModeState = GMODE_STATE_0;
+    FadeTransition_SetProps(2, 4, 0);
+    func_801E6A4C(0, 0);
+    gCameraPerspective->viewMode = 1;
+    if (D_800DA9AC != 0) {
+        D_800DA9D0 = 0;
+    }
+    func_800C21F4(0xA, 0);
+    osViBlack(true);
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EC0D4.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EC20C.s")
+void func_801EC20C(void) {
+    gPrevGameState = gGameState;
+    D_801CE630 = 0;
+    gGameState = 0x32;
+    D_801CE638 = 3;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    gVIsPerFrame = 2;
+    gPlayers = ONE_PLAYER;
+    gRiderGameModes = 1;
+    D_801CE64C = 1;
+    gGameModeState = GMODE_STATE_0;
+    if (gPrevGameState != 0x64) {
+        func_80096960(2, 0, 1, 2, 3);
+        FadeTransition_SetProps(4, 1, 0);
+        func_801E6A4C(0, 0);
+    }
+    gCameraPerspective->viewMode = 1;
+    func_800C21F4(3, 0);
+}
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EC304.s")
+void func_801EC304(void) {
+    gPrevGameState = gGameState;
+    D_801CE630 = 0;
+    gGameState = 0x3C;
+    D_801CE638 = 7;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    gVIsPerFrame = 2;
+    FadeTransition_SetProps(2, 4, 0);
+    func_801E6A4C(0, 0);
+    D_800E5134 = 0;
+    func_800C21F4(9, 0);
+}
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801EC3AC.s")
+void func_801EC3AC(void) {
+    gPrevGameState = gGameState;
+    D_801CE630 = 0;
+    gGameState = 0x3E;
+    D_801CE638 = 0xA;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    gVIsPerFrame = 3;
+    gPlayers = ONE_PLAYER;
+    gRiders = 1;
+    gCourseID = RIDER_SELECTION;
+    gRiderGameModes = 2;
+    D_801CE64C = 2;
+    gGameModeState = 3;
+    D_80192690[D_800D48DC].unkB68 = 0;
+    D_80192690[D_800D48DC].unkB6C = D_800DA950[0].unk_B[0];
+    D_801CE6F4[1] = 0;
+    D_80192690[D_800D48DC].unkB70 = D_800DA950[0].unk_B[1];
+    D_80192690[D_800D48DC].unkB74 = D_800DA950[0].unk_B[2];
+    D_801CE6F4[0] = D_801CE6F4[1];
+    func_80096960(2, 0, 1, 2, 3);
+    FadeTransition_SetProps(2, 4, 0);
+    func_801E6A4C(0, 0);
+    gCameraPerspective->viewMode = 2;
+}
 
 void func_801EC500(void) {
     gPrevGameState = gGameState;
@@ -188,11 +272,64 @@ void func_801ECAF4(void) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801ECB98.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801ECE50.s")
+void func_801ECE50(void) {
+    gPrevGameState = gGameState;
+    D_801CE630 = 0;
+    gGameState = 0x36;
+    D_801CE638 = 0x12;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    gVIsPerFrame = 2;
+    gPlayers = ONE_PLAYER;
+    FadeTransition_SetProps(4, 1, 0);
+    func_801E6A4C(0, 0);
+    gRiderGameModes = 1;
+    D_801CE64C = 1;
+    gGameModeState = GMODE_STATE_0;
+    gCameraPerspective->viewMode = 1;
+    osViBlack(true);
+}
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801ECF18.s")
+void func_801ECF18(void) {
+    gPrevGameState = gGameState;
+    D_801CE630 = 0;
+    gGameState = 0x38;
+    D_801CE638 = 0x16;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    gVIsPerFrame = 2;
+    gPlayers = ONE_PLAYER;
+    gRiderGameModes = 1;
+    D_801CE64C = 1;
+    gGameModeState = GMODE_STATE_0;
+    func_80096960(2, 0, 1, 2, 3);
+    FadeTransition_SetProps(4, 1, 0);
+    func_801E6A4C(0, 0);
+    gCameraPerspective->viewMode = 1;
+    func_800C21F4(3, 0);
+    osViBlack(true);
+}
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B97B0/func_801ED004.s")
+void func_801ED004(void) {
+    gPrevGameState = gGameState;
+    D_801CE630 = 0;
+    gGameState = 0x39;
+    D_801CE638 = 0x17;
+    D_801CE63C = 1;
+    D_801CE640 = 0;
+    D_801CE644 = 0;
+    D_800DAB1C = 0;
+    gVIsPerFrame = 2;
+    gPlayers = ONE_PLAYER;
+    gRiderGameModes = 1;
+    D_801CE64C = 1;
+    gGameModeState = GMODE_STATE_0;
+    gCameraPerspective->viewMode = 1;
+}
 
 f32 func_801ED090(f32 arg0) {
     if ((arg0 < -1.0f) || (arg0 > 1.0f)) {

@@ -619,7 +619,21 @@ s32 func_8007C31C(void) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/core/wr64_save/func_8007C494.s")
+s32 func_8007C494(void) {
+    if (D_800D8260 == 0) {
+        return 1;
+    }
+
+    func_8007B31C();
+
+    D_801AEA18[0].unk2 = Save_GenCheckSum(D_801AEA18);
+
+    if (osEepromLongWrite(&D_801540D0, 0, (u8*) D_801AEA18, 0x10) != 0) {
+        return 3;
+    }
+
+    return 0;
+}
 
 int func_8007C50C(void) {
     int i;

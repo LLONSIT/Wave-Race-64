@@ -1472,9 +1472,57 @@ void func_800C3E6C(s32 arg0) {
     }
 }
 
-// https://decomp.me/scratch/ymeGg
-// problematic switch
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/audio/audio_general/func_800C3EF4.s")
+void func_800C3EF4(s32 arg0) {
+    s32 var_v1;
+    s32 sp18;
+
+    if ((arg0 < 2) && (arg0 >= -1)) {
+        var_v1 = 0;
+    } else if (arg0 >= 2) {
+        var_v1 = 2;
+    } else {
+        var_v1 = 1;
+        arg0 = -arg0;
+    }
+
+    if (D_800E7C94 == 7) {
+        switch (var_v1) {
+            case 0:
+                if (D_801D7DC0 != 1) {
+                    return;
+                }
+                sp18 = (gAudioRandom % 3) + 0x16;
+                break;
+            case 1:
+                if (arg0 >= 0x14) {
+                    sp18 = 0x15;
+                    var_v1 = 0;
+                } else {
+                    sp18 = arg0;
+                }
+                break;
+            case 2:
+                if (arg0 >= 0x14) {
+                    sp18 = 0x19;
+                    var_v1 = 0;
+                } else {
+                    sp18 = arg0;
+                }
+                break;
+        }
+
+        if ((D_801D7DC0 == 1) || (sp18 != 0x15)) {
+            if ((D_801D7DF0[2] == 0) || (D_801D7DF0[1] < 0x51)) {
+                AudioThread_QueueCmdS8(0x06000C02, var_v1);
+                AudioThread_QueueCmdS8(0x06000C01, sp18);
+                AudioThread_QueueCmdS8(0x06000C00, 0x7E);
+                D_801D7DF0[0] = sp18;
+                D_801D7DF0[1] = 0x55;
+                D_801D7DF0[2] = 0x32;
+            }
+        }
+    }
+}
 
 void func_800C4078(void) {
     AudioThread_QueueCmdS8(0x06000B00U, 0);

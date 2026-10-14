@@ -36,7 +36,38 @@ void func_801E5470(void) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E62A8.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E66F4.s")
+void func_801E66F4(UnkStruct_menu_buffer_1* arg0) {
+    MtxF sp0;
+    Mtx sp80[2]; // needed for match (stack size)
+    f32 angle;
+
+    switch (arg0->unk2) {
+        case 0:
+            arg0->unkC = D_802C6BD0 + 6 + D_802C6EE4 * 20;
+            angle = (arg0->unk18 / 40.0f) * 2.0f * 3.1415927f;
+            func_80049A94(&D_801CE5F8->unk900[arg0->unk4], &sp0, angle, angle, 0.0f, arg0->unk8, arg0->unkC, 0);
+            arg0->unk18++;
+            if (arg0->unk18 >= 0x28) {
+                arg0->unk18 -= 0x28;
+            }
+            arg0->unk20 += 4;
+            break;
+        case 1:
+            if (gCurrentPauseMenuOption == -1) {
+                arg0->unk_0 = 0;
+                return;
+            }
+            arg0->unkC = arg0->unk24 + gCurrentPauseMenuOption * 15;
+            angle = (arg0->unk18 / 40.0f) * 2.0f * 3.1415927f;
+            func_80049A94(&D_801CE5F8->unk900[arg0->unk4], &sp0, angle, angle, 0.0f, arg0->unk8, arg0->unkC, 0);
+            arg0->unk18++;
+            if (arg0->unk18 >= 0x28) {
+                arg0->unk18 -= 0x28;
+            }
+            arg0->unk20 += 4;
+            break;
+    }
+}
 
 void func_801E68EC(UnkStruct_menu_buffer_1* arg0) {
     switch (arg0->unk2) { /* irregular */

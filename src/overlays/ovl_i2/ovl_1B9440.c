@@ -5,7 +5,6 @@
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i2/ovl_1B9440/func_i2_802C5AE4.s")
 
 void* func_8007C31C();
-void* func_801EB91C();
 void* func_i2_802C5E28();
 void* func_i2_802C6ADC(Gfx*);
 Gfx* func_i2_802C7C50(Gfx*);
@@ -19,6 +18,7 @@ extern s32 D_802C8C5C;
 extern Gfx D_80BE4A8[];
 extern Gfx D_80BE500[];
 extern s32 D_i2_802C8BC0;
+extern s32 D_i2_802C8BD8[];
 struct SelectionState {
     s32 player_1_ready;
     s32 player_2_ready;
@@ -98,9 +98,31 @@ Gfx* func_i2_802C5B4C(Gfx* gdl) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i2/ovl_1B9440/func_i2_802C5E28.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i2/ovl_1B9440/func_i2_802C676C.s")
+s32 func_i2_802C676C(s32 arg0, s32 arg1) {
+    UnkStruct_func_i8_802C6E00(*tbl)[4] = (UnkStruct_func_i8_802C6E00(*)[4]) D_801CB298;
+    s32 idx = D_i2_802C8BD8[D_800DA9C0[arg0]];
+    s32 ret = 1;
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i2/ovl_1B9440/func_i2_802C67E4.s")
+    tbl[arg0][idx].unk_B[arg1]--;
+    if (tbl[arg0][idx].unk_B[arg1] < 0) {
+        ret = 0;
+        tbl[arg0][idx].unk_B[arg1] = 0;
+    }
+    return ret;
+}
+
+s32 func_i2_802C67E4(s32 arg0, s32 arg1) {
+    UnkStruct_func_i8_802C6E00(*tbl)[4] = (UnkStruct_func_i8_802C6E00(*)[4]) D_801CB298;
+    s32 idx = D_i2_802C8BD8[D_800DA9C0[arg0]];
+    s32 ret = 1;
+
+    tbl[arg0][idx].unk_B[arg1]++;
+    if (tbl[arg0][idx].unk_B[arg1] == 12) {
+        ret = 0;
+        tbl[arg0][idx].unk_B[arg1] = 11;
+    }
+    return ret;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i2/ovl_1B9440/func_i2_802C6864.s")
 

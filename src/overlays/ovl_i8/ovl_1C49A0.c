@@ -86,7 +86,22 @@ void func_i8_802C6E68(void* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/overlays/ovl_i8/ovl_1C49A0/func_i8_802C6EB8.s")
+s32 func_i8_802C6EB8(s8* str, s32 arg1) {
+    s32 width = 0;
+    s32 idx;
+    s32 charWidth;
+    s32 i;
+
+    for (i = 0; str[i] != 0; width += charWidth, i++) {
+        idx = func_801E9B04(arg1, str[i]);
+        if (idx == 0xFF) {
+            charWidth = 12;
+        } else {
+            charWidth = D_80226DC4[idx];
+        }
+    }
+    return width;
+}
 
 void func_i8_802C6F4C(void) {
     gPrevGameState = gGameState;

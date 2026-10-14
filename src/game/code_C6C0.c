@@ -2171,11 +2171,80 @@ Gfx* func_80067BFC(Gfx* gfxP, s32 arg1, s32 arg2) {
     return gfxP;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80067C6C.s")
+void func_80067C6C(void) {
+    Gfx* gdl = (Gfx*) &D_8011EDE0;
+    s32 i;
+    s32 j;
+
+    if ((D_801CE638 == 0) || ((D_801CE638 == 8) && (gCourseID != SUNNY_BEACH))) {
+        gdl = func_80067BFC(gdl, 0, D_800D48DC);
+        gdl = func_80067BFC(gdl, 1, D_800D48E0);
+        return;
+    }
+    if (D_801CE64C == 2) {
+        return;
+    }
+    if ((gPlayers == ONE_PLAYER) || ((D_801CE638 == 8) && (gCourseID == SUNNY_BEACH))) {
+        j = 1;
+        for (i = 0; i < gRiders; i++) {
+            if (i == D_800D48DC) {
+                gdl = func_80067BFC(gdl, 0, i);
+                gdl = func_80067BFC(gdl, 0, i);
+            } else {
+                gdl = func_80067BFC(gdl, j, i);
+                gdl = func_80067BFC(gdl, j + 1, i);
+                j += 2;
+            }
+        }
+    } else {
+        gdl = func_80067BFC(gdl, 0, D_800D48DC);
+        gdl = func_80067BFC(gdl, 1, D_800D48E0);
+        gdl = func_80067BFC(gdl, 2, D_800D48DC);
+        gdl = func_80067BFC(gdl, 3, D_800D48E0);
+        gdl = func_80067BFC(gdl, 4, D_800D48DC);
+        gdl = func_80067BFC(gdl, 5, D_800D48E0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80067E40.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_800683A0.s")
+void func_800683A0(s32 idx) {
+    UnkStruct_80192690* player = &D_80192690[idx];
+
+    D_80192540[idx].unk0 = 6;
+    D_80192540[idx].unk4 = player->unk16E8;
+    D_80192540[idx].unk8 = player->unk16EC;
+    D_80192540[idx].unkC.x = player->unk44.x + (f32) D_800D4948 * player->unk6C;
+    D_80192540[idx].unkC.y = player->unk44.y + (f32) D_800D4948 * player->unk70;
+    D_80192540[idx].unkC.z = player->unk44.z + (f32) D_800D4948 * player->unk74;
+    D_80192540[idx].unk18.x = player->unk6C;
+    D_80192540[idx].unk18.y = player->unk70;
+    D_80192540[idx].unk18.z = player->unk74;
+    D_80192540[idx].unk24.x = player->unk78;
+    D_80192540[idx].unk24.y = player->unk7C;
+    D_80192540[idx].unk24.z = player->unk80;
+    D_80192540[idx].unk30 = 0.1f;
+    func_800AC098(&D_80192540[idx], 1);
+    if (gRiderGameModes != 0) {
+        if (player->unk16E8 == 0) {
+            if (player->unkC7C != 0) {
+                if (player->unkC66 != 0) {
+                    player->unk16EC += 2;
+                } else {
+                    player->unk16EC += 1;
+                }
+            }
+        } else {
+            player->unk16EC += 1;
+        }
+        if (player->unk16EC >= 0x10) {
+            player->unk16EC = 0;
+            if (player->unk16E8 == 3) {
+                player->unk16E8 = 0;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_80068538.s")
 
@@ -2211,7 +2280,15 @@ s32 func_8006931C(UnkStruct_80192690* arg0, Mtx* arg1) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_C6C0/func_800694B8.s")
+Gfx* func_800694B8(Gfx* gdl, s32 idx) {
+    if (D_80192690[idx].unkC78 < 4) {
+        if (func_8006931C(&D_80192690[idx], &gGfxPool->unkF808[idx]) == 0) {
+            gSPMatrix(gdl++, &((GfxPool*) D_3000000)->unkF808[idx], G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPDisplayList(gdl++, D_10068B0);
+        }
+    }
+    return gdl;
+}
 
 Gfx* func_80069594(Gfx* arg0) {
     UnkStruct_80192690* temp_v1;

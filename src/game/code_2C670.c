@@ -10,6 +10,14 @@ extern s32 D_801BB124;
 extern s32 D_801BB128;
 extern s32 D_801CE638;
 
+extern f32 D_801C1CE8;
+extern f32 D_801C1CEC;
+extern f32 D_801C1CF8;
+extern f32 D_801C1CFC;
+extern u8 D_801C1D00[];
+extern s32 D_801C1F00[4][4];
+extern s32 D_801C1F40[4][4];
+
 static const char devstr1[] = "Error: number of buoy2\n";
 static const char devstr2[] = "Error: number of buoy3\n";
 
@@ -19,7 +27,16 @@ static const char devstr2[] = "Error: number of buoy3\n";
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2C670/func_80073E6C.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_2C670/func_800741A4.s")
+s32 func_800741A4(f32 arg0, f32 arg1, u8** arg2) {
+    s32 row = (arg0 - D_801C1CE8) / D_801C1CF8 * 4.0f;
+    s32 col = (arg1 - D_801C1CEC) / D_801C1CFC * 4.0f;
+
+    if (row < 0 || row >= 4 || col < 0 || col >= 4) {
+        return 0;
+    }
+    *arg2 = D_801C1D00 + D_801C1F00[row][col];
+    return D_801C1F40[row][col];
+}
 
 s32 func_80074264(f32 arg0, f32 arg1) {
     s32 i;

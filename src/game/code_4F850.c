@@ -290,7 +290,41 @@ void func_80095CE8(u8* arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_80096048.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_800961B8.s")
+u32* func_800961B8(s32 arg0, s32 arg1) {
+    s32 pad1[1]; // needed for match (stack layout)
+    s32 count;
+    s32 pad2[1]; // needed for match (stack layout)
+    u32* sp38;
+    u32* sp34;
+    s32 i;
+    u32* temp_s0;
+
+    switch (arg0) {
+        case 3:
+            sp34 = (u32*) &D_8002FA8;
+            count = 1;
+            break;
+        case 6:
+            sp34 = (u32*) &D_8002C00;
+            count = 1;
+            break;
+    }
+
+    sp38 = SegmentedToVirtual((u32) sp34) + arg1;
+    for (i = 0; i < count; i++) {
+        temp_s0 = SegmentedToVirtual(sp38[i]) + arg1;
+        sp38[i] = (u32) temp_s0;
+        temp_s0[1] = SegmentedToVirtual(temp_s0[1]) + arg1;
+        temp_s0[2] = SegmentedToVirtual(temp_s0[2]) + arg1;
+        temp_s0[3] = SegmentedToVirtual(temp_s0[3]) + arg1;
+        temp_s0[4] = SegmentedToVirtual(temp_s0[4]) + arg1;
+        temp_s0[5] = SegmentedToVirtual(temp_s0[5]) + arg1;
+        temp_s0[6] = SegmentedToVirtual(temp_s0[6]) + arg1;
+        temp_s0[7] = SegmentedToVirtual(temp_s0[7]) + arg1;
+        temp_s0[8] = SegmentedToVirtual(temp_s0[8]) + arg1;
+    }
+    return sp38;
+}
 
 u32* func_800962F0(s32 arg0) {
     s32 pad[2];
@@ -315,7 +349,37 @@ u32* func_800962F0(s32 arg0) {
     return sp34;
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_4F850/func_800963CC.s")
+u32* func_800963CC(s32 arg0, s32 arg1) {
+    s32 pad1[1]; // needed for match (stack layout)
+    s32 count;
+    s32 pad2[1]; // needed for match (stack layout)
+    u32* sp38;
+    u32* sp34;
+    s32 i;
+    u32* temp_s0;
+
+    switch (arg0) {
+        case 2:
+            sp34 = (u32*) &D_8003578;
+            count = 2;
+            break;
+        case 4:
+            sp34 = (u32*) &D_8000D9C;
+            count = 1;
+            break;
+    }
+
+    sp38 = SegmentedToVirtual((u32) sp34) + arg1;
+    for (i = 0; i < count; i++) {
+        temp_s0 = SegmentedToVirtual(sp38[i]) + arg1;
+        sp38[i] = (u32) temp_s0;
+        temp_s0[1] = SegmentedToVirtual(temp_s0[1]) + arg1;
+        temp_s0[2] = SegmentedToVirtual(temp_s0[2]) + arg1;
+        temp_s0[3] = SegmentedToVirtual(temp_s0[3]) + arg1;
+        temp_s0[4] = SegmentedToVirtual(temp_s0[4]) + arg1;
+    }
+    return sp38;
+}
 
 void func_800964C4(void) {
 }
