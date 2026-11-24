@@ -264,7 +264,9 @@ struct UnkStruct_801C3C50 {
     /* 0x0B53 */ u8 unkB53;
     /* 0x0B54 */ char padB54[0x3C]; /* maybe part of unkB53[0x3D]? */
     /* 0x0B90 */ f32 unkB90;
-    /* 0x0B94 */ char padB94[0xB0]; /* maybe part of unkB90[0x2D]? */
+    /* 0x0B94 */ char padB94[0x24];
+    /* 0x0BB8 */ f32 unkBB8;
+    /* 0x0BBC */ char padBBC[0x88];
     /* 0x0C44 */ f32 unkC44;
     /* 0x0C48 */ char padC48[4];
     /* 0x0C4C */ f32 unkC4C;
@@ -400,7 +402,8 @@ typedef struct GfxPool_s {
     /* 0x13D68 */ Vtx *unk13D68;
     /* 0x13D6C */ char pad13D6C[0x336C];
     /* 0x170D8 */ Vtx *unk170D8;
-    /* 0x170DC */ char pad170DC[0x1F0C];
+    /* 0x170DC */ char pad170DC[0x150C];
+    /* 0x185E8 */ Vtx unk185E8[8 * 20];
 } GfxPool; /* size = 0x18FE8 */
 
 
