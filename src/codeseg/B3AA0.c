@@ -72,7 +72,44 @@ void func_801E6074(UnkStruct_menu_buffer_1* gwp) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E62A8.s")
+void func_801E62A8(UnkStruct_menu_buffer_1* gwp) {
+    MtxF_t mtxfDummy;
+    f32 sc;
+
+    switch (gwp->unk2) {
+        case 0:
+            sc = gwp->unk18 / 5.0f * 1.5f;
+            if (gwp->unk28) {
+                gwp->unk8 = (u32) (58 + (102.0f * (1 - sc)));
+                gwp->unkC = (u32) (93 + (15.0f * (1 - sc)));
+            } else {
+                gwp->unk8 = (u32) (120 + (38.0f * (1 - sc)));
+                gwp->unkC = (u32) (93 + (20.0f * (1 - sc)));
+            }
+            func_80048A88((Mtx*) ((u8*) D_801CE5F8 + 0x900 + (gwp->unk4 << 6)), 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+                          gwp->unk8, gwp->unkC, 0.0f, sc);
+            gwp->unk18++;
+            if (gwp->unk18 > 5) {
+                gwp->unk2 = 1;
+                if (gwp->unk28) {
+                    gwp->unk8 = 58;
+                } else {
+                    gwp->unk8 = 120;
+                }
+                gwp->unkC = 93;
+                gwp->unk18 = 0;
+            }
+            break;
+
+        case 1:
+            SysUtils_MatrixLookAt((Mtx*) ((u8*) D_801CE5F8 + 0x900 + (gwp->unk4 << 6)), (MtxF*) mtxfDummy, 0.0f, 0.0f,
+                                  1.0f, 0.0f, 1.0f, 0.0f, gwp->unk8, gwp->unkC, 0.0f);
+            gwp->unk18++;
+            if (gwp->unk18 > 30) {
+                gwp->unk_0 = 0;
+            }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E66F4.s")
 
