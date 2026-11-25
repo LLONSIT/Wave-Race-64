@@ -233,7 +233,7 @@ void func_801E6A4C(u16 arg0, u16 arg1) {
                 *temp_a0 = D_80226C50;
                 temp_a0->unk4 = idx;
                 temp_a0->unk_0 = 3;
-                switch (arg1) { /* switch 2 */
+                switch (arg1) {
                     case 0:
                         temp_a0->unk2 = 0;
                         temp_a0->unk8 = 0x52;

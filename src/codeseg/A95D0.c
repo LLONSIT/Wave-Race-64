@@ -444,8 +444,8 @@ void func_801E0FF0(camera_unk_1* arg0) {
 }
 
 void func_801E11B4(GfxPool* arg0, camera_unk_1* arg1) {
-    func_800481E0(&arg0->unkE008[arg1->unkE8], (u16*) ((u8*) arg1 + 0xE4), *(f32*) ((u8*) arg1 + 0x88),
-                  4.0f / 3.0f, arg1->unk9C, arg1->unkA0, arg1->unk94, arg1->unk98);
-    func_800484C8(&arg0->unkE088[arg1->unkE8], (MtxF*) ((u8*) arg1 + 0xA4), arg1->unk4C, arg1->unk50,
-                  arg1->unk54, arg1->unk7C, arg1->unk80, arg1->unk84, arg1->unk70, arg1->unk74, arg1->unk78);
+    func_800481E0(&arg0->unkE008[arg1->unkE8], (u16*) ((u8*) arg1 + 0xE4), *(f32*) ((u8*) arg1 + 0x88), 4.0f / 3.0f,
+                  arg1->unk9C, arg1->unkA0, arg1->unk94, arg1->unk98);
+    func_800484C8(&arg0->unkE088[arg1->unkE8], (MtxF*) ((u8*) arg1 + 0xA4), arg1->unk4C, arg1->unk50, arg1->unk54,
+                  arg1->unk7C, arg1->unk80, arg1->unk84, arg1->unk70, arg1->unk74, arg1->unk78);
 }

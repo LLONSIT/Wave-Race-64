@@ -302,56 +302,56 @@ void func_80081048(void) {
                 ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) &&
                  (D_801C3C58->unkB0 == 0))) {
 
-                switch (D_801C3C58->unk5C) { /* switch 4; irregular */
-                    default:                 /* switch 4 */
+                switch (D_801C3C58->unk5C) {
+                    default:
                         break;
-                    case -1: /* switch 4 */
-                    case 0:  /* switch 4 */
+                    case -1:
+                    case 0:
                         D_801C3C50->riderSpeedMultiplier = 0.76f;
                         break;
-                    case 1: /* switch 4 */
+                    case 1:
                         D_801C3C50->riderSpeedMultiplier = 0.73f;
                         break;
-                    case 2: /* switch 4 */
+                    case 2:
                         D_801C3C50->riderSpeedMultiplier = 0.7f;
                         break;
                 }
             } else if (D_801C2938[D_801C3C58->unk0].racePosition < D_801C2938->racePosition) {
-                switch (D_801C3C58->unk5C) { /* switch 2; irregular */
-                    case -1:                 /* switch 2 */
-                    case 0:                  /* switch 2 */
+                switch (D_801C3C58->unk5C) {
+                    case -1:
+                    case 0:
                         D_801C3C50->riderSpeedMultiplier = 0.7f;
                         break;
-                    case 1: /* switch 2 */
+                    case 1:
                         D_801C3C50->riderSpeedMultiplier = 0.6f;
                         break;
-                    case 2:                                 /* switch 2 */
-                        switch (D_801C3C58->currentRider) { /* switch 3; irregular */
-                            case RIDER_RHAYAMI:             /* switch 3 */
+                    case 2:
+                        switch (D_801C3C58->currentRider) {
+                            case RIDER_RHAYAMI:
                                 D_801C3C50->riderSpeedMultiplier = 0.4f;
                                 break;
-                            case RIDER_DMARINER: /* switch 3 */
+                            case RIDER_DMARINER:
                                 D_801C3C50->riderSpeedMultiplier = 0.57f;
                                 break;
-                            case RIDER_ASTEWART: /* switch 3 */
+                            case RIDER_ASTEWART:
                                 D_801C3C50->riderSpeedMultiplier = 0.4f;
                                 break;
-                            case RIDER_MJETER: /* switch 3 */
+                            case RIDER_MJETER:
                                 D_801C3C50->riderSpeedMultiplier = 0.5f;
                                 break;
                         }
                         break;
                 }
             } else {
-                switch (D_801C3C58->unk5C) { /* switch 1; irregular */
-                    case -1:                 /* switch 1 */
-                    case 0:                  /* switch 1 */
+                switch (D_801C3C58->unk5C) {
+                    case -1:
+                    case 0:
                         D_801C3C50->riderSpeedMultiplier = 0.9f;
                         break;
-                    case 1: /* switch 1 */
+                    case 1:
                         D_801C3C50->riderSpeedMultiplier = 0.8f;
                         break;
-                    case 2: /* switch 1 */
+                    case 2:
                         D_801C3C50->riderSpeedMultiplier = 0.7f;
                         break;
                 }
@@ -361,41 +361,41 @@ void func_80081048(void) {
             if ((D_801C3C58->unkA4 != 0) ||
                 ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) &&
                  (D_801C3C58->unkB0 == 0))) {
-                switch (D_801C3C58->currentRider) { /* switch 7; irregular */
-                    default:                        /* switch 7 */
+                switch (D_801C3C58->currentRider) {
+                    default:
                         break;
-                    case 0: /* switch 7 */
-                    case 2: /* switch 7 */
-                    case 3: /* switch 7 */
+                    case 0:
+                    case 2:
+                    case 3:
                         D_801C3C50->riderSpeedMultiplier = 0.88f;
                         break;
-                    case 1: /* switch 7 */
+                    case 1:
                         D_801C3C50->riderSpeedMultiplier = 0.86f;
                         break;
                 }
             } else if (D_801C2938[D_801C3C58->unk0].racePosition < D_801C2938->racePosition) {
-                switch (D_801C3C58->unk5C) { /* switch 6; irregular */
-                    case -1:                 /* switch 6 */
-                    case 0:                  /* switch 6 */
+                switch (D_801C3C58->unk5C) {
+                    case -1:
+                    case 0:
                         D_801C3C50->riderSpeedMultiplier = 0.9f;
                         break;
-                    case 1: /* switch 6 */
+                    case 1:
                         D_801C3C50->riderSpeedMultiplier = 0.8f;
                         break;
-                    case 2: /* switch 6 */
+                    case 2:
                         D_801C3C50->riderSpeedMultiplier = 0.7f;
                         break;
                 }
             } else {
-                switch (D_801C3C58->unk5C) { /* switch 5; irregular */
-                    case -1:                 /* switch 5 */
-                    case 0:                  /* switch 5 */
+                switch (D_801C3C58->unk5C) {
+                    case -1:
+                    case 0:
                         D_801C3C50->riderSpeedMultiplier = 1.0f;
                         break;
-                    case 1: /* switch 5 */
+                    case 1:
                         D_801C3C50->riderSpeedMultiplier = 0.93f;
                         break;
-                    case 2: /* switch 5 */
+                    case 2:
                         D_801C3C50->riderSpeedMultiplier = 0.85f;
                         break;
                 }
@@ -408,15 +408,15 @@ void func_80081048(void) {
 
                 D_801C3C50->riderSpeedMultiplier = 0.95f;
             } else if (D_801C2938[D_801C3C58->unk0].racePosition < D_801C2938->racePosition) {
-                switch (D_801C3C58->unk5C) { /* switch 9; irregular */
-                    case -1:                 /* switch 9 */
-                    case 0:                  /* switch 9 */
+                switch (D_801C3C58->unk5C) {
+                    case -1:
+                    case 0:
                         D_801C3C50->riderSpeedMultiplier = 1.0f;
                         break;
-                    case 1: /* switch 9 */
+                    case 1:
                         D_801C3C50->riderSpeedMultiplier = 0.95f;
                         break;
-                    case 2: /* switch 9 */
+                    case 2:
                         D_801C3C50->riderSpeedMultiplier = 0.9f;
                         break;
 
@@ -424,15 +424,15 @@ void func_80081048(void) {
                         break;
                 }
             } else {
-                switch (D_801C3C58->unk5C) { /* switch 8; irregular */
-                    case -1:                 /* switch 8 */
-                    case 0:                  /* switch 8 */
+                switch (D_801C3C58->unk5C) {
+                    case -1:
+                    case 0:
                         D_801C3C50->riderSpeedMultiplier = 1.0f;
                         break;
-                    case 1: /* switch 8 */
+                    case 1:
                         D_801C3C50->riderSpeedMultiplier = 0.95f;
                         break;
-                    case 2: /* switch 8 */
+                    case 2:
                         D_801C3C50->riderSpeedMultiplier = 0.9f;
                         break;
                 }
@@ -444,17 +444,17 @@ void func_80081048(void) {
     }
 
     if (D_801C2938[D_801C3C58->unk0].unk2F4 != 0) {
-        switch (D_801C3C58->currentRider) { /* switch 10; irregular */
-            case RIDER_RHAYAMI:             /* switch 10 */
+        switch (D_801C3C58->currentRider) {
+            case RIDER_RHAYAMI:
                 D_801C3C50->riderSpeedMultiplier = 0.4f;
                 break;
-            case RIDER_DMARINER: /* switch 10 */
+            case RIDER_DMARINER:
                 D_801C3C50->riderSpeedMultiplier = 0.57f;
                 break;
-            case RIDER_ASTEWART: /* switch 10 */
+            case RIDER_ASTEWART:
                 D_801C3C50->riderSpeedMultiplier = 0.4f;
                 break;
-            case RIDER_MJETER: /* switch 10 */
+            case RIDER_MJETER:
                 D_801C3C50->riderSpeedMultiplier = 0.5f;
                 break;
         }

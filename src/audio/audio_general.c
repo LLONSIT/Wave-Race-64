@@ -971,8 +971,8 @@ void func_800C21F4(s32 arg0, int courseID) {
 
                 // fake !
                 temp_v0 = D_801D7DC0;
-                switch (D_801D7DC0) {  /* switch 1; irregular */
-                    case DOLPHIN_PARK: /* switch 1 */
+                switch (D_801D7DC0) {
+                    case DOLPHIN_PARK:
                         func_800C1488();
                         func_800C13AC(0);
                         D_800E7C90 = 0;
@@ -998,7 +998,7 @@ void func_800C21F4(s32 arg0, int courseID) {
                             func_800C3524(courseID == GLACIER_COAST ? RIDER_SELECTION : courseID, 0xFU);
                         }
                         break;
-                    case SUNNY_BEACH: /* switch 1 */
+                    case SUNNY_BEACH:
                         func_800C1488();
                         func_800C13AC(1);
                         D_800E7C90 = 1;
@@ -1016,7 +1016,7 @@ void func_800C21F4(s32 arg0, int courseID) {
                             func_800C14D0(D_801D7DCC);
                         }
                         break;
-                    case SUNSET_BAY: /* switch 1 */
+                    case SUNSET_BAY:
                         func_800C1488();
                         func_800C13AC(1);
                         D_800E7C90 = 0;
@@ -1034,7 +1034,7 @@ void func_800C21F4(s32 arg0, int courseID) {
                             func_800C14D0(D_801D7DCC);
                         }
                         break;
-                    case MARINE_FORTRESS: /* switch 1 */
+                    case MARINE_FORTRESS:
                         func_800C1488();
                         func_800C13AC(1);
                         D_800E7C90 = 0;
@@ -1065,14 +1065,14 @@ void func_800C21F4(s32 arg0, int courseID) {
                 AudioThread_SetFadeOutTimer(2, 0x3C);
                 // fake
                 temp_v0 = D_801D7DC0;
-                switch (D_801D7DC0) {  /* switch 2; irregular */
-                    case DOLPHIN_PARK: /* switch 2 */
+                switch (D_801D7DC0) {
+                    case DOLPHIN_PARK:
                         courseID--;
                         D_801D7DCC = courseID + 15;
                         func_800C32A0(0xEU, 0x7E, 0x14);
                         func_800C32A0(0xEU, 0x7E, 0x14);
-                        switch (courseID) {    /* switch 3; irregular */
-                            case DOLPHIN_PARK: /* switch 3 */
+                        switch (courseID) {
+                            case DOLPHIN_PARK:
                                 if (D_801D7DF8[1] == 0) {
                                     func_800C32A0(0x10U, 0x7F, 0x14);
                                 } else {
@@ -1080,13 +1080,13 @@ void func_800C21F4(s32 arg0, int courseID) {
                                 }
                                 D_800E7CDC = 0x1E;
                                 break;
-                            case DRAKE_LAKE: /* switch 3 */
+                            case DRAKE_LAKE:
                                 func_800C32A0((gAudioRandom & 1) + 0x14, 0x7F, 0x14);
                                 D_801D7DCC = 0x1B;
                                 D_800E7CDC = 0x1E;
                                 courseID = PORT_BLUE;
                                 break;
-                            default: /* switch 3 */
+                            default:
                                 func_800C3524(courseID + 0x10, 0x28U);
                                 D_800E7CDC = 0x14;
                                 break;
@@ -1094,8 +1094,8 @@ void func_800C21F4(s32 arg0, int courseID) {
                         D_801D7E05 = 8;
                         func_800C1EB8(15);
                         break;
-                    case SUNSET_BAY:      /* switch 2 */
-                    case MARINE_FORTRESS: /* switch 2 */
+                    case SUNSET_BAY:
+                    case MARINE_FORTRESS:
                         if (!(courseID & 1)) {
                             D_801D7DCC = 0x14;
                             func_800C3500(0x16);
@@ -1113,7 +1113,7 @@ void func_800C21F4(s32 arg0, int courseID) {
                             D_800E7CB0 = 0xA0;
                         }
                         break;
-                    case SUNNY_BEACH: /* switch 2 */
+                    case SUNNY_BEACH:
                         D_801D7DCC = 0x15;
                         if (((D_801D7DF8[2] == 0) && (D_801D7DF8[1] == 0)) ||
                             ((D_801D7E00[2] == 0) && (D_801D7E00[1] == 0))) {
@@ -1136,16 +1136,16 @@ void func_800C21F4(s32 arg0, int courseID) {
                 func_800C1714((void*) 0xA);
                 // ! fake
                 temp_v0 = gDifficulty;
-                switch (gDifficulty) {      /* switch 4; irregular */
-                    case DIFFICULTY_NORMAL: /* switch 4 */
-                    case DIFFICULTY_HARD:   /* switch 4 */
+                switch (gDifficulty) {
+                    case DIFFICULTY_NORMAL:
+                    case DIFFICULTY_HARD:
                         if (courseID == DRAKE_LAKE) {
                             D_801D7DD4 = 2;
                         } else {
                             D_801D7DD4 = 1;
                         }
                         break;
-                    case DIFFICULTY_EXPERT: /* switch 4 */
+                    case DIFFICULTY_EXPERT:
                         D_801D7DD4 = 0;
                         break;
                 }
@@ -1476,18 +1476,18 @@ void func_800C40B0(void) {
     s32 v1;
     switch (D_801D7DD4) {
         case 0:
-            switch (D_801D7DC8) { /* switch 1; irregular */
+            switch (D_801D7DC8) {
                 case 0:
-                    switch (D_801D7E14) { /* switch 2; irregular */
-                        case 0x3CA:       /* switch 2 */
+                    switch (D_801D7E14) {
+                        case 0x3CA:
                             break;
-                        case 0x2EE: /* switch 2 */
+                        case 0x2EE:
                             AudioGeneral_DisableSeqPlayer1(0x4B0U);
                             break;
-                        case 0x348: /* switch 2 */
+                        case 0x348:
                             func_800C3500(0);
                             break;
-                        case 0x398: /* switch 2 */
+                        case 0x398:
                             func_800C4078();
                             func_800C15C8(0x1D, 0U);
                             break;
@@ -1499,17 +1499,17 @@ void func_800C40B0(void) {
                     break;
                 case 1:
                     switch (D_801D7E14) {
-                        case 0x311: /* switch 3 */
+                        case 0x311:
                             break;
-                        case 0x28A: /* switch 3 */
+                        case 0x28A:
                             AudioGeneral_DisableSeqPlayer1(0x3E8U);
 
                             break;
-                        case 0x2BC: /* switch 3 */
+                        case 0x2BC:
                             func_800C3500(1);
 
                             break;
-                        case 0x2E4: /* switch 3 */
+                        case 0x2E4:
                             func_800C4078();
                             func_800C15C8(0x1E, 0U);
 
@@ -1522,21 +1522,21 @@ void func_800C40B0(void) {
                         break;
                     }
                     break;
-                case 2: /* switch 1 */
+                case 2:
 
-                    switch (D_801D7E14) { /* switch 4; irregular */
+                    switch (D_801D7E14) {
                         case 0x2E4:
-                            /* switch 4 */
+
                             break;
-                        case 0x258: /* switch 4 */
+                        case 0x258:
                             AudioGeneral_DisableSeqPlayer1(0x4B0U);
 
                             break;
-                        case 0x2A8: /* switch 4 */
+                        case 0x2A8:
                             func_800C3500(2);
 
                             break;
-                        case 0x2D0: /* switch 4 */
+                        case 0x2D0:
                             func_800C4078();
                             func_800C15C8(0x1F, 0U);
 
@@ -1552,21 +1552,21 @@ void func_800C40B0(void) {
             }
             break;
         case 1:
-            switch (D_801D7DC8) { /* switch 5; irregular */
-                case 0:           /* switch 5 */
+            switch (D_801D7DC8) {
+                case 0:
 
-                    switch (D_801D7E14) { /* switch 6; irregular */
-                        case 0x262:       /* switch 6 */
+                    switch (D_801D7E14) {
+                        case 0x262:
                             break;
-                        case 0x1B8: /* switch 6 */
+                        case 0x1B8:
                             AudioGeneral_DisableSeqPlayer1(0x708U);
 
                             break;
-                        case 0x1EA: /* switch 6 */
+                        case 0x1EA:
                             func_800C3500(0);
 
                             break;
-                        case 0x24E: /* switch 6 */
+                        case 0x24E:
                             func_800C4078();
                             func_800C15C8(0x1D, 0U);
 
@@ -1579,20 +1579,20 @@ void func_800C40B0(void) {
                         break;
                     }
                     break;
-                case 1: /* switch 5 */
+                case 1:
 
-                    switch (D_801D7E14) { /* switch 7; irregular */
-                        case 0x280:       /* switch 7 */
+                    switch (D_801D7E14) {
+                        case 0x280:
                             break;
-                        case 0x1E0: /* switch 7 */
+                        case 0x1E0:
                             AudioGeneral_DisableSeqPlayer1(0x3E8U);
 
                             break;
-                        case 0x208: /* switch 7 */
+                        case 0x208:
                             func_800C3500(1);
 
                             break;
-                        case 0x244: /* switch 7 */
+                        case 0x244:
                             func_800C4078();
                             func_800C15C8(0x1E, 0U);
 
@@ -1605,20 +1605,20 @@ void func_800C40B0(void) {
                         break;
                     }
                     break;
-                case 2: /* switch 5 */
+                case 2:
 
-                    switch (D_801D7E14) { /* switch 8; irregular */
-                        case 0x26C:       /* switch 8 */
+                    switch (D_801D7E14) {
+                        case 0x26C:
                             break;
-                        case 0x208: /* switch 8 */
+                        case 0x208:
                             AudioGeneral_DisableSeqPlayer1(0x320U);
 
                             break;
-                        case 0x226: /* switch 8 */
+                        case 0x226:
                             func_800C3500(2);
 
                             break;
-                        case 0x258: /* switch 8 */
+                        case 0x258:
                             func_800C4078();
                             func_800C15C8(0x1F, 0U);
                             break;
@@ -1632,16 +1632,16 @@ void func_800C40B0(void) {
             }
             break;
         case 2:
-            switch (D_801D7E14) { /* switch 9; irregular */
-                case 0x26C:       /* switch 9 */
+            switch (D_801D7E14) {
+                case 0x26C:
                     break;
-                case 0x190: /* switch 9 */
+                case 0x190:
                     AudioGeneral_DisableSeqPlayer1(0x320U);
                     break;
-                case 0x1E0: /* switch 9 */
+                case 0x1E0:
                     func_800C3500(3);
                     break;
-                case 0x208: /* switch 9 */
+                case 0x208:
                     func_800C4078();
                     func_800C15C8(0x20, 0U);
                     break;

@@ -371,11 +371,11 @@ Gfx* Draw_WaterEffects(Gfx* gdl) {
                 gSPDisplayList(gdl++, D_10082F0);
                 break;
             case 2:
-                switch (D_800DAB2C) { /* switch 1; irregular */
-                    case 0:           /* switch 1 */
+                switch (D_800DAB2C) {
+                    case 0:
                         gSPDisplayList(gdl++, D_100D258);
                         break;
-                    case 1: /* switch 1 */
+                    case 1:
                         gSPDisplayList(gdl++, D_100E680);
                         break;
                 }

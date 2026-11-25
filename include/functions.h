@@ -107,6 +107,7 @@ void func_801E5470(void);
 void func_801E6074(UnkStruct_menu_buffer_1* gwp);
 void func_801E62A8(UnkStruct_menu_buffer_1* gwp);
 void func_801E66F4(UnkStruct_menu_buffer_1* gwp);
+s32 func_801E6F6C(void);
 void func_80049A94(Mtx* arg0, MtxF* arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7);
 void func_800AB95C(void *arg0, s32 arg1);
 void func_801E68EC(UnkStruct_menu_buffer_1*);
