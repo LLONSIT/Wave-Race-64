@@ -1,45 +1,4 @@
-#include "common.h"
-
-typedef struct UnkStruct_801DB024 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-} UnkStruct_801DB024;
-
-typedef struct UnkStruct_801DB0E4_arg0 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    f32 unkC[3];
-    f32 unk14[3];
-    f32 unk24;
-    f32 unk28;
-    f32 unk2C;
-    f32 unk30;
-} UnkStruct_801DB0E4_arg0;
-
-typedef struct UnkStruct_801DB0E4_arg1 {
-    f32 unk0[3];
-    f32 unk4[3];
-    f32 unk18;
-    s32 unk1C;
-    f32 unk20;
-    f32 unk24;
-    f32 unk28;
-    f32 unk2C;
-    f32 unk30;
-} UnkStruct_801DB0E4_arg1;
-
-typedef struct UnkStruct_801DBF68_s0 {
-    s32 unk0;
-    s32 unk4;
-    struct UnkStruct_801DB0E4_arg1* unk8;
-    s8 pad[0x1C];
-} UnkStruct_801DBF68_s0;
-
-typedef struct UnkStruct_801DBF68 {
-    UnkStruct_801DBF68_s0 unk0[4];
-} UnkStruct_801DBF68;
+#include "global.h"
 
 extern struct UnkStruct_801DBF68 D_80225CF4;
 
@@ -248,7 +207,35 @@ void func_801DBF68(struct UnkStruct_801DB0E4_arg0* arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801DC0AC.s")
+void func_801DC0AC(struct DemoActorPose* arg0) {
+    s32 i;
+    UnkStruct_801DC0AC sp6C = D_80225D94;
+    UnkStruct_801DBF68_s0 sp44 = D_80225E0C;
+
+    if (arg0->animationIndex == 0) {
+        func_800AB92C();
+    }
+
+    for (i = 0; i < 3; i++) {
+        if ((arg0->animationIndex >= sp6C.unk0[i].unk0) && (arg0->animationIndex < sp6C.unk0[i].unk4)) {
+            D_802287A8++;
+
+            if (arg0->animationIndex == sp6C.unk0[i].unk0) {
+                func_801DB0E4(&D_80228190, (UnkStruct_801DB0E4_arg1*) &sp6C.unk0[i].unk8, &D_80228110);
+            }
+            func_801DB1DC(&D_80228190, (UnkStruct_801DB0E4_arg1*) &sp6C.unk0[i].unk8, &D_80228110);
+        }
+    }
+
+    if ((arg0->animationIndex >= sp44.unk0) && (arg0->animationIndex < sp44.unk4)) {
+        D_802287A8++;
+
+        if (sp44.unk0 == arg0->animationIndex) {
+            func_801DB0E4(&D_802281C4, (UnkStruct_801DB0E4_arg1*) &sp44.unk8, &D_80228114);
+        }
+        func_801DB1DC(&D_802281C4, (UnkStruct_801DB0E4_arg1*) &sp44.unk8, &D_80228114);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801DC274.s")
 

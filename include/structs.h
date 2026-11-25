@@ -1075,4 +1075,59 @@ typedef struct UnkStruct_801CE5F8_s {
     Mtx unk1780[1];
 } UnkStruct_801CE5F8;
 
+typedef struct DemoActorPose {
+    s32 assetId;
+    s32 actorCategory;
+    s32 animationIndex;
+    f32 worldPosition[3];
+    f32 facingDirection[3];
+    f32 verticalDirection[3];
+    f32 modelScale;
+} DemoActorPose;
+
+typedef struct UnkStruct_801DB024 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} UnkStruct_801DB024;
+
+typedef struct UnkStruct_801DB0E4_arg0 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    f32 unkC[3];
+    f32 unk14[3];
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+} UnkStruct_801DB0E4_arg0;
+
+typedef struct UnkStruct_801DB0E4_arg1 {
+    f32 unk0[3];
+    f32 unk4[3];
+    f32 unk18;
+    s32 unk1C;
+    f32 unk20;
+    f32 unk24;
+    f32 unk28;
+    f32 unk2C;
+    f32 unk30;
+} UnkStruct_801DB0E4_arg1;
+
+typedef struct UnkStruct_801DBF68_s0 {
+    s32 unk0;
+    s32 unk4;
+    struct UnkStruct_801DB0E4_arg1* unk8;
+    s8 pad[0x1C];
+} UnkStruct_801DBF68_s0;
+
+typedef struct UnkStruct_801DC0AC {
+    UnkStruct_801DBF68_s0 unk0[3];
+} UnkStruct_801DC0AC;
+
+typedef struct UnkStruct_801DBF68 {
+    UnkStruct_801DBF68_s0 unk0[4];
+} UnkStruct_801DBF68;
+
 #endif /* STRUCTS_H */

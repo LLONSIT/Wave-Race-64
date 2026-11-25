@@ -369,4 +369,9 @@ extern s32 D_i10_802C6B14;
 extern s32 D_802C6B34;
 extern s32 D_802C6B40[];
 
+extern UnkStruct_801DC0AC D_80225D94;
+extern UnkStruct_801DBF68_s0 D_80225E0C;
+extern DemoActorPose D_802281C4;
+extern s32 D_80228114;
+
 #endif /* VARIABLES_H */
