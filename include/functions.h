@@ -104,7 +104,7 @@ Gfx* func_801E3698(Gfx*);
 Gfx* func_801E34F8(Gfx* gdl);
 void func_8007B31C(void);
 void func_801E5470(void);
-void func_801E6074(void*);
+void func_801E6074(UnkStruct_menu_buffer_1* gwp);
 void func_801E62A8(void*);
 void func_801E66F4(void*);
 void func_801E68EC(UnkStruct_menu_buffer_1*);

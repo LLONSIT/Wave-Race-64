@@ -3,7 +3,7 @@
 extern UnkStruct_menu_buffer_1 D_80226C50;
 
 extern UnkStruct_menu_buffer_1 menu_buffer_1[];
-
+void func_801E6074(UnkStruct_menu_buffer_1* gwp);
 void func_801E5470(void) {
     UnkStruct_menu_buffer_1* var_s0;
     s32 i;
@@ -32,7 +32,45 @@ void func_801E5470(void) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E5554.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E6074.s")
+void func_801E6074(UnkStruct_menu_buffer_1* gwp) {
+    MtxF_t mtxfDummy;
+    f32 sc;
+
+    switch (gwp->unk2) {
+        case 0:
+            sc = gwp->unk18 / 5.0f * 1.5f;
+            gwp->unk8 = (80 + (74.0f * (1 - sc)));
+            gwp->unkC = (93 + (20.0f * (1 - sc)));
+            func_80048A88((Mtx*) ((u8*) D_801CE5F8 + 0x900 + (gwp->unk4 << 6)), 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+                          gwp->unk8, gwp->unkC, 0.0f, sc);
+            gwp->unk18++;
+            if (gwp->unk18 > 5) {
+                gwp->unk2 = 1;
+                gwp->unk8 = 80;
+                gwp->unkC = 93;
+                gwp->unk18 = 0;
+            }
+            break;
+
+        case 1:
+            SysUtils_MatrixLookAt((Mtx*) ((u8*) D_801CE5F8 + 0x900 + (gwp->unk4 << 6)), (MtxF*) mtxfDummy, 0.0f, 0.0f,
+                                  1.0f, 0.0f, 1.0f, 0.0f, gwp->unk8, gwp->unkC, 0.0f);
+            gwp->unk18++;
+            if (D_801CE608.gameMode == 4) {
+                if (gwp->unk18 > 10) {
+                    gwp->unk_0 = 0;
+                    func_801E6A4C(2, 0);
+                }
+            } else if (D_801CE608.gameMode == 0) {
+                if (gwp->unk18 > 10) {
+                    gwp->unk_0 = 0;
+                    if (D_801C2650 == 1) {
+                        func_801E6A4C(2, 1);
+                    }
+                }
+            }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E62A8.s")
 
