@@ -19,12 +19,12 @@ typedef struct UnkStruct_8008962C_s {
 
 typedef struct UnkStruct_801CB058_s {
     /* 0x000 */ char pad0[0x88];
-    /* 0x088 */ s32 unk88;        /* inferred */
-    /* 0x08C */ s32 unk8C;        /* inferred */
-    /* 0x090 */ s32 unk90;        /* inferred */
-    /* 0x094 */ s32 unk94;        /* inferred */
-    /* 0x098 */ s32 unk98;        /* inferred */
-    /* 0x09C */ s32 unk9C;        /* inferred */
+    /* 0x088 */ s32 unk88;
+    /* 0x08C */ s32 unk8C;
+    /* 0x090 */ s32 unk90;
+    /* 0x094 */ s32 unk94;
+    /* 0x098 */ s32 unk98;
+    /* 0x09C */ s32 unk9C;
     /* 0x0A0 */ char padA0[0x70]; /* maybe part of unk9C[0x1D]? */
 } UnkStruct_801CB058;             /* size = 0x110 */
 

@@ -1,14 +1,14 @@
 #include "common.h"
 
 typedef struct UnkStruct_80228AE0_s {
-    /* 0x00 */ s32 unk0;  /* inferred */
-    /* 0x04 */ s32 unk4;  /* inferred */
-    /* 0x08 */ s32 unk8;  /* inferred */
-    /* 0x0C */ s32 unkC;  /* inferred */
-    /* 0x10 */ s32 unk10; /* inferred */
-    /* 0x14 */ s32 unk14; /* inferred */
-    /* 0x18 */ s32 unk18; /* inferred */
-} UnkStruct_80228AE0;     /* size = 0x1C */
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s32 unk14;
+    /* 0x18 */ s32 unk18;
+} UnkStruct_80228AE0; /* size = 0x1C */
 
 extern Vp D_1014450;
 extern s32 D_800D48E0;

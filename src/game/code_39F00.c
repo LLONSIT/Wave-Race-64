@@ -1,21 +1,21 @@
 #include "common.h"
 
 typedef struct UnkStruct_801BFD78_s {
-    /* 0x00 */ f32 unk0;  /* inferred */
-    /* 0x04 */ f32 unk4;  /* inferred */
-    /* 0x08 */ f32 unk8;  /* inferred */
-    /* 0x0C */ f32 unkC;  /* inferred */
-    /* 0x10 */ f32 unk10; /* inferred */
-    /* 0x14 */ f32 unk14; /* inferred */
-    /* 0x18 */ f32 unk18; /* inferred */
-    /* 0x1C */ f32 unk1C; /* inferred */
-    /* 0x20 */ f32 unk20; /* inferred */
-    /* 0x24 */ f32 unk24; /* inferred */
-    /* 0x28 */ f32 unk28; /* inferred */
-    /* 0x2C */ f32 unk2C; /* inferred */
-    /* 0x30 */ f32 unk30; /* inferred */
-    /* 0x34 */ f32 unk34; /* inferred */
-    /* 0x38 */ f32 unk38; /* inferred */
+    /* 0x00 */ f32 unk0;
+    /* 0x04 */ f32 unk4;
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ f32 unk24;
+    /* 0x28 */ f32 unk28;
+    /* 0x2C */ f32 unk2C;
+    /* 0x30 */ f32 unk30;
+    /* 0x34 */ f32 unk34;
+    /* 0x38 */ f32 unk38;
     /* 0x3C */ s32 unk3C;
 } UnkStruct_801BFD78; /* size = 0x40 */
 extern UnkStruct_801BFD78 D_801BFD78[];

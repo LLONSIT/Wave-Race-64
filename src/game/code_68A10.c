@@ -1,17 +1,17 @@
 #include "global.h"
 
 typedef struct UnkStruct_801D0798_unk1AA0_s {
-    /* 0x00 */ f32 unk0;  /* inferred */
-    /* 0x04 */ f32 unk4;  /* inferred */
-    /* 0x08 */ f32 unk8;  /* inferred */
-    /* 0x0C */ f32 unkC;  /* inferred */
-    /* 0x10 */ f32 unk10; /* inferred */
-    /* 0x14 */ f32 unk14; /* inferred */
-    /* 0x18 */ f32 unk18; /* inferred */
-    /* 0x1C */ f32 unk1C; /* inferred */
-    /* 0x20 */ f32 unk20; /* inferred */
-    /* 0x24 */ s32 unk24; /* inferred */
-    /* 0x28 */ s32 unk28; /* inferred */
+    /* 0x00 */ f32 unk0;
+    /* 0x04 */ f32 unk4;
+    /* 0x08 */ f32 unk8;
+    /* 0x0C */ f32 unkC;
+    /* 0x10 */ f32 unk10;
+    /* 0x14 */ f32 unk14;
+    /* 0x18 */ f32 unk18;
+    /* 0x1C */ f32 unk1C;
+    /* 0x20 */ f32 unk20;
+    /* 0x24 */ s32 unk24;
+    /* 0x28 */ s32 unk28;
     /* 0x2C */ char pad2C[4];
 } UnkStruct_801D0798_unk1AA0; /* size = 0x30 */
 

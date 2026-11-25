@@ -1,23 +1,23 @@
 #include "global.h"
 
 typedef struct UnkStruct_800DACD0 {
-    /* 0x00 */ s32 unk0;  /* inferred */
-    /* 0x04 */ s32 unk4;  /* inferred */
-    /* 0x08 */ s32 unk8;  /* inferred */
-    /* 0x0C */ s32 unkC;  /* inferred */
-    /* 0x10 */ s32 unk10; /* inferred */
-    /* 0x14 */ s32 unk14; /* inferred */
-    /* 0x18 */ s32 unk18; /* inferred */
-    /* 0x1C */ s32 unk1C; /* inferred */
-    /* 0x20 */ s32 unk20; /* inferred */
-    /* 0x24 */ s32 unk24; /* inferred */
-    /* 0x28 */ s32 unk28; /* inferred */
-    /* 0x2C */ s32 unk2C; /* inferred */
-    /* 0x30 */ s32 unk30; /* inferred */
-    /* 0x34 */ s32 unk34; /* inferred */
-    /* 0x38 */ s32 unk38; /* inferred */
-    /* 0x3C */ s32 unk3C; /* inferred */
-    /* 0x40 */ s32 unk40; /* inferred */
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s32 unk14;
+    /* 0x18 */ s32 unk18;
+    /* 0x1C */ s32 unk1C;
+    /* 0x20 */ s32 unk20;
+    /* 0x24 */ s32 unk24;
+    /* 0x28 */ s32 unk28;
+    /* 0x2C */ s32 unk2C;
+    /* 0x30 */ s32 unk30;
+    /* 0x34 */ s32 unk34;
+    /* 0x38 */ s32 unk38;
+    /* 0x3C */ s32 unk3C;
+    /* 0x40 */ s32 unk40;
 } UnkStruct_800DACD0;
 
 typedef struct UnkStruct_800980D0_s {

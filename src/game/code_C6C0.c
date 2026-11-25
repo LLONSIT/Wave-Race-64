@@ -4,15 +4,15 @@
 #define LERP(startPosition, targetPosition, factor) ((targetPosition - startPosition) * factor) + startPosition
 
 typedef struct UnkStruct_80052C6C_1_s {
-    /* 0x0 */ s16 unk0; /* inferred */
-    /* 0x2 */ s16 unk2; /* inferred */
-    /* 0x4 */ s16 unk4; /* inferred */
-    /* 0x6 */ s8 unk6;  /* inferred */
-    /* 0x7 */ s8 unk7;  /* inferred */
-    /* 0x8 */ s8 unk8;  /* inferred */
-    /* 0x9 */ s8 unk9;  /* inferred */
-    /* 0xA */ s8 unkA;  /* inferred */
-    /* 0xB */ s8 unkB;  /* inferred */
+    /* 0x0 */ s16 unk0;
+    /* 0x2 */ s16 unk2;
+    /* 0x4 */ s16 unk4;
+    /* 0x6 */ s8 unk6;
+    /* 0x7 */ s8 unk7;
+    /* 0x8 */ s8 unk8;
+    /* 0x9 */ s8 unk9;
+    /* 0xA */ s8 unkA;
+    /* 0xB */ s8 unkB;
 } UnkStruct_80052C6C_1; /* size = 0xC */
 
 typedef struct UnkStruct_80052C6C_2_s {
@@ -22,25 +22,25 @@ typedef struct UnkStruct_80052C6C_2_s {
 } UnkStruct_80052C6C_2; /* size = 0x24 */
 
 struct UnkStruct_80052480 {
-    /* 0x00 */ s8 unk0;       /* inferred */
-    /* 0x01 */ s8 unk1;       /* inferred */
-    /* 0x02 */ s8 unk2;       /* inferred */
-    /* 0x03 */ s8 unk3;       /* inferred */
-    /* 0x04 */ s8 unk4;       /* inferred */
-    /* 0x05 */ char pad5[9];  /* maybe part of unk4[0xA]? */
-    /* 0x0E */ s8 unkE;       /* inferred */
-    /* 0x0F */ s8 unkF;       /* inferred */
-    /* 0x10 */ s8 unk10;      /* inferred */
-    /* 0x11 */ s8 unk11;      /* inferred */
-    /* 0x12 */ s8 unk12;      /* inferred */
-    /* 0x13 */ s8 unk13;      /* inferred */
-    /* 0x14 */ s8 unk14;      /* inferred */
-    /* 0x15 */ s8 unk15;      /* inferred */
+    /* 0x00 */ s8 unk0;
+    /* 0x01 */ s8 unk1;
+    /* 0x02 */ s8 unk2;
+    /* 0x03 */ s8 unk3;
+    /* 0x04 */ s8 unk4;
+    /* 0x05 */ char pad5[9]; /* maybe part of unk4[0xA]? */
+    /* 0x0E */ s8 unkE;
+    /* 0x0F */ s8 unkF;
+    /* 0x10 */ s8 unk10;
+    /* 0x11 */ s8 unk11;
+    /* 0x12 */ s8 unk12;
+    /* 0x13 */ s8 unk13;
+    /* 0x14 */ s8 unk14;
+    /* 0x15 */ s8 unk15;
     /* 0x16 */ char pad16[2]; /* maybe part of unk15[3]? */
-    /* 0x18 */ s8 unk18;      /* inferred */
-    /* 0x19 */ s8 unk19;      /* inferred */
+    /* 0x18 */ s8 unk18;
+    /* 0x19 */ s8 unk19;
     /* 0x1A */ char pad1A[1];
-    /* 0x1B */ s8 unk1B; /* inferred */
+    /* 0x1B */ s8 unk1B;
     s8 unk1C;
 }; /* size = 0x1C */
 
@@ -63,223 +63,223 @@ struct UnkStruct_801D0798 {
 };
 
 typedef struct UnkStruct_802238DC_s {
-    /* 0x00 */ s16 unk0; /* inferred */
+    /* 0x00 */ s16 unk0;
     /* 0x02 */ char pad2[2];
-    /* 0x04 */ UnkStruct_80052C6C_1* unk4; /* inferred */
-    /* 0x08 */ s16* unk8;                  /* inferred */
-    /* 0x0C */ s16* unkC;                  /* inferred */
-    /* 0x10 */ s16* unk10;                 /* inferred */
-    /* 0x14 */ s16* unk14;                 /* inferred */
-    /* 0x18 */ s16* unk18;                 /* inferred */
-    /* 0x1C */ s16* unk1C;                 /* inferred */
-    /* 0x20 */ s16* unk20;                 /* inferred */
-    /* 0x24 */ s16* unk24;                 /* inferred */
-    /* 0x28 */ s16* unk28;                 /* inferred */
-    /* 0x2C */ s16* unk2C;                 /* inferred */
-    /* 0x30 */ s16* unk30;                 /* inferred */
-    /* 0x34 */ s16* unk34;                 /* inferred */
-    /* 0x38 */ s16* unk38;                 /* inferred */
-    /* 0x3C */ s16* unk3C;                 /* inferred */
-    /* 0x40 */ s16* unk40;                 /* inferred */
-    /* 0x44 */ s16* unk44;                 /* inferred */
-    /* 0x48 */ s16* unk48;                 /* inferred */
-    /* 0x4C */ s16* unk4C;                 /* inferred */
-} UnkStruct_802238DC;                      /* size = 0x50 */
+    /* 0x04 */ UnkStruct_80052C6C_1* unk4;
+    /* 0x08 */ s16* unk8;
+    /* 0x0C */ s16* unkC;
+    /* 0x10 */ s16* unk10;
+    /* 0x14 */ s16* unk14;
+    /* 0x18 */ s16* unk18;
+    /* 0x1C */ s16* unk1C;
+    /* 0x20 */ s16* unk20;
+    /* 0x24 */ s16* unk24;
+    /* 0x28 */ s16* unk28;
+    /* 0x2C */ s16* unk2C;
+    /* 0x30 */ s16* unk30;
+    /* 0x34 */ s16* unk34;
+    /* 0x38 */ s16* unk38;
+    /* 0x3C */ s16* unk3C;
+    /* 0x40 */ s16* unk40;
+    /* 0x44 */ s16* unk44;
+    /* 0x48 */ s16* unk48;
+    /* 0x4C */ s16* unk4C;
+} UnkStruct_802238DC; /* size = 0x50 */
 
 typedef struct UnkStruct_80052E90_arg1_s {
-    /* 0x000 */ UnkStruct_80052C6C_2 unk0;   /* inferred */
-    /* 0x024 */ UnkStruct_80052C6C_2 unk24;  /* inferred */
-    /* 0x048 */ UnkStruct_80052C6C_2 unk48;  /* inferred */
-    /* 0x06C */ UnkStruct_80052C6C_2 unk6C;  /* inferred */
-    /* 0x090 */ UnkStruct_80052C6C_2 unk90;  /* inferred */
-    /* 0x0B4 */ UnkStruct_80052C6C_2 unkB4;  /* inferred */
-    /* 0x0D8 */ UnkStruct_80052C6C_2 unkD8;  /* inferred */
-    /* 0x0FC */ UnkStruct_80052C6C_2 unkFC;  /* inferred */
-    /* 0x120 */ UnkStruct_80052C6C_2 unk120; /* inferred */
-    /* 0x144 */ UnkStruct_80052C6C_2 unk144; /* inferred */
-    /* 0x168 */ UnkStruct_80052C6C_2 unk168; /* inferred */
-    /* 0x18C */ UnkStruct_80052C6C_2 unk18C; /* inferred */
-    /* 0x1B0 */ UnkStruct_80052C6C_2 unk1B0; /* inferred */
-    /* 0x1D4 */ UnkStruct_80052C6C_2 unk1D4; /* inferred */
-    /* 0x1F8 */ UnkStruct_80052C6C_2 unk1F8; /* inferred */
-    /* 0x21C */ UnkStruct_80052C6C_2 unk21C; /* inferred */
-    /* 0x240 */ UnkStruct_80052C6C_2 unk240; /* inferred */
+    /* 0x000 */ UnkStruct_80052C6C_2 unk0;
+    /* 0x024 */ UnkStruct_80052C6C_2 unk24;
+    /* 0x048 */ UnkStruct_80052C6C_2 unk48;
+    /* 0x06C */ UnkStruct_80052C6C_2 unk6C;
+    /* 0x090 */ UnkStruct_80052C6C_2 unk90;
+    /* 0x0B4 */ UnkStruct_80052C6C_2 unkB4;
+    /* 0x0D8 */ UnkStruct_80052C6C_2 unkD8;
+    /* 0x0FC */ UnkStruct_80052C6C_2 unkFC;
+    /* 0x120 */ UnkStruct_80052C6C_2 unk120;
+    /* 0x144 */ UnkStruct_80052C6C_2 unk144;
+    /* 0x168 */ UnkStruct_80052C6C_2 unk168;
+    /* 0x18C */ UnkStruct_80052C6C_2 unk18C;
+    /* 0x1B0 */ UnkStruct_80052C6C_2 unk1B0;
+    /* 0x1D4 */ UnkStruct_80052C6C_2 unk1D4;
+    /* 0x1F8 */ UnkStruct_80052C6C_2 unk1F8;
+    /* 0x21C */ UnkStruct_80052C6C_2 unk21C;
+    /* 0x240 */ UnkStruct_80052C6C_2 unk240;
     /* 0x264 */ UnkStruct_80052C6C_2 unk264;
 } UnkStruct_80052E90_arg1_s; /* size = 0x284 */
 
 typedef struct UnkStruct_8005CEF8_s {
     /* 0x000 */ char pad0[4];
-    /* 0x004 */ f32 unk4; /* inferred */
-    /* 0x008 */ f32 unk8; /* inferred */
-    /* 0x00C */ f32 unkC; /* inferred */
+    /* 0x004 */ f32 unk4;
+    /* 0x008 */ f32 unk8;
+    /* 0x00C */ f32 unkC;
     /* 0x010 */ f32 unk10;
     /* 0x014 */ f32 unk14;
     /* 0x018 */ f32 unk18;
     /* 0x01C */ char pad1C[0x10]; /* maybe part of unk18[5]? */
-    /* 0x02C */ f32 unk2C;        /* inferred */
-    /* 0x030 */ f32 unk30;        /* inferred */
-    /* 0x034 */ f32 unk34;        /* inferred */
+    /* 0x02C */ f32 unk2C;
+    /* 0x030 */ f32 unk30;
+    /* 0x034 */ f32 unk34;
     /* 0x038 */ f32 unk38;
     /* 0x03C */ f32 unk3C;
     /* 0x040 */ f32 unk40;
     /* 0x044 */ char pad44[0x10]; /* maybe part of unk40[5]? */
-    /* 0x054 */ f32 unk54;        /* inferred */
-    /* 0x058 */ f32 unk58;        /* inferred */
-    /* 0x05C */ f32 unk5C;        /* inferred */
+    /* 0x054 */ f32 unk54;
+    /* 0x058 */ f32 unk58;
+    /* 0x05C */ f32 unk5C;
     /* 0x060 */ f32 unk60;
     /* 0x064 */ f32 unk64;
     /* 0x068 */ f32 unk68;
     /* 0x06C */ char pad6C[0x10]; /* maybe part of unk68[5]? */
-    /* 0x07C */ f32 unk7C;        /* inferred */
-    /* 0x080 */ f32 unk80;        /* inferred */
-    /* 0x084 */ f32 unk84;        /* inferred */
+    /* 0x07C */ f32 unk7C;
+    /* 0x080 */ f32 unk80;
+    /* 0x084 */ f32 unk84;
     /* 0x088 */ f32 unk88;
     /* 0x08C */ f32 unk8C;
     /* 0x090 */ f32 unk90;
     /* 0x094 */ char pad94[0x10]; /* maybe part of unk90[5]? */
-    /* 0x0A4 */ f32 unkA4;        /* inferred */
-    /* 0x0A8 */ f32 unkA8;        /* inferred */
-    /* 0x0AC */ f32 unkAC;        /* inferred */
+    /* 0x0A4 */ f32 unkA4;
+    /* 0x0A8 */ f32 unkA8;
+    /* 0x0AC */ f32 unkAC;
     /* 0x0B0 */ f32 unkB0;
     /* 0x0B4 */ f32 unkB4;
     /* 0x0B8 */ f32 unkB8;
     /* 0x0BC */ char padBC[0x10]; /* maybe part of unkB8[5]? */
-    /* 0x0CC */ f32 unkCC;        /* inferred */
-    /* 0x0D0 */ f32 unkD0;        /* inferred */
-    /* 0x0D4 */ f32 unkD4;        /* inferred */
+    /* 0x0CC */ f32 unkCC;
+    /* 0x0D0 */ f32 unkD0;
+    /* 0x0D4 */ f32 unkD4;
     /* 0x0D8 */ f32 unkD8;
     /* 0x0DC */ f32 unkDC;
     /* 0x0E0 */ f32 unkE0;
     /* 0x0E4 */ char padE4[0x10]; /* maybe part of unkE0[5]? */
-    /* 0x0F4 */ f32 unkF4;        /* inferred */
-    /* 0x0F8 */ f32 unkF8;        /* inferred */
-    /* 0x0FC */ f32 unkFC;        /* inferred */
+    /* 0x0F4 */ f32 unkF4;
+    /* 0x0F8 */ f32 unkF8;
+    /* 0x0FC */ f32 unkFC;
     /* 0x100 */ f32 unk100;
     /* 0x104 */ f32 unk104;
     /* 0x108 */ f32 unk108;
     /* 0x10C */ char pad10C[0x10]; /* maybe part of unk108[5]? */
-    /* 0x11C */ f32 unk11C;        /* inferred */
-    /* 0x120 */ f32 unk120;        /* inferred */
-    /* 0x124 */ f32 unk124;        /* inferred */
+    /* 0x11C */ f32 unk11C;
+    /* 0x120 */ f32 unk120;
+    /* 0x124 */ f32 unk124;
     /* 0x128 */ f32 unk128;
     /* 0x12C */ f32 unk12C;
     /* 0x130 */ f32 unk130;
     /* 0x134 */ char pad134[0x10]; /* maybe part of unk130[5]? */
-    /* 0x144 */ f32 unk144;        /* inferred */
-    /* 0x148 */ f32 unk148;        /* inferred */
-    /* 0x14C */ f32 unk14C;        /* inferred */
+    /* 0x144 */ f32 unk144;
+    /* 0x148 */ f32 unk148;
+    /* 0x14C */ f32 unk14C;
     /* 0x150 */ f32 unk150;
     /* 0x154 */ f32 unk154;
     /* 0x158 */ f32 unk158;
     /* 0x15C */ char pad15C[0x10]; /* maybe part of unk158[5]? */
-    /* 0x16C */ f32 unk16C;        /* inferred */
-    /* 0x170 */ f32 unk170;        /* inferred */
-    /* 0x174 */ f32 unk174;        /* inferred */
+    /* 0x16C */ f32 unk16C;
+    /* 0x170 */ f32 unk170;
+    /* 0x174 */ f32 unk174;
     /* 0x178 */ f32 unk178;
     /* 0x17C */ f32 unk17C;
     /* 0x180 */ f32 unk180;
     /* 0x184 */ char pad184[0x10]; /* maybe part of unk180[5]? */
-    /* 0x194 */ f32 unk194;        /* inferred */
-    /* 0x198 */ f32 unk198;        /* inferred */
-    /* 0x19C */ f32 unk19C;        /* inferred */
+    /* 0x194 */ f32 unk194;
+    /* 0x198 */ f32 unk198;
+    /* 0x19C */ f32 unk19C;
     /* 0x1A0 */ f32 unk1A0;
     /* 0x1A4 */ f32 unk1A4;
     /* 0x1A8 */ f32 unk1A8;
     /* 0x1AC */ char pad1AC[0x10]; /* maybe part of unk1A8[5]? */
-    /* 0x1BC */ f32 unk1BC;        /* inferred */
-    /* 0x1C0 */ f32 unk1C0;        /* inferred */
-    /* 0x1C4 */ f32 unk1C4;        /* inferred */
+    /* 0x1BC */ f32 unk1BC;
+    /* 0x1C0 */ f32 unk1C0;
+    /* 0x1C4 */ f32 unk1C4;
     /* 0x1C8 */ f32 unk1C8;
     /* 0x1CC */ f32 unk1CC;
     /* 0x1D0 */ f32 unk1D0;
     /* 0x1D4 */ char pad1D4[0x10]; /* maybe part of unk1D0[5]? */
-    /* 0x1E4 */ f32 unk1E4;        /* inferred */
-    /* 0x1E8 */ f32 unk1E8;        /* inferred */
-    /* 0x1EC */ f32 unk1EC;        /* inferred */
+    /* 0x1E4 */ f32 unk1E4;
+    /* 0x1E8 */ f32 unk1E8;
+    /* 0x1EC */ f32 unk1EC;
     /* 0x1F0 */ f32 unk1F0;
     /* 0x1F4 */ f32 unk1F4;
     /* 0x1F8 */ f32 unk1F8;
     /* 0x1FC */ char pad1FC[0x10]; /* maybe part of unk1F8[5]? */
-    /* 0x20C */ f32 unk20C;        /* inferred */
-    /* 0x210 */ f32 unk210;        /* inferred */
-    /* 0x214 */ f32 unk214;        /* inferred */
+    /* 0x20C */ f32 unk20C;
+    /* 0x210 */ f32 unk210;
+    /* 0x214 */ f32 unk214;
     /* 0x218 */ f32 unk218;
     /* 0x21C */ f32 unk21C;
     /* 0x220 */ f32 unk220;
     /* 0x224 */ char pad224[0x10]; /* maybe part of unk220[5]? */
-    /* 0x234 */ f32 unk234;        /* inferred */
-    /* 0x238 */ f32 unk238;        /* inferred */
-    /* 0x23C */ f32 unk23C;        /* inferred */
+    /* 0x234 */ f32 unk234;
+    /* 0x238 */ f32 unk238;
+    /* 0x23C */ f32 unk23C;
     /* 0x240 */ f32 unk240;
     /* 0x244 */ f32 unk244;
     /* 0x248 */ f32 unk248;
     /* 0x24C */ char pad24C[0x10]; /* maybe part of unk248[5]? */
-    /* 0x25C */ f32 unk25C;        /* inferred */
-    /* 0x260 */ f32 unk260;        /* inferred */
-    /* 0x264 */ f32 unk264;        /* inferred */
+    /* 0x25C */ f32 unk25C;
+    /* 0x260 */ f32 unk260;
+    /* 0x264 */ f32 unk264;
     /* 0x268 */ f32 unk268;
     /* 0x26C */ f32 unk26C;
     /* 0x270 */ f32 unk270;
     /* 0x274 */ char pad274[0x10]; /* maybe part of unk270[5]? */
-    /* 0x284 */ f32 unk284;        /* inferred */
-    /* 0x288 */ f32 unk288;        /* inferred */
-    /* 0x28C */ f32 unk28C;        /* inferred */
+    /* 0x284 */ f32 unk284;
+    /* 0x288 */ f32 unk288;
+    /* 0x28C */ f32 unk28C;
     /* 0x290 */ f32 unk290;
     /* 0x294 */ f32 unk294;
     /* 0x298 */ f32 unk298;
     /* 0x29C */ char pad29C[0x10]; /* maybe part of unk298[5]? */
-    /* 0x2AC */ f32 unk2AC;        /* inferred */
-    /* 0x2B0 */ f32 unk2B0;        /* inferred */
-    /* 0x2B4 */ f32 unk2B4;        /* inferred */
+    /* 0x2AC */ f32 unk2AC;
+    /* 0x2B0 */ f32 unk2B0;
+    /* 0x2B4 */ f32 unk2B4;
     /* 0x2B8 */ f32 unk2B8;
     /* 0x2BC */ f32 unk2BC;
     /* 0x2C0 */ f32 unk2C0;
     /* 0x2C4 */ char pad2C4[0x10]; /* maybe part of unk2C0[5]? */
-    /* 0x2D4 */ f32 unk2D4;        /* inferred */
-    /* 0x2D8 */ f32 unk2D8;        /* inferred */
-    /* 0x2DC */ f32 unk2DC;        /* inferred */
+    /* 0x2D4 */ f32 unk2D4;
+    /* 0x2D8 */ f32 unk2D8;
+    /* 0x2DC */ f32 unk2DC;
     /* 0x2E0 */ f32 unk2E0;
     /* 0x2E4 */ f32 unk2E4;
     /* 0x2E8 */ f32 unk2E8;
     /* 0x2EC */ char pad2EC[0x10]; /* maybe part of unk2E8[5]? */
-    /* 0x2FC */ f32 unk2FC;        /* inferred */
-    /* 0x300 */ f32 unk300;        /* inferred */
-    /* 0x304 */ f32 unk304;        /* inferred */
+    /* 0x2FC */ f32 unk2FC;
+    /* 0x300 */ f32 unk300;
+    /* 0x304 */ f32 unk304;
     /* 0x308 */ f32 unk308;
     /* 0x30C */ f32 unk30C;
     /* 0x310 */ f32 unk310;
     /* 0x314 */ char pad314[0x10]; /* maybe part of unk310[5]? */
-    /* 0x324 */ f32 unk324;        /* inferred */
-    /* 0x328 */ f32 unk328;        /* inferred */
-    /* 0x32C */ f32 unk32C;        /* inferred */
+    /* 0x324 */ f32 unk324;
+    /* 0x328 */ f32 unk328;
+    /* 0x32C */ f32 unk32C;
     /* 0x330 */ f32 unk330;
     /* 0x334 */ f32 unk334;
     /* 0x338 */ f32 unk338;
     /* 0x33C */ char pad33C[0x10]; /* maybe part of unk338[5]? */
-    /* 0x34C */ f32 unk34C;        /* inferred */
-    /* 0x350 */ f32 unk350;        /* inferred */
-    /* 0x354 */ f32 unk354;        /* inferred */
+    /* 0x34C */ f32 unk34C;
+    /* 0x350 */ f32 unk350;
+    /* 0x354 */ f32 unk354;
     /* 0x358 */ f32 unk358;
     /* 0x35C */ f32 unk35C;
     /* 0x360 */ f32 unk360;
     /* 0x364 */ char pad364[0x10]; /* maybe part of unk360[5]? */
-    /* 0x374 */ f32 unk374;        /* inferred */
-    /* 0x378 */ f32 unk378;        /* inferred */
-    /* 0x37C */ f32 unk37C;        /* inferred */
+    /* 0x374 */ f32 unk374;
+    /* 0x378 */ f32 unk378;
+    /* 0x37C */ f32 unk37C;
     /* 0x380 */ f32 unk380;
     /* 0x384 */ f32 unk384;
     /* 0x388 */ f32 unk388;
     /* 0x38C */ char pad38C[0x10]; /* maybe part of unk388[5]? */
-    /* 0x39C */ f32 unk39C;        /* inferred */
-    /* 0x3A0 */ f32 unk3A0;        /* inferred */
-    /* 0x3A4 */ f32 unk3A4;        /* inferred */
+    /* 0x39C */ f32 unk39C;
+    /* 0x3A0 */ f32 unk3A0;
+    /* 0x3A4 */ f32 unk3A4;
     /* 0x3A8 */ f32 unk3A8;
     /* 0x3AC */ f32 unk3AC;
     /* 0x3B0 */ f32 unk3B0;
     /* 0x3B4 */ char pad3B4[0x10]; /* maybe part of unk3B0[5]? */
-    /* 0x3C4 */ f32 unk3C4;        /* inferred */
-    /* 0x3C8 */ f32 unk3C8;        /* inferred */
-    /* 0x3CC */ f32 unk3CC;        /* inferred */
+    /* 0x3C4 */ f32 unk3C4;
+    /* 0x3C8 */ f32 unk3C8;
+    /* 0x3CC */ f32 unk3CC;
     /* 0x3D0 */ f32 unk3D0;
     /* 0x3D4 */ f32 unk3D4;
     /* 0x3D8 */ f32 unk3D8;
