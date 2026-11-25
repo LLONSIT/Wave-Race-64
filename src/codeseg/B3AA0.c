@@ -111,10 +111,44 @@ void func_801E62A8(UnkStruct_menu_buffer_1* gwp) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/B3AA0/func_801E66F4.s")
+void func_801E66F4(UnkStruct_menu_buffer_1* gwp) {
+    MtxF_t mtxfDummy;
+    s32 pad[32];
+    f32 rad;
+    (void) pad;
+
+    switch (gwp->unk2) {
+        case 0:
+            gwp->unkC = D_802C6BD0 + 6 + (20 * D_802C6EE4);
+            rad = (gwp->unk18 / 40.0f) * 2.0f * 3.1415927f;
+            func_80049A94((Mtx*) ((u8*) D_801CE5F8 + 0x900 + (gwp->unk4 << 6)), (MtxF*) mtxfDummy, rad, rad, 0.0,
+                          gwp->unk8, gwp->unkC, 0.0f);
+            gwp->unk18++;
+            if (gwp->unk18 >= 40) {
+                gwp->unk18 -= 40;
+            }
+            gwp->unk20 += 4;
+            break;
+
+        case 1:
+            if (gCurrentPauseMenuOption == -1) {
+                gwp->unk_0 = 0;
+            } else {
+                gwp->unkC = gwp->unk24 + (15 * gCurrentPauseMenuOption);
+                rad = (gwp->unk18 / 40.0f) * 2.0f * 3.1415927f;
+                func_80049A94((Mtx*) ((u8*) D_801CE5F8 + 0x900 + (gwp->unk4 << 6)), (MtxF*) mtxfDummy, rad, rad, 0.0,
+                              gwp->unk8, gwp->unkC, 0.0f);
+                gwp->unk18 += 1;
+                if (gwp->unk18 >= 40) {
+                    gwp->unk18 -= 40;
+                }
+                gwp->unk20 += 4;
+            }
+    }
+}
 
 void func_801E68EC(UnkStruct_menu_buffer_1* arg0) {
-    switch (arg0->unk2) { /* irregular */
+    switch (arg0->unk2) {
         case 0:
             arg0->unkC = (s32) ((arg0->unk18++) * 3.0f * arg0->unk18) - 0x28;
             if (arg0->unkC >= 0x3F) {

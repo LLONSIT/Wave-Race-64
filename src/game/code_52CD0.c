@@ -842,7 +842,7 @@ void func_8009A554(UnkStruct_801CF060* arg0) {
     func_8009A460(func_8009A4DC, arg0, 0, 0);
     func_80098AC4(true, true, true, false, false);
     if (gGameModes == GMODE_CHAMPIONSHIP) {
-        switch (D_801C293C[D_800D48DC].lapCount) { /* irregular */
+        switch (D_801C293C[D_800D48DC].lapCount) {
             case 0:
                 func_80099A00(arg0, &D_800E52B4, &D_800E52E8, D_801C1F90);
                 break;

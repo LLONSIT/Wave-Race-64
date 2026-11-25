@@ -47,6 +47,7 @@ extern s32 gFramebuffersIdx;
 extern s32 D_80151984;
 extern s32 gFrameBuffers[]; // tex save?
 extern UnkStruct_801CE5F8* D_801CE5F8; 
+extern s32 D_802C6BD0;
 extern s32 D_801C2650;
 // overlay
 extern s32 D_800DAB2C;

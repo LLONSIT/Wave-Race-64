@@ -207,7 +207,7 @@ void func_80089DEC(void) {
 }
 
 void func_80089E24(void) {
-    switch (gCourseID) { /* irregular */
+    switch (gCourseID) {
         case DOLPHIN_PARK:
             func_8008962C(2000.0f, 5.0f, D_800D9924[gCourseID], &D_801C4170);
             break;
@@ -366,7 +366,7 @@ Gfx* Draw_WaterEffects(Gfx* gdl) {
         gDPSetCombineMode(gdl++, G_CC_DECALRGBA, G_CC_DECALRGBA);
     }
     if (D_800D9894 != 0) {
-        switch (D_801CE64C) { /* irregular */
+        switch (D_801CE64C) {
             case 1:
                 gSPDisplayList(gdl++, D_10082F0);
                 break;

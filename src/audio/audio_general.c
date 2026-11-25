@@ -93,7 +93,7 @@ void func_800BF370(void) {
                 D_800E7CD4--;
             }
             if ((D_800E7CD4 == 0) && (D_801D7DC0 == 0)) {
-                switch (D_801D7DFA) { /* irregular */
+                switch (D_801D7DFA) {
                     case 0:
                         func_800C3320((gAudioRandom & 1) + 0x24, 0x5A, 0x3C);
                         break;
@@ -854,7 +854,7 @@ void func_800C21F4(s32 arg0, int courseID) {
         D_800E7C94 = (s8) arg0;
         D_800E7CBC = 1;
         D_800E7CC0 = 1;
-        switch (arg0) { /* irregular */
+        switch (arg0) {
             case 0x0:
                 AudioGeneral_InitSequencePlayers();
                 if (temp_v0 != 0) {
@@ -1474,7 +1474,7 @@ extern s32 D_801D7E14;
 
 void func_800C40B0(void) {
     s32 v1;
-    switch (D_801D7DD4) { /* irregular */
+    switch (D_801D7DD4) {
         case 0:
             switch (D_801D7DC8) { /* switch 1; irregular */
                 case 0:
@@ -1709,7 +1709,7 @@ void func_800C4998(s32 arg0, s32 arg1) {
     AudioGeneral_DisableSeqPlayer1(0xF0U);
     func_800C1488();
     func_800C13AC(0);
-    switch (D_801D7DC0) { /* irregular */
+    switch (D_801D7DC0) {
         case 0:
             D_800E7C90 = 0;
             D_801D7E05 = 8;

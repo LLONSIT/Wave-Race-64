@@ -151,7 +151,7 @@ void UnusedPrint_DrawChar(Gfx** gdl, s32 x, s32 y, s8* buf) {
             t = (((c - 'A') / 10) * 8) + 8;
         } else {
             // Special characters
-            switch (c) { /* irregular */
+            switch (c) {
                 default:
                     dontDraw = true;
                     break;

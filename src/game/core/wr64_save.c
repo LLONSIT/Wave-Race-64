@@ -919,7 +919,7 @@ s32 Save_PfsDeleteFile(void) {
         return ret;
     }
     ret = osPfsDeleteFile(&D_801C3AD0, 1U, 0x4E57524AU, &D_800D82E8, &D_800D82D8);
-    switch (ret) { /* irregular */
+    switch (ret) {
         case 0:
             return SAVE_SUCCESS;
         case PFS_ERR_INVALID:

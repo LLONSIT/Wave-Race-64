@@ -296,7 +296,7 @@ void func_80080E34(void) {
 }
 
 void func_80081048(void) {
-    switch (gDifficulty) { /* irregular */
+    switch (gDifficulty) {
         case DIFFICULTY_NORMAL:
             if ((D_801C3C58->unkA4 != 0) ||
                 ((((D_801C2938->racePosition < D_801C2938[D_801C3C58->unk0].racePosition))) &&
@@ -1804,7 +1804,7 @@ void func_80086DA8(void) {
     s32 var_v1;
     struct UnkStruct_801C3C50* temp;
 
-    switch (D_801C3C50->unkC54) { /* irregular */
+    switch (D_801C3C50->unkC54) {
         case 23:
             D_801C3C58->unk8C = 1;
             break;
