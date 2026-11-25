@@ -403,6 +403,44 @@ void func_801E0F8C(f32* arg0, f32* arg1) {
     arg0[38] = arg1[18];
 }
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801E0FF0.s")
+void func_801E0FF0(camera_unk_1* arg0) {
+    f32 m;
+    f32 h;
+    f32 k;
+    f32 dx;
+    f32 dz;
+
+    arg0->unk64 = arg0->unk7C - arg0->unk4C;
+    arg0->unk68 = arg0->unk80 - arg0->unk50;
+    arg0->unk6C = arg0->unk84 - arg0->unk54;
+    m = sqrtf(SQ(arg0->unk64) + SQ(arg0->unk68) + SQ(arg0->unk6C));
+
+    arg0->unk64 = arg0->unk64 / m;
+    arg0->unk68 = arg0->unk68 / m;
+    arg0->unk6C = arg0->unk6C / m;
+
+    h = sqrtf(SQ(arg0->unk64) + SQ(arg0->unk6C));
+
+    arg0->unkF0 = arg0->unk64 / h;
+    arg0->unkF4 = arg0->unk6C / h;
+
+    k = SQ(arg0->unk64) + SQ(arg0->unk68) + SQ(arg0->unk6C);
+    k = -(arg0->unk64 * arg0->unk70 + arg0->unk68 * arg0->unk74 + arg0->unk6C * arg0->unk78) / (k);
+
+    arg0->unk70 = arg0->unk70 + (arg0->unk64 * k);
+    arg0->unk74 = arg0->unk74 + (arg0->unk68 * k);
+    arg0->unk78 = arg0->unk78 + (arg0->unk6C * k);
+
+    m = sqrtf(SQ(arg0->unk70) + SQ(arg0->unk74) + SQ(arg0->unk78));
+
+    arg0->unk70 = arg0->unk70 / m;
+    arg0->unk74 = arg0->unk74 / m;
+    arg0->unk78 = arg0->unk78 / m;
+
+    dx = arg0->unk4C - arg0->unk7C;
+    dz = arg0->unk54 - arg0->unk84;
+    arg0->unk8C = sqrtf(SQ(dx) + SQ(dz));
+    arg0->unk90 = arg0->unk50 - arg0->unk80;
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801E11B4.s")
