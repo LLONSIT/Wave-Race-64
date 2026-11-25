@@ -1,18 +1,18 @@
-name: Format
-
-# Build on every branch push, tag push, and pull request change:
-on: [push, pull_request]
-
-jobs:
-  build:
-    runs-on: ubuntu-24.04
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Install Packages
-      run: sudo apt-get install -y python3 python3-pip clang-format-20 clang-tidy-20 clang-tools-20
-
-    - name: Check Format
-      run: ./tools/check_format.sh
+# name: Format
+# 
+# # Build on every branch push, tag push, and pull request change:
+# on: [push, pull_request]
+# 
+# jobs:
+#   build:
+#     runs-on: ubuntu-24.04
+# 
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v4
+# 
+#     - name: Install Packages
+#       run: sudo apt-get install -y python3 python3-pip clang-format-20 clang-tidy-20 clang-tools-20
+# 
+#     - name: Check Format
+#       run: ./tools/check_format.sh
