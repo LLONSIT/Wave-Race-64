@@ -314,7 +314,19 @@ void func_801DC5A8(UnkStruct_801DB024* arg0) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801DF744.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801DFC48.s")
+void func_801DFC48(s32* arg0) {
+    switch (arg0[0]) {
+        case 1:
+            func_801DF128((void*) arg0);
+            break;
+        case 2:
+        case 3:
+            func_801DF38C((void*) arg0);
+            break;
+        case 5:
+            func_801DF744((void*) arg0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801DFCB8.s")
 
