@@ -41,35 +41,37 @@ extern struct UnkStruct_801CB058 D_801CB058;
 void func_80088EA0(void) {
 }
 
-#ifdef NON_MATCHING
+// TODO: Lots of fakes!
 void func_80088EA8(void) {
-    s32 var_s4;
+    u32 raw_rand;
+    s32 new_var;
+    s32 i;
     s32 var_s6;
-    s32 rand_seed;
+    s32 randomGeneratorState;
 
-    for (var_s4 = 0; var_s4 < gRiders; var_s4++) {
-        D_801C4100[D_801C26C0[var_s4]] = var_s4;
+    for (i = 0; i < gRiders; i++) {
+        D_801C4100[D_801C26C0[i]] = i;
     }
-    for (var_s4 = 0; var_s4 < gRiders; var_s4++) {
+    for (i = 0; i < gRiders; i++) {
         D_801C3C58->unk60 = 1.0f;
     }
-    for (var_s4 = 0; var_s4 < gRiders; var_s4++) {
-        D_801C3C58 = (struct_801C3C58*) &D_801C3C60[var_s4];
-        D_801C3C58->unk5C = -1;
-    }
-    for (var_s6 = var_s4 = 0; var_s4 < (gRiders - 1); var_s6++, var_s4++) {
-        rand_seed = (SysUtils_Rand(), SysUtils_Rand() / 256) % 4; // What?
-
-        while (D_801C3C58 = (struct_801C3C58*) &D_801C3C60[rand_seed],
-               D_801C3C58->unk5C != -1 || rand_seed == D_800D48DC) {
-            rand_seed = (rand_seed % gRiders) + 1;
+    for (i = 0; i < gRiders; i++) {
+        // clang-format off
+        D_801C3C58 = &D_801C3C60[i].unk0; D_801C3C58->unk5C = -1; } for (var_s6 = i = 0; i < (gRiders - 1); var_s6++, i++) { randomGeneratorState = 4; raw_rand = ((SysUtils_Rand(), SysUtils_Rand())) ^ 0; randomGeneratorState = (raw_rand / 256) % randomGeneratorState;  do {} while (0); new_var = randomGeneratorState;
+        // clang-format on
+        while (D_801C3C58 = &D_801C3C60[new_var].unk0, D_801C3C58->unk5C != -1 || new_var == D_800D48DC) {
+            new_var = ((new_var) % gRiders) + 1;
+            if (1) {}
+            randomGeneratorState = 1;
+            if ((!new_var && !(raw_rand)) && !new_var) {}
+            if (randomGeneratorState != 0) {}
+            {}
+            if (randomGeneratorState != 0) {}
+            if (randomGeneratorState != 0) {}
         }
         D_801C3C58->unk5C = var_s6;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43A60/func_80088EA8.s")
-#endif
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/game/code_43A60/func_800890B4.s")
 
