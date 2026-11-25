@@ -241,7 +241,16 @@ void func_801DC0AC(struct DemoActorPose* arg0) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801DC404.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801DC5A8.s")
+void func_801DC5A8(UnkStruct_801DB024* arg0) {
+    s32 temp = arg0->unk4 - (s32) &D_80223F7C;
+
+    if ((temp / 0xC) == 2) {
+        if (arg0->unk8 == 1) {
+            func_800AB92C();
+            func_800AB95C(1, 0);
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801DC60C.s")
 
