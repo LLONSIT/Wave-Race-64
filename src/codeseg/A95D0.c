@@ -388,7 +388,20 @@ void func_801DFC48(s32* arg0) {
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801E0DB8.s")
 
-#pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801E0F8C.s")
+void func_801E0F8C(f32* arg0, f32* arg1) {
+    arg0[19] = arg1[4];
+    arg0[20] = arg1[5];
+    arg0[21] = arg1[6];
+    arg0[31] = arg1[1];
+    arg0[32] = arg1[2];
+    arg0[33] = arg1[3];
+    arg0[28] = arg1[7];
+    arg0[29] = arg1[8];
+    arg0[30] = arg1[9];
+    arg0[34] = arg1[14];
+    arg0[37] = arg1[17];
+    arg0[38] = arg1[18];
+}
 
 #pragma GLOBAL_ASM("asm/us/rev1/nonmatchings/codeseg/A95D0/func_801E0FF0.s")
 
